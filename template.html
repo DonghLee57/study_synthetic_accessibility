@@ -652,14 +652,23 @@
       overflow-x: auto;
     }
 
-    /* Interactive Mermaid Card with Zoom & Pan */
-    .mermaid-card {
+    /* Clickable Mermaid Containers for Instant Popup */
+    .mermaid-card.clickable-card,
+    .mermaid-box.clickable-mermaid-box {
       background: #ffffff;
       border: 1px solid var(--border-light);
       border-radius: 10px;
       margin: 16px 0;
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mermaid-card.clickable-card:hover,
+    .mermaid-box.clickable-mermaid-box:hover {
+      border-color: #0284c7;
+      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.12);
     }
     .mermaid-toolbar {
       display: flex;
@@ -674,47 +683,54 @@
       font-weight: 600;
       color: var(--text-primary);
     }
-    .mermaid-controls {
-      display: flex;
-      gap: 6px;
+    .click-to-expand-badge {
+      display: inline-flex;
       align-items: center;
-    }
-    .btn-zoom {
-      background: #ffffff;
-      border: 1px solid var(--border-medium);
-      color: var(--text-primary);
-      padding: 4px 10px;
-      font-size: 0.78rem;
-      font-weight: 600;
+      gap: 5px;
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      padding: 5px 12px;
       border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.15s ease;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
     }
-    .btn-zoom:hover {
-      background: var(--bg-hover);
-      border-color: var(--brand-primary);
-      color: var(--brand-primary);
+    .mermaid-card.clickable-card:hover .click-to-expand-badge,
+    .mermaid-box.clickable-mermaid-box:hover .click-to-expand-badge {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
     }
     .mermaid-viewport {
       padding: 24px 20px;
       overflow: auto;
-      max-height: 600px;
+      max-height: 520px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       background: #ffffff;
-      cursor: grab;
       position: relative;
     }
-    .mermaid-viewport:active {
-      cursor: grabbing;
-    }
     .mermaid-svg-container {
-      transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
-      transform-origin: top center;
       width: 100%;
       display: flex;
       justify-content: center;
+    }
+    .btn-close-modal {
+      background: #0284c7;
+      color: #ffffff;
+      border: 1px solid #0284c7;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-close-modal:hover {
+      background: #0369a1;
+      border-color: #0369a1;
     }
 
     /* Modal Overlay for Fullscreen Diagram Inspection */
@@ -1000,9 +1016,13 @@
           </p>
         </div>
 
-        <!-- Mermaid Flowchart of Paradigm Shift -->
-        <div class="mermaid-box">
-          <div class="mermaid">
+        <!-- Mermaid Flowchart of Paradigm Shift: Click to Enlarge -->
+        <div class="mermaid-box clickable-mermaid-box" id="box-paradigm-roadmap" onclick="openDiagramModal('roadmap-diagram-svg', '합성 접근성(SA) 평가 모델 세대별 진화 로드맵 (1G~4G)')" title="클릭하여 큰 팝업으로 확대 보기">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">SA 평가 모델 세대별 진화 로드맵</span>
+            <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
+          </div>
+          <div class="mermaid" id="roadmap-diagram-svg">
 flowchart LR
     A["1세대 (2009~)<br><b>구조 통계 / 휴리스틱</b><br>SAScore, SYBA"] -->|"반응 데이터 도입<br>(Reaxys, CASP)"| B["2세대 (2018~)<br><b>반응 코퍼스 & CASP 대리</b><br>SCScore, RAscore, RetroGNN"]
     B -->|"국소 화학환경 &<br>빌딩블록 분리"| C["3세대 (2022~)<br><b>GNN & 반응 인지형</b><br>GASA, DFRscore, BR-SAScore"]
@@ -1642,16 +1662,11 @@ score, contrib = scorer.calculateScore("CC(C)N(C(C)C)[SiH3]") # DIPAS</div>
           </p>
         </div>
 
-        <!-- Interactive Mermaid Multi-Fidelity Workflow Card with Zoom & Fullscreen Modal -->
-        <div class="mermaid-card" id="card-dft-workflow">
+        <!-- Interactive Mermaid Multi-Fidelity Workflow Card: Click to Expand Popup Modal -->
+        <div class="mermaid-card clickable-card" id="card-dft-workflow" onclick="openDiagramModal('dft-workflow-container', '다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인')" title="클릭하여 큰 팝업으로 확대 보기">
           <div class="mermaid-toolbar">
-            <span class="mermaid-title">다이어그램 뷰어: 다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인</span>
-            <div class="mermaid-controls">
-              <button type="button" class="btn-zoom" onclick="zoomDiagram('dft-workflow-container', 1.2)">확대 (+)</button>
-              <button type="button" class="btn-zoom" onclick="zoomDiagram('dft-workflow-container', 0.8)">축소 (-)</button>
-              <button type="button" class="btn-zoom" onclick="resetZoom('dft-workflow-container')">원래대로 (100%)</button>
-              <button type="button" class="btn-zoom" style="background:#0284c7; color:#fff; border-color:#0284c7;" onclick="openDiagramModal('dft-workflow-container', '다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인')">전체화면 모달 확대보기</button>
-            </div>
+            <span class="mermaid-title">다이어그램: 다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인</span>
+            <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
           </div>
           <div class="mermaid-viewport" id="viewport-dft-workflow">
             <div class="mermaid-svg-container" id="dft-workflow-container">
@@ -1752,9 +1767,13 @@ flowchart TD
           </p>
         </div>
 
-        <!-- Mermaid 4-Layer VASP Automation Architecture -->
-        <div class="mermaid-box">
-          <div class="mermaid">
+        <!-- Mermaid 4-Layer VASP Automation Architecture: Click to Enlarge -->
+        <div class="mermaid-box clickable-mermaid-box" id="box-vasp-architecture" onclick="openDiagramModal('vasp-stack-svg', 'VASP 중심의 4계층 반도체 전구체 DFT 자동화 아키텍처')" title="클릭하여 큰 팝업으로 확대 보기">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">4계층 VASP 자동화 아키텍처</span>
+            <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
+          </div>
+          <div class="mermaid" id="vasp-stack-svg">
 flowchart LR
     subgraph L0["<b>0. SA &amp; 경로 생성</b>"]
         A1["BR-SAScore / RxnFlow<br>합성 가능 후보 SMILES"]
@@ -2538,19 +2557,15 @@ flowchart LR
   </div>
 
   <!-- Modal Window for Diagram Zoom/Inspection -->
+  <!-- Modal Window for Direct Diagram Popup -->
   <div id="diagramModal" class="modal-overlay" onclick="closeDiagramModalOnOverlay(event)">
     <div class="modal-window">
       <div class="modal-header">
-        <strong id="modalDiagramTitle" style="font-size:1.02rem; color:#0f172a;">다이어그램 고해상도 확대 뷰어</strong>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <button type="button" class="btn-zoom" onclick="zoomModalDiagram(1.2)">확대 (+)</button>
-          <button type="button" class="btn-zoom" onclick="zoomModalDiagram(0.8)">축소 (-)</button>
-          <button type="button" class="btn-zoom" onclick="resetModalZoom()">100%</button>
-          <button type="button" class="btn-zoom" style="background:#e11d48; color:#fff; border-color:#e11d48;" onclick="closeDiagramModal()">닫기 (Close / ESC)</button>
-        </div>
+        <strong id="modalDiagramTitle" style="font-size:1.05rem; color:#0f172a;">다이어그램 확대 팝업</strong>
+        <button type="button" class="btn-close-modal" onclick="closeDiagramModal()">✕ 닫기 (Esc)</button>
       </div>
       <div class="modal-body" id="modalDiagramBody">
-        <div id="modalSvgContainer" style="transform-origin: top center; transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);"></div>
+        <div id="modalSvgContainer" style="width:100%; display:flex; justify-content:center; align-items:flex-start;"></div>
       </div>
     </div>
   </div>
@@ -2692,26 +2707,7 @@ flowchart LR
       });
     }
 
-    // Diagram Zoom & Fullscreen Modal Logic
-    const zoomLevels = {};
-    function zoomDiagram(containerId, factor) {
-      if (!zoomLevels[containerId]) zoomLevels[containerId] = 1.0;
-      zoomLevels[containerId] = Math.min(Math.max(zoomLevels[containerId] * factor, 0.5), 3.0);
-      const el = document.getElementById(containerId);
-      if (el) {
-        el.style.transform = `scale(${zoomLevels[containerId]})`;
-      }
-    }
-
-    function resetZoom(containerId) {
-      zoomLevels[containerId] = 1.0;
-      const el = document.getElementById(containerId);
-      if (el) {
-        el.style.transform = 'scale(1.0)';
-      }
-    }
-
-    let modalZoomLevel = 1.25;
+    // Diagram Popup Modal: Direct Click to Enlarge
     function openDiagramModal(sourceContainerId, title) {
       const modal = document.getElementById('diagramModal');
       const modalTitle = document.getElementById('modalDiagramTitle');
@@ -2719,10 +2715,17 @@ flowchart LR
       const sourceEl = document.getElementById(sourceContainerId);
       if (!modal || !sourceEl) return;
 
-      modalTitle.textContent = title || '다이어그램 확대 뷰어';
+      modalTitle.textContent = title || '다이어그램 확대 팝업';
       modalContainer.innerHTML = sourceEl.innerHTML;
-      modalZoomLevel = 1.25;
-      modalContainer.style.transform = `scale(${modalZoomLevel})`;
+      
+      // Ensure the cloned SVG scales cleanly and responsively inside the modal
+      const svg = modalContainer.querySelector('svg');
+      if (svg) {
+        svg.style.maxWidth = '100%';
+        svg.style.width = '100%';
+        svg.style.height = 'auto';
+      }
+
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -2738,22 +2741,6 @@ flowchart LR
     function closeDiagramModalOnOverlay(event) {
       if (event.target && event.target.id === 'diagramModal') {
         closeDiagramModal();
-      }
-    }
-
-    function zoomModalDiagram(factor) {
-      modalZoomLevel = Math.min(Math.max(modalZoomLevel * factor, 0.5), 4.0);
-      const el = document.getElementById('modalSvgContainer');
-      if (el) {
-        el.style.transform = `scale(${modalZoomLevel})`;
-      }
-    }
-
-    function resetModalZoom() {
-      modalZoomLevel = 1.0;
-      const el = document.getElementById('modalSvgContainer');
-      if (el) {
-        el.style.transform = 'scale(1.0)';
       }
     }
 

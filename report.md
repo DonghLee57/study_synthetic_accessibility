@@ -80,7 +80,10 @@ All 17 open-source packages were checked via GitHub API, PyPI, and Zenodo:
    - Replacing `emolecules` with commercial chlorosilane/disilane catalogs (Gelest/Sigma-Aldrich) and `uspto` with aminolysis/hydrosilylation/Grignard templates yields a domain-exact `Si-BR-SAScore` without neural network retraining.
 2. **Track B — Transition-Metal / Lanthanide Organometallic Precursors (`TMC-SA`)**:
    - Following Duan, Nandy, and Kulik (*JACS Au* 2022, `10.1021/jacsau.2c00547`), transition-metal precursor synthesizability is multiplicative:
-     $$\text{SA}_{\text{TMC}}\big(M(L_1)_{n_1}(L_2)_{n_2}\big) = \max_{i} \text{BR-SAScore}(HL_i) + \lambda_{\text{het}} \cdot \mathbb{I}(N_{\text{lig\_types}} > 2) + \lambda_{\text{meta}} \cdot \mathcal{P}_{\text{rxn}}(M\text{X}_m, \{HL_i\})$$
+
+     $$
+     \text{SA}_{\text{TMC}}\big(M(L_1)_{n_1}(L_2)_{n_2}\big) = \max_{i} \text{BR-SAScore}(HL_i) + \lambda_{\text{het}} \cdot \mathbf{1}(N_{\text{types}} > 2) + \lambda_{\text{meta}} \cdot \mathcal{P}_{\text{rxn}}(M\text{X}_m, \{HL_i\})
+     $$
 
 ### 4.2 Physics-Informed DFT Integration (5-Stage Funnel)
 To eliminate False Positives where an easily synthesizable organic ligand ($HL$) fails to coordinate or yields a non-volatile/thermally unstable complex, DFT calculations provide four orthogonal physical constraints:
@@ -89,7 +92,10 @@ To eliminate False Positives where an easily synthesizable organic ligand ($HL$)
 3. **Thermal Isolability & Purification Window ($\text{BDE}_{\min} > 35\text{ kcal/mol}, \Delta G^\ddagger_{\beta\text{-H}} > 28\text{ kcal/mol}$)**: Ensures the precursor survives vacuum distillation/sublimation without premature decomposition.
 4. **COSMO-RS Volatility ($\Delta H_{\text{vap}}$) & Slab DFT / MLIP Wafer Half-Cycle Chemisorption ($\Delta G_{\text{ALD}} < -15\text{ kcal/mol}$)**.
 5. **Closed-Loop Active Learning (`QM-Augmented Reward`)**:
-   $$R_{\text{Precursor}}(ML_n) = \sigma\big(\tau_{\text{SA}} - \text{BR-SAScore}(HL)\big) \cdot \sigma\big(-\Delta G_{\text{syn}}^{\text{xTB/DFT}}\big) \cdot \mathbb{I}\big(58\% \le \%V_{\text{bur}} \le 82\%\big) \cdot \sigma\left(\frac{\text{BDE}_{\min} - \Delta H_{\text{vap}}}{RT}\right)$$
+
+   $$
+   R_{\text{Precursor}}(ML_n) = \sigma\big(\tau_{\text{SA}} - \text{BR-SAScore}(HL)\big) \cdot \sigma\big(-\Delta G_{\text{syn}}^{\text{DFT}}\big) \cdot \mathbf{1}\big(58\% \le \%V_{\text{bur}} \le 82\%\big) \cdot \sigma\left(\frac{\text{BDE}_{\min} - \Delta H_{\text{vap}}}{RT}\right)
+   $$
 
 ---
 

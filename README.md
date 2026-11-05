@@ -13,31 +13,62 @@ This repository provides an end-to-end scientific evaluation, automated DOI/meta
 ## 1. Scientific Domain Expertise & Theoretical Background
 
 ### 1.1 Evolution of Synthetic Accessibility (1st to 4th Generation)
-1. **1st Gen — Statistical Fragment Heuristics & Bayesian Classifiers (`SAScore`, `SYBA`)**:
-   $$\text{SAScore}(m) = 10 - 9 \left( \frac{\frac{1}{|F|}\sum_{f \in F} \log_{10} P(f) - \text{ComplexityPenalty}(m) - S_{\min}}{S_{\max} - S_{\min}} \right)$$
-2. **2nd Gen — Reaction Corpus & CASP Surrogate Distillation (`SCScore`, `RAscore`, `RetroGNN`)**:
-   $$\mathcal{L}_{\text{SCScore}} = -\sum_{(R, P)} \left[ y \ln \sigma(S(P) - S(R)) + (1-y)\ln(1 - \sigma(S(P) - S(R))) \right]$$
-3. **3rd Gen — Graph Attention & Building-Block/Reaction Decoupling (`GASA`, `DeepSA`, `DFRscore`, `BR-SAScore`)**:
-   $$\text{BR-SAScore}(m) = 10 - 9 \times \text{clip}_{[0, 1]}\left( \frac{\frac{1}{|F_R|}\sum_{f \in F_R} s_R(f) - \text{Penalty}_{\text{struct}}(m) + \text{Sym}(m) - S_{\min}}{S_{\max} - S_{\min}} \right)$$
-   where fragments in commercial building blocks ($BFrag$) are assigned $s_B(f) = 0.0$ (zero penalty), and only reaction-formed fragments ($RFrag$) carry negative log-frequency scores $s_R(f) < 0$.
-4. **4th Gen — By-Design Synthesizable Generation & Projection (`ChemProjector`, `SynFormer`, `SynFlowNet`, `RxnFlow`, `ReaSyn`)**:
-   $$\hat{m}_{\text{synth}} = \arg\min_{m \in \mathcal{M}_{\text{synth}}} \mathcal{D}_{\text{struct}}(m, m_{\text{target}})$$
+
+- **1st Gen — Statistical Fragment Heuristics & Bayesian Classifiers (`SAScore`, `SYBA`)**:
+
+  $$
+  \text{SAScore}(m) = 10 - 9 \left( \frac{\frac{1}{|F|}\sum_{f \in F} \log_{10} P(f) - \text{ComplexityPenalty}(m) - S_{\min}}{S_{\max} - S_{\min}} \right)
+  $$
+
+- **2nd Gen — Reaction Corpus & CASP Surrogate Distillation (`SCScore`, `RAscore`, `RetroGNN`)**:
+
+  $$
+  \mathcal{L}_{\text{SCScore}} = -\sum_{(R, P)} \left[ y \ln \sigma(S(P) - S(R)) + (1-y)\ln(1 - \sigma(S(P) - S(R))) \right]
+  $$
+
+- **3rd Gen — Graph Attention & Building-Block/Reaction Decoupling (`GASA`, `DeepSA`, `DFRscore`, `BR-SAScore`)**:
+
+  $$
+  \text{BR-SAScore}(m) = 10 - 9 \cdot \operatorname{clip}_{[0, 1]}\left( \frac{\frac{1}{|F_R|}\sum_{f \in F_R} s_R(f) - \text{Penalty}_{\text{struct}}(m) + \text{Sym}(m) - S_{\min}}{S_{\max} - S_{\min}} \right)
+  $$
+
+  where fragments in commercial building blocks ($BFrag$) are assigned $s_B(f) = 0.0$ (zero penalty), and only reaction-formed fragments ($RFrag$) carry negative log-frequency scores $s_R(f) < 0$.
+
+- **4th Gen — By-Design Synthesizable Generation & Projection (`ChemProjector`, `SynFormer`, `SynFlowNet`, `RxnFlow`, `ReaSyn`)**:
+
+  $$
+  \hat{m}_{\text{synth}} = \operatorname*{arg\,min}_{m \in \mathcal{M}_{\text{synth}}} \mathcal{D}_{\text{struct}}(m, m_{\text{target}})
+  $$
 
 ### 1.2 Extension to Semiconductor Precursors (ALD / CVD) & DFT Synergy
+
 Standard organic SA metrics fail on transition-metal complexes due to RDKit valence/hapticity limitations ($\eta^5\text{-Cp}$, amidinates, dative bonds $L \to M$) and catalog domain shift. We establish a **2-Track SA Extension + 5-Stage DFT Multi-Fidelity Funnel**:
+
 - **Track A (`Si-BR-SAScore` for Covalent Si/Ge/B/Sn Precursors)**: Replaces `emolecules` and `uspto` in `BR-SAScore` with commercial halosilane/disilane catalogs (Gelest) and aminolysis/hydrosilylation reaction templates.
 - **Track B (`TMC-SA` for Transition-Metal/Lanthanide Precursors)**: Decomposes $M(L_1)_{n_1}(L_2)_{n_2}$ into neutral pro-ligands $\{HL_i\}$ and metal salt $M\text{X}_m$:
-  $$\text{SA}_{\text{TMC}}\big(M(L_1)_{n_1}(L_2)_{n_2}\big) = \max_{i} \text{BR-SAScore}(HL_i) + \lambda_{\text{het}} \cdot \mathbb{I}(N_{\text{lig\_types}} > 2) + \lambda_{\text{meta}} \cdot \mathcal{P}_{\text{rxn}}(M\text{X}_m, \{HL_i\})$$
+
+  $$
+  \text{SA}_{\text{TMC}}\big(M(L_1)_{n_1}(L_2)_{n_2}\big) = \max_{i} \text{BR-SAScore}(HL_i) + \lambda_{\text{het}} \cdot \mathbf{1}(N_{\text{types}} > 2) + \lambda_{\text{meta}} \cdot \mathcal{P}_{\text{rxn}}(M\text{X}_m, \{HL_i\})
+  $$
+
 - **Multi-Fidelity DFT Reward Coupling**:
-  $$R_{\text{Precursor}}(ML_n) = \sigma\big(\tau_{\text{SA}} - \text{BR-SAScore}(HL)\big) \cdot \sigma\big(-\Delta G_{\text{syn}}^{\text{xTB/DFT}}\big) \cdot \mathbb{I}\big(58\% \le \%V_{\text{bur}} \le 82\%\big) \cdot \sigma\left(\frac{\text{BDE}_{\min} - \Delta H_{\text{vap}}}{RT}\right)$$
+
+  $$
+  R_{\text{Precursor}}(ML_n) = \sigma\big(\tau_{\text{SA}} - \text{BR-SAScore}(HL)\big) \cdot \sigma\big(-\Delta G_{\text{syn}}^{\text{DFT}}\big) \cdot \mathbf{1}\big(58\% \le \%V_{\text{bur}} \le 82\%\big) \cdot \sigma\left(\frac{\text{BDE}_{\min} - \Delta H_{\text{vap}}}{RT}\right)
+  $$
 
 ### 1.3 VASP-Centered 4-Layer DFT Automation Architecture
+
 Because VASP uses periodic plane waves (`PAW`), automating both gas-phase organometallic precursors (molecule-in-a-box) and wafer surface ALD reactions (slab + adsorbate) requires a 4-layer stack:
-1. **Layer 1 (3D Complex & Slab Builder)**: `molSimplify` (`hjkgrp/molSimplify`) / `Architector` (`lanl/Architector`) for 3D organometallic coordination, paired with `Pymatgen` (`SlabGenerator`, `AdsorbateSiteFinder`, `MVLSlabSet`) and `CatKit` (`SUNCAT-Center/CatKit`) to build asymmetric vacuum boxes ($20 \times 21 \times 22\;\text{\AA}^3$, `IDIPOL = 4`, `ISYM = 0`) and surface slabs (`IDIPOL = 3`, `LDIPOL = .TRUE.`, `IVDW = 12`).
+
+1. **Layer 1 (3D Complex & Slab Builder)**: `molSimplify` (`hjkgrp/molSimplify`) / `Architector` (`lanl/Architector`) for 3D organometallic coordination, paired with `Pymatgen` (`SlabGenerator`, `AdsorbateSiteFinder`, `MVLSlabSet`) and `CatKit` (`SUNCAT-Center/CatKit`) to build asymmetric vacuum boxes ($20 \times 21 \times 22\text{ Å}^3$, `IDIPOL = 4`, `ISYM = 0`) and surface slabs (`IDIPOL = 3`, `LDIPOL = .TRUE.`, `IVDW = 12`).
 2. **Layer 2 (MLIP Pre-Relaxation)**: `SevenNet` (`MDIL-SNU/SevenNet`, trained on MPtrj VASP PBE trajectories) or `MACE-MP-0` via `ASE` (`BFGS`) to pre-optimize structures in seconds and cut VASP ionic `NSW` steps by ~80%.
 3. **Layer 3 (VASP Workflow & Error Recovery)**: `atomate2` + `jobflow` (`materialsproject/atomate2`), `Quacc` (`Quantum-Accelerators/quacc`), or `AiiDA-VASP` (`aiida-vasp/aiida-vasp`) wrapping **`Custodian`** (`VaspErrorHandler`) to automatically cure `ZBRENT`, `BRMIX`, `EDDDAV`, and `TETIRR` failures.
 4. **Layer 4 (Transition States & Thermochemistry)**: `Sella` (`zadorlab/sella`) + `VTST Tools` (`CI-NEB` / Dimer) for $\Delta G^\ddagger_{\text{decomp}}$ and $\Delta G^\ddagger_{\text{ALD}}$, coupled with `ASE` `IdealGasThermo` / `HarmonicThermo`:
-   $$G_{\text{gas}}^{\text{VASP}}(T, P) = E_{\text{VASP}}^{\text{box}} + E_{\text{ZPE}} + \Delta H_{\text{trans+rot+vib}}(T) - T\Big(S_{\text{trans}}(T, P) + S_{\text{rot}}(T) + S_{\text{vib}}^{\text{QRRHO}}(T) + S_{\text{elec}}\Big)$$
+
+   $$
+   G_{\text{gas}}^{\text{VASP}}(T, P) = E_{\text{VASP}}^{\text{box}} + E_{\text{ZPE}} + \Delta H_{\text{trans+rot+vib}}(T) - T\Big(S_{\text{trans}}(T, P) + S_{\text{rot}}(T) + S_{\text{vib}}^{\text{QRRHO}}(T) + S_{\text{elec}}\Big)
+   $$
 
 ---
 
@@ -135,7 +166,7 @@ python generate_html.py
 | Physical Quantity | Symbol | Unit | Target Precursor Threshold |
 | :--- | :--- | :--- | :--- |
 | **Pro-Ligand Synthetic Accessibility** | $\text{BR-SAScore}(HL)$ | dimensionless ($1\text{--}10$) | $< 3.5$ |
-| **Percent Buried Volume** | $\%V_{\text{bur}}$ | $\%$ (at $R_s = 3.5\,\text{\AA}$) | $58\% \sim 82\%$ (monomeric window) |
+| **Percent Buried Volume** | $\%V_{\text{bur}}$ | $\%$ (at $R_s = 3.5\text{ Å}$) | $58\% \sim 82\%$ (monomeric window) |
 | **Complexation Reaction Free Energy** | $\Delta G_{\text{syn}}$ | $\text{kcal/mol}$ | $< 0.0\text{ kcal/mol}$ (exergonic) |
 | **Dimerization Free Energy** | $\Delta G_{\text{dimer}}$ | $\text{kcal/mol}$ | $> +5.0\text{ kcal/mol}$ (prevents oligomerization) |
 | **Minimum Bond Dissociation Energy** | $\text{BDE}_{\min}$ | $\text{kcal/mol}$ | $> 35.0\text{ kcal/mol}$ (survives distillation) |
