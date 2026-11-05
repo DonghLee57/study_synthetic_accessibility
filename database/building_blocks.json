@@ -1,0 +1,292 @@
+[
+  {
+    "id": "BB_01",
+    "name": "Silicon Tetrachloride",
+    "formula": "SiCl4",
+    "smiles": "Cl[Si](Cl)(Cl)Cl",
+    "cas": "10026-04-7",
+    "role": "Inorganic Core",
+    "purity": "99.9999% (6N)",
+    "handling": "Moisture Sensitive, Corrosive"
+  },
+  {
+    "id": "BB_02",
+    "name": "Dichlorosilane",
+    "formula": "SiH2Cl2",
+    "smiles": "Cl[SiH2]Cl",
+    "cas": "4109-96-0",
+    "role": "Inorganic Core",
+    "purity": "99.999% (5N)",
+    "handling": "Flammable Gas, Pyrophoric Risk"
+  },
+  {
+    "id": "BB_03",
+    "name": "Trichlorosilane",
+    "formula": "HSiCl3",
+    "smiles": "Cl[SiH](Cl)Cl",
+    "cas": "10025-78-2",
+    "role": "Inorganic Core",
+    "purity": "99.999% (5N)",
+    "handling": "Flammable Liquid, Moisture Sensitive"
+  },
+  {
+    "id": "BB_04",
+    "name": "Hexachlorodisilane",
+    "formula": "Si2Cl6",
+    "smiles": "Cl[Si](Cl)(Cl)[Si](Cl)(Cl)Cl",
+    "cas": "13465-77-5",
+    "role": "Inorganic Core",
+    "purity": "99.999% (5N)",
+    "handling": "Moisture Sensitive, Corrosive"
+  },
+  {
+    "id": "BB_05",
+    "name": "Hafnium(IV) Chloride",
+    "formula": "HfCl4",
+    "smiles": "Cl[Hf](Cl)(Cl)Cl",
+    "cas": "13499-05-3",
+    "role": "Inorganic Core",
+    "purity": "99.9% (Zr-free <50 ppm)",
+    "handling": "Solid, Hydrolyzes in Air"
+  },
+  {
+    "id": "BB_06",
+    "name": "Zirconium(IV) Chloride",
+    "formula": "ZrCl4",
+    "smiles": "Cl[Zr](Cl)(Cl)Cl",
+    "cas": "10026-11-6",
+    "role": "Inorganic Core",
+    "purity": "99.9%",
+    "handling": "Solid, Moisture Sensitive"
+  },
+  {
+    "id": "BB_07",
+    "name": "Titanium(IV) Chloride",
+    "formula": "TiCl4",
+    "smiles": "Cl[Ti](Cl)(Cl)Cl",
+    "cas": "7550-45-0",
+    "role": "Inorganic Core",
+    "purity": "99.999% (5N)",
+    "handling": "Liquid, Fuming in Air"
+  },
+  {
+    "id": "BB_08",
+    "name": "Aluminum Trichloride",
+    "formula": "AlCl3",
+    "smiles": "Cl[Al](Cl)Cl",
+    "cas": "7446-70-0",
+    "role": "Inorganic Core",
+    "purity": "99.99%",
+    "handling": "Solid, Lewis Acid"
+  },
+  {
+    "id": "BB_09",
+    "name": "Trimethylaluminum",
+    "formula": "AlMe3",
+    "smiles": "C[Al](C)C",
+    "cas": "75-24-1",
+    "role": "Alkyl Precursor / Core",
+    "purity": "99.9999% (6N)",
+    "handling": "Pyrophoric Liquid"
+  },
+  {
+    "id": "BB_10",
+    "name": "Tungsten(VI) Hexachloride",
+    "formula": "WCl6",
+    "smiles": "Cl[W](Cl)(Cl)(Cl)(Cl)Cl",
+    "cas": "13283-01-7",
+    "role": "Inorganic Core",
+    "purity": "99.9%",
+    "handling": "Moisture Sensitive Solid"
+  },
+  {
+    "id": "BB_11",
+    "name": "Molybdenum(V) Chloride",
+    "formula": "MoCl5",
+    "smiles": "Cl[Mo](Cl)(Cl)(Cl)Cl",
+    "cas": "10241-05-1",
+    "role": "Inorganic Core",
+    "purity": "99.9%",
+    "handling": "Moisture Sensitive Solid"
+  },
+  {
+    "id": "BB_12",
+    "name": "Ruthenium(III) Chloride hydrate",
+    "formula": "RuCl3",
+    "smiles": "Cl[Ru](Cl)Cl",
+    "cas": "10049-08-8",
+    "role": "Inorganic Core",
+    "purity": "99.9%",
+    "handling": "Solid, Hygroscopic"
+  },
+  {
+    "id": "BB_13",
+    "name": "Cobalt(II) Chloride",
+    "formula": "CoCl2",
+    "smiles": "Cl[Co]Cl",
+    "cas": "7646-79-9",
+    "role": "Inorganic Core",
+    "purity": "99.99%",
+    "handling": "Solid, Anhydrous"
+  },
+  {
+    "id": "BB_14",
+    "name": "Tantalum(V) Chloride",
+    "formula": "TaCl5",
+    "smiles": "Cl[Ta](Cl)(Cl)(Cl)Cl",
+    "cas": "7721-01-9",
+    "role": "Inorganic Core",
+    "purity": "99.99%",
+    "handling": "Moisture Sensitive Solid"
+  },
+  {
+    "id": "BB_15",
+    "name": "tert-Butyltin Trichloride",
+    "formula": "tBuSnCl3",
+    "smiles": "CC(C)(C)[Sn](Cl)(Cl)Cl",
+    "cas": "7384-14-7",
+    "role": "Organotin Core",
+    "purity": "99.0%",
+    "handling": "Moisture Sensitive Solid"
+  },
+  {
+    "id": "BB_16",
+    "name": "Diisopropylamine",
+    "formula": "C6H15N",
+    "smiles": "CC(C)NC(C)C",
+    "cas": "108-18-9",
+    "role": "Pro-ligand (Amine)",
+    "purity": "99.5%",
+    "handling": "Flammable, Basic"
+  },
+  {
+    "id": "BB_17",
+    "name": "tert-Butylamine",
+    "formula": "C4H11N",
+    "smiles": "CC(C)(C)N",
+    "cas": "75-64-9",
+    "role": "Pro-ligand (Amine / Imido source)",
+    "purity": "99.5%",
+    "handling": "Flammable, Volatile"
+  },
+  {
+    "id": "BB_18",
+    "name": "Dimethylamine",
+    "formula": "C2H7N",
+    "smiles": "CNC",
+    "cas": "124-40-3",
+    "role": "Pro-ligand (Amine)",
+    "purity": "99.0% (Gas/Solution)",
+    "handling": "Flammable Gas"
+  },
+  {
+    "id": "BB_19",
+    "name": "Ethylmethylamine",
+    "formula": "C3H9N",
+    "smiles": "CCNC",
+    "cas": "624-78-2",
+    "role": "Pro-ligand (Amine)",
+    "purity": "99.0%",
+    "handling": "Flammable Liquid"
+  },
+  {
+    "id": "BB_20",
+    "name": "Cyclopentadiene",
+    "formula": "C5H6",
+    "smiles": "C1=CCC=C1",
+    "cas": "542-92-7",
+    "role": "Pro-ligand (Cyclopentadienyl)",
+    "purity": "Freshly cracked",
+    "handling": "Flammable, Dimerizes"
+  },
+  {
+    "id": "BB_21",
+    "name": "N,N'-Diisopropylacetamidine",
+    "formula": "C8H18N2",
+    "smiles": "CC(C)N=C(C)NC(C)C",
+    "cas": "635680-55-6",
+    "role": "Pro-ligand (Amidinate)",
+    "purity": "98.0%",
+    "handling": "Air/Moisture Sensitive Base"
+  },
+  {
+    "id": "BB_22",
+    "name": "Isopropanol",
+    "formula": "C3H8O",
+    "smiles": "CC(C)O",
+    "cas": "67-63-0",
+    "role": "Pro-ligand (Alkoxide)",
+    "purity": "Electronic Grade (99.99%)",
+    "handling": "Flammable"
+  },
+  {
+    "id": "BB_23",
+    "name": "tert-Butanol",
+    "formula": "C4H10O",
+    "smiles": "CC(C)(C)O",
+    "cas": "75-65-0",
+    "role": "Pro-ligand (Alkoxide)",
+    "purity": "99.5%",
+    "handling": "Flammable Solid/Liquid"
+  },
+  {
+    "id": "BB_24",
+    "name": "3,3-Dimethyl-1-butyne",
+    "formula": "C6H10",
+    "smiles": "CC(C)(C)C#C",
+    "cas": "917-92-0",
+    "role": "Pro-ligand (Alkyne)",
+    "purity": "98.0%",
+    "handling": "Flammable Volatile Liquid"
+  },
+  {
+    "id": "BB_25",
+    "name": "n-Butyllithium",
+    "formula": "C4H9Li",
+    "smiles": "CCCC[Li]",
+    "cas": "109-72-8",
+    "role": "Deprotonating Base",
+    "purity": "2.5M in Hexanes",
+    "handling": "Pyrophoric"
+  },
+  {
+    "id": "BB_26",
+    "name": "Methyllithium",
+    "formula": "CH3Li",
+    "smiles": "C[Li]",
+    "cas": "917-54-4",
+    "role": "Alkylation Reagent",
+    "purity": "1.6M in Diethyl ether",
+    "handling": "Pyrophoric"
+  },
+  {
+    "id": "BB_27",
+    "name": "Lithium dimethylamide",
+    "formula": "C2H6LiN",
+    "smiles": "CN(C)[Li]",
+    "cas": "3585-32-8",
+    "role": "Salt Metathesis Reagent",
+    "purity": "Solid or in THF",
+    "handling": "Pyrophoric/Moisture Sensitive"
+  },
+  {
+    "id": "BB_28",
+    "name": "Lithium ethylmethylamide",
+    "formula": "C3H8LiN",
+    "smiles": "CCN(C)[Li]",
+    "cas": "3585-33-9",
+    "role": "Salt Metathesis Reagent",
+    "purity": "in Hexanes",
+    "handling": "Moisture Sensitive"
+  },
+  {
+    "id": "BB_29",
+    "name": "Lithium cyclopentadienide",
+    "formula": "C5H5Li",
+    "smiles": "[Li]C1=CC=CC1",
+    "cas": "16733-97-4",
+    "role": "Cp Transfer Reagent",
+    "purity": "Solid powder",
+    "handling": "Air/Moisture Sensitive"
+  }
+]

@@ -1,0 +1,30 @@
+id,name,formula,cas,role,purity,handling,smiles
+BB_01,Silicon Tetrachloride,SiCl4,10026-04-7,Inorganic Core,99.9999% (6N),"Moisture Sensitive, Corrosive",Cl[Si](Cl)(Cl)Cl
+BB_02,Dichlorosilane,SiH2Cl2,4109-96-0,Inorganic Core,99.999% (5N),"Flammable Gas, Pyrophoric Risk",Cl[SiH2]Cl
+BB_03,Trichlorosilane,HSiCl3,10025-78-2,Inorganic Core,99.999% (5N),"Flammable Liquid, Moisture Sensitive",Cl[SiH](Cl)Cl
+BB_04,Hexachlorodisilane,Si2Cl6,13465-77-5,Inorganic Core,99.999% (5N),"Moisture Sensitive, Corrosive",Cl[Si](Cl)(Cl)[Si](Cl)(Cl)Cl
+BB_05,Hafnium(IV) Chloride,HfCl4,13499-05-3,Inorganic Core,99.9% (Zr-free <50 ppm),"Solid, Hydrolyzes in Air",Cl[Hf](Cl)(Cl)Cl
+BB_06,Zirconium(IV) Chloride,ZrCl4,10026-11-6,Inorganic Core,99.9%,"Solid, Moisture Sensitive",Cl[Zr](Cl)(Cl)Cl
+BB_07,Titanium(IV) Chloride,TiCl4,7550-45-0,Inorganic Core,99.999% (5N),"Liquid, Fuming in Air",Cl[Ti](Cl)(Cl)Cl
+BB_08,Aluminum Trichloride,AlCl3,7446-70-0,Inorganic Core,99.99%,"Solid, Lewis Acid",Cl[Al](Cl)Cl
+BB_09,Trimethylaluminum,AlMe3,75-24-1,Alkyl Precursor / Core,99.9999% (6N),Pyrophoric Liquid,C[Al](C)C
+BB_10,Tungsten(VI) Hexachloride,WCl6,13283-01-7,Inorganic Core,99.9%,Moisture Sensitive Solid,Cl[W](Cl)(Cl)(Cl)(Cl)Cl
+BB_11,Molybdenum(V) Chloride,MoCl5,10241-05-1,Inorganic Core,99.9%,Moisture Sensitive Solid,Cl[Mo](Cl)(Cl)(Cl)Cl
+BB_12,Ruthenium(III) Chloride hydrate,RuCl3,10049-08-8,Inorganic Core,99.9%,"Solid, Hygroscopic",Cl[Ru](Cl)Cl
+BB_13,Cobalt(II) Chloride,CoCl2,7646-79-9,Inorganic Core,99.99%,"Solid, Anhydrous",Cl[Co]Cl
+BB_14,Tantalum(V) Chloride,TaCl5,7721-01-9,Inorganic Core,99.99%,Moisture Sensitive Solid,Cl[Ta](Cl)(Cl)(Cl)Cl
+BB_15,tert-Butyltin Trichloride,tBuSnCl3,7384-14-7,Organotin Core,99.0%,Moisture Sensitive Solid,CC(C)(C)[Sn](Cl)(Cl)Cl
+BB_16,Diisopropylamine,C6H15N,108-18-9,Pro-ligand (Amine),99.5%,"Flammable, Basic",CC(C)NC(C)C
+BB_17,tert-Butylamine,C4H11N,75-64-9,Pro-ligand (Amine / Imido source),99.5%,"Flammable, Volatile",CC(C)(C)N
+BB_18,Dimethylamine,C2H7N,124-40-3,Pro-ligand (Amine),99.0% (Gas/Solution),Flammable Gas,CNC
+BB_19,Ethylmethylamine,C3H9N,624-78-2,Pro-ligand (Amine),99.0%,Flammable Liquid,CCNC
+BB_20,Cyclopentadiene,C5H6,542-92-7,Pro-ligand (Cyclopentadienyl),Freshly cracked,"Flammable, Dimerizes",C1=CCC=C1
+BB_21,"N,N'-Diisopropylacetamidine",C8H18N2,635680-55-6,Pro-ligand (Amidinate),98.0%,Air/Moisture Sensitive Base,CC(C)N=C(C)NC(C)C
+BB_22,Isopropanol,C3H8O,67-63-0,Pro-ligand (Alkoxide),Electronic Grade (99.99%),Flammable,CC(C)O
+BB_23,tert-Butanol,C4H10O,75-65-0,Pro-ligand (Alkoxide),99.5%,Flammable Solid/Liquid,CC(C)(C)O
+BB_24,"3,3-Dimethyl-1-butyne",C6H10,917-92-0,Pro-ligand (Alkyne),98.0%,Flammable Volatile Liquid,CC(C)(C)C#C
+BB_25,n-Butyllithium,C4H9Li,109-72-8,Deprotonating Base,2.5M in Hexanes,Pyrophoric,CCCC[Li]
+BB_26,Methyllithium,CH3Li,917-54-4,Alkylation Reagent,1.6M in Diethyl ether,Pyrophoric,C[Li]
+BB_27,Lithium dimethylamide,C2H6LiN,3585-32-8,Salt Metathesis Reagent,Solid or in THF,Pyrophoric/Moisture Sensitive,CN(C)[Li]
+BB_28,Lithium ethylmethylamide,C3H8LiN,3585-33-9,Salt Metathesis Reagent,in Hexanes,Moisture Sensitive,CCN(C)[Li]
+BB_29,Lithium cyclopentadienide,C5H5Li,16733-97-4,Cp Transfer Reagent,Solid powder,Air/Moisture Sensitive,[Li]C1=CC=CC1

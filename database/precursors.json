@@ -1,0 +1,992 @@
+[
+  {
+    "id": "PREC_SI_01",
+    "name": "DIPAS",
+    "chemical_name": "Diisopropylaminosilane",
+    "formula": "C6H17NSi",
+    "smiles": "CC(C)N([SiH3])C(C)C",
+    "cas_number": "18077-24-9",
+    "molecular_weight": 131.29,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiO2, SiNx",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "10 Torr @ 20 °C",
+      "boiling_point_c": 122.0,
+      "melting_point_c": -15.0,
+      "density_g_cm3": 0.78,
+      "thermal_decomposition_temp_c": 450.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Dichlorosilane (SiH2Cl2)",
+        "Diisopropylamine (HN(iPr)2)"
+      ],
+      "reaction_type": "Aminolysis / Salt Precipitation",
+      "typical_yield_pct": 82.0,
+      "byproduct": "[iPr2NH2]+Cl- (solid salt)"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Merck/Sigma-Aldrich",
+      "SoulBrain",
+      "Hansol Chemical"
+    ],
+    "reference_doi": "10.1039/c7ra02301d"
+  },
+  {
+    "id": "PREC_SI_02",
+    "name": "BTBAS",
+    "chemical_name": "Bis(tert-butylamino)silane",
+    "formula": "C8H22N2Si",
+    "smiles": "CC(C)(C)N[SiH2]NC(C)(C)C",
+    "cas_number": "186598-40-3",
+    "molecular_weight": 174.36,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiO2, SiNx, SiON",
+    "process_type": "ALD / Low-temp CVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "7 Torr @ 20 °C",
+      "boiling_point_c": 167.0,
+      "melting_point_c": -40.0,
+      "density_g_cm3": 0.82,
+      "thermal_decomposition_temp_c": 550.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Dichlorosilane (SiH2Cl2)",
+        "tert-Butylamine (H2NtBu)"
+      ],
+      "reaction_type": "Aminolysis",
+      "typical_yield_pct": 88.0,
+      "byproduct": "[tBuNH3]+Cl-"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Air Liquide",
+      "Merck",
+      "Entegris"
+    ],
+    "reference_doi": "10.1021/cm00045a037"
+  },
+  {
+    "id": "PREC_SI_03",
+    "name": "3DMAS",
+    "chemical_name": "Tris(dimethylamino)silane",
+    "formula": "C6H19N3Si",
+    "smiles": "CN(C)[SiH](N(C)C)N(C)C",
+    "cas_number": "15112-89-7",
+    "molecular_weight": 161.32,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiO2, SiNx",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "18 Torr @ 20 °C",
+      "boiling_point_c": 145.0,
+      "melting_point_c": -50.0,
+      "density_g_cm3": 0.83,
+      "thermal_decomposition_temp_c": 480.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Trichlorosilane (HSiCl3)",
+        "Dimethylamine (HNMe2)"
+      ],
+      "reaction_type": "Aminolysis",
+      "typical_yield_pct": 85.0,
+      "byproduct": "[Me2NH2]+Cl-"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Adeka",
+      "Merck",
+      "SoulBrain"
+    ],
+    "reference_doi": "10.1149/1.1393976"
+  },
+  {
+    "id": "PREC_SI_04",
+    "name": "4DMAS",
+    "chemical_name": "Tetrakis(dimethylamino)silane",
+    "formula": "C8H24N4Si",
+    "smiles": "CN(C)[Si](N(C)C)(N(C)C)N(C)C",
+    "cas_number": "3768-55-1",
+    "molecular_weight": 204.39,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiO2, SiNx, SiC",
+    "process_type": "ALD / CVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "5 Torr @ 25 °C",
+      "boiling_point_c": 196.0,
+      "melting_point_c": -2.0,
+      "density_g_cm3": 0.88,
+      "thermal_decomposition_temp_c": 500.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Silicon Tetrachloride (SiCl4)",
+        "Dimethylamine (HNMe2)"
+      ],
+      "reaction_type": "Exhaustive Aminolysis",
+      "typical_yield_pct": 78.0,
+      "byproduct": "[Me2NH2]+Cl-"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Strem",
+      "Merck"
+    ],
+    "reference_doi": "10.1002/jcc.24437"
+  },
+  {
+    "id": "PREC_SI_05",
+    "name": "TSA",
+    "chemical_name": "Trisilylamine",
+    "formula": "H9NSi3",
+    "smiles": "[SiH3]N([SiH3])[SiH3]",
+    "cas_number": "13862-16-3",
+    "molecular_weight": 107.33,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiNx (Low-temperature gap-fill)",
+    "process_type": "LPCVD / ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid (High vapor pressure)",
+      "vapor_pressure_torr": "312 Torr @ 20 °C",
+      "boiling_point_c": 52.0,
+      "melting_point_c": -105.0,
+      "density_g_cm3": 0.89,
+      "thermal_decomposition_temp_c": 350.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Monochlorosilane (SiH3Cl)",
+        "Ammonia (NH3)"
+      ],
+      "reaction_type": "Gas-phase Aminolysis",
+      "typical_yield_pct": 75.0,
+      "byproduct": "[NH4]+Cl-"
+    },
+    "commercial_vendors": [
+      "Air Liquide",
+      "Wonik Materials",
+      "Entegris"
+    ],
+    "reference_doi": "10.1021/ja01188a032"
+  },
+  {
+    "id": "PREC_SI_06",
+    "name": "HCDS",
+    "chemical_name": "Hexachlorodisilane",
+    "formula": "Cl6Si2",
+    "smiles": "Cl[Si](Cl)(Cl)[Si](Cl)(Cl)Cl",
+    "cas_number": "13465-77-5",
+    "molecular_weight": 268.88,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiNx, SiON (Low-temperature)",
+    "process_type": "ALD / CVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "4.2 Torr @ 20 °C",
+      "boiling_point_c": 145.0,
+      "melting_point_c": -1.0,
+      "density_g_cm3": 1.56,
+      "thermal_decomposition_temp_c": 300.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Silicon metal (Si)",
+        "Chlorine (Cl2)"
+      ],
+      "reaction_type": "Direct Chlorination of Silicon / Disilane Fractionation",
+      "typical_yield_pct": 65.0,
+      "byproduct": "SiCl4, Si3Cl8"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Air Liquide",
+      "Hansol Chemical",
+      "Merck"
+    ],
+    "reference_doi": "10.1016/j.jcrysgro.2004.05.050"
+  },
+  {
+    "id": "PREC_SI_07",
+    "name": "TEOS",
+    "chemical_name": "Tetraethyl orthosilicate",
+    "formula": "C8H20O4Si",
+    "smiles": "CCO[Si](OCC)(OCC)OCC",
+    "cas_number": "78-10-4",
+    "molecular_weight": 208.33,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiO2",
+    "process_type": "CVD / ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "1.5 Torr @ 20 °C",
+      "boiling_point_c": 168.0,
+      "melting_point_c": -82.0,
+      "density_g_cm3": 0.93,
+      "thermal_decomposition_temp_c": 650.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Silicon Tetrachloride (SiCl4)",
+        "Ethanol (EtOH)"
+      ],
+      "reaction_type": "Alcoholysis",
+      "typical_yield_pct": 94.0,
+      "byproduct": "HCl (gas)"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Merck",
+      "SoulBrain",
+      "Honeywell"
+    ],
+    "reference_doi": "10.1021/ja01188a032"
+  },
+  {
+    "id": "PREC_SI_08",
+    "name": "SAM.24",
+    "chemical_name": "N,N-Diisopropyl-1-methylsilanamine",
+    "formula": "C7H19NSi",
+    "smiles": "CC(C)N(C(C)C)[SiH2]C",
+    "cas_number": "1042308-77-9",
+    "molecular_weight": 145.32,
+    "metal_center": "Si",
+    "category": "Silicon & Main Group",
+    "target_films": "SiOC, SiC, SiO2",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "15 Torr @ 25 °C",
+      "boiling_point_c": 138.0,
+      "melting_point_c": -30.0,
+      "density_g_cm3": 0.79,
+      "thermal_decomposition_temp_c": 420.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Methyldichlorosilane (MeSiHCl2)",
+        "LiAlH4",
+        "HN(iPr)2"
+      ],
+      "reaction_type": "Selective Hydride Reduction & Aminolysis",
+      "typical_yield_pct": 76.0,
+      "byproduct": "LiCl, AlCl3"
+    },
+    "commercial_vendors": [
+      "Air Liquide",
+      "Gelest"
+    ],
+    "reference_doi": "10.1021/acs.chemmater.5c03271"
+  },
+  {
+    "id": "PREC_HK_01",
+    "name": "TEMAH",
+    "chemical_name": "Tetrakis(ethylmethylamino)hafnium",
+    "formula": "C12H32HfN4",
+    "smiles": "CCN(C)[Hf](N(C)CC)(N(C)CC)N(C)CC",
+    "cas_number": "352535-01-4",
+    "molecular_weight": 410.89,
+    "metal_center": "Hf",
+    "category": "High-k Dielectric (Hf/Zr)",
+    "target_films": "HfO2, HfSiOx",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 60 °C",
+      "boiling_point_c": 240.0,
+      "melting_point_c": -45.0,
+      "density_g_cm3": 1.32,
+      "thermal_decomposition_temp_c": 280.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Hafnium Tetrachloride (HfCl4)",
+        "Lithium ethylmethylamide (LiN(Et)Me)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 86.0,
+      "byproduct": "LiCl (solid salt)"
+    },
+    "commercial_vendors": [
+      "Strem/Entegris",
+      "Adeka",
+      "Merck",
+      "SoulBrain",
+      "Hansol Chemical"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_HK_02",
+    "name": "TDMAH",
+    "chemical_name": "Tetrakis(dimethylamino)hafnium",
+    "formula": "C8H24HfN4",
+    "smiles": "CN(C)[Hf](N(C)C)(N(C)C)N(C)C",
+    "cas_number": "19782-68-4",
+    "molecular_weight": 354.78,
+    "metal_center": "Hf",
+    "category": "High-k Dielectric (Hf/Zr)",
+    "target_films": "HfO2",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Solid (Low melting point)",
+      "vapor_pressure_torr": "0.1 Torr @ 45 °C",
+      "boiling_point_c": 210.0,
+      "melting_point_c": 29.0,
+      "density_g_cm3": 1.38,
+      "thermal_decomposition_temp_c": 260.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Hafnium Tetrachloride (HfCl4)",
+        "Lithium dimethylamide (LiNMe2)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 89.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Merck",
+      "Adeka"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_HK_03",
+    "name": "Hf(OtBu)4",
+    "chemical_name": "Hafnium tetra-tert-butoxide",
+    "formula": "C16H36HfO4",
+    "smiles": "CC(C)(C)O[Hf](OC(C)(C)C)(OC(C)(C)C)OC(C)(C)C",
+    "cas_number": "2172-02-3",
+    "molecular_weight": 470.94,
+    "metal_center": "Hf",
+    "category": "High-k Dielectric (Hf/Zr)",
+    "target_films": "HfO2",
+    "process_type": "ALD / MOCVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "1.0 Torr @ 75 °C",
+      "boiling_point_c": 210.0,
+      "melting_point_c": 8.0,
+      "density_g_cm3": 1.25,
+      "thermal_decomposition_temp_c": 320.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Hafnium Tetrachloride (HfCl4)",
+        "Sodium tert-butoxide (NaOtBu)"
+      ],
+      "reaction_type": "Salt Metathesis / Alcoholysis",
+      "typical_yield_pct": 85.0,
+      "byproduct": "NaCl"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Gelest",
+      "Merck"
+    ],
+    "reference_doi": "10.1021/cm00045a037"
+  },
+  {
+    "id": "PREC_HK_04",
+    "name": "TEMAZ",
+    "chemical_name": "Tetrakis(ethylmethylamino)zirconium",
+    "formula": "C12H32N4Zr",
+    "smiles": "CCN(C)[Zr](N(C)CC)(N(C)CC)N(C)CC",
+    "cas_number": "175923-04-3",
+    "molecular_weight": 323.63,
+    "metal_center": "Zr",
+    "category": "High-k Dielectric (Hf/Zr)",
+    "target_films": "ZrO2, ZAZ (ZrO2-Al2O3-ZrO2)",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 50 °C",
+      "boiling_point_c": 220.0,
+      "melting_point_c": -50.0,
+      "density_g_cm3": 1.05,
+      "thermal_decomposition_temp_c": 270.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Zirconium Tetrachloride (ZrCl4)",
+        "Lithium ethylmethylamide (LiN(Et)Me)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 88.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Strem/Entegris",
+      "Adeka",
+      "Merck",
+      "SoulBrain"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_HK_05",
+    "name": "TDMAZ",
+    "chemical_name": "Tetrakis(dimethylamino)zirconium",
+    "formula": "C8H24N4Zr",
+    "smiles": "CN(C)[Zr](N(C)C)(N(C)C)N(C)C",
+    "cas_number": "19756-04-8",
+    "molecular_weight": 267.53,
+    "metal_center": "Zr",
+    "category": "High-k Dielectric (Hf/Zr)",
+    "target_films": "ZrO2",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Solid",
+      "vapor_pressure_torr": "0.1 Torr @ 35 °C",
+      "boiling_point_c": 190.0,
+      "melting_point_c": 60.0,
+      "density_g_cm3": 1.15,
+      "thermal_decomposition_temp_c": 250.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Zirconium Tetrachloride (ZrCl4)",
+        "Lithium dimethylamide (LiNMe2)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 91.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Merck",
+      "Adeka"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_HK_06",
+    "name": "ZMA",
+    "chemical_name": "Bis(methylcyclopentadienyl)methoxymethylzirconium",
+    "formula": "C14H20OZr",
+    "smiles": "CO[Zr](C)(C1=CC=C(C)C1)C2=CC=C(C)C2",
+    "cas_number": "866088-57-9",
+    "molecular_weight": 307.53,
+    "metal_center": "Zr",
+    "category": "High-k Dielectric (Hf/Zr)",
+    "target_films": "ZrO2 (High permittivity DRAM capacitor)",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 65 °C",
+      "boiling_point_c": 235.0,
+      "melting_point_c": -10.0,
+      "density_g_cm3": 1.28,
+      "thermal_decomposition_temp_c": 350.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "(CpMe)2ZrCl2",
+        "Methyllithium (MeLi)",
+        "Methanol (MeOH)"
+      ],
+      "reaction_type": "Sequential Alkylation & Methanolysis",
+      "typical_yield_pct": 74.0,
+      "byproduct": "LiCl, CH4"
+    },
+    "commercial_vendors": [
+      "Adeka",
+      "Air Liquide",
+      "UP Chemical"
+    ],
+    "reference_doi": "10.1021/jacsau.2c00547"
+  },
+  {
+    "id": "PREC_HK_07",
+    "name": "Cp(NMe2)3Zr",
+    "chemical_name": "Cyclopentadienyltris(dimethylamino)zirconium",
+    "formula": "C11H24N3Zr",
+    "smiles": "CN(C)[Zr](N(C)C)(N(C)C)C1=CC=CC1",
+    "cas_number": "87227-56-3",
+    "molecular_weight": 289.55,
+    "metal_center": "Zr",
+    "category": "High-k Dielectric (Hf/Zr)",
+    "target_films": "ZrO2",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 55 °C",
+      "boiling_point_c": 230.0,
+      "melting_point_c": 12.0,
+      "density_g_cm3": 1.18,
+      "thermal_decomposition_temp_c": 310.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "CpZrCl3",
+        "Lithium dimethylamide (LiNMe2)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 82.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Merck",
+      "Adeka"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_TI_01",
+    "name": "TDMAT",
+    "chemical_name": "Tetrakis(dimethylamino)titanium",
+    "formula": "C8H24N4Ti",
+    "smiles": "CN(C)[Ti](N(C)C)(N(C)C)N(C)C",
+    "cas_number": "3275-24-9",
+    "molecular_weight": 224.18,
+    "metal_center": "Ti",
+    "category": "Titanium & Dielectrics",
+    "target_films": "TiN (Diffusion barrier), TiO2",
+    "process_type": "ALD / MOCVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "1.5 Torr @ 60 °C",
+      "boiling_point_c": 192.0,
+      "melting_point_c": -12.0,
+      "density_g_cm3": 0.95,
+      "thermal_decomposition_temp_c": 220.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Titanium Tetrachloride (TiCl4)",
+        "Lithium dimethylamide (LiNMe2)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 89.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Strem/Entegris",
+      "Adeka",
+      "Merck",
+      "SoulBrain"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_TI_02",
+    "name": "TTIP",
+    "chemical_name": "Titanium tetraisopropoxide",
+    "formula": "C12H28O4Ti",
+    "smiles": "CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C",
+    "cas_number": "546-68-9",
+    "molecular_weight": 284.22,
+    "metal_center": "Ti",
+    "category": "Titanium & Dielectrics",
+    "target_films": "TiO2, BaTiO3, SrTiO3",
+    "process_type": "ALD / CVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "1.4 Torr @ 50 °C",
+      "boiling_point_c": 232.0,
+      "melting_point_c": 18.0,
+      "density_g_cm3": 0.96,
+      "thermal_decomposition_temp_c": 350.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Titanium Tetrachloride (TiCl4)",
+        "Isopropanol (iPrOH)",
+        "Ammonia (NH3)"
+      ],
+      "reaction_type": "Alcoholysis / Neutralization",
+      "typical_yield_pct": 95.0,
+      "byproduct": "NH4Cl (solid salt)"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Merck",
+      "SoulBrain",
+      "DuPont"
+    ],
+    "reference_doi": "10.1021/ja01188a032"
+  },
+  {
+    "id": "PREC_TI_03",
+    "name": "CpTi(NMe2)3",
+    "chemical_name": "Cyclopentadienyltris(dimethylamino)titanium",
+    "formula": "C11H24N3Ti",
+    "smiles": "CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1",
+    "cas_number": "1072-67-9",
+    "molecular_weight": 246.21,
+    "metal_center": "Ti",
+    "category": "Titanium & Dielectrics",
+    "target_films": "TiO2, TiN",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.5 Torr @ 60 °C",
+      "boiling_point_c": 215.0,
+      "melting_point_c": -5.0,
+      "density_g_cm3": 1.03,
+      "thermal_decomposition_temp_c": 290.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "CpTiCl3",
+        "Lithium dimethylamide (LiNMe2)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 84.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Merck",
+      "Adeka"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_AL_01",
+    "name": "TMA",
+    "chemical_name": "Trimethylaluminum",
+    "formula": "C3H9Al",
+    "smiles": "C[Al](C)C",
+    "cas_number": "75-24-1",
+    "molecular_weight": 72.09,
+    "metal_center": "Al",
+    "category": "Group 13 / Alumina",
+    "target_films": "Al2O3 (Standard barrier & passivation)",
+    "process_type": "ALD (Gold standard model system)",
+    "physical_properties": {
+      "state_at_rt": "Liquid (Pyrophoric)",
+      "vapor_pressure_torr": "11.7 Torr @ 20 °C",
+      "boiling_point_c": 126.0,
+      "melting_point_c": 15.0,
+      "density_g_cm3": 0.75,
+      "thermal_decomposition_temp_c": 330.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Aluminum metal (Al)",
+        "Methyl chloride (MeCl)",
+        "Sodium (Na)"
+      ],
+      "reaction_type": "Direct Sesquichloride Route & Reduction",
+      "typical_yield_pct": 92.0,
+      "byproduct": "NaCl"
+    },
+    "commercial_vendors": [
+      "AkzoNobel",
+      "Merck",
+      "SoulBrain",
+      "Adeka",
+      "Strem"
+    ],
+    "reference_doi": "10.1021/cr00033a005"
+  },
+  {
+    "id": "PREC_AL_02",
+    "name": "DMAH",
+    "chemical_name": "Dimethylaluminum hydride",
+    "formula": "C2H7Al",
+    "smiles": "C[AlH]C",
+    "cas_number": "865-37-2",
+    "molecular_weight": 58.06,
+    "metal_center": "Al",
+    "category": "Group 13 / Alumina",
+    "target_films": "Al Metal (CVD wiring)",
+    "process_type": "CVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "2.0 Torr @ 25 °C",
+      "boiling_point_c": 154.0,
+      "melting_point_c": -19.0,
+      "density_g_cm3": 0.76,
+      "thermal_decomposition_temp_c": 220.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Trimethylaluminum (TMA)",
+        "Hydrogen gas (H2)",
+        "Aluminum (Al)"
+      ],
+      "reaction_type": "High-pressure Hydrogenation",
+      "typical_yield_pct": 80.0,
+      "byproduct": "CH4"
+    },
+    "commercial_vendors": [
+      "Gelest",
+      "Strem"
+    ],
+    "reference_doi": "10.1021/cr00033a005"
+  },
+  {
+    "id": "PREC_MET_01",
+    "name": "BTBMW",
+    "chemical_name": "Bis(tert-butylimido)bis(dimethylamino)tungsten",
+    "formula": "C12H30N4W",
+    "smiles": "CN(C)[W](=NC(C)(C)C)(=NC(C)(C)C)N(C)C",
+    "cas_number": "198463-54-4",
+    "molecular_weight": 414.24,
+    "metal_center": "W",
+    "category": "Metal & Barrier (W/Mo/Ru/Co)",
+    "target_films": "WN, WSiN (Diffusion barrier)",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 60 °C",
+      "boiling_point_c": 230.0,
+      "melting_point_c": -15.0,
+      "density_g_cm3": 1.48,
+      "thermal_decomposition_temp_c": 360.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Tungsten Hexachloride (WCl6)",
+        "tert-Butylamine (tBuNH2)",
+        "Lithium dimethylamide (LiNMe2)"
+      ],
+      "reaction_type": "Sequential Imido Addition & Aminolysis",
+      "typical_yield_pct": 72.0,
+      "byproduct": "LiCl, [tBuNH3]+Cl-"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Adeka",
+      "Air Liquide"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_MET_02",
+    "name": "BTBMMo",
+    "chemical_name": "Bis(tert-butylimido)bis(dimethylamino)molybdenum",
+    "formula": "C12H30MoN4",
+    "smiles": "CN(C)[Mo](=NC(C)(C)C)(=NC(C)(C)C)N(C)C",
+    "cas_number": "923956-62-1",
+    "molecular_weight": 326.33,
+    "metal_center": "Mo",
+    "category": "Metal & Barrier (W/Mo/Ru/Co)",
+    "target_films": "Mo, MoN, MoS2 (Next-gen interconnect)",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.2 Torr @ 55 °C",
+      "boiling_point_c": 215.0,
+      "melting_point_c": -10.0,
+      "density_g_cm3": 1.22,
+      "thermal_decomposition_temp_c": 300.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Molybdenum Pentachloride (MoCl5)",
+        "tert-Butylamine (tBuNH2)",
+        "LiNMe2"
+      ],
+      "reaction_type": "Imido Complexation & Salt Metathesis",
+      "typical_yield_pct": 68.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Adeka",
+      "Strem",
+      "Air Liquide"
+    ],
+    "reference_doi": "10.1021/acs.chemmater.5c03271"
+  },
+  {
+    "id": "PREC_MET_03",
+    "name": "Ru(EtCp)2",
+    "chemical_name": "Bis(ethylcyclopentadienyl)ruthenium(II)",
+    "formula": "C14H18Ru",
+    "smiles": "CCC1=CC=CC1.[Ru].CCC2=CC=CC2",
+    "cas_number": "32992-96-4",
+    "molecular_weight": 287.36,
+    "metal_center": "Ru",
+    "category": "Metal & Barrier (W/Mo/Ru/Co)",
+    "target_films": "Ru Metal (Low-resistivity metal line)",
+    "process_type": "ALD / CVD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 70 °C",
+      "boiling_point_c": 270.0,
+      "melting_point_c": 6.0,
+      "density_g_cm3": 1.34,
+      "thermal_decomposition_temp_c": 340.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Ruthenium Trichloride (RuCl3)",
+        "Sodium ethylcyclopentadienide (Na(EtCp))"
+      ],
+      "reaction_type": "Salt Metathesis / Reductive Coordination",
+      "typical_yield_pct": 79.0,
+      "byproduct": "NaCl"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Merck",
+      "Adeka"
+    ],
+    "reference_doi": "10.1021/om010268w"
+  },
+  {
+    "id": "PREC_MET_04",
+    "name": "Co(AMD)2",
+    "chemical_name": "Bis(N,N'-diisopropylacetamidinato)cobalt(II)",
+    "formula": "C16H34CoN4",
+    "smiles": "CC(C)N=C(C)N(C(C)C)[Co]N(C(C)C)C(C)=NC(C)C",
+    "cas_number": "635680-56-7",
+    "molecular_weight": 341.4,
+    "metal_center": "Co",
+    "category": "Metal & Barrier (W/Mo/Ru/Co)",
+    "target_films": "Co Metal (Contact plug, Cu liner)",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Solid / Low-melting wax",
+      "vapor_pressure_torr": "0.1 Torr @ 60 °C",
+      "boiling_point_c": 220.0,
+      "melting_point_c": 42.0,
+      "density_g_cm3": 1.12,
+      "thermal_decomposition_temp_c": 270.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Cobalt(II) Chloride (CoCl2)",
+        "Lithium N,N'-diisopropylacetamidinate"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 81.0,
+      "byproduct": "LiCl"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Merck",
+      "Adeka"
+    ],
+    "reference_doi": "10.1021/om010268w"
+  },
+  {
+    "id": "PREC_MET_05",
+    "name": "CCTBA",
+    "chemical_name": "Dicobalt hexacarbonyl tert-butylacetylene",
+    "formula": "C12H9Co2O6",
+    "smiles": "CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O",
+    "cas_number": "56703-46-9",
+    "molecular_weight": 367.06,
+    "metal_center": "Co",
+    "category": "Metal & Barrier (W/Mo/Ru/Co)",
+    "target_films": "Co (CVD interconnect)",
+    "process_type": "CVD / ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.5 Torr @ 25 °C",
+      "boiling_point_c": 180.0,
+      "melting_point_c": -15.0,
+      "density_g_cm3": 1.35,
+      "thermal_decomposition_temp_c": 160.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Dicobalt octacarbonyl (Co2(CO)8)",
+        "3,3-Dimethyl-1-butyne (tBuC#CH)"
+      ],
+      "reaction_type": "Alkyne Substitution / CO displacement",
+      "typical_yield_pct": 90.0,
+      "byproduct": "CO (gas)"
+    },
+    "commercial_vendors": [
+      "Adeka",
+      "Strem",
+      "Merck"
+    ],
+    "reference_doi": "10.1021/om010268w"
+  },
+  {
+    "id": "PREC_MET_06",
+    "name": "TBTDET",
+    "chemical_name": "Tert-butylimidotris(diethylamino)tantalum",
+    "formula": "C16H39N4Ta",
+    "smiles": "CCN(CC)[Ta](=NC(C)(C)C)(N(CC)CC)N(CC)CC",
+    "cas_number": "169896-41-7",
+    "molecular_weight": 468.45,
+    "metal_center": "Ta",
+    "category": "Metal & Barrier (W/Mo/Ru/Co)",
+    "target_films": "TaN (Cu diffusion barrier)",
+    "process_type": "ALD",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 90 °C",
+      "boiling_point_c": 285.0,
+      "melting_point_c": -20.0,
+      "density_g_cm3": 1.31,
+      "thermal_decomposition_temp_c": 350.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "Tantalum Pentachloride (TaCl5)",
+        "tert-Butylamine (tBuNH2)",
+        "Lithium diethylamide (LiNEt2)"
+      ],
+      "reaction_type": "Sequential Imido Insertion & Salt Metathesis",
+      "typical_yield_pct": 77.0,
+      "byproduct": "LiCl, [tBuNH3]+Cl-"
+    },
+    "commercial_vendors": [
+      "Strem",
+      "Merck",
+      "Adeka"
+    ],
+    "reference_doi": "10.1021/ja020287v"
+  },
+  {
+    "id": "PREC_EUV_01",
+    "name": "tBuSn(OiPr)3",
+    "chemical_name": "tert-Butyltris(isopropoxy)tin(IV)",
+    "formula": "C13H30O3Sn",
+    "smiles": "CC(C)O[Sn](C(C)(C)C)(OC(C)C)OC(C)C",
+    "cas_number": "13919-49-8",
+    "molecular_weight": 353.09,
+    "metal_center": "Sn",
+    "category": "EUV & Novel",
+    "target_films": "SnOx (High-resolution EUV photoresist)",
+    "process_type": "ALD / MOCVD / Spin-coating",
+    "physical_properties": {
+      "state_at_rt": "Liquid",
+      "vapor_pressure_torr": "0.1 Torr @ 75 °C",
+      "boiling_point_c": 230.0,
+      "melting_point_c": -10.0,
+      "density_g_cm3": 1.28,
+      "thermal_decomposition_temp_c": 260.0
+    },
+    "synthesis_info": {
+      "starting_materials": [
+        "tert-Butyltin trichloride (tBuSnCl3)",
+        "Sodium isopropoxide (NaOiPr)"
+      ],
+      "reaction_type": "Salt Metathesis",
+      "typical_yield_pct": 85.0,
+      "byproduct": "NaCl"
+    },
+    "commercial_vendors": [
+      "Inpria/JSR",
+      "Gelest",
+      "Strem"
+    ],
+    "reference_doi": "10.1021/acs.chemmater.5c03271"
+  }
+]

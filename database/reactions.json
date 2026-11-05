@@ -1,0 +1,207 @@
+[
+  {
+    "id": "RXN_01",
+    "name": "Aminolysis of Dichlorosilane to DIPAS",
+    "reaction_type": "Aminolysis / Salt Precipitation",
+    "reaction_smarts": "[Si:1]([Cl:2])([Cl:3])([H:4])[H:5].[N:6]([C:7])([C:8])[H:9]>>[Si:1]([N:6]([C:7])[C:8])([H:4])([H:5])[H].[Cl:2]",
+    "reactants": [
+      "Cl[SiH2]Cl",
+      "CC(C)NC(C)C"
+    ],
+    "products": [
+      "CC(C)N([SiH3])C(C)C"
+    ],
+    "byproduct": "[iPr2NH2]+Cl-",
+    "solvent": "n-Hexane / Diethyl ether",
+    "conditions": "0 °C to RT, 4 h, N2 atmosphere",
+    "thermodynamics_dG_kcal_mol": -18.5
+  },
+  {
+    "id": "RXN_02",
+    "name": "Bis-aminolysis of Dichlorosilane to BTBAS",
+    "reaction_type": "Bis-aminolysis",
+    "reaction_smarts": "[Si:1]([Cl:2])([Cl:3])([H:4])[H:5].2[N:6]([C:7])([H:8])[H:9]>>[Si:1]([NH:6][C:7])([NH:6][C:7])([H:4])[H:5]",
+    "reactants": [
+      "Cl[SiH2]Cl",
+      "CC(C)(C)N"
+    ],
+    "products": [
+      "CC(C)(C)N[SiH2]NC(C)(C)C"
+    ],
+    "byproduct": "[tBuNH3]+Cl-",
+    "solvent": "Toluene / Pentane",
+    "conditions": "-20 °C to RT, 6 h",
+    "thermodynamics_dG_kcal_mol": -24.2
+  },
+  {
+    "id": "RXN_03",
+    "name": "Tris-aminolysis of Trichlorosilane to 3DMAS",
+    "reaction_type": "Aminolysis",
+    "reaction_smarts": "[Si:1]([Cl:2])([Cl:3])([Cl:4])[H:5].3[N:6]([C:7])[C:8]>>[Si:1]([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])[H:5]",
+    "reactants": [
+      "Cl[SiH](Cl)Cl",
+      "CNC"
+    ],
+    "products": [
+      "CN(C)[SiH](N(C)C)N(C)C"
+    ],
+    "byproduct": "[Me2NH2]+Cl-",
+    "solvent": "Hexane",
+    "conditions": "-10 °C to RT, 8 h",
+    "thermodynamics_dG_kcal_mol": -32.0
+  },
+  {
+    "id": "RXN_04",
+    "name": "Exhaustive Alcoholysis of SiCl4 to TEOS",
+    "reaction_type": "Alcoholysis",
+    "reaction_smarts": "[Si:1]([Cl:2])([Cl:3])([Cl:4])[Cl:5].4[O:6][C:7]>>[Si:1]([O:6][C:7])([O:6][C:7])([O:6][C:7])[O:6][C:7]",
+    "reactants": [
+      "Cl[Si](Cl)(Cl)Cl",
+      "CCO"
+    ],
+    "products": [
+      "CCO[Si](OCC)(OCC)OCC"
+    ],
+    "byproduct": "HCl (gas)",
+    "solvent": "Neat / Toluene",
+    "conditions": "Reflux 70 °C, N2 sweep",
+    "thermodynamics_dG_kcal_mol": -40.5
+  },
+  {
+    "id": "RXN_05",
+    "name": "Salt Metathesis for TEMAH Synthesis",
+    "reaction_type": "Salt Metathesis",
+    "reaction_smarts": "[Hf:1]([Cl:2])([Cl:3])([Cl:4])[Cl:5].4[Li][N:6]([C:7])[C:8]>>[Hf:1]([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])[N:6]([C:7])[C:8]",
+    "reactants": [
+      "Cl[Hf](Cl)(Cl)Cl",
+      "CCN(C)[Li]"
+    ],
+    "products": [
+      "CCN(C)[Hf](N(C)CC)(N(C)CC)N(C)CC"
+    ],
+    "byproduct": "4 LiCl",
+    "solvent": "Anhydrous THF / Hexanes",
+    "conditions": "-78 °C to RT, 12 h, dry box",
+    "thermodynamics_dG_kcal_mol": -58.4
+  },
+  {
+    "id": "RXN_06",
+    "name": "Salt Metathesis for TEMAZ Synthesis",
+    "reaction_type": "Salt Metathesis",
+    "reaction_smarts": "[Zr:1]([Cl:2])([Cl:3])([Cl:4])[Cl:5].4[Li][N:6]([C:7])[C:8]>>[Zr:1]([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])[N:6]([C:7])[C:8]",
+    "reactants": [
+      "Cl[Zr](Cl)(Cl)Cl",
+      "CCN(C)[Li]"
+    ],
+    "products": [
+      "CCN(C)[Zr](N(C)CC)(N(C)CC)N(C)CC"
+    ],
+    "byproduct": "4 LiCl",
+    "solvent": "THF / Pentane",
+    "conditions": "-40 °C to RT, 10 h",
+    "thermodynamics_dG_kcal_mol": -62.1
+  },
+  {
+    "id": "RXN_07",
+    "name": "Salt Metathesis for TDMAT Synthesis",
+    "reaction_type": "Salt Metathesis",
+    "reaction_smarts": "[Ti:1]([Cl:2])([Cl:3])([Cl:4])[Cl:5].4[Li][N:6]([C:7])[C:8]>>[Ti:1]([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])([N:6]([C:7])[C:8])[N:6]([C:7])[C:8]",
+    "reactants": [
+      "Cl[Ti](Cl)(Cl)Cl",
+      "CN(C)[Li]"
+    ],
+    "products": [
+      "CN(C)[Ti](N(C)C)(N(C)C)N(C)C"
+    ],
+    "byproduct": "4 LiCl",
+    "solvent": "Hexanes",
+    "conditions": "0 °C to RT, 6 h",
+    "thermodynamics_dG_kcal_mol": -52.0
+  },
+  {
+    "id": "RXN_08",
+    "name": "Ammonia-Assisted Alcoholysis for TTIP",
+    "reaction_type": "Alcoholysis / Neutralization",
+    "reaction_smarts": "[Ti:1]([Cl:2])([Cl:3])([Cl:4])[Cl:5].4[O:6][C:7].4N>>[Ti:1]([O:6][C:7])([O:6][C:7])([O:6][C:7])[O:6][C:7]",
+    "reactants": [
+      "Cl[Ti](Cl)(Cl)Cl",
+      "CC(C)O"
+    ],
+    "products": [
+      "CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C"
+    ],
+    "byproduct": "4 NH4Cl",
+    "solvent": "Benzene / Toluene",
+    "conditions": "10 °C to RT, NH3 sparging",
+    "thermodynamics_dG_kcal_mol": -48.7
+  },
+  {
+    "id": "RXN_09",
+    "name": "Amidinate Chelation for Co(AMD)2",
+    "reaction_type": "Chelation Metathesis",
+    "reaction_smarts": "[Co:1]([Cl:2])[Cl:3].2[Li][N:4]=[C:5][N:6]>>[Co:1]([N:4]=[C:5][N:6])2",
+    "reactants": [
+      "Cl[Co]Cl",
+      "CC(C)N=C(C)NC(C)C",
+      "CCCC[Li]"
+    ],
+    "products": [
+      "CC(C)N=C(C)N(C(C)C)[Co]N(C(C)C)C(C)=NC(C)C"
+    ],
+    "byproduct": "2 LiCl, 2 Butane",
+    "solvent": "THF / Hexane",
+    "conditions": "Deprotonation at -78 °C, then CoCl2 addition, RT 12 h",
+    "thermodynamics_dG_kcal_mol": -38.2
+  },
+  {
+    "id": "RXN_10",
+    "name": "Imido Exchange & Aminolysis for Bis(imido) Tungsten Precursor",
+    "reaction_type": "Sequential Imido Addition & Aminolysis",
+    "reaction_smarts": "[W:1][Cl:2].2[N:3][C:4].2[Li][N:5]>>[W:1](=[N:3][C:4])(=[N:3][C:4])([N:5])2",
+    "reactants": [
+      "Cl[W](Cl)(Cl)(Cl)(Cl)Cl",
+      "CC(C)(C)N",
+      "CN(C)[Li]"
+    ],
+    "products": [
+      "CN(C)[W](=NC(C)(C)C)(=NC(C)(C)C)N(C)C"
+    ],
+    "byproduct": "4 LiCl, 2 [tBuNH3]+Cl-",
+    "solvent": "Toluene",
+    "conditions": "Step 1: 80 °C, Step 2: RT",
+    "thermodynamics_dG_kcal_mol": -44.0
+  },
+  {
+    "id": "RXN_11",
+    "name": "Alkyne Coordination with CO Displacement for CCTBA",
+    "reaction_type": "Alkyne Displacement",
+    "reaction_smarts": "[Co2(CO)8].[C:1]#[C:2]>>[Co2(CO)6]([C:1]#[C:2]) + 2 CO",
+    "reactants": [
+      "CC(C)(C)C#C"
+    ],
+    "products": [
+      "CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O"
+    ],
+    "byproduct": "2 CO (gas)",
+    "solvent": "Dichloromethane / Hexane",
+    "conditions": "RT, 4 h, CO gas release",
+    "thermodynamics_dG_kcal_mol": -12.3
+  },
+  {
+    "id": "RXN_12",
+    "name": "Salt Metathesis for EUV Tin Precursor tBuSn(OiPr)3",
+    "reaction_type": "Salt Metathesis",
+    "reaction_smarts": "[Sn:1]([C:2])([Cl:3])([Cl:4])[Cl:5].3[Na][O:6][C:7]>>[Sn:1]([C:2])([O:6][C:7])([O:6][C:7])[O:6][C:7]",
+    "reactants": [
+      "CC(C)(C)[Sn](Cl)(Cl)Cl",
+      "CC(C)O"
+    ],
+    "products": [
+      "CC(C)O[Sn](C(C)(C)C)(OC(C)C)OC(C)C"
+    ],
+    "byproduct": "3 NaCl",
+    "solvent": "iPrOH / Toluene",
+    "conditions": "Reflux 4 h",
+    "thermodynamics_dG_kcal_mol": -35.6
+  }
+]

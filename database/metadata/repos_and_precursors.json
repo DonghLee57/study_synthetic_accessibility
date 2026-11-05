@@ -1,0 +1,324 @@
+{
+  "repos": [
+    {
+      "name": "SAScore (RDKit Built-in)",
+      "repo": "rdkit/rdkit",
+      "url": "https://github.com/rdkit/rdkit",
+      "stars": 3666,
+      "license": "BSD-3-Clause",
+      "description": "The official sources for the RDKit library",
+      "snippet": "from rdkit.Chem import RDConfig; import sys, os; sys.path.append(os.path.join(RDConfig.RDContribDir, 'SA_Score')); import sascorer; score = sascorer.calculateScore(mol)",
+      "verified": true
+    },
+    {
+      "name": "SYBA",
+      "repo": "lich-uct/syba",
+      "url": "https://github.com/lich-uct/syba",
+      "stars": 49,
+      "license": "GPL-3.0",
+      "description": "Synthetic Bayesian Classification",
+      "snippet": "from syba.syba import SybaClassifier; syba = SybaClassifier(); syba.fitDefaultScore(); score = syba.predict(smiles)",
+      "verified": true
+    },
+    {
+      "name": "SCScore",
+      "repo": "connorcoley/scscore",
+      "url": "https://github.com/connorcoley/scscore",
+      "stars": 127,
+      "license": "MIT",
+      "description": "",
+      "snippet": "from scscore.standalone_model_numpy import SCScorer; model = SCScorer(); model.restore(); smi, score = model.get_score_from_smi(smiles)",
+      "verified": true
+    },
+    {
+      "name": "RAscore",
+      "repo": "reymond-group/RAscore",
+      "url": "https://github.com/reymond-group/RAscore",
+      "stars": 100,
+      "license": "MIT",
+      "description": "Retrosynthetic Accessibility (RA) score learned from computer aided synthesis planning",
+      "snippet": "from RAscore import RAscore_NN, RAscore_XGB; nn_scorer = RAscore_NN.RAScorerNN(); score = nn_scorer.predict(smiles)",
+      "verified": true
+    },
+    {
+      "name": "GASA",
+      "repo": "cadd-synthetic/GASA",
+      "url": "https://github.com/cadd-synthetic/GASA",
+      "stars": 22,
+      "license": "GPL-2.0",
+      "description": "Synthetic Accessible Prediction of Organic Compounds based on Graph Attention Mechanism",
+      "snippet": "from predict_with_GASA import GASAPredictor; predictor = GASAPredictor(); prob = predictor.predict(smiles)",
+      "verified": true
+    },
+    {
+      "name": "DeepSA",
+      "repo": "Shihang-Wang-58/DeepSA",
+      "url": "https://github.com/Shihang-Wang-58/DeepSA",
+      "stars": 42,
+      "license": "Custom/Open",
+      "description": "A Deep-learning Driven Predictor of Compound Synthesis Accessibility",
+      "snippet": "python DeepSA_predict.py --input molecules.csv --output predictions.csv",
+      "verified": true
+    },
+    {
+      "name": "DFRscore",
+      "repo": "Hwoo-Kim/DFRscore",
+      "url": "https://github.com/Hwoo-Kim/DFRscore",
+      "stars": 12,
+      "license": "MIT",
+      "description": "Scoring Synthesizability of Candidates for Virtual Screening",
+      "snippet": "from dfrscore import DFRscorer; scorer = DFRscorer(); steps = scorer.predict(smiles)",
+      "verified": true
+    },
+    {
+      "name": "BR-SAScore",
+      "repo": "snu-micc/BR-SAScore (PyPI: BRSAScore==0.1.1 / Fork: awadell1/BR-SAScore)",
+      "url": "https://pypi.org/project/BRSAScore/",
+      "stars": "PyPI Official",
+      "license": "MIT",
+      "description": "",
+      "snippet": "from BRSAScore import SAScorer; scorer = SAScorer(); score, contribution = scorer.calculateScore(smiles)",
+      "verified": false
+    },
+    {
+      "name": "ChemProjector",
+      "repo": "luost26/ChemProjector",
+      "url": "https://github.com/luost26/ChemProjector",
+      "stars": 61,
+      "license": "MIT",
+      "description": ":dart: Projecting Molecules into Synthesizable Chemical Spaces (ICML 2024)",
+      "snippet": "python sample.py --config configs/sample.yml --input target_molecules.smi",
+      "verified": true
+    },
+    {
+      "name": "SynFormer",
+      "repo": "wenhao-gao/synformer",
+      "url": "https://github.com/wenhao-gao/synformer",
+      "stars": 90,
+      "license": "Apache-2.0",
+      "description": "",
+      "snippet": "python scripts/sample.py --model_path checkpoints/synformer.ckpt --smiles target.smi",
+      "verified": true
+    },
+    {
+      "name": "SynFlowNet",
+      "repo": "mirunacrt/synflownet",
+      "url": "https://github.com/mirunacrt/synflownet",
+      "stars": 136,
+      "license": "MIT",
+      "description": "A GFlowNet with a chemical synthesis action space.",
+      "snippet": "python train.py --env reaction_env --reward_type docking_score",
+      "verified": true
+    },
+    {
+      "name": "RxnFlow",
+      "repo": "SeonghwanSeo/RxnFlow",
+      "url": "https://github.com/SeonghwanSeo/RxnFlow",
+      "stars": 41,
+      "license": "MIT",
+      "description": "Synthesis-oriented molecular design \"Generative Flows on Synthetic Pathway for Drug Design\" (ICLR 2025)",
+      "snippet": "python scripts/opt_unidock.py --target aldh1 --num_steps 1000",
+      "verified": true
+    },
+    {
+      "name": "ReaSyn",
+      "repo": "NVIDIA-BioNeMo/ReaSyn",
+      "url": "https://github.com/NVIDIA-BioNeMo/ReaSyn",
+      "stars": 116,
+      "license": "Apache-2.0",
+      "description": "",
+      "snippet": "python sample.py --model_name NV-ReaSyn-AR-166M-v2 --input_smiles target.smi --edit_flow",
+      "verified": false
+    },
+    {
+      "name": "SynNet",
+      "repo": "wenhao-gao/SynNet",
+      "url": "https://github.com/wenhao-gao/SynNet",
+      "stars": 103,
+      "license": "MIT",
+      "description": "",
+      "snippet": "python scripts/predict-beam-search.py --data target_smiles.txt",
+      "verified": true
+    },
+    {
+      "name": "AiZynthFinder",
+      "repo": "MolecularAI/aizynthfinder",
+      "url": "https://github.com/MolecularAI/aizynthfinder",
+      "stars": 911,
+      "license": "MIT",
+      "description": "A tool for retrosynthetic planning",
+      "snippet": "aizynthcli --smiles molecules.smi --config config.yml",
+      "verified": true
+    },
+    {
+      "name": "Retro*",
+      "repo": "binghong-ml/retro_star",
+      "url": "https://github.com/binghong-ml/retro_star",
+      "stars": 177,
+      "license": "MIT",
+      "description": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+      "snippet": "python retro_star/plan.py --target_smiles 'CC(=O)Oc1ccccc1C(=O)O'",
+      "verified": true
+    },
+    {
+      "name": "MPScore (Materials Precursor)",
+      "repo": "Zenodo: 10.5281/zenodo.4961161 (Jelfs Group)",
+      "url": "https://doi.org/10.5281/zenodo.4961161",
+      "stars": "Zenodo Archive",
+      "license": "MIT / CC-BY",
+      "description": "",
+      "snippet": "import joblib; model = joblib.load('mpscore.pkl'); score = model.predict([ecfp_fp])",
+      "verified": false
+    }
+  ],
+  "precursor_papers": [
+    {
+      "id": "Kulik_TMC_SA_2022",
+      "name": "TMC Synthesizability (Kulik Group)",
+      "year": 2022,
+      "generation": "Semiconductor / Organometallic SA",
+      "authors": "Chenru Duan, Aditya Nandy, Gianmarco G. Terrones, David W. Kastner et al.",
+      "title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores",
+      "journal": "JACS Au",
+      "doi": "10.1021/jacsau.2c00547",
+      "download_url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00547",
+      "source_type": "OpenAccess_ACS",
+      "role": "Precursor_SA",
+      "pdf_status": {
+        "downloaded": true,
+        "file_path": "downloaded_papers/Kulik_TMC_SA_2022.xml",
+        "ext": "xml",
+        "label": "Full-Text XML",
+        "size_kb": 159,
+        "source": "PMC OpenAccess XML"
+      },
+      "verification": {
+        "verified": true,
+        "verified_by": "CrossRef",
+        "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
+      }
+    },
+    {
+      "id": "MPScore_Jelfs_2021",
+      "name": "MPScore (Materials Precursor Score)",
+      "year": 2021,
+      "generation": "Materials Precursor SA",
+      "authors": "Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al.",
+      "title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors",
+      "journal": "Journal of Chemical Information and Modeling",
+      "doi": "10.1021/acs.jcim.1c00375",
+      "download_url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75675702a9b1b1c18c660/original/materials-precursor-score-modelling-chemists-intuition-for-the-synthetic-accessibility-of-porous-organic-cage-precursors.pdf",
+      "source_type": "OpenAccess_JCIM",
+      "role": "Precursor_SA",
+      "pdf_status": {
+        "downloaded": true,
+        "file_path": "downloaded_papers/MPScore_Jelfs_2021.xml",
+        "ext": "xml",
+        "label": "Full-Text XML",
+        "size_kb": 175,
+        "source": "PMC OpenAccess XML"
+      },
+      "verification": {
+        "verified": true,
+        "verified_by": "CrossRef",
+        "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
+      }
+    },
+    {
+      "id": "AS_ALD_Precursor_ML_2023",
+      "name": "AS-ALD Precursor ML Descriptors",
+      "year": 2023,
+      "generation": "Semiconductor ALD Precursor ML+DFT",
+      "authors": "Tran Thi Ngoc Van, Changsu Kim, Hojae Lee, Jiyong Kim et al.",
+      "title": "Machine learning-based exploration of molecular design descriptors for area-selective atomic layer deposition (AS-ALD) precursors",
+      "journal": "Journal of Molecular Modeling",
+      "doi": "10.1007/s00894-023-05806-y",
+      "download_url": "https://link.springer.com/content/pdf/10.1007/s00894-023-05806-y.pdf",
+      "source_type": "Springer",
+      "role": "Precursor_ALD",
+      "pdf_status": {
+        "downloaded": false,
+        "file_path": null,
+        "size_kb": 0,
+        "source": "Springer"
+      },
+      "verification": {
+        "verified": true,
+        "verified_by": "CrossRef",
+        "verified_title": "Machine learning-based exploration of molecular design descriptors for area-selective atomic layer deposition (AS-ALD) precursors"
+      }
+    },
+    {
+      "id": "ALD_MLIP_Precursor_2024",
+      "name": "MLIP for ALD Precursors",
+      "year": 2024,
+      "generation": "Semiconductor ALD Precursor ML+DFT",
+      "authors": "Seungpyo Kang, Joonchul Kim, Taehyun Park, Joonghee Won et al.",
+      "title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors",
+      "journal": "Materials Today Advances",
+      "doi": "10.1016/j.mtadv.2024.100474",
+      "download_url": null,
+      "source_type": "OpenAccess_Elsevier",
+      "role": "Precursor_ALD",
+      "pdf_status": {
+        "downloaded": false,
+        "file_path": null,
+        "size_kb": 0,
+        "source": "OpenAccess_Elsevier"
+      },
+      "verification": {
+        "verified": true,
+        "verified_by": "CrossRef",
+        "verified_title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors"
+      }
+    },
+    {
+      "id": "ALD_ML_ChemMater_2026",
+      "name": "ML in ALD Roadmap",
+      "year": 2026,
+      "generation": "Semiconductor ALD Precursor ML+DFT",
+      "authors": "Julia Westermayr, Stacey F. Bent, Ralf Tonner-Zech",
+      "title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition",
+      "journal": "Chemistry of Materials",
+      "doi": "10.1021/acs.chemmater.5c03271",
+      "download_url": null,
+      "source_type": "ACS_ChemMater",
+      "role": "Precursor_ALD",
+      "pdf_status": {
+        "downloaded": false,
+        "file_path": null,
+        "size_kb": 0,
+        "source": "ACS_ChemMater"
+      },
+      "verification": {
+        "verified": true,
+        "verified_by": "CrossRef",
+        "verified_title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition"
+      }
+    },
+    {
+      "id": "Aminosilane_SiO2_ALD_DFT_2017",
+      "name": "Aminosilane ALD Precursor DFT Design",
+      "year": 2017,
+      "generation": "Semiconductor Si Precursor DFT",
+      "authors": "Liang Huang, Bo Han, Maohong Fan, Hansong Cheng",
+      "title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films",
+      "journal": "RSC Advances",
+      "doi": "10.1039/c7ra02301d",
+      "download_url": "https://pubs.rsc.org/en/content/articlepdf/2017/ra/c7ra02301d",
+      "source_type": "OpenAccess_RSC",
+      "role": "Precursor_ALD",
+      "pdf_status": {
+        "downloaded": false,
+        "file_path": null,
+        "size_kb": 0,
+        "source": "OpenAccess_RSC"
+      },
+      "verification": {
+        "verified": true,
+        "verified_by": "CrossRef",
+        "verified_title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films"
+      }
+    }
+  ]
+}
