@@ -800,6 +800,244 @@
         max-height: none;
       }
     }
+
+
+    /* KaTeX Mathematical Formula Responsive & Anti-Overflow Guard */
+
+    .katex-display {
+
+      max-width: 100% !important;
+
+      overflow-x: auto !important;
+
+      overflow-y: hidden !important;
+
+      padding: 6px 2px !important;
+
+      margin: 8px 0 !important;
+
+      text-align: center !important;
+
+      scrollbar-width: thin;
+
+      box-sizing: border-box;
+
+    }
+
+    .katex-display::-webkit-scrollbar {
+
+      height: 4px;
+
+    }
+
+    .katex-display::-webkit-scrollbar-thumb {
+
+      background: #cbd5e1;
+
+      border-radius: 4px;
+
+    }
+
+    .katex-display > .katex {
+
+      max-width: 100%;
+
+      text-align: center;
+
+      font-size: 0.98em;
+
+    }
+
+    .katex {
+
+      text-rendering: geometricPrecision;
+
+    }
+
+
+
+    /* Math callout box styling: strictly contained */
+
+    .math-callout {
+
+      background: #f8fafc;
+
+      border: 1px solid var(--border-light);
+
+      border-left: 4px solid var(--accent-blue);
+
+      padding: 12px 16px;
+
+      border-radius: 0 8px 8px 0;
+
+      margin: 12px 0;
+
+      overflow-x: auto;
+
+      max-width: 100%;
+
+      box-sizing: border-box;
+
+    }
+
+    .math-callout .katex-display {
+
+      margin: 4px 0 !important;
+
+      font-size: 0.92em;
+
+    }
+
+
+
+    /* Card & Versus Card math containment: prevent invading adjacent cards */
+
+    .versus-card {
+
+      overflow: hidden;
+
+      word-break: break-word;
+
+      box-sizing: border-box;
+
+    }
+
+    .versus-card .katex-display {
+
+      font-size: 0.82em !important;
+
+      padding: 6px 4px !important;
+
+      margin: 8px 0 !important;
+
+      background: #f1f5f9;
+
+      border-radius: 6px;
+
+      border: 1px solid #e2e8f0;
+
+      text-align: center;
+
+      box-sizing: border-box;
+
+    }
+
+    .timeline-content {
+
+      overflow: hidden;
+
+      max-width: 100%;
+
+    }
+
+
+
+    /* Modal Scaling & Controls Styling */
+
+    .modal-controls {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+    }
+
+    .btn-modal-tool {
+
+      background: #f1f5f9;
+
+      color: #334155;
+
+      border: 1px solid var(--border-light);
+
+      padding: 5px 10px;
+
+      border-radius: 6px;
+
+      font-size: 0.82rem;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: all 0.15s ease;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+    }
+
+    .btn-modal-tool:hover {
+
+      background: #e2e8f0;
+
+      color: #0f172a;
+
+      border-color: #cbd5e1;
+
+    }
+
+    .modal-zoom-badge {
+
+      display: inline-block;
+
+      min-width: 48px;
+
+      text-align: center;
+
+      font-family: 'JetBrains Mono', monospace;
+
+      font-size: 0.8rem;
+
+      font-weight: 700;
+
+      color: #0369a1;
+
+      background: #e0f2fe;
+
+      padding: 4px 8px;
+
+      border-radius: 6px;
+
+      border: 1px solid #bae6fd;
+
+    }
+
+    #modalSvgContainer {
+
+      width: 100%;
+
+      height: 100%;
+
+      min-height: 480px;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      transform-origin: center top;
+
+      transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+
+    }
+
+    #modalSvgContainer .mermaid {
+
+      display: flex !important;
+
+      justify-content: center !important;
+
+      align-items: center !important;
+
+    }
+
   </style>
 </head>
 <body>
@@ -4614,7 +4852,7 @@ flowchart LR
                   버블러(Bubbler) 및 캐니스터 이송을 위해 소스 가열 온도($T_{\text{source}} \le 120^\circ\text{C}$)에서 증기압이 $P_{\text{vap}} \ge 0.5 \sim 1.0\text{ Torr}$ 이상이어야 합니다. Clausius-Clapeyron 관계식에 따라 증발 엔탈피($\Delta H_{\text{vap}}$)가 $55\text{ kcal/mol}$ 이하로 억제되어야 합니다:
                 </p>
                 <div class="math-callout">
-                  $$ \ln P_{\text{vap}}(T) = -\frac{\Delta H_{\text{vap}}}{R}\left(\frac{1}{T} - \frac{1}{T_b}\right) + C, \qquad \Delta H_{\text{vap}} \approx \alpha \cdot \text{SASA} + \beta \cdot \mu_{\text{dipole}}^2 + \gamma $$
+                  $$ \begin{aligned} \ln P_{\text{vap}}(T) &= -\frac{\Delta H_{\text{vap}}}{R}\left(\frac{1}{T} - \frac{1}{T_b}\right) + C \\ \Delta H_{\text{vap}} &\approx \alpha \cdot \text{SASA} + \beta \cdot \mu_{\text{dipole}}^2 + \gamma \end{aligned} $$
                 </div>
                 <p style="color:var(--text-muted); font-size:0.84rem; margin-top:6px;">
                   <strong>전산 연계 툴:</strong> COSMO-RS 분자 전하밀도($\sigma$-profile) 수치 적분 또는 GNN 기반 SASA/분극도 대리 예측 모델.
@@ -4630,7 +4868,7 @@ flowchart LR
                   전구체가 배관 및 샤워헤드 통과 중 조기 분해(Premature decomposition/CVD-like parasitics)되지 않으려면 분해 반응속도 상수($k_{\text{decomp}}$)가 극소화되어야 합니다. 특히 $\beta$-수소 제거 반응($\beta$-H elimination) 장벽 $\Delta G^\ddagger_{\beta\text{-H}} \ge 30\text{ kcal/mol}$ 및 최약 결합 해리에너지 $\text{BDE}_{\min} \ge 35\text{ kcal/mol}$이 요구됩니다:
                 </p>
                 <div class="math-callout">
-                  $$ k_{\text{decomp}}(T) = \frac{k_B T}{h} \exp\left(-\frac{\Delta G^\ddagger_{\text{decomp}}}{k_B T}\right), \qquad \text{BDE}_{\min} = \min_{b \in \text{bonds}} \left[ E_{\text{DFT}}(R_1^\bullet) + E_{\text{DFT}}(R_2^\bullet) - E_{\text{DFT}}(R_1\text{--}R_2) \right] $$
+                  $$ \begin{aligned} k_{\text{decomp}}(T) &= \frac{k_B T}{h} \exp\left(-\frac{\Delta G^\ddagger_{\text{decomp}}}{k_B T}\right) \\ \text{BDE}_{\min} &= \min_{b \in \text{bonds}} \left[ E_{\text{DFT}}(R_1^\bullet) + E_{\text{DFT}}(R_2^\bullet) - E_{\text{DFT}}(R_1\text{--}R_2) \right] \end{aligned} $$
                 </div>
                 <p style="color:var(--text-muted); font-size:0.84rem; margin-top:6px;">
                   <strong>전산 연계 툴:</strong> GFN2-xTB 자동 결합 절단 탐색 &rarr; VASP NEB / Sella 내부좌표계 전이상태(TS) 최적화.
@@ -4646,7 +4884,7 @@ flowchart LR
                   배위 불포화 금속 착물은 상온에서 브릿징 리간드를 통해 올리고머($M_2L_{2n}$)를 형성하여 증기압이 급락합니다. 중심 금속 구면($R_s = 3.5\text{ Å}$)의 매몰 부피($\%V_{\text{bur}}$)가 $58\% \sim 82\%$ 창에 위치해야 하며, 이합체화 자유에너지는 양수여야 합니다:
                 </p>
                 <div class="math-callout">
-                  $$ \%V_{\text{bur}} = \frac{V_{\text{ligand}} \cap V_{\text{sphere}}(R_s)}{V_{\text{sphere}}(R_s)} \times 100\%, \qquad \Delta G_{\text{dimer}} = G(M_2L_{2n}) - 2\,G(ML_n) > +5.0\text{ kcal/mol} $$
+                  $$ \begin{aligned} \%V_{\text{bur}} &= \frac{V_{\text{ligand}} \cap V_{\text{sphere}}(R_s)}{V_{\text{sphere}}(R_s)} \times 100\% \\ \Delta G_{\text{dimer}} &= G(M_2L_{2n}) - 2\,G(ML_n) > +5.0\text{ kcal/mol} \end{aligned} $$
                 </div>
                 <p style="color:var(--text-muted); font-size:0.84rem; margin-top:6px;">
                   <strong>전산 연계 툴:</strong> <code>Architector</code> 3D 착물 자동 조립 &rarr; <code>SambVca-2.1</code> 구면 수치 적분.
@@ -4662,7 +4900,7 @@ flowchart LR
                   기판 표면 활성 사이트($-\text{OH}^*$ 또는 $-\text{NH}_2^*$)에 전구체가 흡착하여 휘발성 부산물($\text{HX}, \text{HNR}_2$)을 방출하는 반쪽 반응 깁스 자유에너지가 강력한 자발성($\le -15\text{ kcal/mol}$)을 가져야 완전 포화 박막 성장이 달성됩니다:
                 </p>
                 <div class="math-callout">
-                  $$ \Delta G_{\text{ALD}}(T, P) = G_{\text{adsorbate*}}(T) + \sum_i \nu_i G_{\text{byproduct}, i}(T, P_i) - \left[ G_{\text{clean*}}(T) + G_{\text{precursor}}(T, P_{\text{prec}}) \right] \le -15.0\text{ kcal/mol} $$
+                  $$ \begin{aligned} \Delta G_{\text{ALD}}(T, P) &= G_{\text{adsorbate*}}(T) + \sum_i \nu_i G_{\text{byproduct}, i}(T, P_i) \\ &\quad - \left[ G_{\text{clean*}}(T) + G_{\text{precursor}}(T, P_{\text{prec}}) \right] \le -15.0\text{ kcal/mol} \end{aligned} $$
                 </div>
                 <p style="color:var(--text-muted); font-size:0.84rem; margin-top:6px;">
                   <strong>전산 연계 툴:</strong> VASP 주기적 슬랩 + PHVA(부분 헤시안 진동 분석) 열역학 연산.
@@ -4678,7 +4916,7 @@ flowchart LR
                   목표 분자가 아무리 뛰어난 물성을 가져도 상용 금속 할로겐화물($M\text{Cl}_n$)로부터 합성할 수 없다면 가상 분자에 불과합니다. 본 프로젝트의 독자 DB(<a href="database/building_blocks.json" target="_blank"><code>database/building_blocks.json</code></a>) 기반 패널티를 $3.5$ 이하로 엄밀히 제한합니다:
                 </p>
                 <div class="math-callout">
-                  $$ \text{SA}_{\text{TMC}}\big(M(L_1)_{n_1}(L_2)_{n_2}\big) = \max_i \text{BR-SAScore}(HL_i) + \lambda_{\text{het}} \cdot \mathbf{1}(N_{\text{types}} > 2) + \lambda_{\text{meta}} \cdot \mathcal{P}_{\text{rxn}}(M\text{X}_m, \{HL_i\}) \le 3.5 $$
+                  $$ \begin{aligned} \text{SA}_{\text{TMC}}\big(M(L_1)_{n_1}(L_2)_{n_2}\big) &= \max_i \text{BR-SAScore}(HL_i) + \lambda_{\text{het}} \cdot \mathbf{1}(N_{\text{types}} > 2) \\ &\quad + \lambda_{\text{meta}} \cdot \mathcal{P}_{\text{rxn}}(M\text{X}_m, \{HL_i\}) \le 3.5 \end{aligned} $$
                 </div>
               </div>
             </div>
@@ -4765,7 +5003,7 @@ flowchart TD
               <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
                 &bull; <strong>표면 종단기:</strong> 아미노/이미노기($-\text{NH}_2^*, =\text{NH}^*$), 질소 고립전자쌍($:\text{N}_{\text{surf}}$), 배위 불포화 양이온 사이트($\text{Ti}^{3+}, \text{Si}^{3+}$).<br>
                 &bull; <strong>지배 반응 메커니즘:</strong> <strong>루이스 산-염기 배위 부가체 형성 및 아민 교환 반응 (Transamination)</strong>.<br>
-                $$ M L_n(g) + \text{Slab-N:}^* \longrightarrow \text{Slab-N:}\rightarrow M L_n^* \longrightarrow \text{Slab-NH-}M L_{n-1}^* + H L(g) $$
+                $$ \begin{aligned} M L_n(g) + \text{Slab-N:}^* &\longrightarrow \text{Slab-N:}\rightarrow M L_n^* \\ &\longrightarrow \text{Slab-NH-}M L_{n-1}^* + H L(g) \end{aligned} $$
                 &bull; <strong>설계 핵심:</strong> 중심 금속의 루이스 산도(FIA / HIA)가 강할수록 표면 질소 고립전자쌍과의 초기 배위 착체($\Delta G_{\text{coord}}$) 형성이 빨라져 핵생성 지연(Incubation)이 제거됩니다.
               </p>
             </div>
@@ -4806,7 +5044,7 @@ flowchart TD
                     기체 상태 전구체 분자가 기판 표면에 충돌했을 때 비가역적으로 반응할 확률인 점착 계수($s_0$)의 비율을 통해 반응 동역학적 선택도를 정량화합니다:
                   </p>
                   <div class="math-callout">
-                    $$ s_0(T) = \kappa \exp\left( -\frac{\Delta G^\ddagger_{\text{ads}}}{RT} \right), \qquad S_{\text{ASD}} = \frac{s_0(S_{\text{growth}}) - s_0(S_{\text{non-growth}})}{s_0(S_{\text{growth}}) + s_0(S_{\text{non-growth}})} \approx \frac{1 - \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)}{1 + \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)} \ge 0.99 $$
+                    $$ \begin{aligned} s_0(T) &= \kappa \exp\left( -\frac{\Delta G^\ddagger_{\text{ads}}}{RT} \right) \\ S_{\text{ASD}} &= \frac{s_0(S_{\text{growth}}) - s_0(S_{\text{non-growth}})}{s_0(S_{\text{growth}}) + s_0(S_{\text{non-growth}})} \approx \frac{1 - \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)}{1 + \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)} \ge 0.99 \end{aligned} $$
                   </div>
                 </div>
               </div>
@@ -4819,7 +5057,7 @@ flowchart TD
                     비성장 기판 상에서 첫 번째 임계 핵(Critical nucleus)이 형성되기 전까지 박막 성장이 억제되는 잠복 사이클 수입니다. 결함 사이트 농도($\Gamma_{\text{defect}}$)와 투입 도즈량($\Phi_{\text{dose}}$)에 반비례하며 활성화 장벽에 지수 비례합니다:
                   </p>
                   <div class="math-callout">
-                    $$ N_{\text{incubation}} \propto \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot s_0(S_{\text{non-growth}})} = \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot \kappa}\exp\left(\frac{\Delta G^\ddagger_{\text{nuc}}}{RT}\right) \ge 50 \sim 100\text{ cycles} $$
+                    $$ \begin{aligned} N_{\text{incubation}} &\propto \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot s_0(S_{\text{non-growth}})} \\ &= \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot \kappa}\exp\left(\frac{\Delta G^\ddagger_{\text{nuc}}}{RT}\right) \ge 50 \sim 100\text{ cycles} \end{aligned} $$
                   </div>
                 </div>
               </div>
@@ -4832,7 +5070,7 @@ flowchart TD
                     금속 기판 및 전도성 질화물 계면에서 전구체와 기판 전자 밴드 간의 전하 이동량과 결합 궤도 혼성화를 평가합니다. 금속 기판 위 무차별 분해(Decomposition)를 억제하고 물리흡착 탈착을 유도하는 척도로 사용됩니다:
                   </p>
                   <div class="math-callout">
-                    $$ \Delta q_{\text{Bader}} = \int_{\Omega_{\text{prec}}} \rho(\mathbf{r}) d^3\mathbf{r} - Z_{\text{prec}}, \qquad \Delta E_{\text{ads}}^{\text{metal}} \approx \alpha \frac{|V_{ad}|^2}{\varepsilon_d - \varepsilon_{\text{LUMO}}} + \beta V_{\text{disp}} $$
+                    $$ \begin{aligned} \Delta q_{\text{Bader}} &= \int_{\Omega_{\text{prec}}} \rho(\mathbf{r}) d^3\mathbf{r} - Z_{\text{prec}} \\ \Delta E_{\text{ads}}^{\text{metal}} &\approx \alpha \frac{|V_{ad}|^2}{\varepsilon_d - \varepsilon_{\text{LUMO}}} + \beta V_{\text{disp}} \end{aligned} $$
                   </div>
                 </div>
               </div>
@@ -5045,8 +5283,25 @@ flowchart TD
   <div id="diagramModal" class="modal-overlay" onclick="closeDiagramModalOnOverlay(event)">
     <div class="modal-window">
       <div class="modal-header">
+
         <strong id="modalDiagramTitle" style="font-size:1.05rem; color:#0f172a;">다이어그램 확대 팝업</strong>
-        <button type="button" class="btn-close-modal" onclick="closeDiagramModal()">✕ 닫기 (Esc)</button>
+
+        <div class="modal-controls">
+
+          <button type="button" class="btn-modal-tool" onclick="zoomDiagram(-0.15)" title="축소 (Zoom Out)">－ 축소</button>
+
+          <span id="modalZoomLevel" class="modal-zoom-badge">100%</span>
+
+          <button type="button" class="btn-modal-tool" onclick="zoomDiagram(+0.15)" title="확대 (Zoom In)">＋ 확대</button>
+
+          <button type="button" class="btn-modal-tool" onclick="fitDiagramToWindow()" title="창에 맞춤 (Fit to Window)">⤢ 창에 맞춤</button>
+
+          <button type="button" class="btn-modal-tool" onclick="resetDiagramZoom()" title="기본 크기 (100%)">↺ 초기화</button>
+
+          <button type="button" class="btn-close-modal" onclick="closeDiagramModal()">✕ 닫기 (Esc)</button>
+
+        </div>
+
       </div>
       <div class="modal-body" id="modalDiagramBody">
         <div id="modalSvgContainer" style="width:100%; display:flex; justify-content:center; align-items:flex-start;"></div>
@@ -5193,34 +5448,184 @@ flowchart TD
     }
 
     // Diagram Popup Modal: Direct Click to Enlarge
-    function openDiagramModal(sourceContainerId, title) {
-      const modal = document.getElementById('diagramModal');
-      const modalTitle = document.getElementById('modalDiagramTitle');
-      const modalContainer = document.getElementById('modalSvgContainer');
-      const sourceEl = document.getElementById(sourceContainerId);
-      if (!modal || !sourceEl) return;
+    let currentDiagramZoom = 1.0;
 
-      modalTitle.textContent = title || '다이어그램 확대 팝업';
-      modalContainer.innerHTML = sourceEl.innerHTML;
-      
-      // Ensure the cloned SVG scales cleanly and responsively inside the modal
-      const svg = modalContainer.querySelector('svg');
-      if (svg) {
-        svg.style.maxWidth = '100%';
-        svg.style.width = '100%';
-        svg.style.height = 'auto';
+
+
+    function updateDiagramTransform() {
+
+      const container = document.getElementById('modalSvgContainer');
+
+      const badge = document.getElementById('modalZoomLevel');
+
+      if (!container) return;
+
+      container.style.transform = `scale(${currentDiagramZoom})`;
+
+      if (badge) {
+
+        badge.textContent = `${Math.round(currentDiagramZoom * 100)}%`;
+
       }
 
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
     }
 
-    function closeDiagramModal() {
-      const modal = document.getElementById('diagramModal');
-      if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
+
+
+    function zoomDiagram(delta) {
+
+      currentDiagramZoom = Math.max(0.3, Math.min(3.5, currentDiagramZoom + delta));
+
+      updateDiagramTransform();
+
+    }
+
+
+
+    function resetDiagramZoom() {
+
+      currentDiagramZoom = 1.0;
+
+      updateDiagramTransform();
+
+    }
+
+
+
+    function fitDiagramToWindow() {
+
+      const body = document.getElementById('modalDiagramBody');
+
+      const container = document.getElementById('modalSvgContainer');
+
+      const svg = container ? container.querySelector('svg') : null;
+
+      if (!body || !svg) return;
+
+
+
+      // Extract native viewBox dimensions
+
+      const viewBox = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
+
+      let svgW = viewBox && viewBox.width > 0 ? viewBox.width : svg.getBoundingClientRect().width;
+
+      let svgH = viewBox && viewBox.height > 0 ? viewBox.height : svg.getBoundingClientRect().height;
+
+
+
+      const availW = body.clientWidth - 48;
+
+      const availH = body.clientHeight - 48;
+
+
+
+      if (svgW > 0 && svgH > 0 && availW > 0 && availH > 0) {
+
+        const scaleX = availW / svgW;
+
+        const scaleY = availH / svgH;
+
+        // Fit within viewport with 92% fill factor
+
+        currentDiagramZoom = Math.min(2.5, Math.max(0.4, Math.min(scaleX, scaleY) * 0.95));
+
+      } else {
+
+        currentDiagramZoom = 1.0;
+
       }
+
+      updateDiagramTransform();
+
+    }
+
+
+
+    function openDiagramModal(sourceContainerId, title) {
+
+      const modal = document.getElementById('diagramModal');
+
+      const modalTitle = document.getElementById('modalDiagramTitle');
+
+      const modalContainer = document.getElementById('modalSvgContainer');
+
+      const sourceEl = document.getElementById(sourceContainerId);
+
+      if (!modal || !sourceEl) return;
+
+
+
+      modalTitle.textContent = title || '다이어그램 확대 팝업';
+
+      modalContainer.innerHTML = sourceEl.innerHTML;
+
+      
+
+      // Ensure the cloned SVG uses its native vector dimensions so transform scaling works crisply
+
+      const svg = modalContainer.querySelector('svg');
+
+      if (svg) {
+
+        const viewBox = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
+
+        if (viewBox && viewBox.width > 0) {
+
+          svg.style.width = viewBox.width + 'px';
+
+          svg.style.height = viewBox.height + 'px';
+
+          svg.style.maxWidth = 'none';
+
+        } else {
+
+          svg.style.width = '100%';
+
+          svg.style.height = 'auto';
+
+        }
+
+      }
+
+
+
+      currentDiagramZoom = 1.0;
+
+      updateDiagramTransform();
+
+
+
+      modal.classList.add('active');
+
+      document.body.style.overflow = 'hidden';
+
+
+
+      // Automatically scale up to comfortably fit the modal window
+
+      setTimeout(() => {
+
+        fitDiagramToWindow();
+
+      }, 40);
+
+    }
+
+
+
+    function closeDiagramModal() {
+
+      const modal = document.getElementById('diagramModal');
+
+      if (modal) {
+
+        modal.classList.remove('active');
+
+        document.body.style.overflow = '';
+
+      }
+
     }
 
     function closeDiagramModalOnOverlay(event) {
