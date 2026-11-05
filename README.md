@@ -70,6 +70,20 @@ Because VASP uses periodic plane waves (`PAW`), automating both gas-phase organo
    G_{\text{gas}}^{\text{VASP}}(T, P) = E_{\text{VASP}}^{\text{box}} + E_{\text{ZPE}} + \Delta H_{\text{trans+rot+vib}}(T) - T\Big(S_{\text{trans}}(T, P) + S_{\text{rot}}(T) + S_{\text{vib}}^{\text{QRRHO}}(T) + S_{\text{elec}}\Big)
    $$
 
+### 1.4 AI-Driven Precursor Inverse Design & Closed-Loop Computational Funnel
+
+To inversely design semiconductor precursors satisfying target properties $\\mathbf{y}^* = [P_{\\text{vap}}^*, \\Delta G^\\ddagger_{\\text{decomp}}^*, \\%V_{\\text{bur}}^*, \\Delta G_{\\text{ALD}}^*]$, we couple **Inorganic GFlowNet / Conditional 3D Diffusion** with a 4-tier multi-fidelity computational funnel:
+
+
+\\mathcal{L}_{\\text{TB}}(\\theta) = \\left( \\ln \\frac{Z_\\theta \\prod_{t=0}^{K-1} P_F(s_{t+1} \\mid s_t; \\theta)}{R(\\mathbf{x}) \\prod_{t=0}^{K-1} P_B(s_t \\mid s_{t+1}; \\theta)} \\right)^2
+
+
+where the scalarized reward (\\mathbf{x})$ integrates fast GNN surrogates ({\\text{vap}}, \\text{SA}$), semi-empirical xTB/SevenNet ($\\%V_{\\text{bur}}$), and VASP DFT ($\\Delta G_{\\text{ALD}}, \\Delta G^\\ddagger_{\\text{decomp}}$):
+
+
+R(\\mathbf{x}) = \\sigma\\big(P_{\\text{vap}} - 0.5\\big) \\cdot \\mathbf{1}\\big(58\\% \\le \\%V_{\\text{bur}} \\le 82\\%\\big) \\cdot \\sigma\\big(\\Delta G^\\ddagger_{\\text{decomp}} - 30\\big) \\cdot \\sigma\\big(-15 - \\Delta G_{\\text{ALD}}\\big) \\cdot \\sigma\\big(3.5 - \\text{SA}_{\\text{TMC}}\\big)
+
+
 ---
 
 ## 2. Strategic Objectives

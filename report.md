@@ -124,3 +124,22 @@ To resolve the domain mismatch where organic SA models fail on industrial electr
 - **Authenticated Synthesis Reactions (`database/reactions.json`, `database/reactions.csv`)**: 12 industrial reaction pathways with exact SMARTS, solvents, conditions, and reaction free energies ($\Delta G$).
 - **BR-SAScore Ready Dictionaries (`database/br_sascore_inputs/`)**: `semi_bb.csv` and `semi_rxn.csv` formatted for direct building-block scoring ($s_B(f) = 0.0$) and reaction fragment logging.
 - **Experimental SAScore Distortion Finding**: `benchmark_precursor_pipeline.py` proved that ultra-simple industrial precursors such as Trisilylamine ($\text{TSA}$, $(\text{SiH}_3)_3\text{N}$, 4 heavy atoms) are severely misclassified with $\text{SAScore} = 6.91$ due to missing PubChem fragments, confirming the absolute necessity of this custom precursor database.
+
+---
+
+## 7. AI-Driven Precursor Inverse Design & Multi-Fidelity Closed-Loop Mapping
+
+To inversely design semiconductor precursors satisfying target properties $\mathbf{y}^* = [P_{\text{vap}}^*, \Delta G^\ddagger_{\text{decomp}}^*, \%V_{\text{bur}}^*, \Delta G_{\text{ALD}}^*]$, we couple **Inorganic GFlowNet / Conditional 3D Diffusion** with the 4-tier multi-fidelity computational funnel:
+1. **Governing Physical Constraints**:
+   - Vapor Pressure ($P_{\text{vap}} \ge 0.5 \sim 1.0\text{ Torr}$ at $T \le 120^\circ\text{C}$, $\Delta H_{\text{vap}} \le 55\text{ kcal/mol}$).
+   - Thermal Stability Window ($\Delta G^\ddagger_{\beta\text{-H}} \ge 30\text{ kcal/mol}$, $\text{BDE}_{\min} \ge 35\text{ kcal/mol}$).
+   - Steric Monomeric Window ($58\% \le \%V_{\text{bur}} \le 82\%$, SambVca-2.1 with $R_s = 3.5\text{ Å}$, $\Delta G_{\text{dimer}} > +5\text{ kcal/mol}$).
+   - Wafer Surface Self-Limiting Reaction ($\Delta G_{\text{ALD}} \le -15.0\text{ kcal/mol}$, byproduct desorption $\Delta G^\ddagger_{\text{desorp}} \le 15\text{ kcal/mol}$).
+   - Synthetic Accessibility ($\text{SA}_{\text{TMC}} \le 3.5$ using proprietary `semi_bb.csv` and `semi_rxn.csv`).
+2. **Computational Funnel Mapping**:
+   - Tier 1: Fast GNN Surrogates ($\sim 0.5\text{ ms}$, SASA, COSMO-RS proxy, `BR-SAScore`).
+   - Tier 2: Semi-empirical xTB & Equivariant MLIP (`SevenNet-0`, $\sim 1\text{ s}$, 3D pre-relaxation, $\%V_{\text{bur}}$).
+   - Tier 3: Gas-phase VASP DFT ($\sim 10\text{ min}$, $\Delta G_{\text{syn}}, \Delta G_{\text{dimer}}, \text{BDE}_{\min}$).
+   - Tier 4: Wafer Surface Slab VASP DFT + Sella TS ($\sim 5\text{ hr}$, $\Delta G_{\text{ALD}}, \Delta G^\ddagger_{\text{decomp}}$).
+3. **Interactive Implementation**:
+   - Comprehensive matrix and closed-loop architecture diagram integrated into Section 13 of [`index.html`](./index.html).
