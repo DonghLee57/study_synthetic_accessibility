@@ -4703,33 +4703,37 @@ flowchart LR
               <div class="mermaid-svg-container" id="inverse-pipeline-container">
                 <div class="mermaid" id="inverse-pipeline-svg">
 flowchart TD
-    IN["<b>목표 물성 벡터 지정 (Target Conditioning)</b><br>y* = [P_vap > 1 Torr, ΔG‡_decomp > 30 kcal/mol, %V_bur ∈ 58~82%, ΔG_ALD < -15 kcal/mol]"] --> S1
+    IN["<b>목표 물성 벡터 지정 (Target Conditioning)</b><br>y* = (P_vap ≥ 1 Torr, ΔG‡_decomp ≥ 30 kcal/mol, %V_bur: 58~82%, ΔG_ALD ≤ -15 kcal/mol)"] --> G1
 
     subgraph S1["<b>Stage 1: 합성 보장 생성 엔진 (Inorganic GFlowNet / GA)</b>"]
-        G1["상용 출발물질 DB (29종 Building Blocks)<br>+ 12종 공인 무기 반응 템플릿"]
+        G1["상용 출발물질 DB (29종 Building Blocks)<br>및 12종 공인 무기 반응 템플릿"]
         G2["경로 내재화 분자 표집 (Trajectory Balance Loss)<br>매 스텝 100% 합성 가능한 착물 후보 생성 (~10,000/hr)"]
         G1 --> G2
     end
 
     subgraph S2["<b>Stage 2: 초고속 ML 대리 모델 필터링 (~1 ms/분자)</b>"]
-        F1["증기압 대리 모델 (GNN SASA/COSMO): P_vap > 0.5 Torr"]
-        F2["합성 지표 필터: Si-BR-SAScore / TMC-SA < 3.5"]
-        G2 --> F1 --> F2
+        F1["증기압 대리 모델 (GNN SASA/COSMO): P_vap ≥ 0.5 Torr"]
+        F2["합성 지표 필터: Si-BR-SAScore / TMC-SA ≤ 3.5"]
+        G2 --> F1
+        F1 --> F2
     end
 
-    subgraph S3["<b>Stage 3: 반경험적 xTB & MLIP 3D 입체 스크리닝 (~1 s/분자)</b>"]
-        M1["Architector 3D 자동 조립 & SevenNet-0 사전 최적화"]
+    subgraph S3["<b>Stage 3: 반경험적 xTB 및 MLIP 3D 입체 스크리닝 (~1 s/분자)</b>"]
+        M1["Architector 3D 자동 조립 및 SevenNet-0 사전 최적화"]
         M2["SambVca 매몰 부피: 58% ≤ %V_bur ≤ 82% (이합체화 방지)"]
-        F2 --> M1 --> M2
+        F2 --> M1
+        M1 --> M2
     end
 
-    subgraph S4["<b>Stage 4: VASP DFT 정밀 검증 & 능동 학습 피드백 (~5 hr/분자)</b>"]
-        D1["VASP 분자 계산: ΔG_syn 착물화 & BDE_min 단일결합 해리"]
-        D2["VASP 슬랩 계산 + Sella TS: 웨이퍼 반쪽 반응 ΔG_ALD & 부산물 탈착 장벽"]
+    subgraph S4["<b>Stage 4: VASP DFT 정밀 검증 및 능동 학습 피드백 (~5 hr/분자)</b>"]
+        D1["VASP 분자 계산: ΔG_syn 착물화 및 BDE_min 단일결합 해리"]
+        D2["VASP 슬랩 계산 및 Sella TS: 웨이퍼 반쪽 반응 ΔG_ALD 및 부산물 탈착 장벽"]
         D3{"목표 물성 전수 만족 여부"}
-        M2 --> D1 --> D2 --> D3
-        D3 -- "미달성" -->|"Active Learning 피드백 (보상함수 R(x) 갱신)"| G2
-        D3 -- "달성" --> OUT["<b>최종 역설계 프리커서 도출 & 실험실 합성 검증</b>"]
+        M2 --> D1
+        D1 --> D2
+        D2 --> D3
+        D3 -->|"미달성 (보상함수 갱신 피드백)"| G2
+        D3 -->|"달성"| OUT["<b>최종 역설계 프리커서 도출 및 실험실 합성 검증</b>"]
     end
                 </div>
               </div>
@@ -4749,31 +4753,30 @@ flowchart TD
             <div class="versus-card" style="border-top:3px solid #0284c7;">
               <div class="versus-header" style="color:#0284c7;">1. 산화물 기판 (Oxides: SiO₂, Al₂O₃, HfO₂, TiO₂)</div>
               <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-                &bull; <strong>표면 종단기:</strong> 브뢴스테드 산/염기 실라놀/히드록실기($-	ext{OH}^*$) 및 가교 산소($M	ext{-O-}M$, Lewis base). 표면 히드록실 밀도 $	heta_{	ext{OH}} pprox 2.0 \sim 5.0	ext{ OH/nm}^2$.<br>
+                &bull; <strong>표면 종단기:</strong> 브뢴스테드 산/염기 실라놀/히드록실기($-\text{OH}^*$) 및 가교 산소($M\text{-O-}M$, Lewis base). 표면 히드록실 밀도 $\theta_{\text{OH}} \approx 2.0 \sim 5.0\text{ OH/nm}^2$.<br>
                 &bull; <strong>지배 반응 메커니즘:</strong> <strong>양성자 분해 및 리간드 교환 반응 (Protonolysis / Ligand Exchange)</strong>.<br>
-                $$ M L_n(g) + 	ext{Slab-OH}^* \longrightarrow 	ext{Slab-O-}M L_{n-1}^* + H L(g) \quad (\Delta G_{	ext{prot}}) $$
-                &bull; <strong>설계 핵심:</strong> 리간드의 염기도($	ext{p}K_a(HL)$)가 높을수록(예: 알킬아미드 $	ext{p}K_a \sim 35$, Cp $\sim 18$, 알콕사이드 $\sim 16$) 표면 양성자 추출 구동력이 강해져 저온 흡착이 촉진됩니다.
+                $$ M L_n(g) + \text{Slab-OH}^* \longrightarrow \text{Slab-O-}M L_{n-1}^* + H L(g) \quad (\Delta G_{\text{prot}}) $$
+                &bull; <strong>설계 핵심:</strong> 리간드의 염기도($\text{p}K_a(HL)$)가 높을수록(예: 알킬아미드 $\text{p}K_a \sim 35$, Cp $\sim 18$, 알콕사이드 $\sim 16$) 표면 양성자 추출 구동력이 강해져 저온 흡착이 촉진됩니다.
               </p>
             </div>
 
             <div class="versus-card" style="border-top:3px solid #7c3aed;">
               <div class="versus-header" style="color:#7c3aed;">2. 질화물 기판 (Nitrides: TiN, TaN, SiNₓ, WN)</div>
               <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-                &bull; <strong>표면 종단기:</strong> 아미노/이미노기($-	ext{NH}_2^*, =	ext{NH}^*$), 질소 고립전자쌍($:	ext{N}_{	ext{surf}}$), 배위 불포화 양이온 사이트($	ext{Ti}^{3+}, 	ext{Si}^{3+}$).<br>
+                &bull; <strong>표면 종단기:</strong> 아미노/이미노기($-\text{NH}_2^*, =\text{NH}^*$), 질소 고립전자쌍($:\text{N}_{\text{surf}}$), 배위 불포화 양이온 사이트($\text{Ti}^{3+}, \text{Si}^{3+}$).<br>
                 &bull; <strong>지배 반응 메커니즘:</strong> <strong>루이스 산-염기 배위 부가체 형성 및 아민 교환 반응 (Transamination)</strong>.<br>
-                $$ M L_n(g) + 	ext{Slab-N:}^* \longrightarrow 	ext{Slab-N:}
-ightarrow M L_n^* \longrightarrow 	ext{Slab-NH-}M L_{n-1}^* + H L(g) $$
-                &bull; <strong>설계 핵심:</strong> 중심 금속의 루이스 산도(FIA / HIA)가 강할수록 표면 질소 고립전자쌍과의 초기 배위 착체($\Delta G_{	ext{coord}}$) 형성이 빨라져 핵생성 지연(Incubation)이 제거됩니다.
+                $$ M L_n(g) + \text{Slab-N:}^* \longrightarrow \text{Slab-N:}\rightarrow M L_n^* \longrightarrow \text{Slab-NH-}M L_{n-1}^* + H L(g) $$
+                &bull; <strong>설계 핵심:</strong> 중심 금속의 루이스 산도(FIA / HIA)가 강할수록 표면 질소 고립전자쌍과의 초기 배위 착체($\Delta G_{\text{coord}}$) 형성이 빨라져 핵생성 지연(Incubation)이 제거됩니다.
               </p>
             </div>
 
             <div class="versus-card" style="border-top:3px solid #059669;">
               <div class="versus-header" style="color:#059669;">3. 금속 기판 (Metals: Cu, W, Ru, Mo, Co)</div>
               <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-                &bull; <strong>표면 종단기:</strong> 활성 수소($-	ext{OH}, -	ext{NH}_2$)가 없는 청정 금속 원자 표면(Metallic conduction sea), 테라스 및 스텝 에지 사이트.<br>
+                &bull; <strong>표면 종단기:</strong> 활성 수소($-\text{OH}, -\text{NH}_2$)가 없는 청정 금속 원자 표면(Metallic conduction sea), 테라스 및 스텝 에지 사이트.<br>
                 &bull; <strong>지배 반응 메커니즘:</strong> <strong>물리흡착 &rarr; 전하 이동형 화학흡착 / 촉매적 분해 / 산화환원 (Redox)</strong>.<br>
-                $$ M L_n(g) + 	ext{Metal-Slab}^* \longrightarrow 	ext{Metal-Slab}\cdots M L_n^* \quad (\Delta q_{	ext{Bader}}, arepsilon_d) $$
-                &bull; <strong>설계 핵심:</strong> 기판 금속의 $d$-밴드 중심($arepsilon_d$)과 페르미 준위에서의 전하 이동량($\Delta q_{	ext{Bader}}$)을 제어해야 하며, 금속 표면의 불필요한 탄화 분해를 막기 위해 높은 결합 해리에너지($	ext{BDE} \ge 35	ext{ kcal/mol}$)가 필수적입니다.
+                $$ M L_n(g) + \text{Metal-Slab}^* \longrightarrow \text{Metal-Slab}\cdots M L_n^* \quad (\Delta q_{\text{Bader}}, \varepsilon_d) $$
+                &bull; <strong>설계 핵심:</strong> 기판 금속의 $d$-밴드 중심($\varepsilon_d$)과 페르미 준위에서의 전하 이동량($\Delta q_{\text{Bader}}$)을 제어해야 하며, 금속 표면의 불필요한 탄화 분해를 막기 위해 높은 결합 해리에너지($\text{BDE} \ge 35\text{ kcal/mol}$)가 필수적입니다.
               </p>
             </div>
           </div>
@@ -4785,12 +4788,12 @@ ightarrow M L_n^* \longrightarrow 	ext{Slab-NH-}M L_{n-1}^* + H L(g) $$
               <div class="timeline-item">
                 <div class="timeline-dot dot-1g"></div>
                 <div class="timeline-content">
-                  <h4 style="color:#0369a1; font-size:0.98rem; margin-bottom:4px;">지표 1: 열역학적 기판 선택성 윈도우 ($\Delta \Delta G_{	ext{ads}}$)</h4>
+                  <h4 style="color:#0369a1; font-size:0.98rem; margin-bottom:4px;">지표 1: 열역학적 기판 선택성 윈도우 ($\Delta \Delta G_{\text{ads}}$)</h4>
                   <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6;">
-                    성장 대상 기판($S_{	ext{growth}}$)과 비성장 기판($S_{	ext{non-growth}}$) 간의 화학흡착 자유에너지 격차를 정의합니다. 선택적 ALD를 달성하려면 두 기판 간 최소 $10\sim 12	ext{ kcal/mol}$ 이상의 에너지 창이 확보되어야 합니다:
+                    성장 대상 기판($S_{\text{growth}}$)과 비성장 기판($S_{\text{non-growth}}$) 간의 화학흡착 자유에너지 격차를 정의합니다. 선택적 ALD를 달성하려면 두 기판 간 최소 $10\sim 12\text{ kcal/mol}$ 이상의 에너지 창이 확보되어야 합니다:
                   </p>
                   <div class="math-callout">
-                    $$ \Delta \Delta G_{	ext{ads}} = \Delta G_{	ext{ads}}(S_{	ext{growth}}) - \Delta G_{	ext{ads}}(S_{	ext{non-growth}}) \le -12.0	ext{ kcal/mol} $$
+                    $$ \Delta \Delta G_{\text{ads}} = \Delta G_{\text{ads}}(S_{\text{growth}}) - \Delta G_{\text{ads}}(S_{\text{non-growth}}) \le -12.0\text{ kcal/mol} $$
                   </div>
                 </div>
               </div>
@@ -4798,15 +4801,12 @@ ightarrow M L_n^* \longrightarrow 	ext{Slab-NH-}M L_{n-1}^* + H L(g) $$
               <div class="timeline-item">
                 <div class="timeline-dot dot-2g"></div>
                 <div class="timeline-content">
-                  <h4 style="color:#059669; font-size:0.98rem; margin-bottom:4px;">지표 2: 동역학적 점착 계수 비 및 선택도 계수 ($S_{	ext{ASD}}, s_0$)</h4>
+                  <h4 style="color:#059669; font-size:0.98rem; margin-bottom:4px;">지표 2: 동역학적 점착 계수 비 및 선택도 계수 ($S_{\text{ASD}}, s_0$)</h4>
                   <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6;">
                     기체 상태 전구체 분자가 기판 표면에 충돌했을 때 비가역적으로 반응할 확률인 점착 계수($s_0$)의 비율을 통해 반응 동역학적 선택도를 정량화합니다:
                   </p>
                   <div class="math-callout">
-                    $$ s_0(T) = \kappa \exp\left( -rac{\Delta G^\ddagger_{	ext{ads}}}{RT} 
-ight), \qquad S_{	ext{ASD}} = rac{s_0(S_{	ext{growth}}) - s_0(S_{	ext{non-growth}})}{s_0(S_{	ext{growth}}) + s_0(S_{	ext{non-growth}})} pprox rac{1 - \exp\left(-rac{\Delta\Delta G^\ddagger}{RT}
-ight)}{1 + \exp\left(-rac{\Delta\Delta G^\ddagger}{RT}
-ight)} \ge 0.99 $$
+                    $$ s_0(T) = \kappa \exp\left( -\frac{\Delta G^\ddagger_{\text{ads}}}{RT} \right), \qquad S_{\text{ASD}} = \frac{s_0(S_{\text{growth}}) - s_0(S_{\text{non-growth}})}{s_0(S_{\text{growth}}) + s_0(S_{\text{non-growth}})} \approx \frac{1 - \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)}{1 + \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)} \ge 0.99 $$
                   </div>
                 </div>
               </div>
@@ -4814,13 +4814,12 @@ ight)} \ge 0.99 $$
               <div class="timeline-item">
                 <div class="timeline-dot dot-3g"></div>
                 <div class="timeline-content">
-                  <h4 style="color:#d97706; font-size:0.98rem; margin-bottom:4px;">지표 3: 비성장면 핵생성 지연 사이클 수 ($N_{	ext{incubation}}$)</h4>
+                  <h4 style="color:#d97706; font-size:0.98rem; margin-bottom:4px;">지표 3: 비성장면 핵생성 지연 사이클 수 ($N_{\text{incubation}}$)</h4>
                   <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6;">
-                    비성장 기판 상에서 첫 번째 임계 핵(Critical nucleus)이 형성되기 전까지 박막 성장이 억제되는 잠복 사이클 수입니다. 결함 사이트 농도($\Gamma_{	ext{defect}}$)와 투입 도즈량($\Phi_{	ext{dose}}$)에 반비례하며 활성화 장벽에 지수 비례합니다:
+                    비성장 기판 상에서 첫 번째 임계 핵(Critical nucleus)이 형성되기 전까지 박막 성장이 억제되는 잠복 사이클 수입니다. 결함 사이트 농도($\Gamma_{\text{defect}}$)와 투입 도즈량($\Phi_{\text{dose}}$)에 반비례하며 활성화 장벽에 지수 비례합니다:
                   </p>
                   <div class="math-callout">
-                    $$ N_{	ext{incubation}} \propto rac{\Gamma_{	ext{defect}}}{\Phi_{	ext{dose}} \cdot s_0(S_{	ext{non-growth}})} = rac{\Gamma_{	ext{defect}}}{\Phi_{	ext{dose}} \cdot \kappa}\exp\left(rac{\Delta G^\ddagger_{	ext{nuc}}}{RT}
-ight) \ge 50 \sim 100	ext{ cycles} $$
+                    $$ N_{\text{incubation}} \propto \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot s_0(S_{\text{non-growth}})} = \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot \kappa}\exp\left(\frac{\Delta G^\ddagger_{\text{nuc}}}{RT}\right) \ge 50 \sim 100\text{ cycles} $$
                   </div>
                 </div>
               </div>
@@ -4828,13 +4827,12 @@ ight) \ge 50 \sim 100	ext{ cycles} $$
               <div class="timeline-item">
                 <div class="timeline-dot dot-4g"></div>
                 <div class="timeline-content">
-                  <h4 style="color:#7c3aed; font-size:0.98rem; margin-bottom:4px;">지표 4: 계면 바더 전하 이동량 및 $d$-밴드 커플링 ($\Delta q_{	ext{Bader}}, arepsilon_d$)</h4>
+                  <h4 style="color:#7c3aed; font-size:0.98rem; margin-bottom:4px;">지표 4: 계면 바더 전하 이동량 및 $d$-밴드 커플링 ($\Delta q_{\text{Bader}}, \varepsilon_d$)</h4>
                   <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6;">
                     금속 기판 및 전도성 질화물 계면에서 전구체와 기판 전자 밴드 간의 전하 이동량과 결합 궤도 혼성화를 평가합니다. 금속 기판 위 무차별 분해(Decomposition)를 억제하고 물리흡착 탈착을 유도하는 척도로 사용됩니다:
                   </p>
                   <div class="math-callout">
-                    $$ \Delta q_{	ext{Bader}} = \int_{\Omega_{	ext{prec}}} 
-ho(\mathbf{r}) d^3\mathbf{r} - Z_{	ext{prec}}, \qquad \Delta E_{	ext{ads}}^{	ext{metal}} pprox lpha rac{|V_{ad}|^2}{arepsilon_d - arepsilon_{	ext{LUMO}}} + eta V_{	ext{disp}} $$
+                    $$ \Delta q_{\text{Bader}} = \int_{\Omega_{\text{prec}}} \rho(\mathbf{r}) d^3\mathbf{r} - Z_{\text{prec}}, \qquad \Delta E_{\text{ads}}^{\text{metal}} \approx \alpha \frac{|V_{ad}|^2}{\varepsilon_d - \varepsilon_{\text{LUMO}}} + \beta V_{\text{disp}} $$
                   </div>
                 </div>
               </div>
@@ -4849,7 +4847,7 @@ ho(\mathbf{r}) d^3\mathbf{r} - Z_{	ext{prec}}, \qquad \Delta E_{	ext{ads}}^{	ext
                 <div class="versus-header" style="color:#0284c7;">Oh, Bent, Mackus et al. (Chem. Mater. 2021)</div>
                 <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
                   &bull; <strong>논문:</strong> <em>Role of Precursor Choice on Area-Selective Atomic Layer Deposition</em> (DOI: <a href="https://doi.org/10.1021/acs.chemmater.0c04718" target="_blank">10.1021/acs.chemmater.0c04718</a>)<br>
-                  &bull; <strong>핵심 내용:</strong> 동일한 박막 물질이라도 전구체 리간드의 입체적 부피($\%V_{	ext{bur}}$)와 염기도에 따라 산화물 대 금속/자기조립박막(SAM) 간의 핵생성 지연 사이클 수($N_{	ext{incubation}}$)가 수십 배 달라짐을 체계적으로 규명. 전구체 분자 역설계가 ASD 선택도 극대화의 핵심 열쇠임을 입증.
+                  &bull; <strong>핵심 내용:</strong> 동일한 박막 물질이라도 전구체 리간드의 입체적 부피($\%V_{\text{bur}}$)와 염기도에 따라 산화물 대 금속/자기조립박막(SAM) 간의 핵생성 지연 사이클 수($N_{\text{incubation}}$)가 수십 배 달라짐을 체계적으로 규명. 전구체 분자 역설계가 ASD 선택도 극대화의 핵심 열쇠임을 입증.
                 </p>
               </div>
 
@@ -4865,7 +4863,7 @@ ho(\mathbf{r}) d^3\mathbf{r} - Z_{	ext{prec}}, \qquad \Delta E_{	ext{ads}}^{	ext
                 <div class="versus-header" style="color:#059669;">Mackus, Bol, Kessels (Chem. Mater. 2019)</div>
                 <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
                   &bull; <strong>논문:</strong> <em>From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity</em> (DOI: <a href="https://doi.org/10.1021/acs.chemmater.8b03454" target="_blank">10.1021/acs.chemmater.8b03454</a>)<br>
-                  &bull; <strong>핵심 내용:</strong> ALD 공정의 무결함 면선택성을 평가하는 표준 수학 공식 $S = (	heta_1 - 	heta_2)/(	heta_1 + 	heta_2)$ 및 기판 결함 밀도와 전구체 투입량(Dosing) 간의 반응 동역학 관계식을 도출하여 산업계 표준 지표로 정립.
+                  &bull; <strong>핵심 내용:</strong> ALD 공정의 무결함 면선택성을 평가하는 표준 수학 공식 $S = (\theta_1 - \theta_2)/(\theta_1 + \theta_2)$ 및 기판 결함 밀도와 전구체 투입량(Dosing) 간의 반응 동역학 관계식을 도출하여 산업계 표준 지표로 정립.
                 </p>
               </div>
 
@@ -4889,31 +4887,37 @@ ho(\mathbf{r}) d^3\mathbf{r} - Z_{	ext{prec}}, \qquad \Delta E_{	ext{ads}}^{	ext
               <div class="mermaid-svg-container" id="substrate-pipeline-container">
                 <div class="mermaid" id="substrate-pipeline-svg">
 flowchart TD
-    COND["<b>공정 기판 선택 조건 주입 (Target ASD Conditioning)</b><br>y* = [S_growth = SiO2(-OH), S_non-growth = Cu(Metal), ΔΔG_ads ≤ -12 kcal/mol, S_ASD ≥ 0.99]"] --> GEN
+    COND["<b>공정 기판 선택 조건 주입 (Target ASD Conditioning)</b><br>y* = (S_growth: SiO2-OH, S_non-growth: Cu-Metal, ΔΔG_ads ≤ -12 kcal/mol, S_ASD ≥ 0.99)"] --> G1
 
     subgraph GEN["<b>1. 역설계 생성 엔진 (GFlowNet / Diffusion)</b>"]
         G1["상용 무기 빌딩 블록 DB (29종 Reagents)"]
-        G2["리간드 전자 공여도 & 입체 차폐 치환 생성<br>pKa(HL) 최적화 & Lewis Acidity 튜닝"]
+        G2["리간드 전자 공여도 및 입체 차폐 치환 생성<br>pKa(HL) 최적화 및 Lewis Acidity 튜닝"]
         G1 --> G2
     end
 
-    subgraph MULTI_SURF["<b>2. 기판별 3D 표면 슬랩 모델링 (VASP & MLIP)</b>"]
-        S_OX["<b>산화물 표면 (SiO2 / Al2O3)</b><br>-OH 실라놀 양성자 교환<br>ΔG_prot & ΔG‡_prot 산출"]
-        S_NIT["<b>질화물 표면 (TiN / SiNx)</b><br>Lewis 산-염기 부가체<br>ΔG_coord & Transamination"]
-        S_MET["<b>금속 표면 (Cu / Ru / W)</b><br>Bader 전하 이동 & d-band<br>ΔG_ads(Metal) & BDE_min"]
+    subgraph MULTI_SURF["<b>2. 기판별 3D 표면 슬랩 모델링 (VASP 및 MLIP)</b>"]
+        S_OX["<b>산화물 표면 (SiO2 / Al2O3)</b><br>-OH 실라놀 양성자 교환<br>ΔG_prot 및 ΔG‡_prot 산출"]
+        S_NIT["<b>질화물 표면 (TiN / SiNx)</b><br>Lewis 산-염기 부가체<br>ΔG_coord 및 Transamination"]
+        S_MET["<b>금속 표면 (Cu / Ru / W)</b><br>Bader 전하 이동 및 d-band<br>ΔG_ads(Metal) 및 BDE_min"]
     end
 
-    GEN --> MULTI_SURF
+    G2 --> S_OX
+    G2 --> S_NIT
+    G2 --> S_MET
 
-    subgraph EVAL["<b>3. 면선택성 지표 계산 & 동역학 평가</b>"]
+    subgraph EVAL["<b>3. 면선택성 지표 계산 및 동역학 평가</b>"]
         E1["열역학 선택성 검증: ΔΔG_ads = ΔG_ads(Oxide) - ΔG_ads(Metal) ≤ -12 kcal/mol"]
-        E2["점착 계수 비 & 잠복기: s0_ratio > 10^3, N_incubation ≥ 80 cycles"]
+        E2["점착 계수 비 및 잠복기: s0_ratio ≥ 10^3, N_incubation ≥ 80 cycles"]
         E3{"선택도 기준 만족 여부"}
-        S_OX & S_NIT & S_MET --> E1 --> E2 --> E3
+        S_OX --> E1
+        S_NIT --> E1
+        S_MET --> E1
+        E1 --> E2
+        E2 --> E3
     end
 
-    E3 -- "선택도 미달 (탈락)" -->|"능동 학습 피드백 (선택도 보상함수 페널티)"| G2
-    E3 -- "선택도 달성 (통과)" --> PROD["<b>최적 면선택적 전구체 후보 도출 & 박막 공정 검증</b><br>(Area-Selective High-k / Metal Via Filling)"]
+    E3 -->|"선택도 미달 (보상함수 페널티 피드백)"| G2
+    E3 -->|"선택도 달성 (통과)"| PROD["<b>최적 면선택적 전구체 후보 도출 및 박막 공정 검증</b><br>(Area-Selective High-k / Metal Via Filling)"]
                 </div>
               </div>
             </div>
@@ -5007,7 +5011,7 @@ flowchart TD
                   <td>성장면(Oxide) 대 비성장면(Metal) 흡착 구동력 격차</td>
                   <td>$\Delta \Delta G_{\text{ads}} = \Delta G_{\text{ads}}^{\text{growth}} - \Delta G_{\text{ads}}^{\text{non-growth}} \le -12.0\text{ kcal/mol}$</td>
                   <td>Pymatgen Multi-Slab &rarr; VASP PBE-D3 표면 에너지 차</td>
-                  <td>~ 8 hr / 2 Slags</td>
+                  <td>~ 8 hr / 2 Slabs</td>
                   <td>면선택적 증착(ASD) 역설계 파레토 다목적 보상함수 핵심 인자</td>
                 </tr>
                 <tr>
