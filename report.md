@@ -127,19 +127,27 @@ To resolve the domain mismatch where organic SA models fail on industrial electr
 
 ---
 
-## 7. AI-Driven Precursor Inverse Design & Multi-Fidelity Closed-Loop Mapping
+## 7. AI-Driven Precursor Inverse Design & Substrate-Selective Funnel
 
-To inversely design semiconductor precursors satisfying target properties $\mathbf{y}^* = [P_{\text{vap}}^*, \Delta G^\ddagger_{\text{decomp}}^*, \%V_{\text{bur}}^*, \Delta G_{\text{ALD}}^*]$, we couple **Inorganic GFlowNet / Conditional 3D Diffusion** with the 4-tier multi-fidelity computational funnel:
+To inversely design semiconductor precursors satisfying target properties $\mathbf{y}^* = [P_{\text{vap}}^*, \Delta G^\ddagger_{\text{decomp}}^*, \%V_{\text{bur}}^*, \Delta G_{\text{ALD}}^*, \Delta\Delta G_{\text{ads}}^*, S_{\text{ASD}}^*]$, we couple **Inorganic GFlowNet / Conditional 3D Diffusion** with a multi-fidelity computational funnel:
 1. **Governing Physical Constraints**:
    - Vapor Pressure ($P_{\text{vap}} \ge 0.5 \sim 1.0\text{ Torr}$ at $T \le 120^\circ\text{C}$, $\Delta H_{\text{vap}} \le 55\text{ kcal/mol}$).
    - Thermal Stability Window ($\Delta G^\ddagger_{\beta\text{-H}} \ge 30\text{ kcal/mol}$, $\text{BDE}_{\min} \ge 35\text{ kcal/mol}$).
    - Steric Monomeric Window ($58\% \le \%V_{\text{bur}} \le 82\%$, SambVca-2.1 with $R_s = 3.5\text{ Å}$, $\Delta G_{\text{dimer}} > +5\text{ kcal/mol}$).
    - Wafer Surface Self-Limiting Reaction ($\Delta G_{\text{ALD}} \le -15.0\text{ kcal/mol}$, byproduct desorption $\Delta G^\ddagger_{\text{desorp}} \le 15\text{ kcal/mol}$).
    - Synthetic Accessibility ($\text{SA}_{\text{TMC}} \le 3.5$ using proprietary `semi_bb.csv` and `semi_rxn.csv`).
-2. **Computational Funnel Mapping**:
+2. **Substrate-Dependent Adsorption Mechanics**:
+   - **Oxides ($\text{SiO}_2, \text{Al}_2\text{O}_3, \text{HfO}_2$)**: Brønsted $-\text{OH}^*$ protonolysis ($M L_n + \text{Slab-OH} \rightarrow \text{Slab-O-}M L_{n-1} + H L$). Controlled by ligand basicity $\text{p}K_a(HL)$ and proton transfer barrier $\Delta G^\ddagger_{\text{prot}} \le 12\text{ kcal/mol}$.
+   - **Nitrides ($\text{TiN}, \text{TaN}, \text{SiN}_x$)**: Lewis acid-base adduct formation ($:\text{N}_{\text{surf}} \rightarrow M L_n$) and transamination. Governed by precursor Lewis acidity (FIA/HIA).
+   - **Metals ($\text{Cu}, \text{W}, \text{Ru}, \text{Co}$)**: Clean metallic surface, Fermi-level Bader charge transfer ($\Delta q_{\text{Bader}} \le 0.15 e$), and $d$-band center coupling. Non-specific decomposition prevented by $\text{BDE}_{\min} \ge 35\text{ kcal/mol}$.
+3. **Area-Selective Deposition (ASD) Metrics**:
+   - Thermodynamic Selectivity: $\Delta\Delta G_{\text{ads}} = \Delta G_{\text{ads}}(S_{\text{growth}}) - \Delta G_{\text{ads}}(S_{\text{non-growth}}) \le -12.0\text{ kcal/mol}$.
+   - Kinetic Sticking Selectivity: $S_{\text{ASD}} = \frac{s_0^{\text{growth}} - s_0^{\text{non-growth}}}{s_0^{\text{growth}} + s_0^{\text{non-growth}}} \ge 0.99$.
+   - Incubation Delay: $N_{\text{incubation}} \ge 50 \sim 100\text{ cycles}$.
+4. **Computational Funnel Mapping**:
    - Tier 1: Fast GNN Surrogates ($\sim 0.5\text{ ms}$, SASA, COSMO-RS proxy, `BR-SAScore`).
    - Tier 2: Semi-empirical xTB & Equivariant MLIP (`SevenNet-0`, $\sim 1\text{ s}$, 3D pre-relaxation, $\%V_{\text{bur}}$).
    - Tier 3: Gas-phase VASP DFT ($\sim 10\text{ min}$, $\Delta G_{\text{syn}}, \Delta G_{\text{dimer}}, \text{BDE}_{\min}$).
-   - Tier 4: Wafer Surface Slab VASP DFT + Sella TS ($\sim 5\text{ hr}$, $\Delta G_{\text{ALD}}, \Delta G^\ddagger_{\text{decomp}}$).
-3. **Interactive Implementation**:
-   - Comprehensive matrix and closed-loop architecture diagram integrated into Section 13 of [`index.html`](./index.html).
+   - Tier 4: Multi-Slab VASP DFT + Sella TS ($\sim 8\text{ hr}$, $\Delta G_{\text{ALD}}, \Delta\Delta G_{\text{ads}}, \Delta G^\ddagger_{\text{prot}}$).
+5. **Interactive Implementation**:
+   - Substrate comparison grid, ASD quantitative indicators, and 10-descriptor comprehensive matrix integrated into Section 13 of [`index.html`](./index.html).

@@ -70,19 +70,30 @@ Because VASP uses periodic plane waves (`PAW`), automating both gas-phase organo
    G_{\text{gas}}^{\text{VASP}}(T, P) = E_{\text{VASP}}^{\text{box}} + E_{\text{ZPE}} + \Delta H_{\text{trans+rot+vib}}(T) - T\Big(S_{\text{trans}}(T, P) + S_{\text{rot}}(T) + S_{\text{vib}}^{\text{QRRHO}}(T) + S_{\text{elec}}\Big)
    $$
 
-### 1.4 AI-Driven Precursor Inverse Design & Closed-Loop Computational Funnel
+### 1.4 AI-Driven Precursor Inverse Design & Substrate-Selective Computational Funnel
 
-To inversely design semiconductor precursors satisfying target properties $\\mathbf{y}^* = [P_{\\text{vap}}^*, \\Delta G^\\ddagger_{\\text{decomp}}^*, \\%V_{\\text{bur}}^*, \\Delta G_{\\text{ALD}}^*]$, we couple **Inorganic GFlowNet / Conditional 3D Diffusion** with a 4-tier multi-fidelity computational funnel:
+To inversely design semiconductor precursors satisfying target multi-objective properties $\mathbf{y}^* = [P_{\text{vap}}^*, \Delta G^\ddagger_{\text{decomp}}^*, \%V_{\text{bur}}^*, \Delta G_{\text{ALD}}^*, \Delta\Delta G_{\text{ads}}^*, S_{\text{ASD}}^*]$, we couple **Inorganic GFlowNet / Conditional 3D Diffusion** with a multi-fidelity computational funnel:
 
+$$\mathcal{L}_{\text{TB}}(\theta) = \left( \ln \frac{Z_\theta \prod_{t=0}^{K-1} P_F(s_{t+1} \mid s_t; \theta)}{R(\mathbf{x}) \prod_{t=0}^{K-1} P_B(s_t \mid s_{t+1}; \theta)} \right)^2$$
 
-\\mathcal{L}_{\\text{TB}}(\\theta) = \\left( \\ln \\frac{Z_\\theta \\prod_{t=0}^{K-1} P_F(s_{t+1} \\mid s_t; \\theta)}{R(\\mathbf{x}) \\prod_{t=0}^{K-1} P_B(s_t \\mid s_{t+1}; \\theta)} \\right)^2
+#### Substrate-Dependent Adsorption Mechanics & Surface Descriptors
+1. **Oxides ($\text{SiO}_2, \text{Al}_2\text{O}_3, \text{HfO}_2$)**:
+   - Surface functional termination: Silanol/aluminol Brønsted hydroxyls ($-\text{OH}^*$, $\theta_{\text{OH}} \approx 2.0 \sim 5.0\text{ nm}^{-2}$) and bridging oxygens ($M\text{-O-}M$).
+   - Reaction mechanism: Protonolysis / Ligand Exchange ($M L_n(g) + \text{Slab-OH}^* \rightarrow \text{Slab-O-}M L_{n-1}^* + H L(g)$). Driven by ligand basicity ($\text{p}K_a(HL)$) and metal-oxygen bond formation ($\Delta G_{\text{prot}} \le -15\text{ kcal/mol}$).
+2. **Nitrides ($\text{TiN}, \text{TaN}, \text{SiN}_x, \text{WN}$)**:
+   - Surface functional termination: Amino/imino groups ($-\text{NH}_2^*, =\text{NH}^*$), nitrogen lone pairs ($:\text{N}_{\text{surf}}$), dangling metal bonds (Lewis acid).
+   - Reaction mechanism: Lewis acid-base adduct coordination followed by transamination ($M L_n(g) + \text{Slab-N:}^* \rightarrow \text{Slab-N:}\rightarrow M L_n^* \rightarrow \text{Slab-NH-}M L_{n-1}^* + H L(g)$). Governed by precursor Lewis acidity (FIA/HIA) and amine exchange barrier ($\Delta G^\ddagger_{\text{transam}}$).
+3. **Metals ($\text{Cu}, \text{W}, \text{Ru}, \text{Mo}, \text{Co}$)**:
+   - Surface functional termination: Clean metallic valence electron sea, step/kink edge sites, free of active protons.
+   - Reaction mechanism: Physisorption $\rightarrow$ charge-transfer chemisorption, catalytic ligand cracking, and redox transmetalation. Governed by Fermi-level Bader charge transfer ($\Delta q_{\text{Bader}} \le 0.15 e$) and substrate $d$-band center ($\varepsilon_d$).
 
-
-where the scalarized reward (\\mathbf{x})$ integrates fast GNN surrogates ({\\text{vap}}, \\text{SA}$), semi-empirical xTB/SevenNet ($\\%V_{\\text{bur}}$), and VASP DFT ($\\Delta G_{\\text{ALD}}, \\Delta G^\\ddagger_{\\text{decomp}}$):
-
-
-R(\\mathbf{x}) = \\sigma\\big(P_{\\text{vap}} - 0.5\\big) \\cdot \\mathbf{1}\\big(58\\% \\le \\%V_{\\text{bur}} \\le 82\\%\\big) \\cdot \\sigma\\big(\\Delta G^\\ddagger_{\\text{decomp}} - 30\\big) \\cdot \\sigma\\big(-15 - \\Delta G_{\\text{ALD}}\\big) \\cdot \\sigma\\big(3.5 - \\text{SA}_{\\text{TMC}}\\big)
-
+#### Area-Selective ALD (ASD) Descriptors for Precursor Inverse Design
+- **Thermodynamic Selectivity Window**:
+  $$\Delta\Delta G_{\text{ads}} = \Delta G_{\text{ads}}(S_{\text{growth}}) - \Delta G_{\text{ads}}(S_{\text{non-growth}}) \le -12.0\text{ kcal/mol}$$
+- **Kinetic Sticking Probability Ratio & ASD Metric**:
+  $$S_{\text{ASD}} = \frac{s_0(S_{\text{growth}}) - s_0(S_{\text{non-growth}})}{s_0(S_{\text{growth}}) + s_0(S_{\text{non-growth}})} \approx \frac{1 - \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)}{1 + \exp\left(-\frac{\Delta\Delta G^\ddagger}{RT}\right)} \ge 0.99$$
+- **Incubation Cycle Window on Non-Growth Surfaces**:
+  $$N_{\text{incubation}} \propto \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot s_0(S_{\text{non-growth}})} = \frac{\Gamma_{\text{defect}}}{\Phi_{\text{dose}} \cdot \kappa}\exp\left(\frac{\Delta G^\ddagger_{\text{nuc}}}{RT}\right) \ge 50 \sim 100\text{ cycles}$$
 
 ---
 
