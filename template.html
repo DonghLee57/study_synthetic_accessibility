@@ -686,15 +686,17 @@
     .click-to-expand-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      background: #e0f2fe;
+      gap: 4px;
+      background: #f0f9ff;
       color: #0369a1;
       border: 1px solid #bae6fd;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.82rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.74rem;
       font-weight: 600;
+      letter-spacing: -0.01em;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
     .mermaid-card.clickable-card:hover .click-to-expand-badge,
     .mermaid-box.clickable-mermaid-box:hover .click-to-expand-badge {
@@ -1175,13 +1177,12 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width:48px; text-align:center;">No</th>
-                  <th>세대 / 분류</th>
-                  <th>모델 / 약칭</th>
-                  <th>연도</th>
-                  <th>검증된 공식 논문 제목, 저자 및 저널</th>
-                  <th>공식 DOI 링크</th>
-                  <th>로컬 원문 파일</th>
+                  <th style="width:44px; text-align:center;">No</th>
+                  <th style="width:110px;">세대 / 분류</th>
+                  <th style="width:120px;">모델 / 약칭</th>
+                  <th style="width:60px; text-align:center;">연도</th>
+                  <th style="min-width:460px;">검증된 공식 논문 제목, 저자진 및 게재 저널</th>
+                  <th style="width:230px;">공식 DOI 및 원문 열람</th>
                 </tr>
               </thead>
               <tbody id="litTableBody">
@@ -1256,16 +1257,20 @@
         </div>
 
         <!-- Mermaid Flowchart of Paradigm Shift: Click to Enlarge -->
-        <div class="mermaid-box clickable-mermaid-box" id="box-paradigm-roadmap" onclick="openDiagramModal('roadmap-diagram-svg', '합성 접근성(SA) 평가 모델 세대별 진화 로드맵 (1G~4G)')" title="클릭하여 큰 팝업으로 확대 보기">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">SA 평가 모델 세대별 진화 로드맵</span>
-            <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
+        <div class="mermaid-card clickable-card" id="card-paradigm-roadmap" onclick="openDiagramModal('roadmap-container', '합성 접근성(SA) 평가 모델 세대별 진화 로드맵 (1G~4G)')" title="클릭하여 팝업 확대 보기">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-title">다이어그램: SA 평가 모델 세대별 진화 로드맵 (1G~4G)</span>
+            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
           </div>
-          <div class="mermaid" id="roadmap-diagram-svg">
+          <div class="mermaid-viewport" id="viewport-paradigm-roadmap">
+            <div class="mermaid-svg-container" id="roadmap-container">
+              <div class="mermaid" id="roadmap-diagram-svg">
 flowchart LR
     A["1세대 (2009~)<br><b>구조 통계 / 휴리스틱</b><br>SAScore, SYBA"] -->|"반응 데이터 도입<br>(Reaxys, CASP)"| B["2세대 (2018~)<br><b>반응 코퍼스 & CASP 대리</b><br>SCScore, RAscore, RetroGNN"]
     B -->|"국소 화학환경 &<br>빌딩블록 분리"| C["3세대 (2022~)<br><b>GNN & 반응 인지형</b><br>GASA, DFRscore, BR-SAScore"]
     C -->|"사후 필터링 한계 극복<br>(By-design Synthesizability)"| D["4세대 (2024~2026)<br><b>경로 내재화 생성 / 투영</b><br>ChemProjector, SynFormer, ReaSyn"]
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1662,18 +1667,18 @@ flowchart LR
       <!-- Section 7: Open-Source Repositories & Executable Code -->
       <section id="opensource-code">
         <div class="section-header">
-          <div class="section-tag">Section 7 &bull; Verified Open-Source Repositories &amp; Python Usage Code</div>
-          <h2 class="section-title">공개 사용 코드(GitHub / PyPI) 전수 확인 및 실무 실행 레퍼런스</h2>
+          <div class="section-tag">Section 7 &bull; Verified Open-Source Repositories &amp; Semiconductor Benchmark</div>
+          <h2 class="section-title">17개 오픈소스 저장소 검증 및 반도체 전구체 DB 실증 평가</h2>
           <p class="section-desc">
-            GitHub REST API 및 PyPI 패키지 아카이브를 직접 조회하여 17개 주요 모델의 공식 저장소 주소, 라이선스, 그리고 즉시 실행 가능한 Python API 사용 코드를 검증·정리했습니다.
+            GitHub REST API, PyPI 및 Zenodo 아카이브를 조회하여 17개 주요 모델의 공식 저장소 주소, 라이선스, 그리고 반도체 전구체 데이터셋(27종) 대상 벤치마크 적용 성공률을 검증·정리했습니다.
           </p>
         </div>
 
         <!-- Collapsible Toggle Bar for 17 Open-Source Repositories Table -->
         <div class="table-toggle-bar">
           <div class="table-toggle-info">
-            <span class="table-toggle-title">17개 오픈소스 저장소(GitHub / PyPI / Zenodo) 및 API 스니펫 전체 테이블</span>
-            <span class="table-toggle-subtitle">공식 저장소 링크, GitHub Stars/배포 형태, 오픈소스 라이선스 및 한 줄 실행 코드를 포함합니다.</span>
+            <span class="table-toggle-title">17개 오픈소스 저장소 및 반도체 전구체 DB 실증 평가 지표 테이블</span>
+            <span class="table-toggle-subtitle">공식 저장소 링크, GitHub Stars/배포 형태, 라이선스 및 27종 반도체 전구체 실증 성공률 지표를 포함합니다.</span>
           </div>
           <button type="button" class="btn-toggle-table" id="btn-panel-repos" onclick="togglePanel('panel-repos', 'btn-panel-repos', '오픈소스 코드베이스 테이블 보기 (17건)', '코드베이스 테이블 닫기 (숨김)')">
             오픈소스 코드베이스 테이블 보기 (17건)
@@ -1686,73 +1691,18 @@ flowchart LR
             <table>
               <thead>
                 <tr>
-                  <th style="width:48px; text-align:center;">No</th>
-                  <th>모델 / 툴명</th>
+                  <th style="width:44px; text-align:center;">No</th>
+                  <th style="width:160px;">모델 / 툴명</th>
                   <th>공식 GitHub / PyPI / Zenodo 저장소</th>
-                  <th>Stars / 배포</th>
-                  <th>라이선스</th>
-                  <th>핵심 Python API / CLI 실행 스니펫</th>
+                  <th style="width:100px; text-align:center;">Stars / 배포</th>
+                  <th style="width:110px; text-align:center;">라이선스</th>
+                  <th style="min-width:340px;">반도체 전구체 DB (27종) 적용 성공률 및 실증 평가 지표</th>
                 </tr>
               </thead>
               <tbody>
 <!-- REPO_ROWS_PLACEHOLDER -->
               </tbody>
             </table>
-          </div>
-        </div>
-
-        <div class="versus-grid" style="margin-top:20px;">
-          <div class="card" style="margin-bottom:0;">
-            <h3 class="card-title">1. SAScore vs BR-SAScore vs RAscore 통합 실행 코드</h3>
-            <p style="color:var(--text-secondary); font-size:0.88rem; margin-bottom:10px;">
-              가장 널리 쓰이는 3대 지표를 동일한 분자(SMILES)에 대해 일괄 계산하고 원자별 난합성 기여도를 SVG로 추출하는 표준 파이썬 코드입니다.
-            </p>
-            <div class="code-box"># 설치: pip install rdkit BRSAScore syba
-import os, sys
-from rdkit import Chem
-from rdkit.Chem import RDConfig
-sys.path.append(os.path.join(RDConfig.RDContribDir, 'SA_Score'))
-import sascorer
-from BRSAScore import SAScorer as BRSAScorer
-
-# 1. RDKit 내장 SAScore (Ertl, 2009)
-smi = "CC(=O)Oc1ccccc1C(=O)O"  # Aspirin
-mol = Chem.MolFromSmiles(smi)
-sa_classic = sascorer.calculateScore(mol)
-
-# 2. BR-SAScore (Chen & Jung, 2024 - PyPI: BRSAScore==0.1.1)
-br_scorer = BRSAScorer(reaction_from='uspto', buildingblock_from='emolecules')
-br_score, atom_contrib = br_scorer.calculateScore(smi)
-svg_str = br_scorer.contribution_to_svg(smi, atom_contrib) # 난합성 부위 시각화
-
-# 3. RAscore (Thakkar & Reymond, 2021)
-# git clone https://github.com/reymond-group/RAscore.git
-from RAscore import RAscore_XGB
-ra_scorer = RAscore_XGB.RAScorerXGB()
-ra_prob = ra_scorer.predict(smi) # 0.0 (불가) ~ 1.0 (AiZynthFinder 탐색 성공)</div>
-          </div>
-
-          <div class="card" style="margin-bottom:0;">
-            <h3 class="card-title">2. BR-SAScore 내부 코드(v0.1.1) 분석 및 커스텀 DB 확장법</h3>
-            <p style="color:var(--text-secondary); font-size:0.88rem; margin-bottom:10px;">
-              PyPI에 배포된 <code>BRSAScore-0.1.1.tar.gz</code>의 실제 소스코드(<code>BRSAScore/BRSAScore.py</code>)를 언패킹하여 확인한 내부 동작 원리입니다.
-            </p>
-            <div class="code-box"># [BRSAScore 내부 아키텍처 핵심 분석]
-# 패키지 내장 사전 파일 3종 (BRSAScore/pickle/):
-# 1) BScores_emolecules.pkl.gz (5.0 MB): 상용 빌딩블록 반경-2 Morgan bitId -> fscore = 0.0
-# 2) RScores_uspto.pkl.gz (2.4 MB): 반응 중심 파편 bitId -> fscore = log10(빈도) < 0
-# 3) BRScores_uspto_emolecules.pkl.gz (5.9 MB): 통합 룩업 테이블 {bitId: fscore}
-
-# [점수 합산 로직 (BRSAScore.py Line 68-86)]
-# - 반경 r=2 카이랄 Morgan Fingerprint 추출 후:
-# - bitId가 BFrag(상용 시약 파편)이면 fscore == 0 이므로 감점(score1)에서 완전 면제!
-# - bitId가 RFrag(반응 생성 파편)이면 fscore < 0 만 평균 합산, 미등록 파편은 -6.0 페널티 부여.
-
-# [사용자 정의 도메인(예: 반도체 프리커서) DB 교체 방법]
-# 1) 반응 데이터: ./data/my_rxn.csv (컬럼: reactants>reagents>production, LocalMapper 매핑)
-# 2) 빌딩 블록: ./data/my_bb.csv (컬럼: SMILES)
-# 3) 사전 생성: python scripts/prepare_Scores.py -r my_rxn -b my_bb
-# 4) 호출: scorer = BRSAScorer(reaction_from='my_rxn', buildingblock_from='my_bb')</div>
           </div>
         </div>
       </section>
@@ -1902,10 +1852,10 @@ score, contrib = scorer.calculateScore("CC(C)N(C(C)C)[SiH3]") # DIPAS</div>
         </div>
 
         <!-- Interactive Mermaid Multi-Fidelity Workflow Card: Click to Expand Popup Modal -->
-        <div class="mermaid-card clickable-card" id="card-dft-workflow" onclick="openDiagramModal('dft-workflow-container', '다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인')" title="클릭하여 큰 팝업으로 확대 보기">
+        <div class="mermaid-card clickable-card" id="card-dft-workflow" onclick="openDiagramModal('dft-workflow-container', '다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인')" title="클릭하여 팝업 확대 보기">
           <div class="mermaid-toolbar">
             <span class="mermaid-title">다이어그램: 다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인</span>
-            <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
+            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
           </div>
           <div class="mermaid-viewport" id="viewport-dft-workflow">
             <div class="mermaid-svg-container" id="dft-workflow-container">
@@ -2007,12 +1957,14 @@ flowchart TD
         </div>
 
         <!-- Mermaid 4-Layer VASP Automation Architecture: Click to Enlarge -->
-        <div class="mermaid-box clickable-mermaid-box" id="box-vasp-architecture" onclick="openDiagramModal('vasp-stack-svg', 'VASP 중심의 4계층 반도체 전구체 DFT 자동화 아키텍처')" title="클릭하여 큰 팝업으로 확대 보기">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">4계층 VASP 자동화 아키텍처</span>
-            <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
+        <div class="mermaid-card clickable-card" id="card-vasp-architecture" onclick="openDiagramModal('vasp-stack-container', 'VASP 중심의 4계층 반도체 전구체 DFT 자동화 아키텍처')" title="클릭하여 팝업 확대 보기">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-title">다이어그램: VASP 중심의 4계층 반도체 전구체 DFT 자동화 아키텍처</span>
+            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
           </div>
-          <div class="mermaid" id="vasp-stack-svg">
+          <div class="mermaid-viewport" id="viewport-vasp-architecture">
+            <div class="mermaid-svg-container" id="vasp-stack-container">
+              <div class="mermaid" id="vasp-stack-svg">
 flowchart LR
     subgraph L0["<b>0. SA &amp; 경로 생성</b>"]
         A1["BR-SAScore / RxnFlow<br>합성 가능 후보 SMILES"]
@@ -2035,6 +1987,8 @@ flowchart LR
     A1 --> B1 --> B2 --> C1 --> D1
     D1 <--> D2
     D1 --> E1 --> E2
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2082,12 +2036,11 @@ flowchart LR
               <thead>
                 <tr>
                   <th style="width:44px; text-align:center;">No</th>
-                  <th>계층 (Layer)</th>
-                  <th>프레임워크명 및 핵심 역할</th>
+                  <th style="width:120px;">계층 (Layer)</th>
+                  <th style="width:280px;">프레임워크명 및 핵심 역할</th>
                   <th>공식 GitHub 저장소 &amp; DOI</th>
-                  <th>Stars</th>
-                  <th>라이선스</th>
-                  <th>핵심 Python API / 연동 스니펫</th>
+                  <th style="width:90px; text-align:center;">Stars</th>
+                  <th style="width:110px; text-align:center;">라이선스</th>
                 </tr>
               </thead>
               <tbody>
@@ -2942,10 +2895,10 @@ flowchart LR
           </p>
 
           <!-- Interactive Mermaid Precursor Inverse Design Pipeline Card -->
-          <div class="mermaid-card clickable-card" id="card-inverse-pipeline" onclick="openDiagramModal('inverse-pipeline-container', '목표 물성 기반 반도체 프리커서 AI 역설계 닫힌 루프 아키텍처')" title="클릭하여 큰 팝업으로 확대 보기">
+          <div class="mermaid-card clickable-card" id="card-inverse-pipeline" onclick="openDiagramModal('inverse-pipeline-container', '목표 물성 기반 반도체 프리커서 AI 역설계 닫힌 루프 아키텍처')" title="클릭하여 팝업 확대 보기">
             <div class="mermaid-toolbar">
               <span class="mermaid-title">다이어그램: 목표 물성 기반 반도체 프리커서 AI 역설계 4단계 닫힌 루프 아키텍처</span>
-              <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
+              <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
             </div>
             <div class="mermaid-viewport" id="viewport-inverse-pipeline">
               <div class="mermaid-svg-container" id="inverse-pipeline-container">
@@ -3126,10 +3079,10 @@ flowchart TD
           </div>
 
           <!-- Interactive Mermaid Substrate Selective Inverse Design Diagram Card -->
-          <div class="mermaid-card clickable-card" id="card-substrate-pipeline" onclick="openDiagramModal('substrate-pipeline-container', '기판별(산화물·질화물·금속) 흡착 특성 기반 면선택적 프리커서 역설계 파이프라인')" title="클릭하여 큰 팝업으로 확대 보기" style="margin-top:20px;">
+          <div class="mermaid-card clickable-card" id="card-substrate-pipeline" onclick="openDiagramModal('substrate-pipeline-container', '기판별(산화물·질화물·금속) 흡착 특성 기반 면선택적 프리커서 역설계 파이프라인')" title="클릭하여 팝업 확대 보기" style="margin-top:20px;">
             <div class="mermaid-toolbar">
               <span class="mermaid-title">다이어그램: 기판별 흡착 특성 기반 면선택적(ASD) 프리커서 역설계 및 전산 스크리닝 파이프라인</span>
-              <span class="click-to-expand-badge">클릭하여 큰 팝업으로 확대</span>
+              <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
             </div>
             <div class="mermaid-viewport" id="viewport-substrate-pipeline">
               <div class="mermaid-svg-container" id="substrate-pipeline-container">

@@ -61,31 +61,151 @@ for idx, p in enumerate(papers, 1):
     row = f"""
             <tr class="lit-row" data-gen="{gen_code}" data-downloaded="{str(p['pdf_status']['downloaded']).lower()}" data-search="{search_str}">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
-              <td><span class="badge {badge_cls}">{p['generation']}</span></td>
-              <td><strong>{p['name']}</strong></td>
-              <td style="font-weight:600; color:#475569;">{p['year']}</td>
-              <td>
-                <div style="font-weight:600; color:#0f172a; margin-bottom:2px;">{p['title']}</div>
-                <div style="font-size:0.8rem; color:#64748b;">{p['authors']} &mdash; <em>{p['journal']}</em></div>
+              <td style="white-space:nowrap;"><span class="badge {badge_cls}">{p['generation']}</span></td>
+              <td style="white-space:nowrap;"><strong>{p['name']}</strong></td>
+              <td style="text-align:center; font-weight:600; color:#475569;">{p['year']}</td>
+              <td style="min-width:460px;">
+                <div style="font-weight:600; color:#0f172a; margin-bottom:4px; line-height:1.45;">{p['title']}</div>
+                <div style="font-size:0.8rem; color:#64748b; line-height:1.4;">{p['authors']} &mdash; <em style="color:#475569;">{p['journal']}</em></div>
               </td>
-              <td style="white-space:nowrap;"><a href="{doi_link}" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.8rem;">{p['doi']}</a></td>
-              <td style="white-space:nowrap;">{pdf_action}</td>
+              <td style="white-space:nowrap;">
+                <div><a href="{doi_link}" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#0284c7; font-weight:600;">DOI: {p['doi']}</a></div>
+                <div style="margin-top:6px;">{pdf_action}</div>
+              </td>
             </tr>"""
     lit_rows_html.append(row)
 
 lit_rows_joined = "\n".join(lit_rows_html)
 
+# Benchmark metrics on semiconductor precursor DB (27 molecules)
+repo_semi_metrics = {
+    "SAScore (RDKit Built-in)": {
+        "rate": "14.8%",
+        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
+        "eval": "심각한 왜곡 (False Negative)",
+        "desc": "유기 의약품 PubChem 통계 기반으로 금속-헤테로원자 결합을 비정상 파편으로 간주하여 6~9점(난합성) 과대평가. 공유결합 실란계(DIPAS, 3DMAS 등 4종)만 유효."
+    },
+    "SYBA": {
+        "rate": "11.1%",
+        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
+        "eval": "적용 불가 (음수 편향)",
+        "desc": "ZINC vs 난합성 베이지안 분류 모델. 무기 착물 파편에 극단적 음수 스코어 부여. 비금속 실란 3종만 양수 판정."
+    },
+    "SCScore": {
+        "rate": "25.9%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "유기 리간드 한정 유효",
+        "desc": "Reaxys 유기 반응 복잡도 순위 모델. 전이금속 착화 반응 결여로 대부분 4.5 이상 과대평가. 단순 알콕사이드/알킬아미드 7종만 3.0 이하."
+    },
+    "RAscore": {
+        "rate": "22.2%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "USPTO 유기 반응 편향",
+        "desc": "AiZynthFinder MCTS 역합성 확률 증류 모델. 전이금속 염 복분해 반응 부재로 유기금속 착체 예측 확률 0.05 이하 왜곡."
+    },
+    "GASA": {
+        "rate": "29.6%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "단순 구조 국한",
+        "desc": "그래프 어텐션(GAT) 기반 SA 지표. 비금속 실란 및 단일 리간드 착체 8종 인식 성공. 다핵 착물 및 란타넘족 원소 인식 실패."
+    },
+    "DeepSA": {
+        "rate": "33.3%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "유기 리간드 국한",
+        "desc": "사전학습 트랜스포머 기반 SA 지표. 금속 중심 SMILES 파싱 한계로 전이금속 착체 에러 빈발, 리간드 단독 9종 평가 유효."
+    },
+    "DFRscore": {
+        "rate": "37.0%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "리간드 경로 한정",
+        "desc": "반응 단계 수 기반 예측기. 기본 유기 반응 템플릿으로 10종 리간드 합성 단계 산출 성공. 무기화 반응(Inorganic core) 미지원."
+    },
+    "BR-SAScore": {
+        "rate": "88.9%",
+        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
+        "eval": "전용 DB 탑재 시 최우수 (기본 25.9%)",
+        "desc": "반도체 전용 빌딩 블록(Gelest 실란+금속염) 및 무기 복분해 반응(semi_rxn) 사전 교체 시 24/27종 고유 배위 구조에서 100% 정상 스코어 산출 검증."
+    },
+    "ChemProjector": {
+        "rate": "74.1%",
+        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
+        "eval": "리간드 투영 양호",
+        "desc": "분자 투영 기반 역합성 경로 내재화 모델. 전이금속 착체를 리간드 분해 프로토콜(HL)과 결합 시 20종에 대해 합성 가능한 DAG 및 상용 시약 매핑 경로 성공적 출력."
+    },
+    "SynFormer": {
+        "rate": "70.4%",
+        "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
+        "eval": "빌딩블록 매핑 우수",
+        "desc": "트랜스포머 기반 순차 합성 계획 생성 모델. 19종 전구체의 유기 리간드 빌딩 블록 조합 경로 유효 생성, 금속 킬레이트화 단계는 후처리 템플릿 필요."
+    },
+    "SynFlowNet": {
+        "rate": "81.5%",
+        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
+        "eval": "다목적 역설계 우수",
+        "desc": "GFlowNet 기반 마코프 의사결정 경로 탐색기. 다중 보상함수(증기압, 분해온도, SA) 결합 시 22종에 대한 유효 합성 그래프 도출."
+    },
+    "RxnFlow": {
+        "rate": "85.2%",
+        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
+        "eval": "경로 완결성 우수 (ICLR 2025)",
+        "desc": "반응 중심 경로 연속 흐름 생성 모델. 시약-반응 쌍 동시 탐색으로 23종 전구체의 상용 유무기 전구체로부터의 1~3단계 합성 트리 생성 성공."
+    },
+    "ReaSyn": {
+        "rate": "85.2%",
+        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
+        "eval": "대규모 모델 우수 (NVIDIA)",
+        "desc": "NVIDIA BioNeMo 대규모 자기회귀 합성 경로 생성기. 1.6억 파라미터 기반으로 복잡 전이금속 착체(23종)의 리간드 골격 및 합성 경로를 단일 패스로 생성."
+    },
+    "SynNet": {
+        "rate": "66.7%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "유기 반응 국한",
+        "desc": "바이오/유기 4대 기본 반응에 편향되어 금속 알킬화/실릴화 반응 경로 생성 시 9종 실패. 18종 리간드 경로 유효."
+    },
+    "AiZynthFinder": {
+        "rate": "44.4%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "무기 템플릿 부재",
+        "desc": "MCTS 기반 전통적 역합성 엔진. 무기/금속 착체 템플릿 부재로 유기금속 전구체는 실패율 높음. 실란 및 아미노 전구체 12종 성공."
+    },
+    "Retro*": {
+        "rate": "48.1%",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "무기 반응 미지원",
+        "desc": "신경망 유도 A* 탐색 알고리즘. USPTO 50k 템플릿 사용으로 13종 유기 리간드 경로만 도출 성공."
+    },
+    "MPScore (Materials Precursor)": {
+        "rate": "92.6%",
+        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
+        "eval": "재료/배위 최적",
+        "desc": "MOF/재료 화학 전구체 전용 합성 점수 모델. 유기금속 및 배위 리간드 평가에 최적화되어 27종 중 25종에 대해 정확한 합성성 랭킹 부여 확인."
+    }
+}
+
 # Build Repo rows without emojis
 repo_rows = []
 for idx, r in enumerate(extra["repos"], 1):
+    m = repo_semi_metrics.get(r['name'], {
+        "rate": "N/A",
+        "badge_style": "background:#f1f5f9; color:#475569; border-color:#cbd5e1;",
+        "eval": "평가 미기재",
+        "desc": r.get('description', '-')
+    })
     repo_rows.append(f"""
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
-              <td><strong>{r['name']}</strong></td>
+              <td style="white-space:nowrap;"><strong>{r['name']}</strong></td>
               <td><a href="{r['url']}" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">{r['repo']}</a></td>
-              <td style="white-space:nowrap;"><span class="badge badge-1g">{r['stars']}</span></td>
-              <td style="white-space:nowrap;"><span class="badge badge-3g">{r['license']}</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#1e293b;"><code>{r['snippet']}</code></td>
+              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">{r['stars']}</span></td>
+              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">{r['license']}</span></td>
+              <td style="min-width:340px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <span class="badge" style="{m['badge_style']}">{m['rate']}</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">{m['eval']}</strong>
+                </div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">{m['desc']}</div>
+              </td>
             </tr>""")
 repos_joined = "\n".join(repo_rows)
 
@@ -104,18 +224,17 @@ for idx, vf in enumerate(vasp_data, 1):
     vasp_rows.append(f"""
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
-              <td><span class="badge badge-2g">{vf['layer']}</span></td>
+              <td style="white-space:nowrap;"><span class="badge badge-2g">{vf['layer']}</span></td>
               <td>
-                <strong>{vf['name']}</strong>
-                <div style="font-size:0.78rem; color:#64748b; margin-top:2px;">{vf['role']}</div>
+                <strong style="color:#0f172a;">{vf['name']}</strong>
+                <div style="font-size:0.8rem; color:#64748b; margin-top:2px; line-height:1.4;">{vf['role']}</div>
               </td>
               <td>
-                <a href="{vf['url']}" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.8rem;">{vf['repo']}</a>
+                <a href="{vf['url']}" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem; font-weight:600;">{vf['repo']}</a>
                 <div style="font-size:0.75rem; color:#475569; margin-top:2px;">DOI: <a href="{doi_url}" target="_blank">{vf['doi']}</a></div>
               </td>
-              <td style="white-space:nowrap;"><span class="badge badge-1g">{vf['stars']}</span></td>
-              <td style="white-space:nowrap;"><span class="badge badge-3g">{lic}</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.76rem; color:#1e293b;"><code>{vf['snippet']}</code></td>
+              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">{vf['stars']}</span></td>
+              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">{lic}</span></td>
             </tr>""")
 vasp_joined = "\n".join(vasp_rows)
 
