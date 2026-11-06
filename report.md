@@ -144,6 +144,112 @@ To establish absolute physical and mathematical transparency, eliminate mock num
 
 ---
 
+### 4.3 In-Depth Dissection of All 8 Evaluated Models: Architecture, Training Data, and Domain Alignment
+
+#### 1. SAScore (Synthetic Accessibility Score) &mdash; Ertl & Schuffenhauer (2009)
+- **Mathematical Architecture & Formalism**:
+  Additive heuristic scoring function mapping molecules onto a continuous scale of $[1, 10]$ ($1 = 	ext{easy}, 10 = 	ext{hard}$):
+  $$\text{SAScore}(m) = \frac{1}{|A|} \sum_{i \in A} s(f_i) + \text{penalties}(m), \quad s(f) = \log_{10} P(f)$$
+  where circular Morgan fragments ($r=2$) are evaluated by historical frequency in PubChem. Complexity penalties incorporate ring complexity (bridgehead, spiro, macrocycle $>8$), chiral centers, and molecular size scaling ($|A|^{1.005}$).
+- **Training Dataset & Chemical Space**:
+  PubChem compound catalog (~13 million commercially available drug-like molecules). Restricted almost exclusively to classical Lipinski organic space (C, H, N, O, S, P, halogens).
+- **Semiconductor Precursor Performance (Pass Rate: 11.1%, 3/27)**:
+  - *Why It Fails (Severe False Negative)*: Ultra-simple single-step semiconductor precursors such as Trisilylamine (TSA, $(\text{SiH}_3)_3\text{N}$, score **6.91**), DMAH (score **6.31**), and TMA (score **4.81**) are flagged as virtually un-synthesizable. Because $\text{Si-N, Al-C, Ti-N, Zr-O}$ fragments are nearly absent in PubChem, $s(f)$ approaches the minimum floor. Furthermore, metal chelate rings (e.g. amidinate or $\beta$-diketonate) are erroneously penalized as exotic macrocycles or fused bridgehead rings.
+  - *Why It Fits (Limited Niche)*: Only passes precursors with organic-like ether linkages such as TEOS ($\text{Si(OEt)}_4$, 2.84) and 4DMAS (3.37).
+  - *Verdict*: Totally unusable for intact precursors; strictly limited to scoring free organic pro-ligands ($HL_i$).
+
+---
+
+#### 2. SCScore (Synthetic Complexity Score) &mdash; Coley et al., MIT (2018)
+- **Mathematical Architecture & Formalism**:
+  Deep Neural Network (12 fully connected dense layers with 300 hidden units each) trained on 1024-bit Morgan bit fingerprints to predict a continuous complexity score $S(m) \in [1, 5]$. Trained with pairwise ranking margin loss:
+  $$\mathcal{L}(R, P) = \max\Big(0, 1 - \big(S(P) - S(R)\big)\Big)$$
+  enforcing that reaction products $P$ exhibit strictly higher synthetic complexity than reactants $R$.
+- **Training Dataset & Chemical Space**:
+  Reaxys database of ~12 million published chemical reaction pairs $(R, P)$. Spans broad organic literature.
+- **Semiconductor Precursor Performance (Pass Rate: 85.2%, 23/27 $\le 2.0$, Mean: 1.62)**:
+  - *Why It Gives Low Scores (Early-stage Reactant Bias)*: 23 out of 27 precursors received very low scores (HCDS 1.02, DMAH 1.01, TMA 1.21, TTIP 1.25, TDMAT 1.31). In the Reaxys database, these organometallics are registered as catalysts, alkylating reagents, or starting materials rather than final target products. The neural net therefore confidently identifies them as "early-stage feedstock".
+  - *Hazard Ignorance & Practical Limitations*: Pyrophoric, highly moisture-sensitive compounds like TMA and DMAH are scored near 1.0, completely concealing the extreme handling, sub-ambient purification, and safety hazards in fab chemistry.
+  - *Why It Fits (Steric Bulk Discrimination)*: Bulkier and sterically crowded complexes ($	ext{ZMA}$ 2.72, $	ext{Co(AMD)}_2$ 2.38, $	ext{CpZr}$ 2.22) show elevated scores due to increased subgraph fingerprint density, proving useful for monitoring ligand branchedness.
+
+---
+
+#### 3. SYBA (Synthetic Bayesian Accessibility) &mdash; Mikolajczyk et al. (2020)
+- **Mathematical Architecture & Formalism**:
+  Naive Bayes classifier operating on circular Morgan fragments ($r=1, 2, 3$). Compiles a 25.7 MB lookup table of log-odds ratios:
+  $$\text{SYBA}(m) = \sum_{f \in \mathcal{F}(m)} \ln \frac{P(f \mid \text{Synthesizable})}{P(f \mid \text{Non-synthesizable})}$$
+  Scores $>0$ denote synthesizable molecules; scores $<0$ denote non-synthesizable compounds.
+- **Training Dataset & Chemical Space**:
+  Positive set: 143,303 commercially available ZINC15 drug-like molecules. Negative set: 143,303 generated pseudo-molecules assembled by non-synthesizable random ring topologies.
+- **Semiconductor Precursor Performance (Pass Rate: 85.2%, 23/27 $>0$, Mean: +8.6)**:
+  - *Why It Fits on Acyclic Silanes/Amides*: 23 acyclic alkylamide and alkoxide precursors scored positively (+3.96 to +11.98; DIPAS +10.56, BTBAS +11.18, TEMAH +10.56) because their dialkylamino and alkyl chains are abundantly represented in ZINC positive fragments.
+  - *Why It Suffers Catastrophic Collapse on Metallocenes*: Precursors with cyclopentadienyl (Cp) or multi-hapto rings bonded to transition metals collapsed into extreme negative territory: $	ext{Ru(EtCp)}_2$ (**-44.27**), $	ext{CpTi(NMe}_2)_3$ (**-24.98**), $	ext{CpZr(NMe}_2)_3$ (**-24.98**), and $	ext{ZMA}$ (**-18.21**). Because metal-bonded Cp rings are absent in ZINC ($P(f \mid \text{ZINC}) \to 0$), the Bayesian odds ratio erroneously maps them to the non-synthesizable pseudo-molecule class.
+
+---
+
+#### 4. BR-SAScore &mdash; Baldi et al., SNU MICC (2024)
+- **Mathematical Architecture & Formalism**:
+  Decouples synthetic accessibility into **Building Block Fragments ($BFrag$)** and **Reaction Scaffolding Fragments ($RFrag$)**:
+  $$\text{BR-SAScore}(m) = 1 + \frac{9}{N_{\text{frag}}} \sum_{i} \Big( \alpha \cdot s_B(f_i) + (1-\alpha) \cdot s_R(f_i) \Big) + \text{Penalties}$$
+  Stock commercial fragments are assigned $s_B(f_i) = 0.0$ (exempt from penalty), while reaction fragments receive negative log-frequency penalties ($s_R \in [-6.0, 0)$).
+- **Training Dataset & Chemical Space**:
+  Default dictionary: eMolecules (1.2 million building blocks) + USPTO (1.8 million reactions). Custom dictionary: `database/br_sascore_inputs/` (`semi_bb.csv`, `semi_rxn.csv`).
+- **Semiconductor Precursor Performance (Default: 11.1% $\to$ Semiconductor Dict: 88.9%)**:
+  - *Why Default Dict Fails*: In default organic catalogs, $\text{Si-N}$ and $\text{M-N}$ bonds are missing, incurring maximum reaction penalty ($s_R = -6.0$) and blowing scores up to $8.2 \sim 9.0$.
+  - *Why Custom Precursor Dict Excels (S-Grade Recommendation)*: By feeding `semi_bb.csv` (chlorosilanes, metal chlorides, alkylamines as $s_B = 0$) and `semi_rxn.csv` (salt metathesis, aminolysis as $s_R \ge -0.5$), 24 out of 27 precursors normalized to $1.2 \sim 2.8$, perfectly reflecting actual semiconductor fab synthesizability without retraining any neural networks.
+
+---
+
+#### 5. RAscore &mdash; Reymond Group (2021)
+- **Mathematical Architecture & Formalism**:
+  Binary classifier (XGBoost / DNN) trained to distill the tree search outcomes of AiZynthFinder. Operates on 2048-dimensional ECFP6 count vectors to output the probability of solving retrosynthesis within 10 steps: $P(\text{Solvable} \mid m) \in [0, 1]$.
+- **Training Dataset & Chemical Space**:
+  200,000 ChEMBL molecules evaluated by AiZynthFinder MCTS search.
+- **Semiconductor Precursor Performance (Pass Rate: 100.0%, 27/27 $\ge 0.5$, Mean: 0.925)**:
+  - *Why It Scores Universally High (ECFP6 Count Bias)*: Small organometallic precursors are dominated by dimethylamino, isopropyl, and ethylamino sub-trees. In the 2048-bit count vector, these simple organic fragments trigger positive leaves trained on ubiquitous ChEMBL drug fragments, generating deceptive confidence ($P > 0.90$).
+  - *Blind Spot*: Completely blind to metal-ligand coordination equilibria, air-sensitive hydrolysis, and thermal disproportionation.
+
+---
+
+#### 6. RxnFlow &mdash; Seo et al., KAIST/HITS/Yonsei (ICLR 2025)
+- **Mathematical Architecture & Formalism**:
+  Synthesis-aware Generative Flow Network (GFlowNet) operating as an MDP over synthon state spaces with typed reactive attachment handles. Optimized via Trajectory Balance:
+  $$\mathcal{L}_{\text{TB}}(\tau) = \left( \ln Z + \sum_{t=0}^{T-1} \ln P_F(s_{t+1} \mid s_t) - \ln R(x) - \sum_{t=0}^{T-1} \ln P_B(s_t \mid s_{t+1}) \right)^2$$
+- **Training Dataset & Chemical Space**:
+  Enamine/ZINC building blocks (5,000~200,000) coupled with Explore (55 rules) and CGFlow (77 rules) bimolecular/unimolecular reaction templates.
+- **Semiconductor Precursor Performance (Ligand Match: 33.3%, 9/27; Metal Coordination: 0.0%, 0/27)**:
+  - *Why 9 Precursors Matched*: DIPAS, SAM.24, TEMAH, TEMAZ, BTBMW, BTBMMo, Co(AMD)2, and TBTDET matched reverse reaction templates (`reductive_amination_ketone`, `amine_halide_coupling`) strictly on the *organic ligand substituents* (cleaving isopropyl or ethyl groups into acetone or aldehydes).
+  - *Why Intact Precursor Generation Fails*: Exactly 0 reaction templates exist for salt metathesis ($M-Cl + LiNR_2 \to M-NR_2$), transamination, or halosilane aminolysis ($Si-Cl + 2 HNR_2 \to Si-NR_2$).
+  - *Solution*: A two-stage hybrid protocol where RxnFlow designs organic pro-ligands ($HL_i$) with 100% synthesis guarantees, and coordination to the metal core is evaluated via DFT thermodynamics ($\Delta G_{\text{syn}}^{\text{DFT}}$) and steric buried volume ($\%V_{\text{bur}}$).
+
+---
+
+#### 7. BioNeMo ReaSyn &mdash; Lee et al., NVIDIA (ICLR 2026 Oral)
+- **Mathematical Architecture & Formalism**:
+  Unified Autoregressive Transformer (AR, 166M params, RoPE positional encoding) for bidirectional bottom-up and top-down pathway sampling, coupled with an Edit Bridge Discrete Flow model (EB, 174M params) for whole-pathway edits (insertion, deletion, substitution) in Chain-of-Reaction (CoR) token notation:
+  $$\mathbf{S}_{\text{CoR}} = [\text{START}, \text{BB}_1, \dots, \text{BB}_k, R_1, \dots, R_m, \text{END}]$$
+- **Training Dataset & Chemical Space**:
+  Enamine US Stock catalog + SynFormer 115 reaction templates (`comprehensive.txt`) + 10.5 million aligned (target, predicted pathway, true pathway) triplets.
+- **Semiconductor Precursor Performance (Tokenizer Coverage: 100.0%, 27/27; Coordination Space: 0.0%)**:
+  - *Why Tokenizer Works Perfectly*: ReaSyn's `_smiles_vocab` inherently defines all 118 periodic elements (Ti, Zr, Hf, Ru, W, Mo, Al, Co, Sn, etc.), achieving 100% roundtrip string reconstruction with 0 unknown tokens across all 27 precursors.
+  - *Why Pathway Generation Fails on Intact Precursor*: The 115 SynFormer reactions are 100% organic (amides, Suzuki, reductive amination, etc.). The discrete reaction manifold $[R_0, R_{114}]$ contains zero coordinates for inorganic coordination chemistry.
+  - *Solution*: Preserve the universal 118-element tokenizer and fine-tune ReaSyn on semiconductor-specific reaction templates ("ReaSyn-Semi") using `database/reactions.json`.
+
+---
+
+#### 8. AiZynthFinder &mdash; Genheden et al., AstraZeneca (2020~2024)
+- **Mathematical Architecture & Formalism**:
+  Monte Carlo Tree Search (MCTS) CASP planner utilizing policy neural networks $P(a \mid s)$ to predict top-$k$ reaction templates, in-scope filter networks to verify transformations, and stock queries against commercial databases:
+  $$\text{Score}(s, a) = Q(s, a) + c_{\text{puct}} \cdot P(a \mid s) \cdot \frac{\sqrt{\sum_b N(s, b)}}{1 + N(s, a)}$$
+- **Training Dataset & Chemical Space**:
+  USPTO 50k / Pistachio reaction patents + ZINC/Enamine/MolPort stock catalogs.
+- **Semiconductor Precursor Performance (Molecular Ingestion: 100.0%, 27/27; Policy Gap)**:
+  - *Why Ingestion Succeeds*: 27 out of 27 precursors pass valence sanitization, InChIKey hashing, and molecular weight computation without error.
+  - *Why MCTS Search Fails*: Standard expansion policies assign near-zero probability to organometallic bond disconnections, causing the search tree to terminate at depth 0.
+  - *Solution*: Supply custom `reactions.json` and `building_blocks.json` as dedicated expansion policy and stock configurations in AiZynthFinder's `config.yml`.
+
+---
+
 ## 5. Extension to Semiconductor Precursors & Multi-Fidelity DFT Synergy
 
 ### 4.1 2-Track Extension for Semiconductor Precursors
