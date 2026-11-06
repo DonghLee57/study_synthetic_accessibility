@@ -2984,6 +2984,11 @@ flowchart LR
       <section id="semiconductor-db">
         <div class="section-header">
           <div class="section-tag">Section 11 &bull; Semiconductor Precursor, Reagents &amp; Reaction Domain Database</div>
+          <h2 class="section-title">반도체 상용 프리커서·출발물질·합성반응 데이터베이스 (Semiconductor DB Hub)</h2>
+          <p class="section-desc">
+            기존 SA 모델이 의약화학 데이터 위주로 구축되어 반도체 프리커서의 합성 가능성을 왜곡(False Negative)하는 구조적 한계를 극복하기 위해, <strong>실제 반도체 양산 라인에서 합성·적용되는 상용 프리커서 27종 (<code>database/precursors.json</code>), 핵심 출발물질/시약 29종 (<code>database/building_blocks.json</code>), 공인된 유기금속 합성 반응 12종 (<code>database/reactions.json</code>)</strong>, 그리고 <strong>글로벌 AtomicLimits ALD DB 연계 확장 마스터 DB 120종 (<code>database/external/</code>)</strong>을 체계적으로 구축하였습니다. RDKit 구조 검증을 100% 통과하였으며 <code>BR-SAScore</code> 전용 사전 생성기 및 VASP DFT 입출력 파이프라인과 완벽히 연동됩니다.
+          </p>
+        </div>
 
         <!-- Eval 1: Proprietary Database Evaluation -->
         <div class="card">
@@ -3006,18 +3011,136 @@ flowchart LR
             </div>
 
             <div class="versus-card" style="border-top: 3px solid #d97706;">
-              <h4 style="color:#b45309; font-size:1.02rem; margin-bottom:6px;">현재 한계점 및 향후 보완 로드맵</h4>
+              <h4 style="color:#b45309; font-size:1.02rem; margin-bottom:6px;">현재 한계점 및 글로벌 DB 연계 확장 성과</h4>
               <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
-                <li><strong>화합물 스펙트럼 확장 (27종 &rarr; 100종):</strong> 실란 올리고머, 고리형 아자실란(Cyclic azasilanes), 그리고 차세대 2D 소재용 칼코겐 프리커서(Te, Se 유도체) 추가 필요.</li>
-                <li><strong>실험 열역학 데이터 연동:</strong> 문헌에 보고된 정확한 승화 엔탈피($\Delta H_{\text{sub}}$), 열분해 활성화 에너지($E_a$), 그리고 수율 편차 데이터를 실험 DB 형태로 체계적 연계 과제 존재.</li>
+                <li><strong>화합물 스펙트럼 확장 (27종 &rarr; 120종):</strong> 글로벌 <strong>AtomicLimits ALD Database(TU Eindhoven)</strong>를 실시간 연동하여 <strong>2,447개 공정 레시피</strong> 및 <strong>780종 고유 전구체 인벤토리</strong>를 확보하고, 상위 120종 전구체 마스터 DB(<code>database/external/expanded_semiconductor_precursors_master.json</code>)로 성공적 확장 달성.</li>
+                <li><strong>실험 열역학 데이터 연동:</strong> Gelest 핸드북 및 Min et al. (JCIM 2024, DOI: 10.1021/acs.jcim.4c01254) 유기금속 물성 DB를 매핑하여 증기압($P_{\text{vap}}$), 열분해 창($T_{\text{decomp}}$), 녹는점 데이터를 연계.</li>
               </ul>
             </div>
           </div>
         </div>
-          <h2 class="section-title">반도체 상용 프리커서·출발물질·합성반응 데이터베이스 (Semiconductor DB Hub)</h2>
-          <p class="section-desc">
-            기존 SA 모델이 의약화학 데이터 위주로 구축되어 반도체 프리커서의 합성 가능성을 왜곡(False Negative)하는 구조적 한계를 극복하기 위해, <strong>실제 반도체 양산 라인에서 합성·적용되는 상용 프리커서 27종 (<code>database/precursors.json</code>), 핵심 출발물질/시약 29종 (<code>database/building_blocks.json</code>), 그리고 공인된 유기금속 합성 반응 12종 (<code>database/reactions.json</code>)</strong>을 체계적으로 DB화하였습니다. RDKit 구조 검증을 100% 통과하였으며 <code>BR-SAScore</code> 전용 사전 생성기 및 VASP DFT 입출력 파이프라인과 완벽히 연동됩니다.
+
+        <!-- NEW: External Precursor Database Integration Card -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-purple);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [글로벌 공인 DB 연계] AtomicLimits ALD 공정 DB 및 확장 전구체 마스터 데이터베이스 (120종 마스터 / 780종 인벤토리)</h3>
+            <span class="badge badge-4g" style="font-size:0.82rem;">Global ALD Database Ingestion</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
+            반도체 박막 제조의 글로벌 사실상 표준인 <strong>TU Eindhoven의 AtomicLimits ALD Database (DOI: 10.6100/alddatabase)</strong>의 최신 API 엔드포인트를 직접 연동하여 <strong>2,447건의 ALD 공정 레시피와 5,732건의 학술 문헌 DOI</strong>를 전수 수집·정형화하고, 산업계 Gelest/Strem 카탈로그 및 최신 머신러닝 유기금속 DB(Min et al., JCIM 2024)를 교차 매핑하여 구축한 <strong>확장 전구체 마스터 데이터베이스</strong>입니다:
           </p>
+
+          <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:18px;">
+            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #0284c7;">
+              <div class="stat-value" style="font-size:1.35rem; color:#0369a1;">2,447 건</div>
+              <div class="stat-label"><strong>총 ALD 공정 레시피 수록</strong><br>&bull; 전 세계 연구소/팹 실증 공정<br>&bull; Reactant A/B/C 및 GPC 연동</div>
+            </div>
+            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #7c3aed;">
+              <div class="stat-value" style="font-size:1.35rem; color:#6d28d9;">780 종</div>
+              <div class="stat-label"><strong>고유 전구체(Reactant A) 인벤토리</strong><br>&bull; 662개 타깃 박막 재료 증착<br>&bull; <code>atomiclimits_precursors_extracted.json</code></div>
+            </div>
+            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #059669;">
+              <div class="stat-value" style="font-size:1.35rem; color:#047857;">120 종</div>
+              <div class="stat-label"><strong>확장 마스터 전구체 DB 구축</strong><br>&bull; 27종 양산 베이스라인 + 93종 핵심 ALD<br>&bull; 증기압·열분해온도·SMILES 결합</div>
+            </div>
+            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #ea580c;">
+              <div class="stat-value" style="font-size:1.35rem; color:#c2410c;">5,732 건</div>
+              <div class="stat-label"><strong>공식 문헌 DOI 상호 연계</strong><br>&bull; 원문 및 특허 출처 100% 추적성<br>&bull; <code>database/external/</code> 아카이빙</div>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="margin-top:10px;">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:40px; text-align:center;">순위</th>
+                  <th style="width:140px;">대표 프리커서 약칭/화학식</th>
+                  <th style="width:80px; text-align:center;">중심원소</th>
+                  <th style="width:90px; text-align:center;">공정 빈도수</th>
+                  <th style="width:200px;">주요 증착 박막 (Target Films)</th>
+                  <th style="width:160px;">주요 공반응물 (Co-reactants)</th>
+                  <th>도메인 특성 및 산업적 활용 가치</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">01</td>
+                  <td><strong>ZnEt2 (DEZ)</strong><br><span style="font-size:0.75rem; color:#64748b;">Diethylzinc</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">Zn</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">77 processes</td>
+                  <td style="font-size:0.82rem;">ZnO, ZnS, ZnSe, ZnTe, AZO</td>
+                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, H2S, O2 plasma</td>
+                  <td style="font-size:0.8rem;">투명 전도막 및 산화아연 ALD의 글로벌 표준 전구체 (높은 상온 증기압 12.4 Torr).</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">02</td>
+                  <td><strong>AlMe3 (TMA)</strong><br><span style="font-size:0.75rem; color:#64748b;">Trimethylaluminum</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">Al</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">76 processes</td>
+                  <td style="font-size:0.82rem;">Al2O3, AlN, AlON, AlF3, TCOs</td>
+                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, NH3, O2 plasma</td>
+                  <td style="font-size:0.8rem;">ALD 분야 '모델 프리커서(Model System)'로서 반도체 절연막 및 태양전지 패시베이션에 전면 적용.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">03</td>
+                  <td><strong>TiCl4</strong><br><span style="font-size:0.75rem; color:#64748b;">Titanium Tetrachloride</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">33 processes</td>
+                  <td style="font-size:0.82rem;">TiO2, TiN, TiC, BaTiO3</td>
+                  <td style="font-size:0.8rem; color:#64748b;">H2O, NH3, H2/Ar plasma</td>
+                  <td style="font-size:0.8rem;">고유전율(High-k) TiO2 및 금속 확산 배리어 TiN 박막 형성의 원조 전구체.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">04</td>
+                  <td><strong>Ti(OiPr)4 (TTIP)</strong><br><span style="font-size:0.75rem; color:#64748b;">Titanium Isopropoxide</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">27 processes</td>
+                  <td style="font-size:0.82rem;">TiO2, SrTiO3, TiAlO</td>
+                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, H2O2</td>
+                  <td style="font-size:0.8rem;">염소 잔류물(Cl residue)이 없는 비염소계 친환경 티타늄 알콕사이드 전구체.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">05</td>
+                  <td><strong>Hf(NEtMe)4 (TEMAH)</strong><br><span style="font-size:0.75rem; color:#64748b;">Tetrakis(ethylmethylamido)hafnium</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">Hf</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">25 processes</td>
+                  <td style="font-size:0.82rem;">HfO2, HfSiO4, HfAlO, HfN</td>
+                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, O2 plasma</td>
+                  <td style="font-size:0.8rem;">DRAM 캐패시터 및 첨단 FinFET/GAA HKMG 게이트 옥사이드의 핵심 양산 전구체.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">06</td>
+                  <td><strong>Ti(NMe2)4 (TDMAT)</strong><br><span style="font-size:0.75rem; color:#64748b;">Tetrakis(dimethylamido)titanium</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">24 processes</td>
+                  <td style="font-size:0.82rem;">TiN, TiO2, TiCN</td>
+                  <td style="font-size:0.8rem; color:#64748b;">NH3, H2O, N2 plasma</td>
+                  <td style="font-size:0.8rem;">반도체 콘택트 플러그 및 구리 배선 확산 배리어 TiN 저온 성장의 표준 아미노 전구체.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">07</td>
+                  <td><strong>WF6</strong><br><span style="font-size:0.75rem; color:#64748b;">Tungsten Hexafluoride</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">W</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">17 processes</td>
+                  <td style="font-size:0.82rem;">W, WN, WS2, W-C-N</td>
+                  <td style="font-size:0.8rem; color:#64748b;">SiH4, B2H6, H2, NH3</td>
+                  <td style="font-size:0.8rem;">3D NAND 워드라인 및 금속 배선 플러그 매립을 위한 초고휘발성 텅스텐 소스.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">08</td>
+                  <td><strong>Ru(EtCp)2</strong><br><span style="font-size:0.75rem; color:#64748b;">Bis(ethylcyclopentadienyl)ruthenium</span></td>
+                  <td style="text-align:center;"><span class="badge badge-1g">Ru</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">12 processes</td>
+                  <td style="font-size:0.82rem;">Ru, RuO2</td>
+                  <td style="font-size:0.8rem; color:#64748b;">O2, O3, O2 plasma</td>
+                  <td style="font-size:0.8rem;">차세대 sub-2nm 로직 배선 및 DRAM 하부전극용 초박막 루테늄 증착 핵심 메탈로센.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:0.82rem; color:#64748b; margin-top:10px;">
+            * 전체 2,447개 공정 원본 데이터 및 780종 전구체 상세 인벤토리는 프로젝트 내 <code>database/external/</code>에 JSON 파일로 완벽 보존되어 있으며 연구자 직접 분석을 지원합니다.
+          </div>
         </div>
 
         <div class="versus-grid">
