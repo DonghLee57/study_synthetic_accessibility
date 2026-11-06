@@ -21,10 +21,19 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\SAScore_2009.pdf",
+      "file_path": "downloaded_papers/SAScore_2009.pdf",
       "size_kb": 1242,
-      "source": "OpenAccess_Journal"
-    }
+      "source": "OpenAccess_Journal",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 2",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "SYBA_2020",
@@ -48,10 +57,18 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\SYBA_2020.pdf",
+      "file_path": "downloaded_papers/SYBA_2020.pdf",
       "size_kb": 3191,
-      "source": "OpenAccess_Journal"
-    }
+      "source": "OpenAccess_Journal",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "SCScore_2018",
@@ -78,7 +95,14 @@
       "file_path": null,
       "size_kb": 0,
       "source": "Subscription_ACS"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "RAscore_2021",
@@ -102,10 +126,18 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\RAscore_2021.pdf",
+      "file_path": "downloaded_papers/RAscore_2021.pdf",
       "size_kb": 322,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "RetroGNN_2022",
@@ -129,10 +161,17 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\RetroGNN_2022.pdf",
+      "file_path": "downloaded_papers/RetroGNN_2022.pdf",
       "size_kb": 2400,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 5"
+    ]
   },
   {
     "id": "GASA_2022",
@@ -159,7 +198,14 @@
       "file_path": null,
       "size_kb": 0,
       "source": "Subscription_ACS"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "DeepSA_2023",
@@ -183,10 +229,18 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\DeepSA_2023.pdf",
+      "file_path": "downloaded_papers/DeepSA_2023.pdf",
       "size_kb": 4058,
-      "source": "OpenAccess_Journal"
-    }
+      "source": "OpenAccess_Journal",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "DFRscore_2023",
@@ -213,7 +267,14 @@
       "file_path": null,
       "size_kb": 0,
       "source": "Subscription_ACS"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "BR_SAScore_2024",
@@ -237,10 +298,20 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+      "file_path": "downloaded_papers/BR_SAScore_2024.pdf",
       "size_kb": 1351,
-      "source": "OpenAccess_Journal"
-    }
+      "source": "OpenAccess_Journal",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 8",
+      "Section 11",
+      "Section 12"
+    ]
   },
   {
     "id": "ChemProjector_2024",
@@ -264,10 +335,19 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\ChemProjector_2024.pdf",
+      "file_path": "downloaded_papers/ChemProjector_2024.pdf",
       "size_kb": 4788,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12",
+      "Section 13"
+    ]
   },
   {
     "id": "SynFormer_2025",
@@ -291,10 +371,19 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\SynFormer_2025.pdf",
+      "file_path": "downloaded_papers/SynFormer_2025.pdf",
       "size_kb": 3651,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12",
+      "Section 13"
+    ]
   },
   {
     "id": "SynFlowNet_2025",
@@ -318,10 +407,19 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\SynFlowNet_2025.pdf",
+      "file_path": "downloaded_papers/SynFlowNet_2025.pdf",
       "size_kb": 8060,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12",
+      "Section 13"
+    ]
   },
   {
     "id": "RxnFlow_2025",
@@ -345,10 +443,19 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\RxnFlow_2025.pdf",
+      "file_path": "downloaded_papers/RxnFlow_2025.pdf",
       "size_kb": 4912,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12",
+      "Section 13"
+    ]
   },
   {
     "id": "ReaSyn_2025",
@@ -372,10 +479,19 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\ReaSyn_2025.pdf",
+      "file_path": "downloaded_papers/ReaSyn_2025.pdf",
       "size_kb": 2479,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12",
+      "Section 13"
+    ]
   },
   {
     "id": "SynNet_2022",
@@ -399,10 +515,18 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\SynNet_2022.pdf",
+      "file_path": "downloaded_papers/SynNet_2022.pdf",
       "size_kb": 3079,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "Gao_Coley_Benchmark_2020",
@@ -426,10 +550,17 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\Gao_Coley_Benchmark_2020.pdf",
+      "file_path": "downloaded_papers/Gao_Coley_Benchmark_2020.pdf",
       "size_kb": 4955,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 4",
+      "Section 5",
+      "Section 12"
+    ]
   },
   {
     "id": "AiZynthFinder_2020",
@@ -453,10 +584,18 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\AiZynthFinder_2020.pdf",
+      "file_path": "downloaded_papers/AiZynthFinder_2020.pdf",
       "size_kb": 1115,
-      "source": "OpenAccess_Journal"
-    }
+      "source": "OpenAccess_Journal",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 3",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "RetroStar_2020",
@@ -480,10 +619,17 @@
     },
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\RetroStar_2020.pdf",
+      "file_path": "downloaded_papers/RetroStar_2020.pdf",
       "size_kb": 3244,
-      "source": "ArXiv_Preprint"
-    }
+      "source": "ArXiv_Preprint",
+      "ext": "pdf"
+    },
+    "sections": [
+      "Section 1",
+      "Section 4",
+      "Section 7",
+      "Section 12"
+    ]
   },
   {
     "id": "V_SYNTH_2022",
@@ -510,7 +656,12 @@
       "file_path": null,
       "size_kb": 0,
       "source": "Subscription_Nature"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 5",
+      "Section 11"
+    ]
   },
   {
     "id": "Kulik_TMC_SA_2022",
@@ -536,7 +687,15 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 5",
+      "Section 8",
+      "Section 9",
+      "Section 11",
+      "Section 13"
+    ]
   },
   {
     "id": "MPScore_Jelfs_2021",
@@ -562,7 +721,15 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 5",
+      "Section 7",
+      "Section 8",
+      "Section 11",
+      "Section 12"
+    ]
   },
   {
     "id": "AS_ALD_Precursor_ML_2023",
@@ -578,7 +745,7 @@
     "role": "Precursor_ALD",
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\AS_ALD_Precursor_ML_2023.pdf",
+      "file_path": "downloaded_papers/AS_ALD_Precursor_ML_2023.pdf",
       "size_kb": 2563,
       "source": "Springer",
       "ext": "pdf",
@@ -588,7 +755,12 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Machine learning-based exploration of molecular design descriptors for area-selective atomic layer deposition (AS-ALD) precursors"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 8",
+      "Section 13"
+    ]
   },
   {
     "id": "ALD_MLIP_Precursor_2024",
@@ -604,7 +776,7 @@
     "role": "Precursor_ALD",
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\ALD_MLIP_Precursor_2024.pdf",
+      "file_path": "downloaded_papers/ALD_MLIP_Precursor_2024.pdf",
       "size_kb": 6267,
       "source": "OpenAccess_Elsevier",
       "ext": "pdf",
@@ -614,7 +786,14 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 8",
+      "Section 9",
+      "Section 10",
+      "Section 13"
+    ]
   },
   {
     "id": "ALD_ML_ChemMater_2026",
@@ -630,7 +809,7 @@
     "role": "Precursor_ALD",
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\ALD_ML_ChemMater_2026.pdf",
+      "file_path": "downloaded_papers/ALD_ML_ChemMater_2026.pdf",
       "size_kb": 3091,
       "source": "ACS_ChemMater",
       "ext": "pdf",
@@ -640,7 +819,13 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 8",
+      "Section 9",
+      "Section 13"
+    ]
   },
   {
     "id": "Aminosilane_SiO2_ALD_DFT_2017",
@@ -656,7 +841,7 @@
     "role": "Precursor_ALD",
     "pdf_status": {
       "downloaded": true,
-      "file_path": "downloaded_papers\\Aminosilane_SiO2_ALD_DFT_2017.pdf",
+      "file_path": "downloaded_papers/Aminosilane_SiO2_ALD_DFT_2017.pdf",
       "size_kb": 736,
       "source": "OpenAccess_RSC",
       "ext": "pdf",
@@ -666,7 +851,13 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 8",
+      "Section 9",
+      "Section 11"
+    ]
   },
   {
     "id": "Oh_ASD_Precursor_2021",
@@ -692,7 +883,11 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Role of Precursor Choice on Area-Selective Atomic Layer Deposition"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 13"
+    ]
   },
   {
     "id": "Tonner_ASD_Precursor_2024",
@@ -707,18 +902,22 @@
     "source_type": "Wiley_JCC",
     "role": "Precursor_ASD",
     "pdf_status": {
-      "downloaded": false,
-      "file_path": null,
-      "ext": "doi",
-      "label": "DOI 이동",
-      "size_kb": 0,
-      "source": "Wiley_Subscription"
+      "downloaded": true,
+      "file_path": "downloaded_papers/Tonner_ASD_Precursor_2024.xml",
+      "ext": "xml",
+      "label": "Full-Text XML",
+      "size_kb": 201,
+      "source": "PMC_EuropePMC_XML"
     },
     "verification": {
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Precursor Design Principles for Area-Selective Atomic Layer Deposition: Quantifying the Role of Lewis Acidity, Steric Repulsion, and Dimerization"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 13"
+    ]
   },
   {
     "id": "Mackus_ASD_Selectivity_2019",
@@ -733,18 +932,22 @@
     "source_type": "ACS_ChemMater",
     "role": "Precursor_ASD",
     "pdf_status": {
-      "downloaded": false,
-      "file_path": null,
-      "ext": "doi",
-      "label": "DOI 이동",
-      "size_kb": 0,
-      "source": "ACS_Subscription"
+      "downloaded": true,
+      "file_path": "downloaded_papers/Mackus_ASD_Selectivity_2019.xml",
+      "ext": "xml",
+      "label": "Full-Text XML",
+      "size_kb": 146,
+      "source": "PMC_EuropePMC_XML"
     },
     "verification": {
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 13"
+    ]
   },
   {
     "id": "Parsons_ASD_Fundamentals_2020",
@@ -770,7 +973,11 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Area-Selective Deposition: Fundamentals, Applications, and Future Outlook"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 13"
+    ]
   },
   {
     "id": "Ong_Pymatgen_2013",
@@ -785,18 +992,22 @@
     "source_type": "Elsevier_CMS",
     "role": "VASP_Framework",
     "pdf_status": {
-      "downloaded": false,
-      "file_path": null,
-      "ext": "doi",
-      "label": "DOI 이동",
-      "size_kb": 0,
-      "source": "Elsevier_Subscription"
+      "downloaded": true,
+      "file_path": "downloaded_papers/Ong_Pymatgen_2013.pdf",
+      "ext": "pdf",
+      "label": "PDF 열람",
+      "size_kb": 1357,
+      "source": "eScholarship_UC_Berkeley"
     },
     "verification": {
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Python Materials Genomics (pymatgen): A robust, open-source python library for materials analysis"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 10"
+    ]
   },
   {
     "id": "Rosen_Atomate2_2024",
@@ -822,7 +1033,11 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "atomate2: Modular computational materials science workflows"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 10"
+    ]
   },
   {
     "id": "Uhrin_AiiDA_2021",
@@ -837,18 +1052,22 @@
     "source_type": "Elsevier_CMS",
     "role": "VASP_Framework",
     "pdf_status": {
-      "downloaded": false,
-      "file_path": null,
-      "ext": "doi",
-      "label": "DOI 이동",
-      "size_kb": 0,
-      "source": "Elsevier_Subscription"
+      "downloaded": true,
+      "file_path": "downloaded_papers/Uhrin_AiiDA_2021.pdf",
+      "ext": "pdf",
+      "label": "PDF 열람",
+      "size_kb": 925,
+      "source": "arXiv_OpenAccess"
     },
     "verification": {
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Workflows and automation in AiiDA: Managing computational materials science"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 10"
+    ]
   },
   {
     "id": "Gautier_Architector_2023",
@@ -874,7 +1093,13 @@
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 9",
+      "Section 10",
+      "Section 13"
+    ]
   },
   {
     "id": "Hermes_Sella_2022",
@@ -889,17 +1114,23 @@
     "source_type": "ACS_JCTC",
     "role": "VASP_Framework",
     "pdf_status": {
-      "downloaded": false,
-      "file_path": null,
-      "ext": "doi",
-      "label": "DOI 이동",
-      "size_kb": 0,
-      "source": "ACS_Subscription"
+      "downloaded": true,
+      "file_path": "downloaded_papers/Hermes_Sella_2022.pdf",
+      "ext": "pdf",
+      "label": "PDF 열람",
+      "size_kb": 2963,
+      "source": "arXiv_OpenAccess"
     },
     "verification": {
       "verified": true,
       "verified_by": "CrossRef",
       "verified_title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces"
-    }
+    },
+    "sections": [
+      "Section 1",
+      "Section 9",
+      "Section 10",
+      "Section 13"
+    ]
   }
 ]

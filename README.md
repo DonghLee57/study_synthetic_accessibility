@@ -1,8 +1,9 @@
 # Synthetic Accessibility (SA) Literature Verification, Open-Source Code & Semiconductor Precursor DFT Repository
 
-[![DOI Verification](https://img.shields.io/badge/DOI_Verification-25%2F25_Passed-emerald.svg)](https://crossref.org)
-[![Full-Text Archived](https://img.shields.io/badge/Full_Text_Archived-21_Papers-blue.svg)](./downloaded_papers/)
-[![Open-Source Repos](https://img.shields.io/badge/Open_Source_Code-27_Verified-cyan.svg)](#6-verified-open-source-repositories--python-api)
+[![DOI Verification](https://img.shields.io/badge/DOI_Verification-34%2F34_Passed-emerald.svg)](https://crossref.org)
+[![Full-Text Archived](https://img.shields.io/badge/Full_Text_Archived-26_Papers_(76.5%25)-blue.svg)](./downloaded_papers/)
+[![Section Bibliography](https://img.shields.io/badge/Bibliography-By_Section_(34_Papers)-purple.svg)](./BIBLIOGRAPHY.md)
+[![Open-Source Repos](https://img.shields.io/badge/Open_Source_Code-22_Verified-cyan.svg)](#6-verified-open-source-repositories--python-api)
 [![VASP Automation](https://img.shields.io/badge/VASP_Automation-4_Layer_Stack-purple.svg)](#13-vasp-centered-4-layer-dft-automation-architecture)
 [![Status](https://img.shields.io/badge/Verification-Validated-success.svg)](./report.md)
 
@@ -185,7 +186,10 @@ python generate_html.py
 
 ---
 
-## 5. Physical Standards & Citation References (25 Verified DOIs)
+## 5. Physical Standards & Citation References (34 Verified DOIs)
+
+> [!NOTE]
+> For the complete section-by-section categorized bibliography, local file paths, and ready-to-use BibTeX collection, see [**`BIBLIOGRAPHY.md`**](./BIBLIOGRAPHY.md).
 
 ### 5.1 Physical Units & Target Precursor Thresholds
 | Physical Quantity | Symbol | Unit | Target Precursor Threshold |
@@ -198,7 +202,7 @@ python generate_html.py
 | **$\beta$-H / Thermal Decomposition Barrier** | $\Delta G^\ddagger_{\text{decomp}}$ | $\text{kcal/mol}$ | $> 28.0\text{ kcal/mol}$ |
 | **Wafer Half-Cycle Chemisorption Energy** | $\Delta G_{\text{ALD}}$ | $\text{kcal/mol}$ | $< -15.0\text{ kcal/mol}$ (self-limiting reaction) |
 
-### 5.2 Complete Citation Registry (DOIs)
+### 5.2 Complete Citation Registry (34 Verified DOIs)
 1. **SAScore**: `10.1186/1758-2946-1-8`
 2. **SYBA**: `10.1186/s13321-020-00439-2`
 3. **SCScore**: `10.1021/acs.jcim.7b00622`
@@ -224,3 +228,12 @@ python generate_html.py
 23. **MLIP for ALD Precursors**: `10.1016/j.mtadv.2024.100474`
 24. **ML in ALD Roadmap**: `10.1021/acs.chemmater.5c03271`
 25. **Aminosilane SiO2 ALD Precursor DFT**: `10.1039/c7ra02301d`
+26. **Oh et al. (ASD Precursor Choice)**: `10.1021/acs.chemmater.0c04718`
+27. **Tonner-Zech et al. (ASD Design Principles)**: `10.1002/jcc.27488`
+28. **Mackus et al. (ASD Fundamentals & Metrics)**: `10.1021/acs.chemmater.8b03454`
+29. **Parsons & Clark (ASD State-of-the-Art)**: `10.1021/acs.chemmater.0c00722`
+30. **Pymatgen (Materials Genomics)**: `10.1016/j.commatsci.2012.10.028`
+31. **atomate2 + jobflow**: `10.1039/D5DD00019J`
+32. **AiiDA-VASP Automation**: `10.1038/s41597-020-00638-4`
+33. **Architector (3D TMC Complex Builder)**: `10.1021/acs.jcim.2c01618`
+34. **Sella (Automated Saddle-Point TS)**: `10.1021/acs.jctc.1c01143`

@@ -1,0 +1,4896 @@
+{
+  "Section 1": {
+    "title": "Literature Verification & Master Download Hub (문헌 검증 및 마스터 아카이브)",
+    "count": 34,
+    "papers": [
+      {
+        "id": "SAScore_2009",
+        "name": "SAScore",
+        "year": 2009,
+        "generation": "1st Gen (Heuristics & Substructure)",
+        "authors": "Peter Ertl, Ansgar Schuffenhauer",
+        "title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/1758-2946-1-8",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/1758-2946-1-8.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2009,
+          "verified_authors": "Peter Ertl, Ansgar Schuffenhauer"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SAScore_2009.pdf",
+          "size_kb": 1242,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 2",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SYBA_2020",
+        "name": "SYBA",
+        "year": 2020,
+        "generation": "1st Gen (Bayesian Classification)",
+        "authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil",
+        "title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00439-2",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00439-2.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SYBA_2020.pdf",
+          "size_kb": 3191,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SCScore_2018",
+        "name": "SCScore",
+        "year": 2018,
+        "generation": "2nd Gen (Reaction Corpus Neural Net)",
+        "authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen",
+        "title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.7b00622",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2018,
+          "verified_authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen"
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RAscore_2021",
+        "name": "RAscore",
+        "year": 2021,
+        "generation": "2nd Gen (CASP Route Distillation)",
+        "authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist, Jean-Louis Reymond",
+        "title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+        "journal": "Chemical Science",
+        "doi": "10.1039/D0SC05401A",
+        "download_url": "https://arxiv.org/pdf/2010.05035.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+          "verified_container": "Chemical Science",
+          "verified_year": 2021,
+          "verified_authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RAscore_2021.pdf",
+          "size_kb": 322,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RetroGNN_2022",
+        "name": "RetroGNN",
+        "year": 2022,
+        "generation": "2nd Gen (CASP GNN Surrogate)",
+        "authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Yoshua Bengio, Marwin H. S. Segler",
+        "title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c01476",
+        "download_url": "https://arxiv.org/pdf/2203.15579.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Paweł Włodarczyk-Pruszyński et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroGNN_2022.pdf",
+          "size_kb": 2400,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 5"
+        ]
+      },
+      {
+        "id": "GASA_2022",
+        "name": "GASA",
+        "year": 2022,
+        "generation": "3rd Gen (Graph Attention Network)",
+        "authors": "Jiahui Yu, Yifei Chen, Zhaojun Rong, Ziqing Fang, Xingyu Liu, Tingjun Hou, Peicheng Zhu",
+        "title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.2c00038",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Jiahui Yu, Jike Wang, Hong Zhao, Junbo Gao et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DeepSA_2023",
+        "name": "DeepSA",
+        "year": 2023,
+        "generation": "3rd Gen (SMILES LM & Fragment Tree)",
+        "authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai",
+        "title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-023-00771-3",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-023-00771-3.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2023,
+          "verified_authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\DeepSA_2023.pdf",
+          "size_kb": 4058,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DFRscore_2023",
+        "name": "DFRscore",
+        "year": 2023,
+        "generation": "3rd Gen (Drug-Focused Retrosynthesis)",
+        "authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim, Woo Youn Kim",
+        "title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01134",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2023,
+          "verified_authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "BR_SAScore_2024",
+        "name": "BR-SAScore",
+        "year": 2024,
+        "generation": "3rd Gen (Building Block & Reaction Aware)",
+        "authors": "Shuan Chen, Yousung Jung",
+        "title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-024-00879-0",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00879-0.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2024,
+          "verified_authors": "Shuan Chen, Yousung Jung"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+          "size_kb": 1351,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "ChemProjector_2024",
+        "name": "ChemProjector",
+        "year": 2024,
+        "generation": "4th Gen (Synthesizable Space Projection)",
+        "authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma",
+        "title": "Projecting Molecules into Synthesizable Chemical Spaces",
+        "journal": "NeurIPS 2024 / arXiv:2406.04628",
+        "doi": "10.48550/arXiv.2406.04628",
+        "download_url": "https://arxiv.org/pdf/2406.04628.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Projecting Molecules into Synthesizable Chemical Spaces",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ChemProjector_2024.pdf",
+          "size_kb": 4788,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFormer_2025",
+        "name": "SynFormer",
+        "year": 2025,
+        "generation": "4th Gen (Autoregressive Pathway Generation)",
+        "authors": "Kangway V. Chuang, Christian A. Mejia, Jeffrey M. Ede, et al.",
+        "title": "Generative Artificial Intelligence for Navigating Synthesizable Chemical Space",
+        "journal": "PNAS 2025 / arXiv:2410.03494",
+        "doi": "10.1073/pnas.2415665122",
+        "download_url": "https://arxiv.org/pdf/2410.03494.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Generative AI for navigating synthesizable chemical space",
+          "verified_container": "Proceedings of the National Academy of Sciences",
+          "verified_year": 2025,
+          "verified_authors": "Wenhao Gao, Shitong Luo, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFormer_2025.pdf",
+          "size_kb": 3651,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFlowNet_2025",
+        "name": "SynFlowNet",
+        "year": 2025,
+        "generation": "4th Gen (GFlowNet Pathway Design)",
+        "authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al.",
+        "title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+        "journal": "ICLR 2025 / arXiv:2405.01155",
+        "doi": "10.48550/arXiv.2405.01155",
+        "download_url": "https://arxiv.org/pdf/2405.01155.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFlowNet_2025.pdf",
+          "size_kb": 8060,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "RxnFlow_2025",
+        "name": "RxnFlow",
+        "year": 2024,
+        "generation": "4th Gen (Generative Flow Pathway Search)",
+        "authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim",
+        "title": "Generative Flows on Synthetic Pathway for Drug Design",
+        "journal": "NeurIPS 2024 / arXiv:2410.04542",
+        "doi": "10.48550/arXiv.2410.04542",
+        "download_url": "https://arxiv.org/pdf/2410.04542.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Generative Flows on Synthetic Pathway for Drug Design",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RxnFlow_2025.pdf",
+          "size_kb": 4912,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ReaSyn_2025",
+        "name": "ReaSyn",
+        "year": 2025,
+        "generation": "4th Gen (Chain-of-Reaction & Edit Flow)",
+        "authors": "KAIST & NVIDIA Research Team",
+        "title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+        "journal": "arXiv:2509.16084",
+        "doi": "10.48550/arXiv.2509.16084",
+        "download_url": "https://arxiv.org/pdf/2509.16084.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "KAIST & NVIDIA Research Team"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ReaSyn_2025.pdf",
+          "size_kb": 2479,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynNet_2022",
+        "name": "SynNet",
+        "year": 2022,
+        "generation": "4th Gen Milestone (Amortized Tree Design)",
+        "authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley",
+        "title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+        "journal": "ICLR 2022",
+        "doi": "10.48550/arXiv.2110.06389",
+        "download_url": "https://arxiv.org/pdf/2110.06389.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+          "verified_container": "arXiv",
+          "verified_year": 2022,
+          "verified_authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynNet_2022.pdf",
+          "size_kb": 3079,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "Gao_Coley_Benchmark_2020",
+        "name": "Generative SA Benchmark",
+        "year": 2020,
+        "generation": "Evaluation / Benchmark",
+        "authors": "Wenhao Gao, Connor W. Coley",
+        "title": "The Synthesizability of Molecules Proposed by Generative Models",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.0c00174",
+        "download_url": "https://arxiv.org/pdf/2002.07007.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "The Synthesizability of Molecules Proposed by Generative\nModels",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2020,
+          "verified_authors": "Wenhao Gao, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\Gao_Coley_Benchmark_2020.pdf",
+          "size_kb": 4955,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 4",
+          "Section 5",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "AiZynthFinder_2020",
+        "name": "AiZynthFinder",
+        "year": 2020,
+        "generation": "CASP Infrastructure",
+        "authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond, Ola Engkvist",
+        "title": "AiZynthFinder: a software package for automating retrosynthetic planning",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00472-1",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00472-1.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "AiZynthFinder: a fast, robust and flexible open-source software for retrosynthetic planning",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\AiZynthFinder_2020.pdf",
+          "size_kb": 1115,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RetroStar_2020",
+        "name": "Retro*",
+        "year": 2020,
+        "generation": "Neural Guided CASP",
+        "authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al.",
+        "title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+        "journal": "ICML 2020",
+        "doi": "10.48550/arXiv.2006.15575",
+        "download_url": "https://arxiv.org/pdf/2006.15575.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+          "verified_container": "arXiv",
+          "verified_year": 2020,
+          "verified_authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroStar_2020.pdf",
+          "size_kb": 3244,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "V_SYNTH_2022",
+        "name": "V-SYNTH",
+        "year": 2022,
+        "generation": "Combinatorial On-Demand Library",
+        "authors": "Arman A. Sadybekov, Anastasiia V. Sadybekov, Yurii S. Moroz, et al.",
+        "title": "Synthetically accessible vast chemical space",
+        "journal": "Nature",
+        "doi": "10.1038/s41586-021-04220-9",
+        "download_url": null,
+        "source_type": "Subscription_Nature",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Synthon-based ligand discovery in virtual libraries of over 11 billion compounds",
+          "verified_container": "Nature",
+          "verified_year": 2021,
+          "verified_authors": "Arman A. Sadybekov, Anastasiia V. Sadybekov, Yongfeng Liu, Christos Iliopoulos-Tsoutsouvas et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_Nature"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 11"
+        ]
+      },
+      {
+        "id": "Kulik_TMC_SA_2022",
+        "name": "TMC Synthesizability (Kulik Group)",
+        "year": 2022,
+        "generation": "Semiconductor / Organometallic SA",
+        "authors": "Chenru Duan, Aditya Nandy, Gianmarco G. Terrones, David W. Kastner et al.",
+        "title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores",
+        "journal": "JACS Au",
+        "doi": "10.1021/jacsau.2c00547",
+        "download_url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00547",
+        "source_type": "OpenAccess_ACS",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Kulik_TMC_SA_2022.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 159,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 8",
+          "Section 9",
+          "Section 11",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "MPScore_Jelfs_2021",
+        "name": "MPScore (Materials Precursor Score)",
+        "year": 2021,
+        "generation": "Materials Precursor SA",
+        "authors": "Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al.",
+        "title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c00375",
+        "download_url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75675702a9b1b1c18c660/original/materials-precursor-score-modelling-chemists-intuition-for-the-synthetic-accessibility-of-porous-organic-cage-precursors.pdf",
+        "source_type": "OpenAccess_JCIM",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/MPScore_Jelfs_2021.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 175,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "AS_ALD_Precursor_ML_2023",
+        "name": "AS-ALD Precursor ML Descriptors",
+        "year": 2023,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Tran Thi Ngoc Van, Changsu Kim, Hojae Lee, Jiyong Kim et al.",
+        "title": "Machine learning-based exploration of molecular design descriptors for area-selective atomic layer deposition (AS-ALD) precursors",
+        "journal": "Journal of Molecular Modeling",
+        "doi": "10.1007/s00894-023-05806-y",
+        "download_url": "https://link.springer.com/content/pdf/10.1007/s00894-023-05806-y.pdf",
+        "source_type": "Springer",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\AS_ALD_Precursor_ML_2023.pdf",
+          "size_kb": 2563,
+          "source": "Springer",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Machine learning-based exploration of molecular design descriptors for area-selective atomic layer deposition (AS-ALD) precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ALD_MLIP_Precursor_2024",
+        "name": "MLIP for ALD Precursors",
+        "year": 2024,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Seungpyo Kang, Joonchul Kim, Taehyun Park, Joonghee Won et al.",
+        "title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors",
+        "journal": "Materials Today Advances",
+        "doi": "10.1016/j.mtadv.2024.100474",
+        "download_url": null,
+        "source_type": "OpenAccess_Elsevier",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_MLIP_Precursor_2024.pdf",
+          "size_kb": 6267,
+          "source": "OpenAccess_Elsevier",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ALD_ML_ChemMater_2026",
+        "name": "ML in ALD Roadmap",
+        "year": 2026,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Julia Westermayr, Stacey F. Bent, Ralf Tonner-Zech",
+        "title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.5c03271",
+        "download_url": null,
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_ML_ChemMater_2026.pdf",
+          "size_kb": 3091,
+          "source": "ACS_ChemMater",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Aminosilane_SiO2_ALD_DFT_2017",
+        "name": "Aminosilane ALD Precursor DFT Design",
+        "year": 2017,
+        "generation": "Semiconductor Si Precursor DFT",
+        "authors": "Liang Huang, Bo Han, Maohong Fan, Hansong Cheng",
+        "title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films",
+        "journal": "RSC Advances",
+        "doi": "10.1039/c7ra02301d",
+        "download_url": "https://pubs.rsc.org/en/content/articlepdf/2017/ra/c7ra02301d",
+        "source_type": "OpenAccess_RSC",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\Aminosilane_SiO2_ALD_DFT_2017.pdf",
+          "size_kb": 736,
+          "source": "OpenAccess_RSC",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 11"
+        ]
+      },
+      {
+        "id": "Oh_ASD_Precursor_2021",
+        "name": "Oh et al. (ASD Precursor Choice)",
+        "year": 2021,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "In-Kyun Oh, Stacey F. Bent, Adriaan J. M. Mackus et al.",
+        "title": "Role of Precursor Choice on Area-Selective Atomic Layer Deposition",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.0c04718",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.0c04718",
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Role of Precursor Choice on Area-Selective Atomic Layer Deposition"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Tonner_ASD_Precursor_2024",
+        "name": "Tonner-Zech et al. (ASD Design Principles)",
+        "year": 2024,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "Ralf Tonner-Zech et al.",
+        "title": "Precursor Design Principles for Area-Selective Atomic Layer Deposition: Quantifying the Role of Lewis Acidity, Steric Repulsion, and Dimerization",
+        "journal": "Journal of Computational Chemistry",
+        "doi": "10.1002/jcc.70493",
+        "download_url": "https://onlinelibrary.wiley.com/doi/10.1002/jcc.70493",
+        "source_type": "Wiley_JCC",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Tonner_ASD_Precursor_2024.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 201,
+          "source": "PMC_EuropePMC_XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Precursor Design Principles for Area-Selective Atomic Layer Deposition: Quantifying the Role of Lewis Acidity, Steric Repulsion, and Dimerization"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Mackus_ASD_Selectivity_2019",
+        "name": "Mackus et al. (ASD Fundamentals & Metrics)",
+        "year": 2019,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "Adriaan J. M. Mackus, Ageeth A. Bol, W. M. Erwin Kessels",
+        "title": "From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.8b03454",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.8b03454",
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Mackus_ASD_Selectivity_2019.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 146,
+          "source": "PMC_EuropePMC_XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Parsons_ASD_Fundamentals_2020",
+        "name": "Parsons & Clark (ASD State-of-the-Art)",
+        "year": 2020,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "Gregory N. Parsons, Robert D. Clark",
+        "title": "Area-Selective Deposition: Fundamentals, Applications, and Future Outlook",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.0c00722",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.0c00722",
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Area-Selective Deposition: Fundamentals, Applications, and Future Outlook"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Ong_Pymatgen_2013",
+        "name": "Pymatgen (Materials Genomics)",
+        "year": 2013,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Shyue Ping Ong, William Davidson Richards, Anubhav Jain, Geoffroy Hautier et al.",
+        "title": "Python Materials Genomics (pymatgen): A robust, open-source python library for materials analysis",
+        "journal": "Computational Materials Science",
+        "doi": "10.1016/j.commatsci.2012.10.028",
+        "download_url": "https://doi.org/10.1016/j.commatsci.2012.10.028",
+        "source_type": "Elsevier_CMS",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Ong_Pymatgen_2013.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 1357,
+          "source": "eScholarship_UC_Berkeley"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Python Materials Genomics (pymatgen): A robust, open-source python library for materials analysis"
+        },
+        "sections": [
+          "Section 1",
+          "Section 10"
+        ]
+      },
+      {
+        "id": "Rosen_Atomate2_2024",
+        "name": "atomate2 + jobflow",
+        "year": 2024,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Andrew S. Rosen, Matthew Gallant, Anderson Janotti et al.",
+        "title": "atomate2: Modular computational materials science workflows",
+        "journal": "Journal of Open Source Software",
+        "doi": "10.21105/joss.06543",
+        "download_url": "https://doi.org/10.21105/joss.06543",
+        "source_type": "JOSS_OpenAccess",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "JOSS_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "atomate2: Modular computational materials science workflows"
+        },
+        "sections": [
+          "Section 1",
+          "Section 10"
+        ]
+      },
+      {
+        "id": "Uhrin_AiiDA_2021",
+        "name": "AiiDA-VASP Automation",
+        "year": 2021,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Martin Uhrin, Sebastiaan P. Huber, Jusong Yu, Nicola Marzari et al.",
+        "title": "Workflows and automation in AiiDA: Managing computational materials science",
+        "journal": "Computational Materials Science",
+        "doi": "10.1016/j.commatsci.2020.110086",
+        "download_url": "https://doi.org/10.1016/j.commatsci.2020.110086",
+        "source_type": "Elsevier_CMS",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Uhrin_AiiDA_2021.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 925,
+          "source": "arXiv_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Workflows and automation in AiiDA: Managing computational materials science"
+        },
+        "sections": [
+          "Section 1",
+          "Section 10"
+        ]
+      },
+      {
+        "id": "Gautier_Architector_2023",
+        "name": "Architector (3D TMC Complex Builder)",
+        "year": 2023,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Corin Gautier, Tyler Castonguay, Heather J. Kulik",
+        "title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01353",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jcim.3c01353",
+        "source_type": "ACS_JCIM",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Hermes_Sella_2022",
+        "name": "Sella (Automated Saddle-Point TS)",
+        "year": 2022,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Eric D. Hermes, Judit Zádor",
+        "title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces",
+        "journal": "Journal of Chemical Theory and Computation",
+        "doi": "10.1021/acs.jctc.1c00845",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jctc.1c00845",
+        "source_type": "ACS_JCTC",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Hermes_Sella_2022.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 2963,
+          "source": "arXiv_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      }
+    ]
+  },
+  "Section 3": {
+    "title": "Deep Architectural Analysis & Paradigm Evolution (세대별 패러다임 진화 및 수식)",
+    "count": 16,
+    "papers": [
+      {
+        "id": "SAScore_2009",
+        "name": "SAScore",
+        "year": 2009,
+        "generation": "1st Gen (Heuristics & Substructure)",
+        "authors": "Peter Ertl, Ansgar Schuffenhauer",
+        "title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/1758-2946-1-8",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/1758-2946-1-8.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2009,
+          "verified_authors": "Peter Ertl, Ansgar Schuffenhauer"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SAScore_2009.pdf",
+          "size_kb": 1242,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 2",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SYBA_2020",
+        "name": "SYBA",
+        "year": 2020,
+        "generation": "1st Gen (Bayesian Classification)",
+        "authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil",
+        "title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00439-2",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00439-2.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SYBA_2020.pdf",
+          "size_kb": 3191,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SCScore_2018",
+        "name": "SCScore",
+        "year": 2018,
+        "generation": "2nd Gen (Reaction Corpus Neural Net)",
+        "authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen",
+        "title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.7b00622",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2018,
+          "verified_authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen"
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RAscore_2021",
+        "name": "RAscore",
+        "year": 2021,
+        "generation": "2nd Gen (CASP Route Distillation)",
+        "authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist, Jean-Louis Reymond",
+        "title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+        "journal": "Chemical Science",
+        "doi": "10.1039/D0SC05401A",
+        "download_url": "https://arxiv.org/pdf/2010.05035.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+          "verified_container": "Chemical Science",
+          "verified_year": 2021,
+          "verified_authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RAscore_2021.pdf",
+          "size_kb": 322,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RetroGNN_2022",
+        "name": "RetroGNN",
+        "year": 2022,
+        "generation": "2nd Gen (CASP GNN Surrogate)",
+        "authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Yoshua Bengio, Marwin H. S. Segler",
+        "title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c01476",
+        "download_url": "https://arxiv.org/pdf/2203.15579.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Paweł Włodarczyk-Pruszyński et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroGNN_2022.pdf",
+          "size_kb": 2400,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 5"
+        ]
+      },
+      {
+        "id": "GASA_2022",
+        "name": "GASA",
+        "year": 2022,
+        "generation": "3rd Gen (Graph Attention Network)",
+        "authors": "Jiahui Yu, Yifei Chen, Zhaojun Rong, Ziqing Fang, Xingyu Liu, Tingjun Hou, Peicheng Zhu",
+        "title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.2c00038",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Jiahui Yu, Jike Wang, Hong Zhao, Junbo Gao et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DeepSA_2023",
+        "name": "DeepSA",
+        "year": 2023,
+        "generation": "3rd Gen (SMILES LM & Fragment Tree)",
+        "authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai",
+        "title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-023-00771-3",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-023-00771-3.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2023,
+          "verified_authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\DeepSA_2023.pdf",
+          "size_kb": 4058,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DFRscore_2023",
+        "name": "DFRscore",
+        "year": 2023,
+        "generation": "3rd Gen (Drug-Focused Retrosynthesis)",
+        "authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim, Woo Youn Kim",
+        "title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01134",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2023,
+          "verified_authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "BR_SAScore_2024",
+        "name": "BR-SAScore",
+        "year": 2024,
+        "generation": "3rd Gen (Building Block & Reaction Aware)",
+        "authors": "Shuan Chen, Yousung Jung",
+        "title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-024-00879-0",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00879-0.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2024,
+          "verified_authors": "Shuan Chen, Yousung Jung"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+          "size_kb": 1351,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "ChemProjector_2024",
+        "name": "ChemProjector",
+        "year": 2024,
+        "generation": "4th Gen (Synthesizable Space Projection)",
+        "authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma",
+        "title": "Projecting Molecules into Synthesizable Chemical Spaces",
+        "journal": "NeurIPS 2024 / arXiv:2406.04628",
+        "doi": "10.48550/arXiv.2406.04628",
+        "download_url": "https://arxiv.org/pdf/2406.04628.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Projecting Molecules into Synthesizable Chemical Spaces",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ChemProjector_2024.pdf",
+          "size_kb": 4788,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFormer_2025",
+        "name": "SynFormer",
+        "year": 2025,
+        "generation": "4th Gen (Autoregressive Pathway Generation)",
+        "authors": "Kangway V. Chuang, Christian A. Mejia, Jeffrey M. Ede, et al.",
+        "title": "Generative Artificial Intelligence for Navigating Synthesizable Chemical Space",
+        "journal": "PNAS 2025 / arXiv:2410.03494",
+        "doi": "10.1073/pnas.2415665122",
+        "download_url": "https://arxiv.org/pdf/2410.03494.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Generative AI for navigating synthesizable chemical space",
+          "verified_container": "Proceedings of the National Academy of Sciences",
+          "verified_year": 2025,
+          "verified_authors": "Wenhao Gao, Shitong Luo, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFormer_2025.pdf",
+          "size_kb": 3651,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFlowNet_2025",
+        "name": "SynFlowNet",
+        "year": 2025,
+        "generation": "4th Gen (GFlowNet Pathway Design)",
+        "authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al.",
+        "title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+        "journal": "ICLR 2025 / arXiv:2405.01155",
+        "doi": "10.48550/arXiv.2405.01155",
+        "download_url": "https://arxiv.org/pdf/2405.01155.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFlowNet_2025.pdf",
+          "size_kb": 8060,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "RxnFlow_2025",
+        "name": "RxnFlow",
+        "year": 2024,
+        "generation": "4th Gen (Generative Flow Pathway Search)",
+        "authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim",
+        "title": "Generative Flows on Synthetic Pathway for Drug Design",
+        "journal": "NeurIPS 2024 / arXiv:2410.04542",
+        "doi": "10.48550/arXiv.2410.04542",
+        "download_url": "https://arxiv.org/pdf/2410.04542.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Generative Flows on Synthetic Pathway for Drug Design",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RxnFlow_2025.pdf",
+          "size_kb": 4912,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ReaSyn_2025",
+        "name": "ReaSyn",
+        "year": 2025,
+        "generation": "4th Gen (Chain-of-Reaction & Edit Flow)",
+        "authors": "KAIST & NVIDIA Research Team",
+        "title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+        "journal": "arXiv:2509.16084",
+        "doi": "10.48550/arXiv.2509.16084",
+        "download_url": "https://arxiv.org/pdf/2509.16084.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "KAIST & NVIDIA Research Team"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ReaSyn_2025.pdf",
+          "size_kb": 2479,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynNet_2022",
+        "name": "SynNet",
+        "year": 2022,
+        "generation": "4th Gen Milestone (Amortized Tree Design)",
+        "authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley",
+        "title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+        "journal": "ICLR 2022",
+        "doi": "10.48550/arXiv.2110.06389",
+        "download_url": "https://arxiv.org/pdf/2110.06389.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+          "verified_container": "arXiv",
+          "verified_year": 2022,
+          "verified_authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynNet_2022.pdf",
+          "size_kb": 3079,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "AiZynthFinder_2020",
+        "name": "AiZynthFinder",
+        "year": 2020,
+        "generation": "CASP Infrastructure",
+        "authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond, Ola Engkvist",
+        "title": "AiZynthFinder: a software package for automating retrosynthetic planning",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00472-1",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00472-1.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "AiZynthFinder: a fast, robust and flexible open-source software for retrosynthetic planning",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\AiZynthFinder_2020.pdf",
+          "size_kb": 1115,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      }
+    ]
+  },
+  "Section 4": {
+    "title": "Benchmarking & Quantitative Comparison (16개 모델 정량 비교 매트릭스)",
+    "count": 18,
+    "papers": [
+      {
+        "id": "SAScore_2009",
+        "name": "SAScore",
+        "year": 2009,
+        "generation": "1st Gen (Heuristics & Substructure)",
+        "authors": "Peter Ertl, Ansgar Schuffenhauer",
+        "title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/1758-2946-1-8",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/1758-2946-1-8.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2009,
+          "verified_authors": "Peter Ertl, Ansgar Schuffenhauer"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SAScore_2009.pdf",
+          "size_kb": 1242,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 2",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SYBA_2020",
+        "name": "SYBA",
+        "year": 2020,
+        "generation": "1st Gen (Bayesian Classification)",
+        "authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil",
+        "title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00439-2",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00439-2.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SYBA_2020.pdf",
+          "size_kb": 3191,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SCScore_2018",
+        "name": "SCScore",
+        "year": 2018,
+        "generation": "2nd Gen (Reaction Corpus Neural Net)",
+        "authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen",
+        "title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.7b00622",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2018,
+          "verified_authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen"
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RAscore_2021",
+        "name": "RAscore",
+        "year": 2021,
+        "generation": "2nd Gen (CASP Route Distillation)",
+        "authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist, Jean-Louis Reymond",
+        "title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+        "journal": "Chemical Science",
+        "doi": "10.1039/D0SC05401A",
+        "download_url": "https://arxiv.org/pdf/2010.05035.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+          "verified_container": "Chemical Science",
+          "verified_year": 2021,
+          "verified_authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RAscore_2021.pdf",
+          "size_kb": 322,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RetroGNN_2022",
+        "name": "RetroGNN",
+        "year": 2022,
+        "generation": "2nd Gen (CASP GNN Surrogate)",
+        "authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Yoshua Bengio, Marwin H. S. Segler",
+        "title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c01476",
+        "download_url": "https://arxiv.org/pdf/2203.15579.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Paweł Włodarczyk-Pruszyński et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroGNN_2022.pdf",
+          "size_kb": 2400,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 5"
+        ]
+      },
+      {
+        "id": "GASA_2022",
+        "name": "GASA",
+        "year": 2022,
+        "generation": "3rd Gen (Graph Attention Network)",
+        "authors": "Jiahui Yu, Yifei Chen, Zhaojun Rong, Ziqing Fang, Xingyu Liu, Tingjun Hou, Peicheng Zhu",
+        "title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.2c00038",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Jiahui Yu, Jike Wang, Hong Zhao, Junbo Gao et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DeepSA_2023",
+        "name": "DeepSA",
+        "year": 2023,
+        "generation": "3rd Gen (SMILES LM & Fragment Tree)",
+        "authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai",
+        "title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-023-00771-3",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-023-00771-3.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2023,
+          "verified_authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\DeepSA_2023.pdf",
+          "size_kb": 4058,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DFRscore_2023",
+        "name": "DFRscore",
+        "year": 2023,
+        "generation": "3rd Gen (Drug-Focused Retrosynthesis)",
+        "authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim, Woo Youn Kim",
+        "title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01134",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2023,
+          "verified_authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "BR_SAScore_2024",
+        "name": "BR-SAScore",
+        "year": 2024,
+        "generation": "3rd Gen (Building Block & Reaction Aware)",
+        "authors": "Shuan Chen, Yousung Jung",
+        "title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-024-00879-0",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00879-0.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2024,
+          "verified_authors": "Shuan Chen, Yousung Jung"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+          "size_kb": 1351,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "ChemProjector_2024",
+        "name": "ChemProjector",
+        "year": 2024,
+        "generation": "4th Gen (Synthesizable Space Projection)",
+        "authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma",
+        "title": "Projecting Molecules into Synthesizable Chemical Spaces",
+        "journal": "NeurIPS 2024 / arXiv:2406.04628",
+        "doi": "10.48550/arXiv.2406.04628",
+        "download_url": "https://arxiv.org/pdf/2406.04628.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Projecting Molecules into Synthesizable Chemical Spaces",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ChemProjector_2024.pdf",
+          "size_kb": 4788,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFormer_2025",
+        "name": "SynFormer",
+        "year": 2025,
+        "generation": "4th Gen (Autoregressive Pathway Generation)",
+        "authors": "Kangway V. Chuang, Christian A. Mejia, Jeffrey M. Ede, et al.",
+        "title": "Generative Artificial Intelligence for Navigating Synthesizable Chemical Space",
+        "journal": "PNAS 2025 / arXiv:2410.03494",
+        "doi": "10.1073/pnas.2415665122",
+        "download_url": "https://arxiv.org/pdf/2410.03494.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Generative AI for navigating synthesizable chemical space",
+          "verified_container": "Proceedings of the National Academy of Sciences",
+          "verified_year": 2025,
+          "verified_authors": "Wenhao Gao, Shitong Luo, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFormer_2025.pdf",
+          "size_kb": 3651,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFlowNet_2025",
+        "name": "SynFlowNet",
+        "year": 2025,
+        "generation": "4th Gen (GFlowNet Pathway Design)",
+        "authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al.",
+        "title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+        "journal": "ICLR 2025 / arXiv:2405.01155",
+        "doi": "10.48550/arXiv.2405.01155",
+        "download_url": "https://arxiv.org/pdf/2405.01155.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFlowNet_2025.pdf",
+          "size_kb": 8060,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "RxnFlow_2025",
+        "name": "RxnFlow",
+        "year": 2024,
+        "generation": "4th Gen (Generative Flow Pathway Search)",
+        "authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim",
+        "title": "Generative Flows on Synthetic Pathway for Drug Design",
+        "journal": "NeurIPS 2024 / arXiv:2410.04542",
+        "doi": "10.48550/arXiv.2410.04542",
+        "download_url": "https://arxiv.org/pdf/2410.04542.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Generative Flows on Synthetic Pathway for Drug Design",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RxnFlow_2025.pdf",
+          "size_kb": 4912,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ReaSyn_2025",
+        "name": "ReaSyn",
+        "year": 2025,
+        "generation": "4th Gen (Chain-of-Reaction & Edit Flow)",
+        "authors": "KAIST & NVIDIA Research Team",
+        "title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+        "journal": "arXiv:2509.16084",
+        "doi": "10.48550/arXiv.2509.16084",
+        "download_url": "https://arxiv.org/pdf/2509.16084.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "KAIST & NVIDIA Research Team"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ReaSyn_2025.pdf",
+          "size_kb": 2479,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynNet_2022",
+        "name": "SynNet",
+        "year": 2022,
+        "generation": "4th Gen Milestone (Amortized Tree Design)",
+        "authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley",
+        "title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+        "journal": "ICLR 2022",
+        "doi": "10.48550/arXiv.2110.06389",
+        "download_url": "https://arxiv.org/pdf/2110.06389.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+          "verified_container": "arXiv",
+          "verified_year": 2022,
+          "verified_authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynNet_2022.pdf",
+          "size_kb": 3079,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "Gao_Coley_Benchmark_2020",
+        "name": "Generative SA Benchmark",
+        "year": 2020,
+        "generation": "Evaluation / Benchmark",
+        "authors": "Wenhao Gao, Connor W. Coley",
+        "title": "The Synthesizability of Molecules Proposed by Generative Models",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.0c00174",
+        "download_url": "https://arxiv.org/pdf/2002.07007.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "The Synthesizability of Molecules Proposed by Generative\nModels",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2020,
+          "verified_authors": "Wenhao Gao, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\Gao_Coley_Benchmark_2020.pdf",
+          "size_kb": 4955,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 4",
+          "Section 5",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "AiZynthFinder_2020",
+        "name": "AiZynthFinder",
+        "year": 2020,
+        "generation": "CASP Infrastructure",
+        "authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond, Ola Engkvist",
+        "title": "AiZynthFinder: a software package for automating retrosynthetic planning",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00472-1",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00472-1.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "AiZynthFinder: a fast, robust and flexible open-source software for retrosynthetic planning",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\AiZynthFinder_2020.pdf",
+          "size_kb": 1115,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RetroStar_2020",
+        "name": "Retro*",
+        "year": 2020,
+        "generation": "Neural Guided CASP",
+        "authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al.",
+        "title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+        "journal": "ICML 2020",
+        "doi": "10.48550/arXiv.2006.15575",
+        "download_url": "https://arxiv.org/pdf/2006.15575.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+          "verified_container": "arXiv",
+          "verified_year": 2020,
+          "verified_authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroStar_2020.pdf",
+          "size_kb": 3244,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      }
+    ]
+  },
+  "Section 5": {
+    "title": "In-Depth Extended Studies (유사 및 확장 연구 심층 분석)",
+    "count": 5,
+    "papers": [
+      {
+        "id": "RetroGNN_2022",
+        "name": "RetroGNN",
+        "year": 2022,
+        "generation": "2nd Gen (CASP GNN Surrogate)",
+        "authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Yoshua Bengio, Marwin H. S. Segler",
+        "title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c01476",
+        "download_url": "https://arxiv.org/pdf/2203.15579.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "RetroGNN: Fast Estimation of Synthesizability for Virtual Screening and De Novo Design by Learning from Slow Retrosynthesis Software",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Cheng-Hao Liu, Maksym Korablyov, Stanisław Jastrzębski, Paweł Włodarczyk-Pruszyński et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroGNN_2022.pdf",
+          "size_kb": 2400,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 5"
+        ]
+      },
+      {
+        "id": "Gao_Coley_Benchmark_2020",
+        "name": "Generative SA Benchmark",
+        "year": 2020,
+        "generation": "Evaluation / Benchmark",
+        "authors": "Wenhao Gao, Connor W. Coley",
+        "title": "The Synthesizability of Molecules Proposed by Generative Models",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.0c00174",
+        "download_url": "https://arxiv.org/pdf/2002.07007.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "The Synthesizability of Molecules Proposed by Generative\nModels",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2020,
+          "verified_authors": "Wenhao Gao, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\Gao_Coley_Benchmark_2020.pdf",
+          "size_kb": 4955,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 4",
+          "Section 5",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "V_SYNTH_2022",
+        "name": "V-SYNTH",
+        "year": 2022,
+        "generation": "Combinatorial On-Demand Library",
+        "authors": "Arman A. Sadybekov, Anastasiia V. Sadybekov, Yurii S. Moroz, et al.",
+        "title": "Synthetically accessible vast chemical space",
+        "journal": "Nature",
+        "doi": "10.1038/s41586-021-04220-9",
+        "download_url": null,
+        "source_type": "Subscription_Nature",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Synthon-based ligand discovery in virtual libraries of over 11 billion compounds",
+          "verified_container": "Nature",
+          "verified_year": 2021,
+          "verified_authors": "Arman A. Sadybekov, Anastasiia V. Sadybekov, Yongfeng Liu, Christos Iliopoulos-Tsoutsouvas et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_Nature"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 11"
+        ]
+      },
+      {
+        "id": "Kulik_TMC_SA_2022",
+        "name": "TMC Synthesizability (Kulik Group)",
+        "year": 2022,
+        "generation": "Semiconductor / Organometallic SA",
+        "authors": "Chenru Duan, Aditya Nandy, Gianmarco G. Terrones, David W. Kastner et al.",
+        "title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores",
+        "journal": "JACS Au",
+        "doi": "10.1021/jacsau.2c00547",
+        "download_url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00547",
+        "source_type": "OpenAccess_ACS",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Kulik_TMC_SA_2022.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 159,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 8",
+          "Section 9",
+          "Section 11",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "MPScore_Jelfs_2021",
+        "name": "MPScore (Materials Precursor Score)",
+        "year": 2021,
+        "generation": "Materials Precursor SA",
+        "authors": "Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al.",
+        "title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c00375",
+        "download_url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75675702a9b1b1c18c660/original/materials-precursor-score-modelling-chemists-intuition-for-the-synthetic-accessibility-of-porous-organic-cage-precursors.pdf",
+        "source_type": "OpenAccess_JCIM",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/MPScore_Jelfs_2021.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 175,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      }
+    ]
+  },
+  "Section 7": {
+    "title": "Verified Open-Source Repositories & Semiconductor Benchmark (17개 오픈소스 저장소 및 반도체 DB 실증)",
+    "count": 17,
+    "papers": [
+      {
+        "id": "SAScore_2009",
+        "name": "SAScore",
+        "year": 2009,
+        "generation": "1st Gen (Heuristics & Substructure)",
+        "authors": "Peter Ertl, Ansgar Schuffenhauer",
+        "title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/1758-2946-1-8",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/1758-2946-1-8.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2009,
+          "verified_authors": "Peter Ertl, Ansgar Schuffenhauer"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SAScore_2009.pdf",
+          "size_kb": 1242,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 2",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SYBA_2020",
+        "name": "SYBA",
+        "year": 2020,
+        "generation": "1st Gen (Bayesian Classification)",
+        "authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil",
+        "title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00439-2",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00439-2.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SYBA_2020.pdf",
+          "size_kb": 3191,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SCScore_2018",
+        "name": "SCScore",
+        "year": 2018,
+        "generation": "2nd Gen (Reaction Corpus Neural Net)",
+        "authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen",
+        "title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.7b00622",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2018,
+          "verified_authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen"
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RAscore_2021",
+        "name": "RAscore",
+        "year": 2021,
+        "generation": "2nd Gen (CASP Route Distillation)",
+        "authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist, Jean-Louis Reymond",
+        "title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+        "journal": "Chemical Science",
+        "doi": "10.1039/D0SC05401A",
+        "download_url": "https://arxiv.org/pdf/2010.05035.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+          "verified_container": "Chemical Science",
+          "verified_year": 2021,
+          "verified_authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RAscore_2021.pdf",
+          "size_kb": 322,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "GASA_2022",
+        "name": "GASA",
+        "year": 2022,
+        "generation": "3rd Gen (Graph Attention Network)",
+        "authors": "Jiahui Yu, Yifei Chen, Zhaojun Rong, Ziqing Fang, Xingyu Liu, Tingjun Hou, Peicheng Zhu",
+        "title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.2c00038",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Jiahui Yu, Jike Wang, Hong Zhao, Junbo Gao et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DeepSA_2023",
+        "name": "DeepSA",
+        "year": 2023,
+        "generation": "3rd Gen (SMILES LM & Fragment Tree)",
+        "authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai",
+        "title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-023-00771-3",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-023-00771-3.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2023,
+          "verified_authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\DeepSA_2023.pdf",
+          "size_kb": 4058,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DFRscore_2023",
+        "name": "DFRscore",
+        "year": 2023,
+        "generation": "3rd Gen (Drug-Focused Retrosynthesis)",
+        "authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim, Woo Youn Kim",
+        "title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01134",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2023,
+          "verified_authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "BR_SAScore_2024",
+        "name": "BR-SAScore",
+        "year": 2024,
+        "generation": "3rd Gen (Building Block & Reaction Aware)",
+        "authors": "Shuan Chen, Yousung Jung",
+        "title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-024-00879-0",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00879-0.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2024,
+          "verified_authors": "Shuan Chen, Yousung Jung"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+          "size_kb": 1351,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "ChemProjector_2024",
+        "name": "ChemProjector",
+        "year": 2024,
+        "generation": "4th Gen (Synthesizable Space Projection)",
+        "authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma",
+        "title": "Projecting Molecules into Synthesizable Chemical Spaces",
+        "journal": "NeurIPS 2024 / arXiv:2406.04628",
+        "doi": "10.48550/arXiv.2406.04628",
+        "download_url": "https://arxiv.org/pdf/2406.04628.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Projecting Molecules into Synthesizable Chemical Spaces",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ChemProjector_2024.pdf",
+          "size_kb": 4788,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFormer_2025",
+        "name": "SynFormer",
+        "year": 2025,
+        "generation": "4th Gen (Autoregressive Pathway Generation)",
+        "authors": "Kangway V. Chuang, Christian A. Mejia, Jeffrey M. Ede, et al.",
+        "title": "Generative Artificial Intelligence for Navigating Synthesizable Chemical Space",
+        "journal": "PNAS 2025 / arXiv:2410.03494",
+        "doi": "10.1073/pnas.2415665122",
+        "download_url": "https://arxiv.org/pdf/2410.03494.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Generative AI for navigating synthesizable chemical space",
+          "verified_container": "Proceedings of the National Academy of Sciences",
+          "verified_year": 2025,
+          "verified_authors": "Wenhao Gao, Shitong Luo, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFormer_2025.pdf",
+          "size_kb": 3651,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFlowNet_2025",
+        "name": "SynFlowNet",
+        "year": 2025,
+        "generation": "4th Gen (GFlowNet Pathway Design)",
+        "authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al.",
+        "title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+        "journal": "ICLR 2025 / arXiv:2405.01155",
+        "doi": "10.48550/arXiv.2405.01155",
+        "download_url": "https://arxiv.org/pdf/2405.01155.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFlowNet_2025.pdf",
+          "size_kb": 8060,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "RxnFlow_2025",
+        "name": "RxnFlow",
+        "year": 2024,
+        "generation": "4th Gen (Generative Flow Pathway Search)",
+        "authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim",
+        "title": "Generative Flows on Synthetic Pathway for Drug Design",
+        "journal": "NeurIPS 2024 / arXiv:2410.04542",
+        "doi": "10.48550/arXiv.2410.04542",
+        "download_url": "https://arxiv.org/pdf/2410.04542.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Generative Flows on Synthetic Pathway for Drug Design",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RxnFlow_2025.pdf",
+          "size_kb": 4912,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ReaSyn_2025",
+        "name": "ReaSyn",
+        "year": 2025,
+        "generation": "4th Gen (Chain-of-Reaction & Edit Flow)",
+        "authors": "KAIST & NVIDIA Research Team",
+        "title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+        "journal": "arXiv:2509.16084",
+        "doi": "10.48550/arXiv.2509.16084",
+        "download_url": "https://arxiv.org/pdf/2509.16084.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "KAIST & NVIDIA Research Team"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ReaSyn_2025.pdf",
+          "size_kb": 2479,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynNet_2022",
+        "name": "SynNet",
+        "year": 2022,
+        "generation": "4th Gen Milestone (Amortized Tree Design)",
+        "authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley",
+        "title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+        "journal": "ICLR 2022",
+        "doi": "10.48550/arXiv.2110.06389",
+        "download_url": "https://arxiv.org/pdf/2110.06389.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+          "verified_container": "arXiv",
+          "verified_year": 2022,
+          "verified_authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynNet_2022.pdf",
+          "size_kb": 3079,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "AiZynthFinder_2020",
+        "name": "AiZynthFinder",
+        "year": 2020,
+        "generation": "CASP Infrastructure",
+        "authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond, Ola Engkvist",
+        "title": "AiZynthFinder: a software package for automating retrosynthetic planning",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00472-1",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00472-1.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "AiZynthFinder: a fast, robust and flexible open-source software for retrosynthetic planning",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\AiZynthFinder_2020.pdf",
+          "size_kb": 1115,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RetroStar_2020",
+        "name": "Retro*",
+        "year": 2020,
+        "generation": "Neural Guided CASP",
+        "authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al.",
+        "title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+        "journal": "ICML 2020",
+        "doi": "10.48550/arXiv.2006.15575",
+        "download_url": "https://arxiv.org/pdf/2006.15575.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+          "verified_container": "arXiv",
+          "verified_year": 2020,
+          "verified_authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroStar_2020.pdf",
+          "size_kb": 3244,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "MPScore_Jelfs_2021",
+        "name": "MPScore (Materials Precursor Score)",
+        "year": 2021,
+        "generation": "Materials Precursor SA",
+        "authors": "Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al.",
+        "title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c00375",
+        "download_url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75675702a9b1b1c18c660/original/materials-precursor-score-modelling-chemists-intuition-for-the-synthetic-accessibility-of-porous-organic-cage-precursors.pdf",
+        "source_type": "OpenAccess_JCIM",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/MPScore_Jelfs_2021.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 175,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      }
+    ]
+  },
+  "Section 8": {
+    "title": "Semiconductor Precursors (ALD/CVD/EUV) Application & Extension (반도체 프리커서 적용 및 확장)",
+    "count": 7,
+    "papers": [
+      {
+        "id": "Kulik_TMC_SA_2022",
+        "name": "TMC Synthesizability (Kulik Group)",
+        "year": 2022,
+        "generation": "Semiconductor / Organometallic SA",
+        "authors": "Chenru Duan, Aditya Nandy, Gianmarco G. Terrones, David W. Kastner et al.",
+        "title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores",
+        "journal": "JACS Au",
+        "doi": "10.1021/jacsau.2c00547",
+        "download_url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00547",
+        "source_type": "OpenAccess_ACS",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Kulik_TMC_SA_2022.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 159,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 8",
+          "Section 9",
+          "Section 11",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "MPScore_Jelfs_2021",
+        "name": "MPScore (Materials Precursor Score)",
+        "year": 2021,
+        "generation": "Materials Precursor SA",
+        "authors": "Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al.",
+        "title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c00375",
+        "download_url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75675702a9b1b1c18c660/original/materials-precursor-score-modelling-chemists-intuition-for-the-synthetic-accessibility-of-porous-organic-cage-precursors.pdf",
+        "source_type": "OpenAccess_JCIM",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/MPScore_Jelfs_2021.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 175,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "AS_ALD_Precursor_ML_2023",
+        "name": "AS-ALD Precursor ML Descriptors",
+        "year": 2023,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Tran Thi Ngoc Van, Changsu Kim, Hojae Lee, Jiyong Kim et al.",
+        "title": "Machine learning-based exploration of molecular design descriptors for area-selective atomic layer deposition (AS-ALD) precursors",
+        "journal": "Journal of Molecular Modeling",
+        "doi": "10.1007/s00894-023-05806-y",
+        "download_url": "https://link.springer.com/content/pdf/10.1007/s00894-023-05806-y.pdf",
+        "source_type": "Springer",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\AS_ALD_Precursor_ML_2023.pdf",
+          "size_kb": 2563,
+          "source": "Springer",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Machine learning-based exploration of molecular design descriptors for area-selective atomic layer deposition (AS-ALD) precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ALD_MLIP_Precursor_2024",
+        "name": "MLIP for ALD Precursors",
+        "year": 2024,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Seungpyo Kang, Joonchul Kim, Taehyun Park, Joonghee Won et al.",
+        "title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors",
+        "journal": "Materials Today Advances",
+        "doi": "10.1016/j.mtadv.2024.100474",
+        "download_url": null,
+        "source_type": "OpenAccess_Elsevier",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_MLIP_Precursor_2024.pdf",
+          "size_kb": 6267,
+          "source": "OpenAccess_Elsevier",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ALD_ML_ChemMater_2026",
+        "name": "ML in ALD Roadmap",
+        "year": 2026,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Julia Westermayr, Stacey F. Bent, Ralf Tonner-Zech",
+        "title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.5c03271",
+        "download_url": null,
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_ML_ChemMater_2026.pdf",
+          "size_kb": 3091,
+          "source": "ACS_ChemMater",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Aminosilane_SiO2_ALD_DFT_2017",
+        "name": "Aminosilane ALD Precursor DFT Design",
+        "year": 2017,
+        "generation": "Semiconductor Si Precursor DFT",
+        "authors": "Liang Huang, Bo Han, Maohong Fan, Hansong Cheng",
+        "title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films",
+        "journal": "RSC Advances",
+        "doi": "10.1039/c7ra02301d",
+        "download_url": "https://pubs.rsc.org/en/content/articlepdf/2017/ra/c7ra02301d",
+        "source_type": "OpenAccess_RSC",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\Aminosilane_SiO2_ALD_DFT_2017.pdf",
+          "size_kb": 736,
+          "source": "OpenAccess_RSC",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 11"
+        ]
+      },
+      {
+        "id": "BR_SAScore_2024",
+        "name": "BR-SAScore",
+        "year": 2024,
+        "generation": "3rd Gen (Building Block & Reaction Aware)",
+        "authors": "Shuan Chen, Yousung Jung",
+        "title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-024-00879-0",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00879-0.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2024,
+          "verified_authors": "Shuan Chen, Yousung Jung"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+          "size_kb": 1351,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      }
+    ]
+  },
+  "Section 9": {
+    "title": "Multi-Fidelity DFT Integration & Quantum Chemical Applications (DFT 계산 연계 응용 프레임워크)",
+    "count": 6,
+    "papers": [
+      {
+        "id": "Kulik_TMC_SA_2022",
+        "name": "TMC Synthesizability (Kulik Group)",
+        "year": 2022,
+        "generation": "Semiconductor / Organometallic SA",
+        "authors": "Chenru Duan, Aditya Nandy, Gianmarco G. Terrones, David W. Kastner et al.",
+        "title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores",
+        "journal": "JACS Au",
+        "doi": "10.1021/jacsau.2c00547",
+        "download_url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00547",
+        "source_type": "OpenAccess_ACS",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Kulik_TMC_SA_2022.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 159,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 8",
+          "Section 9",
+          "Section 11",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Aminosilane_SiO2_ALD_DFT_2017",
+        "name": "Aminosilane ALD Precursor DFT Design",
+        "year": 2017,
+        "generation": "Semiconductor Si Precursor DFT",
+        "authors": "Liang Huang, Bo Han, Maohong Fan, Hansong Cheng",
+        "title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films",
+        "journal": "RSC Advances",
+        "doi": "10.1039/c7ra02301d",
+        "download_url": "https://pubs.rsc.org/en/content/articlepdf/2017/ra/c7ra02301d",
+        "source_type": "OpenAccess_RSC",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\Aminosilane_SiO2_ALD_DFT_2017.pdf",
+          "size_kb": 736,
+          "source": "OpenAccess_RSC",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 11"
+        ]
+      },
+      {
+        "id": "ALD_MLIP_Precursor_2024",
+        "name": "MLIP for ALD Precursors",
+        "year": 2024,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Seungpyo Kang, Joonchul Kim, Taehyun Park, Joonghee Won et al.",
+        "title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors",
+        "journal": "Materials Today Advances",
+        "doi": "10.1016/j.mtadv.2024.100474",
+        "download_url": null,
+        "source_type": "OpenAccess_Elsevier",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_MLIP_Precursor_2024.pdf",
+          "size_kb": 6267,
+          "source": "OpenAccess_Elsevier",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ALD_ML_ChemMater_2026",
+        "name": "ML in ALD Roadmap",
+        "year": 2026,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Julia Westermayr, Stacey F. Bent, Ralf Tonner-Zech",
+        "title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.5c03271",
+        "download_url": null,
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_ML_ChemMater_2026.pdf",
+          "size_kb": 3091,
+          "source": "ACS_ChemMater",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Gautier_Architector_2023",
+        "name": "Architector (3D TMC Complex Builder)",
+        "year": 2023,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Corin Gautier, Tyler Castonguay, Heather J. Kulik",
+        "title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01353",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jcim.3c01353",
+        "source_type": "ACS_JCIM",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Hermes_Sella_2022",
+        "name": "Sella (Automated Saddle-Point TS)",
+        "year": 2022,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Eric D. Hermes, Judit Zádor",
+        "title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces",
+        "journal": "Journal of Chemical Theory and Computation",
+        "doi": "10.1021/acs.jctc.1c00845",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jctc.1c00845",
+        "source_type": "ACS_JCTC",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Hermes_Sella_2022.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 2963,
+          "source": "arXiv_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      }
+    ]
+  },
+  "Section 10": {
+    "title": "VASP-Centered High-Throughput DFT Automation Architecture (VASP 제일원리 계산 자동화 스택)",
+    "count": 6,
+    "papers": [
+      {
+        "id": "Ong_Pymatgen_2013",
+        "name": "Pymatgen (Materials Genomics)",
+        "year": 2013,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Shyue Ping Ong, William Davidson Richards, Anubhav Jain, Geoffroy Hautier et al.",
+        "title": "Python Materials Genomics (pymatgen): A robust, open-source python library for materials analysis",
+        "journal": "Computational Materials Science",
+        "doi": "10.1016/j.commatsci.2012.10.028",
+        "download_url": "https://doi.org/10.1016/j.commatsci.2012.10.028",
+        "source_type": "Elsevier_CMS",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Ong_Pymatgen_2013.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 1357,
+          "source": "eScholarship_UC_Berkeley"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Python Materials Genomics (pymatgen): A robust, open-source python library for materials analysis"
+        },
+        "sections": [
+          "Section 1",
+          "Section 10"
+        ]
+      },
+      {
+        "id": "Rosen_Atomate2_2024",
+        "name": "atomate2 + jobflow",
+        "year": 2024,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Andrew S. Rosen, Matthew Gallant, Anderson Janotti et al.",
+        "title": "atomate2: Modular computational materials science workflows",
+        "journal": "Journal of Open Source Software",
+        "doi": "10.21105/joss.06543",
+        "download_url": "https://doi.org/10.21105/joss.06543",
+        "source_type": "JOSS_OpenAccess",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "JOSS_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "atomate2: Modular computational materials science workflows"
+        },
+        "sections": [
+          "Section 1",
+          "Section 10"
+        ]
+      },
+      {
+        "id": "Uhrin_AiiDA_2021",
+        "name": "AiiDA-VASP Automation",
+        "year": 2021,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Martin Uhrin, Sebastiaan P. Huber, Jusong Yu, Nicola Marzari et al.",
+        "title": "Workflows and automation in AiiDA: Managing computational materials science",
+        "journal": "Computational Materials Science",
+        "doi": "10.1016/j.commatsci.2020.110086",
+        "download_url": "https://doi.org/10.1016/j.commatsci.2020.110086",
+        "source_type": "Elsevier_CMS",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Uhrin_AiiDA_2021.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 925,
+          "source": "arXiv_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Workflows and automation in AiiDA: Managing computational materials science"
+        },
+        "sections": [
+          "Section 1",
+          "Section 10"
+        ]
+      },
+      {
+        "id": "Gautier_Architector_2023",
+        "name": "Architector (3D TMC Complex Builder)",
+        "year": 2023,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Corin Gautier, Tyler Castonguay, Heather J. Kulik",
+        "title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01353",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jcim.3c01353",
+        "source_type": "ACS_JCIM",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Hermes_Sella_2022",
+        "name": "Sella (Automated Saddle-Point TS)",
+        "year": 2022,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Eric D. Hermes, Judit Zádor",
+        "title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces",
+        "journal": "Journal of Chemical Theory and Computation",
+        "doi": "10.1021/acs.jctc.1c00845",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jctc.1c00845",
+        "source_type": "ACS_JCTC",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Hermes_Sella_2022.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 2963,
+          "source": "arXiv_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ALD_MLIP_Precursor_2024",
+        "name": "MLIP for ALD Precursors",
+        "year": 2024,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Seungpyo Kang, Joonchul Kim, Taehyun Park, Joonghee Won et al.",
+        "title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors",
+        "journal": "Materials Today Advances",
+        "doi": "10.1016/j.mtadv.2024.100474",
+        "download_url": null,
+        "source_type": "OpenAccess_Elsevier",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_MLIP_Precursor_2024.pdf",
+          "size_kb": 6267,
+          "source": "OpenAccess_Elsevier",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      }
+    ]
+  },
+  "Section 11": {
+    "title": "Semiconductor Precursor, Reagents & Reaction Database (독자 도메인 데이터베이스)",
+    "count": 5,
+    "papers": [
+      {
+        "id": "Aminosilane_SiO2_ALD_DFT_2017",
+        "name": "Aminosilane ALD Precursor DFT Design",
+        "year": 2017,
+        "generation": "Semiconductor Si Precursor DFT",
+        "authors": "Liang Huang, Bo Han, Maohong Fan, Hansong Cheng",
+        "title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films",
+        "journal": "RSC Advances",
+        "doi": "10.1039/c7ra02301d",
+        "download_url": "https://pubs.rsc.org/en/content/articlepdf/2017/ra/c7ra02301d",
+        "source_type": "OpenAccess_RSC",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\Aminosilane_SiO2_ALD_DFT_2017.pdf",
+          "size_kb": 736,
+          "source": "OpenAccess_RSC",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 11"
+        ]
+      },
+      {
+        "id": "Kulik_TMC_SA_2022",
+        "name": "TMC Synthesizability (Kulik Group)",
+        "year": 2022,
+        "generation": "Semiconductor / Organometallic SA",
+        "authors": "Chenru Duan, Aditya Nandy, Gianmarco G. Terrones, David W. Kastner et al.",
+        "title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores",
+        "journal": "JACS Au",
+        "doi": "10.1021/jacsau.2c00547",
+        "download_url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00547",
+        "source_type": "OpenAccess_ACS",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Kulik_TMC_SA_2022.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 159,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 8",
+          "Section 9",
+          "Section 11",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "MPScore_Jelfs_2021",
+        "name": "MPScore (Materials Precursor Score)",
+        "year": 2021,
+        "generation": "Materials Precursor SA",
+        "authors": "Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al.",
+        "title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c00375",
+        "download_url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75675702a9b1b1c18c660/original/materials-precursor-score-modelling-chemists-intuition-for-the-synthetic-accessibility-of-porous-organic-cage-precursors.pdf",
+        "source_type": "OpenAccess_JCIM",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/MPScore_Jelfs_2021.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 175,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "BR_SAScore_2024",
+        "name": "BR-SAScore",
+        "year": 2024,
+        "generation": "3rd Gen (Building Block & Reaction Aware)",
+        "authors": "Shuan Chen, Yousung Jung",
+        "title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-024-00879-0",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00879-0.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2024,
+          "verified_authors": "Shuan Chen, Yousung Jung"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+          "size_kb": 1351,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "V_SYNTH_2022",
+        "name": "V-SYNTH",
+        "year": 2022,
+        "generation": "Combinatorial On-Demand Library",
+        "authors": "Arman A. Sadybekov, Anastasiia V. Sadybekov, Yurii S. Moroz, et al.",
+        "title": "Synthetically accessible vast chemical space",
+        "journal": "Nature",
+        "doi": "10.1038/s41586-021-04220-9",
+        "download_url": null,
+        "source_type": "Subscription_Nature",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Synthon-based ligand discovery in virtual libraries of over 11 billion compounds",
+          "verified_container": "Nature",
+          "verified_year": 2021,
+          "verified_authors": "Arman A. Sadybekov, Anastasiia V. Sadybekov, Yongfeng Liu, Christos Iliopoulos-Tsoutsouvas et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_Nature"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 11"
+        ]
+      }
+    ]
+  },
+  "Section 12": {
+    "title": "Comprehensive Benchmark & Engineering Evaluation (DB 및 오픈소스 종합 평가)",
+    "count": 17,
+    "papers": [
+      {
+        "id": "SAScore_2009",
+        "name": "SAScore",
+        "year": 2009,
+        "generation": "1st Gen (Heuristics & Substructure)",
+        "authors": "Peter Ertl, Ansgar Schuffenhauer",
+        "title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/1758-2946-1-8",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/1758-2946-1-8.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2009,
+          "verified_authors": "Peter Ertl, Ansgar Schuffenhauer"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SAScore_2009.pdf",
+          "size_kb": 1242,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 2",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SYBA_2020",
+        "name": "SYBA",
+        "year": 2020,
+        "generation": "1st Gen (Bayesian Classification)",
+        "authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil",
+        "title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00439-2",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00439-2.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SYBA: Bayesian estimation of synthetic accessibility of organic compounds",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Milan Voršilák, Michal Kolář, Ivan Čmelo, Daniel Svozil"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SYBA_2020.pdf",
+          "size_kb": 3191,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "SCScore_2018",
+        "name": "SCScore",
+        "year": 2018,
+        "generation": "2nd Gen (Reaction Corpus Neural Net)",
+        "authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen",
+        "title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.7b00622",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "SCScore: Synthetic Complexity Learned from a Reaction Corpus",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2018,
+          "verified_authors": "Connor W. Coley, Luke Rogers, William H. Green, Klavs F. Jensen"
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RAscore_2021",
+        "name": "RAscore",
+        "year": 2021,
+        "generation": "2nd Gen (CASP Route Distillation)",
+        "authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist, Jean-Louis Reymond",
+        "title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+        "journal": "Chemical Science",
+        "doi": "10.1039/D0SC05401A",
+        "download_url": "https://arxiv.org/pdf/2010.05035.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Retrosynthetic accessibility score (RAscore) – rapid machine learned synthesizability classification from AI driven retrosynthetic planning",
+          "verified_container": "Chemical Science",
+          "verified_year": 2021,
+          "verified_authors": "Amol Thakkar, Veronika Chadimová, Esben Jannik Bjerrum, Ola Engkvist et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RAscore_2021.pdf",
+          "size_kb": 322,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "GASA_2022",
+        "name": "GASA",
+        "year": 2022,
+        "generation": "3rd Gen (Graph Attention Network)",
+        "authors": "Jiahui Yu, Yifei Chen, Zhaojun Rong, Ziqing Fang, Xingyu Liu, Tingjun Hou, Peicheng Zhu",
+        "title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.2c00038",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Organic Compound Synthetic Accessibility Prediction Based on the Graph Attention Mechanism",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2022,
+          "verified_authors": "Jiahui Yu, Jike Wang, Hong Zhao, Junbo Gao et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DeepSA_2023",
+        "name": "DeepSA",
+        "year": 2023,
+        "generation": "3rd Gen (SMILES LM & Fragment Tree)",
+        "authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai",
+        "title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-023-00771-3",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-023-00771-3.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DeepSA: a deep-learning driven predictor of compound synthesis accessibility",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2023,
+          "verified_authors": "Shihang Wang, Lin Wang, Fenglei Li, Fang Bai"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\DeepSA_2023.pdf",
+          "size_kb": 4058,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "DFRscore_2023",
+        "name": "DFRscore",
+        "year": 2023,
+        "generation": "3rd Gen (Drug-Focused Retrosynthesis)",
+        "authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim, Woo Youn Kim",
+        "title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01134",
+        "download_url": null,
+        "source_type": "Subscription_ACS",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "DFRscore: Deep Learning-Based Scoring of Synthetic Complexity with Drug-Focused Retrosynthetic Analysis for High-Throughput Virtual Screening",
+          "verified_container": "Journal of Chemical Information and Modeling",
+          "verified_year": 2023,
+          "verified_authors": "Hyeongwoo Kim, Kyunghoon Lee, Chansu Kim, Jaechang Lim et al."
+        },
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "size_kb": 0,
+          "source": "Subscription_ACS"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "BR_SAScore_2024",
+        "name": "BR-SAScore",
+        "year": 2024,
+        "generation": "3rd Gen (Building Block & Reaction Aware)",
+        "authors": "Shuan Chen, Yousung Jung",
+        "title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-024-00879-0",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-024-00879-0.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Estimating the synthetic accessibility of molecules with building block and reaction-aware SAScore",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2024,
+          "verified_authors": "Shuan Chen, Yousung Jung"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\BR_SAScore_2024.pdf",
+          "size_kb": 1351,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "ChemProjector_2024",
+        "name": "ChemProjector",
+        "year": 2024,
+        "generation": "4th Gen (Synthesizable Space Projection)",
+        "authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma",
+        "title": "Projecting Molecules into Synthesizable Chemical Spaces",
+        "journal": "NeurIPS 2024 / arXiv:2406.04628",
+        "doi": "10.48550/arXiv.2406.04628",
+        "download_url": "https://arxiv.org/pdf/2406.04628.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Projecting Molecules into Synthesizable Chemical Spaces",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ChemProjector_2024.pdf",
+          "size_kb": 4788,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFormer_2025",
+        "name": "SynFormer",
+        "year": 2025,
+        "generation": "4th Gen (Autoregressive Pathway Generation)",
+        "authors": "Kangway V. Chuang, Christian A. Mejia, Jeffrey M. Ede, et al.",
+        "title": "Generative Artificial Intelligence for Navigating Synthesizable Chemical Space",
+        "journal": "PNAS 2025 / arXiv:2410.03494",
+        "doi": "10.1073/pnas.2415665122",
+        "download_url": "https://arxiv.org/pdf/2410.03494.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Generative AI for navigating synthesizable chemical space",
+          "verified_container": "Proceedings of the National Academy of Sciences",
+          "verified_year": 2025,
+          "verified_authors": "Wenhao Gao, Shitong Luo, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFormer_2025.pdf",
+          "size_kb": 3651,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFlowNet_2025",
+        "name": "SynFlowNet",
+        "year": 2025,
+        "generation": "4th Gen (GFlowNet Pathway Design)",
+        "authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al.",
+        "title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+        "journal": "ICLR 2025 / arXiv:2405.01155",
+        "doi": "10.48550/arXiv.2405.01155",
+        "download_url": "https://arxiv.org/pdf/2405.01155.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFlowNet_2025.pdf",
+          "size_kb": 8060,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "RxnFlow_2025",
+        "name": "RxnFlow",
+        "year": 2024,
+        "generation": "4th Gen (Generative Flow Pathway Search)",
+        "authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim",
+        "title": "Generative Flows on Synthetic Pathway for Drug Design",
+        "journal": "NeurIPS 2024 / arXiv:2410.04542",
+        "doi": "10.48550/arXiv.2410.04542",
+        "download_url": "https://arxiv.org/pdf/2410.04542.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Generative Flows on Synthetic Pathway for Drug Design",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RxnFlow_2025.pdf",
+          "size_kb": 4912,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ReaSyn_2025",
+        "name": "ReaSyn",
+        "year": 2025,
+        "generation": "4th Gen (Chain-of-Reaction & Edit Flow)",
+        "authors": "KAIST & NVIDIA Research Team",
+        "title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+        "journal": "arXiv:2509.16084",
+        "doi": "10.48550/arXiv.2509.16084",
+        "download_url": "https://arxiv.org/pdf/2509.16084.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "KAIST & NVIDIA Research Team"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ReaSyn_2025.pdf",
+          "size_kb": 2479,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynNet_2022",
+        "name": "SynNet",
+        "year": 2022,
+        "generation": "4th Gen Milestone (Amortized Tree Design)",
+        "authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley",
+        "title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+        "journal": "ICLR 2022",
+        "doi": "10.48550/arXiv.2110.06389",
+        "download_url": "https://arxiv.org/pdf/2110.06389.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Amortized Tree Generation for Bottom-up Synthesis Planning and Synthesizable Molecular Design",
+          "verified_container": "arXiv",
+          "verified_year": 2022,
+          "verified_authors": "Wenhao Gao, Rocío Mercado, Connor W. Coley"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynNet_2022.pdf",
+          "size_kb": 3079,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "AiZynthFinder_2020",
+        "name": "AiZynthFinder",
+        "year": 2020,
+        "generation": "CASP Infrastructure",
+        "authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond, Ola Engkvist",
+        "title": "AiZynthFinder: a software package for automating retrosynthetic planning",
+        "journal": "Journal of Cheminformatics",
+        "doi": "10.1186/s13321-020-00472-1",
+        "download_url": "https://link.springer.com/content/pdf/10.1186/s13321-020-00472-1.pdf",
+        "source_type": "OpenAccess_Journal",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "AiZynthFinder: a fast, robust and flexible open-source software for retrosynthetic planning",
+          "verified_container": "Journal of Cheminformatics",
+          "verified_year": 2020,
+          "verified_authors": "Samuel Genheden, Amol Thakkar, Veronika Chadimová, Jean-Louis Reymond et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\AiZynthFinder_2020.pdf",
+          "size_kb": 1115,
+          "source": "OpenAccess_Journal"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "RetroStar_2020",
+        "name": "Retro*",
+        "year": 2020,
+        "generation": "Neural Guided CASP",
+        "authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al.",
+        "title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+        "journal": "ICML 2020",
+        "doi": "10.48550/arXiv.2006.15575",
+        "download_url": "https://arxiv.org/pdf/2006.15575.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Related",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Retro*: Learning Retrosynthetic Planning with Neural Guided A* Search",
+          "verified_container": "arXiv",
+          "verified_year": 2020,
+          "verified_authors": "Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RetroStar_2020.pdf",
+          "size_kb": 3244,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 4",
+          "Section 7",
+          "Section 12"
+        ]
+      },
+      {
+        "id": "MPScore_Jelfs_2021",
+        "name": "MPScore (Materials Precursor Score)",
+        "year": 2021,
+        "generation": "Materials Precursor SA",
+        "authors": "Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al.",
+        "title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.1c00375",
+        "download_url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75675702a9b1b1c18c660/original/materials-precursor-score-modelling-chemists-intuition-for-the-synthetic-accessibility-of-porous-organic-cage-precursors.pdf",
+        "source_type": "OpenAccess_JCIM",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/MPScore_Jelfs_2021.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 175,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Materials Precursor Score: Modeling Chemists’ Intuition for the Synthetic Accessibility of Porous Organic Cage Precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 7",
+          "Section 8",
+          "Section 11",
+          "Section 12"
+        ]
+      }
+    ]
+  },
+  "Section 13": {
+    "title": "AI-Driven Precursor Inverse Design & Substrate ASD (프리커서 AI 역설계 및 기판 흡착 화학)",
+    "count": 13,
+    "papers": [
+      {
+        "id": "ALD_ML_ChemMater_2026",
+        "name": "ML in ALD Roadmap",
+        "year": 2026,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Julia Westermayr, Stacey F. Bent, Ralf Tonner-Zech",
+        "title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.5c03271",
+        "download_url": null,
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_ML_ChemMater_2026.pdf",
+          "size_kb": 3091,
+          "source": "ACS_ChemMater",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Opportunities and Challenges of Machine Learning in Atomic Layer Deposition"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ALD_MLIP_Precursor_2024",
+        "name": "MLIP for ALD Precursors",
+        "year": 2024,
+        "generation": "Semiconductor ALD Precursor ML+DFT",
+        "authors": "Seungpyo Kang, Joonchul Kim, Taehyun Park, Joonghee Won et al.",
+        "title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors",
+        "journal": "Materials Today Advances",
+        "doi": "10.1016/j.mtadv.2024.100474",
+        "download_url": null,
+        "source_type": "OpenAccess_Elsevier",
+        "role": "Precursor_ALD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ALD_MLIP_Precursor_2024.pdf",
+          "size_kb": 6267,
+          "source": "OpenAccess_Elsevier",
+          "ext": "pdf",
+          "label": "PDF 열람"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Toward fast and accurate machine learning interatomic potentials for atomic layer deposition precursors"
+        },
+        "sections": [
+          "Section 1",
+          "Section 8",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Kulik_TMC_SA_2022",
+        "name": "TMC Synthesizability (Kulik Group)",
+        "year": 2022,
+        "generation": "Semiconductor / Organometallic SA",
+        "authors": "Chenru Duan, Aditya Nandy, Gianmarco G. Terrones, David W. Kastner et al.",
+        "title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores",
+        "journal": "JACS Au",
+        "doi": "10.1021/jacsau.2c00547",
+        "download_url": "https://pubs.acs.org/doi/pdf/10.1021/jacsau.2c00547",
+        "source_type": "OpenAccess_ACS",
+        "role": "Precursor_SA",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Kulik_TMC_SA_2022.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 159,
+          "source": "PMC OpenAccess XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Active Learning Exploration of Transition-Metal Complexes to Discover Method-Insensitive and Synthetically Accessible Chromophores"
+        },
+        "sections": [
+          "Section 1",
+          "Section 5",
+          "Section 8",
+          "Section 9",
+          "Section 11",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Oh_ASD_Precursor_2021",
+        "name": "Oh et al. (ASD Precursor Choice)",
+        "year": 2021,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "In-Kyun Oh, Stacey F. Bent, Adriaan J. M. Mackus et al.",
+        "title": "Role of Precursor Choice on Area-Selective Atomic Layer Deposition",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.0c04718",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.0c04718",
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Role of Precursor Choice on Area-Selective Atomic Layer Deposition"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Tonner_ASD_Precursor_2024",
+        "name": "Tonner-Zech et al. (ASD Design Principles)",
+        "year": 2024,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "Ralf Tonner-Zech et al.",
+        "title": "Precursor Design Principles for Area-Selective Atomic Layer Deposition: Quantifying the Role of Lewis Acidity, Steric Repulsion, and Dimerization",
+        "journal": "Journal of Computational Chemistry",
+        "doi": "10.1002/jcc.70493",
+        "download_url": "https://onlinelibrary.wiley.com/doi/10.1002/jcc.70493",
+        "source_type": "Wiley_JCC",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Tonner_ASD_Precursor_2024.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 201,
+          "source": "PMC_EuropePMC_XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Precursor Design Principles for Area-Selective Atomic Layer Deposition: Quantifying the Role of Lewis Acidity, Steric Repulsion, and Dimerization"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Mackus_ASD_Selectivity_2019",
+        "name": "Mackus et al. (ASD Fundamentals & Metrics)",
+        "year": 2019,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "Adriaan J. M. Mackus, Ageeth A. Bol, W. M. Erwin Kessels",
+        "title": "From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.8b03454",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.8b03454",
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Mackus_ASD_Selectivity_2019.xml",
+          "ext": "xml",
+          "label": "Full-Text XML",
+          "size_kb": 146,
+          "source": "PMC_EuropePMC_XML"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Parsons_ASD_Fundamentals_2020",
+        "name": "Parsons & Clark (ASD State-of-the-Art)",
+        "year": 2020,
+        "generation": "Precursor / Area-Selective ALD",
+        "authors": "Gregory N. Parsons, Robert D. Clark",
+        "title": "Area-Selective Deposition: Fundamentals, Applications, and Future Outlook",
+        "journal": "Chemistry of Materials",
+        "doi": "10.1021/acs.chemmater.0c00722",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.0c00722",
+        "source_type": "ACS_ChemMater",
+        "role": "Precursor_ASD",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Area-Selective Deposition: Fundamentals, Applications, and Future Outlook"
+        },
+        "sections": [
+          "Section 1",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ChemProjector_2024",
+        "name": "ChemProjector",
+        "year": 2024,
+        "generation": "4th Gen (Synthesizable Space Projection)",
+        "authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma",
+        "title": "Projecting Molecules into Synthesizable Chemical Spaces",
+        "journal": "NeurIPS 2024 / arXiv:2406.04628",
+        "doi": "10.48550/arXiv.2406.04628",
+        "download_url": "https://arxiv.org/pdf/2406.04628.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Projecting Molecules into Synthesizable Chemical Spaces",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Shitong Luo, Wenhao Gao, Zuofan Wu, Jian Peng, Connor W. Coley, Jianzhu Ma"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ChemProjector_2024.pdf",
+          "size_kb": 4788,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "SynFlowNet_2025",
+        "name": "SynFlowNet",
+        "year": 2025,
+        "generation": "4th Gen (GFlowNet Pathway Design)",
+        "authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al.",
+        "title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+        "journal": "ICLR 2025 / arXiv:2405.01155",
+        "doi": "10.48550/arXiv.2405.01155",
+        "download_url": "https://arxiv.org/pdf/2405.01155.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "SynFlowNet: Design of Diverse and Novel Molecules with Synthesis Constraints",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "Miruna Cretu, Charles Harris, Austin Tripp, et al."
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\SynFlowNet_2025.pdf",
+          "size_kb": 8060,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "RxnFlow_2025",
+        "name": "RxnFlow",
+        "year": 2024,
+        "generation": "4th Gen (Generative Flow Pathway Search)",
+        "authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim",
+        "title": "Generative Flows on Synthetic Pathway for Drug Design",
+        "journal": "NeurIPS 2024 / arXiv:2410.04542",
+        "doi": "10.48550/arXiv.2410.04542",
+        "download_url": "https://arxiv.org/pdf/2410.04542.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Generative Flows on Synthetic Pathway for Drug Design",
+          "verified_container": "arXiv",
+          "verified_year": 2024,
+          "verified_authors": "Seonghwan Seo, Minsu Kim, Tony Shen, Martin Ester, Jinkyoo Park, Sungsoo Ahn, Woo Youn Kim"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\RxnFlow_2025.pdf",
+          "size_kb": 4912,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "ReaSyn_2025",
+        "name": "ReaSyn",
+        "year": 2025,
+        "generation": "4th Gen (Chain-of-Reaction & Edit Flow)",
+        "authors": "KAIST & NVIDIA Research Team",
+        "title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+        "journal": "arXiv:2509.16084",
+        "doi": "10.48550/arXiv.2509.16084",
+        "download_url": "https://arxiv.org/pdf/2509.16084.pdf",
+        "source_type": "ArXiv_Preprint",
+        "role": "Core",
+        "verification": {
+          "verified": true,
+          "verified_by": "arXiv",
+          "verified_title": "Exploring Synthesizable Chemical Space with Iterative Pathway Refinements",
+          "verified_container": "arXiv",
+          "verified_year": 2025,
+          "verified_authors": "KAIST & NVIDIA Research Team"
+        },
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers\\ReaSyn_2025.pdf",
+          "size_kb": 2479,
+          "source": "ArXiv_Preprint"
+        },
+        "sections": [
+          "Section 1",
+          "Section 3",
+          "Section 4",
+          "Section 7",
+          "Section 12",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Gautier_Architector_2023",
+        "name": "Architector (3D TMC Complex Builder)",
+        "year": 2023,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Corin Gautier, Tyler Castonguay, Heather J. Kulik",
+        "title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures",
+        "journal": "Journal of Chemical Information and Modeling",
+        "doi": "10.1021/acs.jcim.3c01353",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jcim.3c01353",
+        "source_type": "ACS_JCIM",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": false,
+          "file_path": null,
+          "ext": "doi",
+          "label": "DOI 이동",
+          "size_kb": 0,
+          "source": "ACS_Subscription"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      },
+      {
+        "id": "Hermes_Sella_2022",
+        "name": "Sella (Automated Saddle-Point TS)",
+        "year": 2022,
+        "generation": "VASP / First-Principles Automation",
+        "authors": "Eric D. Hermes, Judit Zádor",
+        "title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces",
+        "journal": "Journal of Chemical Theory and Computation",
+        "doi": "10.1021/acs.jctc.1c00845",
+        "download_url": "https://pubs.acs.org/doi/10.1021/acs.jctc.1c00845",
+        "source_type": "ACS_JCTC",
+        "role": "VASP_Framework",
+        "pdf_status": {
+          "downloaded": true,
+          "file_path": "downloaded_papers/Hermes_Sella_2022.pdf",
+          "ext": "pdf",
+          "label": "PDF 열람",
+          "size_kb": 2963,
+          "source": "arXiv_OpenAccess"
+        },
+        "verification": {
+          "verified": true,
+          "verified_by": "CrossRef",
+          "verified_title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces"
+        },
+        "sections": [
+          "Section 1",
+          "Section 9",
+          "Section 10",
+          "Section 13"
+        ]
+      }
+    ]
+  }
+}
