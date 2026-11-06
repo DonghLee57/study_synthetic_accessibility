@@ -48,6 +48,8 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "reasyn"))
 from scscore.standalone_model_numpy import SCScorer
 from syba.syba import SybaClassifier
 from BRSAScore import SAScorer as BRSAScorer
+from aizynthfinder.chem import Molecule as AiZynthMolecule
+from rdchiral.initialization import rdchiralReactants
 import pickle
 import xgboost as xgb
 import yaml
@@ -77,7 +79,7 @@ def run_benchmarks():
                 if m_c:
                     target_smiles.add(Chem.MolToSmiles(m_c))
 
-    target_metal_atomic_nums = {13, 22, 27, 40, 42, 44, 50, 72, 73, 74}  # Al, Ti, Co, Zr, Mo, Ru, Sn, Hf, Ta, W
+    target_metal_atomic_nums = {13, 14, 22, 27, 30, 40, 42, 44, 50, 72, 73, 74}  # Al, Si, Ti, Co, Zn, Zr, Mo, Ru, Sn, Hf, Ta, W
     target_metal_symbols = {"Si", "Ti", "Zr", "Hf", "Ru", "W", "Mo", "Al", "Co", "Ta", "Sn", "Zn"}
 
     def _mol_contains_target_metal(mol_or_patt) -> bool:
@@ -296,10 +298,12 @@ def run_benchmarks():
         "synnet_substituent_match": 0,
         "synnet_core_match": 0,
         "synformer_substituent_match": 0,
+        "synformer_specific_substructure_match": 0,
         "synformer_core_match": 0,
         "reasyn_vocab_pass": 0,
         "reasyn_lossless_roundtrip": 0,
-        "aizynth_ingest_pass": len(precursors),
+        "aizynth_ingest_pass": 0,
+        "retro_star_rdchiral_ingest_pass": 0,
         "gasa_supported_count": 0,
         "gasa_silent_misencoded_count": 0,
         "dfrscore_collapsed_count": 0
@@ -395,17 +399,41 @@ def run_benchmarks():
 
         # 7b. SynFormer Comprehensive Template Substructure Matching (Live RDKit evaluation of 115 rules)
         synformer_matches = []
+        synformer_specific_matches = []
         synformer_core_matches = 0
         for idx, r_line, prods, has_metal in synformer_reactions:
             if all(mol.HasSubstructMatch(pt) for pt in prods):
                 synformer_matches.append(idx)
+                if all(pt.GetNumAtoms() >= 2 for pt in prods):
+                    synformer_specific_matches.append(idx)
                 if has_metal:
                     synformer_core_matches += 1
         has_synformer_match = len(synformer_matches) > 0
+        has_synformer_specific = len(synformer_specific_matches) > 0
         if has_synformer_match:
             stats["synformer_substituent_match"] += 1
+        if has_synformer_specific:
+            stats["synformer_specific_substructure_match"] += 1
         if synformer_core_matches > 0:
             stats["synformer_core_match"] += 1
+
+        # 7c. Live Ingestion Checks for AiZynthFinder (Molecule) and Retro* (rdchiralReactants)
+        try:
+            az_mol = AiZynthMolecule(smiles=smi)
+            az_mol.sanitize()
+            aizynth_ingested = az_mol.rd_mol is not None
+        except Exception:
+            aizynth_ingested = False
+        if aizynth_ingested:
+            stats["aizynth_ingest_pass"] += 1
+
+        try:
+            rdc_obj = rdchiralReactants(smi)
+            rdchiral_ingested = rdc_obj is not None and rdc_obj.reactants is not None
+        except Exception:
+            rdchiral_ingested = False
+        if rdchiral_ingested:
+            stats["retro_star_rdchiral_ingest_pass"] += 1
 
         # 8. ReaSyn Tokenizer Analysis
         tokens = _smiles_token_pattern.findall(smi)
@@ -463,13 +491,16 @@ def run_benchmarks():
             "chemprojector_hb_matches_count": len(hb_matches),
             "chemprojector_core_matches_count": hb_core_matches,
             "synformer_substituent_match": has_synformer_match,
+            "synformer_specific_substructure_match": has_synformer_specific,
             "synformer_matches_count": len(synformer_matches),
+            "synformer_specific_matches_count": len(synformer_specific_matches),
             "synformer_core_matches_count": synformer_core_matches,
             "reasyn_in_vocab": not has_unknown,
             "reasyn_tokens": len(tokens),
             "reasyn_roundtrip_exact": is_exact_roundtrip,
             "reasyn_unknown_tokens": sum(1 for tid in token_ids if tid > len(_smiles_vocab)),
-            "aizynth_ingest": True,
+            "aizynth_ingest": aizynth_ingested,
+            "rdchiral_ingest": rdchiral_ingested,
             "gasa_supported": gasa_supported,
             "gasa_unsupported_elements": list(set(unsupported_gasa)),
             "gasa_failure_mode": "Normal" if gasa_supported else "Silent Mis-encoding (All-Zero Vector)",
@@ -493,9 +524,12 @@ def run_benchmarks():
         expanded_results["br_sascore_custom_strict"][name] = {
             "score": br_strict_score,
             "pass": br_strict_score <= 3.5,
+            "delta_vs_default": round(br_strict_score - br_def_score, 2),
+            "worsened_by_zero_exclusion": br_strict_score > br_def_score,
             "reagent_dictionary_only": True,
             "data_leakage_prevented": True,
-            "execution_mode": "Live Numerical (Strict Reagent Domain)"
+            "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+            "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
         }
         expanded_results["br_sascore_custom_leaked"][name] = {
             "score": br_leaked_score,
@@ -514,48 +548,55 @@ def run_benchmarks():
         }
         expanded_results["rxnflow"][name] = {
             "substituent_matched": rxnflow_has_match,
+            "generic_substructure_matched": rxnflow_has_match,
             "matched_templates": rxnflow_matches,
             "core_coordination_matched": rxnflow_core_matches > 0,
             "core_metal_rules_matched": rxnflow_core_matches,
-            "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+            "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
         }
         expanded_results["aizynthfinder"][name] = {
-            "smiles_ingested": True,
+            "smiles_ingested": aizynth_ingested,
             "policy_proposals": None,
             "search_depth": None,
             "solved": None,
-            "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+            "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
         }
         expanded_results["chemprojector"][name] = {
             "atomic_numbers_valid": all(a.GetAtomicNum() <= 100 for a in mol.GetAtoms()),
             "hb_substituent_matched": has_hb_match,
+            "generic_substructure_matched": has_hb_match,
             "hb_templates_matched_count": len(hb_matches),
             "core_metal_rules_matched": hb_core_matches,
             "route_found": None,
-            "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+            "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
         }
         expanded_results["synnet"][name] = {
-            "morgan_fp_valid": True,
+            "morgan_fp_valid": AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048).GetNumBits() == 2048,
             "hb_substituent_matched": has_hb_match,
+            "generic_substructure_matched": has_hb_match,
             "hb_rules_matched_count": len(hb_matches),
             "core_metal_rules_matched": hb_core_matches,
             "tree_constructed": None,
-            "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+            "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
         }
         expanded_results["synformer"][name] = {
-            "reaction_tokens_valid": True,
+            "reaction_tokens_valid": not has_unknown,
             "substituent_matched": has_synformer_match,
+            "generic_substructure_matched": has_synformer_match,
+            "specific_substructure_matched": has_synformer_specific,
             "disconnection_matched": len(synformer_matches),
+            "specific_disconnection_matched": len(synformer_specific_matches),
             "matched_template_indices": synformer_matches,
+            "specific_matched_template_indices": synformer_specific_matches,
             "core_metal_rules_matched": synformer_core_matches,
             "route_found": None,
-            "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+            "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
         }
         expanded_results["retro_star"][name] = {
-            "rdchiral_ingest": True,
+            "rdchiral_ingest": rdchiral_ingested,
             "uspto_rules_matched": None,
             "solved": None,
-            "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+            "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
         }
         expanded_results["dfrscore"][name] = {
             "metal_elements": [a for a in atoms if a not in dfr_allowed_elements],

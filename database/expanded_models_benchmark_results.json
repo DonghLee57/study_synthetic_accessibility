@@ -742,191 +742,272 @@
     "DIPAS": {
       "score": 8.82,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "BTBAS": {
       "score": 8.88,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "3DMAS": {
       "score": 8.72,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "4DMAS": {
       "score": 8.62,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TSA": {
       "score": 1.04,
       "pass": true,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "HCDS": {
       "score": 8.52,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TEOS": {
       "score": 3.82,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "SAM.24": {
       "score": 8.84,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TEMAH": {
       "score": 8.8,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TDMAH": {
       "score": 8.62,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "Hf(OtBu)4": {
       "score": 8.71,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TEMAZ": {
       "score": 8.8,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TDMAZ": {
       "score": 8.62,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "ZMA": {
       "score": 8.39,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "Cp(NMe2)3Zr": {
       "score": 8.98,
       "pass": false,
+      "delta_vs_default": 1.78,
+      "worsened_by_zero_exclusion": true,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TDMAT": {
       "score": 8.62,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TTIP": {
       "score": 8.75,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "CpTi(NMe2)3": {
       "score": 8.98,
       "pass": false,
+      "delta_vs_default": 1.78,
+      "worsened_by_zero_exclusion": true,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TMA": {
       "score": 1.04,
       "pass": true,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "DMAH": {
       "score": 1.02,
       "pass": true,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "BTBMW": {
       "score": 8.95,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "BTBMMo": {
       "score": 8.95,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "Ru(EtCp)2": {
       "score": 4.88,
       "pass": false,
+      "delta_vs_default": 0.7,
+      "worsened_by_zero_exclusion": true,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "Co(AMD)2": {
       "score": 9.1,
       "pass": false,
+      "delta_vs_default": 0.81,
+      "worsened_by_zero_exclusion": true,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "CCTBA": {
       "score": 8.91,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "TBTDET": {
       "score": 9.03,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     },
     "tBuSn(OiPr)3": {
       "score": 8.95,
       "pass": false,
+      "delta_vs_default": 0.0,
+      "worsened_by_zero_exclusion": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
-      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+      "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
+      "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
     }
   },
   "br_sascore_custom_leaked": {
@@ -2215,6 +2296,7 @@
   "rxnflow": {
     "DIPAS": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "explore:reductive_amination_ketone",
         "cgflow:amine_halide_coupling",
@@ -2222,54 +2304,61 @@
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "BTBAS": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "3DMAS": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "4DMAS": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TSA": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "HCDS": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TEOS": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "SAM.24": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "explore:reductive_amination_ketone",
         "cgflow:amine_halide_coupling",
@@ -2277,10 +2366,11 @@
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TEMAH": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "explore:reductive_amination_aliphatic_aldehyde",
         "cgflow:amine_halide_coupling",
@@ -2288,24 +2378,27 @@
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TDMAH": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "Hf(OtBu)4": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TEMAZ": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "explore:reductive_amination_aliphatic_aldehyde",
         "cgflow:amine_halide_coupling",
@@ -2313,107 +2406,121 @@
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TDMAZ": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "ZMA": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "Cp(NMe2)3Zr": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TDMAT": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TTIP": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "CpTi(NMe2)3": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TMA": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "DMAH": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "BTBMW": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "BTBMMo": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "Ru(EtCp)2": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "Co(AMD)2": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "CCTBA": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "TBTDET": {
       "substituent_matched": true,
+      "generic_substructure_matched": true,
       "matched_templates": [
         "explore:reductive_amination_aliphatic_aldehyde",
         "cgflow:amine_halide_coupling",
@@ -2421,14 +2528,15 @@
       ],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     },
     "tBuSn(OiPr)3": {
       "substituent_matched": false,
+      "generic_substructure_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
       "core_metal_rules_matched": 0,
-      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
+      "execution_mode": "Live Generic Product Substructure Matching (72 Rules; 0 Metal Rules in Set)"
     }
   },
   "aizynthfinder": {
@@ -2437,632 +2545,689 @@
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "BTBAS": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "3DMAS": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "4DMAS": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TSA": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "HCDS": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TEOS": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "SAM.24": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TEMAH": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TDMAH": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "Hf(OtBu)4": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TEMAZ": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TDMAZ": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "ZMA": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "Cp(NMe2)3Zr": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TDMAT": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TTIP": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "CpTi(NMe2)3": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TMA": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "DMAH": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "BTBMW": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "BTBMMo": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "Ru(EtCp)2": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "Co(AMD)2": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "CCTBA": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "TBTDET": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     },
     "tBuSn(OiPr)3": {
       "smiles_ingested": true,
       "policy_proposals": null,
       "search_depth": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live Molecule Sanitization Only (MCTS Search Unexecuted; Weights Not Downloaded)"
     }
   },
   "chemprojector": {
     "DIPAS": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "BTBAS": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "3DMAS": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "4DMAS": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TSA": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "HCDS": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TEOS": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "SAM.24": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TEMAH": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TDMAH": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Hf(OtBu)4": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TEMAZ": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TDMAZ": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "ZMA": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Cp(NMe2)3Zr": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 8,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TDMAT": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TTIP": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "CpTi(NMe2)3": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 8,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TMA": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "DMAH": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "BTBMW": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "BTBMMo": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Ru(EtCp)2": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 5,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Co(AMD)2": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "CCTBA": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TBTDET": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "tBuSn(OiPr)3": {
       "atomic_numbers_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     }
   },
   "synnet": {
     "DIPAS": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "BTBAS": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "3DMAS": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "4DMAS": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TSA": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "HCDS": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TEOS": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "SAM.24": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TEMAH": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TDMAH": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Hf(OtBu)4": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TEMAZ": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TDMAZ": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "ZMA": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Cp(NMe2)3Zr": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 8,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TDMAT": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TTIP": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "CpTi(NMe2)3": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 8,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TMA": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "DMAH": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": false,
+      "generic_substructure_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "BTBMW": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "BTBMMo": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Ru(EtCp)2": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 5,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "Co(AMD)2": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "CCTBA": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "TBTDET": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     },
     "tBuSn(OiPr)3": {
       "morgan_fp_valid": true,
       "hb_substituent_matched": true,
+      "generic_substructure_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
       "tree_constructed": null,
-      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
+      "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
     }
   },
   "synformer": {
     "DIPAS": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 4,
       "matched_template_indices": [
         9,
         43,
@@ -3070,14 +3235,23 @@
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        68,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "BTBAS": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 4,
       "matched_template_indices": [
         9,
         43,
@@ -3085,69 +3259,104 @@
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        68,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "3DMAS": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 2,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
         9,
         84
       ],
+      "specific_matched_template_indices": [
+        9
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "4DMAS": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 2,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
         9,
         84
       ],
+      "specific_matched_template_indices": [
+        9
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TSA": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": false,
       "disconnection_matched": 1,
+      "specific_disconnection_matched": 0,
       "matched_template_indices": [
         84
       ],
+      "specific_matched_template_indices": [],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "HCDS": {
       "reaction_tokens_valid": true,
       "substituent_matched": false,
+      "generic_substructure_matched": false,
+      "specific_substructure_matched": false,
       "disconnection_matched": 0,
+      "specific_disconnection_matched": 0,
       "matched_template_indices": [],
+      "specific_matched_template_indices": [],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TEOS": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 1,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
+        95
+      ],
+      "specific_matched_template_indices": [
         95
       ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "SAM.24": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 4,
       "matched_template_indices": [
         9,
         43,
@@ -3155,14 +3364,23 @@
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        68,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TEMAH": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 4,
       "matched_template_indices": [
         9,
         43,
@@ -3170,37 +3388,58 @@
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        68,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TDMAH": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 2,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
         9,
         84
       ],
+      "specific_matched_template_indices": [
+        9
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "Hf(OtBu)4": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 1,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
+        95
+      ],
+      "specific_matched_template_indices": [
         95
       ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TEMAZ": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 4,
       "matched_template_indices": [
         9,
         43,
@@ -3208,27 +3447,49 @@
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        68,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TDMAZ": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 2,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
         9,
         84
       ],
+      "specific_matched_template_indices": [
+        9
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "ZMA": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 5,
       "matched_template_indices": [
+        3,
+        10,
+        95,
+        96,
+        102
+      ],
+      "specific_matched_template_indices": [
         3,
         10,
         95,
@@ -3237,12 +3498,15 @@
       ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "Cp(NMe2)3Zr": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 7,
+      "specific_disconnection_matched": 6,
       "matched_template_indices": [
         3,
         9,
@@ -3252,37 +3516,60 @@
         96,
         102
       ],
+      "specific_matched_template_indices": [
+        3,
+        9,
+        10,
+        95,
+        96,
+        102
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TDMAT": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 2,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
         9,
         84
       ],
+      "specific_matched_template_indices": [
+        9
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TTIP": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 1,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
+        95
+      ],
+      "specific_matched_template_indices": [
         95
       ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "CpTi(NMe2)3": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 7,
+      "specific_disconnection_matched": 6,
       "matched_template_indices": [
         3,
         9,
@@ -3292,61 +3579,103 @@
         96,
         102
       ],
+      "specific_matched_template_indices": [
+        3,
+        9,
+        10,
+        95,
+        96,
+        102
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TMA": {
       "reaction_tokens_valid": true,
       "substituent_matched": false,
+      "generic_substructure_matched": false,
+      "specific_substructure_matched": false,
       "disconnection_matched": 0,
+      "specific_disconnection_matched": 0,
       "matched_template_indices": [],
+      "specific_matched_template_indices": [],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "DMAH": {
       "reaction_tokens_valid": true,
       "substituent_matched": false,
+      "generic_substructure_matched": false,
+      "specific_substructure_matched": false,
       "disconnection_matched": 0,
+      "specific_disconnection_matched": 0,
       "matched_template_indices": [],
+      "specific_matched_template_indices": [],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "BTBMW": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 4,
+      "specific_disconnection_matched": 3,
       "matched_template_indices": [
         9,
         43,
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "BTBMMo": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 4,
+      "specific_disconnection_matched": 3,
       "matched_template_indices": [
         9,
         43,
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "Ru(EtCp)2": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 5,
       "matched_template_indices": [
+        3,
+        10,
+        95,
+        96,
+        102
+      ],
+      "specific_matched_template_indices": [
         3,
         10,
         95,
@@ -3355,12 +3684,15 @@
       ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "Co(AMD)2": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 4,
       "matched_template_indices": [
         9,
         43,
@@ -3368,25 +3700,40 @@
         84,
         95
       ],
+      "specific_matched_template_indices": [
+        9,
+        43,
+        68,
+        95
+      ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "CCTBA": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 1,
+      "specific_disconnection_matched": 1,
       "matched_template_indices": [
+        95
+      ],
+      "specific_matched_template_indices": [
         95
       ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     },
     "TBTDET": {
       "reaction_tokens_valid": true,
       "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
       "disconnection_matched": 5,
+      "specific_disconnection_matched": 4,
       "matched_template_indices": [
         9,
         43,
@@ -3394,20 +3741,32 @@
         84,
         95
       ],
-      "core_metal_rules_matched": 0,
-      "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
-    },
-    "tBuSn(OiPr)3": {
-      "reaction_tokens_valid": true,
-      "substituent_matched": true,
-      "disconnection_matched": 1,
-      "matched_template_indices": [
+      "specific_matched_template_indices": [
+        9,
+        43,
+        68,
         95
       ],
       "core_metal_rules_matched": 0,
       "route_found": null,
-      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
+    },
+    "tBuSn(OiPr)3": {
+      "reaction_tokens_valid": true,
+      "substituent_matched": true,
+      "generic_substructure_matched": true,
+      "specific_substructure_matched": true,
+      "disconnection_matched": 1,
+      "specific_disconnection_matched": 1,
+      "matched_template_indices": [
+        95
+      ],
+      "specific_matched_template_indices": [
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
     }
   },
   "retro_star": {
@@ -3415,163 +3774,163 @@
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "BTBAS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "3DMAS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "4DMAS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TSA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "HCDS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TEOS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "SAM.24": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TEMAH": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TDMAH": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "Hf(OtBu)4": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TEMAZ": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TDMAZ": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "ZMA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "Cp(NMe2)3Zr": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TDMAT": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TTIP": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "CpTi(NMe2)3": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TMA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "DMAH": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "BTBMW": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "BTBMMo": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "Ru(EtCp)2": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "Co(AMD)2": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "CCTBA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "TBTDET": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     },
     "tBuSn(OiPr)3": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": null,
       "solved": null,
-      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
+      "execution_mode": "Live rdchiralReactants Initialization Only (A* Search Unexecuted; Weights Not Downloaded)"
     }
   },
   "dfrscore": {

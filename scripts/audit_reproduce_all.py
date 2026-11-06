@@ -183,8 +183,9 @@ def run_full_audit():
     print(f"  -> BR-SAScore Strict Reagent Domain (Unleaked): {br_strict_pass}/27 (Expected: 3/27, 11.1%)")
     assert br_def_pass == 3, f"Expected 3 default passes, got {br_def_pass}"
     assert br_strict_pass == 3, f"Expected 3 strict passes, got {br_strict_pass}"
-    print("  -> Scientific Finding: Without circular product memorization, commercial precursors score 8.5~9.0")
-    print("     because newly formed M-N / M-C bonds receive max penalty (-6.0) in USPTO RFrag dictionary.")
+    worsened = [p["name"] for p in precursors if stored_results[p["id"]]["br_sascore_custom_strict"] > stored_results[p["id"]]["br_sascore_default"]]
+    print(f"  -> Methodological Caveat: Zeroing reagent fragments drops them from BRSAScore's negative-only")
+    print(f"     average (fscore < 0), worsening 4 precursors ({worsened}) where remaining M-L fragments are -6.0.")
 
     # 6. Verify BioNeMo ReaSyn Tokenizer Roundtrip & Decoding Offset Bug Analysis
     print("\n[CHECK 6/9] Auditing BioNeMo ReaSyn Tokenizer & Decoding Offset...")
@@ -201,10 +202,12 @@ def run_full_audit():
     print("  -> Audit Note: Prior 'false' flag was caused by decoding offset in ReaSyn's decode_smiles()")
     print("     (_smiles_id_to_token starts at MOL_END+1=4 while _smiles_token_to_id starts at 1).")
 
-    # 7. RxnFlow, ChemProjector, SynNet & SynFormer Template Matching Audit (Substituents vs Core Coordination)
+    # 7. RxnFlow, ChemProjector, SynNet & SynFormer Template Matching Audit (Generic Substructure vs Core Coordination)
     print("\n[CHECK 7/9] Auditing RxnFlow (72), ChemProjector/SynNet (HB 91), & SynFormer (115) Templates...")
     import yaml
-    target_metal_atomic_nums = {13, 22, 27, 40, 42, 44, 50, 72, 73, 74}
+    from aizynthfinder.chem import Molecule as AiZynthMolecule
+    from rdchiral.initialization import rdchiralReactants
+    target_metal_atomic_nums = {13, 14, 22, 27, 30, 40, 42, 44, 50, 72, 73, 74}
     target_metal_symbols = {"Si", "Ti", "Zr", "Hf", "Ru", "W", "Mo", "Al", "Co", "Ta", "Sn", "Zn"}
     def _has_metal(m_or_p):
         return any(a.GetAtomicNum() in target_metal_atomic_nums or a.GetSymbol() in target_metal_symbols for a in m_or_p.GetAtoms())
@@ -225,9 +228,9 @@ def run_full_audit():
                             rxnflow_patts.append((f"{scope_name}:{r_name}", pt, _has_metal(pt)))
     rf_subst = sum(1 for p in precursors if any(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for _, pt, _ in rxnflow_patts))
     rf_core = sum(1 for _, _, hm in rxnflow_patts if hm)
-    assert rf_subst == 9, f"Expected 9 RxnFlow substituent matches, got {rf_subst}"
+    assert rf_subst == 9, f"Expected 9 RxnFlow generic product matches, got {rf_subst}"
     assert rf_core == 0, f"Expected 0 RxnFlow metal rules, got {rf_core}"
-    print(f"  -> RxnFlow Substituent Matches: {rf_subst}/27 (33.3%), Metal Core Rules: {rf_core}")
+    print(f"  -> RxnFlow Generic Product Substructure Matches: {rf_subst}/27 (33.3%), Metal Rules in Set: {rf_core}")
 
     hb_path = os.path.join(PROJECT_ROOT, "external", "chemprojector", "data", "reaction_templates_hb.txt")
     hb_patterns = []
@@ -246,8 +249,8 @@ def run_full_audit():
         if any(m.HasSubstructMatch(patt) for patt, _ in hb_patterns):
             subst_matches += 1
     hb_core = sum(1 for _, hm in hb_patterns if hm)
-    print(f"  -> ChemProjector / SynNet Substituent Ligand Matches: {subst_matches}/27 (85.2%), Metal Core Rules: {hb_core}")
-    assert subst_matches == 23, f"Expected 23 substituent matches, got {subst_matches}"
+    print(f"  -> ChemProjector / SynNet Generic Product Substructure Matches: {subst_matches}/27 (85.2%), Metal Rules in Set: {hb_core}")
+    assert subst_matches == 23, f"Expected 23 generic product matches, got {subst_matches}"
     assert hb_core == 0, f"Expected 0 HB metal rules, got {hb_core}"
 
     sf_path = os.path.join(PROJECT_ROOT, "external", "synformer", "data", "rxn_templates", "comprehensive.txt")
@@ -261,10 +264,17 @@ def run_full_audit():
                 prods = list(rxn.GetProducts())
                 sf_rxns.append((prods, any(_has_metal(pt) for pt in prods)))
     sf_subst = sum(1 for p in precursors if any(all(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
+    sf_spec = sum(1 for p in precursors if any(all(pt.GetNumAtoms() >= 2 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
     sf_core = sum(1 for _, hm in sf_rxns if hm)
-    print(f"  -> SynFormer Substituent Ligand Matches: {sf_subst}/27 (88.9%), Metal Core Rules: {sf_core}")
-    assert sf_subst == 24, f"Expected 24 SynFormer substituent matches, got {sf_subst}"
+    print(f"  -> SynFormer Generic Product Matches: {sf_subst}/27 (88.9%, includes single-atom [N:1] #84 on TSA); >=2-Atom Matches: {sf_spec}/27 (85.2%); Metal Rules in Set: {sf_core}")
+    assert sf_subst == 24, f"Expected 24 SynFormer generic matches, got {sf_subst}"
+    assert sf_spec == 23, f"Expected 23 SynFormer >=2-atom matches, got {sf_spec}"
     assert sf_core == 0, f"Expected 0 SynFormer metal product rules, got {sf_core}"
+
+    az_ingest = sum(1 for p in precursors if (lambda s: (m := AiZynthMolecule(smiles=s), m.sanitize(), m.rd_mol is not None)[2])(p["smiles"]))
+    rdc_ingest = sum(1 for p in precursors if rdchiralReactants(p["smiles"]).reactants is not None)
+    assert az_ingest == 27 and rdc_ingest == 27
+    print(f"  -> Live Ingestion Verified: AiZynthFinder Molecule={az_ingest}/27, Retro* rdchiralReactants={rdc_ingest}/27")
 
     # 8. GASA Element Set & Silent Mis-encoding Verification
     print("\n[CHECK 8/9] Auditing GASA Element Support & Silent Mis-encoding...")

@@ -222,6 +222,10 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(strict_passes, 3, "BR-SAScore Strict Reagent Domain (Unleaked) should pass exactly 3/27 (TSA, TMA, DMAH)")
         self.assertEqual(leaked_passes, 27, "BR-SAScore Product-Memorized baseline confirms 27/27 circular data leakage")
 
+        # Verify that zeroing reagent fragments in BRSAScore negative-only average worsens 4 specific precursors
+        worsened = [p["name"] for p in self.precursors if self.stored_results[p["id"]]["br_sascore_custom_strict"] > self.stored_results[p["id"]]["br_sascore_default"]]
+        self.assertEqual(sorted(worsened), sorted(["Cp(NMe2)3Zr", "CpTi(NMe2)3", "Ru(EtCp)2", "Co(AMD)2"]))
+
     def test_07_reasyn_lossless_tokenization(self):
         """Verify BioNeMo ReaSyn universal tokenizer losslessly roundtrips all 27 SMILES."""
         reasyn_1_to_tok = {i: t for i, t in enumerate(_smiles_vocab, start=1)}
@@ -254,13 +258,15 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(unsupported_elements, {'Hf', 'Ta', 'Ru', 'W', 'Mo'}, "Unsupported elements must be Hf, Ta, Ru, W, Mo")
 
     def test_09_chemprojector_synnet_synformer_rxnflow_and_dfrscore(self):
-        """Verify live SMARTS matching on RxnFlow (72), HB (91), and SynFormer (115) templates."""
+        """Verify live SMARTS matching on RxnFlow (72), HB (91), and SynFormer (115) templates and live ingestion."""
         import yaml
+        from aizynthfinder.chem import Molecule as AiZynthMolecule
+        from rdchiral.initialization import rdchiralReactants
         dfr_allowed = {"C", "N", "O", "F", "S", "Cl", "Br", "I", "B", "P"}
         dfr_collapse = sum(1 for p in self.precursors if any(a.GetSymbol() not in dfr_allowed for a in Chem.MolFromSmiles(p["smiles"]).GetAtoms()))
         self.assertEqual(dfr_collapse, 27, "All 27 precursors must collapse in DFRscore")
 
-        target_metal_atomic_nums = {13, 22, 27, 40, 42, 44, 50, 72, 73, 74}
+        target_metal_atomic_nums = {13, 14, 22, 27, 30, 40, 42, 44, 50, 72, 73, 74}
         target_metal_symbols = {"Si", "Ti", "Zr", "Hf", "Ru", "W", "Mo", "Al", "Co", "Ta", "Sn", "Zn"}
         def _has_metal(m_or_p):
             return any(a.GetAtomicNum() in target_metal_atomic_nums or a.GetSymbol() in target_metal_symbols for a in m_or_p.GetAtoms())
@@ -281,7 +287,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                             if pt:
                                 rf_patts.append((pt, _has_metal(pt)))
         rf_subst = sum(1 for p in self.precursors if any(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt, _ in rf_patts))
-        self.assertEqual(rf_subst, 9, "RxnFlow must match 9/27 on organic substituents")
+        self.assertEqual(rf_subst, 9, "RxnFlow must match 9/27 on generic product substructures")
         self.assertEqual(sum(1 for _, hm in rf_patts if hm), 0, "RxnFlow must contain 0 metal coordination templates")
 
         # ChemProjector / SynNet 91 HB templates
@@ -297,7 +303,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                     if patt: hb_patterns.append((patt, _has_metal(patt)))
 
         subst_matches = sum(1 for p in self.precursors if any(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(patt) for patt, _ in hb_patterns))
-        self.assertEqual(subst_matches, 23, "ChemProjector/SynNet must match 23/27 on organic substituents")
+        self.assertEqual(subst_matches, 23, "ChemProjector/SynNet must match 23/27 on generic product substructures")
         self.assertEqual(sum(1 for _, hm in hb_patterns if hm), 0, "ChemProjector HB rules must contain 0 metal templates")
 
         # SynFormer 115 templates
@@ -312,8 +318,18 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                     prods = list(rxn.GetProducts())
                     sf_rxns.append((prods, any(_has_metal(pt) for pt in prods)))
         sf_subst = sum(1 for p in self.precursors if any(all(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
-        self.assertEqual(sf_subst, 24, "SynFormer must match 24/27 on organic substituents")
+        sf_spec = sum(1 for p in self.precursors if any(all(pt.GetNumAtoms() >= 2 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
+        self.assertEqual(sf_subst, 24, "SynFormer must match 24/27 on generic product substructures (including #84 [N:1] on TSA)")
+        self.assertEqual(sf_spec, 23, "SynFormer must match 23/27 when single-atom product templates (<2 atoms) are excluded")
         self.assertEqual(sum(1 for _, hm in sf_rxns if hm), 0, "SynFormer product templates must contain 0 metal coordination rules")
+
+        # Live ingestion checks for AiZynthFinder and Retro*
+        for p in self.precursors:
+            az_mol = AiZynthMolecule(smiles=p["smiles"])
+            az_mol.sanitize()
+            self.assertIsNotNone(az_mol.rd_mol, f"AiZynthFinder Molecule failed for {p['name']}")
+            rdc_obj = rdchiralReactants(p["smiles"])
+            self.assertIsNotNone(rdc_obj.reactants, f"rdchiralReactants failed for {p['name']}")
 
 
 if __name__ == "__main__":
