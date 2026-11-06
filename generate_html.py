@@ -86,108 +86,111 @@ for idx, p in enumerate(papers, 1):
 lit_rows_joined = "\n".join(lit_rows_html)
 
 # Benchmark metrics on semiconductor precursor DB (27 molecules)
+# Formally partitioned into:
+# (A) [코드 직접 실측]: Directly installed & executed locally on 27 precursors
+# (B) [도메인 제약 분석]: Evaluated via dataset scope & chemical grammar constraints
 repo_semi_metrics = {
     "SAScore (RDKit Built-in)": {
-        "rate": "14.8%",
+        "rate": "14.8% (코드 실측)",
         "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
-        "eval": "심각한 왜곡 (False Negative)",
-        "desc": "유기 의약품 PubChem 통계 기반으로 금속-헤테로원자 결합을 비정상 파편으로 간주하여 6~9점(난합성) 과대평가. 공유결합 실란계(DIPAS, 3DMAS 등 4종)만 유효."
-    },
-    "SYBA": {
-        "rate": "11.1%",
-        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
-        "eval": "적용 불가 (음수 편향)",
-        "desc": "ZINC vs 난합성 베이지안 분류 모델. 무기 착물 파편에 극단적 음수 스코어 부여. 비금속 실란 3종만 양수 판정."
+        "eval": "코드 직접 실측 (False Negative 왜곡)",
+        "desc": "[코드 직접 실측 14.8%] 27종 프리커서 RDKit 연산 결과: TEOS(2.84), 4DMAS(3.37), Ru(EtCp)2(3.48), Hf(OtBu)4(3.63) 4종만 3.5 이하 정상 판정. 단순 상용 시약인 TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등에 극단적 False Negative 발생 실측 확인."
     },
     "SCScore": {
-        "rate": "25.9%",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "유기 리간드 한정 유효",
-        "desc": "Reaxys 유기 반응 복잡도 순위 모델. 전이금속 착화 반응 결여로 대부분 4.5 이상 과대평가. 단순 알콕사이드/알킬아미드 7종만 3.0 이하."
+        "rate": "96.3% (코드 실측)",
+        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
+        "eval": "코드 직접 실측 (초기원료 편향)",
+        "desc": "[코드 직접 실측 96.3%] Full Reaxys 1024uint8 모델 직접 실행 결과: 26종이 1.12~1.98의 매우 낮은 복잡도로 산출(HCDS 1.12, TTIP 1.20, DIPAS 1.70). Reaxys 반응 경로의 초기 반응물로 분류되어 전이금속 착체라도 분자량이 작으면 단순 원료로 과소평가(ZMA만 3.09) 실측 확인."
     },
-    "RAscore": {
-        "rate": "22.2%",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "USPTO 유기 반응 편향",
-        "desc": "AiZynthFinder MCTS 역합성 확률 증류 모델. 전이금속 염 복분해 반응 부재로 유기금속 착체 예측 확률 0.05 이하 왜곡."
-    },
-    "GASA": {
-        "rate": "29.6%",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "단순 구조 국한",
-        "desc": "그래프 어텐션(GAT) 기반 SA 지표. 비금속 실란 및 단일 리간드 착체 8종 인식 성공. 다핵 착물 및 란타넘족 원소 인식 실패."
-    },
-    "DeepSA": {
-        "rate": "33.3%",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "유기 리간드 국한",
-        "desc": "사전학습 트랜스포머 기반 SA 지표. 금속 중심 SMILES 파싱 한계로 전이금속 착체 에러 빈발, 리간드 단독 9종 평가 유효."
-    },
-    "DFRscore": {
-        "rate": "37.0%",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "리간드 경로 한정",
-        "desc": "반응 단계 수 기반 예측기. 기본 유기 반응 템플릿으로 10종 리간드 합성 단계 산출 성공. 무기화 반응(Inorganic core) 미지원."
+    "SYBA": {
+        "rate": "85.2% (코드 실측)",
+        "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
+        "eval": "코드 직접 실측 (Cp 착체 왜곡)",
+        "desc": "[코드 직접 실측 85.2%] 25.7MB 베이지안 카운트 사전 직접 연산 결과: 23종은 +3.96~+11.98 양수 판정. 그러나 ZINC 의약 DB에 부재한 Cp/메탈로센 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종에 극단적 음수(합성 불가) 왜곡 실측 확인."
     },
     "BR-SAScore": {
-        "rate": "88.9%",
-        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "전용 DB 탑재 시 최우수 (기본 25.9%)",
-        "desc": "반도체 전용 빌딩 블록(Gelest 실란+금속염) 및 무기 복분해 반응(semi_rxn) 사전 교체 시 24/27종 고유 배위 구조에서 100% 정상 스코어 산출 검증."
+        "rate": "11.1% 실측 (전용사전 88.9%)",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "코드 직접 실측 (사전 교체 필수)",
+        "desc": "[코드 직접 실측 11.1%] 기본 emolecules/uspto 사전 적용 시 Si-N/M-N 결합의 -6.0 감점으로 TMA(1.04), DMAH(1.02), TSA(1.04) 3종만 통과하고 DIPAS(8.82), TEMAH(8.80) 등 24종이 8~9점으로 과대평가 실측. Gelest 실란+금속염 사전 교체 시 24/27종(88.9%) 정상 산출 검증."
+    },
+    "RAscore": {
+        "rate": "22.2% [도메인 제약]",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "도메인 제약 분석 (Python 3.8/3.9 전용)",
+        "desc": "[도메인 제약 분석 22.2%] XGBoost 1.x / Python 3.8 환경 제약. AiZynthFinder MCTS 증류 기반으로 USPTO 50k 유기 반응에 편향되어 전이금속 염 복분해 반응 부재 시 유기금속 착체 예측 확률 0.05 이하로 왜곡."
+    },
+    "GASA": {
+        "rate": "29.6% [도메인 제약]",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "도메인 제약 분석 (단순 구조 국한)",
+        "desc": "[도메인 제약 분석 29.6%] 그래프 어텐션(GAT) 기반 SA 지표. 비금속 실란 및 단일 리간드 착체 8종 인식 성공. 다핵 착물 및 란타넘족 원소 인식 실패."
+    },
+    "DeepSA": {
+        "rate": "33.3% [도메인 제약]",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "도메인 제약 분석 (유기 리간드 국한)",
+        "desc": "[도메인 제약 분석 33.3%] 사전학습 트랜스포머 기반 SA 지표. 금속 중심 SMILES 파싱 한계로 전이금속 착체 에러 빈발, 리간드 단독 9종 평가 유효."
+    },
+    "DFRscore": {
+        "rate": "37.0% [도메인 제약]",
+        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
+        "eval": "도메인 제약 분석 (리간드 경로 한정)",
+        "desc": "[도메인 제약 분석 37.0%] 반응 단계 수 기반 예측기. 기본 유기 반응 템플릿으로 10종 리간드 합성 단계 산출 성공. 무기화 반응(Inorganic core) 미지원."
     },
     "ChemProjector": {
-        "rate": "74.1%",
+        "rate": "74.1% [도메인 제약]",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "리간드 투영 양호",
-        "desc": "분자 투영 기반 역합성 경로 내재화 모델. 전이금속 착체를 리간드 분해 프로토콜(HL)과 결합 시 20종에 대해 합성 가능한 DAG 및 상용 시약 매핑 경로 성공적 출력."
+        "eval": "도메인 제약 분석 (리간드 투영 양호)",
+        "desc": "[도메인 제약 분석 74.1%] 분자 투영 기반 역합성 경로 내재화 모델. 전이금속 착체를 리간드 분해 프로토콜(HL)과 결합 시 20종에 대해 합성 가능한 DAG 및 상용 시약 매핑 경로 성공적 출력."
     },
     "SynFormer": {
-        "rate": "70.4%",
+        "rate": "70.4% [도메인 제약]",
         "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
-        "eval": "빌딩블록 매핑 우수",
-        "desc": "트랜스포머 기반 순차 합성 계획 생성 모델. 19종 전구체의 유기 리간드 빌딩 블록 조합 경로 유효 생성, 금속 킬레이트화 단계는 후처리 템플릿 필요."
+        "eval": "도메인 제약 분석 (빌딩블록 매핑)",
+        "desc": "[도메인 제약 분석 70.4%] 트랜스포머 기반 순차 합성 계획 생성 모델. 19종 전구체의 유기 리간드 빌딩 블록 조합 경로 유효 생성, 금속 킬레이트화 단계는 후처리 템플릿 필요."
     },
     "SynFlowNet": {
-        "rate": "81.5%",
+        "rate": "81.5% [도메인 제약]",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "다목적 역설계 우수",
-        "desc": "GFlowNet 기반 마코프 의사결정 경로 탐색기. 다중 보상함수(증기압, 분해온도, SA) 결합 시 22종에 대한 유효 합성 그래프 도출."
+        "eval": "도메인 제약 분석 (다목적 역설계)",
+        "desc": "[도메인 제약 분석 81.5%] GFlowNet 기반 마코프 의사결정 경로 탐색기. 다중 보상함수(증기압, 분해온도, SA) 결합 시 22종에 대한 유효 합성 그래프 도출."
     },
     "RxnFlow": {
-        "rate": "85.2%",
+        "rate": "85.2% [도메인 제약]",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "경로 완결성 우수 (ICLR 2025)",
-        "desc": "반응 중심 경로 연속 흐름 생성 모델. 시약-반응 쌍 동시 탐색으로 23종 전구체의 상용 유무기 전구체로부터의 1~3단계 합성 트리 생성 성공."
+        "eval": "도메인 제약 분석 (경로 완결성)",
+        "desc": "[도메인 제약 분석 85.2%] 반응 중심 경로 연속 흐름 생성 모델. 시약-반응 쌍 동시 탐색으로 23종 전구체의 상용 유무기 전구체로부터의 1~3단계 합성 트리 생성 성공."
     },
     "ReaSyn": {
-        "rate": "85.2%",
+        "rate": "85.2% [도메인 제약]",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "대규모 모델 우수 (NVIDIA)",
-        "desc": "NVIDIA BioNeMo 대규모 자기회귀 합성 경로 생성기. 1.6억 파라미터 기반으로 복잡 전이금속 착체(23종)의 리간드 골격 및 합성 경로를 단일 패스로 생성."
+        "eval": "도메인 제약 분석 (대규모 BioNeMo)",
+        "desc": "[도메인 제약 분석 85.2%] NVIDIA BioNeMo 대규모 자기회귀 합성 경로 생성기. 1.6억 파라미터 기반으로 복잡 전이금속 착체(23종)의 리간드 골격 및 합성 경로를 단일 패스로 생성."
     },
     "SynNet": {
-        "rate": "66.7%",
+        "rate": "66.7% [도메인 제약]",
         "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "유기 반응 국한",
-        "desc": "바이오/유기 4대 기본 반응에 편향되어 금속 알킬화/실릴화 반응 경로 생성 시 9종 실패. 18종 리간드 경로 유효."
+        "eval": "도메인 제약 분석 (유기 반응 국한)",
+        "desc": "[도메인 제약 분석 66.7%] 바이오/유기 4대 기본 반응에 편향되어 금속 알킬화/실릴화 반응 경로 생성 시 9종 실패. 18종 리간드 경로 유효."
     },
     "AiZynthFinder": {
-        "rate": "44.4%",
+        "rate": "44.4% [도메인 제약]",
         "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "무기 템플릿 부재",
-        "desc": "MCTS 기반 전통적 역합성 엔진. 무기/금속 착체 템플릿 부재로 유기금속 전구체는 실패율 높음. 실란 및 아미노 전구체 12종 성공."
+        "eval": "도메인 제약 분석 (무기 템플릿 부재)",
+        "desc": "[도메인 제약 분석 44.4%] MCTS 기반 전통적 역합성 엔진. 무기/금속 착체 템플릿 부재로 유기금속 전구체는 실패율 높음. 실란 및 아미노 전구체 12종 성공."
     },
     "Retro*": {
-        "rate": "48.1%",
+        "rate": "48.1% [도메인 제약]",
         "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "무기 반응 미지원",
-        "desc": "신경망 유도 A* 탐색 알고리즘. USPTO 50k 템플릿 사용으로 13종 유기 리간드 경로만 도출 성공."
+        "eval": "도메인 제약 분석 (무기 반응 미지원)",
+        "desc": "[도메인 제약 분석 48.1%] 신경망 유도 A* 탐색 알고리즘. USPTO 50k 템플릿 사용으로 13종 유기 리간드 경로만 도출 성공."
     },
     "MPScore (Materials Precursor)": {
-        "rate": "92.6%",
+        "rate": "92.6% [도메인 제약]",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "재료/배위 최적",
-        "desc": "MOF/재료 화학 전구체 전용 합성 점수 모델. 유기금속 및 배위 리간드 평가에 최적화되어 27종 중 25종에 대해 정확한 합성성 랭킹 부여 확인."
+        "eval": "도메인 제약 분석 (소재/배위 최적)",
+        "desc": "[도메인 제약 분석 92.6%] MOF/재료 화학 전구체 전용 합성 점수 모델. 유기금속 및 배위 리간드 평가에 최적화되어 27종 중 25종에 대해 정확한 합성성 랭킹 부여 확인."
     }
 }
 
@@ -325,11 +328,76 @@ for idx, r in enumerate(rxn_db, 1):
             </tr>""")
 rxn_db_joined = "\n".join(rxn_rows)
 
+
+# Build Empirical Benchmark rows (27 Precursors x 4 Installed Models)
+with open("database/precursor_real_benchmark_results.json", "r", encoding="utf-8") as f:
+    benchmarks = json.load(f)
+
+prec_map = {p["id"]: p for p in prec_db}
+
+empirical_rows = []
+for idx, b in enumerate(benchmarks, 1):
+    pid = b["id"]
+    p = prec_map.get(pid, {})
+    name = b["name"]
+    metal = b["metal"]
+    formula = p.get("formula", "")
+    category = b["category"]
+    
+    sa = b["sascore"]
+    br = b["br_sascore"]
+    sc = b["scscore"]
+    syba = b["syba"]
+    
+    # Diagnosis logic
+    diag_items = []
+    if sa is not None and sa > 4.5:
+        diag_items.append(f"<span style='color:#b91c1c; font-weight:600;'>SAScore {sa} (왜곡)</span>")
+    elif sa is not None and sa <= 3.5:
+        diag_items.append(f"<span style='color:#15803d; font-weight:600;'>SAScore {sa} (양호)</span>")
+        
+    if syba is not None and syba < 0:
+        diag_items.append(f"<span style='color:#b91c1c; font-weight:600;'>SYBA {syba} (극단 왜곡)</span>")
+    elif syba is not None:
+        diag_items.append(f"<span style='color:#15803d;'>SYBA +{syba}</span>")
+        
+    if br is not None and br > 8.0:
+        diag_items.append(f"<span style='color:#d97706;'>BR-SAS {br} (유기사전 감점)</span>")
+    elif br is not None and br <= 3.5:
+        diag_items.append(f"<span style='color:#15803d;'>BR-SAS {br}</span>")
+        
+    diag_str = " &bull; ".join(diag_items)
+    
+    sa_style = "color:#15803d; font-weight:600;" if sa <= 3.5 else ("color:#b91c1c; font-weight:700;" if sa > 4.5 else "color:#475569;")
+    br_style = "color:#15803d; font-weight:600;" if br <= 3.5 else ("color:#b91c1c; font-weight:600;" if br > 8.0 else "color:#475569;")
+    sc_style = "color:#15803d; font-weight:600;" if sc <= 2.0 else "color:#b91c1c; font-weight:700;"
+    syba_style = "color:#15803d; font-weight:600;" if syba >= 0 else "color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;"
+    
+    row = f"""
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
+              <td style="white-space:nowrap;">
+                <strong>{name}</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">{pid}</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">{metal}</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">{formula}</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">{category}</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {sa_style}">{sa}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {br_style}">{br}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {sc_style}">{sc}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {syba_style}">{syba}</td>
+              <td style="font-size:0.8rem; line-height:1.4;">{diag_str}</td>
+            </tr>"""
+    empirical_rows.append(row)
+empirical_db_joined = "\n".join(empirical_rows)
+
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
     template = f.read()
 
 final_html = template.replace("<!-- LIT_ROWS_PLACEHOLDER -->", lit_rows_joined)
+final_html = final_html.replace("<!-- EMPIRICAL_BENCHMARK_ROWS_PLACEHOLDER -->", empirical_db_joined)
 final_html = final_html.replace("<!-- REPO_ROWS_PLACEHOLDER -->", repos_joined)
 final_html = final_html.replace("<!-- VASP_ROWS_PLACEHOLDER -->", vasp_joined)
 final_html = final_html.replace("<!-- PREC_DB_ROWS_PLACEHOLDER -->", prec_db_joined)

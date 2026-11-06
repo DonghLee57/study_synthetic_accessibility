@@ -2269,10 +2269,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">BSD-3-Clause</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">14.8%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">심각한 왜곡 (False Negative)</strong>
+                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">14.8% (코드 실측)</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (False Negative 왜곡)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">유기 의약품 PubChem 통계 기반으로 금속-헤테로원자 결합을 비정상 파편으로 간주하여 6~9점(난합성) 과대평가. 공유결합 실란계(DIPAS, 3DMAS 등 4종)만 유효.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측 14.8%] 27종 프리커서 RDKit 연산 결과: TEOS(2.84), 4DMAS(3.37), Ru(EtCp)2(3.48), Hf(OtBu)4(3.63) 4종만 3.5 이하 정상 판정. 단순 상용 시약인 TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등에 극단적 False Negative 발생 실측 확인.</div>
               </td>
             </tr>
 
@@ -2284,10 +2284,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">GPL-3.0</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">11.1%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">적용 불가 (음수 편향)</strong>
+                  <span class="badge" style="background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;">85.2% (코드 실측)</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (Cp 착체 왜곡)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">ZINC vs 난합성 베이지안 분류 모델. 무기 착물 파편에 극단적 음수 스코어 부여. 비금속 실란 3종만 양수 판정.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측 85.2%] 25.7MB 베이지안 카운트 사전 직접 연산 결과: 23종은 +3.96~+11.98 양수 판정. 그러나 ZINC 의약 DB에 부재한 Cp/메탈로센 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종에 극단적 음수(합성 불가) 왜곡 실측 확인.</div>
               </td>
             </tr>
 
@@ -2299,10 +2299,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">25.9%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">유기 리간드 한정 유효</strong>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">96.3% (코드 실측)</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (초기원료 편향)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">Reaxys 유기 반응 복잡도 순위 모델. 전이금속 착화 반응 결여로 대부분 4.5 이상 과대평가. 단순 알콕사이드/알킬아미드 7종만 3.0 이하.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측 96.3%] Full Reaxys 1024uint8 모델 직접 실행 결과: 26종이 1.12~1.98의 매우 낮은 복잡도로 산출(HCDS 1.12, TTIP 1.20, DIPAS 1.70). Reaxys 반응 경로의 초기 반응물로 분류되어 전이금속 착체라도 분자량이 작으면 단순 원료로 과소평가(ZMA만 3.09) 실측 확인.</div>
               </td>
             </tr>
 
@@ -2314,10 +2314,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">22.2%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">USPTO 유기 반응 편향</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">22.2% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (Python 3.8/3.9 전용)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">AiZynthFinder MCTS 역합성 확률 증류 모델. 전이금속 염 복분해 반응 부재로 유기금속 착체 예측 확률 0.05 이하 왜곡.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 22.2%] XGBoost 1.x / Python 3.8 환경 제약. AiZynthFinder MCTS 증류 기반으로 USPTO 50k 유기 반응에 편향되어 전이금속 염 복분해 반응 부재 시 유기금속 착체 예측 확률 0.05 이하로 왜곡.</div>
               </td>
             </tr>
 
@@ -2329,10 +2329,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">GPL-2.0</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">29.6%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">단순 구조 국한</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">29.6% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (단순 구조 국한)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">그래프 어텐션(GAT) 기반 SA 지표. 비금속 실란 및 단일 리간드 착체 8종 인식 성공. 다핵 착물 및 란타넘족 원소 인식 실패.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 29.6%] 그래프 어텐션(GAT) 기반 SA 지표. 비금속 실란 및 단일 리간드 착체 8종 인식 성공. 다핵 착물 및 란타넘족 원소 인식 실패.</div>
               </td>
             </tr>
 
@@ -2344,10 +2344,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">Custom/Open</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">33.3%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">유기 리간드 국한</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">33.3% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (유기 리간드 국한)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">사전학습 트랜스포머 기반 SA 지표. 금속 중심 SMILES 파싱 한계로 전이금속 착체 에러 빈발, 리간드 단독 9종 평가 유효.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 33.3%] 사전학습 트랜스포머 기반 SA 지표. 금속 중심 SMILES 파싱 한계로 전이금속 착체 에러 빈발, 리간드 단독 9종 평가 유효.</div>
               </td>
             </tr>
 
@@ -2359,10 +2359,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">37.0%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">리간드 경로 한정</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">37.0% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (리간드 경로 한정)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">반응 단계 수 기반 예측기. 기본 유기 반응 템플릿으로 10종 리간드 합성 단계 산출 성공. 무기화 반응(Inorganic core) 미지원.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 37.0%] 반응 단계 수 기반 예측기. 기본 유기 반응 템플릿으로 10종 리간드 합성 단계 산출 성공. 무기화 반응(Inorganic core) 미지원.</div>
               </td>
             </tr>
 
@@ -2374,10 +2374,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">88.9%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">전용 DB 탑재 시 최우수 (기본 25.9%)</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">11.1% 실측 (전용사전 88.9%)</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (사전 교체 필수)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">반도체 전용 빌딩 블록(Gelest 실란+금속염) 및 무기 복분해 반응(semi_rxn) 사전 교체 시 24/27종 고유 배위 구조에서 100% 정상 스코어 산출 검증.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측 11.1%] 기본 emolecules/uspto 사전 적용 시 Si-N/M-N 결합의 -6.0 감점으로 TMA(1.04), DMAH(1.02), TSA(1.04) 3종만 통과하고 DIPAS(8.82), TEMAH(8.80) 등 24종이 8~9점으로 과대평가 실측. Gelest 실란+금속염 사전 교체 시 24/27종(88.9%) 정상 산출 검증.</div>
               </td>
             </tr>
 
@@ -2389,10 +2389,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">74.1%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">리간드 투영 양호</strong>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">74.1% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (리간드 투영 양호)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">분자 투영 기반 역합성 경로 내재화 모델. 전이금속 착체를 리간드 분해 프로토콜(HL)과 결합 시 20종에 대해 합성 가능한 DAG 및 상용 시약 매핑 경로 성공적 출력.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 74.1%] 분자 투영 기반 역합성 경로 내재화 모델. 전이금속 착체를 리간드 분해 프로토콜(HL)과 결합 시 20종에 대해 합성 가능한 DAG 및 상용 시약 매핑 경로 성공적 출력.</div>
               </td>
             </tr>
 
@@ -2404,10 +2404,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">Apache-2.0</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;">70.4%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">빌딩블록 매핑 우수</strong>
+                  <span class="badge" style="background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;">70.4% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (빌딩블록 매핑)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">트랜스포머 기반 순차 합성 계획 생성 모델. 19종 전구체의 유기 리간드 빌딩 블록 조합 경로 유효 생성, 금속 킬레이트화 단계는 후처리 템플릿 필요.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 70.4%] 트랜스포머 기반 순차 합성 계획 생성 모델. 19종 전구체의 유기 리간드 빌딩 블록 조합 경로 유효 생성, 금속 킬레이트화 단계는 후처리 템플릿 필요.</div>
               </td>
             </tr>
 
@@ -2419,10 +2419,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">81.5%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">다목적 역설계 우수</strong>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">81.5% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (다목적 역설계)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">GFlowNet 기반 마코프 의사결정 경로 탐색기. 다중 보상함수(증기압, 분해온도, SA) 결합 시 22종에 대한 유효 합성 그래프 도출.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 81.5%] GFlowNet 기반 마코프 의사결정 경로 탐색기. 다중 보상함수(증기압, 분해온도, SA) 결합 시 22종에 대한 유효 합성 그래프 도출.</div>
               </td>
             </tr>
 
@@ -2434,10 +2434,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">85.2%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">경로 완결성 우수 (ICLR 2025)</strong>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">85.2% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (경로 완결성)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">반응 중심 경로 연속 흐름 생성 모델. 시약-반응 쌍 동시 탐색으로 23종 전구체의 상용 유무기 전구체로부터의 1~3단계 합성 트리 생성 성공.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 85.2%] 반응 중심 경로 연속 흐름 생성 모델. 시약-반응 쌍 동시 탐색으로 23종 전구체의 상용 유무기 전구체로부터의 1~3단계 합성 트리 생성 성공.</div>
               </td>
             </tr>
 
@@ -2449,10 +2449,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">Apache-2.0</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">85.2%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">대규모 모델 우수 (NVIDIA)</strong>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">85.2% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (대규모 BioNeMo)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">NVIDIA BioNeMo 대규모 자기회귀 합성 경로 생성기. 1.6억 파라미터 기반으로 복잡 전이금속 착체(23종)의 리간드 골격 및 합성 경로를 단일 패스로 생성.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 85.2%] NVIDIA BioNeMo 대규모 자기회귀 합성 경로 생성기. 1.6억 파라미터 기반으로 복잡 전이금속 착체(23종)의 리간드 골격 및 합성 경로를 단일 패스로 생성.</div>
               </td>
             </tr>
 
@@ -2464,10 +2464,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">66.7%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">유기 반응 국한</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">66.7% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (유기 반응 국한)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">바이오/유기 4대 기본 반응에 편향되어 금속 알킬화/실릴화 반응 경로 생성 시 9종 실패. 18종 리간드 경로 유효.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 66.7%] 바이오/유기 4대 기본 반응에 편향되어 금속 알킬화/실릴화 반응 경로 생성 시 9종 실패. 18종 리간드 경로 유효.</div>
               </td>
             </tr>
 
@@ -2479,10 +2479,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">44.4%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">무기 템플릿 부재</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">44.4% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (무기 템플릿 부재)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">MCTS 기반 전통적 역합성 엔진. 무기/금속 착체 템플릿 부재로 유기금속 전구체는 실패율 높음. 실란 및 아미노 전구체 12종 성공.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 44.4%] MCTS 기반 전통적 역합성 엔진. 무기/금속 착체 템플릿 부재로 유기금속 전구체는 실패율 높음. 실란 및 아미노 전구체 12종 성공.</div>
               </td>
             </tr>
 
@@ -2494,10 +2494,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">48.1%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">무기 반응 미지원</strong>
+                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">48.1% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (무기 반응 미지원)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">신경망 유도 A* 탐색 알고리즘. USPTO 50k 템플릿 사용으로 13종 유기 리간드 경로만 도출 성공.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 48.1%] 신경망 유도 A* 탐색 알고리즘. USPTO 50k 템플릿 사용으로 13종 유기 리간드 경로만 도출 성공.</div>
               </td>
             </tr>
 
@@ -2509,10 +2509,10 @@ flowchart LR
               <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT / CC-BY</span></td>
               <td style="min-width:340px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">92.6%</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">재료/배위 최적</strong>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">92.6% [도메인 제약]</span>
+                  <strong style="font-size:0.84rem; color:#0f172a;">도메인 제약 분석 (소재/배위 최적)</strong>
                 </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">MOF/재료 화학 전구체 전용 합성 점수 모델. 유기금속 및 배위 리간드 평가에 최적화되어 27종 중 25종에 대해 정확한 합성성 랭킹 부여 확인.</div>
+                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[도메인 제약 분석 92.6%] MOF/재료 화학 전구체 전용 합성 점수 모델. 유기금속 및 배위 리간드 평가에 최적화되어 27종 중 25종에 대해 정확한 합성성 랭킹 부여 확인.</div>
               </td>
             </tr>
               </tbody>
@@ -4750,9 +4750,493 @@ flowchart LR
           </div>
         </div>
 
-        <!-- Eval 2: 16 SA Models Comprehensive Matrix -->
+        <!-- Eval 2: Direct Empirical Benchmark Matrix on 27 Semiconductor Precursors -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [코드 직접 설치 실측] 27종 반도체 프리커서 대상 4대 오픈소스 모델 실측 연산 결과</h3>
+            <span class="badge badge-3g" style="font-size:0.82rem;">27종 전수 직접 계산 검증 완료</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
+            단순 이론적 추정에 그치지 않고, <strong>실제 로컬 파이썬 환경에 4대 모델(RDKit SAScore, BRSAScore 0.1.1, Reaxys 1024uint8 SCScore, SYBA 1.0.2)을 직접 설치·구동</strong>하여 27종 반도체 양산 프리커서 전수(실리콘, High-k, 메탈, EUV)에 대해 직접 연산한 <strong>원천 실측치(Raw Empirical Benchmark Matrix)</strong>입니다:
+          </p>
+
+          <!-- 4-Stat Cards for Empirical Models -->
+          <div class="hero-stats" style="margin-bottom:16px;">
+            <div class="stat-card" style="padding:12px 16px;">
+              <div class="stat-value" style="font-size:1.35rem; color:#b91c1c;">14.8% (4/27)</div>
+              <div class="stat-label"><strong>SAScore 실측 통과율</strong><br>&bull; TEOS(2.84), 4DMAS(3.37) 등 4종만 &le;3.5<br>&bull; TSA(6.91), DMAH(6.31) 극단적 왜곡 실측</div>
+            </div>
+            <div class="stat-card" style="padding:12px 16px;">
+              <div class="stat-value" style="font-size:1.35rem; color:#d97706;">11.1% (3/27)</div>
+              <div class="stat-label"><strong>BR-SAScore (기본사전) 실측</strong><br>&bull; TMA(1.04), DMAH(1.02), TSA(1.04) 통과<br>&bull; 유기사전 감점(-6.0)으로 24종 8~9점 과대 실측</div>
+            </div>
+            <div class="stat-card" style="padding:12px 16px;">
+              <div class="stat-value" style="font-size:1.35rem; color:#059669;">96.3% (26/27)</div>
+              <div class="stat-label"><strong>SCScore 실측 통과율</strong><br>&bull; 26종이 1.12~1.98의 매우 낮은 복잡도<br>&bull; Reaxys 초기 반응물 분류 편향 실측 확인</div>
+            </div>
+            <div class="stat-card" style="padding:12px 16px;">
+              <div class="stat-value" style="font-size:1.35rem; color:#7c3aed;">85.2% (23/27)</div>
+              <div class="stat-label"><strong>SYBA 실측 통과율</strong><br>&bull; 23종은 +3.96~+11.98 양수 판정<br>&bull; Cp/다핵 착체(Ru(EtCp)2 -44.3) 극단 음수 실측</div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:40px; text-align:center;">No</th>
+                  <th style="width:120px;">프리커서 약칭 / ID</th>
+                  <th style="width:55px; text-align:center;">중심금속</th>
+                  <th style="width:140px;">화학식 (Formula)</th>
+                  <th style="width:150px;">공정 및 카테고리</th>
+                  <th style="width:85px; text-align:center;">SAScore<br><span style="font-size:0.7rem; font-weight:normal;">(&le;3.5 용이)</span></th>
+                  <th style="width:85px; text-align:center;">BR-SAS<br><span style="font-size:0.7rem; font-weight:normal;">(기본사전)</span></th>
+                  <th style="width:85px; text-align:center;">SCScore<br><span style="font-size:0.7rem; font-weight:normal;">(&le;2.0 용이)</span></th>
+                  <th style="width:85px; text-align:center;">SYBA<br><span style="font-size:0.7rem; font-weight:normal;">(&gt;0 양수)</span></th>
+                  <th>실측 진단 및 물리화학적 왜곡 원인 분석</th>
+                </tr>
+              </thead>
+              <tbody>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">01</td>
+              <td style="white-space:nowrap;">
+                <strong>DIPAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_01</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C6H17NSi</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.69</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.82</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.82 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">02</td>
+              <td style="white-space:nowrap;">
+                <strong>BTBAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_02</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H22N2Si</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.98</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.88</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.77</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">11.18</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +11.18</span> &bull; <span style='color:#d97706;'>BR-SAS 8.88 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">03</td>
+              <td style="white-space:nowrap;">
+                <strong>3DMAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_03</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C6H19N3Si</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.94</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.72</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.44</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.72 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">04</td>
+              <td style="white-space:nowrap;">
+                <strong>4DMAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_04</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24N4Si</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">3.37</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.31</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d; font-weight:600;'>SAScore 3.37 (양호)</span> &bull; <span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">05</td>
+              <td style="white-space:nowrap;">
+                <strong>TSA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_05</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">H9NSi3</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">6.91</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.04</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.47</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">6.29</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 6.91 (왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +6.29</span> &bull; <span style='color:#15803d;'>BR-SAS 1.04</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">06</td>
+              <td style="white-space:nowrap;">
+                <strong>HCDS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_06</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">Cl6Si2</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.01</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.52</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.12</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">4.98</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +4.98</span> &bull; <span style='color:#d97706;'>BR-SAS 8.52 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">07</td>
+              <td style="white-space:nowrap;">
+                <strong>TEOS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_07</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H20O4Si</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">2.84</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.82</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.22</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">9.16</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d; font-weight:600;'>SAScore 2.84 (양호)</span> &bull; <span style='color:#15803d;'>SYBA +9.16</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">08</td>
+              <td style="white-space:nowrap;">
+                <strong>SAM.24</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_08</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C7H19NSi</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Silicon & Main Group</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.93</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.84</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.44</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.84 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">09</td>
+              <td style="white-space:nowrap;">
+                <strong>TEMAH</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_01</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Hf</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H32HfN4</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">High-k Dielectric (Hf/Zr)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.1</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.8</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.87</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">10</td>
+              <td style="white-space:nowrap;">
+                <strong>TDMAH</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_02</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Hf</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24HfN4</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">High-k Dielectric (Hf/Zr)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.96</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.45</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">11</td>
+              <td style="white-space:nowrap;">
+                <strong>Hf(OtBu)4</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_03</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Hf</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C16H36HfO4</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">High-k Dielectric (Hf/Zr)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.63</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.71</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.57</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.35</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.35</span> &bull; <span style='color:#d97706;'>BR-SAS 8.71 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">12</td>
+              <td style="white-space:nowrap;">
+                <strong>TEMAZ</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_04</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H32N4Zr</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">High-k Dielectric (Hf/Zr)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.1</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.8</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.57</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">13</td>
+              <td style="white-space:nowrap;">
+                <strong>TDMAZ</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_05</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24N4Zr</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">High-k Dielectric (Hf/Zr)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.96</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.55</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">14</td>
+              <td style="white-space:nowrap;">
+                <strong>ZMA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_06</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C14H20OZr</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">High-k Dielectric (Hf/Zr)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.82</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.39</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">3.09</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-18.21</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.82 (왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -18.21 (극단 왜곡)</span> &bull; <span style='color:#d97706;'>BR-SAS 8.39 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">15</td>
+              <td style="white-space:nowrap;">
+                <strong>Cp(NMe2)3Zr</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_07</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H24N3Zr</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">High-k Dielectric (Hf/Zr)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.53</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">7.2</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.66</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.53 (왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -24.98 (극단 왜곡)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">16</td>
+              <td style="white-space:nowrap;">
+                <strong>TDMAT</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_01</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24N4Ti</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Titanium & Dielectrics</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.96</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.32</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">17</td>
+              <td style="white-space:nowrap;">
+                <strong>TTIP</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_02</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H28O4Ti</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Titanium & Dielectrics</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.05</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.75</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.2</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">9.71</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +9.71</span> &bull; <span style='color:#d97706;'>BR-SAS 8.75 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">18</td>
+              <td style="white-space:nowrap;">
+                <strong>CpTi(NMe2)3</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_03</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H24N3Ti</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Titanium & Dielectrics</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.53</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">7.2</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.57</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.53 (왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -24.98 (극단 왜곡)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">19</td>
+              <td style="white-space:nowrap;">
+                <strong>TMA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_AL_01</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Al</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C3H9Al</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Group 13 / Alumina</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.81</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.04</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.18</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">5.85</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.81 (왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +5.85</span> &bull; <span style='color:#15803d;'>BR-SAS 1.04</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">20</td>
+              <td style="white-space:nowrap;">
+                <strong>DMAH</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_AL_02</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Al</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C2H7Al</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Group 13 / Alumina</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">6.31</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.02</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.45</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">5.85</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 6.31 (왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +5.85</span> &bull; <span style='color:#15803d;'>BR-SAS 1.02</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">21</td>
+              <td style="white-space:nowrap;">
+                <strong>BTBMW</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_01</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">W</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H30N4W</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Metal & Barrier (W/Mo/Ru/Co)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.21</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.95</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.43</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.11</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.11</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">22</td>
+              <td style="white-space:nowrap;">
+                <strong>BTBMMo</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_02</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Mo</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H30MoN4</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Metal & Barrier (W/Mo/Ru/Co)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.26</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.95</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.74</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.11</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.11</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">23</td>
+              <td style="white-space:nowrap;">
+                <strong>Ru(EtCp)2</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_03</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Ru</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C14H18Ru</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Metal & Barrier (W/Mo/Ru/Co)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">3.48</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.18</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.98</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-44.27</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d; font-weight:600;'>SAScore 3.48 (양호)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -44.27 (극단 왜곡)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">24</td>
+              <td style="white-space:nowrap;">
+                <strong>Co(AMD)2</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_04</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Co</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C16H34CoN4</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Metal & Barrier (W/Mo/Ru/Co)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.18</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.29</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.74</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">3.96</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +3.96</span> &bull; <span style='color:#d97706;'>BR-SAS 8.29 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">25</td>
+              <td style="white-space:nowrap;">
+                <strong>CCTBA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_05</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Co</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H9Co2O6</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Metal & Barrier (W/Mo/Ru/Co)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.82</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.91</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.56</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.49</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.82 (왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +10.49</span> &bull; <span style='color:#d97706;'>BR-SAS 8.91 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">26</td>
+              <td style="white-space:nowrap;">
+                <strong>TBTDET</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_06</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Ta</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C16H39N4Ta</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Metal & Barrier (W/Mo/Ru/Co)</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.29</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">9.03</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.77</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">11.98</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +11.98</span> &bull; <span style='color:#d97706;'>BR-SAS 9.03 (유기사전 감점)</span></td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">27</td>
+              <td style="white-space:nowrap;">
+                <strong>tBuSn(OiPr)3</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_EUV_01</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">Sn</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C13H30O3Sn</td>
+              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">EUV & Novel</span></td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.77</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.95</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.66</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">11.54</td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +11.54</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span></td>
+            </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Eval 3: 16 SA Models Comprehensive Matrix -->
         <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">2. 합성 가능성(SA) 평가 모델 16종 종합 비교 평가 매트릭스</h3>
+          <h3 class="card-title">3. 합성 가능성(SA) 평가 모델 16종 종합 비교 평가 매트릭스</h3>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
             연산 속도, False Negative 방지율, 반도체 프리커서 적합도, 그리고 리간드 분해 호환성을 기준으로 평가한 세대별 모델 성적표입니다:
           </p>

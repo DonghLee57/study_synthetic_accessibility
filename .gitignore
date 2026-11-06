@@ -21,3 +21,6 @@ Thumbs.db
 downloaded_papers/
 *.pdf
 *.xml
+
+# External vendor models and cloned repositories
+external/
