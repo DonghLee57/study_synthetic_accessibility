@@ -146,15 +146,26 @@ repo_semi_metrics = {
 # 16 Multi-stage evaluated models across the 4 execution pipeline stages
 multistage_models = [
     {
-        "name": "BR-SAScore (반도체 전용사전)",
-        "gen": "3G 도메인 사전",
+        "name": "BR-SAScore (엄격 시약사전, 무누수)",
+        "gen": "3G 엄격 분리",
         "repo_key": "BR-SAScore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 정상 분리 (BFrag s_B=0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("88.9% (24/27) 무기 룰 정합", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s4": ("88.9% (24/27) 성공", "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;"),
-        "barrier_stage": "Stage 4 완결 (성공)",
-        "barrier_desc": "붕괴 없음: Gelest 실란+금속염 및 염복분해 반응을 전용 사전으로 등록하여 유일하게 양산 전구체 24종 정상 평가 성공."
+        "s3": ("14.8% (4/27) USPTO 결측", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("14.8% (4/27) 통과", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (무기 반응 매니폴드 결측)",
+        "barrier_desc": "데이터 누수 방지(생성물 배제) 적용 시, 순수 시약 빌딩블록만으로는 새로 형성된 M-N/M-C 결합의 USPTO 부재로 최대 페널티(s_R=-6.0)를 받아 4종(TSA, TMA, DMAH, CCTBA)만 통과."
+    },
+    {
+        "name": "BR-SAScore (생성물 암기 누수 대조군)",
+        "gen": "3G 피팅 대조군",
+        "repo_key": "BR-SAScore",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 암기 등록 (s=0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("88.9% (24/27) 사전 피팅", "background:#fef3c7; color:#b45309; border-color:#fcd34d;"),
+        "s4": ("88.9% (24/27) [누수 왜곡]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "barrier_stage": "감사 검증 (데이터 누수 대조군)",
+        "barrier_desc": "Claude 감사에서 규명된 반사실적 대조군: 타깃 생성물 단편을 사전에 피팅할 경우 24종 통과가 나오나, 이는 일반화 불가능한 순환 기억(Circular Memorization)에 불과함을 실증."
     },
     {
         "name": "BR-SAScore (기본 의약사전)",
@@ -250,10 +261,10 @@ multistage_models = [
         "repo_key": "ChemProjector",
         "s1": ("100.0% (27/27) 원자번호≤100", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 이중 잠재 공간 투영", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("0.0% (0/27) 무기 룰 0건", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("85.2% (23/27) 리간드 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s4": ("0.0% (0/27) 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (HB-91 템플릿)",
-        "barrier_desc": "Hartenfeller-Button 의약 반응 91종(SynNet과 동일)에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무."
+        "barrier_stage": "Stage 3 (HB-91 템플릿 실측)",
+        "barrier_desc": "HB 91종 SMARTS 실측 결과 23종의 유기 치환기 리간드 매칭은 확인되었으나, 전이금속 배위 결합 룰은 0건으로 전구체 코어 생성 불가."
     },
     {
         "name": "SynNet",
@@ -261,10 +272,10 @@ multistage_models = [
         "repo_key": "SynNet",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Morgan FP 임베딩", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("0.0% (0/27) 무기 룰 0건", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("85.2% (23/27) 리간드 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s4": ("0.0% (0/27) 트리 생성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (HB-91 반응/BB)",
-        "barrier_desc": "4대 순방향 신경망(action, reactant1, reaction, reactant2)이 유기 빌딩블록만 표집하여 전이금속 착체 트리 생성 불가."
+        "barrier_stage": "Stage 3 (HB-91 반응/BB 실측)",
+        "barrier_desc": "4대 순방향 신경망이 유기 빌딩블록만 표집하며, HB 91종 룰 중 금속 코어 형성 룰이 0건이므로 전이금속 착체 트리 생성 불가."
     },
     {
         "name": "SynFormer",
@@ -304,11 +315,11 @@ multistage_models = [
         "gen": "3G 멀티모달 트랜스포머",
         "repo_key": "DeepSA",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("의약 Ro5 & NLP 서브워드 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s2": ("의약 Ro5 (26/27 적합) & NLP 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (복합 SA 지표)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% 물리적 타당성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2·4 (AutoGluon 부재 & Ro5 편향)",
-        "barrier_desc": "AutoGluon 종속성 부재로 미실행 상태이며, 저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡."
+        "barrier_stage": "Stage 2·4 (AutoGluon 부재 & 정적 분석)",
+        "barrier_desc": "AutoGluon 부재로 미실행(정적 분석). RDKit 실측 상 Ro5는 26종이 통과(Hf(OtBu)4만 LogP=5.06 위반)하나, ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 무기 원소 표현 왜곡."
     },
     {
         "name": "GASA",

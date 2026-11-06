@@ -43,6 +43,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         precursor_file = os.path.join(PROJECT_ROOT, "database", "precursors.json")
         with open(precursor_file, "r", encoding="utf-8") as f:
             cls.precursors = json.load(f)
+        cls.target_smiles = {p["smiles"] for p in cls.precursors}
         
         # Load verified database results
         benchmark_file = os.path.join(PROJECT_ROOT, "database", "precursor_real_benchmark_results.json")
@@ -55,7 +56,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         for p in self.precursors:
             mol = Chem.MolFromSmiles(p["smiles"])
             self.assertIsNotNone(mol, f"SMILES parsing failed for {p['name']}: {p['smiles']}")
-            self.assertTrue(len(p["metal_center"]) > 0 or len(p.get("metal", "")) > 0)
+            self.assertTrue(len(p.get("metal_center", "")) > 0 or len(p.get("metal", "")) > 0)
 
     def test_02_sascore_recalculation(self):
         """Recalculate RDKit SAScore and assert against database values."""
@@ -70,7 +71,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(pass_count, 3, "SAScore should pass exactly 3 out of 27 precursors (TSA, TMA, DMAH)")
 
     def test_03_scscore_recalculation(self):
-        """Recalculate SCScore with patched standalone NumPy runner."""
+        """Recalculate SCScore with patched standalone NumPy runner (full_reaxys_model_1024bool)."""
         sc = SCScorer()
         sc_weight = os.path.join(PROJECT_ROOT, "external", "scscore", "models", "full_reaxys_model_1024bool", "model.ckpt-10654.as_numpy.json.gz")
         sc.restore(sc_weight)
@@ -122,63 +123,79 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                 pass_count += 1
         self.assertEqual(pass_count, 27, "RAscore should pass 27 out of 27 precursors (ECFP6 metal projection bias)")
 
-    def test_06_br_sascore_default_and_custom(self):
-        """Recalculate BR-SAScore under default and custom semiconductor dictionaries."""
+    def test_06_br_sascore_default_strict_and_counterfactual_leakage(self):
+        """Recalculate BR-SAScore under Default, Strict Reagent (Unleaked), and Leaked Counterfactual baseline."""
         br_def = BRSAScorer()
-        br_cust = BRSAScorer()
-        custom_fscores = copy.deepcopy(br_def._fscores)
+        br_strict = BRSAScorer()
+        fscores_strict = copy.deepcopy(br_def._fscores)
 
-        def add_bits(path, is_rxn=False):
-            with open(path, "r", encoding="utf-8") as f:
-                reader = csv.reader(f)
-                next(reader, None)
-                for row in reader:
-                    if not row or not row[0].strip():
-                        continue
-                    line = row[0].strip()
-                    if is_rxn:
-                        for side in line.split(">>"):
-                            for smi in side.split("."):
-                                m = Chem.MolFromSmiles(smi.strip())
-                                if m:
-                                    bi = {}
-                                    rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-                                    for b in bi:
-                                        custom_fscores[b] = 0.0
-                    else:
-                        m = Chem.MolFromSmiles(line)
-                        if m:
-                            bi = {}
-                            rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-                            for b in bi:
-                                custom_fscores[b] = 0.0
+        # Ingest commercial building blocks excluding target precursors
+        with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_bb.csv"), "r", encoding="utf-8") as f:
+            for row in list(csv.reader(f))[1:]:
+                if not row or not row[0].strip(): continue
+                smi = row[0].strip()
+                if smi in self.target_smiles: continue
+                m = Chem.MolFromSmiles(smi)
+                if m:
+                    bi = {}
+                    rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
+                    for b in bi: fscores_strict[b] = 0.0
 
-        add_bits(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_bb.csv"), is_rxn=False)
-        add_bits(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_rxn.csv"), is_rxn=True)
-        br_cust._fscores = custom_fscores
+        # Ingest reactants only (NO target products to prevent circular leakage)
+        with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_rxn.csv"), "r", encoding="utf-8") as f:
+            for row in list(csv.reader(f))[1:]:
+                if not row or not row[0].strip(): continue
+                reactants = row[0].strip().split(">>")[0]
+                for smi in reactants.split("."):
+                    smi_clean = smi.strip()
+                    if smi_clean in self.target_smiles: continue
+                    m = Chem.MolFromSmiles(smi_clean)
+                    if m:
+                        bi = {}
+                        rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
+                        for b in bi: fscores_strict[b] = 0.0
+
+        br_strict._fscores = fscores_strict
+
+        # Counterfactual Leaked Model: Pre-memorizes target product fragments
+        br_leaked = BRSAScorer()
+        fscores_leaked = copy.deepcopy(fscores_strict)
+        for p in self.precursors:
+            m = Chem.MolFromSmiles(p["smiles"])
+            if m:
+                bi = {}
+                rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
+                for b in bi: fscores_leaked[b] = 0.0
+        br_leaked._fscores = fscores_leaked
 
         def_passes = 0
-        cust_passes = 0
+        strict_passes = 0
+        leaked_passes = 0
         for p in self.precursors:
             smi = p["smiles"]
             s_def, _ = br_def.calculateScore(smi)
-            s_cust, _ = br_cust.calculateScore(smi)
+            s_strict, _ = br_strict.calculateScore(smi)
+            s_leaked, _ = br_leaked.calculateScore(smi)
+
             s_def = round(float(s_def), 2)
-            s_cust = round(float(s_cust), 2)
+            s_strict = round(float(s_strict), 2)
+            s_leaked = round(float(s_leaked), 2)
 
             exp_def = self.stored_results[p["id"]]["br_sascore_default"]
-            exp_cust = self.stored_results[p["id"]]["br_sascore_custom"]
+            exp_strict = self.stored_results[p["id"]]["br_sascore_custom_strict"]
+            exp_leaked = self.stored_results[p["id"]]["br_sascore_custom_leaked"]
 
             self.assertAlmostEqual(s_def, exp_def, places=2, msg=f"BR-SAScore Default mismatch for {p['name']}")
-            self.assertAlmostEqual(s_cust, exp_cust, places=2, msg=f"BR-SAScore Custom mismatch for {p['name']}")
+            self.assertAlmostEqual(s_strict, exp_strict, places=2, msg=f"BR-SAScore Strict mismatch for {p['name']}")
+            self.assertAlmostEqual(s_leaked, exp_leaked, places=2, msg=f"BR-SAScore Leaked mismatch for {p['name']}")
 
-            if s_def <= 3.5:
-                def_passes += 1
-            if s_cust <= 3.5:
-                cust_passes += 1
+            if s_def <= 3.5: def_passes += 1
+            if s_strict <= 3.5: strict_passes += 1
+            if s_leaked <= 3.5: leaked_passes += 1
 
         self.assertEqual(def_passes, 3, "BR-SAScore Default should pass exactly 3/27")
-        self.assertEqual(cust_passes, 24, "BR-SAScore Custom should pass exactly 24/27 (88.9%)")
+        self.assertEqual(strict_passes, 4, "BR-SAScore Strict Reagent Domain (Unleaked) should pass exactly 4/27")
+        self.assertEqual(leaked_passes, 27, "BR-SAScore Product-Memorized baseline confirms 27/27 circular data leakage")
 
     def test_07_reasyn_lossless_tokenization(self):
         """Verify BioNeMo ReaSyn universal tokenizer losslessly roundtrips all 27 SMILES."""
@@ -211,15 +228,29 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(unsupported_count, 7, "GASA unsupported count must be 7")
         self.assertEqual(unsupported_elements, {'Hf', 'Ta', 'Ru', 'W', 'Mo'}, "Unsupported elements must be Hf, Ta, Ru, W, Mo")
 
-    def test_09_dfrscore_and_reaction_manifolds(self):
-        """Verify DFRscore collapse to ELSE and ChemProjector/SynNet zero transition metal rules."""
+    def test_09_chemprojector_synnet_and_dfrscore(self):
+        """Verify live SMARTS matching on HB 91 templates (23 substituent matches, 0 metal rules)."""
         dfr_allowed = {"C", "N", "O", "F", "S", "Cl", "Br", "I", "B", "P"}
         dfr_collapse = sum(1 for p in self.precursors if any(a.GetSymbol() not in dfr_allowed for a in Chem.MolFromSmiles(p["smiles"]).GetAtoms()))
         self.assertEqual(dfr_collapse, 27, "All 27 precursors must collapse in DFRscore")
 
-        with open(os.path.join(PROJECT_ROOT, "external", "chemprojector", "data", "reaction_templates_hb.txt"), "r", encoding="utf-8") as f:
-            cp_rules = f.read()
+        hb_path = os.path.join(PROJECT_ROOT, "external", "chemprojector", "data", "reaction_templates_hb.txt")
+        hb_patterns = []
+        with open(hb_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"): continue
+                parts = line.split(">>")
+                if len(parts) == 2:
+                    patt = Chem.MolFromSmarts(parts[1].strip())
+                    if patt: hb_patterns.append(patt)
+
+        subst_matches = sum(1 for p in self.precursors if any(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(patt) for patt in hb_patterns))
+        self.assertEqual(subst_matches, 23, "ChemProjector/SynNet must match 23/27 on organic substituents")
+
         metals = ['Si', 'Ti', 'Zr', 'Hf', 'Ru', 'W', 'Mo', 'Al', 'Co', 'Ta']
+        with open(hb_path, "r", encoding="utf-8") as f:
+            cp_rules = f.read()
         for m in metals:
             self.assertNotIn(m, cp_rules, f"Metal {m} should not exist in ChemProjector HB rules")
 

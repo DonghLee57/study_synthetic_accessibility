@@ -2,661 +2,1095 @@
   "sascore": {
     "DIPAS": {
       "score": 3.69,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "BTBAS": {
       "score": 3.98,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "3DMAS": {
       "score": 3.94,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "4DMAS": {
       "score": 3.37,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TSA": {
       "score": 6.91,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "HCDS": {
       "score": 4.01,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TEOS": {
       "score": 2.84,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "SAM.24": {
       "score": 3.93,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TEMAH": {
       "score": 4.1,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TDMAH": {
       "score": 3.96,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "Hf(OtBu)4": {
       "score": 3.63,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TEMAZ": {
       "score": 4.1,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TDMAZ": {
       "score": 3.96,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "ZMA": {
       "score": 4.82,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "Cp(NMe2)3Zr": {
       "score": 4.53,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TDMAT": {
       "score": 3.96,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TTIP": {
       "score": 4.05,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "CpTi(NMe2)3": {
       "score": 4.53,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TMA": {
       "score": 4.81,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "DMAH": {
       "score": 6.31,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "BTBMW": {
       "score": 4.21,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "BTBMMo": {
       "score": 4.26,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "Ru(EtCp)2": {
       "score": 3.48,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "Co(AMD)2": {
       "score": 4.18,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "CCTBA": {
       "score": 4.82,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "TBTDET": {
       "score": 4.29,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     },
     "tBuSn(OiPr)3": {
       "score": 3.77,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (RDKit)"
     }
   },
   "scscore": {
     "DIPAS": {
       "score": 1.73,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "BTBAS": {
       "score": 1.37,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "3DMAS": {
       "score": 1.39,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "4DMAS": {
       "score": 1.48,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TSA": {
       "score": 1.5,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "HCDS": {
       "score": 1.02,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TEOS": {
       "score": 1.22,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "SAM.24": {
       "score": 1.62,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TEMAH": {
       "score": 1.52,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TDMAH": {
       "score": 1.73,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "Hf(OtBu)4": {
       "score": 1.28,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TEMAZ": {
       "score": 1.54,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TDMAZ": {
       "score": 1.69,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "ZMA": {
       "score": 2.72,
-      "pass": false
+      "pass": false,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "Cp(NMe2)3Zr": {
       "score": 2.22,
-      "pass": false
+      "pass": false,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TDMAT": {
       "score": 1.31,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TTIP": {
       "score": 1.25,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "CpTi(NMe2)3": {
       "score": 2.14,
-      "pass": false
+      "pass": false,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TMA": {
       "score": 1.21,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "DMAH": {
       "score": 1.01,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "BTBMW": {
       "score": 1.61,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "BTBMMo": {
       "score": 1.85,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "Ru(EtCp)2": {
       "score": 1.94,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "Co(AMD)2": {
       "score": 2.38,
-      "pass": false
+      "pass": false,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "CCTBA": {
       "score": 1.48,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "TBTDET": {
       "score": 1.89,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     },
     "tBuSn(OiPr)3": {
       "score": 1.84,
-      "pass": true
+      "pass": true,
+      "checkpoint": "full_reaxys_model_1024bool",
+      "execution_mode": "Live Numerical (NumPy Standalone)"
     }
   },
   "syba": {
     "DIPAS": {
       "score": 10.56,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "BTBAS": {
       "score": 11.18,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "3DMAS": {
       "score": 7.7,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "4DMAS": {
       "score": 7.7,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TSA": {
       "score": 6.29,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "HCDS": {
       "score": 4.98,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TEOS": {
       "score": 9.16,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "SAM.24": {
       "score": 10.56,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TEMAH": {
       "score": 10.56,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TDMAH": {
       "score": 7.7,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "Hf(OtBu)4": {
       "score": 10.35,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TEMAZ": {
       "score": 10.56,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TDMAZ": {
       "score": 7.7,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "ZMA": {
       "score": -18.21,
-      "pass": false
+      "pass": false,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "Cp(NMe2)3Zr": {
       "score": -24.98,
-      "pass": false
+      "pass": false,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TDMAT": {
       "score": 7.7,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TTIP": {
       "score": 9.71,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "CpTi(NMe2)3": {
       "score": -24.98,
-      "pass": false
+      "pass": false,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TMA": {
       "score": 5.85,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "DMAH": {
       "score": 5.85,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "BTBMW": {
       "score": 10.11,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "BTBMMo": {
       "score": 10.11,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "Ru(EtCp)2": {
       "score": -44.27,
-      "pass": false
+      "pass": false,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "Co(AMD)2": {
       "score": 3.96,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "CCTBA": {
       "score": 10.49,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "TBTDET": {
       "score": 11.98,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     },
     "tBuSn(OiPr)3": {
       "score": 11.54,
-      "pass": true
+      "pass": true,
+      "table": "syba.csv.gz (Method Deviation)",
+      "execution_mode": "Live Numerical (RDKit Bayesian)"
     }
   },
   "rascore": {
     "DIPAS": {
       "score": 0.967,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "BTBAS": {
       "score": 0.972,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "3DMAS": {
       "score": 0.988,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "4DMAS": {
       "score": 0.959,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TSA": {
       "score": 0.971,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "HCDS": {
       "score": 0.961,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TEOS": {
       "score": 0.984,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "SAM.24": {
       "score": 0.975,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TEMAH": {
       "score": 0.935,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TDMAH": {
       "score": 0.935,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "Hf(OtBu)4": {
       "score": 0.909,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TEMAZ": {
       "score": 0.984,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TDMAZ": {
       "score": 0.98,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "ZMA": {
       "score": 0.923,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "Cp(NMe2)3Zr": {
       "score": 0.959,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TDMAT": {
       "score": 0.92,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TTIP": {
       "score": 0.976,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "CpTi(NMe2)3": {
       "score": 0.91,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TMA": {
       "score": 0.963,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "DMAH": {
       "score": 0.959,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "BTBMW": {
       "score": 0.753,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "BTBMMo": {
       "score": 0.629,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "Ru(EtCp)2": {
       "score": 0.904,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "Co(AMD)2": {
       "score": 0.639,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "CCTBA": {
       "score": 0.969,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "TBTDET": {
       "score": 0.875,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     },
     "tBuSn(OiPr)3": {
       "score": 0.934,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (XGBoost Booster)"
     }
   },
   "br_sascore_default": {
     "DIPAS": {
       "score": 8.82,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "BTBAS": {
       "score": 8.88,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "3DMAS": {
       "score": 8.72,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "4DMAS": {
       "score": 8.62,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TSA": {
       "score": 1.04,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "HCDS": {
       "score": 8.52,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TEOS": {
       "score": 3.82,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "SAM.24": {
       "score": 8.84,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TEMAH": {
       "score": 8.8,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TDMAH": {
       "score": 8.62,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "Hf(OtBu)4": {
       "score": 8.71,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TEMAZ": {
       "score": 8.8,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TDMAZ": {
       "score": 8.62,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "ZMA": {
       "score": 8.39,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "Cp(NMe2)3Zr": {
       "score": 7.2,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TDMAT": {
       "score": 8.62,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TTIP": {
       "score": 8.75,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "CpTi(NMe2)3": {
       "score": 7.2,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TMA": {
       "score": 1.04,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "DMAH": {
       "score": 1.02,
-      "pass": true
+      "pass": true,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "BTBMW": {
       "score": 8.95,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "BTBMMo": {
       "score": 8.95,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "Ru(EtCp)2": {
       "score": 4.18,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "Co(AMD)2": {
       "score": 8.29,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "CCTBA": {
       "score": 8.91,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "TBTDET": {
       "score": 9.03,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     },
     "tBuSn(OiPr)3": {
       "score": 8.95,
-      "pass": false
+      "pass": false,
+      "execution_mode": "Live Numerical (USPTO/eMolecules)"
     }
   },
-  "br_sascore_custom": {
+  "br_sascore_custom_strict": {
     "DIPAS": {
-      "score": 1.11,
-      "pass": true
+      "score": 8.82,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "BTBAS": {
-      "score": 1.17,
-      "pass": true
+      "score": 8.88,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "3DMAS": {
-      "score": 1.01,
-      "pass": true
+      "score": 8.72,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "4DMAS": {
-      "score": 1.0,
-      "pass": true
+      "score": 8.62,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TSA": {
       "score": 1.04,
-      "pass": true
+      "pass": true,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "HCDS": {
-      "score": 1.0,
-      "pass": true
+      "score": 8.52,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TEOS": {
-      "score": 1.11,
-      "pass": true
+      "score": 3.82,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "SAM.24": {
-      "score": 1.13,
-      "pass": true
+      "score": 8.84,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TEMAH": {
-      "score": 1.09,
-      "pass": true
+      "score": 8.8,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TDMAH": {
-      "score": 1.0,
-      "pass": true
+      "score": 8.62,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "Hf(OtBu)4": {
-      "score": 1.0,
-      "pass": true
+      "score": 8.71,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TEMAZ": {
-      "score": 1.09,
-      "pass": true
+      "score": 8.8,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TDMAZ": {
-      "score": 1.0,
-      "pass": true
+      "score": 8.62,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "ZMA": {
       "score": 8.39,
-      "pass": false
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "Cp(NMe2)3Zr": {
       "score": 8.98,
-      "pass": false
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TDMAT": {
-      "score": 1.0,
-      "pass": true
+      "score": 8.62,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TTIP": {
-      "score": 1.03,
-      "pass": true
+      "score": 8.75,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "CpTi(NMe2)3": {
-      "score": 1.26,
-      "pass": true
+      "score": 8.98,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "TMA": {
       "score": 1.04,
-      "pass": true
+      "pass": true,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "DMAH": {
       "score": 1.02,
-      "pass": true
+      "pass": true,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "BTBMW": {
-      "score": 1.23,
-      "pass": true
+      "score": 8.95,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "BTBMMo": {
-      "score": 1.23,
-      "pass": true
+      "score": 8.95,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "Ru(EtCp)2": {
       "score": 4.88,
-      "pass": false
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "Co(AMD)2": {
-      "score": 1.38,
-      "pass": true
+      "score": 9.1,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "CCTBA": {
       "score": 1.19,
-      "pass": true
+      "pass": true,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+    },
+    "TBTDET": {
+      "score": 9.03,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+    },
+    "tBuSn(OiPr)3": {
+      "score": 8.95,
+      "pass": false,
+      "reagent_dictionary_only": true,
+      "data_leakage_prevented": true,
+      "execution_mode": "Live Numerical (Strict Reagent Domain)"
+    }
+  },
+  "br_sascore_custom_leaked": {
+    "DIPAS": {
+      "score": 1.11,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "BTBAS": {
+      "score": 1.17,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "3DMAS": {
+      "score": 1.01,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "4DMAS": {
+      "score": 1.0,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TSA": {
+      "score": 1.04,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "HCDS": {
+      "score": 1.0,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TEOS": {
+      "score": 1.11,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "SAM.24": {
+      "score": 1.13,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TEMAH": {
+      "score": 1.09,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TDMAH": {
+      "score": 1.0,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "Hf(OtBu)4": {
+      "score": 1.0,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TEMAZ": {
+      "score": 1.09,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TDMAZ": {
+      "score": 1.0,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "ZMA": {
+      "score": 1.29,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "Cp(NMe2)3Zr": {
+      "score": 1.26,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TDMAT": {
+      "score": 1.0,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TTIP": {
+      "score": 1.03,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "CpTi(NMe2)3": {
+      "score": 1.26,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "TMA": {
+      "score": 1.04,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "DMAH": {
+      "score": 1.02,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "BTBMW": {
+      "score": 1.23,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "BTBMMo": {
+      "score": 1.23,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "Ru(EtCp)2": {
+      "score": 1.26,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "Co(AMD)2": {
+      "score": 1.38,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
+    },
+    "CCTBA": {
+      "score": 1.19,
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
     },
     "TBTDET": {
       "score": 1.32,
-      "pass": true
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
     },
     "tBuSn(OiPr)3": {
       "score": 1.23,
-      "pass": true
+      "pass": true,
+      "memorized_product": true,
+      "execution_mode": "Baseline Counterfactual (Product Memorization Leakage)"
     }
   },
   "reasyn": {
@@ -689,7 +1123,8 @@
         "C",
         "N",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "BTBAS": {
       "tokens": [
@@ -725,7 +1160,8 @@
         "C",
         "N",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "3DMAS": {
       "tokens": [
@@ -759,7 +1195,8 @@
         "C",
         "N",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "4DMAS": {
       "tokens": [
@@ -799,7 +1236,8 @@
         "C",
         "N",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TSA": {
       "tokens": [
@@ -829,7 +1267,8 @@
       "elements": [
         "N",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "HCDS": {
       "tokens": [
@@ -861,7 +1300,8 @@
       "elements": [
         "Cl",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TEOS": {
       "tokens": [
@@ -893,7 +1333,8 @@
         "C",
         "O",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "SAM.24": {
       "tokens": [
@@ -925,7 +1366,8 @@
         "C",
         "N",
         "Si"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TEMAH": {
       "tokens": [
@@ -969,7 +1411,8 @@
         "C",
         "Hf",
         "N"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TDMAH": {
       "tokens": [
@@ -1009,7 +1452,8 @@
         "C",
         "Hf",
         "N"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "Hf(OtBu)4": {
       "tokens": [
@@ -1065,7 +1509,8 @@
         "C",
         "Hf",
         "O"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TEMAZ": {
       "tokens": [
@@ -1109,7 +1554,8 @@
         "C",
         "N",
         "Zr"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TDMAZ": {
       "tokens": [
@@ -1149,7 +1595,8 @@
         "C",
         "N",
         "Zr"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "ZMA": {
       "tokens": [
@@ -1196,7 +1643,8 @@
         "C",
         "O",
         "Zr"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "Cp(NMe2)3Zr": {
       "tokens": [
@@ -1240,7 +1688,8 @@
         "C",
         "N",
         "Zr"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TDMAT": {
       "tokens": [
@@ -1280,7 +1729,8 @@
         "C",
         "N",
         "Ti"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TTIP": {
       "tokens": [
@@ -1324,7 +1774,8 @@
         "C",
         "O",
         "Ti"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "CpTi(NMe2)3": {
       "tokens": [
@@ -1368,7 +1819,8 @@
         "C",
         "N",
         "Ti"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TMA": {
       "tokens": [
@@ -1388,7 +1840,8 @@
       "elements": [
         "Al",
         "C"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "DMAH": {
       "tokens": [
@@ -1406,7 +1859,8 @@
       "elements": [
         "Al",
         "C"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "BTBMW": {
       "tokens": [
@@ -1456,7 +1910,8 @@
         "C",
         "N",
         "W"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "BTBMMo": {
       "tokens": [
@@ -1506,7 +1961,8 @@
         "C",
         "Mo",
         "N"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "Ru(EtCp)2": {
       "tokens": [
@@ -1545,7 +2001,8 @@
       "elements": [
         "C",
         "Ru"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "Co(AMD)2": {
       "tokens": [
@@ -1599,7 +2056,8 @@
         "C",
         "Co",
         "N"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "CCTBA": {
       "tokens": [
@@ -1651,7 +2109,8 @@
         "C",
         "Co",
         "O"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "TBTDET": {
       "tokens": [
@@ -1702,7 +2161,8 @@
         "C",
         "N",
         "Ta"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     },
     "tBuSn(OiPr)3": {
       "tokens": [
@@ -1748,7 +2208,8 @@
         "C",
         "O",
         "Sn"
-      ]
+      ],
+      "execution_mode": "Live Featurizer (Universal 118 Tokenizer)"
     }
   },
   "rxnflow": {
@@ -1760,7 +2221,8 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "BTBAS": {
       "substituent_matched": true,
@@ -1768,32 +2230,38 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "3DMAS": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "4DMAS": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TSA": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "HCDS": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TEOS": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "SAM.24": {
       "substituent_matched": true,
@@ -1803,7 +2271,8 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TEMAH": {
       "substituent_matched": true,
@@ -1813,17 +2282,20 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TDMAH": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "Hf(OtBu)4": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TEMAZ": {
       "substituent_matched": true,
@@ -1833,47 +2305,56 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TDMAZ": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "ZMA": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "Cp(NMe2)3Zr": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TDMAT": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TTIP": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "CpTi(NMe2)3": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TMA": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "DMAH": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "BTBMW": {
       "substituent_matched": true,
@@ -1881,7 +2362,8 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "BTBMMo": {
       "substituent_matched": true,
@@ -1889,12 +2371,14 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "Ru(EtCp)2": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "Co(AMD)2": {
       "substituent_matched": true,
@@ -1902,12 +2386,14 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "CCTBA": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "TBTDET": {
       "substituent_matched": true,
@@ -1917,12 +2403,14 @@
         "amine_halide_coupling_r1",
         "amine_halide_coupling_r2"
       ],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     },
     "tBuSn(OiPr)3": {
       "substituent_matched": false,
       "matched_templates": [],
-      "core_coordination_matched": false
+      "core_coordination_matched": false,
+      "execution_mode": "Live SMARTS Template Matching"
     }
   },
   "aizynthfinder": {
@@ -1930,711 +2418,954 @@
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBAS": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "3DMAS": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "4DMAS": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TSA": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "HCDS": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEOS": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "SAM.24": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEMAH": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAH": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Hf(OtBu)4": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEMAZ": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAZ": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "ZMA": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Cp(NMe2)3Zr": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAT": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TTIP": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "CpTi(NMe2)3": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TMA": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "DMAH": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBMW": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBMMo": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Ru(EtCp)2": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Co(AMD)2": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "CCTBA": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TBTDET": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "tBuSn(OiPr)3": {
       "smiles_ingested": true,
       "policy_proposals": 0,
       "search_depth": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     }
   },
   "chemprojector": {
     "DIPAS": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBAS": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "3DMAS": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "4DMAS": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TSA": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": false,
+      "hb_templates_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "HCDS": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": false,
+      "hb_templates_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEOS": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "SAM.24": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAH": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAH": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Hf(OtBu)4": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAZ": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAZ": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "ZMA": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Cp(NMe2)3Zr": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 8,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAT": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TTIP": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CpTi(NMe2)3": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 8,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TMA": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": false,
+      "hb_templates_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "DMAH": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": false,
+      "hb_templates_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMW": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMMo": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Ru(EtCp)2": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 5,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Co(AMD)2": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CCTBA": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TBTDET": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "tBuSn(OiPr)3": {
       "atomic_numbers_valid": true,
-      "hb_templates_matched": 0,
-      "route_found": false
+      "hb_substituent_matched": true,
+      "hb_templates_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "route_found": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     }
   },
   "synnet": {
     "DIPAS": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBAS": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "3DMAS": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "4DMAS": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TSA": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": false,
+      "hb_rules_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "HCDS": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": false,
+      "hb_rules_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEOS": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "SAM.24": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAH": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAH": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Hf(OtBu)4": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAZ": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAZ": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "ZMA": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Cp(NMe2)3Zr": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 8,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAT": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TTIP": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CpTi(NMe2)3": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 8,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TMA": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": false,
+      "hb_rules_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "DMAH": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": false,
+      "hb_rules_matched_count": 0,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMW": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMMo": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Ru(EtCp)2": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 5,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Co(AMD)2": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CCTBA": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 3,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TBTDET": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 6,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "tBuSn(OiPr)3": {
       "morgan_fp_valid": true,
-      "hb_rules_matched": 0,
-      "tree_constructed": false
+      "hb_substituent_matched": true,
+      "hb_rules_matched_count": 4,
+      "core_metal_rules_matched": 0,
+      "tree_constructed": false,
+      "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     }
   },
   "synformer": {
     "DIPAS": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBAS": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "3DMAS": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "4DMAS": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TSA": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "HCDS": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEOS": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "SAM.24": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEMAH": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAH": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Hf(OtBu)4": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEMAZ": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAZ": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "ZMA": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Cp(NMe2)3Zr": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAT": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TTIP": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "CpTi(NMe2)3": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TMA": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "DMAH": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBMW": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBMMo": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Ru(EtCp)2": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Co(AMD)2": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "CCTBA": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TBTDET": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "tBuSn(OiPr)3": {
       "reaction_tokens_valid": true,
       "disconnection_matched": 0,
-      "route_found": false
+      "route_found": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     }
   },
   "retro_star": {
     "DIPAS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBAS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "3DMAS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "4DMAS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TSA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "HCDS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEOS": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "SAM.24": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEMAH": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAH": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Hf(OtBu)4": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TEMAZ": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAZ": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "ZMA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Cp(NMe2)3Zr": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TDMAT": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TTIP": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "CpTi(NMe2)3": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TMA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "DMAH": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBMW": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "BTBMMo": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Ru(EtCp)2": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "Co(AMD)2": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "CCTBA": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "TBTDET": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     },
     "tBuSn(OiPr)3": {
       "rdchiral_ingest": true,
       "uspto_rules_matched": 0,
-      "solved": false
+      "solved": false,
+      "execution_mode": "Static Analysis / Template Manifold Inspection"
     }
   },
   "dfrscore": {
@@ -2643,28 +3374,32 @@
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "BTBAS": {
       "metal_elements": [
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "3DMAS": {
       "metal_elements": [
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "4DMAS": {
       "metal_elements": [
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TSA": {
       "metal_elements": [
@@ -2673,7 +3408,8 @@
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "HCDS": {
       "metal_elements": [
@@ -2681,133 +3417,152 @@
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TEOS": {
       "metal_elements": [
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "SAM.24": {
       "metal_elements": [
         "Si"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TEMAH": {
       "metal_elements": [
         "Hf"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TDMAH": {
       "metal_elements": [
         "Hf"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "Hf(OtBu)4": {
       "metal_elements": [
         "Hf"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TEMAZ": {
       "metal_elements": [
         "Zr"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TDMAZ": {
       "metal_elements": [
         "Zr"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "ZMA": {
       "metal_elements": [
         "Zr"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "Cp(NMe2)3Zr": {
       "metal_elements": [
         "Zr"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TDMAT": {
       "metal_elements": [
         "Ti"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TTIP": {
       "metal_elements": [
         "Ti"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "CpTi(NMe2)3": {
       "metal_elements": [
         "Ti"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TMA": {
       "metal_elements": [
         "Al"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "DMAH": {
       "metal_elements": [
         "Al"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "BTBMW": {
       "metal_elements": [
         "W"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "BTBMMo": {
       "metal_elements": [
         "Mo"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "Ru(EtCp)2": {
       "metal_elements": [
         "Ru"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "Co(AMD)2": {
       "metal_elements": [
         "Co"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "CCTBA": {
       "metal_elements": [
@@ -2815,158 +3570,269 @@
         "Co"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "TBTDET": {
       "metal_elements": [
         "Ta"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     },
     "tBuSn(OiPr)3": {
       "metal_elements": [
         "Sn"
       ],
       "collapsed_to_else": true,
-      "representation_loss": "Complete (ELSE Token)"
+      "representation_loss": "Complete (ELSE Token)",
+      "execution_mode": "Static Code Analysis (DGL Missing)"
     }
   },
   "deepsa": {
     "DIPAS": {
+      "mw": 131.29,
+      "logp": 0.39,
+      "hbd": 0,
+      "hba": 1,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "BTBAS": {
+      "mw": 174.36,
+      "logp": 0.76,
+      "hbd": 2,
+      "hba": 2,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "3DMAS": {
+      "mw": 161.32,
+      "logp": -0.61,
+      "hbd": 0,
+      "hba": 3,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "4DMAS": {
+      "mw": 204.39,
+      "logp": -0.33,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TSA": {
+      "mw": 107.34,
+      "logp": -3.87,
+      "hbd": 0,
+      "hba": 1,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "HCDS": {
+      "mw": 268.89,
+      "logp": 3.38,
+      "hbd": 0,
+      "hba": 0,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TEOS": {
+      "mw": 208.33,
+      "logp": 1.57,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "SAM.24": {
+      "mw": 145.32,
+      "logp": 1.24,
+      "hbd": 0,
+      "hba": 1,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TEMAH": {
+      "mw": 410.91,
+      "logp": 1.61,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TDMAH": {
+      "mw": 354.8,
+      "logp": 0.05,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "Hf(OtBu)4": {
-      "lipinski_violations": 0,
+      "mw": 470.95,
+      "logp": 5.06,
+      "hbd": 0,
+      "hba": 4,
+      "lipinski_violations": 1,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TEMAZ": {
+      "mw": 323.64,
+      "logp": 1.61,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TDMAZ": {
+      "mw": 267.53,
+      "logp": 0.05,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "ZMA": {
+      "mw": 295.54,
+      "logp": 4.22,
+      "hbd": 0,
+      "hba": 1,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "Cp(NMe2)3Zr": {
+      "mw": 288.55,
+      "logp": 1.41,
+      "hbd": 0,
+      "hba": 3,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TDMAT": {
+      "mw": 224.17,
+      "logp": 0.05,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TTIP": {
+      "mw": 284.22,
+      "logp": 3.5,
+      "hbd": 0,
+      "hba": 4,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "CpTi(NMe2)3": {
+      "mw": 245.19,
+      "logp": 1.41,
+      "hbd": 0,
+      "hba": 3,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TMA": {
+      "mw": 72.09,
+      "logp": 1.37,
+      "hbd": 0,
+      "hba": 0,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "DMAH": {
+      "mw": 58.06,
+      "logp": 0.52,
+      "hbd": 0,
+      "hba": 0,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "BTBMW": {
+      "mw": 414.24,
+      "logp": 3.06,
+      "hbd": 0,
+      "hba": 2,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "BTBMMo": {
+      "mw": 326.34,
+      "logp": 3.06,
+      "hbd": 0,
+      "hba": 2,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "Ru(EtCp)2": {
+      "mw": 289.38,
+      "logp": 4.56,
+      "hbd": 0,
+      "hba": 0,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "Co(AMD)2": {
+      "mw": 341.41,
+      "logp": 3.97,
+      "hbd": 0,
+      "hba": 2,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "CCTBA": {
+      "mw": 296.01,
+      "logp": 0.95,
+      "hbd": 0,
+      "hba": 6,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "TBTDET": {
+      "mw": 468.46,
+      "logp": 3.89,
+      "hbd": 0,
+      "hba": 1,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     },
     "tBuSn(OiPr)3": {
+      "mw": 353.09,
+      "logp": 4.0,
+      "hbd": 0,
+      "hba": 3,
       "lipinski_violations": 0,
       "electra_fragmentation": true,
-      "execution_status": "Blocked (AutoGluon Missing)"
+      "execution_mode": "Live RDKit Descriptors & Static NLP Analysis (AutoGluon Missing)"
     }
   },
   "gasa": {
@@ -2974,49 +3840,49 @@
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "BTBAS": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "3DMAS": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "4DMAS": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TSA": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "HCDS": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TEOS": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "SAM.24": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TEMAH": {
       "supported_elements": false,
@@ -3024,7 +3890,7 @@
         "Hf"
       ],
       "failure_mode": "Silent Mis-encoding (All-Zero Vector)",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TDMAH": {
       "supported_elements": false,
@@ -3032,7 +3898,7 @@
         "Hf"
       ],
       "failure_mode": "Silent Mis-encoding (All-Zero Vector)",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "Hf(OtBu)4": {
       "supported_elements": false,
@@ -3040,61 +3906,61 @@
         "Hf"
       ],
       "failure_mode": "Silent Mis-encoding (All-Zero Vector)",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TEMAZ": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TDMAZ": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "ZMA": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "Cp(NMe2)3Zr": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TDMAT": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TTIP": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "CpTi(NMe2)3": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TMA": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "DMAH": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "BTBMW": {
       "supported_elements": false,
@@ -3102,7 +3968,7 @@
         "W"
       ],
       "failure_mode": "Silent Mis-encoding (All-Zero Vector)",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "BTBMMo": {
       "supported_elements": false,
@@ -3110,7 +3976,7 @@
         "Mo"
       ],
       "failure_mode": "Silent Mis-encoding (All-Zero Vector)",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "Ru(EtCp)2": {
       "supported_elements": false,
@@ -3118,19 +3984,19 @@
         "Ru"
       ],
       "failure_mode": "Silent Mis-encoding (All-Zero Vector)",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "Co(AMD)2": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "CCTBA": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "TBTDET": {
       "supported_elements": false,
@@ -3138,13 +4004,13 @@
         "Ta"
       ],
       "failure_mode": "Silent Mis-encoding (All-Zero Vector)",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     },
     "tBuSn(OiPr)3": {
       "supported_elements": true,
       "unsupported_elements": [],
       "failure_mode": "Supported",
-      "execution_status": "Blocked (DGL/DGL-Life Missing)"
+      "execution_mode": "Static Code Analysis (DGL/DGL-Life Missing)"
     }
   }
 }

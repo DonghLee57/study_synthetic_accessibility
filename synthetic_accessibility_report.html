@@ -4517,11 +4517,11 @@ flowchart LR
               </div>
             </div>
             <div class="stat-card" style="padding:14px; border-left:4px solid #059669;">
-              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 4: 물리 합성성 ($N_{\text{pass}}$)</div>
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 4: 물리 합성성 ($N_{\text{pass}}$) &amp; 데이터 누수 검증</div>
               <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
-                &bull; <strong>평가 기준:</strong> 양산 전구체 올바른 합성 판정.<br>
-                &bull; <strong>유일한 통과:</strong> <strong>BR-SAScore (반도체 전용사전) 88.9% (24/27)</strong>.<br>
-                &bull; <strong>기존 모델 붕괴:</strong> SAScore(11.1%), SCScore(위험은폐), SYBA(-44점 붕괴).
+                &bull; <strong>평가 기준:</strong> 상용 전구체 물리적 합성 판정 및 딕셔너리 데이터 누수 검증.<br>
+                &bull; <strong>엄격 시약 사전 (무누수):</strong> BR-SAScore 14.8% (4/27) 통과 (M-N 배위 룰 USPTO 부재 한계).<br>
+                &bull; <strong>생성물 암기 대조군 (누수):</strong> 사전 피팅 시 88.9% (24/27) 통과 왜곡 (Claude 감사 규명).
               </div>
             </div>
           </div>
@@ -4606,8 +4606,8 @@ flowchart TD
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">01</td>
               <td style="white-space:nowrap;">
-                <strong>BR-SAScore (반도체 전용사전)</strong><br>
-                <span class="badge badge-1g" style="font-size:0.7rem;">3G 도메인 사전</span>
+                <strong>BR-SAScore (엄격 시약사전, 무누수)</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">3G 엄격 분리</span>
               </td>
               <td style="font-size:0.82rem;">
                 <a href="https://pypi.org/project/BRSAScore/" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">snu-micc/BR-SAScore (PyPI: BRSAScore==0.1.1 / Fork: awadell1/BR-SAScore)</a>
@@ -4615,16 +4615,36 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 정상 분리 (BFrag s_B=0)</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">88.9% (24/27) 무기 룰 정합</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700; font-size:0.78rem;">88.9% (24/27) 성공</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">14.8% (4/27) USPTO 결측</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">14.8% (4/27) 통과</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
-                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 4 완결 (성공)]</strong>
-                <span style="color:#475569;">붕괴 없음: Gelest 실란+금속염 및 염복분해 반응을 전용 사전으로 등록하여 유일하게 양산 전구체 24종 정상 평가 성공.</span>
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (무기 반응 매니폴드 결측)]</strong>
+                <span style="color:#475569;">데이터 누수 방지(생성물 배제) 적용 시, 순수 시약 빌딩블록만으로는 새로 형성된 M-N/M-C 결합의 USPTO 부재로 최대 페널티(s_R=-6.0)를 받아 4종(TSA, TMA, DMAH, CCTBA)만 통과.</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">02</td>
+              <td style="white-space:nowrap;">
+                <strong>BR-SAScore (생성물 암기 누수 대조군)</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">3G 피팅 대조군</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://pypi.org/project/BRSAScore/" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">snu-micc/BR-SAScore (PyPI: BRSAScore==0.1.1 / Fork: awadell1/BR-SAScore)</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: PyPI Official &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 암기 등록 (s=0)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-size:0.75rem;">88.9% (24/27) 사전 피팅</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700; font-size:0.78rem;">88.9% (24/27) [누수 왜곡]</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[감사 검증 (데이터 누수 대조군)]</strong>
+                <span style="color:#475569;">Claude 감사에서 규명된 반사실적 대조군: 타깃 생성물 단편을 사전에 피팅할 경우 24종 통과가 나오나, 이는 일반화 불가능한 순환 기억(Circular Memorization)에 불과함을 실증.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">03</td>
               <td style="white-space:nowrap;">
                 <strong>BR-SAScore (기본 의약사전)</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">3G 사전 분리</span>
@@ -4644,7 +4664,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">03</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">04</td>
               <td style="white-space:nowrap;">
                 <strong>SAScore (RDKit Built-in)</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">1G 단편 빈도</span>
@@ -4664,7 +4684,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">04</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">05</td>
               <td style="white-space:nowrap;">
                 <strong>SCScore</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">2G 반응 신경망</span>
@@ -4684,7 +4704,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">05</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">06</td>
               <td style="white-space:nowrap;">
                 <strong>SYBA</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">1G 베이지안</span>
@@ -4704,7 +4724,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">06</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">07</td>
               <td style="white-space:nowrap;">
                 <strong>RAscore</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">2G MCTS 증류</span>
@@ -4724,7 +4744,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">07</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">08</td>
               <td style="white-space:nowrap;">
                 <strong>RxnFlow</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">4G GFlowNet</span>
@@ -4744,7 +4764,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">08</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">09</td>
               <td style="white-space:nowrap;">
                 <strong>BioNeMo ReaSyn</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">4G 자기회귀 CoR</span>
@@ -4764,7 +4784,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">09</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">10</td>
               <td style="white-space:nowrap;">
                 <strong>AiZynthFinder</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">CASP MCTS 엔진</span>
@@ -4784,7 +4804,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">10</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">11</td>
               <td style="white-space:nowrap;">
                 <strong>ChemProjector</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">4G 분자 투영 디퓨전</span>
@@ -4795,16 +4815,16 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27) 원자번호≤100</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 이중 잠재 공간 투영</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 무기 룰 0건</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">85.2% (23/27) 리간드 / 0% 코어</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 경로 완결</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
-                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-91 템플릿)]</strong>
-                <span style="color:#475569;">Hartenfeller-Button 의약 반응 91종(SynNet과 동일)에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무.</span>
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-91 템플릿 실측)]</strong>
+                <span style="color:#475569;">HB 91종 SMARTS 실측 결과 23종의 유기 치환기 리간드 매칭은 확인되었으나, 전이금속 배위 결합 룰은 0건으로 전구체 코어 생성 불가.</span>
               </td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">11</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">12</td>
               <td style="white-space:nowrap;">
                 <strong>SynNet</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">4G 마코프 순방향 계획</span>
@@ -4815,16 +4835,16 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% Morgan FP 임베딩</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 무기 룰 0건</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">85.2% (23/27) 리간드 / 0% 코어</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 트리 생성</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
-                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-91 반응/BB)]</strong>
-                <span style="color:#475569;">4대 순방향 신경망(action, reactant1, reaction, reactant2)이 유기 빌딩블록만 표집하여 전이금속 착체 트리 생성 불가.</span>
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-91 반응/BB 실측)]</strong>
+                <span style="color:#475569;">4대 순방향 신경망이 유기 빌딩블록만 표집하며, HB 91종 룰 중 금속 코어 형성 룰이 0건이므로 전이금속 착체 트리 생성 불가.</span>
               </td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">12</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">13</td>
               <td style="white-space:nowrap;">
                 <strong>SynFormer</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">4G Seq2Seq 트랜스포머</span>
@@ -4844,7 +4864,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">13</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">14</td>
               <td style="white-space:nowrap;">
                 <strong>Retro*</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">신경망 유도 A* 탐색</span>
@@ -4864,7 +4884,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">14</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">15</td>
               <td style="white-space:nowrap;">
                 <strong>DFRscore</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">3G GAT 단계 예측기</span>
@@ -4884,7 +4904,7 @@ flowchart TD
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">15</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">16</td>
               <td style="white-space:nowrap;">
                 <strong>DeepSA</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">3G 멀티모달 트랜스포머</span>
@@ -4894,17 +4914,17 @@ flowchart TD
                 <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 42 &bull; Custom/Open</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">의약 Ro5 & NLP 서브워드 왜곡</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">의약 Ro5 (26/27 적합) & NLP 왜곡</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (복합 SA 지표)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% 물리적 타당성</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
-                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 (AutoGluon 부재 & Ro5 편향)]</strong>
-                <span style="color:#475569;">AutoGluon 종속성 부재로 미실행 상태이며, 저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡.</span>
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 (AutoGluon 부재 & 정적 분석)]</strong>
+                <span style="color:#475569;">AutoGluon 부재로 미실행(정적 분석). RDKit 실측 상 Ro5는 26종이 통과(Hf(OtBu)4만 LogP=5.06 위반)하나, ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 무기 원소 표현 왜곡.</span>
               </td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">16</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">17</td>
               <td style="white-space:nowrap;">
                 <strong>GASA</strong><br>
                 <span class="badge badge-1g" style="font-size:0.7rem;">3G GAT 위치선택성</span>

@@ -76,8 +76,8 @@ python scripts/setup_external_models.py
 
 | Directory | Model Name & Venue | Git Remote URL | Branch | Commit Hash (HEAD) | Critical Weight / Resource Files |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **`external/scscore`** | **SCScore** (MIT, 2018) | `https://github.com/connorcoley/scscore.git` | `master` | `37090a6aa8220408f572de20224c33c221312d16` | `models/full_reaxys_model_1024bool/model.ckpt-10654.as_numpy.json.gz` |
-| **`external/syba`** | **SYBA** (UCT Prague, 2020) | `https://github.com/lich-uct/syba.git` | `master` | `30929eb2d3b9a03bef326a1f5180f26f55b19a29` | `syba/resources/syba.csv.gz` (~25 MB count table) |
+| **`external/scscore`** | **SCScore** (MIT, 2018) | `https://github.com/connorcoley/scscore.git` | `master` | `37090a6aa8220408f572de20224c33c221312d16` | `models/full_reaxys_model_1024bool/model.ckpt-10654.as_numpy.json.gz` (NumPy standalone runner; evaluates boolean Morgan fingerprints) |
+| **`external/syba`** | **SYBA** (UCT Prague, 2020) | `https://github.com/lich-uct/syba.git` | `master` | `30929eb2d3b9a03bef326a1f5180f26f55b19a29` | `syba/resources/syba.csv.gz` (~25 MB count table; **methodological deviation** from upstream default `syba4.csv.gz` [~115 MB] for 10x faster execution and consistency) |
 | **`external/rascore`** | **RAscore** (Reymond, 2021) | `https://github.com/reymond-group/RAscore.git` | `master` | `cb77db503ee5cbf0e8bb8963df6e5b76b3a94f06` | `RAscore/models/XGB_chembl_ecfp_counts/model.pkl` |
 | **`external/rxnflow`** | **RxnFlow** (KAIST, ICLR 2025) | `https://github.com/SeonghwanSeo/RxnFlow.git` | `main` | `530d098b56625381395fe7a30a2a10b7aacb8077` | `data/templates/explore/reaction.yaml` (30 rules), `data/templates/cgflow/reaction.yaml` (42 rules) |
 | **`external/reasyn`** | **BioNeMo ReaSyn** (NVIDIA, ICLR 2026 Oral) | `https://github.com/NVIDIA-BioNeMo/ReaSyn.git` | `reasyn_v2` | `f28270ca3a5873b2bf7eb52821c5202b111ef9f4` | `reasyn/chem/featurize.py` (153-token SMILES vocab covering 118 elements; `NUM_REACTIONS = 115`) |
@@ -178,7 +178,8 @@ python scripts/audit_reproduce_all.py
 
 | Model | Stage 1 (Syntax Ingestion) | Stage 2 (Representation) | Stage 3 (Reaction Policy) | Stage 4 (True $N_{\text{pass}}$) | Exact Breakdown Barrier & Physical Root Cause |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **BR-SAScore (Custom)** | **100% (27/27)** | **100% Valid ($s_B=0$)** | **88.9% (24/27)** | **88.9% (24/27)** | **No Breakdown**: Domain dictionary successfully overrides drug-like bias; accurately ranks industrial precursors ($1.0 \sim 1.4$ pts). 3 complex metallocenes/sandwiches remain penalized ($4.8 \sim 8.9$ pts). |
+| **BR-SAScore (Strict Unleaked)** | **100% (27/27)** | **100% Valid ($s_B=0$)** | **14.8% (4/27)** | **14.8% (4/27)** | **Stage 3 Barrier (Reagent Domain Only)**: When target products are strictly excluded to prevent data leakage, 23 precursors receive maximum penalty ($s_R = -6.0$, scoring $8.5 \sim 9.0$) because USPTO lacks $M-N/M-C$ formation rules. |
+| **BR-SAScore (Leaked Baseline)** | **100% (27/27)** | **Memorized ($s=0$)** | **88.9% ~ 100%** | **88.9% ~ 100%** | **Counterfactual Audit Baseline**: Illustrates the circular data leakage identified by Claude audit where pre-registering target products into the dictionary yields artificial 24~27/27 passes. |
 | **BR-SAScore (Default)**| **100% (27/27)** | **100% Valid** | **11.1% (3/27)** | **11.1% (3/27)** | **Stage 3 Breakdown**: eMolecules/USPTO dictionaries lack Si-N/M-N, assigning max $-6.0$ penalty to 24 precursors ($8.2 \sim 9.0$ pts). |
 | **SAScore (RDKit)** | **100% (27/27)** | **100% Morgan** | N/A (Scoring) | **11.1% (3/27)** | **Stage 2·4 Breakdown**: Negative log-frequency penalties for near-zero PubChem drug counts cause severe False Negatives (TSA 6.91, DMAH 6.31). |
 | **SCScore (Reaxys)** | **100% (27/27)** | **100% 1024-bit** | N/A (DNN) | **85.2% (23/27)** | **Stage 4 Bias**: Early-stage reactant registration in Reaxys yields artificially low scores (stored range 1.01–2.72; 23/27 ≤ 2.0), completely concealing pyrophoric hazards (TMA). |
