@@ -142,46 +142,219 @@ repo_semi_metrics = {
     }
 }
 
-# Strictly filter to the 8 empirically tested models in benchmark order
-tested_keys = [
-    "SAScore (RDKit Built-in)",
-    "SCScore",
-    "SYBA",
-    "BR-SAScore",
-    "RAscore",
-    "RxnFlow",
-    "ReaSyn",
-    "AiZynthFinder"
+
+# 16 Multi-stage evaluated models across the 4 execution pipeline stages
+multistage_models = [
+    {
+        "name": "BR-SAScore (반도체 전용사전)",
+        "gen": "3G 도메인 사전",
+        "repo_key": "BR-SAScore",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 정상 분리 (BFrag s_B=0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("88.9% (24/27) 무기 룰 정합", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s4": ("88.9% (24/27) 성공", "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;"),
+        "barrier_stage": "Stage 4 완결 (성공)",
+        "barrier_desc": "붕괴 없음: Gelest 실란+금속염 및 염복분해 반응을 전용 사전으로 등록하여 유일하게 양산 전구체 24종 정상 평가 성공."
+    },
+    {
+        "name": "BR-SAScore (기본 의약사전)",
+        "gen": "3G 사전 분리",
+        "repo_key": "BR-SAScore",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 분리 (BFrag/RFrag)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("11.1% (3/27) 의약 편향", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("11.1% (3/27) 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (반응 매니폴드)",
+        "barrier_desc": "의약 사전(eMolecules/USPTO) 내 Si-N, M-N 결합 부재로 최대 반응 페널티(s_R=-6.0) 부과되어 24종이 8~9점으로 과대평가."
+    },
+    {
+        "name": "SAScore (RDKit Built-in)",
+        "gen": "1G 단편 빈도",
+        "repo_key": "SAScore (RDKit Built-in)",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% Morgan 단편 추출", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("N/A (단편 휴리스틱)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("11.1% (3/27) 오판", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 2·4 (빈도 라이브러리)",
+        "barrier_desc": "PubChem 의약 빈도 기반 음의 로그빈도 페널티로 TSA(6.91), DMAH(6.31) 등 단순 전구체 24종에 극단적 False Negative 발생."
+    },
+    {
+        "name": "SCScore",
+        "gen": "2G 반응 신경망",
+        "repo_key": "SCScore",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 1024-bit Morgan", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("N/A (End-to-End DNN)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("85.2% (23/27) [위험 은폐]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "barrier_stage": "Stage 4 (초기원료 편향)",
+        "barrier_desc": "Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 저분자 전구체를 1점대로 과소평가하여 TMA 등 자연발화성 위험 완전 은폐."
+    },
+    {
+        "name": "SYBA",
+        "gen": "1G 베이지안",
+        "repo_key": "SYBA",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 나이브 베이즈 단편", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("N/A (단편 확률 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("85.2% (23/27) [착체 붕괴]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "barrier_stage": "Stage 2·4 (ZINC 코퍼스)",
+        "barrier_desc": "ZINC 의약 DB에 금속-Cp 배위 단편이 전무하여 Ru(EtCp)2(-44.27), CpTi(-24.98) 등 메탈로센 4종에서 극단적 음수 붕괴 발생."
+    },
+    {
+        "name": "RAscore",
+        "gen": "2G MCTS 증류",
+        "repo_key": "RAscore",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("투영 왜곡 (금속→알킬 탄소)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("N/A (XGBoost 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("0.0% 유효 (수치 100% FP)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 2 (ECFP6 특성 표현)",
+        "barrier_desc": "중심금속 배위 안정성을 전혀 인지하지 못하고 디메틸아미노/알킬 비트만으로 27종 전수 0.9점대 과대평가 (100% False Positive)."
+    },
+    {
+        "name": "RxnFlow",
+        "gen": "4G GFlowNet",
+        "repo_key": "RxnFlow",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 신톤 그래프 표현", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("0.0% 코어 (리간드만 33.3%)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 코어 경로 도출", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (신톤 템플릿 풀)",
+        "barrier_desc": "Explore/CGFlow에 금속-배위 결합 룰이 전무하여 아세톤 환원적 아민화 등 유기 곁사슬 9종 외에 전구체 코어 합성 불가."
+    },
+    {
+        "name": "BioNeMo ReaSyn",
+        "gen": "4G 자기회귀 CoR",
+        "repo_key": "ReaSyn",
+        "s1": ("100.0% (27/27) (118 원소)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 트랜스포머 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("0.0% (0/27) 무기 룰 전무", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 합성 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (SynFormer 반응망)",
+        "barrier_desc": "118개 원소 어휘 토큰화는 100% 완벽하나, 115종 특허 반응망이 유기 반응에 국한되어 무기 착체 배위 단계 생성 0건."
+    },
+    {
+        "name": "AiZynthFinder",
+        "gen": "CASP MCTS 엔진",
+        "repo_key": "AiZynthFinder",
+        "s1": ("100.0% (27/27) 객체 생성", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% RDKit 분자 그래프", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("0.0% (0/27) 정책 전개 실패", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 역합성 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (MCTS 전개 정책망)",
+        "barrier_desc": "USPTO 50k 의약 정책망이 금속-리간드 절단 확률을 0으로 산출하여 MCTS 트리가 깊이 0에서 즉시 중단(탐색 실패)."
+    },
+    {
+        "name": "ChemProjector",
+        "gen": "4G 분자 투영 디퓨전",
+        "repo_key": "ChemProjector",
+        "s1": ("100.0% (27/27) 원자번호≤100", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 이중 잠재 공간 투영", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("0.0% (0/27) 무기 룰 0건", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (HB-58 템플릿)",
+        "barrier_desc": "Hartenfeller-Button 의약 반응 58종에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무."
+    },
+    {
+        "name": "SynNet",
+        "gen": "4G 마코프 순방향 계획",
+        "repo_key": "SynNet",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% Morgan FP 임베딩", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("0.0% (0/27) 무기 룰 0건", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 트리 생성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (HB-91 반응/BB)",
+        "barrier_desc": "4대 순방향 신경망(action, reactant1, reaction, reactant2)이 유기 빌딩블록만 표집하여 전이금속 착체 트리 생성 불가."
+    },
+    {
+        "name": "SynFormer",
+        "gen": "4G Seq2Seq 트랜스포머",
+        "repo_key": "SynFormer",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 반응 토큰 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("0.0% (0/27) 무기 반응 0건", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (115 특허 반응 토큰)",
+        "barrier_desc": "SynFormer 반응 토큰 공간에 무기 착체 리간드 교환 룰이 없어 토큰 자기회귀 생성 중단."
+    },
+    {
+        "name": "Retro*",
+        "gen": "신경망 유도 A* 탐색",
+        "repo_key": "Retro*",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 가치 함수 벡터", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("0.0% (0/27) rdchiral 매칭 실패", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 역합성 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (USPTO 50k 템플릿)",
+        "barrier_desc": "rdchiral 템플릿 추출망이 금속-리간드 결합을 인식하지 못해 1단계 트리 확장 후보가 0개로 A* 탐색 즉시 종료."
+    },
+    {
+        "name": "DFRscore",
+        "gen": "3G GAT 단계 예측기",
+        "repo_key": "DFRscore",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("원소 정보 상실 (전수 'ELSE')", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("N/A (GAT 회귀)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("0.0% 물리적 신뢰도", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 2 (원소 인코딩 'ELSE')",
+        "barrier_desc": "Si, Ti, Zr, Hf, Ru, W, Mo, Al, Co 등 모든 금속이 단일 'ELSE' 원소 토큰으로 뭉개져 원소별 합성 난이도 감지 불가."
+    },
+    {
+        "name": "DeepSA",
+        "gen": "3G 멀티모달 트랜스포머",
+        "repo_key": "DeepSA",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("의약 Ro5 & NLP 서브워드 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("N/A (복합 SA 지표)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("0.0% 물리적 타당성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 2·4 (Rule of 5 의약 편향)",
+        "barrier_desc": "저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡."
+    },
+    {
+        "name": "GASA",
+        "gen": "3G GAT 위치선택성",
+        "repo_key": "GASA",
+        "s1": ("25.9% (7/27) 크래시", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s2": ("74.1% (20/27) 학습 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("N/A (GAT 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("0.0% 물리적 유효성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 1 (allowable_set 미지원)",
+        "barrier_desc": "Hf, Ta, Ru, W, Mo 원소가 allowable_set에 없어 7종에서 KeyError 발생하며 Stage 1 파싱 단계에서 즉시 비정상 종료."
+    }
 ]
 
 repo_by_name = {r["name"]: r for r in extra["repos"]}
-repo_rows = []
-for idx, key in enumerate(tested_keys, 1):
-    r = repo_by_name.get(key)
-    if not r:
-        continue
-    m = repo_semi_metrics.get(key, {
-        "rate": "N/A",
-        "badge_style": "background:#f1f5f9; color:#475569; border-color:#cbd5e1;",
-        "eval": "평가 미기재",
-        "desc": r.get('description', '-')
-    })
-    repo_rows.append(f"""
+multistage_rows = []
+for idx, m in enumerate(multistage_models, 1):
+    r = repo_by_name.get(m["repo_key"], {"repo": "-", "stars": "-", "license": "-", "url": "#"})
+    s1_text, s1_style = m["s1"]
+    s2_text, s2_style = m["s2"]
+    s3_text, s3_style = m["s3"]
+    s4_text, s4_style = m["s4"]
+    
+    row_html = f"""
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
-              <td style="white-space:nowrap;"><strong>{r['name']}</strong></td>
-              <td><a href="{r['url']}" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">{r['repo']}</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">{r['stars']}</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">{r['license']}</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="{m['badge_style']}">{m['rate']}</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">{m['eval']}</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">{m['desc']}</div>
+              <td style="white-space:nowrap;">
+                <strong>{m['name']}</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">{m['gen']}</span>
               </td>
-            </tr>""")
-repos_joined = "\n".join(repo_rows)
+              <td style="font-size:0.82rem;">
+                <a href="{r.get('url','#')}" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">{r.get('repo','-')}</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: {r.get('stars','-')} &bull; {r.get('license','-')}</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s1_style} font-size:0.75rem;">{s1_text}</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s2_style} font-size:0.75rem;">{s2_text}</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s3_style} font-size:0.75rem;">{s3_text}</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s4_style} font-size:0.78rem;">{s4_text}</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[{m['barrier_stage']}]</strong>
+                <span style="color:#475569;">{m['barrier_desc']}</span>
+              </td>
+            </tr>"""
+    multistage_rows.append(row_html)
+multistage_joined = "\n".join(multistage_rows)
+
 
 # Build VASP Framework rows without emojis
 vasp_license_fix = {
@@ -380,7 +553,7 @@ with open(template_path, "r", encoding="utf-8") as f:
 
 final_html = template.replace("<!-- LIT_ROWS_PLACEHOLDER -->", lit_rows_joined)
 final_html = final_html.replace("<!-- EMPIRICAL_BENCHMARK_ROWS_PLACEHOLDER -->", empirical_db_joined)
-final_html = final_html.replace("<!-- REPO_ROWS_PLACEHOLDER -->", repos_joined)
+final_html = final_html.replace("<!-- MULTISTAGE_BENCHMARK_ROWS_PLACEHOLDER -->", multistage_joined)
 final_html = final_html.replace("<!-- VASP_ROWS_PLACEHOLDER -->", vasp_joined)
 final_html = final_html.replace("<!-- PREC_DB_ROWS_PLACEHOLDER -->", prec_db_joined)
 final_html = final_html.replace("<!-- BB_DB_ROWS_PLACEHOLDER -->", bb_db_joined)

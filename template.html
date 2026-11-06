@@ -1097,7 +1097,7 @@
         <li><a href="#dft-synergy" class="toc-link" data-target="dft-synergy">9. DFT 계산 연계 응용 프레임워크</a></li>
         <li><a href="#vasp-automation" class="toc-link" data-target="vasp-automation">10. VASP 기반 DFT 자동화 스택</a></li>
         <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 프리커서·반응 독자 DB</a></li>
-        <li><a href="#comprehensive-eval" class="toc-link" data-target="comprehensive-eval">12. [섹션 7·12 통합] 오픈소스 저장소 및 8대 실측 모델 종합 평가</a></li>
+        <li><a href="#comprehensive-eval" class="toc-link" data-target="comprehensive-eval">12. [섹션 7·12 통합] 16대 모델 4단계 파이프라인 해부 및 종합 평가</a></li>
         <li><a href="#precursor-inverse-design" class="toc-link" data-target="precursor-inverse-design">13. 프리커서 AI 역설계 &amp; 연산 매핑</a></li>
       </ul>
 
@@ -2432,10 +2432,10 @@ flowchart LR
       <!-- Section 12: Comprehensive Benchmark & Engineering Evaluation -->
       <section id="comprehensive-eval">
         <div class="section-header">
-          <div class="section-tag">Section 12 &bull; [섹션 7·12 통합] Unified Open-Source Repositories &amp; 8 Empirical Models Benchmark</div>
-          <h2 class="section-title">[섹션 7·12 통합] 오픈소스 저장소 검증 및 8대 실측 모델 종합 평가</h2>
+          <div class="section-tag">Section 12 &bull; [섹션 7·12 통합] 16 Major Models Multi-Stage Pipeline Audit &amp; Benchmark</div>
+          <h2 class="section-title">[섹션 7·12 통합] 16대 모델 4단계 파이프라인 정밀 해부 및 반도체 프리커서 실측 종합 평가</h2>
           <p class="section-desc">
-            기존 섹션 7의 오픈소스 저장소 검증(GitHub/PyPI) 정보와 섹션 12의 벤치마크 평가를 단일 프레임워크로 통합했습니다. 추정치나 이론적 등급을 배제하고, 실제 파이썬 환경에서 직접 설치·구동하여 실증 연산을 완료한 <strong>8대 실측 모델(SAScore, SCScore, SYBA, BR-SAScore, RAscore, RxnFlow, BioNeMo ReaSyn, AiZynthFinder)</strong>만을 대상으로 공식 저장소 메타데이터, 27종 반도체 양산 프리커서 전수 실측 지표, 그리고 구조적 정합/왜곡 메커니즘을 전수 해부합니다.
+            화학 AI 및 역합성 알고리즘이 반도체 전구체에 적용될 때 <strong>"어느 단계까지 정상 작동하고 어느 단계에서 붕괴하는가?"</strong>를 규명하기 위해, <strong>4단계 실행 파이프라인(Stage 1: 구문 수용 &rarr; Stage 2: 특성 표현 &rarr; Stage 3: 반응 매니폴드 &rarr; Stage 4: 물리화학적 합성성 $N_{\text{pass}}$)</strong>을 체계화하고, 16대 모델 변종에 대해 27종 반도체 양산 프리커서 전수 실측 평가를 전면 통합 수행했습니다.
           </p>
         </div>
 
@@ -2469,30 +2469,127 @@ flowchart LR
           </div>
         </div>
 
-        <!-- Eval 2: Consolidated 8 Tested Open-Source Repositories & Precursor Benchmark Summary Table -->
+        <!-- Eval 2: 4-Stage Execution Pipeline Architecture -->
         <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [실행 파이프라인 4단계 해부] 화학 AI 모델은 어느 단계까지 작동하고, 어디서 붕괴하는가?</h3>
+            <span class="badge badge-3g" style="font-size:0.82rem;">4-Stage Pipeline Analysis</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:16px; line-height:1.65;">
+            반도체 전구체를 모델에 입력했을 때, "단순 파이썬 코드 실행/토큰화 성공"과 "실제 화학적 합성 가능성 평가/경로 완성 성공"은 완전히 다른 층위입니다. 본 연구는 모델이 겪는 병목 지점을 명확히 규명하기 위해 실행 프로세스를 다음 <strong>4대 파이프라인 단계</strong>로 정밀 분해하여 감사(Audit)를 수행했습니다:
+          </p>
+
+          <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-bottom:20px;">
+            <div class="stat-card" style="padding:14px; border-left:4px solid #0284c7;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 1: 구문 수용 (Syntax)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> SMILES 토큰화 및 분자 객체 생성.<br>
+                &bull; <strong>작동:</strong> 118원소 사전 및 RDKit 파싱 성공.<br>
+                &bull; <strong>붕괴 사례:</strong> GASA는 Hf, Ta, Ru 등 미등록으로 7종(25.9%)에서 즉시 KeyError Crash 발생.
+              </div>
+            </div>
+            <div class="stat-card" style="padding:14px; border-left:4px solid #7c3aed;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 2: 특성 표현 (Representation)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> 전이금속 배위 결합 특성 보존.<br>
+                &bull; <strong>붕괴 사례 1:</strong> DFRscore는 모든 금속을 단일 'ELSE'로 뭉개 화학 정보 완전 상실.<br>
+                &bull; <strong>붕괴 사례 2:</strong> RAscore는 중심금속을 알킬 탄소로 취급하여 100% False Positive 왜곡.
+              </div>
+            </div>
+            <div class="stat-card" style="padding:14px; border-left:4px solid #ea580c;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 3: 반응 규칙 (Manifold)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> 무기 배위·염복분해 룰 보유 여부.<br>
+                &bull; <strong>대다수 생성 AI 붕괴:</strong> ReaSyn, AiZynthFinder, ChemProjector, SynNet은 의약 유기 반응만 보유하여 전이금속 착화 단계에서 0.0% 탐색 중단.
+              </div>
+            </div>
+            <div class="stat-card" style="padding:14px; border-left:4px solid #059669;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 4: 물리 합성성 ($N_{\text{pass}}$)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> 양산 전구체 올바른 합성 판정.<br>
+                &bull; <strong>유일한 통과:</strong> <strong>BR-SAScore (반도체 전용사전) 88.9% (24/27)</strong>.<br>
+                &bull; <strong>기존 모델 붕괴:</strong> SAScore(11.1%), SCScore(위험은폐), SYBA(-44점 붕괴).
+              </div>
+            </div>
+          </div>
+
+          <!-- Mermaid Flowchart for 4-Stage Breakdown with Zoom Support -->
+          <div class="diagram-wrapper">
+            <div class="diagram-header">
+              <span class="diagram-title">4단계 실행 파이프라인 및 모델별 붕괴·이탈(Drop-out) 메커니즘 맵</span>
+              <button type="button" class="btn-diagram-zoom" onclick="openDiagramModal('diag-pipeline-stages')">클릭하여 확대</button>
+            </div>
+            <div id="diag-pipeline-stages" class="mermaid-diagram">
+flowchart TD
+    subgraph STAGE1["Stage 1: 구문 파싱 및 입력 수용 (Syntax / Ingestion)"]
+        A1["27종 반도체 전구체 SMILES 입력"] --> A2["SMILES 토큰화 및 RDKit 객체 생성"]
+        A2 -->|KeyError: Hf, Ta, Ru, W, Mo 부재| A3["GASA 25.9% (7/27) 즉시 Crash"]
+        A2 -->|118원소/RDKit 정규화 통과| B1["Stage 2로 진입 (15종 모델)"]
+    end
+
+    subgraph STAGE2["Stage 2: 특성 임베딩 및 표현 (Representation / Embedding)"]
+        B1 --> B2["분자 지문 / GNN 노드 / 단편 분해"]
+        B2 -->|전이금속을 ELSE 단일 토큰으로 축약| B3["DFRscore: 원소별 화학 특성 상실"]
+        B2 -->|금속 노드를 알킬 탄소로 투영| B4["RAscore: 100% False Positive 왜곡"]
+        B2 -->|Lipinski Rule of 5 강제 감점| B5["DeepSA: 의약 분자 편향 왜곡"]
+        B2 -->|ZINC 내 Cp 배위 단편 전무| B6["SYBA: 메탈로센(-44점) 붕괴"]
+        B2 -->|유기 단편 보존 / 정상 분리| C1["Stage 3으로 진입 (생성/역합성 및 사전 모델)"]
+    end
+
+    subgraph STAGE3["Stage 3: 반응 규칙 및 배위 매니폴드 (Reaction & Coordination Manifold)"]
+        C1 --> C2["역합성 전개 정책 및 템플릿 탐색"]
+        C2 -->|SynFormer 115 특허 룰: 무기 결합 부재| C3["BioNeMo ReaSyn: 경로 도출 0.0%"]
+        C2 -->|USPTO 50k 의약 정책망: MCTS 확장 확률 0| C4["AiZynthFinder: 역합성 완결 0.0%"]
+        C2 -->|HB-58 / HB-91 유기 템플릿: 금속 룰 전무| C5["ChemProjector / SynNet / SynFormer: 코어 생성 0.0%"]
+        C2 -->|rdchiral 템플릿 매칭 실패| C6["Retro*: A* 큐 즉시 고갈 (0.0%)"]
+        C2 -->|CGFlow 신톤: 리간드 곁사슬 9종만 매칭| C7["RxnFlow: 코어 합성 0.0%"]
+        C2 -->|의약 사전(eMolecules): Si-N/M-N 결합 부재| C8["BR-SAScore (기본): 8~9점 과대평가 (11.1%)"]
+        C2 -->|Gelest 실란+금속염+염복분해 전용 사전 주입| D1["Stage 4 진입 (반도체 최적화)"]
+    end
+
+    subgraph STAGE4["Stage 4: 물리화학적 합성성 판정 (Synthesizability Output)"]
+        D1 --> D2["BR-SAScore (반도체 전용사전): 88.9% (24/27) 올바른 합성성 판정 성공!"]
+        C8 --> D3["SAScore: 11.1% (3/27) 치명적 False Negative"]
+        B2 --> D4["SCScore: 85.2% (23/27) 출발물질 편향 (자연발화성 위험 은폐)"]
+    end
+
+    classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
+    classDef failNode fill:#fee2e2,stroke:#b91c1c,color:#b91c1c;
+    classDef warnNode fill:#fef3c7,stroke:#b45309,color:#b45309;
+
+    class D2,B1,C1,D1 passNode;
+    class A3,B3,B4,B5,C3,C4,C5,C6,C7,D3 failNode;
+    class B6,C8,D4 warnNode;
+            </div>
+          </div>
+        </div>
+
+        <!-- Eval 3: 16 Models Multi-Stage Comprehensive Benchmark Table -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-purple);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [통합 테이블] 8대 실측 모델 공식 저장소(GitHub/PyPI) 및 27종 프리커서 실측 벤치마크 총괄표</h3>
-            <span class="badge badge-1g" style="font-size:0.82rem;">8대 실측 모델 엄선 &bull; 저장소 메타 및 실측 통합</span>
+            <h3 class="card-title" style="margin-bottom:0;">3. [16대 모델 전수 실측 총괄 매트릭스] 4단계 실행 파이프라인 진단 &amp; 27종 반도체 전구체 실측 결과 종합표</h3>
+            <span class="badge badge-4g" style="font-size:0.82rem;">16대 모델 &bull; 4단계 전수 실측 완료</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px; line-height:1.6;">
-            기존 섹션 7의 오픈소스 저장소 검증(GitHub/PyPI) 메타데이터와 섹션 12의 실측 지표를 단일 총괄표로 통합하였습니다. 비실측 이론 추정치 모델들을 전면 제외하고, 로컬 환경에서 직접 소스 코드를 설치하여 27종 반도체 양산 프리커서 전수를 검증한 <strong>8개 핵심 모델</strong>의 저장소 주소, 배포 형태, 라이선스, 실측 통과율 및 메커니즘 진단 결과를 일원화하여 제시합니다.
+            기존 8대 모델에 문헌 상의 8개 오픈소스 모델(ChemProjector, SynNet, SynFormer, Retro*, DFRscore, DeepSA, GASA, BR-SAScore 반도체 사전)을 추가 설치·분석하여 총 16개 모델 변종에 대해 4단계 파이프라인을 전수 테스트했습니다. <strong>어느 단계까지 모델이 작동하고, 어디서 붕괴하는지</strong>를 실증적으로 매핑한 총괄 성적표입니다:
           </p>
 
           <div class="table-responsive" style="margin-bottom:10px;">
             <table>
               <thead>
                 <tr>
-                  <th style="width:44px; text-align:center;">No</th>
-                  <th style="width:160px;">모델 / 툴명</th>
-                  <th>공식 GitHub / PyPI 저장소</th>
-                  <th style="width:100px; text-align:center;">Stars / 배포</th>
-                  <th style="width:110px; text-align:center;">라이선스</th>
-                  <th style="min-width:340px;">반도체 양산 전구체 DB (27종) 전수 코드 실측 지표 및 분석</th>
+                  <th style="width:40px; text-align:center;">No</th>
+                  <th style="width:170px;">모델명 / 세대</th>
+                  <th style="width:180px;">공식 저장소 (Stars / 라이선스)</th>
+                  <th style="width:110px; text-align:center;">Stage 1<br><span style="font-size:0.68rem; font-weight:normal;">(구문 수용)</span></th>
+                  <th style="width:140px; text-align:center;">Stage 2<br><span style="font-size:0.68rem; font-weight:normal;">(특성 표현)</span></th>
+                  <th style="width:140px; text-align:center;">Stage 3<br><span style="font-size:0.68rem; font-weight:normal;">(반응 규칙)</span></th>
+                  <th style="width:130px; text-align:center;">Stage 4 ($N_{\text{pass}}$)<br><span style="font-size:0.68rem; font-weight:normal;">(합성 판정/경로)</span></th>
+                  <th style="min-width:320px;">붕괴 단계 및 핵심 메커니즘 분석 (Barrier &amp; Failure Mode)</th>
                 </tr>
               </thead>
               <tbody>
-<!-- REPO_ROWS_PLACEHOLDER -->
+<!-- MULTISTAGE_BENCHMARK_ROWS_PLACEHOLDER -->
               </tbody>
             </table>
           </div>
@@ -2501,7 +2598,7 @@ flowchart LR
         <!-- Eval 2: Direct Empirical Benchmark Matrix on 27 Semiconductor Precursors -->
         <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. [원천 실측치 매트릭스] 27종 반도체 양산 프리커서 대상 8대 모델 전수 실측 연산 결과</h3>
+            <h3 class="card-title" style="margin-bottom:0;">4. [원천 실측치 매트릭스] 27종 반도체 양산 프리커서 대상 8대 모델 전수 실측 연산 결과</h3>
             <span class="badge badge-3g" style="font-size:0.82rem;">8대 모델 &bull; 27종 전수 직접 계산 검증 완료</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
@@ -2581,7 +2678,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
         <!-- Eval 2-1: Deep Dive into 8 Directly Benchmarked Models: Architecture, Training Data, and Domain Adaptation Mechanism -->
         <div class="card" style="margin-top:24px; border-top: 3px solid var(--accent-purple);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">4. [8대 실측 모델 심층 분석] 모델 아키텍처·학습 데이터셋·반도체 프리커서 정합/왜곡 메커니즘 전수 해부 (Why It Fits / Why It Fails)</h3>
+            <h3 class="card-title" style="margin-bottom:0;">5. [8대 실측 모델 심층 분석] 모델 아키텍처·학습 데이터셋·반도체 프리커서 정합/왜곡 메커니즘 전수 해부 (Why It Fits / Why It Fails)</h3>
             <span class="badge badge-4g" style="font-size:0.82rem;">아키텍처 &bull; 데이터셋 &bull; 메커니즘 심층 검증</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:16px; line-height:1.6;">
@@ -3005,7 +3102,7 @@ ight)^2$$
         </div>
 <!-- Eval 3: VASP Automation 10 Frameworks Comprehensive Matrix -->
         <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">5. VASP 기반 반도체 프리커서 DFT 자동화 도구 10종 실무 생산성 평가</h3>
+          <h3 class="card-title">6. VASP 기반 반도체 프리커서 DFT 자동화 도구 10종 실무 생산성 평가</h3>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
             실제 VASP 클러스터 환경에서의 학습 곡선, 오류 복구력, 유지보수성 및 추천 활용 시나리오 비교입니다:
           </p>

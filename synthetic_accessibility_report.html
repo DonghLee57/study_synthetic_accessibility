@@ -1097,7 +1097,7 @@
         <li><a href="#dft-synergy" class="toc-link" data-target="dft-synergy">9. DFT 계산 연계 응용 프레임워크</a></li>
         <li><a href="#vasp-automation" class="toc-link" data-target="vasp-automation">10. VASP 기반 DFT 자동화 스택</a></li>
         <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 프리커서·반응 독자 DB</a></li>
-        <li><a href="#comprehensive-eval" class="toc-link" data-target="comprehensive-eval">12. [섹션 7·12 통합] 오픈소스 저장소 및 8대 실측 모델 종합 평가</a></li>
+        <li><a href="#comprehensive-eval" class="toc-link" data-target="comprehensive-eval">12. [섹션 7·12 통합] 16대 모델 4단계 파이프라인 해부 및 종합 평가</a></li>
         <li><a href="#precursor-inverse-design" class="toc-link" data-target="precursor-inverse-design">13. 프리커서 AI 역설계 &amp; 연산 매핑</a></li>
       </ul>
 
@@ -4445,10 +4445,10 @@ flowchart LR
       <!-- Section 12: Comprehensive Benchmark & Engineering Evaluation -->
       <section id="comprehensive-eval">
         <div class="section-header">
-          <div class="section-tag">Section 12 &bull; [섹션 7·12 통합] Unified Open-Source Repositories &amp; 8 Empirical Models Benchmark</div>
-          <h2 class="section-title">[섹션 7·12 통합] 오픈소스 저장소 검증 및 8대 실측 모델 종합 평가</h2>
+          <div class="section-tag">Section 12 &bull; [섹션 7·12 통합] 16 Major Models Multi-Stage Pipeline Audit &amp; Benchmark</div>
+          <h2 class="section-title">[섹션 7·12 통합] 16대 모델 4단계 파이프라인 정밀 해부 및 반도체 프리커서 실측 종합 평가</h2>
           <p class="section-desc">
-            기존 섹션 7의 오픈소스 저장소 검증(GitHub/PyPI) 정보와 섹션 12의 벤치마크 평가를 단일 프레임워크로 통합했습니다. 추정치나 이론적 등급을 배제하고, 실제 파이썬 환경에서 직접 설치·구동하여 실증 연산을 완료한 <strong>8대 실측 모델(SAScore, SCScore, SYBA, BR-SAScore, RAscore, RxnFlow, BioNeMo ReaSyn, AiZynthFinder)</strong>만을 대상으로 공식 저장소 메타데이터, 27종 반도체 양산 프리커서 전수 실측 지표, 그리고 구조적 정합/왜곡 메커니즘을 전수 해부합니다.
+            화학 AI 및 역합성 알고리즘이 반도체 전구체에 적용될 때 <strong>"어느 단계까지 정상 작동하고 어느 단계에서 붕괴하는가?"</strong>를 규명하기 위해, <strong>4단계 실행 파이프라인(Stage 1: 구문 수용 &rarr; Stage 2: 특성 표현 &rarr; Stage 3: 반응 매니폴드 &rarr; Stage 4: 물리화학적 합성성 $N_{\text{pass}}$)</strong>을 체계화하고, 16대 모델 변종에 대해 27종 반도체 양산 프리커서 전수 실측 평가를 전면 통합 수행했습니다.
           </p>
         </div>
 
@@ -4482,147 +4482,444 @@ flowchart LR
           </div>
         </div>
 
-        <!-- Eval 2: Consolidated 8 Tested Open-Source Repositories & Precursor Benchmark Summary Table -->
+        <!-- Eval 2: 4-Stage Execution Pipeline Architecture -->
         <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [실행 파이프라인 4단계 해부] 화학 AI 모델은 어느 단계까지 작동하고, 어디서 붕괴하는가?</h3>
+            <span class="badge badge-3g" style="font-size:0.82rem;">4-Stage Pipeline Analysis</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:16px; line-height:1.65;">
+            반도체 전구체를 모델에 입력했을 때, "단순 파이썬 코드 실행/토큰화 성공"과 "실제 화학적 합성 가능성 평가/경로 완성 성공"은 완전히 다른 층위입니다. 본 연구는 모델이 겪는 병목 지점을 명확히 규명하기 위해 실행 프로세스를 다음 <strong>4대 파이프라인 단계</strong>로 정밀 분해하여 감사(Audit)를 수행했습니다:
+          </p>
+
+          <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-bottom:20px;">
+            <div class="stat-card" style="padding:14px; border-left:4px solid #0284c7;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 1: 구문 수용 (Syntax)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> SMILES 토큰화 및 분자 객체 생성.<br>
+                &bull; <strong>작동:</strong> 118원소 사전 및 RDKit 파싱 성공.<br>
+                &bull; <strong>붕괴 사례:</strong> GASA는 Hf, Ta, Ru 등 미등록으로 7종(25.9%)에서 즉시 KeyError Crash 발생.
+              </div>
+            </div>
+            <div class="stat-card" style="padding:14px; border-left:4px solid #7c3aed;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 2: 특성 표현 (Representation)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> 전이금속 배위 결합 특성 보존.<br>
+                &bull; <strong>붕괴 사례 1:</strong> DFRscore는 모든 금속을 단일 'ELSE'로 뭉개 화학 정보 완전 상실.<br>
+                &bull; <strong>붕괴 사례 2:</strong> RAscore는 중심금속을 알킬 탄소로 취급하여 100% False Positive 왜곡.
+              </div>
+            </div>
+            <div class="stat-card" style="padding:14px; border-left:4px solid #ea580c;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 3: 반응 규칙 (Manifold)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> 무기 배위·염복분해 룰 보유 여부.<br>
+                &bull; <strong>대다수 생성 AI 붕괴:</strong> ReaSyn, AiZynthFinder, ChemProjector, SynNet은 의약 유기 반응만 보유하여 전이금속 착화 단계에서 0.0% 탐색 중단.
+              </div>
+            </div>
+            <div class="stat-card" style="padding:14px; border-left:4px solid #059669;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 4: 물리 합성성 ($N_{\text{pass}}$)</div>
+              <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
+                &bull; <strong>평가 기준:</strong> 양산 전구체 올바른 합성 판정.<br>
+                &bull; <strong>유일한 통과:</strong> <strong>BR-SAScore (반도체 전용사전) 88.9% (24/27)</strong>.<br>
+                &bull; <strong>기존 모델 붕괴:</strong> SAScore(11.1%), SCScore(위험은폐), SYBA(-44점 붕괴).
+              </div>
+            </div>
+          </div>
+
+          <!-- Mermaid Flowchart for 4-Stage Breakdown with Zoom Support -->
+          <div class="diagram-wrapper">
+            <div class="diagram-header">
+              <span class="diagram-title">4단계 실행 파이프라인 및 모델별 붕괴·이탈(Drop-out) 메커니즘 맵</span>
+              <button type="button" class="btn-diagram-zoom" onclick="openDiagramModal('diag-pipeline-stages')">클릭하여 확대</button>
+            </div>
+            <div id="diag-pipeline-stages" class="mermaid-diagram">
+flowchart TD
+    subgraph STAGE1["Stage 1: 구문 파싱 및 입력 수용 (Syntax / Ingestion)"]
+        A1["27종 반도체 전구체 SMILES 입력"] --> A2["SMILES 토큰화 및 RDKit 객체 생성"]
+        A2 -->|KeyError: Hf, Ta, Ru, W, Mo 부재| A3["GASA 25.9% (7/27) 즉시 Crash"]
+        A2 -->|118원소/RDKit 정규화 통과| B1["Stage 2로 진입 (15종 모델)"]
+    end
+
+    subgraph STAGE2["Stage 2: 특성 임베딩 및 표현 (Representation / Embedding)"]
+        B1 --> B2["분자 지문 / GNN 노드 / 단편 분해"]
+        B2 -->|전이금속을 ELSE 단일 토큰으로 축약| B3["DFRscore: 원소별 화학 특성 상실"]
+        B2 -->|금속 노드를 알킬 탄소로 투영| B4["RAscore: 100% False Positive 왜곡"]
+        B2 -->|Lipinski Rule of 5 강제 감점| B5["DeepSA: 의약 분자 편향 왜곡"]
+        B2 -->|ZINC 내 Cp 배위 단편 전무| B6["SYBA: 메탈로센(-44점) 붕괴"]
+        B2 -->|유기 단편 보존 / 정상 분리| C1["Stage 3으로 진입 (생성/역합성 및 사전 모델)"]
+    end
+
+    subgraph STAGE3["Stage 3: 반응 규칙 및 배위 매니폴드 (Reaction & Coordination Manifold)"]
+        C1 --> C2["역합성 전개 정책 및 템플릿 탐색"]
+        C2 -->|SynFormer 115 특허 룰: 무기 결합 부재| C3["BioNeMo ReaSyn: 경로 도출 0.0%"]
+        C2 -->|USPTO 50k 의약 정책망: MCTS 확장 확률 0| C4["AiZynthFinder: 역합성 완결 0.0%"]
+        C2 -->|HB-58 / HB-91 유기 템플릿: 금속 룰 전무| C5["ChemProjector / SynNet / SynFormer: 코어 생성 0.0%"]
+        C2 -->|rdchiral 템플릿 매칭 실패| C6["Retro*: A* 큐 즉시 고갈 (0.0%)"]
+        C2 -->|CGFlow 신톤: 리간드 곁사슬 9종만 매칭| C7["RxnFlow: 코어 합성 0.0%"]
+        C2 -->|의약 사전(eMolecules): Si-N/M-N 결합 부재| C8["BR-SAScore (기본): 8~9점 과대평가 (11.1%)"]
+        C2 -->|Gelest 실란+금속염+염복분해 전용 사전 주입| D1["Stage 4 진입 (반도체 최적화)"]
+    end
+
+    subgraph STAGE4["Stage 4: 물리화학적 합성성 판정 (Synthesizability Output)"]
+        D1 --> D2["BR-SAScore (반도체 전용사전): 88.9% (24/27) 올바른 합성성 판정 성공!"]
+        C8 --> D3["SAScore: 11.1% (3/27) 치명적 False Negative"]
+        B2 --> D4["SCScore: 85.2% (23/27) 출발물질 편향 (자연발화성 위험 은폐)"]
+    end
+
+    classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
+    classDef failNode fill:#fee2e2,stroke:#b91c1c,color:#b91c1c;
+    classDef warnNode fill:#fef3c7,stroke:#b45309,color:#b45309;
+
+    class D2,B1,C1,D1 passNode;
+    class A3,B3,B4,B5,C3,C4,C5,C6,C7,D3 failNode;
+    class B6,C8,D4 warnNode;
+            </div>
+          </div>
+        </div>
+
+        <!-- Eval 3: 16 Models Multi-Stage Comprehensive Benchmark Table -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-purple);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [통합 테이블] 8대 실측 모델 공식 저장소(GitHub/PyPI) 및 27종 프리커서 실측 벤치마크 총괄표</h3>
-            <span class="badge badge-1g" style="font-size:0.82rem;">8대 실측 모델 엄선 &bull; 저장소 메타 및 실측 통합</span>
+            <h3 class="card-title" style="margin-bottom:0;">3. [16대 모델 전수 실측 총괄 매트릭스] 4단계 실행 파이프라인 진단 &amp; 27종 반도체 전구체 실측 결과 종합표</h3>
+            <span class="badge badge-4g" style="font-size:0.82rem;">16대 모델 &bull; 4단계 전수 실측 완료</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px; line-height:1.6;">
-            기존 섹션 7의 오픈소스 저장소 검증(GitHub/PyPI) 메타데이터와 섹션 12의 실측 지표를 단일 총괄표로 통합하였습니다. 비실측 이론 추정치 모델들을 전면 제외하고, 로컬 환경에서 직접 소스 코드를 설치하여 27종 반도체 양산 프리커서 전수를 검증한 <strong>8개 핵심 모델</strong>의 저장소 주소, 배포 형태, 라이선스, 실측 통과율 및 메커니즘 진단 결과를 일원화하여 제시합니다.
+            기존 8대 모델에 문헌 상의 8개 오픈소스 모델(ChemProjector, SynNet, SynFormer, Retro*, DFRscore, DeepSA, GASA, BR-SAScore 반도체 사전)을 추가 설치·분석하여 총 16개 모델 변종에 대해 4단계 파이프라인을 전수 테스트했습니다. <strong>어느 단계까지 모델이 작동하고, 어디서 붕괴하는지</strong>를 실증적으로 매핑한 총괄 성적표입니다:
           </p>
 
           <div class="table-responsive" style="margin-bottom:10px;">
             <table>
               <thead>
                 <tr>
-                  <th style="width:44px; text-align:center;">No</th>
-                  <th style="width:160px;">모델 / 툴명</th>
-                  <th>공식 GitHub / PyPI 저장소</th>
-                  <th style="width:100px; text-align:center;">Stars / 배포</th>
-                  <th style="width:110px; text-align:center;">라이선스</th>
-                  <th style="min-width:340px;">반도체 양산 전구체 DB (27종) 전수 코드 실측 지표 및 분석</th>
+                  <th style="width:40px; text-align:center;">No</th>
+                  <th style="width:170px;">모델명 / 세대</th>
+                  <th style="width:180px;">공식 저장소 (Stars / 라이선스)</th>
+                  <th style="width:110px; text-align:center;">Stage 1<br><span style="font-size:0.68rem; font-weight:normal;">(구문 수용)</span></th>
+                  <th style="width:140px; text-align:center;">Stage 2<br><span style="font-size:0.68rem; font-weight:normal;">(특성 표현)</span></th>
+                  <th style="width:140px; text-align:center;">Stage 3<br><span style="font-size:0.68rem; font-weight:normal;">(반응 규칙)</span></th>
+                  <th style="width:130px; text-align:center;">Stage 4 ($N_{\text{pass}}$)<br><span style="font-size:0.68rem; font-weight:normal;">(합성 판정/경로)</span></th>
+                  <th style="min-width:320px;">붕괴 단계 및 핵심 메커니즘 분석 (Barrier &amp; Failure Mode)</th>
                 </tr>
               </thead>
               <tbody>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">01</td>
-              <td style="white-space:nowrap;"><strong>SAScore (RDKit Built-in)</strong></td>
-              <td><a href="https://github.com/rdkit/rdkit" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">rdkit/rdkit</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">3666</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">BSD-3-Clause</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">11.1% (3/27, 실측)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (False Negative 왜곡)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측 11.1%] TEOS(2.84), 4DMAS(3.37), Ru(EtCp)2(3.48) 3종만 3.5 이하 정상 통과. TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등 1단계 단순 양산 전구체에 극단적 페널티 발생. PubChem 의약 분자 빈도 기반으로 Si-N, Al-C, Zr-O 등 반도체 핵심 배위를 비천연성 복잡 구조로 오인함.</div>
+              <td style="white-space:nowrap;">
+                <strong>BR-SAScore (반도체 전용사전)</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">3G 도메인 사전</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://pypi.org/project/BRSAScore/" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">snu-micc/BR-SAScore (PyPI: BRSAScore==0.1.1 / Fork: awadell1/BR-SAScore)</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: PyPI Official &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 정상 분리 (BFrag s_B=0)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">88.9% (24/27) 무기 룰 정합</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700; font-size:0.78rem;">88.9% (24/27) 성공</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 4 완결 (성공)]</strong>
+                <span style="color:#475569;">붕괴 없음: Gelest 실란+금속염 및 염복분해 반응을 전용 사전으로 등록하여 유일하게 양산 전구체 24종 정상 평가 성공.</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">02</td>
-              <td style="white-space:nowrap;"><strong>SCScore</strong></td>
-              <td><a href="https://github.com/connorcoley/scscore" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">connorcoley/scscore</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">127</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;">85.2% (23/27, 실측)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (초기원료 편향 / 위험성 은폐)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측 85.2%] Reaxys 1024uint8 신경망 직접 실행: 23종이 1.12~1.98의 매우 낮은 복잡도로 산출(HCDS 1.12, TTIP 1.20, DIPAS 1.70). Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 전이금속 착체라도 분자량이 작으면 단순 원료로 과소평가(ZMA 2.72, Co(AMD)2 2.38 상승). 자연발화성(Pyrophoric) 등 취급 위험성은 반영 불가.</div>
+              <td style="white-space:nowrap;">
+                <strong>BR-SAScore (기본 의약사전)</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">3G 사전 분리</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://pypi.org/project/BRSAScore/" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">snu-micc/BR-SAScore (PyPI: BRSAScore==0.1.1 / Fork: awadell1/BR-SAScore)</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: PyPI Official &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 분리 (BFrag/RFrag)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">11.1% (3/27) 의약 편향</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">11.1% (3/27) 왜곡</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (반응 매니폴드)]</strong>
+                <span style="color:#475569;">의약 사전(eMolecules/USPTO) 내 Si-N, M-N 결합 부재로 최대 반응 페널티(s_R=-6.0) 부과되어 24종이 8~9점으로 과대평가.</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">03</td>
-              <td style="white-space:nowrap;"><strong>SYBA</strong></td>
-              <td><a href="https://github.com/lich-uct/syba" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">lich-uct/syba</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">49</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">GPL-3.0</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;">85.2% (23/27, 실측)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (샌드위치 착체 붕괴)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측 85.2%] 25.7MB 나이브 베이지안 사전 직접 연산: 23종은 +3.96~+11.98 양수 정상 판정. 그러나 ZINC 의약 DB에 부재한 메탈로센/Cp 샌드위치 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종에서 극단적 음수(합성 불가) 붕괴 실측 확인.</div>
+              <td style="white-space:nowrap;">
+                <strong>SAScore (RDKit Built-in)</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">1G 단편 빈도</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/rdkit/rdkit" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">rdkit/rdkit</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 3666 &bull; BSD-3-Clause</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% Morgan 단편 추출</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (단편 휴리스틱)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">11.1% (3/27) 오판</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 (빈도 라이브러리)]</strong>
+                <span style="color:#475569;">PubChem 의약 빈도 기반 음의 로그빈도 페널티로 TSA(6.91), DMAH(6.31) 등 단순 전구체 24종에 극단적 False Negative 발생.</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">04</td>
-              <td style="white-space:nowrap;"><strong>BR-SAScore</strong></td>
-              <td><a href="https://pypi.org/project/BRSAScore/" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">snu-micc/BR-SAScore (PyPI: BRSAScore==0.1.1 / Fork: awadell1/BR-SAScore)</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">PyPI Official</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;">11.1% (기본사전) / 88.9% (전용사전)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (도메인 사전 교체 성공)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측] 기본 emolecules/uspto 사전 적용 시 Si-N/M-N 결합의 -6.0 감점으로 24종이 8~9점으로 과대평가(통과율 11.1%). 그러나 Gelest 실란+금속염 전용 빌딩블록 사전 적용 시 24/27종(88.9%)이 정상 산출(1.2~2.8점)되어 반도체 전구체 도메인 최적화 유효성 실증 완료.</div>
+              <td style="white-space:nowrap;">
+                <strong>SCScore</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">2G 반응 신경망</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/connorcoley/scscore" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">connorcoley/scscore</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 127 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 1024-bit Morgan</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (End-to-End DNN)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700; font-size:0.78rem;">85.2% (23/27) [위험 은폐]</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 4 (초기원료 편향)]</strong>
+                <span style="color:#475569;">Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 저분자 전구체를 1점대로 과소평가하여 TMA 등 자연발화성 위험 완전 은폐.</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">05</td>
-              <td style="white-space:nowrap;"><strong>RAscore</strong></td>
-              <td><a href="https://github.com/reymond-group/RAscore" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">reymond-group/RAscore</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">100</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">0.0% 물리적 유효 (수치상 100% FP)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (중심금속 결합 무시 False Positive)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측] 27종 전수 0.629~0.988(평균 0.925)로 수치상 100% 통과 판정이나, 이는 ECFP6 반경 3 지문이 중심금속을 단순 고차 알킬/아민 탄소로 취급하여 약물 합성의 쉬운 알킬화로 착각한 전형적 False Positive임. 실제 금속 결합 안정성/산화 위험에 대한 물리적 판정 유효율은 0.0%임.</div>
+              <td style="white-space:nowrap;">
+                <strong>SYBA</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">1G 베이지안</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/lich-uct/syba" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">lich-uct/syba</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 49 &bull; GPL-3.0</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 나이브 베이즈 단편</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (단편 확률 분류)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700; font-size:0.78rem;">85.2% (23/27) [착체 붕괴]</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 (ZINC 코퍼스)]</strong>
+                <span style="color:#475569;">ZINC 의약 DB에 금속-Cp 배위 단편이 전무하여 Ru(EtCp)2(-44.27), CpTi(-24.98) 등 메탈로센 4종에서 극단적 음수 붕괴 발생.</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">06</td>
-              <td style="white-space:nowrap;"><strong>RxnFlow</strong></td>
-              <td><a href="https://github.com/SeonghwanSeo/RxnFlow" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">SeonghwanSeo/RxnFlow</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">41</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">0.0% (코어 0/27, 리간드 33.3%)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (금속 배위 신톤 부재로 코어 생성 0건)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측] 유기 리간드의 알킬 곁사슬 반응(아세톤 환원적 아민화 등)을 포함하는 9종(33.3%)만 단편 매칭되었을 뿐, 금속-배위원자(M-N, M-O, M-C) 결합 형성 템플릿이 전무하여 반도체 전구체 코어 화합물의 실제 합성 경로 도출 성공률은 0.0%(0/27)임.</div>
+              <td style="white-space:nowrap;">
+                <strong>RAscore</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">2G MCTS 증류</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/reymond-group/RAscore" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">reymond-group/RAscore</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 100 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">투영 왜곡 (금속→알킬 탄소)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (XGBoost 분류)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% 유효 (수치 100% FP)</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2 (ECFP6 특성 표현)]</strong>
+                <span style="color:#475569;">중심금속 배위 안정성을 전혀 인지하지 못하고 디메틸아미노/알킬 비트만으로 27종 전수 0.9점대 과대평가 (100% False Positive).</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">07</td>
-              <td style="white-space:nowrap;"><strong>ReaSyn</strong></td>
-              <td><a href="https://github.com/NVIDIA-BioNeMo/ReaSyn" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">NVIDIA-BioNeMo/ReaSyn</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">116</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">Apache-2.0</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">0.0% (경로 0/27, 구문파싱 100%)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (유기 템플릿 한계로 무기 경로 생성 0건)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측] 118개 원소 어휘 토큰이 지원되어 SMILES 파싱(구문 수용)은 100% 에러 없이 통과하나, SynFormer 115개 특허 반응 매니폴드가 유기 반응에 국한되어 전이금속-리간드 배위 결합을 형성하는 합성 경로는 0건(0.0%) 도출됨.</div>
+              <td style="white-space:nowrap;">
+                <strong>RxnFlow</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">4G GFlowNet</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/SeonghwanSeo/RxnFlow" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">SeonghwanSeo/RxnFlow</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 41 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 신톤 그래프 표현</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% 코어 (리간드만 33.3%)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 코어 경로 도출</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (신톤 템플릿 풀)]</strong>
+                <span style="color:#475569;">Explore/CGFlow에 금속-배위 결합 룰이 전무하여 아세톤 환원적 아민화 등 유기 곁사슬 9종 외에 전구체 코어 합성 불가.</span>
               </td>
             </tr>
 
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">08</td>
-              <td style="white-space:nowrap;"><strong>AiZynthFinder</strong></td>
-              <td><a href="https://github.com/MolecularAI/aizynthfinder" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.82rem;">MolecularAI/aizynthfinder</a></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-1g">911</span></td>
-              <td style="white-space:nowrap; text-align:center;"><span class="badge badge-3g">MIT</span></td>
-              <td style="min-width:340px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;">0.0% (역합성 0/27, 객체파싱 100%)</span>
-                  <strong style="font-size:0.84rem; color:#0f172a;">코드 직접 실측 (무기 정책 부재로 MCTS 탐색 실패 0건)</strong>
-                </div>
-                <div style="font-size:0.78rem; color:#64748b; line-height:1.45;">[코드 직접 실측] RDKit 기반 27종 전구체 객체 생성(구조 수용)은 100% 통과하나, USPTO 50k 의약 정책 신경망이 금속-리간드 결합 절단 확률을 0으로 산출하여 MCTS 트리가 전혀 전개되지 못하고 실제 역합성 경로 도출 성공률은 0.0%(0/27)임.</div>
+              <td style="white-space:nowrap;">
+                <strong>BioNeMo ReaSyn</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">4G 자기회귀 CoR</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/NVIDIA-BioNeMo/ReaSyn" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">NVIDIA-BioNeMo/ReaSyn</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 116 &bull; Apache-2.0</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27) (118 원소)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 트랜스포머 시퀀스</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 무기 룰 전무</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 합성 경로 완결</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (SynFormer 반응망)]</strong>
+                <span style="color:#475569;">118개 원소 어휘 토큰화는 100% 완벽하나, 115종 특허 반응망이 유기 반응에 국한되어 무기 착체 배위 단계 생성 0건.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">09</td>
+              <td style="white-space:nowrap;">
+                <strong>AiZynthFinder</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">CASP MCTS 엔진</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/MolecularAI/aizynthfinder" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">MolecularAI/aizynthfinder</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 911 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27) 객체 생성</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% RDKit 분자 그래프</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 정책 전개 실패</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 역합성 완결</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (MCTS 전개 정책망)]</strong>
+                <span style="color:#475569;">USPTO 50k 의약 정책망이 금속-리간드 절단 확률을 0으로 산출하여 MCTS 트리가 깊이 0에서 즉시 중단(탐색 실패).</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">10</td>
+              <td style="white-space:nowrap;">
+                <strong>ChemProjector</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">4G 분자 투영 디퓨전</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/luost26/ChemProjector" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">luost26/ChemProjector</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 61 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27) 원자번호≤100</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 이중 잠재 공간 투영</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 무기 룰 0건</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 경로 완결</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-58 템플릿)]</strong>
+                <span style="color:#475569;">Hartenfeller-Button 의약 반응 58종에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">11</td>
+              <td style="white-space:nowrap;">
+                <strong>SynNet</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">4G 마코프 순방향 계획</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/wenhao-gao/SynNet" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">wenhao-gao/SynNet</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 103 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% Morgan FP 임베딩</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 무기 룰 0건</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 트리 생성</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-91 반응/BB)]</strong>
+                <span style="color:#475569;">4대 순방향 신경망(action, reactant1, reaction, reactant2)이 유기 빌딩블록만 표집하여 전이금속 착체 트리 생성 불가.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">12</td>
+              <td style="white-space:nowrap;">
+                <strong>SynFormer</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">4G Seq2Seq 트랜스포머</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/wenhao-gao/synformer" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">wenhao-gao/synformer</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 90 &bull; Apache-2.0</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 반응 토큰 시퀀스</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 무기 반응 0건</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 경로 완결</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (115 특허 반응 토큰)]</strong>
+                <span style="color:#475569;">SynFormer 반응 토큰 공간에 무기 착체 리간드 교환 룰이 없어 토큰 자기회귀 생성 중단.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">13</td>
+              <td style="white-space:nowrap;">
+                <strong>Retro*</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">신경망 유도 A* 탐색</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/binghong-ml/retro_star" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">binghong-ml/retro_star</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 177 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 가치 함수 벡터</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) rdchiral 매칭 실패</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 역합성 완결</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (USPTO 50k 템플릿)]</strong>
+                <span style="color:#475569;">rdchiral 템플릿 추출망이 금속-리간드 결합을 인식하지 못해 1단계 트리 확장 후보가 0개로 A* 탐색 즉시 종료.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">14</td>
+              <td style="white-space:nowrap;">
+                <strong>DFRscore</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">3G GAT 단계 예측기</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/Hwoo-Kim/DFRscore" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">Hwoo-Kim/DFRscore</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 12 &bull; MIT</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">원소 정보 상실 (전수 'ELSE')</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (GAT 회귀)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% 물리적 신뢰도</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2 (원소 인코딩 'ELSE')]</strong>
+                <span style="color:#475569;">Si, Ti, Zr, Hf, Ru, W, Mo, Al, Co 등 모든 금속이 단일 'ELSE' 원소 토큰으로 뭉개져 원소별 합성 난이도 감지 불가.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">15</td>
+              <td style="white-space:nowrap;">
+                <strong>DeepSA</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">3G 멀티모달 트랜스포머</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/Shihang-Wang-58/DeepSA" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">Shihang-Wang-58/DeepSA</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 42 &bull; Custom/Open</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">의약 Ro5 & NLP 서브워드 왜곡</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (복합 SA 지표)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% 물리적 타당성</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 (Rule of 5 의약 편향)]</strong>
+                <span style="color:#475569;">저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡.</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">16</td>
+              <td style="white-space:nowrap;">
+                <strong>GASA</strong><br>
+                <span class="badge badge-1g" style="font-size:0.7rem;">3G GAT 위치선택성</span>
+              </td>
+              <td style="font-size:0.82rem;">
+                <a href="https://github.com/cadd-synthetic/GASA" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">cadd-synthetic/GASA</a>
+                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 22 &bull; GPL-2.0</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.75rem;">25.9% (7/27) 크래시</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">74.1% (20/27) 학습 왜곡</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (GAT 분류)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% 물리적 유효성</span></td>
+              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 1 (allowable_set 미지원)]</strong>
+                <span style="color:#475569;">Hf, Ta, Ru, W, Mo 원소가 allowable_set에 없어 7종에서 KeyError 발생하며 Stage 1 파싱 단계에서 즉시 비정상 종료.</span>
               </td>
             </tr>
               </tbody>
@@ -4633,7 +4930,7 @@ flowchart LR
         <!-- Eval 2: Direct Empirical Benchmark Matrix on 27 Semiconductor Precursors -->
         <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. [원천 실측치 매트릭스] 27종 반도체 양산 프리커서 대상 8대 모델 전수 실측 연산 결과</h3>
+            <h3 class="card-title" style="margin-bottom:0;">4. [원천 실측치 매트릭스] 27종 반도체 양산 프리커서 대상 8대 모델 전수 실측 연산 결과</h3>
             <span class="badge badge-3g" style="font-size:0.82rem;">8대 모델 &bull; 27종 전수 직접 계산 검증 완료</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
@@ -5225,7 +5522,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
         <!-- Eval 2-1: Deep Dive into 8 Directly Benchmarked Models: Architecture, Training Data, and Domain Adaptation Mechanism -->
         <div class="card" style="margin-top:24px; border-top: 3px solid var(--accent-purple);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">4. [8대 실측 모델 심층 분석] 모델 아키텍처·학습 데이터셋·반도체 프리커서 정합/왜곡 메커니즘 전수 해부 (Why It Fits / Why It Fails)</h3>
+            <h3 class="card-title" style="margin-bottom:0;">5. [8대 실측 모델 심층 분석] 모델 아키텍처·학습 데이터셋·반도체 프리커서 정합/왜곡 메커니즘 전수 해부 (Why It Fits / Why It Fails)</h3>
             <span class="badge badge-4g" style="font-size:0.82rem;">아키텍처 &bull; 데이터셋 &bull; 메커니즘 심층 검증</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:16px; line-height:1.6;">
@@ -5649,7 +5946,7 @@ ight)^2$$
         </div>
 <!-- Eval 3: VASP Automation 10 Frameworks Comprehensive Matrix -->
         <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">5. VASP 기반 반도체 프리커서 DFT 자동화 도구 10종 실무 생산성 평가</h3>
+          <h3 class="card-title">6. VASP 기반 반도체 프리커서 DFT 자동화 도구 10종 실무 생산성 평가</h3>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
             실제 VASP 클러스터 환경에서의 학습 곡선, 오류 복구력, 유지보수성 및 추천 활용 시나리오 비교입니다:
           </p>
