@@ -667,5 +667,239 @@
       "verified_by": "CrossRef",
       "verified_title": "Design of efficient mono-aminosilane precursors for atomic layer deposition of SiO\n                    <sub>2</sub>\n                    thin films"
     }
+  },
+  {
+    "id": "Oh_ASD_Precursor_2021",
+    "name": "Oh et al. (ASD Precursor Choice)",
+    "year": 2021,
+    "generation": "Precursor / Area-Selective ALD",
+    "authors": "In-Kyun Oh, Stacey F. Bent, Adriaan J. M. Mackus et al.",
+    "title": "Role of Precursor Choice on Area-Selective Atomic Layer Deposition",
+    "journal": "Chemistry of Materials",
+    "doi": "10.1021/acs.chemmater.0c04718",
+    "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.0c04718",
+    "source_type": "ACS_ChemMater",
+    "role": "Precursor_ASD",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "ACS_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "Role of Precursor Choice on Area-Selective Atomic Layer Deposition"
+    }
+  },
+  {
+    "id": "Tonner_ASD_Precursor_2024",
+    "name": "Tonner-Zech et al. (ASD Design Principles)",
+    "year": 2024,
+    "generation": "Precursor / Area-Selective ALD",
+    "authors": "Ralf Tonner-Zech et al.",
+    "title": "Precursor Design Principles for Area-Selective Atomic Layer Deposition: Quantifying the Role of Lewis Acidity, Steric Repulsion, and Dimerization",
+    "journal": "Journal of Computational Chemistry",
+    "doi": "10.1002/jcc.70493",
+    "download_url": "https://onlinelibrary.wiley.com/doi/10.1002/jcc.70493",
+    "source_type": "Wiley_JCC",
+    "role": "Precursor_ASD",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "Wiley_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "Precursor Design Principles for Area-Selective Atomic Layer Deposition: Quantifying the Role of Lewis Acidity, Steric Repulsion, and Dimerization"
+    }
+  },
+  {
+    "id": "Mackus_ASD_Selectivity_2019",
+    "name": "Mackus et al. (ASD Fundamentals & Metrics)",
+    "year": 2019,
+    "generation": "Precursor / Area-Selective ALD",
+    "authors": "Adriaan J. M. Mackus, Ageeth A. Bol, W. M. Erwin Kessels",
+    "title": "From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity",
+    "journal": "Chemistry of Materials",
+    "doi": "10.1021/acs.chemmater.8b03454",
+    "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.8b03454",
+    "source_type": "ACS_ChemMater",
+    "role": "Precursor_ASD",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "ACS_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "From the Bottom-Up: Toward Area-Selective Atomic Layer Deposition with High Selectivity"
+    }
+  },
+  {
+    "id": "Parsons_ASD_Fundamentals_2020",
+    "name": "Parsons & Clark (ASD State-of-the-Art)",
+    "year": 2020,
+    "generation": "Precursor / Area-Selective ALD",
+    "authors": "Gregory N. Parsons, Robert D. Clark",
+    "title": "Area-Selective Deposition: Fundamentals, Applications, and Future Outlook",
+    "journal": "Chemistry of Materials",
+    "doi": "10.1021/acs.chemmater.0c00722",
+    "download_url": "https://pubs.acs.org/doi/10.1021/acs.chemmater.0c00722",
+    "source_type": "ACS_ChemMater",
+    "role": "Precursor_ASD",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "ACS_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "Area-Selective Deposition: Fundamentals, Applications, and Future Outlook"
+    }
+  },
+  {
+    "id": "Ong_Pymatgen_2013",
+    "name": "Pymatgen (Materials Genomics)",
+    "year": 2013,
+    "generation": "VASP / First-Principles Automation",
+    "authors": "Shyue Ping Ong, William Davidson Richards, Anubhav Jain, Geoffroy Hautier et al.",
+    "title": "Python Materials Genomics (pymatgen): A robust, open-source python library for materials analysis",
+    "journal": "Computational Materials Science",
+    "doi": "10.1016/j.commatsci.2012.10.028",
+    "download_url": "https://doi.org/10.1016/j.commatsci.2012.10.028",
+    "source_type": "Elsevier_CMS",
+    "role": "VASP_Framework",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "Elsevier_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "Python Materials Genomics (pymatgen): A robust, open-source python library for materials analysis"
+    }
+  },
+  {
+    "id": "Rosen_Atomate2_2024",
+    "name": "atomate2 + jobflow",
+    "year": 2024,
+    "generation": "VASP / First-Principles Automation",
+    "authors": "Andrew S. Rosen, Matthew Gallant, Anderson Janotti et al.",
+    "title": "atomate2: Modular computational materials science workflows",
+    "journal": "Journal of Open Source Software",
+    "doi": "10.21105/joss.06543",
+    "download_url": "https://doi.org/10.21105/joss.06543",
+    "source_type": "JOSS_OpenAccess",
+    "role": "VASP_Framework",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "JOSS_OpenAccess"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "atomate2: Modular computational materials science workflows"
+    }
+  },
+  {
+    "id": "Uhrin_AiiDA_2021",
+    "name": "AiiDA-VASP Automation",
+    "year": 2021,
+    "generation": "VASP / First-Principles Automation",
+    "authors": "Martin Uhrin, Sebastiaan P. Huber, Jusong Yu, Nicola Marzari et al.",
+    "title": "Workflows and automation in AiiDA: Managing computational materials science",
+    "journal": "Computational Materials Science",
+    "doi": "10.1016/j.commatsci.2020.110086",
+    "download_url": "https://doi.org/10.1016/j.commatsci.2020.110086",
+    "source_type": "Elsevier_CMS",
+    "role": "VASP_Framework",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "Elsevier_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "Workflows and automation in AiiDA: Managing computational materials science"
+    }
+  },
+  {
+    "id": "Gautier_Architector_2023",
+    "name": "Architector (3D TMC Complex Builder)",
+    "year": 2023,
+    "generation": "VASP / First-Principles Automation",
+    "authors": "Corin Gautier, Tyler Castonguay, Heather J. Kulik",
+    "title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures",
+    "journal": "Journal of Chemical Information and Modeling",
+    "doi": "10.1021/acs.jcim.3c01353",
+    "download_url": "https://pubs.acs.org/doi/10.1021/acs.jcim.3c01353",
+    "source_type": "ACS_JCIM",
+    "role": "VASP_Framework",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "ACS_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "Architector: Rapid, Characterizable Generation of 3D Inorganic Complex Structures"
+    }
+  },
+  {
+    "id": "Hermes_Sella_2022",
+    "name": "Sella (Automated Saddle-Point TS)",
+    "year": 2022,
+    "generation": "VASP / First-Principles Automation",
+    "authors": "Eric D. Hermes, Judit Zádor",
+    "title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces",
+    "journal": "Journal of Chemical Theory and Computation",
+    "doi": "10.1021/acs.jctc.1c00845",
+    "download_url": "https://pubs.acs.org/doi/10.1021/acs.jctc.1c00845",
+    "source_type": "ACS_JCTC",
+    "role": "VASP_Framework",
+    "pdf_status": {
+      "downloaded": false,
+      "file_path": null,
+      "ext": "doi",
+      "label": "DOI 이동",
+      "size_kb": 0,
+      "source": "ACS_Subscription"
+    },
+    "verification": {
+      "verified": true,
+      "verified_by": "CrossRef",
+      "verified_title": "Sella: An Automated Saddle-Point Optimization Tool for Complex Potential Energy Surfaces"
+    }
   }
 ]

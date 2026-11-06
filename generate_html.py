@@ -27,19 +27,27 @@ with open("database/reactions.json", "r", encoding="utf-8") as f:
 
 lit_rows_html = []
 for idx, p in enumerate(papers, 1):
-    if p.get("role", "").startswith("Precursor"):
+    gen = p.get("generation", "")
+    role = p.get("role", "")
+    if "Area-Selective ALD" in gen or role == "Precursor_ASD":
+        gen_code = "ASD"
+        badge_cls = "badge-prec"
+    elif "VASP" in gen or role == "VASP_Framework":
+        gen_code = "VASP"
+        badge_cls = "badge-2g"
+    elif role.startswith("Precursor") or "Precursor" in gen:
         gen_code = "Precursor"
         badge_cls = "badge-prec"
-    elif "1st Gen" in p["generation"]:
+    elif "1st Gen" in gen:
         gen_code = "1G"
         badge_cls = "badge-1g"
-    elif "2nd Gen" in p["generation"]:
+    elif "2nd Gen" in gen:
         gen_code = "2G"
         badge_cls = "badge-2g"
-    elif "3rd Gen" in p["generation"]:
+    elif "3rd Gen" in gen:
         gen_code = "3G"
         badge_cls = "badge-3g"
-    elif "4th Gen" in p["generation"] and p.get("role") == "Core":
+    elif "4th Gen" in gen and role == "Core":
         gen_code = "4G"
         badge_cls = "badge-4g"
     else:
