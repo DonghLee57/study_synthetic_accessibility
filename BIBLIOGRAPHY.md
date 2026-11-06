@@ -228,7 +228,7 @@ downloaded_papers/
 | 16 | **Retro*** | 2020 | Binghong Chen, Chengtao Shen, Shuangjia Zheng, et al. (*ICML 2020*) | [PDF 열람 (3244 KB)](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/RetroStar_2020.pdf) | [10.48550/arXiv.2006.15575](https://doi.org/10.48550/arXiv.2006.15575) |
 | 17 | **MPScore (Materials Precursor Score)** | 2021 | Steven Bennett, Filip T. Szczypiński, Lukas Turcani, Michael E. Briggs et al. (*Journal of Chemical Information and Modeling*) | [XML 열람 (175 KB)](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/MPScore_Jelfs_2021.xml) | [10.1021/acs.jcim.1c00375](https://doi.org/10.1021/acs.jcim.1c00375) |
 
-### Section 13: AI-Driven Precursor Inverse Design & Substrate ASD (프리커서 AI 역설계 및 기판 흡착 화학)
+### Section 12: AI-Driven Precursor Inverse Design & Substrate ASD (프리커서 AI 역설계 및 기판 흡착 화학)
 **Literature Count**: 13 papers (Locally secured: 10/13)  
 
 | No | Model / Target | Year | Authors & Journal | Local Archive | Official DOI |
@@ -430,7 +430,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *NeurIPS 2024 / arXiv:2406.04628* (2024)
 - **DOI**: [10.48550/arXiv.2406.04628](https://doi.org/10.48550/arXiv.2406.04628)
 - **Local Document**: [downloaded_papers/ChemProjector_2024.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/ChemProjector_2024.pdf) (4788 KB)
-- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 13
+- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 12
 
 ```bibtex
 @article{luo2024ChemProjector,
@@ -449,7 +449,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *PNAS 2025 / arXiv:2410.03494* (2025)
 - **DOI**: [10.1073/pnas.2415665122](https://doi.org/10.1073/pnas.2415665122)
 - **Local Document**: [downloaded_papers/SynFormer_2025.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/SynFormer_2025.pdf) (3651 KB)
-- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 13
+- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 12
 
 ```bibtex
 @article{chuang2025SynFormer,
@@ -468,7 +468,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *ICLR 2025 / arXiv:2405.01155* (2025)
 - **DOI**: [10.48550/arXiv.2405.01155](https://doi.org/10.48550/arXiv.2405.01155)
 - **Local Document**: [downloaded_papers/SynFlowNet_2025.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/SynFlowNet_2025.pdf) (8060 KB)
-- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 13
+- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 12
 
 ```bibtex
 @article{cretu2025SynFlowNet,
@@ -487,7 +487,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *NeurIPS 2024 / arXiv:2410.04542* (2024)
 - **DOI**: [10.48550/arXiv.2410.04542](https://doi.org/10.48550/arXiv.2410.04542)
 - **Local Document**: [downloaded_papers/RxnFlow_2025.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/RxnFlow_2025.pdf) (4912 KB)
-- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 13
+- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 12
 
 ```bibtex
 @article{seo2024RxnFlow,
@@ -506,7 +506,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *arXiv:2509.16084* (2025)
 - **DOI**: [10.48550/arXiv.2509.16084](https://doi.org/10.48550/arXiv.2509.16084)
 - **Local Document**: [downloaded_papers/ReaSyn_2025.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/ReaSyn_2025.pdf) (2479 KB)
-- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 13
+- **Sections Referenced**: Section 1, Section 3, Section 4, Section 7, Section 12, Section 12
 
 ```bibtex
 @article{kaist2025ReaSyn,
@@ -620,7 +620,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *JACS Au* (2022)
 - **DOI**: [10.1021/jacsau.2c00547](https://doi.org/10.1021/jacsau.2c00547)
 - **Local Document**: [downloaded_papers/Kulik_TMC_SA_2022.xml](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/Kulik_TMC_SA_2022.xml) (159 KB)
-- **Sections Referenced**: Section 1, Section 5, Section 8, Section 9, Section 11, Section 13
+- **Sections Referenced**: Section 1, Section 5, Section 8, Section 9, Section 11, Section 12
 
 ```bibtex
 @article{duan2022TMCSynthesizability(KulikGroup),
@@ -658,7 +658,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Journal of Molecular Modeling* (2023)
 - **DOI**: [10.1007/s00894-023-05806-y](https://doi.org/10.1007/s00894-023-05806-y)
 - **Local Document**: [downloaded_papers/AS_ALD_Precursor_ML_2023.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/AS_ALD_Precursor_ML_2023.pdf) (2563 KB)
-- **Sections Referenced**: Section 1, Section 8, Section 13
+- **Sections Referenced**: Section 1, Section 8, Section 12
 
 ```bibtex
 @article{van2023ASALDPrecursorMLDescriptors,
@@ -677,7 +677,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Materials Today Advances* (2024)
 - **DOI**: [10.1016/j.mtadv.2024.100474](https://doi.org/10.1016/j.mtadv.2024.100474)
 - **Local Document**: [downloaded_papers/ALD_MLIP_Precursor_2024.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/ALD_MLIP_Precursor_2024.pdf) (6267 KB)
-- **Sections Referenced**: Section 1, Section 8, Section 9, Section 10, Section 13
+- **Sections Referenced**: Section 1, Section 8, Section 9, Section 10, Section 12
 
 ```bibtex
 @article{kang2024MLIPforALDPrecursors,
@@ -696,7 +696,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Chemistry of Materials* (2026)
 - **DOI**: [10.1021/acs.chemmater.5c03271](https://doi.org/10.1021/acs.chemmater.5c03271)
 - **Local Document**: [downloaded_papers/ALD_ML_ChemMater_2026.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/ALD_ML_ChemMater_2026.pdf) (3091 KB)
-- **Sections Referenced**: Section 1, Section 8, Section 9, Section 13
+- **Sections Referenced**: Section 1, Section 8, Section 9, Section 12
 
 ```bibtex
 @article{westermayr2026MLinALDRoadmap,
@@ -738,7 +738,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Chemistry of Materials* (2021)
 - **DOI**: [10.1021/acs.chemmater.0c04718](https://doi.org/10.1021/acs.chemmater.0c04718)
 - **Local Document**: Commercial Subscription Paywall ([Direct Publisher DOI Link](https://doi.org/10.1021/acs.chemmater.0c04718))
-- **Sections Referenced**: Section 1, Section 13
+- **Sections Referenced**: Section 1, Section 12
 
 ```bibtex
 @article{oh2021Ohetal.(ASDPrecursorChoice),
@@ -757,7 +757,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Journal of Computational Chemistry* (2024)
 - **DOI**: [10.1002/jcc.70493](https://doi.org/10.1002/jcc.70493)
 - **Local Document**: [downloaded_papers/Tonner_ASD_Precursor_2024.xml](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/Tonner_ASD_Precursor_2024.xml) (201 KB)
-- **Sections Referenced**: Section 1, Section 13
+- **Sections Referenced**: Section 1, Section 12
 
 ```bibtex
 @article{al.2024TonnerZechetal.(ASDDesignPrinciples),
@@ -776,7 +776,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Chemistry of Materials* (2019)
 - **DOI**: [10.1021/acs.chemmater.8b03454](https://doi.org/10.1021/acs.chemmater.8b03454)
 - **Local Document**: [downloaded_papers/Mackus_ASD_Selectivity_2019.xml](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/Mackus_ASD_Selectivity_2019.xml) (146 KB)
-- **Sections Referenced**: Section 1, Section 13
+- **Sections Referenced**: Section 1, Section 12
 
 ```bibtex
 @article{mackus2019Mackusetal.(ASDFundamentals&Metrics),
@@ -795,7 +795,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Chemistry of Materials* (2020)
 - **DOI**: [10.1021/acs.chemmater.0c00722](https://doi.org/10.1021/acs.chemmater.0c00722)
 - **Local Document**: Commercial Subscription Paywall ([Direct Publisher DOI Link](https://doi.org/10.1021/acs.chemmater.0c00722))
-- **Sections Referenced**: Section 1, Section 13
+- **Sections Referenced**: Section 1, Section 12
 
 ```bibtex
 @article{parsons2020Parsons&Clark(ASDStateoftheArt),
@@ -871,7 +871,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Journal of Chemical Information and Modeling* (2023)
 - **DOI**: [10.1021/acs.jcim.3c01353](https://doi.org/10.1021/acs.jcim.3c01353)
 - **Local Document**: Commercial Subscription Paywall ([Direct Publisher DOI Link](https://doi.org/10.1021/acs.jcim.3c01353))
-- **Sections Referenced**: Section 1, Section 9, Section 10, Section 13
+- **Sections Referenced**: Section 1, Section 9, Section 10, Section 12
 
 ```bibtex
 @article{gautier2023Architector(3DTMCComplexBuilder),
@@ -890,7 +890,7 @@ The complete BibTeX collection is indexed below for immediate integration into L
 - **Journal**: *Journal of Chemical Theory and Computation* (2022)
 - **DOI**: [10.1021/acs.jctc.1c00845](https://doi.org/10.1021/acs.jctc.1c00845)
 - **Local Document**: [downloaded_papers/Hermes_Sella_2022.pdf](file:///c:/Users/user/Downloads/dev_w_antigravity/synth_acc/downloaded_papers/Hermes_Sella_2022.pdf) (2963 KB)
-- **Sections Referenced**: Section 1, Section 9, Section 10, Section 13
+- **Sections Referenced**: Section 1, Section 9, Section 10, Section 12
 
 ```bibtex
 @article{hermes2022Sella(AutomatedSaddlePointTS),

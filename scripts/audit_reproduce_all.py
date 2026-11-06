@@ -122,11 +122,14 @@ def run_full_audit():
     print(f"  -> Recalculated RAscore for all 27 precursors. Pass (>=0.5): {ra_pass}/27 (Expected: 27/27, 100.0%)")
     assert ra_pass == 27, f"Expected 27 passes, got {ra_pass}"
 
-    # 5. Recalculate BR-SAScore (Default vs Strict Unleaked vs Leaked Counterfactual)
+    # 5. Recalculate BR-SAScore (Default vs Strict Unleaked [max(existing, -0.47)] vs Zero-Overwrite vs Leaked Counterfactual)
     print("\n[CHECK 5/9] Recalculating BR-SAScore (Default, Strict Unleaked, and Leaked Counterfactual)...")
+    REAGENT_BSCORE_FLOOR = -0.47
     br_default = BRSAScorer()
     br_strict = BRSAScorer()
     fscores_strict = copy.deepcopy(br_default._fscores)
+    br_strict_zero = BRSAScorer()
+    fscores_strict_zero = copy.deepcopy(br_default._fscores)
 
     # Ingest commercial building blocks excluding target precursors via canonical SMILES
     with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_bb.csv"), "r", encoding="utf-8") as f:
@@ -138,7 +141,9 @@ def run_full_audit():
             if smi in target_smiles or Chem.MolToSmiles(m) in target_smiles: continue
             bi = {}
             rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-            for b in bi: fscores_strict[b] = 0.0
+            for b in bi:
+                fscores_strict[b] = max(fscores_strict.get(b, -6.0), REAGENT_BSCORE_FLOOR)
+                fscores_strict_zero[b] = 0.0
 
     # Ingest reactants only (NO target products or identity rules via canonical SMILES)
     with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_rxn.csv"), "r", encoding="utf-8") as f:
@@ -156,9 +161,12 @@ def run_full_audit():
                 if smi_clean in target_smiles or Chem.MolToSmiles(m) in target_smiles: continue
                 bi = {}
                 rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-                for b in bi: fscores_strict[b] = 0.0
+                for b in bi:
+                    fscores_strict[b] = max(fscores_strict.get(b, -6.0), REAGENT_BSCORE_FLOOR)
+                    fscores_strict_zero[b] = 0.0
 
     br_strict._fscores = fscores_strict
+    br_strict_zero._fscores = fscores_strict_zero
 
     br_def_pass = 0
     br_strict_pass = 0
@@ -173,6 +181,7 @@ def run_full_audit():
         exp_strict = stored_results[p["id"]]["br_sascore_custom_strict"]
         assert abs(s_def - exp_def) < 1e-2, f"BR-SAScore Default mismatch for {p['name']}: {s_def} vs {exp_def}"
         assert abs(s_strict - exp_strict) < 1e-2, f"BR-SAScore Strict mismatch for {p['name']}: {s_strict} vs {exp_strict}"
+        assert s_strict <= s_def, f"Strict max(existing, -0.47) should never worsen score for {p['name']}: {s_strict} > {s_def}"
 
         if s_def <= 3.5:
             br_def_pass += 1
@@ -180,12 +189,12 @@ def run_full_audit():
             br_strict_pass += 1
 
     print(f"  -> BR-SAScore Default Pass:                  {br_def_pass}/27 (Expected: 3/27, 11.1%)")
-    print(f"  -> BR-SAScore Strict Reagent Domain (Unleaked): {br_strict_pass}/27 (Expected: 3/27, 11.1%)")
+    print(f"  -> BR-SAScore Strict Reagent Domain (Unleaked, max(existing, -0.47)): {br_strict_pass}/27 (Expected: 3/27, 11.1%, 0 worsened)")
     assert br_def_pass == 3, f"Expected 3 default passes, got {br_def_pass}"
     assert br_strict_pass == 3, f"Expected 3 strict passes, got {br_strict_pass}"
-    worsened = [p["name"] for p in precursors if stored_results[p["id"]]["br_sascore_custom_strict"] > stored_results[p["id"]]["br_sascore_default"]]
-    print(f"  -> Methodological Caveat: Zeroing reagent fragments drops them from BRSAScore's negative-only")
-    print(f"     average (fscore < 0), worsening 4 precursors ({worsened}) where remaining M-L fragments are -6.0.")
+    worsened_zero = [p["name"] for p in precursors if stored_results[p["id"]]["br_sascore_custom_strict_zero_overwrite"] > stored_results[p["id"]]["br_sascore_default"]]
+    print(f"  -> Methodological Note: Using max(existing, -0.47) prevents the 0.0-overwrite exclusion artifact")
+    print(f"     (which worsened 4 precursors {worsened_zero}) while confirming 3/27 pass rate.")
 
     # 6. Verify BioNeMo ReaSyn Tokenizer Roundtrip & Decoding Offset Bug Analysis
     print("\n[CHECK 6/9] Auditing BioNeMo ReaSyn Tokenizer & Decoding Offset...")
@@ -264,11 +273,13 @@ def run_full_audit():
                 prods = list(rxn.GetProducts())
                 sf_rxns.append((prods, any(_has_metal(pt) for pt in prods)))
     sf_subst = sum(1 for p in precursors if any(all(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
-    sf_spec = sum(1 for p in precursors if any(all(pt.GetNumAtoms() >= 2 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
+    sf_ge2 = sum(1 for p in precursors if any(all(pt.GetNumAtoms() >= 2 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
+    sf_ge4 = sum(1 for p in precursors if any(all(pt.GetNumAtoms() >= 4 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
     sf_core = sum(1 for _, hm in sf_rxns if hm)
-    print(f"  -> SynFormer Generic Product Matches: {sf_subst}/27 (88.9%, includes single-atom [N:1] #84 on TSA); >=2-Atom Matches: {sf_spec}/27 (85.2%); Metal Rules in Set: {sf_core}")
+    print(f"  -> SynFormer Generic Product Matches: {sf_subst}/27 (>=2-Atom: {sf_ge2}/27, >=4-Atom: {sf_ge4}/27); Metal Rules in Set: {sf_core}")
     assert sf_subst == 24, f"Expected 24 SynFormer generic matches, got {sf_subst}"
-    assert sf_spec == 23, f"Expected 23 SynFormer >=2-atom matches, got {sf_spec}"
+    assert sf_ge2 == 23, f"Expected 23 SynFormer >=2-atom matches, got {sf_ge2}"
+    assert sf_ge4 == 11, f"Expected 11 SynFormer >=4-atom matches, got {sf_ge4}"
     assert sf_core == 0, f"Expected 0 SynFormer metal product rules, got {sf_core}"
 
     az_ingest = sum(1 for p in precursors if (lambda s: (m := AiZynthMolecule(smiles=s), m.sanitize(), m.rd_mol is not None)[2])(p["smiles"]))

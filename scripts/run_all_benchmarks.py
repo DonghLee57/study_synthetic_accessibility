@@ -114,8 +114,13 @@ def run_benchmarks():
     print("[INIT] BR-SAScore (Default) initialized.")
 
     # 2.5 BR-SAScore: Strict Reagent Domain (Unleaked; NO target precursors registered)
+    # Use max(existing, -0.47) for reagent fragments so they remain negative (included in
+    # BRSAScore's `if fscore < 0:` average) and never worsen any precursor score relative to Default.
+    REAGENT_BSCORE_FLOOR = -0.47  # 99.9th-percentile negative BScore in BScores_emolecules.pkl.gz
     br_custom_strict = BRSAScorer()
     fscores_strict = copy.deepcopy(br_default._fscores)
+    br_custom_strict_zero = BRSAScorer()
+    fscores_strict_zero = copy.deepcopy(br_default._fscores)
 
     semi_bb_path = os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_bb.csv")
     semi_rxn_path = os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_rxn.csv")
@@ -135,7 +140,8 @@ def run_benchmarks():
             bi = {}
             rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
             for b in bi:
-                fscores_strict[b] = 0.0
+                fscores_strict[b] = max(fscores_strict.get(b, -6.0), REAGENT_BSCORE_FLOOR)
+                fscores_strict_zero[b] = 0.0
 
     # Add reaction reactants ONLY (excluding target products and identity rules via canonical SMILES)
     with open(semi_rxn_path, "r", encoding="utf-8") as f:
@@ -160,14 +166,16 @@ def run_benchmarks():
                 bi = {}
                 rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
                 for b in bi:
-                    fscores_strict[b] = 0.0
+                    fscores_strict[b] = max(fscores_strict.get(b, -6.0), REAGENT_BSCORE_FLOOR)
+                    fscores_strict_zero[b] = 0.0
 
     br_custom_strict._fscores = fscores_strict
-    print("[INIT] BR-SAScore (Strict Reagent Domain, Unleaked) initialized.")
+    br_custom_strict_zero._fscores = fscores_strict_zero
+    print("[INIT] BR-SAScore (Strict Reagent Domain, Unleaked, max(existing, -0.47)) initialized.")
 
     # 2.6 BR-SAScore: Overfitted / Product-Memorized Baseline (for counterfactual audit comparison)
     br_custom_leaked = BRSAScorer()
-    fscores_leaked = copy.deepcopy(fscores_strict)
+    fscores_leaked = copy.deepcopy(fscores_strict_zero)
     with open(semi_rxn_path, "r", encoding="utf-8") as f:
         for row in list(csv.reader(f))[1:]:
             if not row or not row[0].strip():
@@ -244,10 +252,15 @@ def run_benchmarks():
                     synformer_reactions.append((i, line, prods, has_metal))
     print(f"[INIT] SynFormer: compiled {len(synformer_reactions)} comprehensive reaction templates.")
 
-    # 2.9 ReaSyn Featurizer
+    # 2.9 ReaSyn & SynFormer Featurizers
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "synformer"))
     from reasyn.chem.featurize import _smiles_vocab, _smiles_token_pattern, _smiles_token_to_id
+    from synformer.chem.featurize import (
+        tokenize_smiles as synformer_tokenize_smiles,
+        _smiles_token_max as synformer_token_max,
+    )
     reasyn_vocab_1_to_tok = {i: t for i, t in enumerate(_smiles_vocab, start=1)}
-    print(f"[INIT] ReaSyn: loaded universal 118-element tokenizer ({len(_smiles_vocab)} tokens).")
+    print(f"[INIT] ReaSyn & SynFormer: loaded universal 118-element tokenizers ({len(_smiles_vocab)} tokens).")
 
     # 2.10 GASA Allowed Elements
     gasa_allowed_elements = {
@@ -298,10 +311,12 @@ def run_benchmarks():
         "synnet_substituent_match": 0,
         "synnet_core_match": 0,
         "synformer_substituent_match": 0,
-        "synformer_specific_substructure_match": 0,
+        "synformer_ge2_atom_substructure_match": 0,
+        "synformer_ge4_atom_substructure_match": 0,
         "synformer_core_match": 0,
         "reasyn_vocab_pass": 0,
         "reasyn_lossless_roundtrip": 0,
+        "synformer_vocab_pass": 0,
         "aizynth_ingest_pass": 0,
         "retro_star_rdchiral_ingest_pass": 0,
         "gasa_supported_count": 0,
@@ -351,7 +366,7 @@ def run_benchmarks():
         if ra_score >= 0.5:
             stats["rascore_pass"] += 1
 
-        # 5. BR-SAScore (Default, Strict Unleaked Custom, and Leaked Baseline)
+        # 5. BR-SAScore (Default, Strict Unleaked Custom [max(existing, -0.47)], Zero-Overwrite Diagnostic, and Leaked Baseline)
         br_def_val, _ = br_default.calculateScore(smi)
         br_def_score = round(float(br_def_val), 2)
         if br_def_score <= 3.5:
@@ -361,6 +376,9 @@ def run_benchmarks():
         br_strict_score = round(float(br_strict_val), 2)
         if br_strict_score <= 3.5:
             stats["br_sascore_custom_strict_pass"] += 1
+
+        br_strict_zero_val, _ = br_custom_strict_zero.calculateScore(smi)
+        br_strict_zero_score = round(float(br_strict_zero_val), 2)
 
         br_leaked_val, _ = br_custom_leaked.calculateScore(smi)
         br_leaked_score = round(float(br_leaked_val), 2)
@@ -399,23 +417,35 @@ def run_benchmarks():
 
         # 7b. SynFormer Comprehensive Template Substructure Matching (Live RDKit evaluation of 115 rules)
         synformer_matches = []
-        synformer_specific_matches = []
+        synformer_ge2_matches = []
+        synformer_ge4_matches = []
         synformer_core_matches = 0
         for idx, r_line, prods, has_metal in synformer_reactions:
             if all(mol.HasSubstructMatch(pt) for pt in prods):
                 synformer_matches.append(idx)
                 if all(pt.GetNumAtoms() >= 2 for pt in prods):
-                    synformer_specific_matches.append(idx)
+                    synformer_ge2_matches.append(idx)
+                if all(pt.GetNumAtoms() >= 4 for pt in prods):
+                    synformer_ge4_matches.append(idx)
                 if has_metal:
                     synformer_core_matches += 1
         has_synformer_match = len(synformer_matches) > 0
-        has_synformer_specific = len(synformer_specific_matches) > 0
+        has_synformer_ge2 = len(synformer_ge2_matches) > 0
+        has_synformer_ge4 = len(synformer_ge4_matches) > 0
         if has_synformer_match:
             stats["synformer_substituent_match"] += 1
-        if has_synformer_specific:
-            stats["synformer_specific_substructure_match"] += 1
+        if has_synformer_ge2:
+            stats["synformer_ge2_atom_substructure_match"] += 1
+        if has_synformer_ge4:
+            stats["synformer_ge4_atom_substructure_match"] += 1
         if synformer_core_matches > 0:
             stats["synformer_core_match"] += 1
+
+        # SynFormer Native Tokenizer Check (synformer.chem.featurize.tokenize_smiles)
+        sf_token_ids = synformer_tokenize_smiles(smi)
+        sf_has_unknown = any(tid > synformer_token_max for tid in sf_token_ids)
+        if not sf_has_unknown:
+            stats["synformer_vocab_pass"] += 1
 
         # 7c. Live Ingestion Checks for AiZynthFinder (Molecule) and Retro* (rdchiralReactants)
         try:
@@ -482,6 +512,7 @@ def run_benchmarks():
             "br_sascore": br_def_score,
             "br_sascore_default": br_def_score,
             "br_sascore_custom_strict": br_strict_score,
+            "br_sascore_custom_strict_zero_overwrite": br_strict_zero_score,
             "br_sascore_custom_leaked": br_leaked_score,
             "rascore": ra_score,
             "rxnflow_match": rxnflow_has_match,
@@ -491,9 +522,11 @@ def run_benchmarks():
             "chemprojector_hb_matches_count": len(hb_matches),
             "chemprojector_core_matches_count": hb_core_matches,
             "synformer_substituent_match": has_synformer_match,
-            "synformer_specific_substructure_match": has_synformer_specific,
+            "synformer_ge2_atom_substructure_match": has_synformer_ge2,
+            "synformer_ge4_atom_substructure_match": has_synformer_ge4,
             "synformer_matches_count": len(synformer_matches),
-            "synformer_specific_matches_count": len(synformer_specific_matches),
+            "synformer_ge2_matches_count": len(synformer_ge2_matches),
+            "synformer_ge4_matches_count": len(synformer_ge4_matches),
             "synformer_core_matches_count": synformer_core_matches,
             "reasyn_in_vocab": not has_unknown,
             "reasyn_tokens": len(tokens),
@@ -525,11 +558,14 @@ def run_benchmarks():
             "score": br_strict_score,
             "pass": br_strict_score <= 3.5,
             "delta_vs_default": round(br_strict_score - br_def_score, 2),
-            "worsened_by_zero_exclusion": br_strict_score > br_def_score,
+            "worsened_vs_default": br_strict_score > br_def_score,
+            "zero_overwrite_score": br_strict_zero_score,
+            "worsened_by_zero_exclusion": br_strict_zero_score > br_def_score,
             "reagent_dictionary_only": True,
             "data_leakage_prevented": True,
-            "methodological_note": "Zeroing reagent fragments excludes them from BRSAScore negative-only average (fscore < 0), which can worsen scores when remaining M-L fragments are -6.0.",
-            "execution_mode": "Live Numerical (Strict Reagent Domain; Negative-Average Exclusion Caveat)"
+            "reagent_bscore_floor": REAGENT_BSCORE_FLOOR,
+            "methodological_note": "Uses max(existing, -0.47) so reagent fragments stay in BRSAScore's negative-only average (fscore < 0) without worsening any precursor relative to Default.",
+            "execution_mode": "Live Numerical (Strict Reagent Domain; max(existing, -0.47))"
         }
         expanded_results["br_sascore_custom_leaked"][name] = {
             "score": br_leaked_score,
@@ -570,8 +606,10 @@ def run_benchmarks():
             "route_found": None,
             "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
         }
+        synnet_fp = AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048)
         expanded_results["synnet"][name] = {
-            "morgan_fp_valid": AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048).GetNumBits() == 2048,
+            "morgan_fp_nonzero": synnet_fp.GetNumOnBits() > 0,
+            "morgan_on_bits": synnet_fp.GetNumOnBits(),
             "hb_substituent_matched": has_hb_match,
             "generic_substructure_matched": has_hb_match,
             "hb_rules_matched_count": len(hb_matches),
@@ -580,17 +618,22 @@ def run_benchmarks():
             "execution_mode": "Live Generic Product Substructure Matching (HB 91; 0 Metal Rules in Set)"
         }
         expanded_results["synformer"][name] = {
-            "reaction_tokens_valid": not has_unknown,
+            "synformer_tokens": sf_token_ids,
+            "synformer_token_count": len(sf_token_ids),
+            "reaction_tokens_valid": not sf_has_unknown,
             "substituent_matched": has_synformer_match,
             "generic_substructure_matched": has_synformer_match,
-            "specific_substructure_matched": has_synformer_specific,
+            "ge2_atom_substructure_matched": has_synformer_ge2,
+            "ge4_atom_substructure_matched": has_synformer_ge4,
             "disconnection_matched": len(synformer_matches),
-            "specific_disconnection_matched": len(synformer_specific_matches),
+            "ge2_disconnection_matched": len(synformer_ge2_matches),
+            "ge4_disconnection_matched": len(synformer_ge4_matches),
             "matched_template_indices": synformer_matches,
-            "specific_matched_template_indices": synformer_specific_matches,
+            "ge2_matched_template_indices": synformer_ge2_matches,
+            "ge4_matched_template_indices": synformer_ge4_matches,
             "core_metal_rules_matched": synformer_core_matches,
             "route_found": None,
-            "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; #84 [N:1] single-atom match noted)"
+            "execution_mode": "Live Generic Product Substructure Matching (Comprehensive 115; 1-atom #84, >=2-atom, and >=4-atom counts recorded)"
         }
         expanded_results["retro_star"][name] = {
             "rdchiral_ingest": rdchiral_ingested,

@@ -135,10 +135,13 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(pass_count, 27, "RAscore should pass 27 out of 27 precursors (ECFP6 metal projection bias)")
 
     def test_06_br_sascore_default_strict_and_counterfactual_leakage(self):
-        """Recalculate BR-SAScore under Default, Strict Reagent (Unleaked), and Leaked Counterfactual baseline."""
+        """Recalculate BR-SAScore under Default, Strict Reagent (Unleaked, max(existing, -0.47)), Zero-Overwrite, and Leaked Counterfactual."""
+        REAGENT_BSCORE_FLOOR = -0.47
         br_def = BRSAScorer()
         br_strict = BRSAScorer()
         fscores_strict = copy.deepcopy(br_def._fscores)
+        br_strict_zero = BRSAScorer()
+        fscores_strict_zero = copy.deepcopy(br_def._fscores)
 
         # Ingest commercial building blocks excluding target precursors via canonical SMILES
         with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_bb.csv"), "r", encoding="utf-8") as f:
@@ -150,7 +153,9 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                 if smi in self.target_smiles or Chem.MolToSmiles(m) in self.target_smiles: continue
                 bi = {}
                 rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-                for b in bi: fscores_strict[b] = 0.0
+                for b in bi:
+                    fscores_strict[b] = max(fscores_strict.get(b, -6.0), REAGENT_BSCORE_FLOOR)
+                    fscores_strict_zero[b] = 0.0
 
         # Ingest reactants only (NO target products or identity rules via canonical SMILES)
         with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_rxn.csv"), "r", encoding="utf-8") as f:
@@ -168,13 +173,16 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                     if smi_clean in self.target_smiles or Chem.MolToSmiles(m) in self.target_smiles: continue
                     bi = {}
                     rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-                    for b in bi: fscores_strict[b] = 0.0
+                    for b in bi:
+                        fscores_strict[b] = max(fscores_strict.get(b, -6.0), REAGENT_BSCORE_FLOOR)
+                        fscores_strict_zero[b] = 0.0
 
         br_strict._fscores = fscores_strict
+        br_strict_zero._fscores = fscores_strict_zero
 
         # Counterfactual Leaked Model: Pre-memorizes target product fragments
         br_leaked = BRSAScorer()
-        fscores_leaked = copy.deepcopy(fscores_strict)
+        fscores_leaked = copy.deepcopy(fscores_strict_zero)
         with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_rxn.csv"), "r", encoding="utf-8") as f:
             for row in list(csv.reader(f))[1:]:
                 if not row or not row[0].strip(): continue
@@ -200,19 +208,24 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             smi = p["smiles"]
             s_def, _ = br_def.calculateScore(smi)
             s_strict, _ = br_strict.calculateScore(smi)
+            s_strict_zero, _ = br_strict_zero.calculateScore(smi)
             s_leaked, _ = br_leaked.calculateScore(smi)
 
             s_def = round(float(s_def), 2)
             s_strict = round(float(s_strict), 2)
+            s_strict_zero = round(float(s_strict_zero), 2)
             s_leaked = round(float(s_leaked), 2)
 
             exp_def = self.stored_results[p["id"]]["br_sascore_default"]
             exp_strict = self.stored_results[p["id"]]["br_sascore_custom_strict"]
+            exp_strict_zero = self.stored_results[p["id"]]["br_sascore_custom_strict_zero_overwrite"]
             exp_leaked = self.stored_results[p["id"]]["br_sascore_custom_leaked"]
 
             self.assertAlmostEqual(s_def, exp_def, places=2, msg=f"BR-SAScore Default mismatch for {p['name']}")
             self.assertAlmostEqual(s_strict, exp_strict, places=2, msg=f"BR-SAScore Strict mismatch for {p['name']}")
+            self.assertAlmostEqual(s_strict_zero, exp_strict_zero, places=2, msg=f"BR-SAScore Strict Zero mismatch for {p['name']}")
             self.assertAlmostEqual(s_leaked, exp_leaked, places=2, msg=f"BR-SAScore Leaked mismatch for {p['name']}")
+            self.assertLessEqual(s_strict, s_def, msg=f"Strict max(existing, -0.47) must not worsen {p['name']}")
 
             if s_def <= 3.5: def_passes += 1
             if s_strict <= 3.5: strict_passes += 1
@@ -222,9 +235,11 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(strict_passes, 3, "BR-SAScore Strict Reagent Domain (Unleaked) should pass exactly 3/27 (TSA, TMA, DMAH)")
         self.assertEqual(leaked_passes, 27, "BR-SAScore Product-Memorized baseline confirms 27/27 circular data leakage")
 
-        # Verify that zeroing reagent fragments in BRSAScore negative-only average worsens 4 specific precursors
-        worsened = [p["name"] for p in self.precursors if self.stored_results[p["id"]]["br_sascore_custom_strict"] > self.stored_results[p["id"]]["br_sascore_default"]]
-        self.assertEqual(sorted(worsened), sorted(["Cp(NMe2)3Zr", "CpTi(NMe2)3", "Ru(EtCp)2", "Co(AMD)2"]))
+        # Verify that max(existing, -0.47) worsens 0 precursors, whereas 0.0-overwriting worsens 4 specific precursors
+        worsened_strict = [p["name"] for p in self.precursors if self.stored_results[p["id"]]["br_sascore_custom_strict"] > self.stored_results[p["id"]]["br_sascore_default"]]
+        self.assertEqual(worsened_strict, [])
+        worsened_zero = [p["name"] for p in self.precursors if self.stored_results[p["id"]]["br_sascore_custom_strict_zero_overwrite"] > self.stored_results[p["id"]]["br_sascore_default"]]
+        self.assertEqual(sorted(worsened_zero), sorted(["Cp(NMe2)3Zr", "CpTi(NMe2)3", "Ru(EtCp)2", "Co(AMD)2"]))
 
     def test_07_reasyn_lossless_tokenization(self):
         """Verify BioNeMo ReaSyn universal tokenizer losslessly roundtrips all 27 SMILES."""
@@ -318,9 +333,11 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                     prods = list(rxn.GetProducts())
                     sf_rxns.append((prods, any(_has_metal(pt) for pt in prods)))
         sf_subst = sum(1 for p in self.precursors if any(all(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
-        sf_spec = sum(1 for p in self.precursors if any(all(pt.GetNumAtoms() >= 2 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
+        sf_ge2 = sum(1 for p in self.precursors if any(all(pt.GetNumAtoms() >= 2 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
+        sf_ge4 = sum(1 for p in self.precursors if any(all(pt.GetNumAtoms() >= 4 and Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
         self.assertEqual(sf_subst, 24, "SynFormer must match 24/27 on generic product substructures (including #84 [N:1] on TSA)")
-        self.assertEqual(sf_spec, 23, "SynFormer must match 23/27 when single-atom product templates (<2 atoms) are excluded")
+        self.assertEqual(sf_ge2, 23, "SynFormer must match 23/27 when single-atom product templates (<2 atoms) are excluded")
+        self.assertEqual(sf_ge4, 11, "SynFormer must match 11/27 when restricted to >=4-atom product templates")
         self.assertEqual(sum(1 for _, hm in sf_rxns if hm), 0, "SynFormer product templates must contain 0 metal coordination rules")
 
         # Live ingestion checks for AiZynthFinder and Retro*

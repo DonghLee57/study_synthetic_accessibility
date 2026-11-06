@@ -113,8 +113,8 @@ repo_semi_metrics = {
     "BR-SAScore": {
         "rate": "11.1% (엄격 시약 3/27) / 100% (암기 누수)",
         "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "코드 직접 실측 (무누수 한계·0점 평균 배제 왜곡 규명 & 2-Track TMC-SA 필수)",
-        "desc": "[코드 직접 실측] 기본 의약사전(11.1%, 3/27)뿐 아니라, 데이터 누수(생성물 등록 및 CCTBA A>>A 규칙)를 완전히 배제한 엄격 시약 사전에서도 통과율은 11.1%(3/27: TSA, TMA, DMAH)로 동일함. 특히 BRSAScore.calculateScore는 반경 2(vs[0][1]==2)의 음수 단편(fscore < 0)만 평균내므로, 시약 단편을 0.0으로 덮어쓰면 완만한 음수 유기 단편이 분모(nf)에서 빠져 오히려 -6.0 금속 배위 단편만 남아 4종(CpZr 7.20→8.98, CpTi 7.20→8.98, Ru(EtCp)2 4.18→4.88, Co(AMD)2 8.29→9.10)의 점수가 기본 사전보다 악화됨. 반면 타깃 생성물을 사전에 피팅하면 100.0%(27/27)가 나오나 이는 순환 기억 왜곡이므로 리간드 분리형 2-Track TMC-SA 프로토콜이 필수적임."
+        "eval": "코드 직접 실측 (무누수 한계 규명 & max(existing, -0.47) 보정 완료)",
+        "desc": "[코드 직접 실측] 기본 의약사전(11.1%, 3/27)뿐 아니라, 데이터 누수(생성물 등록 및 CCTBA A>>A 규칙)를 완전히 배제하고 BRSAScore의 음수 단편 평균(fscore < 0) 수식에 맞춰 max(existing, -0.47)로 보정한 엄격 시약 사전에서도 점수가 악화되는 전구체(0종) 없이 통과율은 11.1%(3/27: TSA, TMA, DMAH)로 동일함(신규 형성된 M-N/M-C 중심 단편은 시약에 부재하여 -6.0 유지; 반면 단순 0.0 덮어쓰기 시 유기 단편이 분모에서 빠져 4종 악화). 타깃 생성물을 사전 피팅하면 100.0%(27/27)가 나오나 순환 기억 왜곡이므로 리간드 분리형 2-Track TMC-SA 프로토콜이 필수적임."
     },
     "RAscore": {
         "rate": "0.0% 물리적 유효 (수치상 100% FP)",
@@ -150,11 +150,11 @@ multistage_models = [
         "gen": "3G 엄격 분리",
         "repo_key": "BR-SAScore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("반경 2 음수단편 평균 (f<0)", "background:#fef3c7; color:#b45309; border-color:#fcd34d;"),
+        "s2": ("max(existing, -0.47) 보정", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("11.1% (3/27) USPTO 결측", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("11.1% (3/27) 통과 (4종 악화)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2·3 (무기 매니폴드 결측 & 0점 평균 배제 왜곡)",
-        "barrier_desc": "생성물 및 CCTBA 항등 반응(A>>A) 누수를 차단하면 3종(TSA, TMA, DMAH)만 통과. 또한 BRSAScore는 반경 2의 음수 단편(fscore < 0)만 평균내므로, 시약 단편을 0.0으로 덮어쓰면 완만한 음수 유기 단편이 분모(nf)에서 제외되고 -6.0 금속 단편만 남아 4종(CpZr, CpTi, Ru(EtCp)2, Co(AMD)2)의 점수가 기본 사전보다 악화됨."
+        "s4": ("11.1% (3/27) 통과 (악화 0종)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (무기 매니폴드 결측; max(existing, -0.47) 보정)",
+        "barrier_desc": "BRSAScore는 반경 2 음수 단편(fscore < 0)만 평균내므로, 시약 단편을 max(existing, -0.47)로 갱신하면 점수 악화(0종; CpZr 7.20→6.95, Ru(EtCp)2 4.18→3.99) 없이도 M-N/M-C 결합 중심 단편이 시약에 부재(-6.0)하여 3종(TSA, TMA, DMAH)만 통과함. (단순 0.0 덮어쓰기 시 유기 단편이 분모에서 빠져 4종 악화)"
     },
     {
         "name": "BR-SAScore (생성물 암기 누수 대조군)",
@@ -271,22 +271,22 @@ multistage_models = [
         "gen": "4G 마코프 순방향 계획",
         "repo_key": "SynNet",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% Morgan FP 임베딩", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% Morgan FP (활성비트>0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("85.2% (23/27) 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 (HB-91 반응/BB 매칭)",
-        "barrier_desc": "ChemProjector와 동일한 HB 91종 SMARTS 매칭 결과 일반 생성물 부분구조 23/27종은 존재하나, 템플릿 파일 내 금속 원자가 전무(0건)하므로 전이금속 착체 합성 트리 생성 불가."
+        "barrier_desc": "2048비트 Morgan 지문 내 활성 비트(GetNumOnBits() > 0) 정상 생성을 27/27 실측 검증. ChemProjector와 동일한 HB 91종 SMARTS 매칭 결과 일반 생성물 부분구조 23/27종은 존재하나, 템플릿 파일 내 금속 원자가 전무(0건)하므로 착체 합성 트리 생성 불가."
     },
     {
         "name": "SynFormer",
         "gen": "4G Seq2Seq 트랜스포머",
         "repo_key": "SynFormer",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 반응 토큰 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("88.9% 부분구조(≥2원자 85.2%) / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s1": ("100.0% (27/27) 자체 어휘 통과", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% synformer 토큰 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("88.9% (≥2원자 85.2%, ≥4원자 40.7%) / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 (115 특허 반응 SMARTS 매칭)",
-        "barrier_desc": "comprehensive.txt 115종 생성물 SMARTS 매칭 결과 24/27종(무탄소 TSA는 #84 [N:1] 단일 질소 패턴으로 매칭; ≥2원자 패턴 제한 시 23/27종)에서 일반 생성물 부분구조가 존재하나, 템플릿 내 금속 원자는 전무(0건)함."
+        "barrier_desc": "synformer 자체 토크나이저(smiles_vocab.txt)는 27/27 통과. comprehensive.txt 115종 생성물 SMARTS 매칭 결과 전체 24/27종(무탄소 TSA는 #84 [N:1] 1원자 패턴), ≥2원자 패턴 23/27종(이 중 12종은 N-C 등 2~3원자 패턴만 매칭), ≥4원자 패턴 11/27종이 매칭되며 금속 원자는 전무(0건)함."
     },
     {
         "name": "Retro*",

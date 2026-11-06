@@ -147,7 +147,7 @@ synth_acc/
 │   ├── manifest.json                   # Complete verification metadata for all 25 papers
 │   ├── repos_and_precursors.json       # Verified GitHub/PyPI repository & precursor audit
 │   └── vasp_frameworks.json            # 10 verified VASP automation frameworks metadata
-├── index.html                          # Primary interactive HTML report (11 Sections, KaTeX + Mermaid)
+├── index.html                          # Primary interactive HTML report (12 Sections, KaTeX + Mermaid)
 ├── synthetic_accessibility_report.html  # Synchronized copy of the HTML report
 ├── template.html                       # Master HTML template
 ├── build_semiconductor_db.py           # Semiconductor database generation and RDKit validation engine
