@@ -1,0 +1,1447 @@
+{
+  "reasyn": {
+    "DIPAS": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        7,
+        137,
+        135,
+        14,
+        1,
+        128,
+        136,
+        138,
+        6,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 18,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[Be97Na08[Li9Li[Li",
+      "elements": [
+        "C",
+        "Si",
+        "N"
+      ]
+    },
+    "BTBAS": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        7,
+        135,
+        14,
+        1,
+        127,
+        136,
+        7,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 23,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[9Li[Be7Nap8BeLi9Li[9Li[Li",
+      "elements": [
+        "C",
+        "Si",
+        "N"
+      ]
+    },
+    "3DMAS": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        14,
+        1,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 21,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7Na89Be9Li[Li[Be9Li[Li",
+      "elements": [
+        "C",
+        "Si",
+        "N"
+      ]
+    },
+    "4DMAS": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        14,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 27,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7Na89Be9Li[Li[9Be9Li[Li[Be9Li[Li",
+      "elements": [
+        "C",
+        "Si",
+        "N"
+      ]
+    },
+    "TSA": {
+      "tokens": [
+        135,
+        14,
+        1,
+        128,
+        136,
+        7,
+        137,
+        135,
+        14,
+        1,
+        128,
+        136,
+        138,
+        135,
+        14,
+        1,
+        128,
+        136
+      ],
+      "token_count": 18,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "7Na08Be97Na08[7Na08",
+      "elements": [
+        "Si",
+        "N"
+      ]
+    },
+    "HCDS": {
+      "tokens": [
+        17,
+        135,
+        14,
+        136,
+        137,
+        17,
+        138,
+        137,
+        17,
+        138,
+        135,
+        14,
+        136,
+        137,
+        17,
+        138,
+        137,
+        17,
+        138,
+        17
+      ],
+      "token_count": 20,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "Si7Na89Si[9Si[7Na89Si[9Si[Si",
+      "elements": [
+        "Si",
+        "Cl"
+      ]
+    },
+    "TEOS": {
+      "tokens": [
+        6,
+        6,
+        8,
+        135,
+        14,
+        136,
+        137,
+        8,
+        6,
+        6,
+        138,
+        137,
+        8,
+        6,
+        6,
+        138,
+        8,
+        6,
+        6
+      ],
+      "token_count": 19,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLiB7Na89BLiLi[9BLiLi[BLiLi",
+      "elements": [
+        "C",
+        "Si",
+        "O"
+      ]
+    },
+    "SAM.24": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        7,
+        137,
+        6,
+        137,
+        6,
+        138,
+        6,
+        138,
+        135,
+        14,
+        1,
+        127,
+        136,
+        6
+      ],
+      "token_count": 19,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[Be9Li9Li[Li[7Nap8Li",
+      "elements": [
+        "C",
+        "Si",
+        "N"
+      ]
+    },
+    "TEMAH": {
+      "tokens": [
+        6,
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        72,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6,
+        6
+      ],
+      "token_count": 31,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLiBe9Li[7Tm89Be9Li[LiLi[9Be9Li[LiLi[Be9Li[LiLi",
+      "elements": [
+        "C",
+        "N",
+        "Hf"
+      ]
+    },
+    "TDMAH": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        72,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 27,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7Tm89Be9Li[Li[9Be9Li[Li[Be9Li[Li",
+      "elements": [
+        "C",
+        "N",
+        "Hf"
+      ]
+    },
+    "Hf(OtBu)4": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        8,
+        135,
+        72,
+        136,
+        137,
+        8,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        8,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        8,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 43,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[9Li[B7Tm89BLi9Li[9Li[Li[9BLi9Li[9Li[Li[BLi9Li[9Li[Li",
+      "elements": [
+        "C",
+        "Hf",
+        "O"
+      ]
+    },
+    "TEMAZ": {
+      "tokens": [
+        6,
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        40,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6,
+        6
+      ],
+      "token_count": 31,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLiBe9Li[7Rb89Be9Li[LiLi[9Be9Li[LiLi[Be9Li[LiLi",
+      "elements": [
+        "C",
+        "N",
+        "Zr"
+      ]
+    },
+    "TDMAZ": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        40,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 27,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7Rb89Be9Li[Li[9Be9Li[Li[Be9Li[Li",
+      "elements": [
+        "C",
+        "N",
+        "Zr"
+      ]
+    },
+    "ZMA": {
+      "tokens": [
+        6,
+        8,
+        135,
+        40,
+        136,
+        137,
+        6,
+        138,
+        137,
+        6,
+        126,
+        140,
+        6,
+        6,
+        140,
+        6,
+        137,
+        6,
+        138,
+        6,
+        126,
+        138,
+        6,
+        127,
+        140,
+        6,
+        6,
+        140,
+        6,
+        137,
+        6,
+        138,
+        6,
+        127
+      ],
+      "token_count": 34,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiB7Rb89Li[9Lis(LiLi(Li9Li[Lis[Lip(LiLi(Li9Li[Lip",
+      "elements": [
+        "C",
+        "Zr",
+        "O"
+      ]
+    },
+    "Cp(NMe2)3Zr": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        40,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        6,
+        126,
+        140,
+        6,
+        6,
+        140,
+        6,
+        6,
+        126
+      ],
+      "token_count": 31,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7Rb89Be9Li[Li[9Be9Li[Li[Lis(LiLi(LiLis",
+      "elements": [
+        "C",
+        "N",
+        "Zr"
+      ]
+    },
+    "TDMAT": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        22,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 27,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7K89Be9Li[Li[9Be9Li[Li[Be9Li[Li",
+      "elements": [
+        "C",
+        "N",
+        "Ti"
+      ]
+    },
+    "TTIP": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        8,
+        135,
+        22,
+        136,
+        137,
+        8,
+        6,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        8,
+        6,
+        137,
+        6,
+        138,
+        6,
+        138,
+        8,
+        6,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 31,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[B7K89BLi9Li[Li[9BLi9Li[Li[BLi9Li[Li",
+      "elements": [
+        "C",
+        "Ti",
+        "O"
+      ]
+    },
+    "CpTi(NMe2)3": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        22,
+        136,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        138,
+        6,
+        138,
+        6,
+        126,
+        140,
+        6,
+        6,
+        140,
+        6,
+        6,
+        126
+      ],
+      "token_count": 31,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7K89Be9Li[Li[9Be9Li[Li[Lis(LiLi(LiLis",
+      "elements": [
+        "C",
+        "N",
+        "Ti"
+      ]
+    },
+    "TMA": {
+      "tokens": [
+        6,
+        135,
+        13,
+        136,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 8,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "Li7Ne89Li[Li",
+      "elements": [
+        "C",
+        "Al"
+      ]
+    },
+    "DMAH": {
+      "tokens": [
+        6,
+        135,
+        13,
+        1,
+        136,
+        6
+      ],
+      "token_count": 6,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "Li7Ne8Li",
+      "elements": [
+        "C",
+        "Al"
+      ]
+    },
+    "BTBMW": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        74,
+        136,
+        137,
+        140,
+        7,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        140,
+        7,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 37,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7Lu89(BeLi9Li[9Li[Li[9(BeLi9Li[9Li[Li[Be9Li[Li",
+      "elements": [
+        "C",
+        "N",
+        "W"
+      ]
+    },
+    "BTBMMo": {
+      "tokens": [
+        6,
+        7,
+        137,
+        6,
+        138,
+        135,
+        42,
+        136,
+        137,
+        140,
+        7,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        140,
+        7,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        7,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 37,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiBe9Li[7Y89(BeLi9Li[9Li[Li[9(BeLi9Li[9Li[Li[Be9Li[Li",
+      "elements": [
+        "C",
+        "N",
+        "Mo"
+      ]
+    },
+    "Ru(EtCp)2": {
+      "tokens": [
+        6,
+        6,
+        6,
+        126,
+        140,
+        6,
+        6,
+        140,
+        6,
+        6,
+        126,
+        139,
+        135,
+        44,
+        136,
+        139,
+        6,
+        6,
+        6,
+        127,
+        140,
+        6,
+        6,
+        140,
+        6,
+        6,
+        127
+      ],
+      "token_count": 27,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLiLis(LiLi(LiLis]7Nb8]LiLiLip(LiLi(LiLip",
+      "elements": [
+        "C",
+        "Ru"
+      ]
+    },
+    "Co(AMD)2": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        7,
+        140,
+        6,
+        137,
+        6,
+        138,
+        7,
+        137,
+        6,
+        137,
+        6,
+        138,
+        6,
+        138,
+        135,
+        27,
+        136,
+        7,
+        137,
+        6,
+        137,
+        6,
+        138,
+        6,
+        138,
+        6,
+        137,
+        6,
+        138,
+        140,
+        7,
+        6,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 41,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[Be(Li9Li[Be9Li9Li[Li[7Cr8Be9Li9Li[Li[Li9Li[(BeLi9Li[Li",
+      "elements": [
+        "C",
+        "N",
+        "Co"
+      ]
+    },
+    "CCTBA": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        141,
+        6,
+        139,
+        135,
+        27,
+        136,
+        137,
+        140,
+        8,
+        138,
+        137,
+        140,
+        8,
+        138,
+        140,
+        8,
+        139,
+        135,
+        27,
+        136,
+        137,
+        140,
+        8,
+        138,
+        137,
+        140,
+        8,
+        138,
+        140,
+        8
+      ],
+      "token_count": 39,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[9Li[Li)Li]7Cr89(B[9(B[(B]7Cr89(B[9(B[(B",
+      "elements": [
+        "C",
+        "Co",
+        "O"
+      ]
+    },
+    "TBTDET": {
+      "tokens": [
+        6,
+        6,
+        7,
+        137,
+        6,
+        6,
+        138,
+        135,
+        73,
+        136,
+        137,
+        140,
+        7,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        7,
+        137,
+        6,
+        6,
+        138,
+        6,
+        6,
+        138,
+        7,
+        137,
+        6,
+        6,
+        138,
+        6,
+        6
+      ],
+      "token_count": 38,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLiBe9LiLi[7Yb89(BeLi9Li[9Li[Li[9Be9LiLi[LiLi[Be9LiLi[LiLi",
+      "elements": [
+        "C",
+        "N",
+        "Ta"
+      ]
+    },
+    "tBuSn(OiPr)3": {
+      "tokens": [
+        6,
+        6,
+        137,
+        6,
+        138,
+        8,
+        135,
+        50,
+        136,
+        137,
+        6,
+        137,
+        6,
+        138,
+        137,
+        6,
+        138,
+        6,
+        138,
+        137,
+        8,
+        6,
+        137,
+        6,
+        138,
+        6,
+        138,
+        8,
+        6,
+        137,
+        6,
+        138,
+        6
+      ],
+      "token_count": 33,
+      "has_unknown_token": false,
+      "roundtrip_exact": false,
+      "decoded": "LiLi9Li[B7Ag89Li9Li[9Li[Li[9BLi9Li[Li[BLi9Li[Li",
+      "elements": [
+        "C",
+        "Sn",
+        "O"
+      ]
+    }
+  },
+  "rxnflow": {
+    "DIPAS": {
+      "explore_reverse_matches": [
+        "reductive_amination_ketone_r1",
+        "reductive_amination_ketone_r2"
+      ],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2",
+        "reductive_amination_ketone_r1",
+        "reductive_amination_ketone_r2"
+      ],
+      "has_template_match": true
+    },
+    "BTBAS": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2"
+      ],
+      "has_template_match": true
+    },
+    "3DMAS": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "4DMAS": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "TSA": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "HCDS": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "TEOS": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "SAM.24": {
+      "explore_reverse_matches": [
+        "reductive_amination_ketone_r1",
+        "reductive_amination_ketone_r2"
+      ],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2",
+        "reductive_amination_ketone_r1",
+        "reductive_amination_ketone_r2"
+      ],
+      "has_template_match": true
+    },
+    "TEMAH": {
+      "explore_reverse_matches": [
+        "reductive_amination_aliphatic_aldehyde_r1",
+        "reductive_amination_aliphatic_aldehyde_r2"
+      ],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2",
+        "reductive_amination_aldehyde_r1",
+        "reductive_amination_aldehyde_r2"
+      ],
+      "has_template_match": true
+    },
+    "TDMAH": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "Hf(OtBu)4": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "TEMAZ": {
+      "explore_reverse_matches": [
+        "reductive_amination_aliphatic_aldehyde_r1",
+        "reductive_amination_aliphatic_aldehyde_r2"
+      ],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2",
+        "reductive_amination_aldehyde_r1",
+        "reductive_amination_aldehyde_r2"
+      ],
+      "has_template_match": true
+    },
+    "TDMAZ": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "ZMA": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "Cp(NMe2)3Zr": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "TDMAT": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "TTIP": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "CpTi(NMe2)3": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "TMA": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "DMAH": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "BTBMW": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2"
+      ],
+      "has_template_match": true
+    },
+    "BTBMMo": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2"
+      ],
+      "has_template_match": true
+    },
+    "Ru(EtCp)2": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "Co(AMD)2": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2"
+      ],
+      "has_template_match": true
+    },
+    "CCTBA": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    },
+    "TBTDET": {
+      "explore_reverse_matches": [
+        "reductive_amination_aliphatic_aldehyde_r1",
+        "reductive_amination_aliphatic_aldehyde_r2"
+      ],
+      "cgflow_reverse_matches": [
+        "amine_halide_coupling_r1",
+        "amine_halide_coupling_r2",
+        "reductive_amination_aldehyde_r1",
+        "reductive_amination_aldehyde_r2"
+      ],
+      "has_template_match": true
+    },
+    "tBuSn(OiPr)3": {
+      "explore_reverse_matches": [],
+      "cgflow_reverse_matches": [],
+      "has_template_match": false
+    }
+  },
+  "aizynthfinder": {
+    "DIPAS": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)N([SiH3])C(C)C",
+      "inchi": "InChI=1S/C6H17NSi/c1-5(2)7(8)6(3)4/h5-6H,1-4,8H3",
+      "can_ingest": true
+    },
+    "BTBAS": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)(C)N[SiH2]NC(C)(C)C",
+      "inchi": "InChI=1S/C8H22N2Si/c1-7(2,3)9-11-10-8(4,5)6/h9-10H,11H2,1-6H3",
+      "can_ingest": true
+    },
+    "3DMAS": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[SiH](N(C)C)N(C)C",
+      "inchi": "InChI=1S/C6H19N3Si/c1-7(2)10(8(3)4)9(5)6/h10H,1-6H3",
+      "can_ingest": true
+    },
+    "4DMAS": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[Si](N(C)C)(N(C)C)N(C)C",
+      "inchi": "InChI=1S/C8H24N4Si/c1-9(2)13(10(3)4,11(5)6)12(7)8/h1-8H3",
+      "can_ingest": true
+    },
+    "TSA": {
+      "valid_rdkit": true,
+      "smiles": "[SiH3]N([SiH3])[SiH3]",
+      "inchi": "InChI=1S/H9NSi3/c2-1(3)4/h2-4H3",
+      "can_ingest": true
+    },
+    "HCDS": {
+      "valid_rdkit": true,
+      "smiles": "Cl[Si](Cl)(Cl)[Si](Cl)(Cl)Cl",
+      "inchi": "InChI=1S/Cl6Si2/c1-7(2,3)8(4,5)6",
+      "can_ingest": true
+    },
+    "TEOS": {
+      "valid_rdkit": true,
+      "smiles": "CCO[Si](OCC)(OCC)OCC",
+      "inchi": "InChI=1S/C8H20O4Si/c1-5-9-13(10-6-2,11-7-3)12-8-4/h5-8H2,1-4H3",
+      "can_ingest": true
+    },
+    "SAM.24": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)N(C(C)C)[SiH2]C",
+      "inchi": "InChI=1S/C7H19NSi/c1-6(2)8(9-5)7(3)4/h6-7H,9H2,1-5H3",
+      "can_ingest": true
+    },
+    "TEMAH": {
+      "valid_rdkit": true,
+      "smiles": "CCN(C)[Hf](N(C)CC)(N(C)CC)N(C)CC",
+      "inchi": "InChI=1S/4C3H8N.Hf/c4*1-3-4-2;/h4*3H2,1-2H3;/q4*-1;+4",
+      "can_ingest": true
+    },
+    "TDMAH": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[Hf](N(C)C)(N(C)C)N(C)C",
+      "inchi": "InChI=1S/4C2H6N.Hf/c4*1-3-2;/h4*1-2H3;/q4*-1;+4",
+      "can_ingest": true
+    },
+    "Hf(OtBu)4": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)(C)O[Hf](OC(C)(C)C)(OC(C)(C)C)OC(C)(C)C",
+      "inchi": "InChI=1S/4C4H9O.Hf/c4*1-4(2,3)5;/h4*1-3H3;/q4*-1;+4",
+      "can_ingest": true
+    },
+    "TEMAZ": {
+      "valid_rdkit": true,
+      "smiles": "CCN(C)[Zr](N(C)CC)(N(C)CC)N(C)CC",
+      "inchi": "InChI=1S/4C3H8N.Zr/c4*1-3-4-2;/h4*3H2,1-2H3;/q4*-1;+4",
+      "can_ingest": true
+    },
+    "TDMAZ": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[Zr](N(C)C)(N(C)C)N(C)C",
+      "inchi": "InChI=1S/4C2H6N.Zr/c4*1-3-2;/h4*1-2H3;/q4*-1;+4",
+      "can_ingest": true
+    },
+    "ZMA": {
+      "valid_rdkit": true,
+      "smiles": "CO[Zr](C)(C1=CC=C(C)C1)C2=CC=C(C)C2",
+      "inchi": "InChI=1S/2C6H7.CH3O.CH3.Zr/c2*1-6-4-2-3-5-6;1-2;;/h2*2,4H,5H2,1H3;1H3;1H3;/q;;-1;;+1",
+      "can_ingest": true
+    },
+    "Cp(NMe2)3Zr": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[Zr](N(C)C)(N(C)C)C1=CC=CC1",
+      "inchi": "InChI=1S/C5H5.3C2H6N.Zr/c1-2-4-5-3-1;3*1-3-2;/h1-3H,4H2;3*1-2H3;/q;3*-1;+3",
+      "can_ingest": true
+    },
+    "TDMAT": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[Ti](N(C)C)(N(C)C)N(C)C",
+      "inchi": "InChI=1S/4C2H6N.Ti/c4*1-3-2;/h4*1-2H3;/q4*-1;+4",
+      "can_ingest": true
+    },
+    "TTIP": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C",
+      "inchi": "InChI=1S/4C3H7O.Ti/c4*1-3(2)4;/h4*3H,1-2H3;/q4*-1;+4",
+      "can_ingest": true
+    },
+    "CpTi(NMe2)3": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1",
+      "inchi": "InChI=1S/C5H5.3C2H6N.Ti/c1-2-4-5-3-1;3*1-3-2;/h1-3H,4H2;3*1-2H3;/q;3*-1;+3",
+      "can_ingest": true
+    },
+    "TMA": {
+      "valid_rdkit": true,
+      "smiles": "C[Al](C)C",
+      "inchi": "InChI=1S/3CH3.Al/h3*1H3;",
+      "can_ingest": true
+    },
+    "DMAH": {
+      "valid_rdkit": true,
+      "smiles": "C[AlH]C",
+      "inchi": "InChI=1S/2CH3.Al.H/h2*1H3;;",
+      "can_ingest": true
+    },
+    "BTBMW": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[W](=NC(C)(C)C)(=NC(C)(C)C)N(C)C",
+      "inchi": "InChI=1S/2C4H9N.2C2H6N.W/c2*1-4(2,3)5;2*1-3-2;/h2*1-3H3;2*1-2H3;/q;;2*-1;+2",
+      "can_ingest": true
+    },
+    "BTBMMo": {
+      "valid_rdkit": true,
+      "smiles": "CN(C)[Mo](=NC(C)(C)C)(=NC(C)(C)C)N(C)C",
+      "inchi": "InChI=1S/2C4H9N.2C2H6N.Mo/c2*1-4(2,3)5;2*1-3-2;/h2*1-3H3;2*1-2H3;/q;;2*-1;+2",
+      "can_ingest": true
+    },
+    "Ru(EtCp)2": {
+      "valid_rdkit": true,
+      "smiles": "CCC1=CC=CC1.[Ru].CCC2=CC=CC2",
+      "inchi": "InChI=1S/2C7H10.Ru/c2*1-2-7-5-3-4-6-7;/h2*3-5H,2,6H2,1H3;",
+      "can_ingest": true
+    },
+    "Co(AMD)2": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)N=C(C)N(C(C)C)[Co]N(C(C)C)C(C)=NC(C)C",
+      "inchi": "InChI=1S/2C8H17N2.Co/c2*1-6(2)9-8(5)10-7(3)4;/h2*6-7H,1-5H3;/q2*-1;+2",
+      "can_ingest": true
+    },
+    "CCTBA": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O",
+      "inchi": "InChI=1S/C6H10.2Co.6O/c1-5-6(2,3)4;;;;;;;;/h1H,2-4H3;;;;;;;;",
+      "can_ingest": true
+    },
+    "TBTDET": {
+      "valid_rdkit": true,
+      "smiles": "CCN(CC)[Ta](=NC(C)(C)C)(N(CC)CC)N(CC)CC",
+      "inchi": "InChI=1S/C4H9N.3C4H10N.Ta/c1-4(2,3)5;3*1-3-5-4-2;/h1-3H3;3*3-4H2,1-2H3;/q;3*-1;+3",
+      "can_ingest": true
+    },
+    "tBuSn(OiPr)3": {
+      "valid_rdkit": true,
+      "smiles": "CC(C)O[Sn](C(C)(C)C)(OC(C)C)OC(C)C",
+      "inchi": "InChI=1S/C4H9.3C3H7O.Sn/c1-4(2)3;3*1-3(2)4;/h1-3H3;3*3H,1-2H3;/q;3*-1;+3",
+      "can_ingest": true
+    }
+  }
+}

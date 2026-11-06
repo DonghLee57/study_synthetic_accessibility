@@ -1,0 +1,11 @@
+{
+  "total": 27,
+  "sascore_pass": 3,
+  "scscore_pass": 23,
+  "syba_pass": 23,
+  "br_sascore_pass": 3,
+  "rascore_pass": 27,
+  "rxnflow_match_count": 9,
+  "reasyn_vocab_pass": 27,
+  "aizynth_ingest_pass": 27
+}

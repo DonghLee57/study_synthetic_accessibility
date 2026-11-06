@@ -329,7 +329,7 @@ for idx, r in enumerate(rxn_db, 1):
 rxn_db_joined = "\n".join(rxn_rows)
 
 
-# Build Empirical Benchmark rows (27 Precursors x 4 Installed Models)
+# Build Empirical Benchmark rows (27 Precursors x 8 Installed Models)
 with open("database/precursor_real_benchmark_results.json", "r", encoding="utf-8") as f:
     benchmarks = json.load(f)
 
@@ -344,27 +344,38 @@ for idx, b in enumerate(benchmarks, 1):
     formula = p.get("formula", "")
     category = b["category"]
     
-    sa = b["sascore"]
-    br = b["br_sascore"]
-    sc = b["scscore"]
-    syba = b["syba"]
+    sa = b.get("sascore")
+    br = b.get("br_sascore")
+    sc = b.get("scscore")
+    syba = b.get("syba")
+    ra = b.get("rascore")
+    rxnflow = b.get("rxnflow_match", False)
+    rxnflow_rules = b.get("rxnflow_templates", [])
+    reasyn_ok = b.get("reasyn_in_vocab", True)
+    reasyn_tok = b.get("reasyn_tokens", 0)
+    aizynth_ok = b.get("aizynth_ingest", True)
+    mw = b.get("mw", 0.0)
     
     # Diagnosis logic
     diag_items = []
     if sa is not None and sa > 4.5:
-        diag_items.append(f"<span style='color:#b91c1c; font-weight:600;'>SAScore {sa} (왜곡)</span>")
+        diag_items.append(f"<span style='color:#b91c1c; font-weight:600;'>SAScore {sa} (무기원소 빈도왜곡)</span>")
     elif sa is not None and sa <= 3.5:
         diag_items.append(f"<span style='color:#15803d; font-weight:600;'>SAScore {sa} (양호)</span>")
         
     if syba is not None and syba < 0:
-        diag_items.append(f"<span style='color:#b91c1c; font-weight:600;'>SYBA {syba} (극단 왜곡)</span>")
+        diag_items.append(f"<span style='color:#b91c1c; font-weight:600;'>SYBA {syba} (샌드위치/Cp 착체 붕괴)</span>")
     elif syba is not None:
         diag_items.append(f"<span style='color:#15803d;'>SYBA +{syba}</span>")
         
     if br is not None and br > 8.0:
         diag_items.append(f"<span style='color:#d97706;'>BR-SAS {br} (유기사전 감점)</span>")
-    elif br is not None and br <= 3.5:
-        diag_items.append(f"<span style='color:#15803d;'>BR-SAS {br}</span>")
+        
+    if rxnflow:
+        rule_short = rxnflow_rules[0].split('_r')[0] if rxnflow_rules else 'ligand'
+        diag_items.append(f"<span style='color:#ea580c;'>RxnFlow: 유기리간드 쇄({rule_short})만 매칭 &bull; 금속배위 부재</span>")
+    else:
+        diag_items.append("<span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span>")
         
     diag_str = " &bull; ".join(diag_items)
     
@@ -372,6 +383,11 @@ for idx, b in enumerate(benchmarks, 1):
     br_style = "color:#15803d; font-weight:600;" if br <= 3.5 else ("color:#b91c1c; font-weight:600;" if br > 8.0 else "color:#475569;")
     sc_style = "color:#15803d; font-weight:600;" if sc <= 2.0 else "color:#b91c1c; font-weight:700;"
     syba_style = "color:#15803d; font-weight:600;" if syba >= 0 else "color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;"
+    ra_style = "color:#0284c7; font-weight:600;" if (ra is not None and ra >= 0.5) else "color:#b91c1c; font-weight:600;"
+    
+    rxnflow_badge = f"<span class='badge' style='background:#ffedd5; color:#c2410c; font-size:0.75rem; font-weight:600;'>리간드 매칭 ({len(rxnflow_rules)}건)</span>" if rxnflow else "<span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0건 (미매칭)</span>"
+    reasyn_badge = f"<span class='badge' style='background:#dcfce7; color:#15803d; font-size:0.75rem; font-weight:600;'>100% In-Vocab ({reasyn_tok}t)</span>" if reasyn_ok else "<span class='badge badge-1g'>UNK 발생</span>"
+    aizynth_badge = f"<span class='badge' style='background:#e0e7ff; color:#4338ca; font-size:0.75rem; font-weight:600;'>정상 수용 ({mw})</span>" if aizynth_ok else "<span class='badge badge-1g'>수용 에러</span>"
     
     row = f"""
             <tr>
@@ -382,11 +398,14 @@ for idx, b in enumerate(benchmarks, 1):
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">{metal}</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">{formula}</td>
-              <td style="white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">{category}</span></td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {sa_style}">{sa}</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {br_style}">{br}</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {sc_style}">{sc}</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {syba_style}">{syba}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {br_style}">{br}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {ra_style}">{ra}</td>
+              <td style="text-align:center;">{rxnflow_badge}</td>
+              <td style="text-align:center;">{reasyn_badge}</td>
+              <td style="text-align:center;">{aizynth_badge}</td>
               <td style="font-size:0.8rem; line-height:1.4;">{diag_str}</td>
             </tr>"""
     empirical_rows.append(row)
