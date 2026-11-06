@@ -40,7 +40,18 @@ def run_full_audit():
     with open(os.path.join(PROJECT_ROOT, "database", "precursors.json"), "r", encoding="utf-8") as f:
         precursors = json.load(f)
     assert len(precursors) == 27, f"Expected 27 precursors, found {len(precursors)}"
-    target_smiles = {p["smiles"] for p in precursors}
+    target_smiles = set()
+    for p in precursors:
+        target_smiles.add(p["smiles"])
+        m_t = Chem.MolFromSmiles(p["smiles"])
+        if m_t:
+            target_smiles.add(Chem.MolToSmiles(m_t))
+        if "." in p["smiles"]:
+            for comp in p["smiles"].split("."):
+                target_smiles.add(comp.strip())
+                m_c = Chem.MolFromSmiles(comp.strip())
+                if m_c:
+                    target_smiles.add(Chem.MolToSmiles(m_c))
 
     with open(os.path.join(PROJECT_ROOT, "database", "precursor_real_benchmark_results.json"), "r", encoding="utf-8") as f:
         stored_results = {r["id"]: r for r in json.load(f)}
@@ -117,31 +128,35 @@ def run_full_audit():
     br_strict = BRSAScorer()
     fscores_strict = copy.deepcopy(br_default._fscores)
 
-    # Ingest commercial building blocks excluding target precursors
+    # Ingest commercial building blocks excluding target precursors via canonical SMILES
     with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_bb.csv"), "r", encoding="utf-8") as f:
         for row in list(csv.reader(f))[1:]:
             if not row or not row[0].strip(): continue
             smi = row[0].strip()
-            if smi in target_smiles: continue
             m = Chem.MolFromSmiles(smi)
-            if m:
-                bi = {}
-                rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-                for b in bi: fscores_strict[b] = 0.0
+            if not m: continue
+            if smi in target_smiles or Chem.MolToSmiles(m) in target_smiles: continue
+            bi = {}
+            rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
+            for b in bi: fscores_strict[b] = 0.0
 
-    # Ingest reactants only (NO target products to prevent circular leakage)
+    # Ingest reactants only (NO target products or identity rules via canonical SMILES)
     with open(os.path.join(PROJECT_ROOT, "database", "br_sascore_inputs", "semi_rxn.csv"), "r", encoding="utf-8") as f:
         for row in list(csv.reader(f))[1:]:
             if not row or not row[0].strip(): continue
-            reactants = row[0].strip().split(">>")[0]
+            parts_rxn = row[0].strip().split(">>")
+            reactants = parts_rxn[0].strip()
+            m_full = Chem.MolFromSmiles(reactants)
+            if reactants in target_smiles or (m_full and Chem.MolToSmiles(m_full) in target_smiles): continue
+            if len(parts_rxn) > 1 and reactants == parts_rxn[1].strip(): continue
             for smi in reactants.split("."):
                 smi_clean = smi.strip()
-                if smi_clean in target_smiles: continue
                 m = Chem.MolFromSmiles(smi_clean)
-                if m:
-                    bi = {}
-                    rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
-                    for b in bi: fscores_strict[b] = 0.0
+                if not m: continue
+                if smi_clean in target_smiles or Chem.MolToSmiles(m) in target_smiles: continue
+                bi = {}
+                rdMolDescriptors.GetMorganFingerprint(m, 2, useChirality=True, bitInfo=bi)
+                for b in bi: fscores_strict[b] = 0.0
 
     br_strict._fscores = fscores_strict
 
@@ -165,9 +180,9 @@ def run_full_audit():
             br_strict_pass += 1
 
     print(f"  -> BR-SAScore Default Pass:                  {br_def_pass}/27 (Expected: 3/27, 11.1%)")
-    print(f"  -> BR-SAScore Strict Reagent Domain (Unleaked): {br_strict_pass}/27 (Expected: 4/27, 14.8%)")
+    print(f"  -> BR-SAScore Strict Reagent Domain (Unleaked): {br_strict_pass}/27 (Expected: 3/27, 11.1%)")
     assert br_def_pass == 3, f"Expected 3 default passes, got {br_def_pass}"
-    assert br_strict_pass == 4, f"Expected 4 strict passes, got {br_strict_pass}"
+    assert br_strict_pass == 3, f"Expected 3 strict passes, got {br_strict_pass}"
     print("  -> Scientific Finding: Without circular product memorization, commercial precursors score 8.5~9.0")
     print("     because newly formed M-N / M-C bonds receive max penalty (-6.0) in USPTO RFrag dictionary.")
 
@@ -186,8 +201,34 @@ def run_full_audit():
     print("  -> Audit Note: Prior 'false' flag was caused by decoding offset in ReaSyn's decode_smiles()")
     print("     (_smiles_id_to_token starts at MOL_END+1=4 while _smiles_token_to_id starts at 1).")
 
-    # 7. ChemProjector & SynNet 91 HB Template Matching Audit (Substituents vs Core Coordination)
-    print("\n[CHECK 7/9] Auditing ChemProjector & SynNet HB 91 Templates (Substituent vs Core)...")
+    # 7. RxnFlow, ChemProjector, SynNet & SynFormer Template Matching Audit (Substituents vs Core Coordination)
+    print("\n[CHECK 7/9] Auditing RxnFlow (72), ChemProjector/SynNet (HB 91), & SynFormer (115) Templates...")
+    import yaml
+    target_metal_atomic_nums = {13, 22, 27, 40, 42, 44, 50, 72, 73, 74}
+    target_metal_symbols = {"Si", "Ti", "Zr", "Hf", "Ru", "W", "Mo", "Al", "Co", "Ta", "Sn", "Zn"}
+    def _has_metal(m_or_p):
+        return any(a.GetAtomicNum() in target_metal_atomic_nums or a.GetSymbol() in target_metal_symbols for a in m_or_p.GetAtoms())
+
+    rxnflow_patts = []
+    for scope_name, r_file in [
+        ("explore", os.path.join(PROJECT_ROOT, "external", "rxnflow", "data", "templates", "explore", "reaction.yaml")),
+        ("cgflow", os.path.join(PROJECT_ROOT, "external", "rxnflow", "data", "templates", "cgflow", "reaction.yaml"))
+    ]:
+        with open(r_file, "r", encoding="utf-8") as f:
+            d_rf = yaml.safe_load(f)
+            for sec in ["UniReaction", "BiReaction"]:
+                for r_name, r_body in d_rf.get(sec, {}).items():
+                    rev = r_body.get("reverse", "")
+                    if ">>" in rev:
+                        pt = Chem.MolFromSmarts(rev.split(">>")[0].strip())
+                        if pt:
+                            rxnflow_patts.append((f"{scope_name}:{r_name}", pt, _has_metal(pt)))
+    rf_subst = sum(1 for p in precursors if any(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for _, pt, _ in rxnflow_patts))
+    rf_core = sum(1 for _, _, hm in rxnflow_patts if hm)
+    assert rf_subst == 9, f"Expected 9 RxnFlow substituent matches, got {rf_subst}"
+    assert rf_core == 0, f"Expected 0 RxnFlow metal rules, got {rf_core}"
+    print(f"  -> RxnFlow Substituent Matches: {rf_subst}/27 (33.3%), Metal Core Rules: {rf_core}")
+
     hb_path = os.path.join(PROJECT_ROOT, "external", "chemprojector", "data", "reaction_templates_hb.txt")
     hb_patterns = []
     with open(hb_path, "r", encoding="utf-8") as f:
@@ -197,16 +238,33 @@ def run_full_audit():
             parts = line.split(">>")
             if len(parts) == 2:
                 patt = Chem.MolFromSmarts(parts[1].strip())
-                if patt: hb_patterns.append(patt)
+                if patt: hb_patterns.append((patt, _has_metal(patt)))
     
     subst_matches = 0
     for p in precursors:
         m = Chem.MolFromSmiles(p["smiles"])
-        if any(m.HasSubstructMatch(patt) for patt in hb_patterns):
+        if any(m.HasSubstructMatch(patt) for patt, _ in hb_patterns):
             subst_matches += 1
-    print(f"  -> ChemProjector / SynNet Substituent Ligand Matches: {subst_matches}/27 (85.2%)")
-    print("  -> ChemProjector / SynNet Metal Coordination Core Matches: 0/27 (0.0% - zero metal rules exist)")
+    hb_core = sum(1 for _, hm in hb_patterns if hm)
+    print(f"  -> ChemProjector / SynNet Substituent Ligand Matches: {subst_matches}/27 (85.2%), Metal Core Rules: {hb_core}")
     assert subst_matches == 23, f"Expected 23 substituent matches, got {subst_matches}"
+    assert hb_core == 0, f"Expected 0 HB metal rules, got {hb_core}"
+
+    sf_path = os.path.join(PROJECT_ROOT, "external", "synformer", "data", "rxn_templates", "comprehensive.txt")
+    sf_rxns = []
+    with open(sf_path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"): continue
+            rxn = AllChem.ReactionFromSmarts(line)
+            if rxn:
+                prods = list(rxn.GetProducts())
+                sf_rxns.append((prods, any(_has_metal(pt) for pt in prods)))
+    sf_subst = sum(1 for p in precursors if any(all(Chem.MolFromSmiles(p["smiles"]).HasSubstructMatch(pt) for pt in prods) for prods, _ in sf_rxns))
+    sf_core = sum(1 for _, hm in sf_rxns if hm)
+    print(f"  -> SynFormer Substituent Ligand Matches: {sf_subst}/27 (88.9%), Metal Core Rules: {sf_core}")
+    assert sf_subst == 24, f"Expected 24 SynFormer substituent matches, got {sf_subst}"
+    assert sf_core == 0, f"Expected 0 SynFormer metal product rules, got {sf_core}"
 
     # 8. GASA Element Set & Silent Mis-encoding Verification
     print("\n[CHECK 8/9] Auditing GASA Element Support & Silent Mis-encoding...")

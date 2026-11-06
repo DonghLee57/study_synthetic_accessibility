@@ -908,8 +908,8 @@
       "execution_mode": "Live Numerical (Strict Reagent Domain)"
     },
     "CCTBA": {
-      "score": 1.19,
-      "pass": true,
+      "score": 8.91,
+      "pass": false,
       "reagent_dictionary_only": true,
       "data_leakage_prevented": true,
       "execution_mode": "Live Numerical (Strict Reagent Domain)"
@@ -2216,392 +2216,410 @@
     "DIPAS": {
       "substituent_matched": true,
       "matched_templates": [
-        "reductive_amination_ketone_r1",
-        "reductive_amination_ketone_r2",
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "explore:reductive_amination_ketone",
+        "cgflow:amine_halide_coupling",
+        "cgflow:reductive_amination_ketone"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "BTBAS": {
       "substituent_matched": true,
       "matched_templates": [
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "3DMAS": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "4DMAS": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TSA": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "HCDS": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TEOS": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "SAM.24": {
       "substituent_matched": true,
       "matched_templates": [
-        "reductive_amination_ketone_r1",
-        "reductive_amination_ketone_r2",
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "explore:reductive_amination_ketone",
+        "cgflow:amine_halide_coupling",
+        "cgflow:reductive_amination_ketone"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TEMAH": {
       "substituent_matched": true,
       "matched_templates": [
-        "reductive_amination_aliphatic_aldehyde_r1",
-        "reductive_amination_aliphatic_aldehyde_r2",
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "explore:reductive_amination_aliphatic_aldehyde",
+        "cgflow:amine_halide_coupling",
+        "cgflow:reductive_amination_aldehyde"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TDMAH": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "Hf(OtBu)4": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TEMAZ": {
       "substituent_matched": true,
       "matched_templates": [
-        "reductive_amination_aliphatic_aldehyde_r1",
-        "reductive_amination_aliphatic_aldehyde_r2",
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "explore:reductive_amination_aliphatic_aldehyde",
+        "cgflow:amine_halide_coupling",
+        "cgflow:reductive_amination_aldehyde"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TDMAZ": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "ZMA": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "Cp(NMe2)3Zr": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TDMAT": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TTIP": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "CpTi(NMe2)3": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TMA": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "DMAH": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "BTBMW": {
       "substituent_matched": true,
       "matched_templates": [
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "BTBMMo": {
       "substituent_matched": true,
       "matched_templates": [
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "Ru(EtCp)2": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "Co(AMD)2": {
       "substituent_matched": true,
       "matched_templates": [
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "cgflow:amine_halide_coupling"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "CCTBA": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "TBTDET": {
       "substituent_matched": true,
       "matched_templates": [
-        "reductive_amination_aliphatic_aldehyde_r1",
-        "reductive_amination_aliphatic_aldehyde_r2",
-        "amine_halide_coupling_r1",
-        "amine_halide_coupling_r2"
+        "explore:reductive_amination_aliphatic_aldehyde",
+        "cgflow:amine_halide_coupling",
+        "cgflow:reductive_amination_aldehyde"
       ],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     },
     "tBuSn(OiPr)3": {
       "substituent_matched": false,
       "matched_templates": [],
       "core_coordination_matched": false,
-      "execution_mode": "Live SMARTS Template Matching"
+      "core_metal_rules_matched": 0,
+      "execution_mode": "Live SMARTS Template Matching (72 Rules)"
     }
   },
   "aizynthfinder": {
     "DIPAS": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "BTBAS": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "3DMAS": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "4DMAS": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TSA": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "HCDS": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TEOS": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "SAM.24": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TEMAH": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TDMAH": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Hf(OtBu)4": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TEMAZ": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TDMAZ": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "ZMA": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Cp(NMe2)3Zr": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TDMAT": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TTIP": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "CpTi(NMe2)3": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TMA": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "DMAH": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "BTBMW": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "BTBMMo": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Ru(EtCp)2": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Co(AMD)2": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "CCTBA": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TBTDET": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "tBuSn(OiPr)3": {
       "smiles_ingested": true,
-      "policy_proposals": 0,
-      "search_depth": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "policy_proposals": null,
+      "search_depth": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     }
   },
   "chemprojector": {
@@ -2610,7 +2628,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBAS": {
@@ -2618,7 +2636,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "3DMAS": {
@@ -2626,7 +2644,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "4DMAS": {
@@ -2634,7 +2652,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TSA": {
@@ -2642,7 +2660,7 @@
       "hb_substituent_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "HCDS": {
@@ -2650,7 +2668,7 @@
       "hb_substituent_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEOS": {
@@ -2658,7 +2676,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "SAM.24": {
@@ -2666,7 +2684,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAH": {
@@ -2674,7 +2692,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAH": {
@@ -2682,7 +2700,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Hf(OtBu)4": {
@@ -2690,7 +2708,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAZ": {
@@ -2698,7 +2716,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAZ": {
@@ -2706,7 +2724,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "ZMA": {
@@ -2714,7 +2732,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Cp(NMe2)3Zr": {
@@ -2722,7 +2740,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 8,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAT": {
@@ -2730,7 +2748,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TTIP": {
@@ -2738,7 +2756,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CpTi(NMe2)3": {
@@ -2746,7 +2764,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 8,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TMA": {
@@ -2754,7 +2772,7 @@
       "hb_substituent_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "DMAH": {
@@ -2762,7 +2780,7 @@
       "hb_substituent_matched": false,
       "hb_templates_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMW": {
@@ -2770,7 +2788,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMMo": {
@@ -2778,7 +2796,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Ru(EtCp)2": {
@@ -2786,7 +2804,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 5,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Co(AMD)2": {
@@ -2794,7 +2812,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CCTBA": {
@@ -2802,7 +2820,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TBTDET": {
@@ -2810,7 +2828,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "tBuSn(OiPr)3": {
@@ -2818,7 +2836,7 @@
       "hb_substituent_matched": true,
       "hb_templates_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "route_found": false,
+      "route_found": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     }
   },
@@ -2828,7 +2846,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBAS": {
@@ -2836,7 +2854,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "3DMAS": {
@@ -2844,7 +2862,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "4DMAS": {
@@ -2852,7 +2870,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TSA": {
@@ -2860,7 +2878,7 @@
       "hb_substituent_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "HCDS": {
@@ -2868,7 +2886,7 @@
       "hb_substituent_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEOS": {
@@ -2876,7 +2894,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "SAM.24": {
@@ -2884,7 +2902,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAH": {
@@ -2892,7 +2910,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAH": {
@@ -2900,7 +2918,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Hf(OtBu)4": {
@@ -2908,7 +2926,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TEMAZ": {
@@ -2916,7 +2934,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAZ": {
@@ -2924,7 +2942,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "ZMA": {
@@ -2932,7 +2950,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Cp(NMe2)3Zr": {
@@ -2940,7 +2958,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 8,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TDMAT": {
@@ -2948,7 +2966,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TTIP": {
@@ -2956,7 +2974,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CpTi(NMe2)3": {
@@ -2964,7 +2982,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 8,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TMA": {
@@ -2972,7 +2990,7 @@
       "hb_substituent_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "DMAH": {
@@ -2980,7 +2998,7 @@
       "hb_substituent_matched": false,
       "hb_rules_matched_count": 0,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMW": {
@@ -2988,7 +3006,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "BTBMMo": {
@@ -2996,7 +3014,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Ru(EtCp)2": {
@@ -3004,7 +3022,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 5,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "Co(AMD)2": {
@@ -3012,7 +3030,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "CCTBA": {
@@ -3020,7 +3038,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 3,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "TBTDET": {
@@ -3028,7 +3046,7 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 6,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     },
     "tBuSn(OiPr)3": {
@@ -3036,336 +3054,524 @@
       "hb_substituent_matched": true,
       "hb_rules_matched_count": 4,
       "core_metal_rules_matched": 0,
-      "tree_constructed": false,
+      "tree_constructed": null,
       "execution_mode": "Live SMARTS Substructure Matching (HB 91)"
     }
   },
   "synformer": {
     "DIPAS": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        9,
+        43,
+        68,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "BTBAS": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        9,
+        43,
+        68,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "3DMAS": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 2,
+      "matched_template_indices": [
+        9,
+        84
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "4DMAS": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 2,
+      "matched_template_indices": [
+        9,
+        84
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TSA": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 1,
+      "matched_template_indices": [
+        84
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "HCDS": {
       "reaction_tokens_valid": true,
+      "substituent_matched": false,
       "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "matched_template_indices": [],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TEOS": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 1,
+      "matched_template_indices": [
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "SAM.24": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        9,
+        43,
+        68,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TEMAH": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        9,
+        43,
+        68,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TDMAH": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 2,
+      "matched_template_indices": [
+        9,
+        84
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "Hf(OtBu)4": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 1,
+      "matched_template_indices": [
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TEMAZ": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        9,
+        43,
+        68,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TDMAZ": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 2,
+      "matched_template_indices": [
+        9,
+        84
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "ZMA": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        3,
+        10,
+        95,
+        96,
+        102
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "Cp(NMe2)3Zr": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 7,
+      "matched_template_indices": [
+        3,
+        9,
+        10,
+        84,
+        95,
+        96,
+        102
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TDMAT": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 2,
+      "matched_template_indices": [
+        9,
+        84
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TTIP": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 1,
+      "matched_template_indices": [
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "CpTi(NMe2)3": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 7,
+      "matched_template_indices": [
+        3,
+        9,
+        10,
+        84,
+        95,
+        96,
+        102
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TMA": {
       "reaction_tokens_valid": true,
+      "substituent_matched": false,
       "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "matched_template_indices": [],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "DMAH": {
       "reaction_tokens_valid": true,
+      "substituent_matched": false,
       "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "matched_template_indices": [],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "BTBMW": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 4,
+      "matched_template_indices": [
+        9,
+        43,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "BTBMMo": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 4,
+      "matched_template_indices": [
+        9,
+        43,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "Ru(EtCp)2": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        3,
+        10,
+        95,
+        96,
+        102
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "Co(AMD)2": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        9,
+        43,
+        68,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "CCTBA": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 1,
+      "matched_template_indices": [
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "TBTDET": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 5,
+      "matched_template_indices": [
+        9,
+        43,
+        68,
+        84,
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     },
     "tBuSn(OiPr)3": {
       "reaction_tokens_valid": true,
-      "disconnection_matched": 0,
-      "route_found": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "substituent_matched": true,
+      "disconnection_matched": 1,
+      "matched_template_indices": [
+        95
+      ],
+      "core_metal_rules_matched": 0,
+      "route_found": null,
+      "execution_mode": "Live SMARTS Substructure Matching (Comprehensive 115)"
     }
   },
   "retro_star": {
     "DIPAS": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "BTBAS": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "3DMAS": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "4DMAS": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TSA": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "HCDS": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TEOS": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "SAM.24": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TEMAH": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TDMAH": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Hf(OtBu)4": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TEMAZ": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TDMAZ": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "ZMA": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Cp(NMe2)3Zr": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TDMAT": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TTIP": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "CpTi(NMe2)3": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TMA": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "DMAH": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "BTBMW": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "BTBMMo": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Ru(EtCp)2": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "Co(AMD)2": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "CCTBA": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "TBTDET": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     },
     "tBuSn(OiPr)3": {
       "rdchiral_ingest": true,
-      "uspto_rules_matched": 0,
-      "solved": false,
-      "execution_mode": "Static Analysis / Template Manifold Inspection"
+      "uspto_rules_matched": null,
+      "solved": null,
+      "execution_mode": "Static Analysis / Unexecuted Search (Weights Not Downloaded)"
     }
   },
   "dfrscore": {

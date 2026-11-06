@@ -102,19 +102,19 @@ repo_semi_metrics = {
         "rate": "85.2% (23/27, 실측)",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
         "eval": "코드 직접 실측 (초기원료 편향 / 위험성 은폐)",
-        "desc": "[코드 직접 실측 85.2%] Reaxys 1024uint8 신경망 직접 실행: 23종이 1.12~1.98의 매우 낮은 복잡도로 산출(HCDS 1.12, TTIP 1.20, DIPAS 1.70). Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 전이금속 착체라도 분자량이 작으면 단순 원료로 과소평가(ZMA 2.72, Co(AMD)2 2.38 상승). 자연발화성(Pyrophoric) 등 취급 위험성은 반영 불가."
+        "desc": "[코드 직접 실측 85.2%] Reaxys 1024bool 신경망 직접 실행: 23종이 1.01~1.94의 매우 낮은 복잡도로 산출(DMAH 1.01, HCDS 1.02, TTIP 1.25, DIPAS 1.73). Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 전이금속 착체라도 분자량이 작으면 단순 원료로 과소평가(ZMA 2.72, Co(AMD)2 2.38 상승). 자연발화성(Pyrophoric) 등 취급 위험성은 반영 불가."
     },
     "SYBA": {
         "rate": "85.2% (23/27, 실측)",
         "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
-        "eval": "코드 직접 실측 (샌드위치 착체 붕괴)",
-        "desc": "[코드 직접 실측 85.2%] 25.7MB 나이브 베이지안 사전 직접 연산: 23종은 +3.96~+11.98 양수 정상 판정. 그러나 ZINC 의약 DB에 부재한 메탈로센/Cp 샌드위치 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종에서 극단적 음수(합성 불가) 붕괴 실측 확인."
+        "eval": "코드 직접 실측 (샌드위치 착체 붕괴 / syba.csv.gz)",
+        "desc": "[코드 직접 실측 85.2%] 25.7MB 나이브 베이지안 사전(syba.csv.gz; 기본 syba4.csv.gz 대비 방법론적 변경 명시) 직접 연산: 23종은 +3.96~+11.98 양수 정상 판정. 그러나 ZINC 의약 DB에 부재한 메탈로센/Cp 샌드위치 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종에서 극단적 음수(합성 불가) 붕괴 실측 확인."
     },
     "BR-SAScore": {
-        "rate": "11.1% (기본사전) / 88.9% (전용사전)",
+        "rate": "11.1% (엄격 시약 3/27) / 100% (암기 누수)",
         "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "코드 직접 실측 (도메인 사전 교체 성공)",
-        "desc": "[코드 직접 실측] 기본 emolecules/uspto 사전 적용 시 Si-N/M-N 결합의 -6.0 감점으로 24종이 8~9점으로 과대평가(통과율 11.1%). 그러나 Gelest 실란+금속염 전용 빌딩블록 사전 적용 시 24/27종(88.9%)이 정상 산출(1.2~2.8점)되어 반도체 전구체 도메인 최적화 유효성 실증 완료."
+        "eval": "코드 직접 실측 (무누수 한계 규명 & 2-Track TMC-SA 필수)",
+        "desc": "[코드 직접 실측] 기본 의약사전(11.1%, 3/27)뿐 아니라, 데이터 누수(생성물 등록 및 CCTBA A>>A 규칙)를 완전히 배제한 엄격 시약 사전(Strict Reagent Domain)에서도 통과율은 11.1%(3/27: TSA, TMA, DMAH)로 동일함(신규 형성된 M-N/M-C 결합이 USPTO RFrag에 부재하여 -6.0 페널티 부과). 반면 타깃 생성물을 사전에 피팅하면 100.0%(27/27, 이전 24종 등록 시 88.9%)가 나오나 이는 순환 기억(Circular Leakage) 왜곡임. 따라서 단순 단편 사전 확장이 아닌 리간드 분리형 2-Track TMC-SA 프로토콜이 필수적임."
     },
     "RAscore": {
         "rate": "0.0% 물리적 유효 (수치상 100% FP)",
@@ -151,10 +151,10 @@ multistage_models = [
         "repo_key": "BR-SAScore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 정상 분리 (BFrag s_B=0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("14.8% (4/27) USPTO 결측", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("14.8% (4/27) 통과", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s3": ("11.1% (3/27) USPTO 결측", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("11.1% (3/27) 통과", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 (무기 반응 매니폴드 결측)",
-        "barrier_desc": "데이터 누수 방지(생성물 배제) 적용 시, 순수 시약 빌딩블록만으로는 새로 형성된 M-N/M-C 결합의 USPTO 부재로 최대 페널티(s_R=-6.0)를 받아 4종(TSA, TMA, DMAH, CCTBA)만 통과."
+        "barrier_desc": "생성물 및 CCTBA 항등 반응(A>>A) 누수를 정규화 SMILES로 완전 차단 시, 순수 시약 사전만으로는 신규 형성된 M-N/M-C 결합이 USPTO에 부재하여 최대 페널티(s_R=-6.0)가 부과됨에 따라 기본 사전과 동일하게 3종(TSA, TMA, DMAH)만 통과."
     },
     {
         "name": "BR-SAScore (생성물 암기 누수 대조군)",
@@ -162,10 +162,10 @@ multistage_models = [
         "repo_key": "BR-SAScore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 암기 등록 (s=0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("88.9% (24/27) 사전 피팅", "background:#fef3c7; color:#b45309; border-color:#fcd34d;"),
-        "s4": ("88.9% (24/27) [누수 왜곡]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "s3": ("100.0% (27/27) 사전 피팅", "background:#fef3c7; color:#b45309; border-color:#fcd34d;"),
+        "s4": ("100.0% (27/27) [누수 왜곡]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
         "barrier_stage": "감사 검증 (데이터 누수 대조군)",
-        "barrier_desc": "Claude 감사에서 규명된 반사실적 대조군: 타깃 생성물 단편을 사전에 피팅할 경우 24종 통과가 나오나, 이는 일반화 불가능한 순환 기억(Circular Memorization)에 불과함을 실증."
+        "barrier_desc": "Claude 감사에서 규명된 반사실적 대조군: 타깃 전구체 생성물 단편을 사전에 등록할 경우 27/27종(100.0%, 이전 24종 등록 시 88.9%)이 통과하나, 이는 미지의 전구체에 일반화할 수 없는 순환 기억(Circular Memorization) 왜곡임을 실증."
     },
     {
         "name": "BR-SAScore (기본 의약사전)",
@@ -250,10 +250,10 @@ multistage_models = [
         "repo_key": "AiZynthFinder",
         "s1": ("100.0% (27/27) 객체 생성", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% RDKit 분자 그래프", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("0.0% (0/27) 정책 전개 실패", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 역합성 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (MCTS 전개 정책망)",
-        "barrier_desc": "USPTO 50k 의약 정책망이 금속-리간드 절단 확률을 0으로 산출하여 MCTS 트리가 깊이 0에서 즉시 중단(탐색 실패)."
+        "s3": ("미실행 (가중치 미설치 / 정적 분석)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("N/A (MCTS 미실행, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
+        "barrier_stage": "Stage 3 (MCTS 가중치 부재 & 정적 분석)",
+        "barrier_desc": "RDKit 분자 객체 생성(Stage 1·2)은 100% 통과하나, USPTO 정책망 가중치 미설치로 실제 MCTS 탐색은 미실행(null 처리). 정적 분석 상 USPTO 50k 유기 반응망에는 전이금속 배위 규칙이 부재함."
     },
     {
         "name": "ChemProjector",
@@ -262,9 +262,9 @@ multistage_models = [
         "s1": ("100.0% (27/27) 원자번호≤100", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 이중 잠재 공간 투영", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("85.2% (23/27) 리간드 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 (HB-91 템플릿 실측)",
-        "barrier_desc": "HB 91종 SMARTS 실측 결과 23종의 유기 치환기 리간드 매칭은 확인되었으나, 전이금속 배위 결합 룰은 0건으로 전구체 코어 생성 불가."
+        "barrier_desc": "HB 91종 SMARTS 실측 결과 23종의 유기 치환기 리간드 매칭은 확인되었으나(TSA, HCDS, TMA, DMAH 제외), 전이금속 배위 결합 룰은 0건(동적 스캔 실측)으로 전구체 코어 생성 불가."
     },
     {
         "name": "SynNet",
@@ -273,9 +273,9 @@ multistage_models = [
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Morgan FP 임베딩", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("85.2% (23/27) 리간드 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 트리 생성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 (HB-91 반응/BB 실측)",
-        "barrier_desc": "4대 순방향 신경망이 유기 빌딩블록만 표집하며, HB 91종 룰 중 금속 코어 형성 룰이 0건이므로 전이금속 착체 트리 생성 불가."
+        "barrier_desc": "ChemProjector와 동일한 HB 91종 SMARTS 실측 결과 유기 치환기 23/27종은 매칭되나, 금속 배위 코어 형성 룰이 0건(동적 스캔 실측)이므로 전이금속 착체 합성 트리 생성 불가."
     },
     {
         "name": "SynFormer",
@@ -283,10 +283,10 @@ multistage_models = [
         "repo_key": "SynFormer",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 반응 토큰 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("0.0% (0/27) 무기 반응 0건", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (115 특허 반응 토큰)",
-        "barrier_desc": "SynFormer 반응 토큰 공간에 무기 착체 리간드 교환 룰이 없어 토큰 자기회귀 생성 중단."
+        "s3": ("88.9% (24/27) 리간드 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 (115 특허 반응 SMARTS 실측)",
+        "barrier_desc": "comprehensive.txt 115종 반응 SMARTS 직접 실측 결과 24/27종(HCDS, TMA, DMAH 제외)에서 유기 치환기 곁사슬이 매칭되었으나, 전이금속 배위 생성물 템플릿은 0건(동적 스캔 실측)임."
     },
     {
         "name": "Retro*",
@@ -294,10 +294,10 @@ multistage_models = [
         "repo_key": "Retro*",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 가치 함수 벡터", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("0.0% (0/27) rdchiral 매칭 실패", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 역합성 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (USPTO 50k 템플릿)",
-        "barrier_desc": "rdchiral 템플릿 추출망이 금속-리간드 결합을 인식하지 못해 1단계 트리 확장 후보가 0개로 A* 탐색 즉시 종료."
+        "s3": ("미실행 (USPTO 템플릿 미설치)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("N/A (A* 미실행, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
+        "barrier_stage": "Stage 3 (가중치 부재 & 정적 분석)",
+        "barrier_desc": "rdchiral 객체 파싱은 호환되나 USPTO 50k 템플릿 및 가치 신경망 가중치 미설치로 실제 A* 탐색은 미실행(null 처리). 정적 분석 상 USPTO 유기 반응망에는 금속 배위 규칙이 부재함."
     },
     {
         "name": "DFRscore",

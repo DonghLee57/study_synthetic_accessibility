@@ -2507,8 +2507,8 @@ flowchart LR
               <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 4: 물리 합성성 ($N_{\text{pass}}$) &amp; 데이터 누수 검증</div>
               <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
                 &bull; <strong>평가 기준:</strong> 상용 전구체 물리적 합성 판정 및 딕셔너리 데이터 누수 검증.<br>
-                &bull; <strong>엄격 시약 사전 (무누수):</strong> BR-SAScore 14.8% (4/27) 통과 (M-N 배위 룰 USPTO 부재 한계).<br>
-                &bull; <strong>생성물 암기 대조군 (누수):</strong> 사전 피팅 시 88.9% (24/27) 통과 왜곡 (Claude 감사 규명).
+                &bull; <strong>엄격 시약 사전 (무누수):</strong> BR-SAScore 11.1% (3/27: TSA, TMA, DMAH) 통과 (M-N 배위 룰 USPTO 부재 한계).<br>
+                &bull; <strong>생성물 암기 대조군 (누수):</strong> 타깃 전구체 사전 등록 시 100.0% (27/27; 이전 24종 등록 시 88.9%) 통과 왜곡 (Claude 감사 규명).
               </div>
             </div>
           </div>
@@ -2543,12 +2543,12 @@ flowchart TD
         C2 -->|HB-58 / HB-91 유기 템플릿: 금속 룰 전무| C5["ChemProjector / SynNet / SynFormer: 코어 생성 0.0%"]
         C2 -->|rdchiral 템플릿 매칭 실패| C6["Retro*: A* 큐 즉시 고갈 (0.0%)"]
         C2 -->|CGFlow 신톤: 리간드 곁사슬 9종만 매칭| C7["RxnFlow: 코어 합성 0.0%"]
-        C2 -->|의약 사전(eMolecules): Si-N/M-N 결합 부재| C8["BR-SAScore (기본): 8~9점 과대평가 (11.1%)"]
-        C2 -->|Gelest 실란+금속염+염복분해 전용 사전 주입| D1["Stage 4 진입 (반도체 최적화)"]
+        C2 -->|의약 사전(eMolecules) & 순수 시약 사전(무누수): M-N 결합 USPTO 부재| C8["BR-SAScore (기본 & 엄격 시약): 8~9점 과대평가 (11.1%, 3/27)"]
+        C2 -->|리간드 분리형 2-Track TMC-SA + DFT 착물화 에너지 결합| D1["Stage 4 진입 (물리 기반 반도체 최적화)"]
     end
 
     subgraph STAGE4["Stage 4: 물리화학적 합성성 판정 (Synthesizability Output)"]
-        D1 --> D2["BR-SAScore (반도체 전용사전): 88.9% (24/27) 올바른 합성성 판정 성공!"]
+        D1 --> D2["2-Track TMC-SA + DFT: 순환 누수 없는 물리 기반 합성성 판정 완성!"]
         C8 --> D3["SAScore: 11.1% (3/27) 치명적 False Negative"]
         B2 --> D4["SCScore: 85.2% (23/27) 출발물질 편향 (자연발화성 위험 은폐)"]
     end
@@ -2761,18 +2761,19 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
                 <tr>
                   <td><strong>BR-SAScore</strong><br><span class="badge badge-3g">3G 사전 분리</span><br><span style="font-size:0.75rem; color:#64748b;">(2024)</span></td>
                   <td style="font-size:0.82rem;"><strong>BFrag &bull; RFrag 분리 스코어링</strong><br>&bull; 시판 원료 단편($s_B$) 감점 면제<br>&bull; 반응 단편($s_R$) 로그빈도 감점</td>
-                  <td style="font-size:0.82rem;"><strong>eMolecules + USPTO</strong><br>&bull; 기본: 의약 120만 BB / 180만 반응<br>&bull; <strong>반도체 독자 사전 치환 가능</strong></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#d97706;">기본 11.1%<br><span style="color:#15803d; font-weight:700;">사전 88.9%</span></td>
+                  <td style="font-size:0.82rem;"><strong>eMolecules + USPTO</strong><br>&bull; 기본: 의약 120만 BB / 180만 반응<br>&bull; <strong>무누수 시약 사전 vs 암기 대조군 검증</strong></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#b91c1c;">엄격 11.1%<br><span style="color:#b45309; font-weight:700; font-size:0.72rem;">(암기누수 100%)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
-                    <strong>기본 의약 사전 불일치:</strong><br>
-                    &bull; 기본 사전에서 Si-N, M-N 결합에 최대 반응 감점($s_R = -6.0$)이 부과되어 24종이 8~9점으로 과대 산출.
+                    <strong>무누수 시약 사전의 근본 한계 (3/27 통과):</strong><br>
+                    &bull; 타깃 생성물 및 항등 반응(A&gt;&gt;A) 누수를 배제한 엄격 시약 사전에서도, 신규 형성된 Si-N/M-N 결합 중심 원자가 USPTO RFrag에 부재하여 최대 반응 감점($s_R = -6.0$)을 받아 기본 사전과 동일하게 3종(TSA, TMA, DMAH)만 통과.<br>
+                    &bull; 타깃 생성물을 사전 등록하면 100%(27/27; 구버전 24/27) 통과하나 이는 순환 암기(Circular Leakage) 왜곡임.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
-                    <strong>반도체 독자 사전 주입 시 완벽 정합:</strong><br>
-                    &bull; SiCl4, HfCl4, TiCl4, 아민류를 시판 원료($s_B=0$)로, 염 복분해를 정규 반응으로 등록 시 24종이 1.2~2.8점으로 완벽 정상화.
+                    <strong>유기 프로-리간드($HL_i$) 정밀 평가:</strong><br>
+                    &bull; 전구체 전체가 아닌 분리된 유기 프로-리간드($HL_i$: 아민, 아미딘, 알콕사이드, Cp)에 적용 시 시판 원료($s_B=0$)와 유기 반응($s_R$)을 누수 없이 정확히 평가.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#047857; font-weight:600;">
-                    <strong>최우수 추천 (S등급).</strong><br>자체 구축한 <code>semi_bb.csv</code>와 <code>semi_rxn.csv</code>를 주입하여 Track A/B 통합 운영.
+                    <strong>2-Track TMC-SA 필수.</strong><br>단순 단편 사전 피팅을 지양하고, 유기 리간드 <code>BR-SAScore(HL_i)</code>와 무기 배위 패널티 및 DFT 착물화 에너지를 결합하여 운용.
                   </td>
                 </tr>
 
@@ -2955,7 +2956,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
                 <h4 style="margin:0; font-size:1.08rem; color:#0f172a;">4. BR-SAScore (Building-block &amp; Reaction Decoupled SA Score) &mdash; Baldi et al., SNU (2024)</h4>
                 <div>
                   <span class="badge badge-3g">3G Decoupled</span>
-                  <span class="badge" style="background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:700;">기본 11.1% &rarr; 전용사전 88.9%</span>
+                  <span class="badge" style="background:#fee2e2; color:#991b1b; font-size:0.75rem; font-weight:700;">기본·엄격시약 11.1% (3/27) / 생성물암기 누수 100%</span>
                 </div>
               </div>
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:0.86rem; line-height:1.55;">
@@ -2968,14 +2969,15 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
                   시판 빌딩블록 라이브러리에 존재하는 단편은 $s_B(f_i) = 0.0$으로 감점을 면제하며, 반응 단편 $s_R(f_i)$만 반응 DB 로그빈도 감점($-6.0 \sim 0$)을 부여합니다.
                 </div>
                 <div style="background:#f8fafc; padding:12px 14px; border-radius:6px; border-left:3px solid #64748b;">
-                  <strong>&bull; 학습 데이터셋:</strong><br>
-                  기본 사본은 eMolecules 120만 개 빌딩블록과 USPTO 180만 개 특허 반응으로 빌드되었습니다. 본 연구에서는 이를 <code>database/br_sascore_inputs/</code>의 <strong>반도체 전용 독자 사전(<code>semi_bb.csv</code>, <code>semi_rxn.csv</code>)</strong>으로 전면 교체하여 검증하였습니다.
+                  <strong>&bull; 학습 데이터셋 및 무누수 감사 설계:</strong><br>
+                  기본 사본은 eMolecules 120만 개 빌딩블록과 USPTO 180만 개 특허 반응으로 빌드되었습니다. 본 연구에서는 타깃 생성물 단편을 철저히 배제한 <strong>엄격 시약 사전(Strict Reagent Domain)</strong>과 생성물 단편을 사전 등록한 <strong>암기 누수 대조군(Leaked Counterfactual Baseline)</strong>을 대조 검증하였습니다.
                 </div>
               </div>
-              <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#f0fdf4; border:1px solid #dcfce7; border-radius:6px; padding:12px 16px;">
-                <strong style="color:#166534;">&bull; 실측 비교: 왜 기본 사전은 실패하고 전용 사전은 최우수인가? (The Custom Dictionary Revolution):</strong><br>
-                1. <strong>기본 사전의 실패:</strong> eMolecules와 USPTO는 $99.8\%$ 유기 반응이므로, 반도체의 실리콘-질소($	ext{Si-N}$) 및 금속-질소($	ext{M-N}$) 단편에 최대 반응 감점($s_R = -6.0$)을 일괄 적용하여 24종이 8.2~9.0점으로 폭주했습니다.<br>
-                2. <strong>반도체 전용 사전의 대성공 (88.9% 통과):</strong> $	ext{SiCl}_4, 	ext{HfCl}_4, 	ext{TiCl}_4$ 및 알킬아민을 원료($s_B = 0.0$)로 등록하고, 염 복분해(Salt Metathesis) 및 아미노분해(Aminolysis)를 정규 반응으로 주입하자 24종이 실제 공정 난이도에 부합하는 $1.2 \sim 2.8$점으로 완벽히 정상화되었습니다. 재학습 없이 도메인 확장이 가능한 최고의 모델입니다.
+              <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#fff7ed; border:1px solid #ffedd5; border-radius:6px; padding:12px 16px;">
+                <strong style="color:#c2410c;">&bull; 실측 및 반사실적 감사(Counterfactual Audit) 결론: 왜 단순 사전 확장은 실패하며 2-Track 리간드 분리가 필수인가?:</strong><br>
+                1. <strong>엄격 시약 사전(무누수) 실측 (11.1%, 3/27 통과):</strong> $\text{SiCl}_4, \text{HfCl}_4, \text{TiCl}_4$ 및 알킬아민 등 순수 출발 시약만 $s_B = 0.0$으로 등록하고 타깃 전구체 생성물(및 CCTBA의 비표준 SMILES <code>CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O</code> 항등 규칙)을 정규화 SMILES로 완전 배제할 경우, 반응 후 새로 형성된 $\text{M-N, M-O, M-C}$ 결합 중심의 반경 2 Morgan 단편은 출발 시약과 해시값이 다르며 USPTO `RFrag` 사전에도 존재하지 않아 최대 페널티($s_R = -6.0$)를 받습니다. 그 결과 통과율은 기본 사전과 동일하게 <strong>3/27 (11.1%: TSA, TMA, DMAH)</strong>에 머뭅니다.<br>
+                2. <strong>생성물 암기 누수 대조군 (100.0%, 27/27; 구버전 24/27):</strong> 타깃 전구체 생성물 자체의 단편을 $0.0$으로 사전 등록하면 27종 전수가 $1.0 \sim 1.9$점으로 통과하나, 이는 테스트셋 생성물을 암기(Circular Data Leakage)한 결과이므로 미지의 신규 전구체에는 전혀 일반화되지 않습니다.<br>
+                3. <strong>구조적 해법 (2-Track TMC-SA):</strong> 따라서 온전한 유기금속 착물에 1G/3G 단편 사전을 직접 씌우는 방식을 폐기하고, 착물을 금속 코어($MX_m$)와 유기 프로-리간드($HL_i$)로 분해하여 리간드 합성성은 `BR-SAScore`($HL_i$)로 평가하고 금속 배위 열역학은 DFT($\Delta G_{\text{syn}}^{\text{DFT}}$)로 결합하는 <strong>Section 8의 2-Track TMC-SA 아키텍처</strong>가 유일하게 정합적인 해법입니다.
               </div>
             </div>
 
