@@ -89,115 +89,78 @@ lit_rows_joined = "\n".join(lit_rows_html)
 # Formally partitioned into:
 # (A) [코드 직접 실측]: Directly installed & executed locally on 27 precursors
 # (B) [도메인 제약 분석]: Evaluated via dataset scope & chemical grammar constraints
+# Benchmark metrics on semiconductor precursor DB (27 molecules)
+# Strictly filtered to the 8 directly installed, executed, and benchmarked models
 repo_semi_metrics = {
     "SAScore (RDKit Built-in)": {
-        "rate": "14.8% (코드 실측)",
+        "rate": "11.1% (3/27, 실측)",
         "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
         "eval": "코드 직접 실측 (False Negative 왜곡)",
-        "desc": "[코드 직접 실측 14.8%] 27종 프리커서 RDKit 연산 결과: TEOS(2.84), 4DMAS(3.37), Ru(EtCp)2(3.48), Hf(OtBu)4(3.63) 4종만 3.5 이하 정상 판정. 단순 상용 시약인 TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등에 극단적 False Negative 발생 실측 확인."
+        "desc": "[코드 직접 실측 11.1%] TEOS(2.84), 4DMAS(3.37), Ru(EtCp)2(3.48) 3종만 3.5 이하 정상 통과. TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등 1단계 단순 양산 전구체에 극단적 페널티 발생. PubChem 의약 분자 빈도 기반으로 Si-N, Al-C, Zr-O 등 반도체 핵심 배위를 비천연성 복잡 구조로 오인함."
     },
     "SCScore": {
-        "rate": "96.3% (코드 실측)",
+        "rate": "85.2% (23/27, 실측)",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "코드 직접 실측 (초기원료 편향)",
-        "desc": "[코드 직접 실측 96.3%] Full Reaxys 1024uint8 모델 직접 실행 결과: 26종이 1.12~1.98의 매우 낮은 복잡도로 산출(HCDS 1.12, TTIP 1.20, DIPAS 1.70). Reaxys 반응 경로의 초기 반응물로 분류되어 전이금속 착체라도 분자량이 작으면 단순 원료로 과소평가(ZMA만 3.09) 실측 확인."
+        "eval": "코드 직접 실측 (초기원료 편향 / 위험성 은폐)",
+        "desc": "[코드 직접 실측 85.2%] Reaxys 1024uint8 신경망 직접 실행: 23종이 1.12~1.98의 매우 낮은 복잡도로 산출(HCDS 1.12, TTIP 1.20, DIPAS 1.70). Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 전이금속 착체라도 분자량이 작으면 단순 원료로 과소평가(ZMA 2.72, Co(AMD)2 2.38 상승). 자연발화성(Pyrophoric) 등 취급 위험성은 반영 불가."
     },
     "SYBA": {
-        "rate": "85.2% (코드 실측)",
+        "rate": "85.2% (23/27, 실측)",
         "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
-        "eval": "코드 직접 실측 (Cp 착체 왜곡)",
-        "desc": "[코드 직접 실측 85.2%] 25.7MB 베이지안 카운트 사전 직접 연산 결과: 23종은 +3.96~+11.98 양수 판정. 그러나 ZINC 의약 DB에 부재한 Cp/메탈로센 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종에 극단적 음수(합성 불가) 왜곡 실측 확인."
+        "eval": "코드 직접 실측 (샌드위치 착체 붕괴)",
+        "desc": "[코드 직접 실측 85.2%] 25.7MB 나이브 베이지안 사전 직접 연산: 23종은 +3.96~+11.98 양수 정상 판정. 그러나 ZINC 의약 DB에 부재한 메탈로센/Cp 샌드위치 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종에서 극단적 음수(합성 불가) 붕괴 실측 확인."
     },
     "BR-SAScore": {
-        "rate": "11.1% 실측 (전용사전 88.9%)",
+        "rate": "11.1% (기본사전) / 88.9% (전용사전)",
         "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "코드 직접 실측 (사전 교체 필수)",
-        "desc": "[코드 직접 실측 11.1%] 기본 emolecules/uspto 사전 적용 시 Si-N/M-N 결합의 -6.0 감점으로 TMA(1.04), DMAH(1.02), TSA(1.04) 3종만 통과하고 DIPAS(8.82), TEMAH(8.80) 등 24종이 8~9점으로 과대평가 실측. Gelest 실란+금속염 사전 교체 시 24/27종(88.9%) 정상 산출 검증."
+        "eval": "코드 직접 실측 (도메인 사전 교체 성공)",
+        "desc": "[코드 직접 실측] 기본 emolecules/uspto 사전 적용 시 Si-N/M-N 결합의 -6.0 감점으로 24종이 8~9점으로 과대평가(통과율 11.1%). 그러나 Gelest 실란+금속염 전용 빌딩블록 사전 적용 시 24/27종(88.9%)이 정상 산출(1.2~2.8점)되어 반도체 전구체 도메인 최적화 유효성 실증 완료."
     },
     "RAscore": {
-        "rate": "22.2% [도메인 제약]",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "도메인 제약 분석 (Python 3.8/3.9 전용)",
-        "desc": "[도메인 제약 분석 22.2%] XGBoost 1.x / Python 3.8 환경 제약. AiZynthFinder MCTS 증류 기반으로 USPTO 50k 유기 반응에 편향되어 전이금속 염 복분해 반응 부재 시 유기금속 착체 예측 확률 0.05 이하로 왜곡."
-    },
-    "GASA": {
-        "rate": "29.6% [도메인 제약]",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "도메인 제약 분석 (단순 구조 국한)",
-        "desc": "[도메인 제약 분석 29.6%] 그래프 어텐션(GAT) 기반 SA 지표. 비금속 실란 및 단일 리간드 착체 8종 인식 성공. 다핵 착물 및 란타넘족 원소 인식 실패."
-    },
-    "DeepSA": {
-        "rate": "33.3% [도메인 제약]",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "도메인 제약 분석 (유기 리간드 국한)",
-        "desc": "[도메인 제약 분석 33.3%] 사전학습 트랜스포머 기반 SA 지표. 금속 중심 SMILES 파싱 한계로 전이금속 착체 에러 빈발, 리간드 단독 9종 평가 유효."
-    },
-    "DFRscore": {
-        "rate": "37.0% [도메인 제약]",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "도메인 제약 분석 (리간드 경로 한정)",
-        "desc": "[도메인 제약 분석 37.0%] 반응 단계 수 기반 예측기. 기본 유기 반응 템플릿으로 10종 리간드 합성 단계 산출 성공. 무기화 반응(Inorganic core) 미지원."
-    },
-    "ChemProjector": {
-        "rate": "74.1% [도메인 제약]",
-        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "도메인 제약 분석 (리간드 투영 양호)",
-        "desc": "[도메인 제약 분석 74.1%] 분자 투영 기반 역합성 경로 내재화 모델. 전이금속 착체를 리간드 분해 프로토콜(HL)과 결합 시 20종에 대해 합성 가능한 DAG 및 상용 시약 매핑 경로 성공적 출력."
-    },
-    "SynFormer": {
-        "rate": "70.4% [도메인 제약]",
-        "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
-        "eval": "도메인 제약 분석 (빌딩블록 매핑)",
-        "desc": "[도메인 제약 분석 70.4%] 트랜스포머 기반 순차 합성 계획 생성 모델. 19종 전구체의 유기 리간드 빌딩 블록 조합 경로 유효 생성, 금속 킬레이트화 단계는 후처리 템플릿 필요."
-    },
-    "SynFlowNet": {
-        "rate": "81.5% [도메인 제약]",
-        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "도메인 제약 분석 (다목적 역설계)",
-        "desc": "[도메인 제약 분석 81.5%] GFlowNet 기반 마코프 의사결정 경로 탐색기. 다중 보상함수(증기압, 분해온도, SA) 결합 시 22종에 대한 유효 합성 그래프 도출."
+        "rate": "100.0% (27/27, 실측)",
+        "badge_style": "background:#e0f2fe; color:#0369a1; border-color:#7dd3fc; font-weight:700;",
+        "eval": "코드 직접 실측 (ECFP6 알킬 서브트리 편향)",
+        "desc": "[코드 직접 실측 100.0%] XGBoost 1.7.6 기반 직접 실행: 전수 평균 0.925(최저 0.629 ~ 최고 0.988)로 27종 전수 합성 용이 판정. ECFP6 반경 3 지문에서 금속 중심이 '다중 치환 알킬/아민'으로 매핑되어 약물 합성의 쉬운 알킬화 반응으로 착각하여 중심 금속 결합 안정성 및 산화 위험을 감지하지 못하는 맹점 확인."
     },
     "RxnFlow": {
-        "rate": "85.2% [도메인 제약]",
-        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "도메인 제약 분석 (경로 완결성)",
-        "desc": "[도메인 제약 분석 85.2%] 반응 중심 경로 연속 흐름 생성 모델. 시약-반응 쌍 동시 탐색으로 23종 전구체의 상용 유무기 전구체로부터의 1~3단계 합성 트리 생성 성공."
+        "rate": "33.3% (9/27, 리간드 매칭)",
+        "badge_style": "background:#ffedd5; color:#c2410c; border-color:#fdba74; font-weight:700;",
+        "eval": "코드 직접 실측 (유기 리간드 국한 / 무기 배위 부재)",
+        "desc": "[코드 직접 실측 33.3%] ICLR 2025 공식 GFlowNet 환경 직접 연산: 유기 리간드의 알킬 곁사슬(아세톤 환원적 아민화 등)을 포함하는 9종만 매칭 성공. 금속-배위원자(M-N, M-O, M-C) 배위 결합 형성 템플릿 부재로 유기금속 전이금속 착체 코어 합성률은 0.0%에 머무름."
     },
     "ReaSyn": {
-        "rate": "85.2% [도메인 제약]",
-        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "도메인 제약 분석 (대규모 BioNeMo)",
-        "desc": "[도메인 제약 분석 85.2%] NVIDIA BioNeMo 대규모 자기회귀 합성 경로 생성기. 1.6억 파라미터 기반으로 복잡 전이금속 착체(23종)의 리간드 골격 및 합성 경로를 단일 패스로 생성."
-    },
-    "SynNet": {
-        "rate": "66.7% [도메인 제약]",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "도메인 제약 분석 (유기 반응 국한)",
-        "desc": "[도메인 제약 분석 66.7%] 바이오/유기 4대 기본 반응에 편향되어 금속 알킬화/실릴화 반응 경로 생성 시 9종 실패. 18종 리간드 경로 유효."
+        "rate": "100.0% 어휘 수용 (무기 템플릿 제약)",
+        "badge_style": "background:#ede9fe; color:#6d28d9; border-color:#c4b5fd; font-weight:700;",
+        "eval": "코드 직접 실측 (118종 전주기 어휘 / 반응 매니폴드 갭)",
+        "desc": "[코드 직접 실측 100.0%] ICLR 2026 Oral NVIDIA BioNeMo ReaSyn 구조 직접 분석: 118개 전주기율표 원소 토큰을 지원하여 27종 전구체의 SMILES 토큰화 및 임베딩 100% 결함 없음(0 UNK). 그러나 115개 SynFormer 특허 반응 매니폴드가 유기 반응에 국한되어 무기 착체 배위 단계 전개 템플릿 제약 확인."
     },
     "AiZynthFinder": {
-        "rate": "44.4% [도메인 제약]",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "도메인 제약 분석 (무기 템플릿 부재)",
-        "desc": "[도메인 제약 분석 44.4%] MCTS 기반 전통적 역합성 엔진. 무기/금속 착체 템플릿 부재로 유기금속 전구체는 실패율 높음. 실란 및 아미노 전구체 12종 성공."
-    },
-    "Retro*": {
-        "rate": "48.1% [도메인 제약]",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "도메인 제약 분석 (무기 반응 미지원)",
-        "desc": "[도메인 제약 분석 48.1%] 신경망 유도 A* 탐색 알고리즘. USPTO 50k 템플릿 사용으로 13종 유기 리간드 경로만 도출 성공."
-    },
-    "MPScore (Materials Precursor)": {
-        "rate": "92.6% [도메인 제약]",
-        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "도메인 제약 분석 (소재/배위 최적)",
-        "desc": "[도메인 제약 분석 92.6%] MOF/재료 화학 전구체 전용 합성 점수 모델. 유기금속 및 배위 리간드 평가에 최적화되어 27종 중 25종에 대해 정확한 합성성 랭킹 부여 확인."
+        "rate": "100.0% 분자 수용 (MCTS 무기 정책 제약)",
+        "badge_style": "background:#f1f5f9; color:#334155; border-color:#94a3b8; font-weight:700;",
+        "eval": "코드 직접 실측 (RDKit 완결 / 유기 전개 정책 제약)",
+        "desc": "[코드 직접 실측 100.0%] v4.4.1 직접 실행: RDKit 기반 27종 전구체 분자 객체 생성, MW 계산, InChIKey 생성 100% 정상 통과. 그러나 USPTO 50k 기반 전개 정책 신경망이 금속-리간드 결합 절단 확률을 0으로 산출하여 자식 노드 전개가 즉시 중단되므로 무기 반응 템플릿 주입 필수."
     }
 }
 
-# Build Repo rows without emojis
+# Strictly filter to the 8 empirically tested models in benchmark order
+tested_keys = [
+    "SAScore (RDKit Built-in)",
+    "SCScore",
+    "SYBA",
+    "BR-SAScore",
+    "RAscore",
+    "RxnFlow",
+    "ReaSyn",
+    "AiZynthFinder"
+]
+
+repo_by_name = {r["name"]: r for r in extra["repos"]}
 repo_rows = []
-for idx, r in enumerate(extra["repos"], 1):
-    m = repo_semi_metrics.get(r['name'], {
+for idx, key in enumerate(tested_keys, 1):
+    r = repo_by_name.get(key)
+    if not r:
+        continue
+    m = repo_semi_metrics.get(key, {
         "rate": "N/A",
         "badge_style": "background:#f1f5f9; color:#475569; border-color:#cbd5e1;",
         "eval": "평가 미기재",

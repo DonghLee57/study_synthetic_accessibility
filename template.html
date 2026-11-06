@@ -1092,12 +1092,12 @@
         <li><a href="#comparison-matrix" class="toc-link" data-target="comparison-matrix">4. 16개 모델 정량 비교 매트릭스</a></li>
         <li><a href="#extended-studies" class="toc-link" data-target="extended-studies">5. 유사 및 확장 연구 심층 분석</a></li>
         <li><a href="#decision-guide" class="toc-link" data-target="decision-guide">6. 연구 목적별 모델 선정 가이드</a></li>
-        <li><a href="#opensource-code" class="toc-link" data-target="opensource-code">7. 공개 사용 코드 (GitHub/PyPI)</a></li>
+        <li><a href="#opensource-code" class="toc-link" data-target="opensource-code">7. 오픈소스 저장소 검증 (섹션 12 통합 안내)</a></li>
         <li><a href="#semiconductor-precursor" class="toc-link" data-target="semiconductor-precursor">8. 반도체 프리커서 적용 및 확장</a></li>
         <li><a href="#dft-synergy" class="toc-link" data-target="dft-synergy">9. DFT 계산 연계 응용 프레임워크</a></li>
         <li><a href="#vasp-automation" class="toc-link" data-target="vasp-automation">10. VASP 기반 DFT 자동화 스택</a></li>
         <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 프리커서·반응 독자 DB</a></li>
-        <li><a href="#comprehensive-eval" class="toc-link" data-target="comprehensive-eval">12. DB 및 오픈소스 종합 평가</a></li>
+        <li><a href="#comprehensive-eval" class="toc-link" data-target="comprehensive-eval">12. [섹션 7·12 통합] 오픈소스 저장소 및 8대 실측 모델 종합 평가</a></li>
         <li><a href="#precursor-inverse-design" class="toc-link" data-target="precursor-inverse-design">13. 프리커서 AI 역설계 &amp; 연산 매핑</a></li>
       </ul>
 
@@ -1714,42 +1714,28 @@ flowchart LR
       <!-- Section 7: Open-Source Repositories & Executable Code -->
       <section id="opensource-code">
         <div class="section-header">
-          <div class="section-tag">Section 7 &bull; Verified Open-Source Repositories &amp; Semiconductor Benchmark</div>
-          <h2 class="section-title">17개 오픈소스 저장소 검증 및 반도체 전구체 DB 실증 평가</h2>
+          <div class="section-tag">Section 7 &bull; Integrated into Section 12</div>
+          <h2 class="section-title">오픈소스 저장소 검증 (섹션 12로 전면 통합 안내)</h2>
           <p class="section-desc">
-            GitHub REST API, PyPI 및 Zenodo 아카이브를 조회하여 17개 주요 모델의 공식 저장소 주소, 라이선스, 그리고 반도체 전구체 데이터셋(27종) 대상 벤치마크 적용 성공률을 검증·정리했습니다.
+            기존 섹션 7의 <strong>오픈소스 저장소 검증 메타데이터</strong>와 섹션 12의 <strong>벤치마크 평가</strong> 간 중복을 해소하고 가독성을 극대화하기 위해, <strong>섹션 12(DB 및 오픈소스 종합 평가)</strong>의 <strong>'8대 실측 모델 공식 저장소 및 27종 프리커서 실측 벤치마크 총괄표'</strong>로 일원화하여 통합하였습니다.
           </p>
         </div>
 
-        <!-- Collapsible Toggle Bar for 17 Open-Source Repositories Table -->
-        <div class="table-toggle-bar">
-          <div class="table-toggle-info">
-            <span class="table-toggle-title">17개 오픈소스 저장소 및 반도체 전구체 DB 실증 평가 지표 테이블</span>
-            <span class="table-toggle-subtitle">공식 저장소 링크, GitHub Stars/배포 형태, 라이선스 및 27종 반도체 전구체 실증 성공률 지표를 포함합니다.</span>
-          </div>
-          <button type="button" class="btn-toggle-table" id="btn-panel-repos" onclick="togglePanel('panel-repos', 'btn-panel-repos', '오픈소스 코드베이스 테이블 보기 (17건)', '코드베이스 테이블 닫기 (숨김)')">
-            오픈소스 코드베이스 테이블 보기 (17건)
-          </button>
-        </div>
-
-        <!-- Hidden by default: 17 Open-Source Repositories Table -->
-        <div id="panel-repos" class="collapsible-panel">
-          <div class="table-responsive" style="margin-bottom:20px;">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:44px; text-align:center;">No</th>
-                  <th style="width:160px;">모델 / 툴명</th>
-                  <th>공식 GitHub / PyPI / Zenodo 저장소</th>
-                  <th style="width:100px; text-align:center;">Stars / 배포</th>
-                  <th style="width:110px; text-align:center;">라이선스</th>
-                  <th style="min-width:340px;">반도체 전구체 DB (27종) 적용 성공률 및 실증 평가 지표</th>
-                </tr>
-              </thead>
-              <tbody>
-<!-- REPO_ROWS_PLACEHOLDER -->
-              </tbody>
-            </table>
+        <div class="card" style="border-left: 4px solid var(--accent-blue); background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 24px; margin-bottom: 24px;">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <div style="font-size:1.8rem; line-height:1; color:var(--accent-blue);">&#9432;</div>
+            <div style="flex:1;">
+              <h3 style="font-size:1.15rem; color:#0f172a; margin-top:0; margin-bottom:8px;">섹션 7 &middot; 섹션 12 구조 통합 및 8대 실측 모델 집중 재편</h3>
+              <p style="font-size:0.92rem; color:var(--text-secondary); line-height:1.65; margin-bottom:12px;">
+                기존에 분리되어 제공되던 오픈소스 코드 저장소 정보와 실측 성능 평가를 단일 챕터로 병합하였습니다. 특히 비실측 이론 추정치 모델들을 전면 제외하고, <strong>실제 로컬 파이썬 환경에서 소스 코드를 설치하여 27종 반도체 전구체 전수를 직접 계산·검증한 8대 핵심 모델(SAScore, SCScore, SYBA, BR-SAScore, RAscore, RxnFlow, BioNeMo ReaSyn, AiZynthFinder)</strong>만을 대상으로 공식 GitHub/PyPI 저장소, 배포 형태, 라이선스, 실측 통과율 및 결함 원인 분석을 통합 제공합니다.
+              </p>
+              <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:16px;">
+                <a href="#comprehensive-eval" class="btn-primary" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; font-weight:600; text-decoration:none; border-radius:6px; font-size:0.9rem; background:var(--accent-blue); color:#ffffff;">
+                  <span>통합된 섹션 12로 바로 이동하여 8대 실측 모델 종합 평가 확인하기 &rarr;</span>
+                </a>
+                <span style="font-size:0.82rem; color:#64748b;">(섹션 12 &gt; 2. [통합 테이블] 8대 실측 모델 공식 저장소 &amp; 실측 벤치마크 총괄표)</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -2446,10 +2432,10 @@ flowchart LR
       <!-- Section 12: Comprehensive Benchmark & Engineering Evaluation -->
       <section id="comprehensive-eval">
         <div class="section-header">
-          <div class="section-tag">Section 12 &bull; Comprehensive Benchmark &amp; Engineering Evaluation</div>
-          <h2 class="section-title">확보된 데이터베이스 및 오픈소스 라이브러리 종합 평가</h2>
+          <div class="section-tag">Section 12 &bull; [섹션 7·12 통합] Unified Open-Source Repositories &amp; 8 Empirical Models Benchmark</div>
+          <h2 class="section-title">[섹션 7·12 통합] 오픈소스 저장소 검증 및 8대 실측 모델 종합 평가</h2>
           <p class="section-desc">
-            본 연구에서 구축한 <strong>반도체 도메인 독자 DB(프리커서 27종, 시약 29종, 반응 12종)</strong>와 조사·검증된 <strong>27개 오픈소스 라이브러리(SA 지표 17종, VASP 자동화 도구 10종)</strong>의 기술적 완성도, 실제 연구 적용성, 물리·화학적 장단점 및 실무 추천도를 종합 평가합니다.
+            기존 섹션 7의 오픈소스 저장소 검증(GitHub/PyPI) 정보와 섹션 12의 벤치마크 평가를 단일 프레임워크로 통합했습니다. 추정치나 이론적 등급을 배제하고, 실제 파이썬 환경에서 직접 설치·구동하여 실증 연산을 완료한 <strong>8대 실측 모델(SAScore, SCScore, SYBA, BR-SAScore, RAscore, RxnFlow, BioNeMo ReaSyn, AiZynthFinder)</strong>만을 대상으로 공식 저장소 메타데이터, 27종 반도체 양산 프리커서 전수 실측 지표, 그리고 구조적 정합/왜곡 메커니즘을 전수 해부합니다.
           </p>
         </div>
 
@@ -2483,10 +2469,39 @@ flowchart LR
           </div>
         </div>
 
+        <!-- Eval 2: Consolidated 8 Tested Open-Source Repositories & Precursor Benchmark Summary Table -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [통합 테이블] 8대 실측 모델 공식 저장소(GitHub/PyPI) 및 27종 프리커서 실측 벤치마크 총괄표</h3>
+            <span class="badge badge-1g" style="font-size:0.82rem;">8대 실측 모델 엄선 &bull; 저장소 메타 및 실측 통합</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px; line-height:1.6;">
+            기존 섹션 7의 오픈소스 저장소 검증(GitHub/PyPI) 메타데이터와 섹션 12의 실측 지표를 단일 총괄표로 통합하였습니다. 비실측 이론 추정치 모델들을 전면 제외하고, 로컬 환경에서 직접 소스 코드를 설치하여 27종 반도체 양산 프리커서 전수를 검증한 <strong>8개 핵심 모델</strong>의 저장소 주소, 배포 형태, 라이선스, 실측 통과율 및 메커니즘 진단 결과를 일원화하여 제시합니다.
+          </p>
+
+          <div class="table-responsive" style="margin-bottom:10px;">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:44px; text-align:center;">No</th>
+                  <th style="width:160px;">모델 / 툴명</th>
+                  <th>공식 GitHub / PyPI 저장소</th>
+                  <th style="width:100px; text-align:center;">Stars / 배포</th>
+                  <th style="width:110px; text-align:center;">라이선스</th>
+                  <th style="min-width:340px;">반도체 양산 전구체 DB (27종) 전수 코드 실측 지표 및 분석</th>
+                </tr>
+              </thead>
+              <tbody>
+<!-- REPO_ROWS_PLACEHOLDER -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <!-- Eval 2: Direct Empirical Benchmark Matrix on 27 Semiconductor Precursors -->
         <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [코드 직접 설치 실측] 27종 반도체 프리커서 대상 8대 오픈소스 및 최신 생성·역합성 모델 전수 실측 연산 결과</h3>
+            <h3 class="card-title" style="margin-bottom:0;">3. [원천 실측치 매트릭스] 27종 반도체 양산 프리커서 대상 8대 모델 전수 실측 연산 결과</h3>
             <span class="badge badge-3g" style="font-size:0.82rem;">8대 모델 &bull; 27종 전수 직접 계산 검증 완료</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
@@ -2566,7 +2581,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
         <!-- Eval 2-1: Deep Dive into 8 Directly Benchmarked Models: Architecture, Training Data, and Domain Adaptation Mechanism -->
         <div class="card" style="margin-top:24px; border-top: 3px solid var(--accent-purple);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. [8대 실측 모델 심층 분석] 모델 아키텍처·학습 데이터셋·반도체 프리커서 정합/왜곡 메커니즘 전수 해부 (Why It Fits / Why It Fails)</h3>
+            <h3 class="card-title" style="margin-bottom:0;">4. [8대 실측 모델 심층 분석] 모델 아키텍처·학습 데이터셋·반도체 프리커서 정합/왜곡 메커니즘 전수 해부 (Why It Fits / Why It Fails)</h3>
             <span class="badge badge-4g" style="font-size:0.82rem;">아키텍처 &bull; 데이터셋 &bull; 메커니즘 심층 검증</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:16px; line-height:1.6;">
@@ -2988,168 +3003,7 @@ ight)^2$$
 
           </div>
         </div>
-<!-- Eval 3: 16 SA Models Comprehensive Matrix -->
-        <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">4. 합성 가능성(SA) 평가 모델 16종 세대별 종합 비교표</h3>
-          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
-            연산 속도, False Negative 방지율, 반도체 프리커서 적합도, 그리고 리간드 분해 호환성을 기준으로 평가한 세대별 모델 성적표입니다:
-          </p>
-
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>모델명</th>
-                  <th>세대</th>
-                  <th>계산 속도</th>
-                  <th>False Negative 방지</th>
-                  <th>반도체 프리커서 적합도</th>
-                  <th>리간드 분해 호환성</th>
-                  <th>실무 종합 추천 등급</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>SAScore</strong> (2009)</td>
-                  <td><span class="badge badge-1g">1G</span></td>
-                  <td>&lt; 0.1 ms</td>
-                  <td>매우 낮음 (TSA 6.91점 등 왜곡)</td>
-                  <td>부적합 (무기/금속 결여)</td>
-                  <td>불가 (전체 분자 대상)</td>
-                  <td><strong>C</strong> (단순 베이스라인용)</td>
-                </tr>
-                <tr>
-                  <td><strong>SYBA</strong> (2020)</td>
-                  <td><span class="badge badge-1g">1G</span></td>
-                  <td>~ 0.5 ms</td>
-                  <td>중간 (ZINC 기준 편향)</td>
-                  <td>부적합 (의약 탄소 위주)</td>
-                  <td>유기 리간드만 가능</td>
-                  <td><strong>C+</strong> (의약 스크리닝용)</td>
-                </tr>
-                <tr>
-                  <td><strong>SCScore</strong> (2018)</td>
-                  <td><span class="badge badge-2g">2G</span></td>
-                  <td>~ 5 ms</td>
-                  <td>중간 (반응 단계 추정)</td>
-                  <td>낮음 (Reaxys 유기반응 한정)</td>
-                  <td>가능 (단계 제어)</td>
-                  <td><strong>B</strong> (합성 복잡도 추정용)</td>
-                </tr>
-                <tr>
-                  <td><strong>RAscore</strong> (2021)</td>
-                  <td><span class="badge badge-2g">2G</span></td>
-                  <td>~ 1 ms</td>
-                  <td>우수 (MCTS 증류)</td>
-                  <td>중간 (유기 리간드 한정)</td>
-                  <td>매우 우수 ($HL$ 평가)</td>
-                  <td><strong>A-</strong> (리간드 경로 확률 판정)</td>
-                </tr>
-                <tr>
-                  <td><strong>RetroGNN</strong> (2022)</td>
-                  <td><span class="badge badge-2g">2G</span></td>
-                  <td>~ 8 ms</td>
-                  <td>우수 (그래프 임베딩)</td>
-                  <td>중간 (유기 리간드)</td>
-                  <td>우수</td>
-                  <td><strong>B+</strong> (GNN 특화 분석)</td>
-                </tr>
-                <tr>
-                  <td><strong>GASA</strong> (2022)</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td>~ 10 ms</td>
-                  <td>우수 (위치선택성 감지)</td>
-                  <td>중간 (실란 치환기 위치)</td>
-                  <td>우수</td>
-                  <td><strong>B+</strong> (이성질체 구분 특화)</td>
-                </tr>
-                <tr>
-                  <td><strong>DeepSA</strong> (2023)</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td>~ 15 ms</td>
-                  <td>우수 (SMILES LM)</td>
-                  <td>낮음 (약물 분해트리 기반)</td>
-                  <td>가능</td>
-                  <td><strong>B</strong> (약물 도메인 최적화)</td>
-                </tr>
-                <tr>
-                  <td><strong>DFRscore</strong> (2023)</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td>~ 12 ms</td>
-                  <td>우수 (반응 단계 정수화)</td>
-                  <td>낮음</td>
-                  <td>가능</td>
-                  <td><strong>B</strong> (의약 전구체 특화)</td>
-                </tr>
-                <tr>
-                  <td><strong>BR-SAScore</strong> (2024)</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td><strong>~ 1 ms</strong></td>
-                  <td><strong>최우수 (BFrag 면제)</strong></td>
-                  <td><strong>최우수 (사전 교체 가능)</strong></td>
-                  <td><strong>최우수 (Track A/B 완벽 호환)</strong></td>
-                  <td><strong>S (최우수 추천)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>MPScore</strong> (2021)</td>
-                  <td><span class="badge badge-prec">소재</span></td>
-                  <td>~ 1 ms</td>
-                  <td>우수 (소재 전문가 레이블)</td>
-                  <td>우수 (유기 케이지/소재)</td>
-                  <td>우수</td>
-                  <td><strong>A</strong> (소재 리간드 평가)</td>
-                </tr>
-                <tr>
-                  <td><strong>ChemProjector</strong> (2024)</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>~ 100 ms</td>
-                  <td>100% 경로 보장 (투영)</td>
-                  <td>우수 (BB/반응 템플릿 확장 시)</td>
-                  <td>100% 경로 동시 출력</td>
-                  <td><strong>A+</strong> (합성 보장 분자 투영)</td>
-                </tr>
-                <tr>
-                  <td><strong>SynFormer</strong> (2025)</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>~ 80 ms</td>
-                  <td>100% 경로 보장 (토큰)</td>
-                  <td>우수</td>
-                  <td>경로 시퀀스 보장</td>
-                  <td><strong>A</strong> (자기회귀 생성)</td>
-                </tr>
-                <tr>
-                  <td><strong>SynFlowNet</strong> (2025)</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>~ 40 ms</td>
-                  <td>100% 보장 (GFlowNet)</td>
-                  <td>우수 (다양성 표집)</td>
-                  <td>경로 그래프 보장</td>
-                  <td><strong>A</strong> (다양한 후보군 탐색)</td>
-                </tr>
-                <tr>
-                  <td><strong>RxnFlow</strong> (2024)</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>~ 45 ms</td>
-                  <td>100% 보장 (DAG 경로)</td>
-                  <td><strong>최우수 (보상함수 결합 용이)</strong></td>
-                  <td><strong>100% DAG 합성망 보장</strong></td>
-                  <td><strong>S (생성형 코어 최우수)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>ReaSyn</strong> (2025)</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>테스트타임 스케일링</td>
-                  <td>100% 보장 (CoR)</td>
-                  <td>우수</td>
-                  <td>단계별 반응 수정 가능</td>
-                  <td><strong>A+</strong> (NVIDIA 고속 엔진)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Eval 3: VASP Automation 10 Frameworks Comprehensive Matrix -->
+<!-- Eval 3: VASP Automation 10 Frameworks Comprehensive Matrix -->
         <div class="card" style="margin-top:20px;">
           <h3 class="card-title">5. VASP 기반 반도체 프리커서 DFT 자동화 도구 10종 실무 생산성 평가</h3>
           <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
@@ -3862,7 +3716,7 @@ flowchart TD
     const tableConfigs = [
       { panel: 'panel-lit', btn: 'btn-panel-lit', closed: '문헌 검증 전체 테이블 보기 (25건)', open: '문헌 검증 테이블 닫기 (숨김)' },
       { panel: 'panel-matrix', btn: 'btn-panel-matrix', closed: '16개 모델 비교 테이블 보기', open: '비교 테이블 닫기 (숨김)' },
-      { panel: 'panel-repos', btn: 'btn-panel-repos', closed: '오픈소스 코드베이스 테이블 보기 (17건)', open: '코드베이스 테이블 닫기 (숨김)' },
+      
       { panel: 'panel-bottleneck', btn: 'btn-panel-bottleneck', closed: '3대 병목 및 해결책 테이블 보기', open: '병목 비교 테이블 닫기 (숨김)' },
       { panel: 'panel-vasp', btn: 'btn-panel-vasp', closed: 'VASP 자동화 프레임워크 테이블 보기 (10건)', open: 'VASP 프레임워크 테이블 닫기 (숨김)' },
       { panel: 'panel-precdb', btn: 'btn-panel-precdb', closed: '상용 프리커서 DB 테이블 보기 (27종)', open: '상용 프리커서 DB 닫기 (숨김)' },
@@ -3876,6 +3730,7 @@ flowchart TD
       tableConfigs.forEach(cfg => {
         const panel = document.getElementById(cfg.panel);
         const btn = document.getElementById(cfg.btn);
+        if (!panel || !btn) return;
         if (anyClosed) {
           panel.classList.add('open');
           btn.classList.add('is-open');

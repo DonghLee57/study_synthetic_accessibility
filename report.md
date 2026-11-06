@@ -61,23 +61,52 @@ This report validates the evolutionary history of Synthetic Accessibility (SA) p
 
 ---
 
-## 3. Open-Source Codebase & Package Audit
+## 3. Open-Source Codebase Audit & Environmental Verification (8 Directly Benchmarked Models)
 
-All 17 open-source packages were checked via GitHub API, PyPI, and Zenodo:
-- **SAScore**: Built into `rdkit.Chem.RDConfig.RDContribDir` (`SA_Score/sascorer.py`, BSD-3-Clause, 3,666+ stars).
-- **BR-SAScore**: Distributed on PyPI (`pip install BRSAScore`, v0.1.1, MIT License). Source code inspection of `BRSAScore/BRSAScore.py` confirmed that building block fragments ($BFrag$) in `BScores_emolecules.pkl.gz` are assigned $f_{\text{score}} = 0.0$ (exempt from penalty), while reaction fragments ($RFrag$) in `RScores_uspto.pkl.gz` carry negative log-frequency scores $f_{\text{score}} \in [-6.0, 0)$. Custom domains are natively supported via `python scripts/prepare_Scores.py -r <rxn> -b <bb>`.
-- **RAscore**: `github.com/reymond-group/RAscore` (MIT, 100 stars).
-- **SCScore**: `github.com/connorcoley/scscore` (MIT, 127 stars).
-- **SYBA**: `github.com/lich-uct/syba` (GPL-3.0, 49 stars).
-- **GASA**: `github.com/cadd-synthetic/GASA` (GPL-2.0, 22 stars).
-- **DeepSA**: `github.com/Shihang-Wang-58/DeepSA` (42 stars).
-- **DFRscore**: `github.com/Hwoo-Kim/DFRscore` (MIT, 12 stars).
-- **ChemProjector**: `github.com/luost26/ChemProjector` (MIT, 61 stars).
-- **SynFormer**: `github.com/wenhao-gao/synformer` (Apache-2.0, 90 stars).
-- **SynFlowNet**: `github.com/mirunacrt/synflownet` (MIT, 136 stars).
-- **RxnFlow**: `github.com/SeonghwanSeo/RxnFlow` (MIT, 41 stars).
-- **ReaSyn**: `github.com/NVIDIA-BioNeMo/ReaSyn` (Apache-2.0, 116 stars).
-- **MPScore**: `doi.org/10.5281/zenodo.4961161` (MIT/CC-BY).
+To eliminate ungrounded theoretical scores and ensure strict reproducibility, repository metadata and environment dependencies were audited specifically for the **8 directly executed open-source frameworks** evaluated on the 27 semiconductor precursors:
+
+1. **SAScore (RDKit Built-in)**:
+   - *Repository*: Official RDKit distribution (`rdkit.Chem.RDConfig.RDContribDir/SA_Score/sascorer.py`).
+   - *License*: BSD-3-Clause | *Community*: 3,666+ GitHub stars.
+   - *Environment*: Native RDKit integration; zero external dependencies.
+
+2. **SCScore (MIT Coley Group)**:
+   - *Repository*: `github.com/connorcoley/scscore`
+   - *License*: MIT | *Community*: 127 GitHub stars.
+   - *Environment*: Standalone NumPy inference engine using full Reaxys 1024uint8 weights (`model.ckpt-10654`).
+
+3. **SYBA (UCT Prague)**:
+   - *Repository*: `github.com/lich-uct/syba`
+   - *License*: GPL-3.0 | *Community*: 49 GitHub stars.
+   - *Environment*: Python / RDKit wrapper with 25.7 MB empirical Bayesian fragment count table (`syba.csv.gz`).
+
+4. **BR-SAScore (SNU MICC)**:
+   - *Repository*: `snu-micc/BR-SAScore` (PyPI: `BRSAScore==0.1.1` / Fork: `awadell1/BR-SAScore`).
+   - *License*: MIT | *Distribution*: PyPI Official package.
+   - *Environment*: Decouples building blocks ($BFrag$, score $0.0$) and reaction steps ($RFrag$, score $\in [-6.0, 0)$). Supports custom semiconductor domain dictionaries.
+
+5. **RAscore (Reymond Group / AstraZeneca)**:
+   - *Repository*: `github.com/reymond-group/RAscore`
+   - *License*: MIT | *Community*: 100 GitHub stars.
+   - *Environment*: XGBoost 1.7.6 classifier on 2048-bit ECFP6 counts, trained on 200,000 ChEMBL AiZynthFinder retrosynthetic rollouts.
+
+6. **RxnFlow (KAIST / Yonsei / HITS, ICLR 2025)**:
+   - *Repository*: `github.com/SeonghwanSeo/RxnFlow`
+   - *License*: MIT | *Community*: 41 GitHub stars.
+   - *Environment*: Generative Flow Network (GFlowNet) over synthesis DAGs, utilizing forward/backward policy networks on synthon actions.
+
+7. **BioNeMo ReaSyn (NVIDIA, ICLR 2026 Oral)**:
+   - *Repository*: `github.com/NVIDIA-BioNeMo/ReaSyn`
+   - *License*: Apache-2.0 | *Community*: 116 GitHub stars.
+   - *Environment*: 160M-parameter autoregressive transformer over a 118-element periodic vocabulary and 115 SynFormer patent reaction templates.
+
+8. **AiZynthFinder (AstraZeneca)**:
+   - *Repository*: `github.com/MolecularAI/aizynthfinder` (PyPI: `aizynthfinder==4.4.1`).
+   - *License*: MIT | *Community*: 911 GitHub stars.
+   - *Environment*: Production-grade Monte Carlo Tree Search (MCTS) retrosynthetic engine with policy neural networks and stock query interfaces.
+
+> [!NOTE]
+> Models lacking empirical local execution or open weights (e.g., GASA, DeepSA, DFRscore, ChemProjector, SynFormer, SynFlowNet, SynNet, Retro*, MPScore) have been excluded from the empirical benchmark matrix to uphold rigorous scientific integrity and avoid speculative ratings.
 
 ---
 
