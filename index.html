@@ -1083,7 +1083,7 @@
     <aside class="toc-sidebar" aria-label="보고서 목차">
       <div class="toc-header">
         <span>보고서 목차 (Contents)</span>
-        <span class="toc-progress" id="tocProgress">Sec 1/12</span>
+        <span class="toc-progress" id="tocProgress">Sec 1/13</span>
       </div>
       <ul class="toc-list" id="tocList">
         <li><a href="#verification-hub" class="toc-link active" data-target="verification-hub">1. 문헌 종합 통계 및 아카이브 (34편)</a></li>
@@ -1098,6 +1098,7 @@
         <li><a href="#vasp-automation" class="toc-link" data-target="vasp-automation">10. VASP 기반 DFT 자동화 스택</a></li>
         <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 프리커서·반응 독자 DB</a></li>
         <li><a href="#precursor-inverse-design" class="toc-link" data-target="precursor-inverse-design">12. 프리커서 AI 역설계 &amp; 연산 매핑</a></li>
+        <li><a href="#dft-tuning-roadmap" class="toc-link" data-target="dft-tuning-roadmap">13. 반도체 AI 모델 튜닝 &amp; DFT·실험 융합 전략</a></li>
       </ul>
 
       <div class="toc-sub-actions">
@@ -6572,6 +6573,288 @@ flowchart TD
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+      </section>
+
+    
+      <!-- Section 13: Semiconductor Precursor AI Model Adaptation & DFT/Experiment Tuning Roadmap -->
+      <section id="dft-tuning-roadmap">
+        <div class="section-header">
+          <div class="section-tag">Section 13 &bull; Model Adaptation Strategy &amp; DFT/Experiment-Coupled Tuning Roadmap</div>
+          <h2 class="section-title">반도체 프리커서 AI 모델 선정, 튜닝 방법론 및 DFT·실험 데이터 융합 로드맵</h2>
+          <p class="section-desc">
+            기존 의약 중심 오픈소스 모델의 도메인 불일치와 4단계 파이프라인 붕괴를 극복하기 위해, <strong>어떤 오픈소스 모델을 베이스로 선정하고(BR-SAScore, RxnFlow, AiZynthFinder)</strong>, <strong>분자 분해(De-coupling), Multi-Fidelity DFT(SevenNet MLIP, VASP), 그리고 실험 피드백(열분해 창, 증기압, 자연발화성)</strong>을 어떻게 단계별 보상(Reward) 및 제약으로 결합·튜닝할 것인지에 대한 <strong>종합 실행 전략 및 엔지니어링 청사진</strong>을 제시합니다.
+          </p>
+        </div>
+
+        <!-- 13.1 Base Model Selection Matrix -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">1. 반도체 프리커서 맞춤형 3대 오픈소스 베이스 모델 선정 매트릭스</h3>
+            <span class="badge badge-4g" style="font-size:0.82rem;">Base Model Architecture Matrix</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
+            단일 모델로 모든 것을 해결하려는 시도는 실패합니다. 목적에 따라 <strong>'빠른 대량 스크리닝(Scoring)'</strong>, <strong>'합성 경로 보장 생성(Generation)'</strong>, 그리고 <strong>'체계적 역합성 트리 탐색(CASP Planning)'</strong>으로 명확히 역할을 분리하여 베이스 모델을 선정해야 합니다:
+          </p>
+
+          <div class="table-responsive" style="margin-bottom:16px;">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:130px;">적용 목적</th>
+                  <th style="width:140px;">추천 베이스 모델</th>
+                  <th style="width:140px;">원작 아키텍처</th>
+                  <th style="width:110px;">라이선스</th>
+                  <th style="width:230px;">선정 이유 (Why This Model?)</th>
+                  <th>반도체 도메인 개조 핵심 포인트</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Track A: 정량 스크리닝</strong><br><span class="badge badge-1g">빠른 단일 스코어링</span></td>
+                  <td><strong><code>BR-SAScore</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(&rarr; TMC-SA 확장)</span></td>
+                  <td style="font-size:0.82rem;">단편 빈도 룩업 테이블<br>(Morgan r=2 분해)</td>
+                  <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
+                  <td style="font-size:0.82rem; line-height:1.5;">
+                    &bull; <strong>100% 구조 투명성:</strong> 블랙박스 신경망이 아니므로 사전 제어가 완벽함.<br>
+                    &bull; <strong>시약/반응 분리 구조:</strong> $BFrag$(시약)와 $RFrag$(반응)가 분리되어 유기 리간드 평가와 무기 배위 평가의 디커플링이 가장 용이함.
+                  </td>
+                  <td style="font-size:0.82rem; line-height:1.5;">
+                    전구체를 $\{HL_i\}$와 $M\text{X}_m$으로 분해하여 리간드 점수와 DFT 착물화 에너지($\Delta G_{\text{syn}}^{\text{DFT}}$)를 결합하는 하이브리드 수식으로 전면 개조.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Track B: 경로 보장 생성</strong><br><span class="badge badge-4g">de novo 역설계 생성</span></td>
+                  <td><strong><code>RxnFlow</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(ICLR 2025)</span></td>
+                  <td style="font-size:0.82rem;">GFlowNet 기반<br>반응 DAG 순방향 생성</td>
+                  <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
+                  <td style="font-size:0.82rem; line-height:1.5;">
+                    &bull; <strong>보상(Reward) 함수 연동성:</strong> 목적함수 $R(x)$에 DFT 계산값($\Delta G$, $\%V_{\text{bur}}$, 증기압)을 다중 보상으로 직접 결합 가능.<br>
+                    &bull; <strong>합성 경로 원천 보장:</strong> 반응 템플릿을 따라 순방향으로 조립하므로 생성된 물질은 100% 역합성 경로를 보유함.
+                  </td>
+                  <td style="font-size:0.82rem; line-height:1.5;">
+                    의약 유기 템플릿(72개)을 반도체 유기금속 25대 템플릿(염복분해, 아미노분해 등)으로 교체하고 29종 반도체 시약 카탈로그를 공급.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Track C: 역합성 트리 탐색</strong><br><span class="badge badge-2g">CASP 경로 계획</span></td>
+                  <td><strong><code>AiZynthFinder</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(AstraZeneca)</span></td>
+                  <td style="font-size:0.82rem;">MCTS 트리 탐색<br>+ 정책 신경망</td>
+                  <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
+                  <td style="font-size:0.82rem; line-height:1.5;">
+                    &bull; <strong>모듈형 파이프라인 무결성:</strong> 27종 반도체 전구체 객체 수용(`Molecule.sanitize()`) 100% 검증 완료.<br>
+                    &bull; <strong>설정 파일 분리:</strong> `config.yml`을 통해 정책 파일과 재고 HDF5만 갈아끼우면 무기 전용 엔진으로 전환 가능.
+                  </td>
+                  <td style="font-size:0.82rem; line-height:1.5;">
+                    USPTO 의약 정책망 대신 유기금속 특허 반응망을 추출하여 커스텀 정책 신경망 및 재고 카탈로그(`building_blocks.json`)를 연동.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 13.2 Methodology 1: BR-SAScore -> TMC-SA Hybrid Adaptation -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [평가 스코어러 튜닝] `BR-SAScore` &rarr; `TMC-SA` (Transition Metal Complex SA) 하이브리드 수식화</h3>
+            <span class="badge badge-1g" style="font-size:0.82rem;">Scorer Adaptation Formulation</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            MIT Kulik 그룹의 전이금속 착물 합성성 연구(JACS Au 2022)와 `BR-SAScore`의 모듈형 사전 룩업 방식을 결합하여, 유기금속 전구체에 내재된 두 화학적 층위(유기 리간드 합성과 금속-리간드 배위 결합)를 분리 평가하는 지배방정식을 정의합니다:
+          </p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid var(--accent-blue); border-radius:6px; padding:16px; margin-bottom:18px;">
+            <div style="font-weight:700; color:#0f172a; font-size:1.02rem; margin-bottom:6px;">TMC-SA 하이브리드 지배방정식 (Governing Equation):</div>
+            $$\text{SA}_{\text{Precursor}} = \underbrace{\max_{i} \text{BR-SAScore}(HL_i)}_{\text{Track 1: 유기 프로-리간드 합성 난이도}} + \underbrace{w_1 \cdot \mathcal{S}_{\text{DFT}}(\Delta G_{\text{syn}}^{\text{DFT}}) + w_2 \cdot \mathcal{S}_{\text{steric}}(\%V_{\text{bur}})}_{\text{Track 2: DFT 배위 착물화 자유에너지 및 입체 인자}} + \underbrace{w_3 \cdot \mathcal{P}_{\text{exp}}}_{\text{실험 위험도 패널티}}$$
+          </div>
+
+          <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:14px;">
+            <div class="stat-card" style="padding:14px; border-left:4px solid #0284c7;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">1. Track 1: 리간드 분해 ($HL_i$)</div>
+              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
+                전구체 $M(L_1)_{n_1}(L_2)_{n_2}$를 중심 금속염 $M\text{X}_m$과 중성 프로-리간드 $HL_1, HL_2$로 자동 절단. 리간드는 순수 유기 분자이므로 `BR-SAScore`(또는 `SCScore`)를 통해 합성성을 100% 신뢰성 있게 평가.
+              </div>
+            </div>
+
+            <div class="stat-card" style="padding:14px; border-left:4px solid #059669;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">2. Track 2: DFT 착물화 ($\Delta G_{\text{syn}}^{\text{DFT}}$)</div>
+              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
+                기상 착물화 반응 $M\text{Cl}_m + n HL \rightarrow M(L)_n + m \text{HCl}$의 깁스 자유에너지 산출:<br>
+                &bull; $\Delta G_{\text{syn}}^{\text{DFT}} \le -15\text{ kcal/mol}$: 자발적 착물 형성 (패널티 0.0)<br>
+                &bull; $\Delta G_{\text{syn}}^{\text{DFT}} > 0\text{ kcal/mol}$: 열역학적 불안정 (+5.0 감점)
+              </div>
+            </div>
+
+            <div class="stat-card" style="padding:14px; border-left:4px solid #7c3aed;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">3. 입체 매몰 부피 ($\%V_{\text{bur}}$)</div>
+              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
+                단분자 기화성과 이량화 억제를 보장하는 입체 포화도 제어:<br>
+                &bull; $\%V_{\text{bur}} \in [65\%, 80\%]$: 정상 단분자 창 (패널티 0.0)<br>
+                &bull; $\%V_{\text{bur}} < 60\%$: 배위 미포화로 인한 중합 위험 (+3.0 감점)<br>
+                &bull; $\%V_{\text{bur}} > 85\%$: 과도한 입체 장해로 리간드 탈락 (+4.0 감점)
+              </div>
+            </div>
+
+            <div class="stat-card" style="padding:14px; border-left:4px solid #ea580c;">
+              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">4. 실험 피드백 패널티 ($\mathcal{P}_{\text{exp}}$)</div>
+              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
+                실제 실험실/양산 라인의 취급 난이도 반영:<br>
+                &bull; $\text{TGA residue} > 2\%$: 불완전 기화 패널티 (+2.0)<br>
+                &bull; 자연발화성(Pyrophoric: TMA, Al-H) 시약 사용 시 공정 안전 가중치 ($+1.5 \times N_{\text{pyro}}$) 부과.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13.3 Methodology 2: RxnFlow Domain Specialization & Multi-Fidelity Reward -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-purple);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">3. [생성 엔진 튜닝] `RxnFlow` (GFlowNet) 도메인 특화 전용 및 Multi-Fidelity 보상 연계</h3>
+            <span class="badge badge-4g" style="font-size:0.82rem;">GFlowNet Domain Tuning</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            `RxnFlow`의 가장 강력한 장점은 <strong>목적함수인 보상(Reward) $R(x)$를 통해 에이전트의 분자 탐색 확률을 직접 조종</strong>할 수 있다는 점입니다 ($P(x) \propto R(x)$). 의약 유기 룰을 반도체 전구체 템플릿으로 교체하고 보상 함수에 VASP DFT 및 SevenNet MLIP 에너지를 직접 연계합니다:
+          </p>
+
+          <div style="background:#faf5ff; border:1px solid #f3e8ff; border-left:4px solid #9333ea; border-radius:6px; padding:16px; margin-bottom:16px;">
+            <div style="font-weight:700; color:#581c87; font-size:1.02rem; margin-bottom:6px;">Multi-Fidelity GFlowNet 복합 보상 함수 (Reward Formulation):</div>
+            $$R(x) = \exp \left( - \frac{\alpha \cdot \text{SA}_{\text{ligand}}(x) + \beta \cdot \Delta G_{\text{syn}}^{\text{DFT}}(x) + \gamma \cdot |\Delta H_{\text{vap}}(x) - \Delta H_{\text{target}}| + \delta \cdot \mathcal{P}_{\text{dimer}}(x)}{k_B T} \right) \times \mathbf{1}\Big(\%V_{\text{bur}}(x) \in [65\%, 82\%]\Big)$$
+          </div>
+
+          <div class="versus-grid">
+            <div class="versus-card" style="border-top: 3px solid #7c3aed;">
+              <h4 style="color:#6d28d9; font-size:1.02rem; margin-bottom:8px;">반도체 전용 반응 템플릿 라이브러리 (25대 룰 구축)</h4>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6;">
+                기존 의약 템플릿(환원적 아민화 등 72개)을 전면 제거하고, 본 연구의 <code>database/reactions.json</code> 기반 25개 핵심 유기금속 반응 템플릿으로 치환:<br>
+                &bull; <strong>무기 염 복분해 (Salt Metathesis):</strong> <code>[M:1][Cl] + [Li:2][N:3] &gt;&gt; [M:1][N:3] + [Li][Cl]</code><br>
+                &bull; <strong>실란 아미노분해 (Silane Aminolysis):</strong> <code>[Si:1][Cl] + [H:2][N:3] &gt;&gt; [Si:1][N:3] + [H][Cl]</code><br>
+                &bull; <strong>알콕사이드 리간드 교환:</strong> <code>[M:1][N:2] + [H:3][O:4] &gt;&gt; [M:1][O:4] + [H][N:2]</code><br>
+                &bull; <strong>시클로펜타다이에닐($\text{Cp}$) 전이:</strong> <code>[M:1][Cl] + [Na:2][c:3]1[c:4][c:5][c:6][c:7]1 &gt;&gt; [M:1][c:3]1[c:4][c:5][c:6][c:7]1 + [Na][Cl]</code>
+              </p>
+            </div>
+
+            <div class="versus-card" style="border-top: 3px solid #0284c7;">
+              <h4 style="color:#0369a1; font-size:1.02rem; margin-bottom:8px;">상용 시약 카탈로그 공급 (Building Blocks)</h4>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6;">
+                ZINC/Enamine 의약 라이브러리 대신, 본 연구에서 체계화한 <strong>29종 반도체 양산 시약 카탈로그(<code>database/building_blocks.json</code>)</strong>와 Gelest 상용 클로로실란($\text{SiCl}_4, \text{SiH}_2\text{Cl}_2$), 무수 금속염화물($\text{TiCl}_4, \text{ZrCl}_4, \text{HfCl}_4, \text{WCl}_6$), 그리고 알킬리튬/아민염을 공급하여 실제 구매 가능한 시약으로만 분자를 조립하도록 강제합니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13.4 Closed-Loop Active Learning Pipeline Diagram -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">4. [인프라 융합 아키텍처] Multi-Fidelity Closed-Loop Active Learning 파이프라인 맵</h3>
+            <span class="badge badge-3g" style="font-size:0.82rem;">Interactive Pipeline Diagram</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.6; margin-bottom:16px;">
+            생성 모델(RxnFlow), 고속 MLIP(SevenNet), 제일원리 DFT(VASP), 그리고 실험 피드백이 실시간 닫힌 루프(Closed-Loop)로 연동되는 차세대 반도체 프리커서 AI 역설계 프레임워크의 전체 데이터 흐름도입니다:
+          </p>
+
+          <!-- Interactive Mermaid Card -->
+          <div class="mermaid-card clickable-card" id="card-closedloop-pipeline" onclick="openDiagramModal('closedloop-pipeline-container', '반도체 프리커서 맞춤형 Multi-Fidelity Closed-Loop Active Learning 아키텍처')" title="클릭하여 팝업 확대 보기">
+            <div class="mermaid-toolbar">
+              <span class="mermaid-title">다이어그램: 반도체 프리커서 맞춤형 Multi-Fidelity Closed-Loop Active Learning 아키텍처</span>
+              <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
+            </div>
+            <div class="mermaid-viewport" id="viewport-closedloop-pipeline">
+              <div class="mermaid-svg-container" id="closedloop-pipeline-container">
+                <div class="mermaid" id="closedloop-pipeline-svg">
+flowchart TD
+    subgraph S1["Level 1: 도메인 특화 생성 및 경로 전개 (Generative Policy)"]
+        G1["RxnFlow (GFlowNet) / AiZynthFinder (MCTS)"] -->|"25대 유기금속 반응 템플릿 적용"| G2["반도체 전구체 후보 M(L)n 생성"]
+        DB1["29종 양산 시약 + Gelest 실란/금속염 카탈로그"] --> G1
+    end
+
+    subgraph S2["Level 2: 4단계 Multi-Fidelity 전산 및 DFT 깔때기 (Computational Funnel)"]
+        G2 -->|"Tier 1 (~0.5 ms)"| T1["GNN 대리 모델: 분자량, 대략적 기화열, 리간드 BR-SAScore 필터링"]
+        T1 -->|"Tier 2 (~1 s)"| T2["SevenNet-0 (MLIP): 3D 완화 및 중심금속 매몰 부피 (%V_bur) 산출"]
+        T2 -->|"Tier 3 (~10 min)"| T3["VASP PBE-D3 Gas-phase: 착물화 깁스 자유에너지 (ΔG_syn) 및 이량화 억제 연산"]
+        T3 -->|"Tier 4 (~8 hr)"| T4["VASP Slab Surface: 기판 반응 흡착 에너지 (ΔG_ALD) 및 면선택성 (ΔΔG_ads)"]
+    end
+
+    subgraph S3["Level 3: 실험 데이터 캘리브레이션 및 닫힌 루프 보상 (Closed-Loop Feedback)"]
+        T4 --> E1["실험 데이터 검증: TGA 열분해 창, 증기압, 대기 안정성"]
+        E1 --> R1["보상 함수(Reward) 갱신: R(x) = exp(-[α SA + β ΔG_syn + γ ΔH_vap]/kT)"]
+        R1 -->|"정책 파라미터 업데이트 (Active Learning)"| G1
+    end
+
+    classDef genNode fill:#eff6ff,stroke:#2563eb,color:#1e40af,font-weight:bold;
+    classDef compNode fill:#f0fdf4,stroke:#16a34a,color:#166534;
+    classDef expNode fill:#fff7ed,stroke:#ea580c,color:#9a3412;
+    classDef rewardNode fill:#faf5ff,stroke:#9333ea,color:#6b21a8,font-weight:bold;
+
+    class G1,G2,DB1 genNode;
+    class T1,T2,T3,T4 compNode;
+    class E1 expNode;
+    class R1 rewardNode;
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13.5 Actionable Implementation Roadmap -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-green);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">5. [단계별 추진 로드맵] 실무 개발 일정 및 구체적 마일스톤 (Actionable Milestones)</h3>
+            <span class="badge badge-1g" style="font-size:0.82rem;">Implementation Milestones</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
+            연구 현장에서 즉시 착수하여 점진적으로 완성도를 높일 수 있는 3단계 실행 로드맵입니다:
+          </p>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot dot-1g"></div>
+              <div class="timeline-content">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span class="badge badge-1g">Phase 1: 리간드 분해 프로토타입 평가기 구축 (소요: 1 ~ 2주)</span>
+                  <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--text-muted);">Quick Prototype</span>
+                </div>
+                <h4 style="font-size:1.05rem; color:var(--text-primary); margin-bottom:6px;">`BR-SAScore` 기반 리간드 분해 스코어러 및 29종 시약 카탈로그 이식</h4>
+                <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
+                  <li>RDKit 서브그래프 절단 함수를 개발하여 전구체 입력 시 중성 프로-리간드($HL_i$)와 금속염($M\text{X}_m$)을 자동 분리.</li>
+                  <li>본 연구의 <code>database/building_blocks.json</code>(29종)을 `BScores` 테이블에 이식하여 무누수 순수 출발물질 기반 1차 스코어러 완성.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot dot-2g"></div>
+              <div class="timeline-content">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span class="badge badge-2g">Phase 2: MLIP (SevenNet) 기반 입체 형상 스코어러 결합 (소요: 2 ~ 3주)</span>
+                  <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--text-muted);">Geometry &amp; Steric</span>
+                </div>
+                <h4 style="font-size:1.05rem; color:var(--text-primary); margin-bottom:6px;">ASE + SevenNet-0 연동 3D 완화 및 매몰 부피($\%V_{\text{bur}}$) 자동화</h4>
+                <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
+                  <li>로컬 파이썬 가상환경에 설치된 ASE와 `SevenNet-0` MLIP를 호출하여 2D SMILES &rarr; 3D 착체 자동 완화 파이프라인 구축 (~1초).</li>
+                  <li>중심 금속 주변 매몰 부피율($\%V_{\text{bur}}$)을 계산하여 올리고머화/응집 위험을 감지하는 페널티 모듈 통합.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot dot-4g"></div>
+              <div class="timeline-content">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span class="badge badge-4g">Phase 3: VASP 자동화 스택 연동 및 RxnFlow 닫힌 루프 가동 (소요: 4 ~ 6주)</span>
+                  <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--text-muted);">Full Closed-Loop</span>
+                </div>
+                <h4 style="font-size:1.05rem; color:var(--text-primary); margin-bottom:6px;">VASP DFT 에너지 실시간 보상 피드백 &amp; 반도체 전구체 AI 역설계 가동</h4>
+                <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
+                  <li>보고서 섹션 10의 VASP 자동화 스택(`Pymatgen` + `Custodian` + `Quacc`)과 연동하여 기상 착물화 $\Delta G_{\text{syn}}^{\text{DFT}}$ 자동 연산.</li>
+                  <li>`RxnFlow`의 반응 템플릿을 무기 배위 룰로 치환하고 VASP 에너지를 보상으로 피드백하여 고증기압·고열안정성 반도체 신규 전구체 자동 역설계 가동.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 

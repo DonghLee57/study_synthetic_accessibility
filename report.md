@@ -368,3 +368,4 @@ To inversely design semiconductor precursors satisfying target properties $\math
    - Tier 4: Multi-Slab VASP DFT + Sella TS ($\sim 8\text{ hr}$, $\Delta G_{\text{ALD}}, \Delta\Delta G_{\text{ads}}, \Delta G^\ddagger_{\text{prot}}$).
 5. **Interactive Implementation**:
    - Substrate comparison grid, ASD quantitative indicators, and 10-descriptor comprehensive matrix integrated into Section 12 of [`index.html`](./index.html).
+   - Domain-specific base model adaptation strategy, `TMC-SA` hybrid formulation ($\Delta G_{\text{syn}}^{\text{DFT}} + \%V_{\text{bur}} + \mathcal{P}_{\text{exp}}$), `RxnFlow` Multi-Fidelity GFlowNet reward coupling, and 3-phase implementation roadmap integrated into Section 13 of [`index.html`](./index.html).
