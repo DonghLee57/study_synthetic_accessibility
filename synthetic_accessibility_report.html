@@ -4498,7 +4498,7 @@ flowchart LR
               <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
                 &bull; <strong>평가 기준:</strong> SMILES 토큰화 및 분자 객체 생성.<br>
                 &bull; <strong>작동:</strong> 118원소 사전 및 RDKit 파싱 성공.<br>
-                &bull; <strong>붕괴 사례:</strong> GASA는 Hf, Ta, Ru 등 미등록으로 7종(25.9%)에서 즉시 KeyError Crash 발생.
+                &bull; <strong>붕괴 사례:</strong> GASA는 DGL/DGL-Life 부재로 미실행 상태이며, 코드 정적 분석 상 Hf, Ta, Ru, W, Mo(7종, 25.9%)가 allowable_set 부재로 에러 대신 0벡터로 무음 오인코딩(Silent Mis-encoding)되는 결함 확인.
               </div>
             </div>
             <div class="stat-card" style="padding:14px; border-left:4px solid #7c3aed;">
@@ -4536,7 +4536,7 @@ flowchart LR
 flowchart TD
     subgraph STAGE1["Stage 1: 구문 파싱 및 입력 수용 (Syntax / Ingestion)"]
         A1["27종 반도체 전구체 SMILES 입력"] --> A2["SMILES 토큰화 및 RDKit 객체 생성"]
-        A2 -->|KeyError: Hf, Ta, Ru, W, Mo 부재| A3["GASA 25.9% (7/27) 즉시 Crash"]
+        A2 -->|미지원 원소: Hf, Ta, Ru, W, Mo (7종)| A3["GASA: All-Zero 벡터 무음 오인코딩<br>(Silent Mis-encoding & 종속성 부재)"]
         A2 -->|118원소/RDKit 정규화 통과| B1["Stage 2로 진입 (15종 모델)"]
     end
 
@@ -4759,7 +4759,7 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 합성 경로 완결</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
                 <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (SynFormer 반응망)]</strong>
-                <span style="color:#475569;">118개 원소 어휘 토큰화는 100% 완벽하나, 115종 특허 반응망이 유기 반응에 국한되어 무기 착체 배위 단계 생성 0건.</span>
+                <span style="color:#475569;">118개 원소 어휘 토큰화 및 무손실 역변환(0 UNK)은 100% 완벽하나, 115종 특허 반응망이 유기 반응에 국한되어 무기 착체 배위 단계 생성 0건 (디코딩 오프셋 버그 규명 완료).</span>
               </td>
             </tr>
 
@@ -4798,8 +4798,8 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0.0% (0/27) 무기 룰 0건</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% (0/27) 경로 완결</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
-                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-58 템플릿)]</strong>
-                <span style="color:#475569;">Hartenfeller-Button 의약 반응 58종에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무.</span>
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 3 (HB-91 템플릿)]</strong>
+                <span style="color:#475569;">Hartenfeller-Button 의약 반응 91종(SynNet과 동일)에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무.</span>
               </td>
             </tr>
 
@@ -4898,8 +4898,8 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (복합 SA 지표)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% 물리적 타당성</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
-                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 (Rule of 5 의약 편향)]</strong>
-                <span style="color:#475569;">저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡.</span>
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 (AutoGluon 부재 & Ro5 편향)]</strong>
+                <span style="color:#475569;">AutoGluon 종속성 부재로 미실행 상태이며, 저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡.</span>
               </td>
             </tr>
 
@@ -4913,13 +4913,13 @@ flowchart TD
                 <a href="https://github.com/cadd-synthetic/GASA" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">cadd-synthetic/GASA</a>
                 <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: 22 &bull; GPL-2.0</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.75rem;">25.9% (7/27) 크래시</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">74.1% (20/27) 학습 왜곡</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.75rem;">25.9% (7/27) 미지원 원소</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.75rem;">0벡터 무음 오인코딩 (Silent Mis-encoding)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (GAT 분류)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% 물리적 유효성</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
-                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 1 (allowable_set 미지원)]</strong>
-                <span style="color:#475569;">Hf, Ta, Ru, W, Mo 원소가 allowable_set에 없어 7종에서 KeyError 발생하며 Stage 1 파싱 단계에서 즉시 비정상 종료.</span>
+                <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 1·2 (DGL 부재 및 무음 오인코딩)]</strong>
+                <span style="color:#475569;">DGL/DGL-Life 부재로 미실행 상태이며, 코드 정적 분석 상 Hf, Ta, Ru, W, Mo(7종)는 allowable_set 부재로 에러 대신 atom_type_one_hot에 의해 0벡터로 무음 오인코딩(Silent Mis-encoding)되어 특성 완전 상실.</span>
               </td>
             </tr>
               </tbody>
@@ -5015,7 +5015,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.82</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.967</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (6건)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (4건)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>경로 0건 (토큰 통과)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>탐색 실패 (객체 수용)</span></td>
               <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.82 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 유기리간드 쇄(reductive_amination_ketone)만 매칭 &bull; 금속배위 부재</span></td>
@@ -5148,7 +5148,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.84</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.975</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (6건)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (4건)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>경로 0건 (토큰 통과)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>탐색 실패 (객체 수용)</span></td>
               <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.84 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 유기리간드 쇄(reductive_amination_ketone)만 매칭 &bull; 금속배위 부재</span></td>
@@ -5167,7 +5167,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.8</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.935</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (6건)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (4건)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>경로 0건 (토큰 통과)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>탐색 실패 (객체 수용)</span></td>
               <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 유기리간드 쇄(reductive_amination_aliphatic_aldehyde)만 매칭 &bull; 금속배위 부재</span></td>
@@ -5224,7 +5224,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.8</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.984</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (6건)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (4건)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>경로 0건 (토큰 통과)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>탐색 실패 (객체 수용)</span></td>
               <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 유기리간드 쇄(reductive_amination_aliphatic_aldehyde)만 매칭 &bull; 금속배위 부재</span></td>
@@ -5490,7 +5490,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">11.98</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">9.03</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.875</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (6건)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 (4건)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>경로 0건 (토큰 통과)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>탐색 실패 (객체 수용)</span></td>
               <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +11.98</span> &bull; <span style='color:#d97706;'>BR-SAS 9.03 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 유기리간드 쇄(reductive_amination_aliphatic_aldehyde)만 매칭 &bull; 금속배위 부재</span></td>

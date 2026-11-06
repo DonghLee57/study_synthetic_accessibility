@@ -2485,7 +2485,7 @@ flowchart LR
               <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
                 &bull; <strong>평가 기준:</strong> SMILES 토큰화 및 분자 객체 생성.<br>
                 &bull; <strong>작동:</strong> 118원소 사전 및 RDKit 파싱 성공.<br>
-                &bull; <strong>붕괴 사례:</strong> GASA는 Hf, Ta, Ru 등 미등록으로 7종(25.9%)에서 즉시 KeyError Crash 발생.
+                &bull; <strong>붕괴 사례:</strong> GASA는 DGL/DGL-Life 부재로 미실행 상태이며, 코드 정적 분석 상 Hf, Ta, Ru, W, Mo(7종, 25.9%)가 allowable_set 부재로 에러 대신 0벡터로 무음 오인코딩(Silent Mis-encoding)되는 결함 확인.
               </div>
             </div>
             <div class="stat-card" style="padding:14px; border-left:4px solid #7c3aed;">
@@ -2523,7 +2523,7 @@ flowchart LR
 flowchart TD
     subgraph STAGE1["Stage 1: 구문 파싱 및 입력 수용 (Syntax / Ingestion)"]
         A1["27종 반도체 전구체 SMILES 입력"] --> A2["SMILES 토큰화 및 RDKit 객체 생성"]
-        A2 -->|KeyError: Hf, Ta, Ru, W, Mo 부재| A3["GASA 25.9% (7/27) 즉시 Crash"]
+        A2 -->|미지원 원소: Hf, Ta, Ru, W, Mo (7종)| A3["GASA: All-Zero 벡터 무음 오인코딩<br>(Silent Mis-encoding & 종속성 부재)"]
         A2 -->|118원소/RDKit 정규화 통과| B1["Stage 2로 진입 (15종 모델)"]
     end
 

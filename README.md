@@ -173,6 +173,22 @@ flowchart LR
 
 ## 4. Operational Harness & Execution
 
+### 4.1 Automated Benchmark Reproduction & Audit Harness
+```bash
+# 1. Setup, clone pinned repositories in external/, and apply compatibility patches
+python scripts/setup_external_models.py
+
+# 2. Run master benchmark engine across all 16 models and 27 semiconductor precursors
+python scripts/run_all_benchmarks.py
+
+# 3. Execute formal unit test suite (automated CI/CD & peer audit)
+python -m unittest discover tests
+
+# 4. Run standalone audit verification script (recalculates SAScore, SCScore, SYBA, RAscore, BR-SAScore)
+python scripts/audit_reproduce_all.py
+```
+
+### 4.2 Web Artifact & Literature Compilation
 ```bash
 # 1. Verify core DOIs and download open-access PDFs
 python download_all.py

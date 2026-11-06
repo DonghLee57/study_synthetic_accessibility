@@ -231,7 +231,7 @@ multistage_models = [
         "s3": ("0.0% (0/27) 무기 룰 전무", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s4": ("0.0% (0/27) 합성 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 (SynFormer 반응망)",
-        "barrier_desc": "118개 원소 어휘 토큰화는 100% 완벽하나, 115종 특허 반응망이 유기 반응에 국한되어 무기 착체 배위 단계 생성 0건."
+        "barrier_desc": "118개 원소 어휘 토큰화 및 무손실 역변환(0 UNK)은 100% 완벽하나, 115종 특허 반응망이 유기 반응에 국한되어 무기 착체 배위 단계 생성 0건 (디코딩 오프셋 버그 규명 완료)."
     },
     {
         "name": "AiZynthFinder",
@@ -252,8 +252,8 @@ multistage_models = [
         "s2": ("100% 이중 잠재 공간 투영", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("0.0% (0/27) 무기 룰 0건", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s4": ("0.0% (0/27) 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (HB-58 템플릿)",
-        "barrier_desc": "Hartenfeller-Button 의약 반응 58종에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무."
+        "barrier_stage": "Stage 3 (HB-91 템플릿)",
+        "barrier_desc": "Hartenfeller-Button 의약 반응 91종(SynNet과 동일)에 국한되어 전이금속(Ti, Zr, Hf, Ru 등) 배위 결합 형성 규칙 전무."
     },
     {
         "name": "SynNet",
@@ -307,19 +307,19 @@ multistage_models = [
         "s2": ("의약 Ro5 & NLP 서브워드 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (복합 SA 지표)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% 물리적 타당성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2·4 (Rule of 5 의약 편향)",
-        "barrier_desc": "저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡."
+        "barrier_stage": "Stage 2·4 (AutoGluon 부재 & Ro5 편향)",
+        "barrier_desc": "AutoGluon 종속성 부재로 미실행 상태이며, 저분자 의약용 Lipinski Rule of 5 강제 감점 및 ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 금속 착체 평가 왜곡."
     },
     {
         "name": "GASA",
         "gen": "3G GAT 위치선택성",
         "repo_key": "GASA",
-        "s1": ("25.9% (7/27) 크래시", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "s2": ("74.1% (20/27) 학습 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s1": ("25.9% (7/27) 미지원 원소", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s2": ("0벡터 무음 오인코딩 (Silent Mis-encoding)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (GAT 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% 물리적 유효성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 1 (allowable_set 미지원)",
-        "barrier_desc": "Hf, Ta, Ru, W, Mo 원소가 allowable_set에 없어 7종에서 KeyError 발생하며 Stage 1 파싱 단계에서 즉시 비정상 종료."
+        "barrier_stage": "Stage 1·2 (DGL 부재 및 무음 오인코딩)",
+        "barrier_desc": "DGL/DGL-Life 부재로 미실행 상태이며, 코드 정적 분석 상 Hf, Ta, Ru, W, Mo(7종)는 allowable_set 부재로 에러 대신 atom_type_one_hot에 의해 0벡터로 무음 오인코딩(Silent Mis-encoding)되어 특성 완전 상실."
     }
 ]
 

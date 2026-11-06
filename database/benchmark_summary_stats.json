@@ -3,9 +3,17 @@
   "sascore_pass": 3,
   "scscore_pass": 23,
   "syba_pass": 23,
-  "br_sascore_pass": 3,
+  "br_sascore_default_pass": 3,
+  "br_sascore_custom_pass": 24,
   "rascore_pass": 27,
-  "rxnflow_match_count": 9,
+  "rxnflow_substituent_match": 9,
+  "rxnflow_core_match": 0,
   "reasyn_vocab_pass": 27,
-  "aizynth_ingest_pass": 27
+  "reasyn_lossless_roundtrip": 27,
+  "aizynth_ingest_pass": 27,
+  "gasa_supported_count": 20,
+  "gasa_silent_misencoded_count": 7,
+  "dfrscore_collapsed_count": 27,
+  "chemprojector_metal_rules": 0,
+  "synnet_metal_rules": 0
 }

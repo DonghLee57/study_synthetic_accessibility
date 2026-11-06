@@ -2,11 +2,14 @@ SMILES
 Cl[Si](Cl)(Cl)Cl
 Cl[SiH2]Cl
 Cl[SiH](Cl)Cl
+Cl[SiH2]C
+[SiH3]Cl
 Cl[Si](Cl)(Cl)[Si](Cl)(Cl)Cl
 Cl[Hf](Cl)(Cl)Cl
 Cl[Zr](Cl)(Cl)Cl
 Cl[Ti](Cl)(Cl)Cl
 Cl[Al](Cl)Cl
+C[Al](Cl)C
 C[Al](C)C
 Cl[W](Cl)(Cl)(Cl)(Cl)Cl
 Cl[Mo](Cl)(Cl)(Cl)Cl
@@ -18,6 +21,7 @@ CC(C)NC(C)C
 CC(C)(C)N
 CNC
 CCNC
+CCN(CC)CC
 C1=CCC=C1
 CC(C)N=C(C)NC(C)C
 CC(C)O
@@ -27,4 +31,9 @@ CCCC[Li]
 C[Li]
 CN(C)[Li]
 CCN(C)[Li]
+CCN(CC)[Li]
 [Li]C1=CC=CC1
+CC(C)(C)O[Na]
+CC(C)(C)O[Li]
+CC(C)O[Na]
+[LiH]
