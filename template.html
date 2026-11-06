@@ -2527,20 +2527,20 @@ flowchart LR
               <div class="stat-label"><strong>SYBA 실측 통과율</strong><br>&bull; 23종 +3.96~+11.98 양수 판정<br>&bull; Ru(EtCp)2(-44.27), CpTi(-24.98) 샌드위치 착체 붕괴</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
-              <div class="stat-value" style="font-size:1.3rem; color:#0284c7;">100.0% (27/27)</div>
-              <div class="stat-label"><strong>RAscore (AiZynth XGB)</strong><br>&bull; 평균 0.925 (0.629~0.988) 전수 합성 용이 판정<br>&bull; ECFP6 알킬/아민 서브트리 과대평가 편향 확인</div>
+              <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">0.0% (수치 100% FP)</div>
+              <div class="stat-label"><strong>RAscore 물리적 유효성</strong><br>&bull; 평균 0.925로 전수 통과이나 중심금속 완전 무시<br>&bull; ECFP6 지문의 알킬 치환 오인 (100% False Positive)</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
-              <div class="stat-value" style="font-size:1.3rem; color:#ea580c;">33.3% (9/27)</div>
-              <div class="stat-label"><strong>RxnFlow (ICLR 2025)</strong><br>&bull; 9종만 리간드 알킬 반응(환원적 아민화 등) 매칭<br>&bull; 금속-배위원자 배위 결합 템플릿 부재 (0% 금속 배위)</div>
+              <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">0.0% (리간드만 33.3%)</div>
+              <div class="stat-label"><strong>RxnFlow 전구체 코어 합성</strong><br>&bull; 리간드 알킬 곁사슬 9종(33.3%)만 단편 매칭<br>&bull; 금속-배위 결합 템플릿 전무로 코어 합성 0.0%</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
-              <div class="stat-value" style="font-size:1.3rem; color:#10b981;">100.0% (27/27)</div>
-              <div class="stat-label"><strong>BioNeMo ReaSyn (ICLR 2026)</strong><br>&bull; 118종 전원소 토크나이저로 27종 100% 무손실 복원<br>&bull; 단, SynFormer 115 템플릿에 무기 착물 합성 부재</div>
+              <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">0.0% (경로 생성 0건)</div>
+              <div class="stat-label"><strong>BioNeMo ReaSyn 경로 완성</strong><br>&bull; 118개 원소 구문 토큰화는 100% 에러 없이 통과<br>&bull; 단, 유기 반응 한계로 무기 착체 경로 도출 0.0%</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
-              <div class="stat-value" style="font-size:1.3rem; color:#6366f1;">100.0% (27/27)</div>
-              <div class="stat-label"><strong>AiZynthFinder 분자 수용</strong><br>&bull; 27종 RDKit/InChI 분자 그래프 100% 정상 수용<br>&bull; MCTS 전개 정책(USPTO 50k)의 금속 배위 규칙 보완 필수</div>
+              <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">0.0% (역합성 탐색 0건)</div>
+              <div class="stat-label"><strong>AiZynthFinder 역합성 완결</strong><br>&bull; RDKit 객체 생성(구조 수용)은 100% 정상 통과<br>&bull; USPTO 무기 정책 부재로 MCTS 탐색 실패 (0.0%)</div>
             </div>
           </div>
 
@@ -2683,7 +2683,7 @@ ightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
                   <td><strong>RAscore</strong><br><span class="badge badge-2g">2G MCTS 증류</span><br><span style="font-size:0.75rem; color:#64748b;">(2021)</span></td>
                   <td style="font-size:0.82rem;"><strong>XGBoost 분류 앙상블</strong><br>&bull; 2048-bit ECFP6 카운트 벡터<br>&bull; AiZynthFinder 탐색 성공 확률</td>
                   <td style="font-size:0.82rem;"><strong>ChEMBL 20만 건</strong><br>&bull; AiZynthFinder 10스텝 내 역합성 경로 도출 성공/실패 레이블</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0284c7;">100.0%<br><span style="font-size:0.75rem; font-weight:normal;">(27/27)</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#b91c1c;">0.0% 유효<br><span style="font-size:0.75rem; font-weight:normal; color:#64748b;">(수치 100% FP)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>소형 분자 치환기 과대평가 맹점:</strong><br>
                     &bull; 전수 평균 0.925로 비정상 과대평가.<br>

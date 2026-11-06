@@ -117,28 +117,28 @@ repo_semi_metrics = {
         "desc": "[코드 직접 실측] 기본 emolecules/uspto 사전 적용 시 Si-N/M-N 결합의 -6.0 감점으로 24종이 8~9점으로 과대평가(통과율 11.1%). 그러나 Gelest 실란+금속염 전용 빌딩블록 사전 적용 시 24/27종(88.9%)이 정상 산출(1.2~2.8점)되어 반도체 전구체 도메인 최적화 유효성 실증 완료."
     },
     "RAscore": {
-        "rate": "100.0% (27/27, 실측)",
-        "badge_style": "background:#e0f2fe; color:#0369a1; border-color:#7dd3fc; font-weight:700;",
-        "eval": "코드 직접 실측 (ECFP6 알킬 서브트리 편향)",
-        "desc": "[코드 직접 실측 100.0%] XGBoost 1.7.6 기반 직접 실행: 전수 평균 0.925(최저 0.629 ~ 최고 0.988)로 27종 전수 합성 용이 판정. ECFP6 반경 3 지문에서 금속 중심이 '다중 치환 알킬/아민'으로 매핑되어 약물 합성의 쉬운 알킬화 반응으로 착각하여 중심 금속 결합 안정성 및 산화 위험을 감지하지 못하는 맹점 확인."
+        "rate": "0.0% 물리적 유효 (수치상 100% FP)",
+        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
+        "eval": "코드 직접 실측 (중심금속 결합 무시 False Positive)",
+        "desc": "[코드 직접 실측] 27종 전수 0.629~0.988(평균 0.925)로 수치상 100% 통과 판정이나, 이는 ECFP6 반경 3 지문이 중심금속을 단순 고차 알킬/아민 탄소로 취급하여 약물 합성의 쉬운 알킬화로 착각한 전형적 False Positive임. 실제 금속 결합 안정성/산화 위험에 대한 물리적 판정 유효율은 0.0%임."
     },
     "RxnFlow": {
-        "rate": "33.3% (9/27, 리간드 매칭)",
-        "badge_style": "background:#ffedd5; color:#c2410c; border-color:#fdba74; font-weight:700;",
-        "eval": "코드 직접 실측 (유기 리간드 국한 / 무기 배위 부재)",
-        "desc": "[코드 직접 실측 33.3%] ICLR 2025 공식 GFlowNet 환경 직접 연산: 유기 리간드의 알킬 곁사슬(아세톤 환원적 아민화 등)을 포함하는 9종만 매칭 성공. 금속-배위원자(M-N, M-O, M-C) 배위 결합 형성 템플릿 부재로 유기금속 전이금속 착체 코어 합성률은 0.0%에 머무름."
+        "rate": "0.0% (코어 0/27, 리간드 33.3%)",
+        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
+        "eval": "코드 직접 실측 (금속 배위 신톤 부재로 코어 생성 0건)",
+        "desc": "[코드 직접 실측] 유기 리간드의 알킬 곁사슬 반응(아세톤 환원적 아민화 등)을 포함하는 9종(33.3%)만 단편 매칭되었을 뿐, 금속-배위원자(M-N, M-O, M-C) 결합 형성 템플릿이 전무하여 반도체 전구체 코어 화합물의 실제 합성 경로 도출 성공률은 0.0%(0/27)임."
     },
     "ReaSyn": {
-        "rate": "100.0% 어휘 수용 (무기 템플릿 제약)",
-        "badge_style": "background:#ede9fe; color:#6d28d9; border-color:#c4b5fd; font-weight:700;",
-        "eval": "코드 직접 실측 (118종 전주기 어휘 / 반응 매니폴드 갭)",
-        "desc": "[코드 직접 실측 100.0%] ICLR 2026 Oral NVIDIA BioNeMo ReaSyn 구조 직접 분석: 118개 전주기율표 원소 토큰을 지원하여 27종 전구체의 SMILES 토큰화 및 임베딩 100% 결함 없음(0 UNK). 그러나 115개 SynFormer 특허 반응 매니폴드가 유기 반응에 국한되어 무기 착체 배위 단계 전개 템플릿 제약 확인."
+        "rate": "0.0% (경로 0/27, 구문파싱 100%)",
+        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
+        "eval": "코드 직접 실측 (유기 템플릿 한계로 무기 경로 생성 0건)",
+        "desc": "[코드 직접 실측] 118개 원소 어휘 토큰이 지원되어 SMILES 파싱(구문 수용)은 100% 에러 없이 통과하나, SynFormer 115개 특허 반응 매니폴드가 유기 반응에 국한되어 전이금속-리간드 배위 결합을 형성하는 합성 경로는 0건(0.0%) 도출됨."
     },
     "AiZynthFinder": {
-        "rate": "100.0% 분자 수용 (MCTS 무기 정책 제약)",
-        "badge_style": "background:#f1f5f9; color:#334155; border-color:#94a3b8; font-weight:700;",
-        "eval": "코드 직접 실측 (RDKit 완결 / 유기 전개 정책 제약)",
-        "desc": "[코드 직접 실측 100.0%] v4.4.1 직접 실행: RDKit 기반 27종 전구체 분자 객체 생성, MW 계산, InChIKey 생성 100% 정상 통과. 그러나 USPTO 50k 기반 전개 정책 신경망이 금속-리간드 결합 절단 확률을 0으로 산출하여 자식 노드 전개가 즉시 중단되므로 무기 반응 템플릿 주입 필수."
+        "rate": "0.0% (역합성 0/27, 객체파싱 100%)",
+        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
+        "eval": "코드 직접 실측 (무기 정책 부재로 MCTS 탐색 실패 0건)",
+        "desc": "[코드 직접 실측] RDKit 기반 27종 전구체 객체 생성(구조 수용)은 100% 통과하나, USPTO 50k 의약 정책 신경망이 금속-리간드 결합 절단 확률을 0으로 산출하여 MCTS 트리가 전혀 전개되지 못하고 실제 역합성 경로 도출 성공률은 0.0%(0/27)임."
     }
 }
 
@@ -348,9 +348,9 @@ for idx, b in enumerate(benchmarks, 1):
     syba_style = "color:#15803d; font-weight:600;" if syba >= 0 else "color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;"
     ra_style = "color:#0284c7; font-weight:600;" if (ra is not None and ra >= 0.5) else "color:#b91c1c; font-weight:600;"
     
-    rxnflow_badge = f"<span class='badge' style='background:#ffedd5; color:#c2410c; font-size:0.75rem; font-weight:600;'>리간드 매칭 ({len(rxnflow_rules)}건)</span>" if rxnflow else "<span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0건 (미매칭)</span>"
-    reasyn_badge = f"<span class='badge' style='background:#dcfce7; color:#15803d; font-size:0.75rem; font-weight:600;'>100% In-Vocab ({reasyn_tok}t)</span>" if reasyn_ok else "<span class='badge badge-1g'>UNK 발생</span>"
-    aizynth_badge = f"<span class='badge' style='background:#e0e7ff; color:#4338ca; font-size:0.75rem; font-weight:600;'>정상 수용 ({mw})</span>" if aizynth_ok else "<span class='badge badge-1g'>수용 에러</span>"
+    rxnflow_badge = f"<span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>리간드만 ({len(rxnflow_rules)}건)</span>" if rxnflow else "<span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>코어 0건</span>"
+    reasyn_badge = f"<span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>경로 0건 (토큰 통과)</span>" if reasyn_ok else "<span class='badge badge-1g'>어휘 에러</span>"
+    aizynth_badge = f"<span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>탐색 실패 (객체 수용)</span>" if aizynth_ok else "<span class='badge badge-1g'>수용 에러</span>"
     
     row = f"""
             <tr>
