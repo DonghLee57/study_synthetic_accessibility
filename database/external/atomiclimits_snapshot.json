@@ -1,0 +1,18 @@
+{
+  "source": "AtomicLimits ALD database, https://www.atomiclimits.com/alddatabase (DOI 10.6100/alddatabase)",
+  "endpoint": "https://www.atomiclimits.com/alddatabase/api/processes.php",
+  "fetched_at": "2026-11-06 (approx.; snapshot first committed in c0708e0, exact fetch time not recorded)",
+  "raw_sha256": "337fe48a30f88711dc92617d378bd9cb4b995e53cd60e67ee3c4530bb3eaa4a3",
+  "raw_tracked_in_git": false,
+  "redistribution_terms": "not confirmed; raw dump kept local only",
+  "processes": 2447,
+  "reference_records": 5732,
+  "unique_dois": 4177,
+  "orphan_reference_records": 36,
+  "materials": 662,
+  "unique_precursors_after_alias_merge": 814,
+  "unique_reactantA_strings_raw": 780,
+  "master_entries": 120,
+  "master_baseline_entries": 27,
+  "master_baseline_matched_in_atomiclimits": 24
+}

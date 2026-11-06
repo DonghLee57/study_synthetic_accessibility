@@ -119,10 +119,12 @@ synth_acc/
 │   ├── building_blocks.csv             # Formatted table of precursor starting materials with CAS and purity grades
 │   ├── reactions.json                  # 12 authenticated synthesis reaction pathways with SMARTS & deltaG
 │   ├── reactions.csv                   # Synthesis reaction database table
-│   ├── external/                       # Ingested Global Precursor Databases
-│   │   ├── atomiclimits_raw.json       # TU Eindhoven AtomicLimits ALD DB (2,447 processes, 5,732 citations)
-│   │   ├── atomiclimits_precursors_extracted.json # 780 unique ALD precursors inventory
-│   │   └── expanded_semiconductor_precursors_master.json # 120 curated master precursors with properties
+│   ├── external/                       # AtomicLimits ALD DB derived data (scripts/fetch_external_precursor_dbs.py)
+│   │   ├── atomiclimits_snapshot.json  # Snapshot record: date, endpoint, SHA-256, counts (2,447 processes, 4,177 unique DOIs)
+│   │   ├── atomiclimits_aliases.json   # Hand-checked spelling-variant -> canonical name map
+│   │   ├── atomiclimits_precursors_extracted.json # 814 precursors after alias merge (all reactant fields A-D)
+│   │   ├── expanded_semiconductor_precursors_master.json # 120 entries: 27 baseline + 93 top AtomicLimits (no invented properties)
+│   │   └── (atomiclimits_raw.json)     # Raw dump, local only / gitignored (redistribution terms unconfirmed); get with --fetch
 │   └── br_sascore_inputs/              # Formatted inputs ready for BR-SAScore dictionary generator
 │       ├── semi_bb.csv                 # Commercial semiconductor building block SMILES for BFrag (score = 0.0)
 │       └── semi_rxn.csv                # Semiconductor synthesis reactions for RFrag

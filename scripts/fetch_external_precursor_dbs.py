@@ -1,222 +1,361 @@
-import os
+"""Build a semiconductor precursor inventory from the AtomicLimits ALD database.
+
+Usage
+-----
+    python scripts/fetch_external_precursor_dbs.py           # rebuild from local raw snapshot
+    python scripts/fetch_external_precursor_dbs.py --fetch   # download a fresh snapshot first
+
+Data policy
+-----------
+* The raw AtomicLimits dump (``database/external/atomiclimits_raw.json``) is NOT
+  committed: it is a full copy of a third-party database (including contributor
+  names) obtained from the site's web API, and its redistribution terms have not
+  been confirmed. Only derived aggregates and a snapshot record (date, URL,
+  SHA-256, counts) are tracked. Cite the database as
+  https://www.atomiclimits.com/alddatabase (DOI 10.6100/alddatabase).
+* No physical property, CAS number or SMILES is invented here. The master file
+  carries identifiers/properties only for the 27 project-curated baseline
+  precursors (``database/precursors.json``); for the added AtomicLimits entries
+  those fields are null and flagged for a later PubChem/datasheet lookup.
+
+Method
+------
+* Every reactant field (A-D) of every process is read, not only reactant A:
+  in multi-component processes the metal precursor is often listed in B/C
+  (e.g. AlMe3 appears 76x as A but 155x in total).
+* A reactant is a *precursor* if it contains a metal/metalloid centre
+  (see ``NON_CENTER``); everything else (H2O, O3, plasmas, H2S, ...) is a
+  *co-reactant*. For P/S/Se sources carrying a metal(loid) ligand
+  (Se(SiMe3)2, P(SnMe3)3) the chalcogen/pnictogen is reported as the centre.
+* The centre element is the metal/metalloid symbol at the lowest parenthesis
+  depth (first occurrence), so ``Pb(N(SiMe3)2)2`` -> Pb, ``(Et3Si)2Te`` -> Te.
+* Spelling variants are merged through ``atomiclimits_aliases.json``.
+"""
+import argparse
+import datetime
+import hashlib
 import json
-import urllib.request
+import os
+import re
 import ssl
+import urllib.request
 from collections import defaultdict
 
-def fetch_atomiclimits():
-    print("[1/3] Fetching live data from AtomicLimits ALD Database (TU Eindhoven)...")
-    ctx = ssl._create_unverified_context()
-    url = "https://www.atomiclimits.com/alddatabase/api/processes.php"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
-    
-    with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
-        raw_data = json.loads(resp.read().decode("utf-8"))
-        
-    processes = raw_data.get("processes", [])
-    references = raw_data.get("references", [])
-    print(f"  -> Successfully retrieved {len(processes)} ALD processes and {len(references)} literature references.")
-    
-    os.makedirs("database/external", exist_ok=True)
-    
-    # Save raw data
-    with open("database/external/atomiclimits_raw.json", "w", encoding="utf-8") as f:
-        json.dump(raw_data, f, indent=2, ensure_ascii=False)
-        
-    # Build reference lookup: process_id -> list of DOIs
-    ref_by_pid = defaultdict(list)
-    for ref in references:
-        pid = ref.get("process_id")
-        doi = ref.get("reference_doi")
-        if pid and doi:
-            ref_by_pid[pid].append(doi)
-            
-    # Group by Precursor (process_reactantA)
-    precursor_map = defaultdict(lambda: {
-        "precursor_name": "",
-        "process_count": 0,
-        "materials": set(),
-        "co_reactants": set(),
-        "process_ids": [],
-        "dois": set()
-    })
-    
-    for p in processes:
-        prec = p.get("process_reactantA", "").strip()
-        mat = p.get("process_material", "").strip()
-        co_b = p.get("process_reactantB", "").strip()
-        co_c = p.get("process_reactantC", "").strip()
-        pid = p.get("process_id", "")
-        
-        if not prec:
-            continue
-            
-        entry = precursor_map[prec]
-        entry["precursor_name"] = prec
-        entry["process_count"] += 1
-        if mat:
-            entry["materials"].add(mat)
-        if co_b:
-            entry["co_reactants"].add(co_b)
-        if co_c:
-            entry["co_reactants"].add(co_c)
-        if pid:
-            entry["process_ids"].append(pid)
-            for d in ref_by_pid.get(pid, []):
-                entry["dois"].add(d)
-                
-    # Convert sets to sorted lists for JSON serialization
-    curated_precursors = []
-    for prec, d in precursor_map.items():
-        curated_precursors.append({
-            "precursor": prec,
-            "process_count": d["process_count"],
-            "materials_count": len(d["materials"]),
-            "materials": sorted(list(d["materials"])),
-            "co_reactants": sorted(list(d["co_reactants"])),
-            "literature_citations_count": len(d["dois"]),
-            "sample_dois": sorted(list(d["dois"]))[:5]
-        })
-        
-    curated_precursors.sort(key=lambda x: x["process_count"], reverse=True)
-    
-    with open("database/external/atomiclimits_precursors_extracted.json", "w", encoding="utf-8") as f:
-        json.dump(curated_precursors, f, indent=2, ensure_ascii=False)
-        
-    print(f"  -> Extracted {len(curated_precursors)} unique ALD precursors.")
-    print("  -> Saved to database/external/atomiclimits_precursors_extracted.json")
-    return curated_precursors, raw_data
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+EXT = os.path.join(ROOT, "database", "external")
+RAW_PATH = os.path.join(EXT, "atomiclimits_raw.json")
+SNAPSHOT_PATH = os.path.join(EXT, "atomiclimits_snapshot.json")
+ALIAS_PATH = os.path.join(EXT, "atomiclimits_aliases.json")
+INVENTORY_PATH = os.path.join(EXT, "atomiclimits_precursors_extracted.json")
+MASTER_PATH = os.path.join(EXT, "expanded_semiconductor_precursors_master.json")
+BASELINE_PATH = os.path.join(ROOT, "database", "precursors.json")
 
-def build_expanded_master_database(atomic_precs):
-    print("\n[2/3] Integrating with Gelest/Strem/Min et al. (JCIM 2024) Organometallic Knowledge Base...")
-    
-    # Load our 27 baseline precursors
-    with open("database/precursors.json", "r", encoding="utf-8") as f:
-        baseline_27 = json.load(f)
-        
-    baseline_names = {p["name"].lower(): p for p in baseline_27}
-    
-    # Well-known semiconductor precursor metadata dictionary
-    # Connecting formulas, CAS numbers, metal centers, SMILES, and thermal properties
-    known_precursor_catalog = {
-        "alme3": {"standard_name": "TMA", "formula": "Al(CH3)3", "metal": "Al", "category": "Aluminum", "cas": "75-24-1", "smiles": "C[Al](C)C", "vp_torr": "8.4 Torr (20 °C)", "t_decomp": "> 300 °C"},
-        "alcl3": {"standard_name": "AlCl3", "formula": "AlCl3", "metal": "Al", "category": "Aluminum", "cas": "7446-70-0", "smiles": "Cl[Al](Cl)Cl", "vp_torr": "1.0 Torr (100 °C)", "t_decomp": "> 400 °C"},
-        "zne2": {"standard_name": "DEZ", "formula": "Zn(C2H5)2", "metal": "Zn", "category": "Zinc", "cas": "557-20-0", "smiles": "CC[Zn]CC", "vp_torr": "12.4 Torr (20 °C)", "t_decomp": "> 300 °C"},
-        "znet2": {"standard_name": "DEZ", "formula": "Zn(C2H5)2", "metal": "Zn", "category": "Zinc", "cas": "557-20-0", "smiles": "CC[Zn]CC", "vp_torr": "12.4 Torr (20 °C)", "t_decomp": "> 300 °C"},
-        "ticl4": {"standard_name": "TiCl4", "formula": "TiCl4", "metal": "Ti", "category": "Titanium", "cas": "7550-45-0", "smiles": "Cl[Ti](Cl)(Cl)Cl", "vp_torr": "10.0 Torr (21 °C)", "t_decomp": "> 450 °C"},
-        "ti(oipr)4": {"standard_name": "TTIP", "formula": "Ti(OCH(CH3)2)4", "metal": "Ti", "category": "Titanium", "cas": "546-68-9", "smiles": "CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C", "vp_torr": "1.0 Torr (50 °C)", "t_decomp": "> 250 °C"},
-        "ti(nme2)4": {"standard_name": "TDMAT", "formula": "Ti(N(CH3)2)4", "metal": "Ti", "category": "Titanium", "cas": "3275-24-9", "smiles": "CN(C)[Ti](N(C)C)(N(C)C)N(C)C", "vp_torr": "1.0 Torr (50 °C)", "t_decomp": "> 180 °C"},
-        "hfcl4": {"standard_name": "HfCl4", "formula": "HfCl4", "metal": "Hf", "category": "Hafnium", "cas": "13499-05-3", "smiles": "Cl[Hf](Cl)(Cl)Cl", "vp_torr": "1.0 Torr (190 °C)", "t_decomp": "> 500 °C"},
-        "hf(netme)4": {"standard_name": "TEMAH", "formula": "Hf(N(CH3)(C2H5))4", "metal": "Hf", "category": "Hafnium", "cas": "352535-01-4", "smiles": "CCN(C)[Hf](N(C)CC)(N(C)CC)N(C)CC", "vp_torr": "0.1 Torr (60 °C)", "t_decomp": "> 250 °C"},
-        "hf(nme2)4": {"standard_name": "TDMAH", "formula": "Hf(N(CH3)2)4", "metal": "Hf", "category": "Hafnium", "cas": "19782-68-4", "smiles": "CN(C)[Hf](N(C)C)(N(C)C)N(C)C", "vp_torr": "0.1 Torr (50 °C)", "t_decomp": "> 220 °C"},
-        "hf(net2)4": {"standard_name": "TDEAH", "formula": "Hf(N(C2H5)2)4", "metal": "Hf", "category": "Hafnium", "cas": "630138-86-8", "smiles": "CCN(CC)[Hf](N(CC)CC)(N(CC)CC)N(CC)CC", "vp_torr": "0.1 Torr (85 °C)", "t_decomp": "> 260 °C"},
-        "zrcl4": {"standard_name": "ZrCl4", "formula": "ZrCl4", "metal": "Zr", "category": "Zirconium", "cas": "10026-11-6", "smiles": "Cl[Zr](Cl)(Cl)Cl", "vp_torr": "1.0 Torr (190 °C)", "t_decomp": "> 500 °C"},
-        "zr(netme)4": {"standard_name": "TEMAZ", "formula": "Zr(N(CH3)(C2H5))4", "metal": "Zr", "category": "Zirconium", "cas": "175923-04-3", "smiles": "CCN(C)[Zr](N(C)CC)(N(C)CC)N(C)CC", "vp_torr": "0.1 Torr (60 °C)", "t_decomp": "> 250 °C"},
-        "zr(nme2)4": {"standard_name": "TDMAZ", "formula": "Zr(N(CH3)2)4", "metal": "Zr", "category": "Zirconium", "cas": "19756-04-8", "smiles": "CN(C)[Zr](N(C)C)(N(C)C)N(C)C", "vp_torr": "0.1 Torr (50 °C)", "t_decomp": "> 220 °C"},
-        "wf6": {"standard_name": "WF6", "formula": "WF6", "metal": "W", "category": "Tungsten", "cas": "7783-82-6", "smiles": "F[W](F)(F)(F)(F)F", "vp_torr": "760 Torr (17 °C)", "t_decomp": "> 350 °C"},
-        "tacl5": {"standard_name": "TaCl5", "formula": "TaCl5", "metal": "Ta", "category": "Tantalum", "cas": "7721-01-9", "smiles": "Cl[Ta](Cl)(Cl)(Cl)Cl", "vp_torr": "1.0 Torr (120 °C)", "t_decomp": "> 500 °C"},
-        "mocl5": {"standard_name": "MoCl5", "formula": "MoCl5", "metal": "Mo", "category": "Molybdenum", "cas": "10241-05-1", "smiles": "Cl[Mo](Cl)(Cl)(Cl)Cl", "vp_torr": "1.0 Torr (90 °C)", "t_decomp": "> 200 °C"},
-        "ru(etcp)2": {"standard_name": "Ru(EtCp)2", "formula": "Ru(C2H5C5H4)2", "metal": "Ru", "category": "Ruthenium", "cas": "32992-05-9", "smiles": "CC[C]1[CH][CH][CH][CH]1.CC[C]1[CH][CH][CH][CH]1.[Ru]", "vp_torr": "0.1 Torr (80 °C)", "t_decomp": "> 300 °C"},
-        "co(amd)2": {"standard_name": "Co(AMD)2", "formula": "Co(iPr-AMD)2", "metal": "Co", "category": "Cobalt", "cas": "635680-56-7", "smiles": "CC(C)N=C(C)[N-]C(C)C.CC(C)N=C(C)[N-]C(C)C.[Co+2]", "vp_torr": "0.1 Torr (65 °C)", "t_decomp": "> 280 °C"},
-        "si(oet)4": {"standard_name": "TEOS", "formula": "Si(OC2H5)4", "metal": "Si", "category": "Silicon", "cas": "78-10-4", "smiles": "CCO[Si](OCC)(OCC)OCC", "vp_torr": "1.0 Torr (20 °C)", "t_decomp": "> 600 °C"},
-        "sih2cl2": {"standard_name": "DCS", "formula": "SiH2Cl2", "metal": "Si", "category": "Silicon", "cas": "4109-96-0", "smiles": "Cl[SiH2]Cl", "vp_torr": "760 Torr (8.3 °C)", "t_decomp": "> 500 °C"},
-        "sicl4": {"standard_name": "STC", "formula": "SiCl4", "metal": "Si", "category": "Silicon", "cas": "10026-04-7", "smiles": "Cl[Si](Cl)(Cl)Cl", "vp_torr": "194 Torr (20 °C)", "t_decomp": "> 600 °C"},
-        "sic2h6": {"standard_name": "DMAH / Silanes", "formula": "SiH2(CH3)2", "metal": "Si", "category": "Silicon", "cas": "1066-29-1", "smiles": "C[SiH2]C", "vp_torr": "760 Torr (-20 °C)", "t_decomp": "> 400 °C"}
+API_URL = "https://www.atomiclimits.com/alddatabase/api/processes.php"
+MASTER_SIZE = 120
+
+ELEMENTS = (
+    "H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn "
+    "Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce "
+    "Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn "
+    "Fr Ra Ac Th Pa U Np Pu"
+).split()
+# Elements that never count as the precursor centre (ligand / co-reactant atoms).
+NON_CENTER = {"H", "He", "C", "N", "O", "F", "Ne", "P", "S", "Cl", "Ar", "Se", "Br", "Kr", "I", "Xe", "Rn", "At"}
+CENTER = set(ELEMENTS) - NON_CENTER
+# Chalcogen/pnictogen sources such as Se(SiMe3)2 or P(SnMe3)3: they only qualify as
+# precursors because of the metal/metalloid they carry, but the film element they
+# deliver is the depth-0 P/S/Se atom, so that atom is ranked as the centre.
+ANION_SOURCE = {"P", "S", "Se"}
+# Element symbols that collide with ligand abbreviations (iPr/nPr, OAc, Np = neopentyl,
+# Pa): only accepted as the very first token of the name, e.g. Pr(thd)3.
+AMBIGUOUS = {"Pr", "Ac", "Np", "Pa"}
+
+# Baseline precursor id -> canonical AtomicLimits name (None = not present in the DB).
+BASELINE_TO_ATOMICLIMITS = {
+    "PREC_SI_01": "SiH3(NiPr2)",          # DIPAS
+    "PREC_SI_02": "SiH2(NHtBu)2",         # BTBAS
+    "PREC_SI_03": "SiH(NMe2)3",           # 3DMAS
+    "PREC_SI_04": "Si(NMe2)4",            # 4DMAS
+    "PREC_SI_05": "N(SiH3)3",             # TSA
+    "PREC_SI_06": "Si2Cl6",               # HCDS
+    "PREC_SI_07": "Si(OEt)4",             # TEOS
+    "PREC_SI_08": None,                   # SAM.24: baseline formula C7H19NSi does not match BDEAS; left unmapped
+    "PREC_HK_01": "Hf(NEtMe)4",           # TEMAH
+    "PREC_HK_02": "Hf(NMe2)4",            # TDMAH
+    "PREC_HK_03": "Hf(OtBu)4",
+    "PREC_HK_04": "Zr(NEtMe)4",           # TEMAZ
+    "PREC_HK_05": "Zr(NMe2)4",            # TDMAZ
+    "PREC_HK_06": "Zr(CpMe)2(OMe)Me",     # ZMA
+    "PREC_HK_07": "ZrCp(NMe2)3",
+    "PREC_TI_01": "Ti(NMe2)4",            # TDMAT
+    "PREC_TI_02": "Ti(OiPr)4",            # TTIP
+    "PREC_TI_03": None,                   # CpTi(NMe2)3: only substituted-Cp analogues in the DB
+    "PREC_AL_01": "AlMe3",                # TMA
+    "PREC_AL_02": "AlMe2H",               # DMAH
+    "PREC_MET_01": "W(NtBu)2(NMe2)2",     # BTBMW
+    "PREC_MET_02": "Mo(NtBu)2(NMe2)2",    # BTBMMo
+    "PREC_MET_03": "Ru(CpEt)2",           # Ru(EtCp)2
+    "PREC_MET_04": "Co(iPrAMD)2",         # Co(AMD)2 = bis(N,N'-diisopropylacetamidinato)cobalt
+    "PREC_MET_05": "CCTBA",
+    "PREC_MET_06": "Ta(NtBu)(NEt2)3",     # TBTDET
+    "PREC_EUV_01": None,                  # tBuSn(OiPr)3: not in the DB
+}
+
+
+def fetch_snapshot():
+    """Download the AtomicLimits process list (TLS verification ON)."""
+    ctx = ssl.create_default_context()
+    req = urllib.request.Request(API_URL, headers={"User-Agent": "synth_acc-precursor-db/1.0"})
+    with urllib.request.urlopen(req, context=ctx, timeout=60) as resp:
+        body = resp.read()
+    data = json.loads(body.decode("utf-8"))
+    os.makedirs(EXT, exist_ok=True)
+    with open(RAW_PATH, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+
+
+def sha256_of(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def load_aliases():
+    with open(ALIAS_PATH, encoding="utf-8") as f:
+        cfg = json.load(f)
+    aliases = {re.sub(r"\s+", "", k): v for k, v in cfg["aliases"].items()}
+    overrides = {k: v for k, v in cfg.get("center_overrides", {}).items() if not k.startswith("_")}
+    for name in cfg.get("coreactant_overrides", {}).get("names", []):
+        overrides[name] = None
+    return aliases, overrides
+
+
+def canonical(name, aliases):
+    key = re.sub(r"\s+", "", name)
+    # "[X]" wrapper without a trailing count is pure notation
+    if key.startswith("[") and key.endswith("]"):
+        key = key[1:-1]
+    return aliases.get(key, key)
+
+
+def normalize_coreactant(name):
+    s = re.sub(r"\s+", " ", name).strip()
+    s = re.sub(r"\bPlasma\b", "plasma", s)
+    return "Electrons" if s.lower() == "electrons" else s
+
+
+def center_elements(name, overrides):
+    """Return centre symbols ordered by (paren depth, position); [] = co-reactant."""
+    if name in overrides:
+        return [overrides[name]] if overrides[name] else []
+    found, depth = [], 0
+    rankable = CENTER | ANION_SOURCE
+    for m in re.finditer(r"[\(\[\{\)\]\}]|[A-Z][a-z]*", name):
+        tok = m.group(0)
+        if tok in "([{":
+            depth += 1
+        elif tok in ")]}":
+            depth = max(0, depth - 1)
+        elif tok in rankable and (tok not in AMBIGUOUS or m.start() == 0):
+            found.append((depth, m.start(), tok))
+    if not any(el in CENTER for _, _, el in found):
+        return []
+    seen, out = set(), []
+    for _, _, el in sorted(found):
+        if el not in seen:
+            seen.add(el)
+            out.append(el)
+    return out
+
+
+def build_inventory(raw, aliases, overrides):
+    procs = raw["processes"]
+    pids = {p["process_id"] for p in procs}
+    dois_by_pid = defaultdict(set)
+    orphan_refs = 0
+    for ref in raw["references"]:
+        pid, doi = ref.get("process_id"), (ref.get("reference_doi") or "").strip()
+        if pid not in pids:
+            orphan_refs += 1
+            continue
+        if doi:
+            dois_by_pid[pid].add(doi)
+
+    inv = defaultdict(lambda: {"aliases": set(), "pids": set(), "pids_A": set(),
+                               "materials": set(), "co_reactants": set(), "co_precursors": set()})
+    centers = {}
+    for p in procs:
+        pid = p["process_id"]
+        reactants = []
+        for slot in "ABCD":
+            v = (p.get("process_reactant" + slot) or "").strip()
+            if not v:
+                continue
+            c = canonical(v, aliases)
+            els = center_elements(c, overrides)
+            reactants.append((slot, v, c, els))
+        prec = [r for r in reactants if r[3]]
+        co = [normalize_coreactant(r[1]) for r in reactants if not r[3]]
+        for slot, v, c, els in prec:
+            e = inv[c]
+            centers[c] = els
+            e["aliases"].add(v)
+            e["pids"].add(pid)
+            if slot == "A":
+                e["pids_A"].add(pid)
+            if p.get("process_material", "").strip():
+                e["materials"].add(p["process_material"].strip())
+            e["co_reactants"].update(co)
+            e["co_precursors"].update(o[2] for o in prec if o[2] != c)
+
+    out = []
+    for name, e in inv.items():
+        dois = sorted(set().union(*[dois_by_pid[x] for x in e["pids"]]))
+        els = centers[name]
+        out.append({
+            "precursor": name,
+            "aliases_in_source": sorted(a for a in e["aliases"] if a != name),
+            "center_element": els[0],
+            "center_elements": els,
+            "is_elemental": name in ELEMENTS,
+            "process_count": len(e["pids"]),
+            "process_count_as_reactantA": len(e["pids_A"]),
+            "materials": sorted(e["materials"]),
+            "co_reactants": sorted(e["co_reactants"]),
+            "co_precursors": sorted(e["co_precursors"]),
+            "process_ids": sorted(e["pids"], key=int),
+            "unique_doi_count": len(dois),
+            "dois": dois,
+        })
+    out.sort(key=lambda x: (-x["process_count"], x["precursor"]))
+    stats = {
+        "processes": len(procs),
+        "reference_records": len(raw["references"]),
+        "unique_dois": len({(r.get("reference_doi") or "").strip() for r in raw["references"]} - {""}),
+        "orphan_reference_records": orphan_refs,
+        "materials": len({p["process_material"].strip() for p in procs}),
+        "unique_precursors_after_alias_merge": len(out),
+        "unique_reactantA_strings_raw": len({p["process_reactantA"].strip() for p in procs}),
     }
-    
-    expanded_master = []
-    
-    # 1. First add all baseline 27 with enriched process data
-    for b in baseline_27:
-        b_key = b["name"].lower().replace("-", "").replace(" ", "").replace("_", "")
-        # Find matching AtomicLimits entries
-        matched_ap = None
-        for ap in atomic_precs:
-            if ap["precursor"].lower().replace("-", "").replace(" ", "").replace("_", "") == b_key or \
-               b["formula"].lower().replace(" ", "") in ap["precursor"].lower().replace(" ", ""):
-                matched_ap = ap
-                break
-                
-        entry = {
+    return out, stats
+
+
+def build_master(inventory, baseline):
+    by_name = {e["precursor"]: e for e in inventory}
+    master, used = [], set()
+    for b in baseline:
+        if b["id"] not in BASELINE_TO_ATOMICLIMITS:
+            raise KeyError(f"baseline id {b['id']} missing from BASELINE_TO_ATOMICLIMITS")
+        al_name = BASELINE_TO_ATOMICLIMITS[b["id"]]
+        al = by_name.get(al_name) if al_name else None
+        if al_name and al is None:
+            raise KeyError(f"{b['id']}: mapped name {al_name!r} not found in AtomicLimits inventory")
+        if al:
+            used.add(al_name)
+        props = b.get("physical_properties", {})
+        master.append({
             "id": b["id"],
             "name": b["name"],
             "chemical_name": b["chemical_name"],
             "formula": b["formula"],
-            "metal_center": b["metal_center"],
+            "center_element": b["metal_center"],
             "category": b["category"],
             "smiles": b["smiles"],
-            "molecular_weight": b["molecular_weight"],
             "cas_number": b["cas_number"],
-            "source": "Commercial ALD/CVD Baseline (Verified Fab Spec)",
-            "atomiclimits_processes": matched_ap["process_count"] if matched_ap else 0,
-            "atomiclimits_materials": matched_ap["materials"] if matched_ap else [b["target_films"]],
-            "co_reactants": matched_ap["co_reactants"] if matched_ap else [],
-            "vapor_pressure": b["physical_properties"].get("vapor_pressure_torr", "-"),
-            "thermal_decomposition_temp_c": b["physical_properties"].get("thermal_decomposition_temp_c", "-"),
-            "commercial_vendors": b.get("commercial_vendors", [])
-        }
-        expanded_master.append(entry)
-        
-    print(f"  -> Processed baseline {len(expanded_master)} precursors with AtomicLimits cross-referencing.")
-    
-    # 2. Add top AtomicLimits ALD Precursors (threshold: process_count >= 3)
-    existing_formulas = {p["formula"].lower().replace(" ", "") for p in expanded_master}
-    existing_names = {p["name"].lower().replace(" ", "") for p in expanded_master}
-    
-    added_count = 0
-    for ap in atomic_precs:
-        p_name = ap["precursor"].strip()
-        p_key = p_name.lower().replace("-", "").replace(" ", "").replace("_", "")
-        
-        if p_name.lower() in existing_names or p_key in known_precursor_catalog and known_precursor_catalog[p_key]["formula"].lower() in existing_formulas:
-            continue
-            
-        # Get metadata from known catalog if available
-        meta = known_precursor_catalog.get(p_key, {})
-        metal = meta.get("metal", "")
-        if not metal:
-            # Simple heuristic metal detection from formula
-            for m in ["Zr", "Hf", "Ti", "Al", "Ru", "Ta", "Mo", "W", "Co", "Sn", "Zn", "Ga", "In", "La", "Si", "Ge", "Cu", "Ni", "Fe", "Mn", "V", "Nb", "Y", "Sc", "Sb", "Bi"]:
-                if m in p_name:
-                    metal = m
-                    break
-        if not metal:
-            metal = "Other"
-            
-        new_entry = {
-            "id": f"EXT-ALD-{len(expanded_master)+1:03d}",
-            "name": meta.get("standard_name", p_name),
-            "chemical_name": p_name,
-            "formula": meta.get("formula", p_name),
-            "metal_center": metal,
-            "category": meta.get("category", f"{metal} Precursor"),
-            "smiles": meta.get("smiles", ""),
-            "molecular_weight": "-",
-            "cas_number": meta.get("cas", "-"),
-            "source": "AtomicLimits ALD Database (TU Eindhoven)",
-            "atomiclimits_processes": ap["process_count"],
-            "atomiclimits_materials": ap["materials"],
-            "co_reactants": ap["co_reactants"],
-            "vapor_pressure": meta.get("vp_torr", "-"),
-            "thermal_decomposition_temp_c": meta.get("t_decomp", "-"),
-            "literature_dois": ap["sample_dois"]
-        }
-        expanded_master.append(new_entry)
-        existing_names.add(p_name.lower())
-        added_count += 1
-        if len(expanded_master) >= 120:  # Expand to top 120 key ALD precursors
+            "molecular_weight": b["molecular_weight"],
+            "vapor_pressure": props.get("vapor_pressure_torr"),
+            "thermal_decomposition_temp_c": props.get("thermal_decomposition_temp_c"),
+            "commercial_vendors": b.get("commercial_vendors", []),
+            "origin": "project baseline (database/precursors.json)",
+            "property_source": "database/precursors.json (project-curated; per-value sources not recorded)",
+            "atomiclimits_name": al_name,
+            "atomiclimits_process_count": al["process_count"] if al else 0,
+            "atomiclimits_materials": al["materials"] if al else [],
+            "atomiclimits_co_reactants": al["co_reactants"] if al else [],
+            "atomiclimits_unique_doi_count": al["unique_doi_count"] if al else 0,
+        })
+
+    for e in inventory:
+        if len(master) >= MASTER_SIZE:
             break
-            
-    print(f"  -> Added {added_count} top ALD precursors from AtomicLimits Database.")
-    print(f"  -> Total master semiconductor precursors database: {len(expanded_master)} entries.")
-    
-    with open("database/external/expanded_semiconductor_precursors_master.json", "w", encoding="utf-8") as f:
-        json.dump(expanded_master, f, indent=2, ensure_ascii=False)
-        
-    print("  -> Saved master database to database/external/expanded_semiconductor_precursors_master.json")
-    return expanded_master
+        if e["precursor"] in used or e["is_elemental"]:
+            continue
+        master.append({
+            "id": f"EXT-ALD-{len(master) + 1:03d}",
+            "name": e["precursor"],
+            "chemical_name": None,
+            "formula": None,
+            "center_element": e["center_element"],
+            "category": None,
+            "smiles": None,
+            "cas_number": None,
+            "molecular_weight": None,
+            "vapor_pressure": None,
+            "thermal_decomposition_temp_c": None,
+            "commercial_vendors": [],
+            "origin": "AtomicLimits ALD database",
+            "property_source": None,
+            "identifier_status": "unverified: needs PubChem/datasheet lookup",
+            "atomiclimits_name": e["precursor"],
+            "atomiclimits_aliases": e["aliases_in_source"],
+            "atomiclimits_process_count": e["process_count"],
+            "atomiclimits_materials": e["materials"],
+            "atomiclimits_co_reactants": e["co_reactants"],
+            "atomiclimits_unique_doi_count": e["unique_doi_count"],
+            "sample_dois": e["dois"][:5],
+        })
+        used.add(e["precursor"])
+    return master
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--fetch", action="store_true", help="download a fresh AtomicLimits snapshot first")
+    args = ap.parse_args()
+
+    fetched_at = None
+    if args.fetch:
+        fetched_at = fetch_snapshot()
+    elif not os.path.exists(RAW_PATH):
+        raise SystemExit(f"{RAW_PATH} not found; run with --fetch (raw dump is not tracked in git)")
+
+    with open(RAW_PATH, encoding="utf-8") as f:
+        raw = json.load(f)
+    aliases, overrides = load_aliases()
+    inventory, stats = build_inventory(raw, aliases, overrides)
+    with open(BASELINE_PATH, encoding="utf-8") as f:
+        baseline = json.load(f)
+    master = build_master(inventory, baseline)
+
+    prev = {}
+    if os.path.exists(SNAPSHOT_PATH):
+        with open(SNAPSHOT_PATH, encoding="utf-8") as f:
+            prev = json.load(f)
+    digest = sha256_of(RAW_PATH)
+    if fetched_at is None:
+        fetched_at = prev.get("fetched_at") if prev.get("raw_sha256") == digest else "unknown"
+    snapshot = {
+        "source": "AtomicLimits ALD database, https://www.atomiclimits.com/alddatabase (DOI 10.6100/alddatabase)",
+        "endpoint": API_URL,
+        "fetched_at": fetched_at,
+        "raw_sha256": digest,
+        "raw_tracked_in_git": False,
+        "redistribution_terms": "not confirmed; raw dump kept local only",
+        **stats,
+        "master_entries": len(master),
+        "master_baseline_entries": sum(1 for m in master if m["origin"].startswith("project")),
+        "master_baseline_matched_in_atomiclimits": sum(1 for m in master if m["origin"].startswith("project") and m["atomiclimits_name"]),
+    }
+
+    for path, obj in ((INVENTORY_PATH, inventory), (MASTER_PATH, master), (SNAPSHOT_PATH, snapshot)):
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            json.dump(obj, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+    print(json.dumps(snapshot, indent=2, ensure_ascii=False))
+
 
 if __name__ == "__main__":
-    atomic_precs, raw_data = fetch_atomiclimits()
-    build_expanded_master_database(atomic_precs)
-    print("\n[3/3] External Precursor Database Extraction & Synthesis Completed Successfully!")
+    main()

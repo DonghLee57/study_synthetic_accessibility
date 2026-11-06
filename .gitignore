@@ -24,3 +24,6 @@ downloaded_papers/
 
 # External vendor models and cloned repositories
 /external/
+
+# Third-party AtomicLimits raw dump: redistribution terms unconfirmed, keep local only
+database/external/atomiclimits_raw.json
