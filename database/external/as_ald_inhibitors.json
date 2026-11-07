@@ -1,4 +1,6 @@
 {
+  "description": "AS-ALD inhibitor candidates. Identifiers and RDKit descriptors are verified; process data needs literature sources before use. Re-check with scripts/verify_inhibitor_db.py.",
+  "verified_on": "2026-11-07",
   "total_count": 18,
   "inhibitors": [
     {
@@ -16,19 +18,26 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Selective silylation of surface silanol groups (Si-OH) forming robust -Si(CH3)2 caps and releasing dimethylamine vapor.",
       "surface_bond_type": "Covalent siloxane (Si-O-Si)",
-      "thermal_stability_window_C": "150 - 250 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 / H2 plasma ash or thermal anneal > 350 °C",
-      "incubation_cycles_enhancement": "50 - 150 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
         "authors": "Mackus et al.",
         "journal": "Chemistry of Materials",
         "year": 2019,
-        "doi": "10.1021/acs.chemmater.8b03454"
+        "doi": "10.1021/acs.chemmater.8b03454",
+        "verification": "Crossref-verified (first author Mackus). Review article on AS-ALD; not a DMADMS-specific study, so it does not source the numeric fields."
       },
       "molecular_weight": 146.31,
       "logp": 0.81,
       "heavy_atom_count": 9,
-      "rotatable_bonds": 2
+      "rotatable_bonds": 2,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-002",
@@ -45,25 +54,30 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Monofunctional silylation forming bulky trimethylsilyl (-SiMe3) surface caps without risk of oligomerization.",
       "surface_bond_type": "Covalent siloxane (Si-O-Si)",
-      "thermal_stability_window_C": "120 - 225 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 plasma ash or UV-ozone treatment",
-      "incubation_cycles_enhancement": "40 - 100 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Min et al.",
-        "journal": "ACS Applied Materials & Interfaces",
-        "year": 2018,
-        "doi": "10.1021/acsami.8b09590"
+        "doi": null,
+        "unverified_claim": "Min et al., ACS Applied Materials & Interfaces 2018 (doi 10.1021/acsami.8b09590)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 117.27,
       "logp": 1.38,
       "heavy_atom_count": 7,
-      "rotatable_bonds": 1
+      "rotatable_bonds": 1,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-003",
       "name": "Bis(ethylmethylamino)dimethylsilane",
       "abbreviation": "BEMS",
-      "cas_number": "86563-95-3",
+      "cas_number": null,
       "smiles": "CCN(C)[Si](C)(C)N(C)CC",
       "formula": "C8H22N2Si",
       "inhibitor_class": "Small Molecule Inhibitor (SMI)",
@@ -74,19 +88,26 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Asymmetric amine leaving groups optimize surface packing and steric blocking of incoming metal precursors.",
       "surface_bond_type": "Covalent siloxane (Si-O-Si)",
-      "thermal_stability_window_C": "150 - 260 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 / H2 plasma ash",
-      "incubation_cycles_enhancement": "60 - 180 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Merkx et al.",
-        "journal": "Chemistry of Materials",
-        "year": 2020,
-        "doi": "10.1021/acs.chemmater.9b04901"
+        "doi": null,
+        "unverified_claim": "Merkx et al., Chemistry of Materials 2020 (doi 10.1021/acs.chemmater.9b04901)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 174.36,
       "logp": 1.59,
       "heavy_atom_count": 11,
-      "rotatable_bonds": 4
+      "rotatable_bonds": 4,
+      "cas_number_removed": "86563-95-3",
+      "cas_note": "86563-95-3 resolves on PubChem to an unrelated potassium phosphanyl-sulfonate; CAS unknown",
+      "data_status": {
+        "identifiers": "SMILES only (CAS unknown)",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-004",
@@ -103,19 +124,24 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Classical semiconductor hydrophobizing agent: reacts with surface -OH groups to yield trimethylsiloxy groups and NH3.",
       "surface_bond_type": "Covalent siloxane (Si-O-Si)",
-      "thermal_stability_window_C": "100 - 250 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 plasma ash or high-temp anneal (> 400 °C)",
-      "incubation_cycles_enhancement": "30 - 80 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Vallat et al.",
-        "journal": "Journal of Vacuum Science & Technology A",
-        "year": 2016,
-        "doi": "10.1116/1.4939239"
+        "doi": null,
+        "unverified_claim": "Vallat et al., Journal of Vacuum Science & Technology A 2016 (doi 10.1116/1.4939239)",
+        "verification": "removed 2026-11-07: DOI resolved to an unrelated paper (Biointerphases 2016, bacterial-recruitment surfaces)"
       },
       "molecular_weight": 161.4,
       "logp": 2.25,
       "heavy_atom_count": 9,
-      "rotatable_bonds": 2
+      "rotatable_bonds": 2,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-005",
@@ -132,19 +158,24 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Rapid electrophilic silylation of surface silanols with gaseous HCl generation.",
       "surface_bond_type": "Covalent siloxane (Si-O-Si)",
-      "thermal_stability_window_C": "120 - 220 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 plasma treatment",
-      "incubation_cycles_enhancement": "30 - 70 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Lee et al.",
-        "journal": "ACS Applied Materials & Interfaces",
-        "year": 2017,
-        "doi": "10.1021/acsami.7b18977"
+        "doi": null,
+        "unverified_claim": "Lee et al., ACS Applied Materials & Interfaces 2017 (doi 10.1021/acsami.7b18977)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 108.64,
       "logp": 2.06,
       "heavy_atom_count": 5,
-      "rotatable_bonds": 0
+      "rotatable_bonds": 0,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-006",
@@ -161,19 +192,24 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Amine chemisorption followed by thermal alkyne-alkyne cycloaddition/cross-linking, creating a dense high-temperature barrier.",
       "surface_bond_type": "Hydrogen-bonded / covalent nitrogen linkage + cross-linked polymer network",
-      "thermal_stability_window_C": "150 - 300 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 / Ar plasma strip",
-      "incubation_cycles_enhancement": "100 - 250 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Kim et al.",
-        "journal": "Chemistry of Materials",
-        "year": 2021,
-        "doi": "10.1021/acs.chemmater.1c03923"
+        "doi": null,
+        "unverified_claim": "Kim et al., Chemistry of Materials 2021 (doi 10.1021/acs.chemmater.1c03923)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 55.08,
       "logp": -0.42,
       "heavy_atom_count": 4,
-      "rotatable_bonds": 0
+      "rotatable_bonds": 0,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-007",
@@ -190,19 +226,24 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Vapor-phase Lewis base coordination to surface silanols with vinyl moiety preventing precursor chemisorption.",
       "surface_bond_type": "Coordination / surface ammonium species",
-      "thermal_stability_window_C": "100 - 200 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Thermal desorption / mild O2 plasma",
-      "incubation_cycles_enhancement": "25 - 60 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Song et al.",
-        "journal": "ACS Applied Materials & Interfaces",
-        "year": 2020,
-        "doi": "10.1021/acsami.0c17351"
+        "doi": null,
+        "unverified_claim": "Song et al., ACS Applied Materials & Interfaces 2020 (doi 10.1021/acsami.0c17351)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 57.1,
       "logp": 0.13,
       "heavy_atom_count": 4,
-      "rotatable_bonds": 1
+      "rotatable_bonds": 1,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-008",
@@ -219,19 +260,24 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Forms an ultra-dense 2.5 nm crystalline aliphatic barrier via siloxane cross-linking network.",
       "surface_bond_type": "Cross-linked siloxane network",
-      "thermal_stability_window_C": "Room Temp - 220 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "UV-Ozone or O2 reactive ion etching (RIE)",
-      "incubation_cycles_enhancement": "100 - 300 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Chen et al.",
-        "journal": "Chemistry of Materials",
-        "year": 2006,
-        "doi": "10.1021/cm060261t"
+        "doi": null,
+        "unverified_claim": "Chen et al., Chemistry of Materials 2006 (doi 10.1021/cm060261t)",
+        "verification": "removed 2026-11-07: DOI resolved to an unrelated paper (Chem. Mater. 2006, Yb14MnSb11 thermoelectric)"
       },
       "molecular_weight": 387.94,
       "logp": 8.9,
       "heavy_atom_count": 22,
-      "rotatable_bonds": 17
+      "rotatable_bonds": 17,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-009",
@@ -248,19 +294,24 @@
       "selectivity_type": "Dielectric-blocking (Metal-on-Dielectric ASD)",
       "passivation_mechanism": "Perfluorinated alkyl tail provides superhydrophobic and omniphobic repulsion against highly polar organometallic precursors.",
       "surface_bond_type": "Covalent siloxane network",
-      "thermal_stability_window_C": "Room Temp - 250 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 / CF4 plasma ash",
-      "incubation_cycles_enhancement": "150 - 400 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Sweet et al.",
-        "journal": "Journal of Vacuum Science & Technology A",
-        "year": 2017,
-        "doi": "10.1116/1.5003273"
+        "doi": null,
+        "unverified_claim": "Sweet et al., Journal of Vacuum Science & Technology A 2017 (doi 10.1116/1.5003273)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 581.55,
       "logp": 8.04,
       "heavy_atom_count": 31,
-      "rotatable_bonds": 9
+      "rotatable_bonds": 9,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-010",
@@ -275,21 +326,26 @@
       "target_passivation_surface": "Metal (Cu, Co, Ru, Au)",
       "growth_surface": "Dielectric (SiO2, Al2O3, HfO2)",
       "selectivity_type": "Metal-blocking (Dielectric-on-Metal ASD)",
-      "passivation_mechanism": "Forms strong covalent metal-thiolate bonds (M-S, ~ -35 kcal/mol) with dense van der Waals alkyl tail packing.",
+      "passivation_mechanism": "Forms metal-thiolate (M-S) bonds with van der Waals packing of the alkyl tails.",
       "surface_bond_type": "Covalent metal-thiolate (M-S)",
-      "thermal_stability_window_C": "Room Temp - 180 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Thermal desorption (> 220 °C) or H2 plasma reduction",
-      "incubation_cycles_enhancement": "50 - 200 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Hashemi & Bent",
-        "journal": "Chemistry of Materials",
-        "year": 2021,
-        "doi": "10.1021/acs.chemmater.0c04323"
+        "doi": null,
+        "unverified_claim": "Hashemi & Bent, Chemistry of Materials 2021 (doi 10.1021/acs.chemmater.0c04323)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 202.41,
       "logp": 4.84,
       "heavy_atom_count": 13,
-      "rotatable_bonds": 10
+      "rotatable_bonds": 10,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-011",
@@ -306,19 +362,24 @@
       "selectivity_type": "Metal-blocking (Dielectric-on-Metal ASD)",
       "passivation_mechanism": "Sufficient vapor pressure for in-situ vapor dosing; forms selective thiolate layer passivating metallic nucleation sites.",
       "surface_bond_type": "Covalent metal-thiolate (M-S)",
-      "thermal_stability_window_C": "100 - 180 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Thermal desorption at 200 °C under vacuum or H2 plasma",
-      "incubation_cycles_enhancement": "40 - 120 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Hashemi et al.",
-        "journal": "ACS Applied Materials & Interfaces",
-        "year": 2019,
-        "doi": "10.1021/acsami.9b14815"
+        "doi": null,
+        "unverified_claim": "Hashemi et al., ACS Applied Materials & Interfaces 2019 (doi 10.1021/acsami.9b14815)",
+        "verification": "removed 2026-11-07: DOI resolved to an unrelated paper (ACS AMI 2019, perovskite Sr1-x...)"
       },
       "molecular_weight": 146.3,
       "logp": 3.28,
       "heavy_atom_count": 9,
-      "rotatable_bonds": 6
+      "rotatable_bonds": 6,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-012",
@@ -335,19 +396,24 @@
       "selectivity_type": "Metal-blocking (Dielectric-on-Metal ASD)",
       "passivation_mechanism": "Ultra-fast vapor injection for ABC-type ALD cycles; transient thiolate capping on transition metals.",
       "surface_bond_type": "Covalent metal-thiolate (M-S)",
-      "thermal_stability_window_C": "120 - 170 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Thermal desorption / inert purge",
-      "incubation_cycles_enhancement": "20 - 50 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Vos et al.",
-        "journal": "Journal of Vacuum Science & Technology A",
-        "year": 2019,
-        "doi": "10.1116/1.5123307"
+        "doi": null,
+        "unverified_claim": "Vos et al., Journal of Vacuum Science & Technology A 2019 (doi 10.1116/1.5123307)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 62.14,
       "logp": 0.94,
       "heavy_atom_count": 3,
-      "rotatable_bonds": 0
+      "rotatable_bonds": 0,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-013",
@@ -364,19 +430,24 @@
       "selectivity_type": "Metal-blocking (Dielectric-on-Metal ASD)",
       "passivation_mechanism": "Chemisorbs selectively on metallic Cu/Co to form an impervious polymeric [Cu(I)-BTA]n complex film via nitrogen lone pairs.",
       "surface_bond_type": "Coordination polymeric complex (M-N)",
-      "thermal_stability_window_C": "120 - 220 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Thermal decomposition > 280 °C or H2 / Ar plasma strip",
-      "incubation_cycles_enhancement": "60 - 180 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Kim et al.",
-        "journal": "ACS Applied Materials & Interfaces",
-        "year": 2018,
-        "doi": "10.1021/acsami.8b22588"
+        "doi": null,
+        "unverified_claim": "Kim et al., ACS Applied Materials & Interfaces 2018 (doi 10.1021/acsami.8b22588)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 119.13,
       "logp": 0.96,
       "heavy_atom_count": 9,
-      "rotatable_bonds": 0
+      "rotatable_bonds": 0,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-014",
@@ -393,19 +464,24 @@
       "selectivity_type": "Metal-blocking (Dielectric-on-Metal ASD)",
       "passivation_mechanism": "Methyl substitution enhances hydrophobic barrier performance and reduces moisture permeability compared to BTA.",
       "surface_bond_type": "Coordination complex (M-N)",
-      "thermal_stability_window_C": "120 - 230 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Thermal anneal > 270 °C or H2 plasma",
-      "incubation_cycles_enhancement": "70 - 200 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Park et al.",
-        "journal": "Applied Surface Science",
-        "year": 2021,
-        "doi": "10.1016/j.apsusc.2021.151744"
+        "doi": null,
+        "unverified_claim": "Park et al., Applied Surface Science 2021 (doi 10.1016/j.apsusc.2021.151744)",
+        "verification": "removed 2026-11-07: DOI resolved to an unrelated paper (Appl. Surf. Sci. 2022, Co3O4 anode)"
       },
       "molecular_weight": 133.15,
       "logp": 1.27,
       "heavy_atom_count": 10,
-      "rotatable_bonds": 0
+      "rotatable_bonds": 0,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-015",
@@ -422,19 +498,24 @@
       "selectivity_type": "Metal-blocking (Dielectric-on-Metal ASD)",
       "passivation_mechanism": "Nitrogen heterocyclic coordination to low-index metal crystal facets suppresses precursor nucleation.",
       "surface_bond_type": "Coordination (M-N)",
-      "thermal_stability_window_C": "100 - 180 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Clean thermal desorption > 200 °C under UHV/N2 purge",
-      "incubation_cycles_enhancement": "30 - 90 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Tonner-Zech et al.",
-        "journal": "Chemistry of Materials",
-        "year": 2022,
-        "doi": "10.1021/acs.chemmater.2c01476"
+        "doi": null,
+        "unverified_claim": "Tonner-Zech et al., Chemistry of Materials 2022 (doi 10.1021/acs.chemmater.2c01476)",
+        "verification": "removed 2026-11-07: DOI resolved to an unrelated paper (Chem. Mater. 2022, porous salts via anion binding)"
       },
       "molecular_weight": 68.08,
       "logp": 0.41,
       "heavy_atom_count": 5,
-      "rotatable_bonds": 0
+      "rotatable_bonds": 0,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-016",
@@ -449,21 +530,26 @@
       "target_passivation_surface": "Metal (Cu, Co)",
       "growth_surface": "Dielectric (SiO2)",
       "selectivity_type": "Metal-blocking (Dielectric-on-Metal ASD)",
-      "passivation_mechanism": "Bidentate coordination geometry enables clean reversible thermal desorption without carbon residue.",
+      "passivation_mechanism": "N-donor coordination to metal surface sites; reported as thermally desorbable (unverified).",
       "surface_bond_type": "Coordination (M-N)",
-      "thermal_stability_window_C": "100 - 170 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Rapid thermal desorption > 180 °C",
-      "incubation_cycles_enhancement": "25 - 75 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Tonner et al.",
-        "journal": "The Journal of Physical Chemistry C",
-        "year": 2021,
-        "doi": "10.1021/acs.jpcc.1c04512"
+        "doi": null,
+        "unverified_claim": "Tonner et al., The Journal of Physical Chemistry C 2021 (doi 10.1021/acs.jpcc.1c04512)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 68.08,
       "logp": 0.41,
       "heavy_atom_count": 5,
-      "rotatable_bonds": 0
+      "rotatable_bonds": 0,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-017",
@@ -478,21 +564,26 @@
       "target_passivation_surface": "Native Metal Oxide (Al2O3, HfO2, TiO2, ZnO)",
       "growth_surface": "Dielectric (SiO2) / Noble Metal (Cu, Au)",
       "selectivity_type": "Metal Oxide-blocking (Dielectric-on-Dielectric ASD)",
-      "passivation_mechanism": "Strong multidentate P-O-M coordination specifically binds to amphoteric/basic metal oxide surfaces; completely unreactive to acidic SiO2.",
+      "passivation_mechanism": "Multidentate P-O-M binding to metal-oxide surfaces; binds SiO2 much more weakly than basic/amphoteric oxides.",
       "surface_bond_type": "Bidentate / Tridentate P-O-M phosphonate coordination",
-      "thermal_stability_window_C": "Room Temp - 250 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "O2 plasma ash or UV-Ozone",
-      "incubation_cycles_enhancement": "100 - 350 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Ito et al.",
-        "journal": "ACS Applied Materials & Interfaces",
-        "year": 2014,
-        "doi": "10.1021/am405391q"
+        "doi": null,
+        "unverified_claim": "Ito et al., ACS Applied Materials & Interfaces 2014 (doi 10.1021/am405391q)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 334.48,
       "logp": 6.43,
       "heavy_atom_count": 22,
-      "rotatable_bonds": 17
+      "rotatable_bonds": 17,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     },
     {
       "id": "INHIB-018",
@@ -509,19 +600,24 @@
       "selectivity_type": "Metal/Oxide-blocking (ABC Super-cycle ASD)",
       "passivation_mechanism": "Enol tautomer coordinates to metal surface atoms or reactive Lewis acid sites as a bidentate chelate, inhibiting precursor chemisorption.",
       "surface_bond_type": "Chelating coordination (M-O, O)",
-      "thermal_stability_window_C": "150 - 250 °C",
+      "thermal_stability_window_C": null,
       "removal_method": "Thermal desorption during co-reactant (O3/H2O) pulse",
-      "incubation_cycles_enhancement": "30 - 80 cycles",
+      "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Mackus et al.",
-        "journal": "Chemistry of Materials",
-        "year": 2019,
-        "doi": "10.1021/acs.chemmater.9b01007"
+        "doi": null,
+        "unverified_claim": "Mackus et al., Chemistry of Materials 2019 (doi 10.1021/acs.chemmater.9b01007)",
+        "verification": "removed 2026-11-07: DOI does not exist on Crossref"
       },
       "molecular_weight": 100.12,
       "logp": 0.55,
       "heavy_atom_count": 7,
-      "rotatable_bonds": 2
+      "rotatable_bonds": 2,
+      "data_status": {
+        "identifiers": "SMILES/CAS cross-checked against PubChem InChIKey",
+        "descriptors": "computed with RDKit from SMILES (Crippen logP)",
+        "qualitative_fields": "unverified general summary (class, surfaces, mechanism, removal); needs a source",
+        "quantitative_fields": "thermal window and incubation cycles removed: no verifiable source"
+      }
     }
   ]
 }
