@@ -1099,6 +1099,7 @@
         <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 전구체·반응 및 AS-ALD 인히비터 DB</a></li>
         <li><a href="#precursor-inverse-design" class="toc-link" data-target="precursor-inverse-design">12. 프리커서 AI 역설계 &amp; 연산 매핑</a></li>
         <li><a href="#dft-tuning-roadmap" class="toc-link" data-target="dft-tuning-roadmap">13. 반도체 AI 모델 튜닝 &amp; DFT·실험 융합 전략</a></li>
+        <li><a href="#synthesis-workflow" class="toc-link" data-target="synthesis-workflow">14. 전구체·인히비터 합성 워크플로우 &amp; DFT·MLIP 설계</a></li>
       </ul>
 
       <div class="toc-sub-actions">
@@ -4278,6 +4279,318 @@ flowchart TD
                 </ul>
               </div>
             </div>
+          </div>
+        </div>
+
+      </section>
+
+    
+      <!-- Section 14: End-to-End Synthesis Workflow & Multi-Fidelity DFT/MLIP Architecture -->
+      <section id="synthesis-workflow">
+        <div class="section-header">
+          <div class="section-tag">Section 14 &bull; End-to-End Synthesis Workflow &amp; Multi-Fidelity DFT/MLIP Architecture</div>
+          <h2 class="section-title">확장 DB 기반 프리커서·인히비터 합성 가능성 평가 및 합성 경로 자동 설계 워크플로우</h2>
+          <p class="section-desc">
+            구축된 <strong>120종 확장 전구체 마스터 DB</strong>, <strong>18종 AS-ALD 인히비터 DB</strong>, <strong>29종 반응 시약(Building Blocks)</strong> 및 <strong>12종 공인 유기금속 반응식</strong>을 바탕으로, 가상 후보 분자의 합성 가능성(SA) 고속 스크리닝부터 시작 물질 선정, 반응 조건·용매·글러브박스 분위기, 부반응물 제거 및 정제법에 이르는 <strong>엔드투엔드 실험 레시피(SOP)를 자동 도출하는 워크플로우</strong>를 구축합니다. 아울러 <strong>초고속 머신러닝 인터애토믹 포텐셜(MLIP: SevenNet, MACE, ALD-MLIP)</strong>과 <strong>고정밀 DFT(VASP, ORCA)</strong>를 다중 충실도(Multi-Fidelity)로 연계하여 반응 활성화 장벽(\(\Delta G^\ddagger\)), 열분해 한계(\(T_{\text{decomp}}\)), 증기압 곡선, 그리고 표면 선택 흡착능(\(\Delta\Delta G_{\text{ads}}\))을 계산·검증하는 전산 아키텍처를 상세히 설계합니다.
+          </p>
+        </div>
+
+        <!-- 14.1 Mermaid Pipeline Diagram -->
+        <div class="mermaid-card clickable-card" id="card-synthesis-workflow" style="margin-bottom:24px;" onclick="openDiagramModal('workflow-container', '확장 DB 기반 프리커서 &amp; 인히비터 합성 자동 설계 및 DFT·MLIP 연계 워크플로우')">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-title">그림 14-1. 전구체 &amp; AS-ALD 인히비터 합성 가능성 평가 및 실험 SOP 자동 조제 파이프라인 (클릭 시 확대)</span>
+            <span class="badge badge-4g" style="font-size:0.75rem;">5-Stage End-to-End Pipeline</span>
+          </div>
+          <div class="mermaid-viewport">
+            <div class="mermaid-svg-container" id="workflow-container">
+              <pre class="mermaid">
+flowchart TD
+    subgraph S1 ["Stage 1: 분자 입력 및 전처리 (Input Profiling)"]
+        A["후보 분자 입력 (120종 전구체 / 18종 억제제 / AI 역설계 분자)"] --> B["RDKit 2D 정규화 및 원자가 검증 (Metal-Coordination Sanitization)"]
+        B --> C{"분자 도메인 분류"}
+        C -- "전이금속 착물" --> C1["Precursor 파이프라인 분기"]
+        C -- "유전체/금속 차단제" --> C2["Inhibitor (SMI / SAM) 파이프라인 분기"]
+    end
+
+    subgraph S2 ["Stage 2: 2-Track 합성 가능성 고속 스크리닝 (Synthetic Accessibility)"]
+        C1 --> D1["Precursor TMC-SA: 유기 리간드 BR-SAScore 및 금속-리간드 복분해 타당성"]
+        C2 --> D2["Inhibitor SCScore: Reaxys 유기 합성 복잡도 및 기상 휘발성 평가"]
+        D1 & D2 --> E{"SA 임계치 판정 (SA &lt;= 3.5 &amp; BDE_min &gt;= 40 kcal/mol)"}
+        E -- "Fail (합성 난해/자멸 분해)" --> E_rej["후보 탈락 및 리간드 대체 피드백 (Reject / Redesign)"]
+        E -- "Pass (합성 유망)" --> F["합성 경로 탐색 진입"]
+    end
+
+    subgraph S3 ["Stage 3: 지능형 역합성 절단 및 실험 SOP 자동 조제 (Retrosynthesis &amp; SOP)"]
+        F --> G["29종 시약 카탈로그 (Building Blocks) 및 12종 반응 템플릿 매칭"]
+        G --> H["역합성 트리 생성 (AiZynthFinder-Metal / MCTS 전향 유효성 검증)"]
+        H --> I["실험 프로토콜 자동 조제 (시약 몰비, 용매, 불활성 글러브박스, 온도, 여과, 정제)"]
+    end
+
+    subgraph S4 ["Stage 4: DFT &amp; MLIP 다중 충실도 물리 검증 (Multi-Fidelity Verification)"]
+        I --> J1["초고속 MLIP (SevenNet-0 / MACE): 3D 컨포머 최적화, BDE, 기화열, ΔE_rxn (&lt;1 ms)"]
+        J1 --> J2["고정밀 DFT (VASP / ORCA): 전이상태 활성화 장벽 ΔG‡, 솔베이션 반응 자유에너지 ΔG_298K"]
+        J2 --> J3["표면 차폐 반응 (Inhibitor: SiO2 vs Cu 표면 ΔΔG_ads, %V_bur, MLIP-GCMC 패킹)"]
+    end
+
+    subgraph S5 ["Stage 5: 파운드리 / 합성 연구진용 데이터시트 출력 (Actionable Synthesis Report)"]
+        J3 --> K1["합성 가능성 종합 등급 (Level A/B/C) 및 화학적 SOP 레시피 출력"]
+        K1 --> K2["열분해 온도(T_decomp), 자연발화성(Pyrophoricity), ALD 공정 윈도우 데이터시트 완성"]
+    end
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14.2 Module 1: 2-Track SA Scoring -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">1. 반도체 전구체 및 인히비터 특화 2-Track 합성 가능성(SA) 평가 체계</h3>
+            <span class="badge badge-1g" style="font-size:0.82rem;">Hybrid SA Architecture</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            의약화학 위주의 기존 SA 모델이 지닌 False Negative(TSA, DMAH 왜곡)와 False Positive(금속 착물 맹목 통과)를 원천 차단하기 위해, 전구체와 인히비터의 화학적 특성에 맞춘 <strong>이원화(2-Track) 정량 평가 수식</strong>을 정의합니다:
+          </p>
+
+          <div class="versus-grid">
+            <div class="versus-card" style="border-top: 3px solid #7c3aed;">
+              <h4 style="color:#6d28d9; font-size:1.02rem; margin-bottom:6px;">Track A: 전이금속 전구체 합성 스코어 (TMC-SA)</h4>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:10px;">
+                중심 금속과 유기 리간드를 분리(De-coupling)하여 평가하며, 무기 할로겐화물과 리간드 음이온 간의 복분해 반응 열역학을 결합합니다:
+              </p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; font-size:0.88rem; margin-bottom:10px;">
+                $$\text{SA}_{\text{Precursor}} = \max_i \text{BR-SAScore}(HL_i) + w_1 \mathcal{S}_{\text{DFT}}(\Delta G_{\text{syn}}^{\text{DFT}}) + w_2 \mathcal{S}_{\text{steric}}(\%V_{\text{bur}})$$
+              </div>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li>\(HL_i\): 중심 금속(\(\text{Zr, Hf, Ti, Ru, W, Co}\))과 해리된 순수 유기 리간드 파편 (BFrag 사전에 존재 시 감점 배제).</li>
+                <li>\(\Delta G_{\text{syn}}^{\text{DFT}}\): \(\text{MCl}_n + n\,\text{LiNR}_2 \rightarrow \text{M(NR}_2)_n + n\,\text{LiCl}\downarrow\) 염 복분해 자유에너지 (\(\le -10\text{ kcal/mol}\) 시 통과).</li>
+                <li>\(\%V_{\text{bur}}\): SambVca 기반 중심 금속 매몰 부피율 (\(65\% \sim 85\%\) 범위 내에서 단분자 올리고머화 방지).</li>
+              </ul>
+            </div>
+
+            <div class="versus-card" style="border-top: 3px solid #0284c7;">
+              <h4 style="color:#0369a1; font-size:1.02rem; margin-bottom:6px;">Track B: AS-ALD 인히비터 합성 스코어 (Inhib-SA)</h4>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:10px;">
+                인히비터(SMI/SAM)는 순수 유기 화합물(아미노실란, 알칸티올, 트리아졸 등)이므로 Reaxys SCScore를 1차 기반으로 하되 기상 공정 휘발성 페널티를 결합합니다:
+              </p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; font-size:0.88rem; margin-bottom:10px;">
+                $$\text{SA}_{\text{Inhibitor}} = \text{SCScore}(I) + w_{\text{vol}}\mathcal{P}_{\text{volatility}}(T_{\text{boil}}) + w_{\text{res}}\mathcal{P}_{\text{residue}}(\text{Heteroatom})$$
+              </div>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li>\(\text{SCScore}(I)\): Reaxys 1024bool 신경망 기반 합성 난이도 (상용 화학물질 출발 시 \(1.0 \sim 2.0\)).</li>
+                <li>\(\mathcal{P}_{\text{volatility}}\): 기상 주입을 위한 비점 페널티 (\(T_{\text{boil}} \le 180^\circ\text{C}\) 시 \(0.0\), \(> 250^\circ\text{C}\) 시 지수적 감점).</li>
+                <li>\(\mathcal{P}_{\text{residue}}\): 할로겐(Cl, Br) 잔류물 부식성 위험 및 산소 플라즈마 애싱 후 탄화 잔류 페널티.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14.3 Module 2: Retrosynthesis & SOP Generation Engine -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. 지능형 역합성 절단 &amp; 실험실 표준 운영 절차(SOP) 자동 조제 엔진</h3>
+            <span class="badge badge-3g" style="font-size:0.82rem;">Recipe Generation Engine</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            가상 분자가 주어졌을 때, <strong>29종 출발물질 카탈로그(<code>database/building_blocks.json</code>)</strong>와 <strong>12종 공인 반응(<code>database/reactions.json</code>)</strong> 템플릿을 역방향으로 탐색하여 파운드리 및 합성 연구진이 즉시 실험에 착수할 수 있는 6단계 SOP를 조제합니다:
+          </p>
+
+          <div class="table-responsive" style="margin-bottom:16px;">
+            <table style="font-size:0.86rem;">
+              <thead>
+                <tr style="background:#f8fafc;">
+                  <th style="width:110px;">SOP 단계</th>
+                  <th style="width:160px;">핵심 제어 변수</th>
+                  <th>반도체 전구체 적용 기준 (Precursor SOP)</th>
+                  <th>AS-ALD 인히비터 적용 기준 (Inhibitor SOP)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Step 1. 시약 정량</strong></td>
+                  <td>당량비 (Stoichiometry)</td>
+                  <td>금속 할로겐화물(\(\text{MCl}_n\)) 대비 리간드 음이온(\(\text{Li-L}\)) 1:1.02 미세 과량 주입.</td>
+                  <td>실란/클로로실란 대비 유기 아민 1:2.05 (발생 \(\text{HCl}\) 포획용 염기 과량).</td>
+                </tr>
+                <tr>
+                  <td><strong>Step 2. 용매 &amp; 분위기</strong></td>
+                  <td>수분/산소 제어, 극성</td>
+                  <td>무수 건조 톨루엔/n-헥산, \(\text{H}_2\text{O}/\text{O}_2 &lt; 0.1\text{ ppm}\) 질소 글러브박스 필수.</td>
+                  <td>무수 디에틸에테르 / 무수 THF / 펜탄, 불활성 아르곤 실링.</td>
+                </tr>
+                <tr>
+                  <td><strong>Step 3. 반응 온도 프로파일</strong></td>
+                  <td>발열 제어, 활성화 장벽</td>
+                  <td>\(-78^\circ\text{C}\) (드라이아이스/아세톤) 저온 적하 후 서서히 실온 승온 (12시간 교반).</td>
+                  <td>\(0^\circ\text{C}\) 빙초산/얼음 배스 적하 후 실온 교반 (4~6시간).</td>
+                </tr>
+                <tr>
+                  <td><strong>Step 4. 부반응물 분리</strong></td>
+                  <td>염 침전 및 가스 배기</td>
+                  <td>\(\text{LiCl}\downarrow\) 염 침전물을 Celite 패드 감압 여과로 제거.</td>
+                  <td>\(\text{R}_2\text{NH}\cdot\text{HCl}\downarrow\) 아민염 필터 여과 또는 \(\text{HNMe}_2\uparrow\) 질소 버블링 배기.</td>
+                </tr>
+                <tr>
+                  <td><strong>Step 5. 최종 분별 정제</strong></td>
+                  <td>고순도화, 금속 잔류</td>
+                  <td>고진공(\(0.05 \sim 0.1\text{ Torr}\)) 분별 감압 증류 또는 승화 (순도 \(\ge 99.999\%\)).</td>
+                  <td>상압 또는 미세 감압(\(10 \sim 20\text{ Torr}\)) 정밀 증류관 분별.</td>
+                </tr>
+                <tr>
+                  <td><strong>Step 6. 안전 &amp; 보관 규격</strong></td>
+                  <td>자연발화성, 독성</td>
+                  <td>Pyrophoric 등급(TMA, ZMA) 취급 주의, 금속 화재용 D급 소화기 비치.</td>
+                  <td>악취성 티올 가스 배기 스크러버 가동, 산화성 수분 차단 보관.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 14.4 Module 3: Multi-Fidelity DFT & MLIP Architecture -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">3. DFT &amp; MLIP 다중 충실도(Multi-Fidelity) 연산 데이터 심층 활용 아키텍처</h3>
+            <span class="badge badge-4g" style="font-size:0.82rem;">Multi-Fidelity Computational Stack</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
+            연산 속도가 수백만 배 다른 <strong>MLIP(밀리초 단위 고속 스크리닝)</strong>와 <strong>DFT(시간 단위 고정밀 양자화학)</strong>를 3계층(Tier)으로 분업화하여 대규모 분자 공간을 실시간 탐색합니다:
+          </p>
+
+          <div class="versus-grid">
+            <div class="versus-card" style="border-top: 3px solid #059669;">
+              <h4 style="color:#047857; font-size:1.02rem; margin-bottom:6px;">Tier 1. 초고속 MLIP 스크리닝 (&lt;1 ms / 분자)</h4>
+              <p style="font-size:0.85rem; color:#64748b; margin-bottom:8px;"><strong>엔진:</strong> SevenNet-0, MACE-MP-0, ALD-MLIP (ASE 인터페이스)</p>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li><strong>3D 구조 완화:</strong> 2D SMILES로부터 초기 3D 컨포머 전역 탐색 및 50 스텝 내 평형 구조 수렴.</li>
+                <li><strong>최소 결합 해리 에너지 (\(\text{BDE}_{\min}\)):</strong> 중심 금속-헤테로원자 결합 해리 시뮬레이션으로 열분해 시작 온도(\(T_{\text{decomp}}\)) 즉시 추정.</li>
+                <li><strong>기화 엔탈피 및 증기압 곡선:</strong> Clausius-Clapeyron 관계식(\(\ln P = -\Delta H_{\text{vap}}/RT + C\)) 연동 ALD 버블러 온도별 증기압 산출.</li>
+              </ul>
+            </div>
+
+            <div class="versus-card" style="border-top: 3px solid #0284c7;">
+              <h4 style="color:#0369a1; font-size:1.02rem; margin-bottom:6px;">Tier 2. 고정밀 분자 DFT 검증 (상위 5% 후보)</h4>
+              <p style="font-size:0.85rem; color:#64748b; margin-bottom:8px;"><strong>엔진:</strong> VASP (Plane-wave PAW), ORCA (def2-TZVP / B3LYP-D3)</p>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li><strong>전이상태(TS) 활성화 장벽 (\(\Delta G^\ddagger\)):</strong> NEB(Nudged Elastic Band) 및 Sella 알고리즘으로 리간드 치환 반응 활성화 에너지 정밀 도출.</li>
+                <li><strong>솔베이션 반응 깁스 자유에너지:</strong> 비극성 용매(SMD 톨루엔/헥산) 보정을 포함한 표준 반응 자유에너지(\(\Delta G_{\text{rxn}, 298\text{K}}^\circ\)) 계산.</li>
+                <li><strong>입체 매몰 부피율 (\(\%V_{\text{bur}}\)):</strong> 금속 배위권의 구형 부피 적분을 통해 2량체화(Dimerization) 방지력 검증.</li>
+              </ul>
+            </div>
+
+            <div class="versus-card" style="border-top: 3px solid #d97706;">
+              <h4 style="color:#b45309; font-size:1.02rem; margin-bottom:6px;">Tier 3. AS-ALD 표면 슬랩 반응 &amp; 패킹 모델링</h4>
+              <p style="font-size:0.85rem; color:#64748b; margin-bottom:8px;"><strong>엔진:</strong> VASP Slab DFT + MLIP-GCMC / RSA Dynamics</p>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li><strong>표면 흡착 선택도:</strong> \(\text{SiO}_2(001)\text{-OH}\) vs \(\text{Cu}(111)/\text{Co}(0001)\) 표면 흡착 에너지 차이(\(\Delta\Delta G_{\text{ads}} = \Delta G_{\text{ads}}^{\text{Target}} - \Delta G_{\text{ads}}^{\text{Growth}}\)).</li>
+                <li><strong>동적 패킹 밀도 (\(\theta(t)\)):</strong> MLIP 기반 Grand Canonical Monte Carlo 시뮬레이션으로 표면 결함 밀도 및 전구체 차폐 지연 주기 수(\(N_{\text{incubation}}\)) 예측.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14.5 Module 4: Real-world Case Studies & Output Recipe -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">4. 파운드리/합성 연구진을 위한 실증 출력 레시피 (Case Studies)</h3>
+            <span class="badge badge-2g" style="font-size:0.82rem;">Case Verification</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            본 워크플로우를 통해 실제 반도체 양산 전구체 <strong>DIPAS</strong>와 AS-ALD 면적선택증착 인히비터 <strong>DMADMS</strong>를 입력했을 때 자동 출력되는 표준 실험 SOP 및 물리 데이터시트 예시입니다:
+          </p>
+
+          <div class="versus-grid">
+            <div class="versus-card" style="background:#ffffff; border:1px solid #cbd5e1; border-top: 3px solid #0284c7;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:#0369a1; font-size:1.05rem;">Case 1. 반도체 실리콘 전구체: DIPAS</strong>
+                <span class="badge badge-1g">SA: Level A (합성 매우 용이)</span>
+              </div>
+              <div style="font-size:0.82rem; font-family:'JetBrains Mono'; color:#475569; margin-bottom:8px;">
+                IUPAC: Diisopropylaminosilane &bull; Formula: C6H17NSi &bull; MW: 131.29
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; font-size:0.82rem; margin-bottom:10px; font-family:'JetBrains Mono';">
+                <strong>[역합성 경로]</strong><br>
+                SiH3Cl (모노클로로실란) + 2 HN(iPr)2 (디이소프로필아민)<br>
+                &rarr; SiH3[N(iPr)2] (DIPAS) + (iPr)2NH·HCl↓ (염산염 부산물)
+              </div>
+              <div style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6;">
+                &bull; <strong>조제 SOP:</strong> 무수 펜탄 용매 중 \(-20^\circ\text{C}\)에서 디이소프로필아민을 모노클로로실란에 서서히 적하. 4시간 교반 후 Celite 여과로 흰색 아민염 제거. 감압 분별 증류(\(122^\circ\text{C}\) / 상압)로 정제 (수율 \(84\%\)).<br>
+                &bull; <strong>DFT / MLIP 예측:</strong> \(\Delta G_{\text{rxn}} = -18.4\text{ kcal/mol}\), \(\text{BDE}(\text{Si-N}) = 78.5\text{ kcal/mol}\), \(T_{\text{decomp}} = 450^\circ\text{C}\), 증기압 \(10\text{ Torr @ } 20^\circ\text{C}\).<br>
+                &bull; <strong>안전 등급:</strong> 공기 중 서서히 가수분해, 질소 글러브박스 보관 권고.
+              </div>
+            </div>
+
+            <div class="versus-card" style="background:#ffffff; border:1px solid #cbd5e1; border-top: 3px solid #dc2626;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:#b91c1c; font-size:1.05rem;">Case 2. AS-ALD 유전체 억제제: DMADMS</strong>
+                <span class="badge badge-1g">SA: Level A (상용 대량 합성)</span>
+              </div>
+              <div style="font-size:0.82rem; font-family:'JetBrains Mono'; color:#475569; margin-bottom:8px;">
+                IUPAC: Bis(dimethylamino)dimethylsilane &bull; Formula: C6H18N2Si &bull; MW: 146.31
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; font-size:0.82rem; margin-bottom:10px; font-family:'JetBrains Mono';">
+                <strong>[역합성 경로]</strong><br>
+                Me2SiCl2 (디클로로디메틸실란) + 4 HNMe2 (디메틸아민 기체)<br>
+                &rarr; Me2Si(NMe2)2 (DMADMS) + 2 Me2NH·HCl↓
+              </div>
+              <div style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6;">
+                &bull; <strong>조제 SOP:</strong> 무수 디에틸에테르에 디클로로디메틸실란 용해 후 \(0^\circ\text{C}\)에서 디메틸아민 가스를 천천히 버블링. 침전염 여과 후 에테르 유거, \(128^\circ\text{C}\) 상압 분별 증류 정제 (수율 \(89\%\)).<br>
+                &bull; <strong>표면 선택도 DFT:</strong> \(\Delta G_{\text{ads}}(\text{SiO}_2) = -1.45\text{ eV}\) (실릴화 발열 반응) vs \(\Delta G_{\text{ads}}(\text{Cu}) = -0.12\text{ eV}\) (물리흡착 가역 탈착) &rarr; \(\Delta\Delta G_{\text{ads}} = -1.33\text{ eV}\) (\(-30.7\text{ kcal/mol}\), 초고선택적 \(\text{SiO}_2\) 차단).<br>
+                &bull; <strong>ALD 공정 윈도우:</strong> \(150 \sim 250^\circ\text{C}\)에서 100회 이상 핵생성 지연, 산소 플라즈마 애싱 시 잔류 탄소 없이 완전 제거.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14.6 Module 5: Code Architecture Snippet -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">5. 파이썬 파이프라인 구현 아키텍처 (Python Execution Blueprint)</h3>
+            <span class="badge badge-prec" style="font-size:0.82rem;">Code Blueprint</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            본 연구소 저장소의 데이터베이스(<code>database/</code>)와 즉시 연동되어 전구체/인히비터 합성 레시피 및 DFT/MLIP 인풋을 자동 조제하는 핵심 파이프라인 클래스 구조입니다:
+          </p>
+
+          <div style="background:#0f172a; border-radius:8px; padding:16px; font-family:'JetBrains Mono'; font-size:0.8rem; color:#f8fafc; overflow-x:auto; line-height:1.5;">
+<span style="color:#7dd3fc;">class</span> <span style="color:#38bdf8; font-weight:700;">SemiconductorSynthesisPlanner</span>:
+    <span style="color:#64748b;">"""
+    End-to-End Synthesis Accessibility & Route Planner for Semiconductor Precursors & Inhibitors
+    Integrates 120 Master Precursors, 18 AS-ALD Inhibitors, 29 Reagents, and 12 Reaction Templates.
+    """</span>
+    <span style="color:#7dd3fc;">def</span> <span style="color:#facc15;">__init__</span>(self, db_root=<span style="color:#86efac;">"database"</span>):
+        self.precursors = self.load_json(f<span style="color:#86efac;">"{db_root}/external/expanded_semiconductor_precursors_master.json"</span>)
+        self.inhibitors = self.load_json(f<span style="color:#86efac;">"{db_root}/external/as_ald_inhibitors.json"</span>)[<span style="color:#86efac;">"inhibitors"</span>]
+        self.reagents = self.load_json(f<span style="color:#86efac;">"{db_root}/building_blocks.json"</span>)
+        self.reactions = self.load_json(f<span style="color:#86efac;">"{db_root}/reactions.json"</span>)
+        self.mlip_engine = SevenNetCalculator()  <span style="color:#64748b;"># ASE calculator for ultrafast BDE/geometry</span>
+        self.dft_runner = VaspAutomationPipeline() <span style="color:#64748b;"># High-precision transition-state runner</span>
+
+    <span style="color:#7dd3fc;">def</span> <span style="color:#facc15;">evaluate_sa</span>(self, smiles: str, mol_type: str = <span style="color:#86efac;">"precursor"</span>) -&gt; dict:
+        <span style="color:#64748b;"># 1. 2-Track SA Scoring (TMC-SA for Precursors, SCScore for Inhibitors)</span>
+        <span style="color:#7dd3fc;">if</span> mol_type == <span style="color:#86efac;">"precursor"</span>:
+            ligands = self.extract_ligands(smiles)
+            ligand_sa = max([self.calc_br_sascore(l) <span style="color:#7dd3fc;">for</span> l <span style="color:#7dd3fc;">in</span> ligands])
+            bde_min = self.mlip_engine.calc_min_bde(smiles)  <span style="color:#64748b;"># units: kcal/mol</span>
+            verdict = <span style="color:#86efac;">"Pass"</span> <span style="color:#7dd3fc;">if</span> ligand_sa &lt;= 3.5 <span style="color:#7dd3fc;">and</span> bde_min &gt;= 40.0 <span style="color:#7dd3fc;">else</span> <span style="color:#86efac;">"Caution"</span>
+            <span style="color:#7dd3fc;">return</span> {<span style="color:#86efac;">"sa_score"</span>: ligand_sa, <span style="color:#86efac;">"min_bde"</span>: bde_min, <span style="color:#86efac;">"verdict"</span>: verdict}
+        <span style="color:#7dd3fc;">else</span>:
+            sc = self.calc_scscore(smiles)
+            t_boil = self.estimate_boiling_point(smiles)
+            <span style="color:#7dd3fc;">return</span> {<span style="color:#86efac;">"scscore"</span>: sc, <span style="color:#86efac;">"t_boil_est_c"</span>: t_boil, <span style="color:#86efac;">"verdict"</span>: <span style="color:#86efac;">"Pass"</span> <span style="color:#7dd3fc;">if</span> sc &lt;= 2.2 <span style="color:#7dd3fc;">else</span> <span style="color:#86efac;">"Fail"</span>}
+
+    <span style="color:#7dd3fc;">def</span> <span style="color:#facc15;">generate_synthesis_sop</span>(self, smiles: str) -&gt; dict:
+        <span style="color:#64748b;"># 2. Retrosynthetic Disconnection &amp; SOP Formulation</span>
+        matched_rxn, precursors_needed = self.match_reaction_templates(smiles)
+        sop = {
+            <span style="color:#86efac;">"reaction_name"</span>: matched_rxn[<span style="color:#86efac;">"name"</span>],
+            <span style="color:#86efac;">"starting_materials"</span>: precursors_needed,
+            <span style="color:#86efac;">"solvent"</span>: matched_rxn.get(<span style="color:#86efac;">"solvent"</span>, <span style="color:#86efac;">"Anhydrous Toluene"</span>),
+            <span style="color:#86efac;">"temperature_profile"</span>: <span style="color:#86efac;">"-78 °C addition -&gt; 25 °C stir (12h)"</span>,
+            <span style="color:#86efac;">"byproduct_quench"</span>: matched_rxn.get(<span style="color:#86efac;">"byproduct"</span>, <span style="color:#86efac;">"LiCl"</span>),
+            <span style="color:#86efac;">"purification"</span>: <span style="color:#86efac;">"Vacuum fractional distillation (0.1 Torr)"</span>,
+            <span style="color:#86efac;">"expected_yield"</span>: <span style="color:#86efac;">"80 - 90%"</span>
+        }
+        <span style="color:#7dd3fc;">return</span> sop
           </div>
         </div>
 
