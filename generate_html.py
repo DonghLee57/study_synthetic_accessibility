@@ -558,6 +558,157 @@ for idx, b in enumerate(benchmarks, 1):
     empirical_rows.append(row)
 empirical_db_joined = "\n".join(empirical_rows)
 
+
+# Build Expanded Precursor Master DB rows (120 items)
+with open("database/external/expanded_semiconductor_precursors_master.json", "r", encoding="utf-8") as f:
+    expanded_prec_db = json.load(f)
+
+expanded_prec_rows = []
+for idx, p in enumerate(expanded_prec_db, 1):
+    pid = p.get("id", f"EXP-{idx:03d}")
+    name = p.get("name", "-")
+    chem_name = p.get("chemical_name") or "-"
+    formula = p.get("formula") or "-"
+    elem = p.get("center_element") or "-"
+    origin = p.get("origin", "")
+    if "project baseline" in origin:
+        cat_badge = '<span class="badge badge-prec">Baseline 27종</span>'
+    else:
+        cat_badge = '<span class="badge badge-ext">AtomicLimits ALD</span>'
+    
+    proc_cnt = p.get("atomiclimits_process_count", 0)
+    proc_str = f'<strong style="color:#0369a1; font-family:\'JetBrains Mono\';">{proc_cnt}회</strong>' if proc_cnt > 0 else '<span style="color:#94a3b8;">-</span>'
+    
+    mats = p.get("atomiclimits_materials", [])
+    if len(mats) > 4:
+        mat_str = ", ".join(mats[:4]) + f" 외 {len(mats)-4}종"
+    elif mats:
+        mat_str = ", ".join(mats)
+    else:
+        mat_str = "-"
+        
+    co_rxns = p.get("atomiclimits_co_reactants", [])
+    if len(co_rxns) > 3:
+        co_str = ", ".join(co_rxns[:3]) + f" 외 {len(co_rxns)-3}종"
+    elif co_rxns:
+        co_str = ", ".join(co_rxns)
+    else:
+        co_str = "-"
+        
+    doi_cnt = p.get("atomiclimits_unique_doi_count", 0)
+    doi_str = f'<span style="font-family:\'JetBrains Mono\'; font-weight:600; color:#475569;">{doi_cnt}건</span>' if doi_cnt > 0 else '<span style="color:#94a3b8;">-</span>'
+    
+    smi = p.get("smiles")
+    if smi:
+        smi_str = f'<code>{smi}</code>'
+    else:
+        smi_str = '<span style="color:#94a3b8; font-size:0.75rem; font-style:italic;">PubChem 조회 예정</span>'
+        
+    search_str = f"{name} {chem_name} {formula} {elem} {mat_str} {co_str}".lower()
+    
+    expanded_prec_rows.append(f"""
+            <tr class="exp-prec-row" data-search="{search_str}">
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
+              <td style="white-space:nowrap;">
+                <strong>{name}</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">{pid}</div>
+              </td>
+              <td>
+                <div style="font-weight:600; color:#0f172a; font-size:0.82rem;">{chem_name}</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.76rem; color:#475569;">{formula}</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">{elem}</span></td>
+              <td style="white-space:nowrap;">{cat_badge}</td>
+              <td style="text-align:center; white-space:nowrap;">{proc_str}</td>
+              <td style="font-size:0.8rem; color:#0369a1; max-width:220px;">{mat_str}</td>
+              <td style="font-size:0.78rem; color:#64748b; max-width:180px;">{co_str}</td>
+              <td style="text-align:center; white-space:nowrap;">{doi_str}</td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:240px; word-break:break-all;">{smi_str}</td>
+            </tr>""")
+expanded_prec_db_joined = "\n".join(expanded_prec_rows)
+
+
+# Build AS-ALD Inhibitor DB rows (18 items)
+with open("database/external/as_ald_inhibitors.json", "r", encoding="utf-8") as f:
+    inhib_json = json.load(f)
+    inhib_list = inhib_json["inhibitors"]
+
+inhib_rows = []
+for idx, inh in enumerate(inhib_list, 1):
+    iid = inh.get("id", f"INHIB-{idx:03d}")
+    abbr = inh.get("abbreviation", "-")
+    name = inh.get("name", "-")
+    cas = inh.get("cas_number", "-")
+    formula = inh.get("formula", "-")
+    fam = inh.get("chemical_family", "-")
+    phase = inh.get("delivery_phase", "-")
+    sel_type = inh.get("selectivity_type", "")
+    target_surf = inh.get("target_passivation_surface", "-")
+    growth_surf = inh.get("growth_surface", "-")
+    mech = inh.get("passivation_mechanism", "-")
+    bond = inh.get("surface_bond_type", "-")
+    mw = inh.get("molecular_weight", "-")
+    logp = inh.get("logp", "-")
+    h_count = inh.get("heavy_atom_count", "-")
+    rot_b = inh.get("rotatable_bonds", "-")
+    removal = inh.get("removal_method", "-")
+    smi = inh.get("smiles", "-")
+    lit = inh.get("literature_reference", {})
+    doi = lit.get("doi", "")
+    authors = lit.get("authors", "-")
+    year = lit.get("year", "-")
+    
+    if "Dielectric-blocking" in sel_type:
+        type_badge = '<span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-size:0.74rem;">유전체 차단 &rarr; 금속 증착</span>'
+    elif "Metal-blocking" in sel_type:
+        type_badge = '<span class="badge" style="background:#dbeafe; color:#1d4ed8; border-color:#93c5fd; font-size:0.74rem;">금속 차단 &rarr; 유전체 증착</span>'
+    else:
+        type_badge = '<span class="badge badge-3g" style="font-size:0.74rem;">선택적 차단 &rarr; 박막 증착</span>'
+        
+    doi_link = f'https://doi.org/{doi}' if doi else '#'
+    
+    search_str = f"{abbr} {name} {cas} {formula} {fam} {target_surf} {growth_surf} {bond}".lower()
+    
+    inhib_rows.append(f"""
+            <tr class="inhib-row" data-search="{search_str}">
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
+              <td style="white-space:nowrap;">
+                <strong style="font-size:0.95rem; color:#0f172a;">{abbr}</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">{iid}</div>
+              </td>
+              <td>
+                <div style="font-weight:600; color:#0f172a; font-size:0.82rem;">{name}</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.76rem; color:#475569;">CAS: {cas} &bull; {formula}</div>
+              </td>
+              <td style="white-space:nowrap;">
+                <span class="badge badge-2g">{fam}</span>
+                <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">{phase}</div>
+              </td>
+              <td>
+                <div>{type_badge}</div>
+                <div style="font-size:0.75rem; color:#475569; margin-top:3px; line-height:1.35;">
+                  &bull; 차단: <strong>{target_surf}</strong><br>
+                  &bull; 성장: <span style="color:#0369a1;">{growth_surf}</span>
+                </div>
+              </td>
+              <td>
+                <div style="font-size:0.79rem; color:#334155; line-height:1.4;">{mech}</div>
+                <div style="font-size:0.75rem; color:#047857; font-weight:600; margin-top:3px;">결합: {bond}</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
+                <div>MW: {mw}</div>
+                <div style="color:#475569;">LogP: {logp}</div>
+                <div style="font-size:0.7rem; color:#64748b;">HA:{h_count} &bull; RotB:{rot_b}</div>
+              </td>
+              <td style="font-size:0.78rem; color:#334155; max-width:180px;">{removal}</td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:180px; word-break:break-all;"><code>{smi}</code></td>
+              <td style="white-space:nowrap;">
+                <div><a href="{doi_link}" target="_blank" style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">DOI</a></div>
+                <div style="font-size:0.72rem; color:#64748b;">{authors} ({year})</div>
+              </td>
+            </tr>""")
+inhibitor_db_joined = "\n".join(inhib_rows)
+
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
     template = f.read()
@@ -569,6 +720,8 @@ final_html = final_html.replace("<!-- VASP_ROWS_PLACEHOLDER -->", vasp_joined)
 final_html = final_html.replace("<!-- PREC_DB_ROWS_PLACEHOLDER -->", prec_db_joined)
 final_html = final_html.replace("<!-- BB_DB_ROWS_PLACEHOLDER -->", bb_db_joined)
 final_html = final_html.replace("<!-- RXN_DB_ROWS_PLACEHOLDER -->", rxn_db_joined)
+final_html = final_html.replace("<!-- EXPANDED_PREC_DB_ROWS_PLACEHOLDER -->", expanded_prec_db_joined)
+final_html = final_html.replace("<!-- INHIBITOR_DB_ROWS_PLACEHOLDER -->", inhibitor_db_joined)
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(final_html)

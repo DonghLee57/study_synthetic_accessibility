@@ -1096,7 +1096,7 @@
         <li><a href="#semiconductor-precursor" class="toc-link" data-target="semiconductor-precursor">8. 반도체 프리커서 적용 및 확장</a></li>
         <li><a href="#dft-synergy" class="toc-link" data-target="dft-synergy">9. DFT 계산 연계 응용 프레임워크</a></li>
         <li><a href="#vasp-automation" class="toc-link" data-target="vasp-automation">10. VASP 기반 DFT 자동화 스택</a></li>
-        <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 프리커서·반응 독자 DB</a></li>
+        <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 전구체·반응 및 AS-ALD 인히비터 DB</a></li>
         <li><a href="#precursor-inverse-design" class="toc-link" data-target="precursor-inverse-design">12. 프리커서 AI 역설계 &amp; 연산 매핑</a></li>
         <li><a href="#dft-tuning-roadmap" class="toc-link" data-target="dft-tuning-roadmap">13. 반도체 AI 모델 튜닝 &amp; DFT·실험 융합 전략</a></li>
       </ul>
@@ -2984,9 +2984,9 @@ flowchart LR
       <section id="semiconductor-db">
         <div class="section-header">
           <div class="section-tag">Section 11 &bull; Semiconductor Precursor, Reagents &amp; Reaction Domain Database</div>
-          <h2 class="section-title">반도체 상용 프리커서·출발물질·합성반응 데이터베이스 (Semiconductor DB Hub)</h2>
+          <h2 class="section-title">반도체 상용 전구체·반응 및 AS-ALD 인히비터(억제제) 통합 데이터베이스</h2>
           <p class="section-desc">
-            기존 SA 모델이 의약화학 데이터 위주로 구축되어 반도체 프리커서의 합성 가능성을 왜곡(False Negative)하는 구조적 한계를 극복하기 위해, <strong>실제 반도체 양산 라인에서 합성·적용되는 상용 프리커서 27종 (<code>database/precursors.json</code>), 핵심 출발물질/시약 29종 (<code>database/building_blocks.json</code>), 공인된 유기금속 합성 반응 12종 (<code>database/reactions.json</code>)</strong>, 그리고 <strong>AtomicLimits ALD DB 공정 통계를 붙인 확장 전구체 목록 120종 (<code>database/external/</code>)</strong>을 정리하였습니다. 기존 27종은 RDKit 구조 검증을 통과하였으며 <code>BR-SAScore</code> 전용 사전 생성기 및 VASP DFT 입출력 파이프라인과 완벽히 연동됩니다.
+            기존 SA 모델이 의약화학 데이터 위주로 구축되어 반도체 프리커서의 합성 가능성을 왜곡(False Negative)하는 구조적 한계를 극복하기 위해, <strong>실제 반도체 양산 라인에서 합성·적용되는 상용 프리커서 27종 (<code>database/precursors.json</code>), 핵심 출발물질/시약 29종 (<code>database/building_blocks.json</code>), 공인된 유기금속 합성 반응 12종 (<code>database/reactions.json</code>)</strong>과 더불어, <strong>AtomicLimits ALD 공정 DB 연계 확장 전구체 120종 마스터 DB (<code>database/external/expanded_semiconductor_precursors_master.json</code>)</strong> 및 <strong>AS-ALD(면적선택증착) 핵심 인히비터 18종 마스터 DB (<code>database/external/as_ald_inhibitors.json</code>)</strong>를 정형화하여 통합 구축하였습니다.
           </p>
         </div>
 
@@ -3175,7 +3175,48 @@ flowchart LR
             </table>
           </div>
           <div style="font-size:0.82rem; color:#64748b; margin-top:10px;">
-            * 원본 덤프(<code>atomiclimits_raw.json</code>)는 재배포 조건이 확인되지 않아 저장소에 포함하지 않습니다. <code>python scripts/fetch_external_precursor_dbs.py --fetch</code>로 내려받을 수 있으며, 스냅샷 날짜·SHA-256·집계 수치는 <code>atomiclimits_snapshot.json</code>에 기록됩니다.
+          <div style="font-size:0.82rem; color:#64748b; margin-top:10px;">
+            * 원본 덤프(<code>atomiclimits_raw.json</code>)의 재배포 라이선스 조건을 고려하여 저장소에는 정제된 추출 집계본만 포함합니다. <code>python scripts/fetch_external_precursor_dbs.py --fetch</code>로 실시간 내려받을 수 있으며, 스냅샷 날짜·SHA-256·집계 수치는 <code>atomiclimits_snapshot.json</code>에 기록됩니다.
+          </div>
+
+          <!-- Collapsible Toggle Bar: 120 Expanded Precursors Master DB -->
+          <div class="table-toggle-bar" style="margin-top:18px;">
+            <div class="table-toggle-info">
+              <span class="table-toggle-title">확장 반도체 전구체 마스터 데이터베이스 (120종 전수)</span>
+              <span class="table-toggle-subtitle">프로젝트 기준 27종 + AtomicLimits ALD 최다 보고 93종 전구체 통합 목록: 중심원소, 공정 횟수, 박막 재료, 공반응제, 문헌 DOI 수록.</span>
+            </div>
+            <button type="button" class="btn-toggle-table" id="btn-panel-expdb" onclick="togglePanel('panel-expdb', 'btn-panel-expdb', '확장 전구체 마스터 DB 테이블 보기 (120종)', '확장 전구체 마스터 DB 닫기 (숨김)')">
+              확장 전구체 마스터 DB 테이블 보기 (120종)
+            </button>
+          </div>
+
+          <!-- Hidden by default: 120 Expanded Precursors Table -->
+          <div id="panel-expdb" class="collapsible-panel">
+            <div class="filter-bar">
+              <input type="text" id="expPrecSearch" class="search-input" style="width:100%;" placeholder="전구체명, 화학명, 분자식, 중심원소, 박막 재료 검색..." onkeyup="searchExpandedPrecursors()">
+            </div>
+            <div class="table-responsive" style="margin-bottom:20px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:40px; text-align:center;">No</th>
+                    <th>전구체 표기 / ID</th>
+                    <th>화학명 &amp; 분자식</th>
+                    <th style="text-align:center;">중심원소</th>
+                    <th>출처 / 분류</th>
+                    <th style="text-align:center;">공정 보고수</th>
+                    <th>타깃 박막 재료</th>
+                    <th>대표 공반응제</th>
+                    <th style="text-align:center;">고유 DOI 수</th>
+                    <th>2D SMILES</th>
+                  </tr>
+                </thead>
+                <tbody>
+<!-- EXPANDED_PREC_DB_ROWS_PLACEHOLDER -->
+                </tbody>
+              </table>
+            </div>
+          </div>
           </div>
         </div>
 
@@ -3324,6 +3365,90 @@ flowchart LR
           </div>
         </div>
 
+        <!-- Card 3: AS-ALD Area-Selective Deposition Inhibitor Database -->
+        <div class="card" style="margin-top:20px; border-top: 3px solid #0284c7;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">3. AS-ALD 면적선택증착 인히비터(억제제) 마스터 데이터베이스 (18종)</h3>
+            <span class="badge" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd; font-weight:700;">AS-ALD Inhibitor Master Hub</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
+            선단 반도체 패터닝 오정렬(Edge Placement Error, EPE) 극복 및 Fully Self-Aligned Vias(FSAV) 구현의 핵심인 <strong>AS-ALD 면적선택증착 인히비터 18종 (<code>database/external/as_ald_inhibitors.json</code>)</strong>을 체계적으로 분류·구축하였습니다. 기상 저분자 억제제(SMI)와 자가조립단분자막(SAM)을 망라하며, RDKit 분자 디스크립터(MW, LogP, 회전 결합 수) 검증 및 원천 학술 논문(Mackus, Bent, Tonner-Zech 등) DOI가 전수 연동되어 있습니다.
+          </p>
+
+          <div class="versus-grid">
+            <div class="versus-card" style="border-top: 3px solid #dc2626;">
+              <h4 style="color:#b91c1c; font-size:1.02rem; margin-bottom:6px;">유전체 선택적 억제제 (Dielectric-blocking)</h4>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:8px;">
+                <strong>타깃:</strong> \(\text{SiO}_2, \text{SiN}_x, \text{Low-}k\) 유전체 표면 차단 &rarr; 금속(\(\text{Cu, Co, Ru}\)) 배선 위에만 선택 증착 (Metal-on-Dielectric ASD).
+              </p>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li><strong>화학 메커니즘:</strong> 친수성 실란올(\(\equiv\text{Si-OH}\))과 선택적 실릴화(Silylation) 반응으로 소수성 알킬/실릴 캡 형성. 금속 표면에는 흡착되지 않고 날아감.</li>
+                <li><strong>대표 물질:</strong> <strong>DMADMS</strong>, <strong>DMATMS</strong>, <strong>BEMS</strong> (기상 아미노실란), <strong>HMDS</strong> (소수화 표준제), <strong>Propargyl Amine</strong> (열 가교형 초고온 억제제), <strong>ODTS / FDTS</strong> (결정성·불소화 SAM).</li>
+              </ul>
+            </div>
+
+            <div class="versus-card" style="border-top: 3px solid #2563eb;">
+              <h4 style="color:#1d4ed8; font-size:1.02rem; margin-bottom:6px;">금속 선택적 억제제 (Metal-blocking)</h4>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:8px;">
+                <strong>타깃:</strong> 전이금속/귀금속(\(\text{Cu, Co, Ru, W}\)) 표면 차단 &rarr; 절연막(\(\text{SiO}_2, \text{Al}_2\text{O}_3\)) 위에만 선택 증착 (Dielectric-on-Metal ASD).
+              </p>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li><strong>화학 메커니즘:</strong> 금속 \(\text{d}\)-오비탈 및 자유 전자와 유기 분자의 헤테로원자(S, N)가 강한 배위 화학흡착(\(\text{M-S}\) 공유결합, \([\text{Cu(I)-BTA}]_n\) 배위 고분자 착물) 형성. 산화막과는 비반응성.</li>
+                <li><strong>대표 물질:</strong> <strong>1-DDT</strong>, <strong>1-Octanethiol</strong>, <strong>Ethanethiol</strong> (알칸티올 계열), <strong>BTA</strong>, <strong>TTA</strong>, <strong>Imidazole</strong>, <strong>Pyrazole</strong> (아자헤테로고리 계열), <strong>ODPA</strong> (포스폰산), <strong>Hacac</strong> (킬레이트 공억제제).</li>
+              </ul>
+            </div>
+
+            <div class="versus-card" style="border-top: 3px solid #059669;">
+              <h4 style="color:#047857; font-size:1.02rem; margin-bottom:6px;">Inhibitor 가상 스크리닝 4대 물리 지표</h4>
+              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
+                <li><strong>흡착 선택도 (\(\Delta\Delta G_{\text{ads}}\)):</strong> \(\Delta G_{\text{ads}}^{\text{Target}} - \Delta G_{\text{ads}}^{\text{Growth}}\) (최소 \(15 \sim 25\text{ kcal/mol}\) 이상 우위 요구).</li>
+                <li><strong>패킹 밀도 (\(\theta\)):</strong> 분자 풋프린트(\(\text{\AA}^2/\text{molecule}\))와 van der Waals 반경에 따른 전구체 접근 입체 차폐율.</li>
+                <li><strong>지연 주기 수 (\(N_{\text{incubation}}\)):</strong> 억제제 피막 파괴 전까지 비성장 영역에서 ALD 핵생성을 지연시키는 사이클 수 (\(\ge 100\text{ cycles}\)).</li>
+                <li><strong>탈착/제거 윈도우 (\(T_{\text{desorp}}\)):</strong> 증착 후 탄소 잔류물 없이 \(\text{O}_2/\text{H}_2\) 플라즈마 애싱 또는 진공 열처리로 \(100\%\) 무잔류 제거 가능성.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Collapsible Toggle Bar: 18 AS-ALD Inhibitors -->
+          <div class="table-toggle-bar" style="margin-top:16px;">
+            <div class="table-toggle-info">
+              <span class="table-toggle-title">AS-ALD 면적선택증착 억제제(Inhibitor) 마스터 데이터베이스 (18종 전수)</span>
+              <span class="table-toggle-subtitle">약어, 화학명, CAS, 분류, 차단&rarr;성장 표면, 화학흡착 메커니즘, 분자량·LogP(RDKit 계산), 제거 방식, 2D SMILES, 원천 문헌 DOI.</span>
+            </div>
+            <button type="button" class="btn-toggle-table" id="btn-panel-inhibdb" onclick="togglePanel('panel-inhibdb', 'btn-panel-inhibdb', 'AS-ALD 억제제 DB 테이블 보기 (18종)', 'AS-ALD 억제제 DB 닫기 (숨김)')">
+              AS-ALD 억제제 DB 테이블 보기 (18종)
+            </button>
+          </div>
+
+          <!-- Hidden by default: 18 AS-ALD Inhibitors Table -->
+          <div id="panel-inhibdb" class="collapsible-panel">
+            <div class="filter-bar">
+              <input type="text" id="inhibSearch" class="search-input" style="width:100%;" placeholder="억제제 약어, 화학명, CAS, 화학 계열, 표적 표면 검색..." onkeyup="searchInhibitors()">
+            </div>
+            <div class="table-responsive" style="margin-bottom:20px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:40px; text-align:center;">No</th>
+                    <th>억제제 약어 / ID</th>
+                    <th>화학명 &amp; CAS</th>
+                    <th>분류 &amp; 투입 방식</th>
+                    <th>차단 표면 &rarr; 선택 성장 표면</th>
+                    <th>표면 화학흡착 메커니즘 &amp; 결합형</th>
+                    <th style="text-align:center;">MW / LogP</th>
+                    <th>제거 방식</th>
+                    <th>2D SMILES</th>
+                    <th>원천 문헌 DOI</th>
+                  </tr>
+                </thead>
+                <tbody>
+<!-- INHIBITOR_DB_ROWS_PLACEHOLDER -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         <!-- Database Downloads & Computational Toolkit Card -->
         <div class="card" style="margin-top:20px;">
           <h3 class="card-title">4. 데이터베이스 다운로드 및 BR-SAScore / VASP 연동 안내</h3>
@@ -3338,6 +3463,9 @@ flowchart LR
                 <li><strong>상용 프리커서 메타데이터:</strong> <code>database/precursors.json</code> &bull; <code>database/precursors.csv</code> (27건)</li>
                 <li><strong>출발물질 및 반응 시약:</strong> <code>database/building_blocks.json</code> &bull; <code>database/building_blocks.csv</code> (29건)</li>
                 <li><strong>유기금속 합성 반응식:</strong> <code>database/reactions.json</code> &bull; <code>database/reactions.csv</code> (12건)</li>
+                <li><strong>확장 반도체 전구체 마스터 DB:</strong> <code>database/external/expanded_semiconductor_precursors_master.json</code> (120건)</li>
+                <li><strong>AS-ALD 억제제(Inhibitor) 마스터 DB:</strong> <code>database/external/as_ald_inhibitors.json</code> (18건)</li>
+                <li><strong>AtomicLimits ALD 추출 전구체:</strong> <code>database/external/atomiclimits_precursors_extracted.json</code> (780건)</li>
               </ul>
             </div>
 
@@ -4239,6 +4367,8 @@ flowchart TD
       { panel: 'panel-precdb', btn: 'btn-panel-precdb', closed: '상용 프리커서 DB 테이블 보기 (27종)', open: '상용 프리커서 DB 닫기 (숨김)' },
       { panel: 'panel-bbdb', btn: 'btn-panel-bbdb', closed: '출발물질·시약 DB 테이블 보기 (29종)', open: '출발물질·시약 DB 닫기 (숨김)' },
       { panel: 'panel-rxndb', btn: 'btn-panel-rxndb', closed: '공인 합성 반응 DB 테이블 보기 (12종)', open: '합성 반응 DB 닫기 (숨김)' },
+      { panel: 'panel-expdb', btn: 'btn-panel-expdb', closed: '확장 전구체 마스터 DB 테이블 보기 (120종)', open: '확장 전구체 마스터 DB 닫기 (숨김)' },
+      { panel: 'panel-inhibdb', btn: 'btn-panel-inhibdb', closed: 'AS-ALD 억제제 DB 테이블 보기 (18종)', open: 'AS-ALD 억제제 DB 닫기 (숨김)' },
       { panel: 'panel-inversedb', btn: 'btn-panel-inversedb', closed: '물성 지표 & 연산 매핑 테이블 보기 (7종)', open: '매핑 테이블 닫기 (숨김)' }
     ];
 
@@ -4323,7 +4453,29 @@ flowchart TD
       const query = document.getElementById('precSearch').value.toLowerCase();
       const rows = document.querySelectorAll('.prec-row');
       rows.forEach(row => {
-        const text = row.getAttribute('data-search');
+        const text = row.getAttribute('data-search') || '';
+        row.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+
+    function searchExpandedPrecursors() {
+      const input = document.getElementById('expPrecSearch');
+      if (!input) return;
+      const query = input.value.toLowerCase();
+      const rows = document.querySelectorAll('.exp-prec-row');
+      rows.forEach(row => {
+        const text = row.getAttribute('data-search') || '';
+        row.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+
+    function searchInhibitors() {
+      const input = document.getElementById('inhibSearch');
+      if (!input) return;
+      const query = input.value.toLowerCase();
+      const rows = document.querySelectorAll('.inhib-row');
+      rows.forEach(row => {
+        const text = row.getAttribute('data-search') || '';
         row.style.display = text.includes(query) ? '' : 'none';
       });
     }
