@@ -709,6 +709,368 @@ for idx, inh in enumerate(inhib_list, 1):
             </tr>""")
 inhibitor_db_joined = "\n".join(inhib_rows)
 
+
+# -----------------------------------------------------------------------------
+# Section 15: Phase 1 & Phase 2 Empirical Benchmark and SevenNet Tuning Generator
+# -----------------------------------------------------------------------------
+with open("database/benchmark_phase2_tuned_comparison.json", "r", encoding="utf-8") as f:
+    bench_p2 = json.load(f)
+
+ana_comp = bench_p2["analytical_comparison"]
+ml_comp = bench_p2["machine_learning_comparison"]
+molecules_eval = bench_p2["molecules_evaluated"]
+
+# Generate 55 benchmark rows
+benchmark_table_rows = []
+for idx, m in enumerate(molecules_eval, 1):
+    mid = m["id"]
+    name = m["name"]
+    smi = m["smiles"]
+    formula = m.get("formula", "")
+    domain = m.get("domain", "")
+    ttype = m.get("target_type", "")
+    
+    if ttype == "Precursor":
+        type_badge = '<span class="badge badge-prec" style="font-size:0.75rem;">반도체 전구체</span>'
+        data_type = "prec"
+    elif ttype == "Inhibitor":
+        type_badge = '<span class="badge badge-2g" style="font-size:0.75rem;">AS-ALD 억제제</span>'
+        data_type = "inhib"
+    else:
+        type_badge = '<span class="badge badge-4g" style="font-size:0.75rem; background:#fee2e2; color:#991b1b; border:1px solid #f87171;">음성 대조군</span>'
+        data_type = "neg"
+        
+    sa = m.get("sascore", 0.0)
+    sc = m.get("scscore", 0.0)
+    base_pass = m.get("baseline_consensus_pass", False)
+    
+    sa_style = "color:#15803d; font-weight:700;" if sa <= 3.5 else "color:#dc2626; font-weight:700;"
+    sc_style = "color:#15803d; font-weight:700;" if sc <= 2.0 else "color:#dc2626; font-weight:700;"
+    base_verdict_badge = '<span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">통과 (Pass)</span>' if base_pass else '<span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">기각 (Fail)</span>'
+    
+    ecoh = m.get("e_coh_ev_per_atom", 0.0)
+    bde = m.get("bde_min_kcal_mol", 0.0)
+    dde = m.get("delta_delta_e_ads_ev", 0.0)
+    sel = m.get("inferred_selectivity", "-")
+    
+    tuned_pass = m.get("tuned_pass", False)
+    if ttype == "Precursor":
+        status_badge = '<span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">양산 적합 (Pass)</span>' if tuned_pass else '<span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">위양성 오인 (FN)</span>'
+    elif ttype == "Inhibitor":
+        status_badge = '<span class="badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc; font-weight:700;">인히비터 적합 (Pass)</span>' if tuned_pass else '<span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">비선택/불안정</span>'
+    else:
+        status_badge = '<span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">위험 결함 차단 (Reject)</span>' if not tuned_pass else '<span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d; font-weight:700;">위음성 누락 (FP)</span>'
+        
+    search_str = f"{mid} {name} {formula} {domain} {ttype} {smi}".lower()
+    
+    row_html = f"""
+            <tr class="benchmark-row" data-type="{data_type}" data-search="{search_str}">
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
+              <td style="white-space:nowrap;">
+                <strong>{name}</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">{mid}</div>
+              </td>
+              <td>
+                <div style="font-weight:600; color:#0f172a; font-size:0.8rem;">{formula}</div>
+                <div style="font-size:0.75rem; color:#64748b;">{domain}</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;">{type_badge}</td>
+              <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.78rem;">
+                <div>SA: <span style="{sa_style}">{sa:.2f}</span></div>
+                <div style="color:#475569;">SC: <span style="{sc_style}">{sc:.2f}</span></div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;">{base_verdict_badge}</td>
+              <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.78rem;">
+                <div>E_coh: <strong>{ecoh:.2f}</strong> eV</div>
+                <div style="color:#475569;">BDE_min: <strong>{bde:.1f}</strong> kcal</div>
+                <div style="font-size:0.72rem; color:#0284c7;">&Delta;&Delta;E: {dde:.3f} eV</div>
+              </td>
+              <td style="text-align:center; white-space:nowrap;">{status_badge}</td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>{smi}</code></td>
+            </tr>"""
+    benchmark_table_rows.append(row_html)
+benchmark_table_joined = "\n".join(benchmark_table_rows)
+
+phase1_phase2_tuning_joined = f"""
+        <!-- 15.1 Summary Stat Cards -->
+        <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-bottom:24px;">
+          <div class="stat-card" style="border-left:4px solid #ef4444; padding:18px;">
+            <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 1 베이스라인 오류 (Data-Only)</div>
+            <div style="font-size:1.85rem; font-weight:800; color:#b91c1c; margin:6px 0;">88.9% &rarr; 100.0%</div>
+            <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
+              전구체 False Negative <strong>88.9%</strong> (24/27 기각)<br>
+              음성군 False Positive <strong>100.0%</strong> (10/10 통과)
+            </div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #10b981; padding:18px;">
+            <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 2 튜닝 후 전구체 구제율</div>
+            <div style="font-size:1.85rem; font-weight:800; color:#059669; margin:6px 0;">96.3% (26/27)</div>
+            <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
+              False Negative <strong>88.9% &rarr; 3.7%</strong> (-85.2%p 혁신)<br>
+              TSA, DMAH, TMA, TEMAH 정상 판정 복원
+            </div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #6366f1; padding:18px;">
+            <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">위험/불량 분자 차단율 (FP 제거)</div>
+            <div style="font-size:1.85rem; font-weight:800; color:#4338ca; margin:6px 0;">100.0% (10/10)</div>
+            <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
+              Ti(Et)4 &beta;-수소 탈락, ZrMe4 폭발성,<br>
+              WPh5 무기화성, 데칸 비흡착성 전원 차단
+            </div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #0284c7; padding:18px;">
+            <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">SevenNet-0 물리 피처 기여도</div>
+            <div style="font-size:1.85rem; font-weight:800; color:#0369a1; margin:6px 0;">40.4%</div>
+            <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
+              BDE_min(10.9%), E_coh(10.4%), 흡착능(12.5%)<br>
+              CPU 추론 속도: 55종 분자 총 332초 (6.0s/mol)
+            </div>
+          </div>
+        </div>
+
+        <!-- 15.2 Module 1: The Pathology of Pure Data-Driven Models -->
+        <div class="card" style="margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">1. [Phase 1 실측 평가] 순수 데이터 기반 케모인포매틱스 모델의 양방향 병리 (Dual Pathology)</h3>
+            <span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">Baseline Failure Analysis</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            공개된 오픈소스 케모인포매틱스 모델(RDKit SAScore, Reaxys SCScore, SYBA, RAscore, BR-SAScore)을 물리적 전산 피처 없이 자체 확보한 실물 분자 55종(양산 전구체 27종, AS-ALD 인히비터 18종, 음성 대조군 10종)에 대해 직접 실행한 결과, 다음과 같은 <strong>치명적인 양방향 병리 현상</strong>이 입증되었습니다:
+          </p>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:6px; padding:14px;">
+              <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">병리 1: 양산 전구체에 대한 극단적 False Negative (88.9%)</div>
+              <p style="font-size:0.84rem; color:#7f1d1d; line-height:1.55; margin:0;">
+                RDKit SAScore는 27개 반도체 전구체 중 3개(TEOS, 4DMAS, Ru(EtCp)2)만 통과시키고 <strong>24개를 기각(FN율 88.9%)</strong>했습니다. 글로벌 반도체 팹의 핵심 양산 워크호스인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 심각하게 탈락합니다. 이는 의약품(PubChem/ChEMBL) 통계에서 Si-N, Al-C, Hf-N 결합이 극히 희귀하여 '비천연성 복잡 구조'로 감점되었기 때문입니다.
+              </p>
+            </div>
+
+            <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:14px;">
+              <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">병리 2: 위험·불량 분자에 대한 무비판적 False Positive (100.0%)</div>
+              <p style="font-size:0.84rem; color:#78350f; line-height:1.55; margin:0;">
+                반대로 합성 데이터베이스(Reaxys/USPTO)를 학습한 SCScore와 머신러닝 RAscore는 자발적 열분해 물질인 <code>Ti(Et)4</code>(SC 1.88, RA 0.999), -15 °C에서 폭발하는 <code>ZrMe4</code>(SC 1.76, RA 0.999), 챔버를 부식시키는 <code>트리클로로아세트산</code>(SC 1.15, RA 1.000) 등 <strong>위험 물질 10종 전원(100.0%)을 합성 용이 물질로 통과</strong>시켰습니다. 단순 알킬 사슬과 카르복실산이 유기합성 데이터셋에서 풍부한 시약으로 분류되었기 때문입니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15.3 Module 2: SevenNet Physical Feature Pipeline -->
+        <div class="card" style="margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 물리 피처] SevenNet (7net-0) 인터애토믹 포텐셜 기반 물리 특성 산출 체계</h3>
+            <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet Atomistic Physics</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
+            DFT 수준의 양자역학적 정확도를 초고속으로 실현하는 <strong>SevenNet (7net-0)</strong> 머신러닝 인터애토믹 포텐셜을 로컬 CPU에 탑재하여, 55종 분자의 3D 형태 이완 및 5대 원자 스케일 물리 파라미터를 실측 추출하였습니다:
+          </p>
+
+          <div style="overflow-x:auto; margin-bottom:16px;">
+            <table class="report-table" style="font-size:0.85rem;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="width:18%;">물리 파라미터</th>
+                  <th style="width:24%;">수학적 정의 및 지배방정식</th>
+                  <th style="width:18%;">반도체 팹 기준 물리적 의미</th>
+                  <th>실측 데이터 스케일 및 선별 기준</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>응집 에너지 ($e_{{\text{{coh}}}}$)</strong></td>
+                  <td>$$e_{{\text{{coh}}}} = \frac{{\sum_i E_{{\text{{isolated}}}}(Z_i) - E_{{\text{{eq}}}}}}{{N_{{\text{{atoms}}}}}}$$</td>
+                  <td>원자당 결합 안정도 및 비정상 결합 와해 저항성</td>
+                  <td>정상 착물: <strong>3.8 ~ 4.4 eV/atom</strong><br>불안정/자기중합 위험: <strong>&lt; 3.0 eV/atom</strong> (예: 1,2-Dichlorodisilane: 2.87 eV)</td>
+                </tr>
+                <tr>
+                  <td><strong>최소 결합 신장 장벽 ($\Delta E_{{\text{{stretch}}}}^{{\min}}$)</strong></td>
+                  <td>$$\Delta E_{{\text{{stretch}}}} = [E(r_0 + 1.2\,\text{{\AA}}) - E(r_0)] \times 23.06$$</td>
+                  <td>열적 해리 용이성 및 기상 분해 시작점 (BDE proxy)</td>
+                  <td>안정 배위: <strong>50 ~ 110 kcal/mol</strong><br>&beta;-수소 탈락/라디칼 분해 위험: <strong>&lt; 45 kcal/mol</strong> (예: CoEt4: 42.9 kcal/mol)</td>
+                </tr>
+                <tr>
+                  <td><strong>분자 부피 ($V_{{\text{{mol}}}}$) &amp; $R_g$</strong></td>
+                  <td>$$R_g = \sqrt{{\frac{{1}}{{M}}\sum m_i r_i^2}},\; V \approx \frac{{4}}{{3}}\pi(R_g+1.8)^3$$</td>
+                  <td>기화 증기압 및 단분자 승화성 지표</td>
+                  <td>단분자 기화 창: <strong>120 ~ 480 \text{{\AA}}^3</strong><br>무기화성 거대 올리고머: <strong>&gt; 550 \text{{\AA}}^3</strong> (예: WPh5: 668 \text{{\AA}}^3)</td>
+                </tr>
+                <tr>
+                  <td><strong>표면 클러스터 흡착 ($E_{{\text{{ads}}}}$)</strong></td>
+                  <td>$$E_{{\text{{ads}}}} = E_{{\text{{cluster+mol}}}} - (E_{{\text{{cluster}}}} + E_{{\text{{mol}}}})$$</td>
+                  <td>$$\text{{Cu}}_{{13}}$$ (금속) 및 $$\text{{Si}}_4\text{{O}}_6(\text{{OH}})_4$$ (유전체) 흡착능</td>
+                  <td>화학흡착 (Chemisorption): <strong>$|E_{{\text{{ads}}}}| \ge 0.15\,\text{{eV}}$</strong><br>비기능성 단순 물리흡착: <strong>$|E_{{\text{{ads}}}}| &lt; 0.08\,\text{{eV}}$</strong> (예: Decane)</td>
+                </tr>
+                <tr>
+                  <td><strong>AS-ALD 흡착 선택도 ($\Delta\Delta E_{{\text{{ads}}}}$)</strong></td>
+                  <td>$$\Delta\Delta E_{{\text{{ads}}}} = E_{{\text{{ads}}}}(\text{{SiO}}_2) - E_{{\text{{ads}}}}(\text{{Cu}})$$</td>
+                  <td>금속(도체) vs 유전체 기판 선택적 부동태화 방향성</td>
+                  <td>금속 차단 억제제: <strong>$\Delta\Delta E &gt; +0.10\,\text{{eV}}$</strong> (1-Octanethiol: +0.176 eV)<br>유전체 차단 억제제: <strong>$\Delta\Delta E &lt; -0.05\,\text{{eV}}$</strong> (Silanes)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 15.4 Module 3: Model Tuning Comparison Matrix & Feature Importance -->
+        <div class="card" style="margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">3. [튜닝 비교 평가] Phase 1 (데이터 전용) vs Phase 2 (7net 물리 증강) 정량 비교</h3>
+            <span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac;">Before vs After Tuning</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 3fr 2fr; gap:18px; margin-bottom:18px;">
+            <div>
+              <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">표 15-1. 합성 가능성 평가 모델 튜닝 전후 성능 비교 매트릭스</div>
+              <table class="report-table" style="font-size:0.84rem;">
+                <thead>
+                  <tr style="background:#f8fafc;">
+                    <th>평가 지표 (Evaluation Metric)</th>
+                    <th style="text-align:center; color:#b91c1c;">Phase 1 베이스라인 (Data-Only)</th>
+                    <th style="text-align:center; color:#15803d;">Phase 2 튜닝 모델 (7net 결합)</th>
+                    <th style="text-align:center;">개선폭 (Delta)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>팹 양산 전구체 통과율 (Precursor Pass)</strong></td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">11.1% (3/27)</td>
+                    <td style="text-align:center; color:#15803d; font-weight:700;">96.3% (26/27)</td>
+                    <td style="text-align:center; font-weight:700; color:#059669;">+85.2%p</td>
+                  </tr>
+                  <tr>
+                    <td><strong>전구체 위양성 기각률 (False Negative)</strong></td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">88.9% (24/27)</td>
+                    <td style="text-align:center; color:#15803d; font-weight:700;">3.7% (1/27)</td>
+                    <td style="text-align:center; font-weight:700; color:#059669;">-85.2%p</td>
+                  </tr>
+                  <tr>
+                    <td><strong>AS-ALD 인히비터 정상 판정률</strong></td>
+                    <td style="text-align:center; color:#475569;">83.3% (15/18)</td>
+                    <td style="text-align:center; color:#15803d; font-weight:700;">94.4% (17/18)</td>
+                    <td style="text-align:center; font-weight:700; color:#059669;">+11.1%p</td>
+                  </tr>
+                  <tr>
+                    <td><strong>음성 대조군 위음성 통과율 (False Positive)</strong></td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">100.0% (10/10)</td>
+                    <td style="text-align:center; color:#15803d; font-weight:700;">0.0% (0/10)</td>
+                    <td style="text-align:center; font-weight:700; color:#059669;">-100.0%p</td>
+                  </tr>
+                  <tr>
+                    <td><strong>위험·결함 분자 차단 성공률</strong></td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">0.0% (0/10)</td>
+                    <td style="text-align:center; color:#15803d; font-weight:700;">100.0% (10/10)</td>
+                    <td style="text-align:center; font-weight:700; color:#059669;">100% 차단</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">SevenNet 물리 피처 기여도 (Random Forest Importance)</div>
+              <div style="font-size:0.8rem; color:#64748b; margin-bottom:12px;">5-Fold 교차 검증 분류기에서 도출된 상위 8대 피처 기여율:</div>
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                  <span>1. RDKit SAScore</span>
+                  <span style="font-family:'JetBrains Mono'; font-weight:700;">19.33%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:19.33%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
+                  <span>2. 7net 결합 해리 (BDE_min)</span>
+                  <span style="font-family:'JetBrains Mono';">10.88%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:10.88%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
+                  <span>3. 7net 응집 에너지 (E_coh)</span>
+                  <span style="font-family:'JetBrains Mono';">10.39%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:10.39%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
+                  <span>4. 7net 유전체 흡착 (E_ads_SiO2)</span>
+                  <span style="font-family:'JetBrains Mono';">6.71%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:6.71%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                  <span>5. Reaxys SCScore</span>
+                  <span style="font-family:'JetBrains Mono'; font-weight:700;">6.63%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:6.63%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
+                  <span>6. 7net 흡착 선택도 (&Delta;&Delta;E)</span>
+                  <span style="font-family:'JetBrains Mono';">5.82%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:5.82%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
+                  <span>7. 7net 분자 회전 반경 (Rg)</span>
+                  <span style="font-family:'JetBrains Mono';">5.65%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:5.65%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                  <span>8. 분자 지질 친화도 (LogP)</span>
+                  <span style="font-family:'JetBrains Mono'; font-weight:700;">5.52%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:5.52%; height:100%;"></div></div>
+              </div>
+              <div style="margin-top:10px; font-size:0.75rem; color:#047857; font-weight:600;">
+                &bull; SevenNet 물리 피처 5종 누적 기여도: <strong>40.45%</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15.5 Module 4: 55 Molecules Interactive Data Table -->
+        <div class="card" id="panel-benchmark">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h3 class="card-title" style="margin-bottom:2px;">4. [전수 실측 데이터시트] 55종 실증 벤치마크 분자 전수 데이터시트 (Interactive Benchmark Table)</h3>
+              <p style="color:var(--text-secondary); font-size:0.84rem; margin:0;">
+                팹 양산 전구체 27종, AS-ALD 인히비터 18종, 음성 대조군 10종에 대한 Phase 1 vs Phase 2 실측 데이터 전수 목록입니다.
+              </p>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <input type="text" id="benchmarkSearch" onkeyup="searchBenchmark()" placeholder="분자명, 화학식, SMILES 검색..." style="padding:6px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.8rem; width:220px;">
+            </div>
+          </div>
+
+          <div class="filter-bar" style="margin-bottom:14px; display:flex; gap:8px;">
+            <button type="button" class="filter-btn active" onclick="filterBenchmark('all', event)">전체 55종 보기</button>
+            <button type="button" class="filter-btn" onclick="filterBenchmark('prec', event)">팹 양산 전구체 (27종)</button>
+            <button type="button" class="filter-btn" onclick="filterBenchmark('inhib', event)">AS-ALD 인히비터 (18종)</button>
+            <button type="button" class="filter-btn" onclick="filterBenchmark('neg', event)">음성 대조군 (10종)</button>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="report-table" style="font-size:0.82rem;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="width:4%; text-align:center;">No</th>
+                  <th style="width:16%;">분자명 / 식별 ID</th>
+                  <th style="width:13%;">화학식 / 도메인</th>
+                  <th style="width:10%; text-align:center;">타겟 분류</th>
+                  <th style="width:11%; text-align:center;">Phase 1 케모 스코어</th>
+                  <th style="width:9%; text-align:center;">Phase 1 판정</th>
+                  <th style="width:16%; text-align:center;">Phase 2 SevenNet 물리 지표</th>
+                  <th style="width:11%; text-align:center;">튜닝 최종 상태</th>
+                  <th>SMILES 구조식</th>
+                </tr>
+              </thead>
+              <tbody>
+                {benchmark_table_joined}
+              </tbody>
+            </table>
+          </div>
+        </div>
+"""
+
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
     template = f.read()
@@ -722,6 +1084,7 @@ final_html = final_html.replace("<!-- BB_DB_ROWS_PLACEHOLDER -->", bb_db_joined)
 final_html = final_html.replace("<!-- RXN_DB_ROWS_PLACEHOLDER -->", rxn_db_joined)
 final_html = final_html.replace("<!-- EXPANDED_PREC_DB_ROWS_PLACEHOLDER -->", expanded_prec_db_joined)
 final_html = final_html.replace("<!-- INHIBITOR_DB_ROWS_PLACEHOLDER -->", inhibitor_db_joined)
+final_html = final_html.replace("<!-- PHASE1_PHASE2_TUNING_PLACEHOLDER -->", phase1_phase2_tuning_joined)
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(final_html)
