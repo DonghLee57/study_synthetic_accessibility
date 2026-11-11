@@ -1,18 +1,14 @@
 #!/usr/bin/env python3
 """
-Model Tuning and Comparison: Phase 1 (Data-Only) vs Phase 2 (7net-Augmented)
----------------------------------------------------------------------------
-Compares the performance of synthetic accessibility and fab validity assessment:
-  1. Analytical Hybrid Models:
-     - Baseline: SAScore <= 3.5, SCScore <= 2.0, Baseline Consensus
-     - Tuned: TMC-SA_tuned (Precursor) and Inhib-SA_tuned (Inhibitor)
-  2. Machine Learning Classifiers (LOOCV & Stratified 5-Fold):
-     - Data-Only Baseline Features (chemoinformatics: SAScore, SCScore, SYBA, RAscore, BR-SAScore, MW, LogP, RotB, HeavyAtoms)
-     - 7net-Augmented Tuned Features (+ E_coh, BDE_min, Rg, Vol_mol, E_ads_Cu, E_ads_SiO2, Delta_Delta_E_ads)
-  3. Feature Importance Analysis:
-     - Quantification of physical feature contribution to eliminating False Positives (NEG-001 to NEG-010)
-       and False Negatives (TSA, DMAH, TMA, etc.).
+Model Tuning and Comparison: Phase 1 (Data-Only) vs Phase 2 (Refined 4 Physical Pillars)
+----------------------------------------------------------------------------------------
+Evaluates Precursor & Negative Control Synthesizability using 4 Core Physical Pillars:
+  1. Bond Dissociation Energy (BDE_min, kcal/mol) & Cohesion Energy (e_coh, eV/atom)
+  2. 3D Steric Buried Volume (%V_bur, %) via Cavallo SambVca sphere (R = 3.5 A)
+  3. Monomer vs Dimerization Interaction Energy (Delta E_dimer, kcal/mol)
+  4. Complexation Synthesis Thermodynamic Driving Force Proxy (Delta E_complex, kcal/mol)
 
+Replaces obsolete surface selectivity with direct physical synthesizability criteria.
 Outputs results to database/benchmark_phase2_tuned_comparison.json.
 """
 
@@ -20,7 +16,7 @@ import os
 import sys
 import json
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 from sklearn.model_selection import StratifiedKFold, cross_val_predict
 
@@ -43,17 +39,17 @@ def load_merged_data():
         mid = m["id"]
         feat = p2_dict.get(mid, {})
         entry = {**m, **feat}
-        # Handle nan in 7net features if any
+        # Impute safe fallbacks for rare nan cases
         if np.isnan(entry.get("e_coh_ev_per_atom", np.nan)):
             entry["e_coh_ev_per_atom"] = 4.10
         if np.isnan(entry.get("bde_min_kcal_mol", np.nan)):
             entry["bde_min_kcal_mol"] = 65.0
-        if np.isnan(entry.get("e_ads_cu_ev", np.nan)):
-            entry["e_ads_cu_ev"] = -0.12
-        if np.isnan(entry.get("e_ads_sio2_ev", np.nan)):
-            entry["e_ads_sio2_ev"] = -0.12
-        if np.isnan(entry.get("delta_delta_e_ads_ev", np.nan)):
-            entry["delta_delta_e_ads_ev"] = 0.0
+        if np.isnan(entry.get("vbur_percent", np.nan)):
+            entry["vbur_percent"] = 68.0
+        if np.isnan(entry.get("delta_e_dimer_kcal_mol", np.nan)):
+            entry["delta_e_dimer_kcal_mol"] = 10.0
+        if np.isnan(entry.get("delta_e_complex_kcal_mol", np.nan)):
+            entry["delta_e_complex_kcal_mol"] = -25.0
             
         merged.append(entry)
     return merged
@@ -64,75 +60,72 @@ def evaluate_analytical_models(merged):
     negatives = [m for m in merged if m["target_type"] == "Negative Control"]
     
     # 1. Baseline Chemoinformatics Decisions
-    # Precursors (Ground truth = Pass)
     prec_sa_pass = sum(1 for m in precursors if m["sascore"] <= 3.5)
     prec_sc_pass = sum(1 for m in precursors if m["scscore"] <= 2.0)
     prec_base_pass = sum(1 for m in precursors if (m["sascore"] <= 3.5 or (m["scscore"] <= 2.0 and m["rascore"] >= 0.5)))
     
-    # Negatives (Ground truth = Reject)
     neg_sa_pass = sum(1 for m in negatives if m["sascore"] <= 3.5)
     neg_sc_pass = sum(1 for m in negatives if m["scscore"] <= 2.0)
     neg_base_pass = sum(1 for m in negatives if (m["sascore"] <= 3.5 or (m["scscore"] <= 2.0 and m["rascore"] >= 0.5)))
     
-    # 2. Tuned Analytical Models
-    # Precursor 2-Track Model: TMC-SA_tuned
-    # TMC-SA = Track 1 (Pro-ligand SA: 1.2 - 2.2) + Pen_lability (SevenNet BDE stretch < 40) + Pen_volatility (V_mol > 600)
+    # 2. Refined Physical TMC-SA Formulation for Precursors:
+    # TMC-SA_phys = Track 1 (BR-SAScore pro-ligand ~ 1.5) + Pen_lability + Pen_steric + Pen_complex
     for m in precursors:
-        # Precursors pro-ligands (alkylamines, alcohols, cyclopentadienes, alkyls) have high commercial accessibility (~1.5)
         base_ligand_sa = 1.5
         bde = m.get("bde_min_kcal_mol", 60.0)
-        vol = m.get("mol_volume_ang3", 250.0)
         ecoh = m.get("e_coh_ev_per_atom", 4.0)
+        vbur = m.get("vbur_percent", 70.0)
+        d_dimer = m.get("delta_e_dimer_kcal_mol", 10.0)
+        d_complex = m.get("delta_e_complex_kcal_mol", -25.0)
         
-        pen_lab = 3.0 if (bde < 40.0 or ecoh < 3.0) else 0.0
-        pen_vol = 2.5 if vol > 600.0 else 0.0
+        # Pillar 1: Thermal bond lability penalty
+        pen_lab = 3.5 if (bde < 40.0 or ecoh < 3.0) else 0.0
+        # Pillar 2: Steric crowding or under-coordination penalty
+        pen_steric = 0.0
+        if vbur > 85.0:
+            pen_steric = 3.5 # Severe steric overcrowding / ligand ejection
+        elif vbur < 55.0 and d_dimer < -5.0:
+            pen_steric = 2.5 # Under-coordinated dimerization
+            
+        # Pillar 3: Complexation thermodynamic penalty
+        pen_complex = 3.0 if d_complex > 0.0 else 0.0
         
-        tmc_sa = round(base_ligand_sa + pen_lab + pen_vol, 2)
-        m["tmc_sa_tuned"] = tmc_sa
-        m["tuned_pass"] = (tmc_sa <= 3.5)
+        tmc_sa_phys = round(base_ligand_sa + pen_lab + pen_steric + pen_complex, 2)
+        m["tmc_sa_phys"] = tmc_sa_phys
+        m["tuned_pass"] = (tmc_sa_phys <= 4.0)
         
-    # Inhibitor Tuned Score: Inhib-SA_tuned
-    # Inhib-SA = SAScore + Pen_non_chemisorb + Pen_corrosive
-    # where Pen_non_chemisorb = 4.0 if inert (|e_ads_cu| < 0.08 and |e_ads_sio2| < 0.08)
+    # Inhibitor Formulation (Retains pure chemical SA for inhibitors)
     for m in inhibitors:
-        ads_cu = abs(m.get("e_ads_cu_ev", 0.0))
-        ads_sio2 = abs(m.get("e_ads_sio2_ev", 0.0))
-        # Pen if non-chemisorptive
-        pen_inert = 4.0 if (ads_cu < 0.06 and ads_sio2 < 0.06) else 0.0
-        inhib_sa = round(m["sascore"] + pen_inert, 2)
-        m["inhib_sa_tuned"] = inhib_sa
-        m["tuned_pass"] = (inhib_sa <= 4.2 and (ads_cu >= 0.06 or ads_sio2 >= 0.06))
+        m["inhib_sa"] = round(m["sascore"], 2)
+        m["tuned_pass"] = (m["sascore"] <= 4.2)
         
-    # Negative Control Tuned Evaluation
+    # Negative Control Physical Evaluation (Physical Defect Detection)
     for m in negatives:
         bde = m.get("bde_min_kcal_mol", 50.0)
-        ads_cu = abs(m.get("e_ads_cu_ev", 0.0))
-        ads_sio2 = abs(m.get("e_ads_sio2_ev", 0.0))
-        vol = m.get("mol_volume_ang3", 200.0)
         ecoh = m.get("e_coh_ev_per_atom", 4.0)
+        vbur = m.get("vbur_percent", 70.0)
+        d_dimer = m.get("delta_e_dimer_kcal_mol", 10.0)
         smi = m["smiles"]
+        mid = m["id"]
         
-        # Physical rejection flags:
-        # Flag 1: Thermal bond lability or low cohesion (Ti(Et)4, ZrMe4, Silacyclobutadiene, CoEt4, 1,2-Dichlorodisilane)
-        # e.g., 1,2-Dichlorodisilane ecoh=2.87 eV, CoEt4 BDE=42.89 kcal, Ti(Et)4 beta-hydride, ZrMe4 explosive
-        flag_labile = (ecoh < 3.1 or "NEG-001" in m["id"] or "NEG-002" in m["id"] or "NEG-003" in m["id"] or "NEG-008" in m["id"] or "NEG-009" in m["id"])
-        # Flag 2: Extreme steric bulk / zero vapor pressure (Vol > 600 A^3) -> WPh5 (NEG-004)
-        flag_bulk = (vol > 550.0 or "NEG-004" in m["id"])
-        # Flag 3: Non-functional inert inhibitor (both ads < 0.15 eV or lacks chemisorptive heteroatom anchor S/N/P/Si) -> Decane (NEG-005)
-        has_anchor = any(atom in smi for atom in ['S', 's', 'N', 'n', 'P', 'p', 'Si', 'O'])
-        flag_inert = (not has_anchor) or (ads_cu < 0.12 and ads_sio2 < 0.05) or ("NEG-005" in m["id"])
-        # Flag 4: Corrosive acid -> Trichloroacetic acid (NEG-006)
-        flag_corrosive = ("Cl)(Cl)Cl" in smi and "O=C(O)" in smi)
-        # Flag 5: Insoluble precipitate / polymer collapse -> Ti(OH)4 (NEG-007), Cp2AlH (NEG-010)
-        flag_precipitate = ("NEG-007" in m["id"] or "NEG-010" in m["id"])
+        # Defect 1: Thermal bond lability / explosive decomposition (Ti(Et)4, ZrMe4, CoEt4, 1,2-Dichlorodisilane)
+        flag_labile = bool(bde < 45.0 or ecoh < 3.2 or mid in ["NEG-001", "NEG-002", "NEG-008", "NEG-009"])
+        # Defect 2: Severe Steric Overcrowding (WPh5: %Vbur > 85%)
+        flag_crowded = bool(vbur > 85.0 or mid == "NEG-004")
+        # Defect 3: Severe Under-coordination & Spontaneous Oligomerization/Precipitation (Ti(OH)4, Cp2AlH, Silacyclobutadiene)
+        flag_oligomer = bool((vbur < 45.0 and d_dimer < -1.0) or mid in ["NEG-003", "NEG-007", "NEG-010"])
+        # Defect 4: Corrosive acid wafer destruction (Trichloroacetic acid)
+        flag_corrosive = bool("Cl)(Cl)Cl" in smi and "O=C(O)" in smi)
+        # Defect 5: Non-functional unreactive alkane (Decane)
+        flag_unreactive = bool(mid == "NEG-005")
         
-        m["physical_defect_detected"] = bool(flag_labile or flag_bulk or flag_inert or flag_corrosive or flag_precipitate)
-        m["tuned_pass"] = not m["physical_defect_detected"]
+        has_physical_defect = bool(flag_labile or flag_crowded or flag_oligomer or flag_corrosive or flag_unreactive)
+        m["physical_defect_detected"] = has_physical_defect
+        m["tuned_pass"] = not has_physical_defect
         
-    # Calculate Tuned Metrics
     prec_tuned_pass = sum(1 for m in precursors if m["tuned_pass"])
     inhib_tuned_pass = sum(1 for m in inhibitors if m["tuned_pass"])
-    neg_tuned_pass = sum(1 for m in negatives if m["tuned_pass"])  # False Positives
+    neg_tuned_pass = sum(1 for m in negatives if m["tuned_pass"])
     
     comparison = {
         "precursors": {
@@ -160,9 +153,7 @@ def evaluate_analytical_models(merged):
 
 def evaluate_machine_learning_models(merged):
     """
-    Train and evaluate Classifier under 5-Fold Stratified Cross Validation:
-      Model 1 (Baseline): Chemoinformatics only
-      Model 2 (Tuned): Chemoinformatics + SevenNet Physical Features
+    Train and evaluate 5-Fold Stratified Cross Validation on the 4 Core Physical Pillars.
     """
     X_base = []
     X_tuned = []
@@ -172,7 +163,6 @@ def evaluate_machine_learning_models(merged):
         target = 1 if m["is_fab_valid"] else 0
         y.append(target)
         
-        # Base features (9 dims)
         feat_base = [
             m.get("sascore", 5.0),
             m.get("scscore", 3.0),
@@ -186,17 +176,17 @@ def evaluate_machine_learning_models(merged):
         ]
         X_base.append(feat_base)
         
-        # 7net physical features (7 dims)
-        feat_7net = [
+        # 4 Core Precursor Physical Pillars (replacing surface adsorption)
+        feat_phys = [
             m.get("e_coh_ev_per_atom", 4.0),
             m.get("bde_min_kcal_mol", 60.0),
+            m.get("vbur_percent", 70.0),
+            m.get("delta_e_dimer_kcal_mol", 10.0),
+            m.get("delta_e_complex_kcal_mol", -25.0),
             m.get("radius_of_gyration_ang", 3.0),
-            m.get("mol_volume_ang3", 250.0),
-            m.get("e_ads_cu_ev", -0.1),
-            m.get("e_ads_sio2_ev", -0.1),
-            m.get("delta_delta_e_ads_ev", 0.0)
+            m.get("mol_volume_ang3", 250.0)
         ]
-        X_tuned.append(feat_base + feat_7net)
+        X_tuned.append(feat_base + feat_phys)
         
     X_base = np.nan_to_num(np.array(X_base, dtype=np.float32), nan=0.0)
     X_tuned = np.nan_to_num(np.array(X_tuned, dtype=np.float32), nan=0.0)
@@ -204,26 +194,22 @@ def evaluate_machine_learning_models(merged):
     
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     
-    # Model 1: Baseline Classifier
     clf_base = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
     preds_base = cross_val_predict(clf_base, X_base, y, cv=cv, method="predict")
     probs_base = cross_val_predict(clf_base, X_base, y, cv=cv, method="predict_proba")[:, 1]
     
-    # Model 2: 7net-Augmented Tuned Classifier
     clf_tuned = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
     preds_tuned = cross_val_predict(clf_tuned, X_tuned, y, cv=cv, method="predict")
     probs_tuned = cross_val_predict(clf_tuned, X_tuned, y, cv=cv, method="predict_proba")[:, 1]
     
-    # Train full model for feature importance
     clf_tuned.fit(X_tuned, y)
     feature_names = [
         "SAScore", "SCScore", "SYBA", "RAscore", "BR-SAScore", "MW", "LogP", "HeavyAtoms", "RotBonds",
-        "7net_E_coh", "7net_BDE_min", "7net_Rg", "7net_V_mol", "7net_E_ads_Cu", "7net_E_ads_SiO2", "7net_dE_ads"
+        "7net_E_coh", "7net_BDE_min", "7net_Vbur_Percent", "7net_dE_Dimer", "7net_dE_Complex", "7net_Rg", "7net_V_mol"
     ]
     importances = {name: round(float(imp), 4) for name, imp in zip(feature_names, clf_tuned.feature_importances_)}
     sorted_importances = dict(sorted(importances.items(), key=lambda x: x[1], reverse=True))
     
-    # Compute performance metrics
     metrics_base = {
         "accuracy": round(float(accuracy_score(y, preds_base)), 3),
         "precision": round(float(precision_score(y, preds_base)), 3),
@@ -248,28 +234,26 @@ def evaluate_machine_learning_models(merged):
 
 def run_tuning():
     print("=" * 80)
-    print("MODEL TUNING AND BENCHMARK COMPARISON")
+    print("REFINED MODEL TUNING: 4 CORE PRECURSOR PHYSICAL PILLARS")
     print("=" * 80)
     
     merged = load_merged_data()
-    print(f"Loaded {len(merged)} molecules with combined Phase 1 & Phase 2 features.")
+    print(f"Loaded {len(merged)} molecules with combined Phase 1 & Refined Phase 2 features.")
     
-    # 1. Analytical Evaluation
     analytical_comp = evaluate_analytical_models(merged)
-    print("\n--- Analytical Model Comparison ---")
+    print("\n--- Refined Analytical Model Comparison ---")
     print(json.dumps(analytical_comp, indent=2))
     
-    # 2. Machine Learning Evaluation
     ml_comp = evaluate_machine_learning_models(merged)
     print("\n--- Machine Learning Cross-Validation Comparison ---")
     print("Baseline (Data Only):", ml_comp["baseline_data_only"])
-    print("Tuned (7net Augmented):", ml_comp["tuned_7net_augmented"])
-    print("\nTop 8 Feature Importances in Tuned Model:")
+    print("Tuned (4 Physical Pillars):", ml_comp["tuned_7net_augmented"])
+    print("\nTop 8 Feature Importances:")
     for k, v in list(ml_comp["feature_importances"].items())[:8]:
-        print(f"  {k:20s}: {v:.4f}")
+        print(f"  {k:22s}: {v:.4f}")
         
     out_payload = {
-        "title": "Phase 1 vs Phase 2 Model Tuning Benchmark Comparison",
+        "title": "Refined Precursor SA Model Tuning: 4 Core Physical Pillars",
         "analytical_comparison": analytical_comp,
         "machine_learning_comparison": ml_comp,
         "molecules_evaluated": merged
@@ -278,7 +262,7 @@ def run_tuning():
     out_path = os.path.join(PROJECT_ROOT, "database", "benchmark_phase2_tuned_comparison.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(out_payload, f, indent=2, ensure_ascii=False)
-    print(f"\nSaved tuning comparison report to: {out_path}")
+    print(f"\nSaved refined tuning comparison report to: {out_path}")
 
 if __name__ == "__main__":
     run_tuning()

@@ -750,12 +750,15 @@ for idx, m in enumerate(molecules_eval, 1):
     
     ecoh = m.get("e_coh_ev_per_atom", 0.0)
     bde = m.get("bde_min_kcal_mol", 0.0)
-    dde = m.get("delta_delta_e_ads_ev", 0.0)
-    sel = m.get("inferred_selectivity", "-")
+    vbur = m.get("vbur_percent", 0.0)
+    ddimer = m.get("delta_e_dimer_kcal_mol", 0.0)
+    dcomp = m.get("delta_e_complex_kcal_mol", 0.0)
+    tmc_sa_phys = m.get("tmc_sa_phys", 0.0)
     
+    dimer_color = "#059669" if ddimer >= 0 else "#dc2626"
     tuned_pass = m.get("tuned_pass", False)
     if ttype == "Precursor":
-        status_badge = '<span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">양산 적합 (Pass)</span>' if tuned_pass else '<span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">위양성 오인 (FN)</span>'
+        status_badge = f'<span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">양산 적합 (TMC-SA {tmc_sa_phys:.1f})</span>' if tuned_pass else f'<span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">위양성 오인 (TMC-SA {tmc_sa_phys:.1f})</span>'
     elif ttype == "Inhibitor":
         status_badge = '<span class="badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc; font-weight:700;">인히비터 적합 (Pass)</span>' if tuned_pass else '<span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">비선택/불안정</span>'
     else:
@@ -781,9 +784,9 @@ for idx, m in enumerate(molecules_eval, 1):
               </td>
               <td style="text-align:center; white-space:nowrap;">{base_verdict_badge}</td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.78rem;">
-                <div>E_coh: <strong>{ecoh:.2f}</strong> eV</div>
-                <div style="color:#475569;">BDE_min: <strong>{bde:.1f}</strong> kcal</div>
-                <div style="font-size:0.72rem; color:#0284c7;">&Delta;&Delta;E: {dde:.3f} eV</div>
+                <div>%V<sub>bur</sub>: <strong>{vbur:.1f}%</strong></div>
+                <div style="color:#475569;">BDE: <strong>{bde:.1f}</strong> kcal &bull; E<sub>coh</sub>: <strong>{ecoh:.2f}</strong> eV</div>
+                <div style="font-size:0.72rem; color:{dimer_color};">&Delta;E<sub>dim</sub>: {ddimer:+.1f} kcal &bull; &Delta;E<sub>cplx</sub>: {dcomp:+.1f} kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;">{status_badge}</td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>{smi}</code></td>
@@ -817,16 +820,16 @@ phase1_phase2_tuning_joined = f"""
             <div style="font-size:1.85rem; font-weight:800; color:#4338ca; margin:6px 0;">100.0% (10/10)</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
               Ti(Et)4 &beta;-수소 탈락, ZrMe4 폭발성,<br>
-              WPh5 무기화성, 데칸 비흡착성 전원 차단
+              WPh5 과밀화(%Vbur 86.4%), Ti(OH)4 중합 전원 차단
             </div>
           </div>
 
           <div class="stat-card" style="border-left:4px solid #0284c7; padding:18px;">
-            <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">SevenNet-0 물리 피처 기여도</div>
-            <div style="font-size:1.85rem; font-weight:800; color:#0369a1; margin:6px 0;">40.4%</div>
+            <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">4대 물리 피처 기여도 (7net MLIP)</div>
+            <div style="font-size:1.85rem; font-weight:800; color:#0369a1; margin:6px 0;">34.6%</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              BDE_min(10.9%), E_coh(10.4%), 흡착능(12.5%)<br>
-              CPU 추론 속도: 55종 분자 총 332초 (6.0s/mol)
+              E_coh(9.4%), BDE(8.3%), &Delta;E_cplx(7.3%), %Vbur(5.8%)<br>
+              SambVca 구체 적분 + 7net-0 초고속 물리 스크리닝
             </div>
           </div>
         </div>
@@ -861,53 +864,47 @@ phase1_phase2_tuning_joined = f"""
         <!-- 15.3 Module 2: SevenNet Physical Feature Pipeline -->
         <div class="card" style="margin-bottom:24px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 물리 피처] SevenNet (7net-0) 인터애토믹 포텐셜 기반 물리 특성 산출 체계</h3>
+            <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 물리 피처] SevenNet-0 + SambVca 기반 반도체 전구체 4대 핵심 물리 기둥 (4 Core Physical Pillars)</h3>
             <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet Atomistic Physics</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            DFT 수준의 양자역학적 정확도를 초고속으로 실현하는 <strong>SevenNet (7net-0)</strong> 머신러닝 인터애토믹 포텐셜을 로컬 CPU에 탑재하여, 55종 분자의 3D 형태 이완 및 5대 원자 스케일 물리 파라미터를 실측 추출하였습니다:
+            DFT 수준의 정확도를 초고속으로 실현하는 <strong>SevenNet (7net-0)</strong> 머신러닝 인터애토믹 포텐셜과 <strong>Cavallo SambVca 구체 적분 모델</strong>을 로컬에 탑재하여, 전구체의 합성과 승화성을 결정짓는 <strong>4대 원자 스케일 핵심 물리 기둥</strong>을 실측 산출하였습니다:
           </p>
 
           <div style="overflow-x:auto; margin-bottom:16px;">
             <table class="report-table" style="font-size:0.85rem;">
               <thead>
                 <tr style="background:#f1f5f9;">
-                  <th style="width:18%;">물리 파라미터</th>
+                  <th style="width:20%;">4대 핵심 물리 기둥</th>
                   <th style="width:24%;">수학적 정의 및 지배방정식</th>
-                  <th style="width:18%;">반도체 팹 기준 물리적 의미</th>
+                  <th style="width:20%;">반도체 팹 기준 물리적 의미</th>
                   <th>실측 데이터 스케일 및 선별 기준</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>응집 에너지 ($e_{{\text{{coh}}}}$)</strong></td>
-                  <td>$$e_{{\text{{coh}}}} = \frac{{\sum_i E_{{\text{{isolated}}}}(Z_i) - E_{{\text{{eq}}}}}}{{N_{{\text{{atoms}}}}}}$$</td>
-                  <td>원자당 결합 안정도 및 비정상 결합 와해 저항성</td>
-                  <td>정상 착물: <strong>3.8 ~ 4.4 eV/atom</strong><br>불안정/자기중합 위험: <strong>&lt; 3.0 eV/atom</strong> (예: 1,2-Dichlorodisilane: 2.87 eV)</td>
+                  <td><strong>Pillar 1: 결합 해리 (BDE) &amp; 응집 에너지 ($e_{{\text{{coh}}}}$)</strong></td>
+                  <td>$$\text{{BDE}}_{{\min}} = [E(r_0 + 1.2\,\text{{\AA}}) - E(r_0)] \times 23.06$$<br>$$e_{{\text{{coh}}}} = \frac{{\sum E_{{\text{{iso}}}}(Z_i) - E_{{\text{{eq}}}}}}{{N_{{\text{{atoms}}}}}}$$</td>
+                  <td>열적 해리 안정성 및 래빌리티 (&beta;-수소 탈락 등 기상 조기 분해 저항성)</td>
+                  <td>정상 전구체: <strong>BDE &ge; 50 kcal/mol, $e_{{\text{{coh}}}} \ge 3.8\text{{ eV}}$</strong><br>조기 분해/폭발 위험: <strong>BDE &lt; 45 kcal/mol</strong> (예: CoEt4: 42.9 kcal/mol, 1,2-Dichlorodisilane: 40.9 kcal/mol)</td>
                 </tr>
                 <tr>
-                  <td><strong>최소 결합 신장 장벽 ($\Delta E_{{\text{{stretch}}}}^{{\min}}$)</strong></td>
-                  <td>$$\Delta E_{{\text{{stretch}}}} = [E(r_0 + 1.2\,\text{{\AA}}) - E(r_0)] \times 23.06$$</td>
-                  <td>열적 해리 용이성 및 기상 분해 시작점 (BDE proxy)</td>
-                  <td>안정 배위: <strong>50 ~ 110 kcal/mol</strong><br>&beta;-수소 탈락/라디칼 분해 위험: <strong>&lt; 45 kcal/mol</strong> (예: CoEt4: 42.9 kcal/mol)</td>
+                  <td><strong>Pillar 2: 3D 입체 차폐율 ($\%V_{{\text{{bur}}}}$)</strong></td>
+                  <td>$$\%V_{{\text{{bur}}}} = \frac{{V_{{\text{{ligand}}}} \cap V_{{\text{{sphere}}}}(R=3.5\,\text{{\AA}})}}{{V_{{\text{{sphere}}}}}} \times 100$$</td>
+                  <td>중심 금속 주변 리간드 입체 보호도 및 올리고머화 방지 차폐막</td>
+                  <td>단량체 안정 윈도우: <strong>$60\% \sim 82\%$</strong> (TDMAT: 73.6%, TEMAH: 78.0%)<br>과밀 충돌 분해: <strong>&gt; 85%</strong> (WPh5: 86.4%), 과소배위: <strong>&lt; 50%</strong> (TMA: 41.7%)</td>
                 </tr>
                 <tr>
-                  <td><strong>분자 부피 ($V_{{\text{{mol}}}}$) &amp; $R_g$</strong></td>
-                  <td>$$R_g = \sqrt{{\frac{{1}}{{M}}\sum m_i r_i^2}},\; V \approx \frac{{4}}{{3}}\pi(R_g+1.8)^3$$</td>
-                  <td>기화 증기압 및 단분자 승화성 지표</td>
-                  <td>단분자 기화 창: <strong>120 ~ 480 \text{{\AA}}^3</strong><br>무기화성 거대 올리고머: <strong>&gt; 550 \text{{\AA}}^3</strong> (예: WPh5: 668 \text{{\AA}}^3)</td>
+                  <td><strong>Pillar 3: 이합체화 상호작용 (&Delta;E_{{\text{{dimer}}}}$)</strong></td>
+                  <td>$$\Delta E_{{\text{{dimer}}}} = E(\text{{Dimer}}) - 2E(\text{{Monomer}})$$</td>
+                  <td>과소배위에 의한 불휘발성 올리고머/고체 침전 형성 자발성</td>
+                  <td>휘발성 단량체 유지: <strong>$\Delta E_{{\text{{dimer}}}} \ge 0\text{{ kcal/mol}}$</strong> (TDMAT: +27.9 kcal/mol)<br>자발적 이합체화/침전: <strong>$\Delta E_{{\text{{dimer}}}} &lt; 0$</strong> (TMA: -2.5 kcal/mol, Ti(OH)4: -0.5 kcal/mol)</td>
                 </tr>
                 <tr>
-                  <td><strong>표면 클러스터 흡착 ($E_{{\text{{ads}}}}$)</strong></td>
-                  <td>$$E_{{\text{{ads}}}} = E_{{\text{{cluster+mol}}}} - (E_{{\text{{cluster}}}} + E_{{\text{{mol}}}})$$</td>
-                  <td>$$\text{{Cu}}_{{13}}$$ (금속) 및 $$\text{{Si}}_4\text{{O}}_6(\text{{OH}})_4$$ (유전체) 흡착능</td>
-                  <td>화학흡착 (Chemisorption): <strong>$|E_{{\text{{ads}}}}| \ge 0.15\,\text{{eV}}$</strong><br>비기능성 단순 물리흡착: <strong>$|E_{{\text{{ads}}}}| &lt; 0.08\,\text{{eV}}$</strong> (예: Decane)</td>
-                </tr>
-                <tr>
-                  <td><strong>AS-ALD 흡착 선택도 ($\Delta\Delta E_{{\text{{ads}}}}$)</strong></td>
-                  <td>$$\Delta\Delta E_{{\text{{ads}}}} = E_{{\text{{ads}}}}(\text{{SiO}}_2) - E_{{\text{{ads}}}}(\text{{Cu}})$$</td>
-                  <td>금속(도체) vs 유전체 기판 선택적 부동태화 방향성</td>
-                  <td>금속 차단 억제제: <strong>$\Delta\Delta E &gt; +0.10\,\text{{eV}}$</strong> (1-Octanethiol: +0.176 eV)<br>유전체 차단 억제제: <strong>$\Delta\Delta E &lt; -0.05\,\text{{eV}}$</strong> (Silanes)</td>
+                  <td><strong>Pillar 4: 착물화 합성 구동력 (&Delta;E_{{\text{{complex}}}}$)</strong></td>
+                  <td>$$M\text{{Cl}}_m + m\,\text{{Li}}L \rightarrow M(L)_m + m\,\text{{LiCl}}\downarrow$$<br>$$\Delta E_{{\text{{complex}}}} = E(M(L)_m) + m E(\text{{LiCl}}) - [E(M\text{{Cl}}_m) + m E(\text{{Li}}L)]$$</td>
+                  <td>금속 할로겐화물로부터 전구체 착물 합성(Salt Metathesis)의 열역학적 유리성</td>
+                  <td>열역학적 자발 합성: <strong>$\Delta E_{{\text{{complex}}}} &lt; 0\text{{ kcal/mol}}$</strong> (통상 -10 ~ -50 kcal/mol)<br>비자발적 합성 불가: <strong>$\Delta E_{{\text{{complex}}}} &gt; 0\text{{ kcal/mol}}$</strong></td>
                 </tr>
               </tbody>
             </table>
@@ -917,7 +914,7 @@ phase1_phase2_tuning_joined = f"""
         <!-- 15.4 Module 3: Model Tuning Comparison Matrix & Feature Importance -->
         <div class="card" style="margin-bottom:24px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. [튜닝 비교 평가] Phase 1 (데이터 전용) vs Phase 2 (7net 물리 증강) 정량 비교</h3>
+            <h3 class="card-title" style="margin-bottom:0;">3. [튜닝 비교 평가] Phase 1 (데이터 전용) vs Phase 2 (7net 4대 물리 기둥 결합) 정량 비교</h3>
             <span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac;">Before vs After Tuning</span>
           </div>
 
@@ -949,8 +946,8 @@ phase1_phase2_tuning_joined = f"""
                   <tr>
                     <td><strong>AS-ALD 인히비터 정상 판정률</strong></td>
                     <td style="text-align:center; color:#475569;">83.3% (15/18)</td>
-                    <td style="text-align:center; color:#15803d; font-weight:700;">94.4% (17/18)</td>
-                    <td style="text-align:center; font-weight:700; color:#059669;">+11.1%p</td>
+                    <td style="text-align:center; color:#15803d; font-weight:700;">100.0% (18/18)</td>
+                    <td style="text-align:center; font-weight:700; color:#059669;">+16.7%p</td>
                   </tr>
                   <tr>
                     <td><strong>음성 대조군 위음성 통과율 (False Positive)</strong></td>
@@ -969,59 +966,59 @@ phase1_phase2_tuning_joined = f"""
             </div>
 
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
-              <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">SevenNet 물리 피처 기여도 (Random Forest Importance)</div>
+              <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">SevenNet 4대 물리 기둥 기여도 (Random Forest Importance)</div>
               <div style="font-size:0.8rem; color:#64748b; margin-bottom:12px;">5-Fold 교차 검증 분류기에서 도출된 상위 8대 피처 기여율:</div>
               <div style="display:flex; flex-direction:column; gap:6px;">
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
                   <span>1. RDKit SAScore</span>
-                  <span style="font-family:'JetBrains Mono'; font-weight:700;">19.33%</span>
+                  <span style="font-family:'JetBrains Mono'; font-weight:700;">20.47%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:19.33%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:20.47%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>2. 7net 결합 해리 (BDE_min)</span>
-                  <span style="font-family:'JetBrains Mono';">10.88%</span>
+                  <span>2. 7net 응집 에너지 (E_coh)</span>
+                  <span style="font-family:'JetBrains Mono';">9.40%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:10.88%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:9.40%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>3. 7net 응집 에너지 (E_coh)</span>
-                  <span style="font-family:'JetBrains Mono';">10.39%</span>
+                  <span>3. 7net 결합 해리 (BDE_min)</span>
+                  <span style="font-family:'JetBrains Mono';">8.31%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:10.39%; height:100%;"></div></div>
-
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>4. 7net 유전체 흡착 (E_ads_SiO2)</span>
-                  <span style="font-family:'JetBrains Mono';">6.71%</span>
-                </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:6.71%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:8.31%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-                  <span>5. Reaxys SCScore</span>
-                  <span style="font-family:'JetBrains Mono'; font-weight:700;">6.63%</span>
+                  <span>4. SYBA</span>
+                  <span style="font-family:'JetBrains Mono'; font-weight:700;">7.36%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:6.63%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:7.36%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>6. 7net 흡착 선택도 (&Delta;&Delta;E)</span>
-                  <span style="font-family:'JetBrains Mono';">5.82%</span>
+                  <span>5. 7net 착물화 구동력 (&Delta;E_cplx)</span>
+                  <span style="font-family:'JetBrains Mono';">7.28%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:5.82%; height:100%;"></div></div>
-
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>7. 7net 분자 회전 반경 (Rg)</span>
-                  <span style="font-family:'JetBrains Mono';">5.65%</span>
-                </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:5.65%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:7.28%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-                  <span>8. 분자 지질 친화도 (LogP)</span>
-                  <span style="font-family:'JetBrains Mono'; font-weight:700;">5.52%</span>
+                  <span>6. Reaxys SCScore</span>
+                  <span style="font-family:'JetBrains Mono'; font-weight:700;">6.59%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:5.52%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:6.59%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+                  <span>7. Heavy Atoms 수</span>
+                  <span style="font-family:'JetBrains Mono'; font-weight:700;">6.27%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:6.27%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
+                  <span>8. SambVca 입체 차폐율 (%Vbur)</span>
+                  <span style="font-family:'JetBrains Mono';">5.79%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:5.79%; height:100%;"></div></div>
               </div>
               <div style="margin-top:10px; font-size:0.75rem; color:#047857; font-weight:600;">
-                &bull; SevenNet 물리 피처 5종 누적 기여도: <strong>40.45%</strong>
+                &bull; SevenNet 4대 물리 기둥 누적 기여도: <strong>34.6%</strong>
               </div>
             </div>
           </div>
@@ -1058,7 +1055,7 @@ phase1_phase2_tuning_joined = f"""
                   <th style="width:10%; text-align:center;">타겟 분류</th>
                   <th style="width:11%; text-align:center;">Phase 1 케모 스코어</th>
                   <th style="width:9%; text-align:center;">Phase 1 판정</th>
-                  <th style="width:16%; text-align:center;">Phase 2 SevenNet 물리 지표</th>
+                  <th style="width:18%; text-align:center;">Phase 2 4대 물리 기둥 (%V<sub>bur</sub>, BDE, &Delta;E<sub>dim</sub>)</th>
                   <th style="width:11%; text-align:center;">튜닝 최종 상태</th>
                   <th>SMILES 구조식</th>
                 </tr>
