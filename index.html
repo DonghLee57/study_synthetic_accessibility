@@ -1325,7 +1325,7 @@
             <span style="font-size:0.84rem; color:#0369a1; font-weight:600;">압축 핵심 스토리라인 &bull; 4단계 체계적 안내</span>
           </div>
           <h2 style="font-size:1.65rem; font-weight:800; color:#0f172a; margin:0 0 10px 0; line-height:1.35;">
-            반도체 전구체 AI 합성 가능성(SA) 평가와 MLIP 물리 결합: 핵심 스토리라인
+            반도체 전구체 AI 합성 가능성(SA) 평가와 물리 지표 결합: 핵심 스토리라인
           </h2>
           <p style="font-size:0.95rem; color:#334155; line-height:1.65; margin:0 0 16px 0;">
             기존 제약(Drug Discovery) 중심의 AI 합성 가능성 모델(SAScore, SCScore 등)은 왜 반도체 팹 양산 전구체를 88.9% 오판 기각하고, 상온 폭발성 분자를 100% 통과시키는 치명적 오류를 범할까요? 본 연구는 이 <strong>양방향 병리(Dual Pathology)</strong>를 실증적으로 규명하고, 초고속 양자 머신러닝 인터애토믹 포텐셜(<strong>SevenNet-0</strong>)과 <strong>4대 핵심 물리 기둥</strong>을 결합하여 위험 분자 100% 차단 및 전구체 96.3% 구제를 달성한 연구입니다. 아래 4단계를 통해 전체 연구의 흐름과 통찰을 한눈에 파악하실 수 있습니다.
@@ -1527,7 +1527,72 @@
               </div>
             </div>
 
-            <!-- Empirical Diagnostic Scorecard (Pass Boundary & Limitations) -->
+            <!-- Section 7: 4-Stage Breakdown Mermaid Diagram in Summary Tab -->
+            <div style="margin-bottom:22px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
+                  4단계 실행 파이프라인별 통과 및 실패 원인 (Drop-out 메커니즘 맵)
+                </div>
+                <span class="badge badge-4g" style="font-size:0.75rem;">16대 모델 전수 검증 인과 맵</span>
+              </div>
+              <p style="font-size:0.86rem; color:#475569; line-height:1.6; margin-bottom:12px;">
+                27종 반도체 전구체 분자가 입력되었을 때, 16대 오픈소스 AI 모델들이 구문 파싱(Stage 1)부터 물리화학적 판정(Stage 4)까지 어느 단계에서 붕괴·이탈하는지 추적한 인과 맵입니다:
+              </p>
+              
+              <!-- Mermaid Flowchart for 4-Stage Breakdown with Interactive Zoom Modal -->
+              <div class="mermaid-card clickable-card" id="card-summary-pipeline-stages" onclick="openDiagramModal('summary-pipeline-stages-container', '4단계 실행 파이프라인 및 모델별 붕괴·이탈(Drop-out) 메커니즘 맵')" title="클릭하여 팝업 확대 보기">
+                <div class="mermaid-toolbar">
+                  <span class="mermaid-title">다이어그램: 4단계 실행 파이프라인 및 모델별 붕괴·이탈(Drop-out) 메커니즘 맵 (클릭 시 확대)</span>
+                  <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
+                </div>
+                <div class="mermaid-viewport" id="viewport-summary-pipeline-stages">
+                  <div class="mermaid-svg-container" id="summary-pipeline-stages-container">
+                    <div class="mermaid" id="summary-pipeline-stages-svg">
+flowchart TD
+    subgraph STAGE1 ["Stage 1: 구문 파싱 및 입력 수용 (Syntax / Ingestion)"]
+        A1["27종 반도체 전구체 SMILES 입력"] --> A2["SMILES 토큰화 및 RDKit 객체 생성"]
+        A2 -->|"미지원 원소: Hf, Ta, Ru, W, Mo (7종)"| A3["GASA: All-Zero 벡터 무음 오인코딩<br>(Silent Mis-encoding 및 종속성 부재)"]
+        A2 -->|"118원소/RDKit 정규화 통과"| B1["Stage 2로 진입 (15종 모델)"]
+    end
+
+    subgraph STAGE2 ["Stage 2: 특성 임베딩 및 표현 (Representation / Embedding)"]
+        B1 --> B2["분자 지문 / GNN 노드 / 단편 분해"]
+        B2 -->|"전이금속을 ELSE 단일 토큰으로 축약"| B3["DFRscore: 원소별 화학 특성 상실"]
+        B2 -->|"금속 노드를 알킬 탄소로 투영"| B4["RAscore: 100 percent False Positive 왜곡"]
+        B2 -->|"Lipinski Rule of 5 강제 감점"| B5["DeepSA: 의약 분자 편향 왜곡"]
+        B2 -->|"ZINC 내 Cp 배위 단편 전무"| B6["SYBA: 메탈로센(-44점) 붕괴"]
+        B2 -->|"유기 단편 보존 / 정상 분리"| C1["Stage 3으로 진입 (생성/역합성 및 사전 모델)"]
+    end
+
+    subgraph STAGE3 ["Stage 3: 반응 규칙 및 배위 매니폴드 (Reaction and Coordination Manifold)"]
+        C1 --> C2["역합성 전개 정책 및 템플릿 탐색"]
+        C2 -->|"SynFormer 115 특허 룰: 금속 원자 0개"| C3["BioNeMo ReaSyn: 배위 경로 0건 (0.0 percent)"]
+        C2 -->|"USPTO 가중치 미설치: MCTS 미실행 null"| C4["AiZynthFinder: MCTS 미실행 (null)"]
+        C2 -->|"HB-91 / SynFormer-115: 금속 원자 0개"| C5["ChemProjector / SynNet / SynFormer: 코어 규칙 0건 (0.0 percent)"]
+        C2 -->|"USPTO 템플릿 미설치: A-Star 미실행 null"| C6["Retro-Star: A-Star 미실행 (null)"]
+        C2 -->|"Explore 30 / CGFlow 42: 부분구조 9종만 매칭"| C7["RxnFlow: 코어 합성 0건 (0.0 percent)"]
+        C2 -->|"의약 사전 및 엄격 시약 사전 (max(existing, -0.47)): M-N 결합 부재"| C8["BR-SAScore: 3/27 통과 (11.1 percent)"]
+        C2 -->|"리간드 분리형 2-Track TMC-SA + DFT 착물화 에너지 결합"| D1["Stage 4 진입 (물리 기반 반도체 최적화)"]
+    end
+
+    subgraph STAGE4 ["Stage 4: 물리화학적 합성성 판정 (Synthesizability Output)"]
+        D1 --> D2["2-Track TMC-SA + DFT: 순환 누수 없는 물리 기반 합성성 판정 완성"]
+        C8 --> D3["SAScore: 3/27 통과 (11.1 percent) 치명적 False Negative"]
+        B2 --> D4["SCScore: 23/27 통과 (85.2 percent) 위험 은폐"]
+    end
+
+    classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
+    classDef failNode fill:#fee2e2,stroke:#b91c1c,color:#b91c1c;
+    classDef warnNode fill:#fef3c7,stroke:#b45309,color:#b45309;
+
+    class D2,B1,C1,D1 passNode;
+    class A3,B3,B4,B5,C3,C4,C5,C6,C7,D3 failNode;
+    class B6,C8,D4 warnNode;
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div style="overflow-x:auto; margin-bottom:16px;">
               <div style="font-weight:700; font-size:0.95rem; color:#0f172a; margin-bottom:8px;">
                 AI 모델별 실제 통과 가능 범위와 한계 진단표 (어디까지 믿을 수 있는가?)
@@ -1605,13 +1670,13 @@
           </div>
         </section>
 
-        <!-- Step 3: Base 모델의 한계와 계산(MLIP) 병합 극복 플랜 -->
+        <!-- Step 3: Base 모델의 한계와 계산(물리 지표) 병합 극복 플랜 -->
         <section id="storyline-step3" class="storyline-step">
           <div class="storyline-step-header">
             <span class="step-badge">3</span>
             <div>
               <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 3 &bull; Pathology &amp; Hybrid Strategy</div>
-              <h3 class="storyline-step-title">Base 모델의 한계(양방향 병리)와 MLIP 물리 결합 극복 플랜</h3>
+              <h3 class="storyline-step-title">Base 모델의 한계(양방향 병리)와 물리 지표 결합 극복 플랜</h3>
             </div>
           </div>
 
@@ -12841,6 +12906,9 @@ flowchart TD
       }
       initScrollSpy();
 
+      // Trigger Mermaid rendering for visible Storyline tab
+      renderMermaidInStorylineTab();
+
       // Check URL hash on direct link entry
       if (window.location.hash) {
         const targetId = window.location.hash.substring(1);
@@ -13228,6 +13296,9 @@ flowchart TD
         if (tocStoryline) tocStoryline.style.display = 'block';
         if (tocTechnical) tocTechnical.style.display = 'none';
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Trigger Mermaid rendering after storyline tab becomes visible
+        renderMermaidInStorylineTab();
       } else {
         btnStoryline.classList.remove('active');
         btnTechnical.classList.add('active');
@@ -13253,6 +13324,24 @@ flowchart TD
           throwOnError: false
         });
       }
+    }
+
+    let storylineMermaidRendered = false;
+    function renderMermaidInStorylineTab() {
+      if (typeof mermaid === 'undefined') return;
+      setTimeout(async () => {
+        try {
+          const unrendered = document.querySelectorAll('#tab-content-storyline .mermaid:not([data-processed="true"])');
+          if (unrendered && unrendered.length > 0) {
+            await mermaid.run({
+              nodes: unrendered
+            });
+            storylineMermaidRendered = true;
+          }
+        } catch(e) {
+          console.warn('Storyline Mermaid render notice:', e);
+        }
+      }, 50);
     }
 
     let technicalMermaidRendered = false;
