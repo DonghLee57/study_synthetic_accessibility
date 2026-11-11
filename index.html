@@ -1163,13 +1163,13 @@
   <nav class="view-mode-bar" aria-label="보고서 뷰 모드 전환">
     <div class="view-mode-inner">
       <button type="button" class="view-mode-btn active" id="btn-tab-storyline" onclick="switchViewTab('storyline')">
-        [입문 가이드] 핵심 요약 및 스토리라인 (Executive Storyline)
+        [요약] 핵심 요약 및 스토리라인 (Executive Storyline)
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-technical" onclick="switchViewTab('technical')">
-        [전문 리포트] 전수 기술 분석 &amp; 벤치마크 (15대 섹션 전문)
+        [리포트] 전수 기술 분석 &amp; 벤치마크 (15대 섹션)
       </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 압축 입문 가이드와 전수 기술 분석 뷰를 자유롭게 전환할 수 있습니다.
+        열람 목적에 따라 핵심 요약과 상세 기술 리포트 뷰를 자유롭게 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -1182,20 +1182,20 @@
       <!-- Storyline TOC -->
       <div id="toc-storyline">
         <div class="toc-header">
-          <span>입문 가이드 목차</span>
+          <span>요약 목차</span>
           <span class="toc-progress">Step 1~4</span>
         </div>
         <ul class="toc-list">
-          <li><a href="#storyline-step1" class="toc-link active" data-target="storyline-step1">1. 필수 기본 개념 (전구체 vs 인히비터)</a></li>
-          <li><a href="#storyline-step2" class="toc-link" data-target="storyline-step2">2. 세대별 모델 진화의 단일 축 로직</a></li>
+          <li><a href="#storyline-step1" class="toc-link active" data-target="storyline-step1">1. 모델 평가 핵심 기준 (혼동 행렬 &amp; TP/FP/TN/FN)</a></li>
+          <li><a href="#storyline-step2" class="toc-link" data-target="storyline-step2">2. 세대별 모델 진화 로직 &amp; 적합성·패스 기준</a></li>
           <li><a href="#storyline-step3" class="toc-link" data-target="storyline-step3">3. Base 모델 병리와 7net 물리 결합 플랜</a></li>
           <li><a href="#storyline-step4" class="toc-link" data-target="storyline-step4">4. 55종 실증 벤치마크 평가 결과</a></li>
         </ul>
         <div style="margin-top:20px; padding:12px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; font-size:0.78rem; line-height:1.5;">
           <strong style="color:#1e40af;">전체 기술 보고서 열람:</strong><br>
-          34편 원문 아카이브, 16개 모델 비교, DFT/VASP 자동화 및 55종 실측 데이터시트는 전문 리포트 탭에 있습니다.
+          34편 원문 아카이브, 16개 모델 비교, DFT/VASP 자동화 및 55종 실측 데이터시트는 리포트 탭에 있습니다.
           <button type="button" onclick="switchViewTab('technical')" class="btn-toc-utility" style="margin-top:8px; width:100%; background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer;">
-            15개 섹션 전문 리포트 열기 &rarr;
+            15개 섹션 상세 리포트 열기 &rarr;
           </button>
         </div>
       </div>
@@ -1237,7 +1237,7 @@
     <main class="main-content">
 
       <!-- ===================================================================== -->
-      <!-- TAB 1: EXECUTIVE STORYLINE GUIDE (입문 가이드 & 핵심 로직 뷰)          -->
+      <!-- TAB 1: EXECUTIVE STORYLINE GUIDE (요약 뷰)                             -->
       <!-- ===================================================================== -->
       <div id="tab-content-storyline">
 
@@ -1245,7 +1245,7 @@
         <div class="card" style="margin-bottom:28px; background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:1px solid #bae6fd; padding:26px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
             <div style="display:inline-flex; align-items:center; gap:8px; background:#0284c7; color:#fff; padding:5px 14px; border-radius:20px; font-size:0.82rem; font-weight:700;">
-              처음 접하는 연구자를 위한 핵심 입문 가이드 (Executive Guide)
+              반도체 전구체 AI 합성 평가 핵심 요약 (Executive Summary)
             </div>
             <span style="font-size:0.84rem; color:#0369a1; font-weight:600;">압축 핵심 스토리라인 &bull; 4단계 체계적 안내</span>
           </div>
@@ -1256,153 +1256,105 @@
             기존 제약(Drug Discovery) 중심의 AI 합성 가능성 모델(SAScore, SCScore 등)은 왜 반도체 팹 양산 전구체를 88.9% 오판 기각하고, 상온 폭발성 분자를 100% 통과시키는 치명적 오류를 범할까요? 본 연구는 이 <strong>양방향 병리(Dual Pathology)</strong>를 실증적으로 규명하고, 초고속 양자 머신러닝 인터애토믹 포텐셜(<strong>SevenNet-0</strong>)과 <strong>4대 핵심 물리 기둥</strong>을 결합하여 위험 분자 100% 차단 및 전구체 96.3% 구제를 달성한 연구입니다. 아래 4단계를 통해 전체 연구의 흐름과 통찰을 한눈에 파악하실 수 있습니다.
           </p>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. 필수 기초 개념 &darr;</a>
-            <a href="#storyline-step2" class="btn-pdf" style="text-decoration:none;">Step 2. 세대별 모델 진화 로직 &darr;</a>
+            <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. 평가 기준 및 혼동 행렬 &darr;</a>
+            <a href="#storyline-step2" class="btn-pdf" style="text-decoration:none;">Step 2. 모델 진화 로직 &amp; 적합성 기준 &darr;</a>
             <a href="#storyline-step3" class="btn-pdf" style="text-decoration:none;">Step 3. Base 모델 병리와 7net 플랜 &darr;</a>
             <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 55종 실증 벤치마크 결과 &darr;</a>
             <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer; text-decoration:none;">
-              15개 섹션 전문 기술 리포트 보기 &rarr;
+              15개 섹션 상세 리포트 보기 &rarr;
             </button>
           </div>
         </div>
 
-        <!-- Step 1: 필수 기본 개념 -->
+        <!-- Step 1: 모델 평가 핵심 기준 (혼동 행렬 & TP/FP/TN/FN) -->
         <section id="storyline-step1" class="storyline-step">
           <div class="storyline-step-header">
             <span class="step-badge">1</span>
             <div>
-              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 1 &bull; Core Foundational Concepts</div>
-              <h3 class="storyline-step-title">어떤 개념을 먼저 알아야 하는가? (필수 기초 지식)</h3>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 1 &bull; Evaluation Metrics &amp; Confusion Matrix</div>
+              <h3 class="storyline-step-title">반도체 AI 모델 평가의 핵심 기준: 혼동 행렬(Confusion Matrix)과 TP / FP / TN / FN 개념 정의</h3>
             </div>
           </div>
 
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:18px; margin-bottom:20px;">
-            <!-- Precursor Concept Card -->
-            <div class="card" style="border-top:4px solid #0284c7; padding:20px;">
-              <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:8px;">
-                1. 반도체 전구체 (Precursor)
+          <div class="card" style="border-top:4px solid #10b981; padding:22px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+              <div style="font-weight:700; font-size:1.1rem; color:#0f172a;">
+                반도체 전구체 AI 평가의 혼동 행렬과 파운드리 팹(Fab) 파급 효과
               </div>
-              <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:12px;">
-                원자층 증착(ALD) 및 화학기상증착(CVD) 공정에서 웨이퍼 위에 나노미터 두께의 박막(절연막, 금속 전극, 배리어막)을 형성하기 위해 <strong>기체 상태로 공급되는 중심 금속-리간드 착물(Metal Complex)</strong>입니다.
-              </p>
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; font-size:0.82rem; color:#334155; line-height:1.55;">
-                <div style="font-weight:700; color:#0369a1; margin-bottom:4px;">팹 양산 필수 3대 조건:</div>
-                &bull; <strong>상온 휘발성 (Volatility)</strong>: 기화기에서 원활히 승화될 수 있는 단량체(Monomer) 형태 유지.<br>
-                &bull; <strong>열적 안정 윈도우 (Thermal Window)</strong>: 기화 이송 중에는 분해되지 않고, 고온 기판에서만 자기제한적(Self-limiting) 흡착 분해.<br>
-                &bull; <strong>비오염 부산물 배출</strong>: 분해 후 리간드가 휘발성 가스로 배출되어 박막 내 불순물 최소화.
-              </div>
+              <span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">평가 기준 핵심 해설</span>
+            </div>
+            <p style="font-size:0.88rem; color:#475569; line-height:1.65; margin-bottom:14px;">
+              머신러닝과 통계학의 분류 평가지표(Positive/Negative, True/False)가 <strong>반도체 전구체 및 억제제 합성 평가에서 의미하는 물리적 실체</strong>는 일반 IT/의약학 분류와 완전히 다릅니다. 제약 DB(PubChem/ChEMBL) 중심의 기존 AI 모델이 지닌 도메인 미스매치로 인해, '전구체 위양성 기각 88.9%'와 '위험 분자 위음성 통과 100%'가 파운드리 양산 현장에서 왜 치명적인지 파악해야 합니다:
+            </p>
+
+            <div style="overflow-x:auto; margin-bottom:14px;">
+              <table class="report-table" style="font-size:0.84rem; text-align:center;">
+                <thead>
+                  <tr style="background:#f1f5f9;">
+                    <th style="width:20%; text-align:left;">구분 (Classification)</th>
+                    <th style="width:20%; background:#ecfdf5; color:#065f46;">실제 상태: 양산 적합 (Actual Positive)</th>
+                    <th style="width:20%; background:#fef2f2; color:#991b1b;">실제 상태: 위험·불량 (Actual Negative)</th>
+                    <th style="width:40%; text-align:left;">반도체 팹(Fab) 관점의 실질적 영향 및 산업적 파급력</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left; font-weight:700; background:#f8fafc;">
+                      모델 판정: 통과 (Pass)<br><span style="font-size:0.75rem; color:#0284c7;">(Predicted Positive)</span>
+                    </td>
+                    <td style="background:#f0fdf4;">
+                      <strong style="color:#15803d; font-size:0.95rem;">True Positive (TP)</strong><br>
+                      <span style="font-size:0.78rem; color:#166534; font-weight:700;">진양성 (정상 통과)</span><br>
+                      <span style="font-size:0.75rem; color:#475569;">실제 양산 전구체를 정상 판정</span>
+                    </td>
+                    <td style="background:#fef2f2;">
+                      <strong style="color:#b91c1c; font-size:0.95rem;">False Positive (FP)</strong><br>
+                      <span style="font-size:0.78rem; color:#991b1b; font-weight:700;">위양성 (파국적 오판 통과)</span><br>
+                      <span style="font-size:0.75rem; color:#7f1d1d;">폭발성·부식성 분자를 안전 통과시킴</span>
+                    </td>
+                    <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
+                      <strong style="color:#b91c1c;">[FP의 재앙적 위험]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우, <strong>진공 챔버 폭발, 고가 증착 장비 파손, 웨이퍼 전량 오염 폐기</strong> 등 수십억 원대 공정 사고 유발. (Phase 1 기존 모델: <strong>FP = 100.0%</strong>로 전원 통과시키는 재앙 초래)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left; font-weight:700; background:#f8fafc;">
+                      모델 판정: 기각 (Reject)<br><span style="font-size:0.75rem; color:#dc2626;">(Predicted Negative)</span>
+                    </td>
+                    <td style="background:#fffbeb;">
+                      <strong style="color:#b45309; font-size:0.95rem;">False Negative (FN)</strong><br>
+                      <span style="font-size:0.78rem; color:#92400e; font-weight:700;">위음성 (치명적 오판 기각)</span><br>
+                      <span style="font-size:0.75rem; color:#78350f;">실제 양산 전구체를 불가능으로 탈락</span>
+                    </td>
+                    <td style="background:#f8fafc;">
+                      <strong style="color:#475569; font-size:0.95rem;">True Negative (TN)</strong><br>
+                      <span style="font-size:0.78rem; color:#334155; font-weight:700;">진음성 (정상 차단)</span><br>
+                      <span style="font-size:0.75rem; color:#64748b;">위험·불량 분자를 올바르게 기각</span>
+                    </td>
+                    <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
+                      <strong style="color:#b45309;">[FN의 연구 단절 위험]</strong> 글로벌 팹에서 매일 수 톤씩 쓰는 TSA, TMA, TEMAH를 '합성 불가능'으로 탈락시켜 <strong>유망한 차세대 전구체 후보를 사장시키고 연구 기회를 박탈</strong>함. (Phase 1 RDKit SAScore: <strong>FN = 88.9%</strong>로 27종 중 24종을 오판 기각)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <!-- Inhibitor Concept Card -->
-            <div class="card" style="border-top:4px solid #7c3aed; padding:20px;">
-              <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:8px;">
-                2. 면선택적 증착 인히비터 (AS-ALD Inhibitor)
-              </div>
-              <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:12px;">
-                초미세 반도체 패턴에서 포토레지스트(PR) 마스크 없이, <strong>원하는 표면(예: 유전체)에만 막을 증착하고 다른 표면(예: 금속 Cu)에는 증착을 원천 차단</strong>하기 위해 금속 표면에 선택적으로 화학흡착하는 자가조립 차단제(SAMs, Thiols, Silanes)입니다.
-              </p>
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; font-size:0.82rem; color:#334155; line-height:1.55;">
-                <div style="font-weight:700; color:#6d28d9; margin-bottom:4px;">핵심 물리화학적 조건:</div>
-                &bull; <strong>표면 선택적 화학흡착 (&Delta;&Delta;E<sub>ads</sub>)</strong>: 타겟 비성장 표면(Cu 등)에는 강하게 결합하고, 성장 기판(SiO2)에는 흡착하지 않아야 함.<br>
-                &bull; <strong>치밀한 소수성 차폐막 형성</strong>: 알킬 사슬 간 반데르발스 인력으로 전구체의 침투를 입체적으로 방어.
-              </div>
-            </div>
-
-            <!-- Synthetic Accessibility Domain Conflict Card -->
-            <div class="card" style="border-top:4px solid #e11d48; padding:20px;">
-              <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:8px;">
-                3. 합성 가능성(SA)의 기원과 도메인 충돌
-              </div>
-              <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:12px;">
-                합성 가능성(Synthetic Accessibility, SA)은 제약 분야에서 수억 개의 가상 유기 분자 중 <strong>"실제 실험실에서 저비용으로 합성 가능한가?"</strong>를 사전에 초고속 스크리닝하기 위해 2009년 도입된 평가 척도입니다.
-              </p>
-              <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:6px; padding:12px; font-size:0.82rem; color:#9f1239; line-height:1.55;">
-                <div style="font-weight:700; color:#be123c; margin-bottom:4px;">치명적 도메인 충돌 (Domain Mismatch):</div>
-                제약 DB(PubChem, ChEMBL)는 99.9%가 C, H, O, N 유기물입니다. 반면 반도체 전구체는 <strong>Si, Al, Ti, Zr, Hf, Ru 등 금속 배위 결합</strong>이 핵심입니다. 기존 AI 모델은 금속 결합을 '비천연성 극악 구조'로 간주하여 팹 양산 전구체를 일괄 기각해 버립니다!
-              </div>
-            </div>
-
-            <!-- 4. Confusion Matrix and TP / FP / TN / FN Concept Card -->
-            <div class="card" style="border-top:4px solid #10b981; padding:20px; grid-column: 1 / -1;">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-                <div style="font-weight:700; font-size:1.05rem; color:#0f172a;">
-                  4. 반도체 AI 모델 평가의 핵심: 혼동 행렬(Confusion Matrix)과 TP / FP / TN / FN 개념 정의
-                </div>
-                <span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">평가 기준 핵심 해설</span>
-              </div>
-              <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:14px;">
-                머신러닝과 통계학의 분류 평가지표(Positive/Negative, True/False)가 <strong>반도체 전구체 및 억제제 합성 평가에서 의미하는 물리적 실체</strong>는 일반 IT/의약학 분류와 완전히 다릅니다. 이 매트릭스를 명확히 이해해야 이후 보고서의 '전구체 위양성 기각 88.9%'와 '위험 분자 위음성 통과 100%'가 파운드리 양산 현장에서 왜 치명적인지 파악할 수 있습니다:
-              </p>
-
-              <div style="overflow-x:auto; margin-bottom:14px;">
-                <table class="report-table" style="font-size:0.84rem; text-align:center;">
-                  <thead>
-                    <tr style="background:#f1f5f9;">
-                      <th style="width:20%; text-align:left;">구분 (Classification)</th>
-                      <th style="width:20%; background:#ecfdf5; color:#065f46;">실제 상태: 양산 적합 (Actual Positive)</th>
-                      <th style="width:20%; background:#fef2f2; color:#991b1b;">실제 상태: 위험·불량 (Actual Negative)</th>
-                      <th style="width:40%; text-align:left;">반도체 팹(Fab) 관점의 실질적 영향 및 산업적 파급력</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style="text-align:left; font-weight:700; background:#f8fafc;">
-                        모델 판정: 통과 (Pass)<br><span style="font-size:0.75rem; color:#0284c7;">(Predicted Positive)</span>
-                      </td>
-                      <td style="background:#f0fdf4;">
-                        <strong style="color:#15803d; font-size:0.95rem;">True Positive (TP)</strong><br>
-                        <span style="font-size:0.78rem; color:#166534; font-weight:700;">진양성 (정상 통과)</span><br>
-                        <span style="font-size:0.75rem; color:#475569;">실제 양산 전구체를 정상 판정</span>
-                      </td>
-                      <td style="background:#fef2f2;">
-                        <strong style="color:#b91c1c; font-size:0.95rem;">False Positive (FP)</strong><br>
-                        <span style="font-size:0.78rem; color:#991b1b; font-weight:700;">위양성 (파국적 오판 통과)</span><br>
-                        <span style="font-size:0.75rem; color:#7f1d1d;">폭발성·부식성 분자를 안전 통과시킴</span>
-                      </td>
-                      <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
-                        <strong style="color:#b91c1c;">[FP의 재앙적 위험]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우, <strong>진공 챔버 폭발, 고가 증착 장비 파손, 웨이퍼 전량 오염 폐기</strong> 등 수십억 원대 공정 사고 유발. (Phase 1 기존 모델: <strong>FP = 100.0%</strong>로 전원 통과시키는 재앙 초래)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="text-align:left; font-weight:700; background:#f8fafc;">
-                        모델 판정: 기각 (Reject)<br><span style="font-size:0.75rem; color:#dc2626;">(Predicted Negative)</span>
-                      </td>
-                      <td style="background:#fffbeb;">
-                        <strong style="color:#b45309; font-size:0.95rem;">False Negative (FN)</strong><br>
-                        <span style="font-size:0.78rem; color:#92400e; font-weight:700;">위음성 (치명적 오판 기각)</span><br>
-                        <span style="font-size:0.75rem; color:#78350f;">실제 양산 전구체를 불가능으로 탈락</span>
-                      </td>
-                      <td style="background:#f8fafc;">
-                        <strong style="color:#475569; font-size:0.95rem;">True Negative (TN)</strong><br>
-                        <span style="font-size:0.78rem; color:#334155; font-weight:700;">진음성 (정상 차단)</span><br>
-                        <span style="font-size:0.75rem; color:#64748b;">위험·불량 분자를 올바르게 기각</span>
-                      </td>
-                      <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
-                        <strong style="color:#b45309;">[FN의 연구 단절 위험]</strong> 글로벌 팹에서 매일 수 톤씩 쓰는 TSA, TMA, TEMAH를 '합성 불가능'으로 탈락시켜 <strong>유망한 차세대 전구체 후보를 사장시키고 연구 기회를 박탈</strong>함. (Phase 1 RDKit SAScore: <strong>FN = 88.9%</strong>로 27종 중 24종을 오판 기각)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div style="background:#f8fafc; border-left:4px solid #10b981; padding:10px 14px; border-radius:0 6px 6px 0; font-size:0.82rem; color:#334155; line-height:1.55;">
-                <strong>핵심 결론:</strong> 반도체 AI 모델은 <strong>FP(위험 분자 통과)를 0%로 완벽 차단</strong>하는 동시에, <strong>FN(양산 전구체 기각)을 최소화</strong>하여 실제 양산 가능한 고휘발성 분자를 놓치지 않는 정밀한 물리적 식별력을 반드시 갖추어야 합니다.
-              </div>
+            <div style="background:#f8fafc; border-left:4px solid #10b981; padding:12px 16px; border-radius:0 6px 6px 0; font-size:0.84rem; color:#334155; line-height:1.6;">
+              <strong>핵심 결론:</strong> 반도체 AI 모델은 <strong>FP(위험 분자 통과)를 0%로 완벽 차단</strong>하는 동시에, <strong>FN(양산 전구체 기각)을 최소화</strong>하여 실제 양산 가능한 고휘발성 분자를 놓치지 않는 정밀한 물리적 식별력을 반드시 갖추어야 합니다.
             </div>
           </div>
         </section>
 
-        <!-- Step 2: 세대별 모델 진화의 단일 축 로직 -->
+        <!-- Step 2: 세대별 모델 진화 로직 & 반도체 전구체 SA 모델 적합성·패스 기준 -->
         <section id="storyline-step2" class="storyline-step">
           <div class="storyline-step-header">
             <span class="step-badge">2</span>
             <div>
-              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 2 &bull; Evolution Axis</div>
-              <h3 class="storyline-step-title">세대별 모델을 하나의 축으로 관통하는 발전 로직</h3>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 2 &bull; Evolution Axis &amp; Precursor SA Criteria</div>
+              <h3 class="storyline-step-title">세대별 모델 진화 로직과 반도체 전구체 SA 모델 적합성·패스 기준</h3>
             </div>
           </div>
 
-          <div class="card" style="margin-bottom:20px; padding:20px;">
+          <div class="card" style="margin-bottom:20px; padding:22px;">
             <p style="font-size:0.92rem; color:#334155; line-height:1.65; margin-bottom:16px;">
               지난 17년간 개발된 수많은 AI 합성 가능성 모델은 서로 파편화된 것이 아니라, <strong>"표현형의 추상도와 물리적 사실성(Physical Realism)"</strong>이라는 <strong>단 하나의 논리적 축</strong>을 따라 진화해 왔습니다:
             </p>
@@ -1415,7 +1367,7 @@
             </div>
 
             <!-- Evolution Table -->
-            <div style="overflow-x:auto; margin-bottom:16px;">
+            <div style="overflow-x:auto; margin-bottom:20px;">
               <table class="report-table" style="font-size:0.84rem;">
                 <thead>
                   <tr style="background:#f1f5f9;">
@@ -1458,6 +1410,122 @@
                 </tbody>
               </table>
             </div>
+
+            <!-- New Section: Precursor SA Suitability Criteria & Empirical Pass Boundary -->
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; margin-bottom:20px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
+                  반도체용 프리커서 SA 모델 적합성 판정 4대 기준 (Precursor SA Evaluation Criteria)
+                </div>
+                <span class="badge badge-prec" style="font-size:0.75rem;">적합성 판정 가이드라인</span>
+              </div>
+              <p style="font-size:0.86rem; color:#475569; line-height:1.6; margin-bottom:12px;">
+                기존 제약 모델을 반도체 전구체 설계에 그대로 도입할 수 있는지 검증하기 위해 본 연구팀이 정립한 <strong>4대 공학적 적합성 기준</strong>입니다:
+              </p>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #0284c7; border-radius:6px; padding:12px;">
+                  <strong style="color:#0369a1; font-size:0.88rem;">1. 배위 결합 파싱 허용성</strong>
+                  <div style="font-size:0.78rem; color:#64748b; margin-top:4px; line-height:1.5;">
+                    $\text{Si, Al, Ti, Zr, Hf, Ru}$ 등 금속 배위 착물을 크래시(Crash)나 파싱 거부 없이 RDKit/GNN 내부 그래프로 온전히 수용하는가?
+                  </div>
+                </div>
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #7c3aed; border-radius:6px; padding:12px;">
+                  <strong style="color:#6d28d9; font-size:0.88rem;">2. 원소 커버리지 &amp; 비축퇴성</strong>
+                  <div style="font-size:0.78rem; color:#64748b; margin-top:4px; line-height:1.5;">
+                    전이금속 원소($\text{Hf, Mo, Ru, Ta, W}$)를 $0$벡터로 침묵 누락(Silent Mis-encoding)하거나 'ELSE' 토큰으로 뭉개지 않고 식별하는가?
+                  </div>
+                </div>
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #10b981; border-radius:6px; padding:12px;">
+                  <strong style="color:#15803d; font-size:0.88rem;">3. 양산 전구체 정상 통과력</strong>
+                  <div style="font-size:0.78rem; color:#64748b; margin-top:4px; line-height:1.5;">
+                    글로벌 팹 핵심 양산 전구체($\text{TSA, DMAH, TMA, TEMAH}$)를 합성 불가능(False Negative)으로 기각하지 않고 패스시키는가?
+                  </div>
+                </div>
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #ef4444; border-radius:6px; padding:12px;">
+                  <strong style="color:#b91c1c; font-size:0.88rem;">4. 열분해·폭발 위험 변별력</strong>
+                  <div style="font-size:0.78rem; color:#64748b; margin-top:4px; line-height:1.5;">
+                    $\text{TiEt}_4$($\beta$-수소 탈락 열분해) 및 $\text{ZrMe}_4$(상온 폭발성) 등 공정 파괴 물질을 False Positive로 통과시키지 않고 차단하는가?
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pass Boundary & Suitability Matrix Table -->
+            <div style="overflow-x:auto; margin-bottom:16px;">
+              <div style="font-weight:700; font-size:0.95rem; color:#0f172a; margin-bottom:8px;">
+                세대별 모델의 반도체 전구체 실측 패스 한계 및 적합성 평가 종합표 (어디까지 정상 패스하는가?)
+              </div>
+              <table class="report-table" style="font-size:0.82rem;">
+                <thead>
+                  <tr style="background:#f1f5f9;">
+                    <th style="width:13%;">모델 (세대)</th>
+                    <th style="width:12%;">전구체 통과율<br>(Pass Rate)</th>
+                    <th style="width:25%;">어디까지 정상 패스하는가? (통과 가능 범위)</th>
+                    <th style="width:25%;">어디서 실패·기각되는가? (병리 및 탈락 한계)</th>
+                    <th style="width:25%;">반도체 프리커서 적합성 판정 및 활용 권고</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>RDKit SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(1세대 규칙·통계)</span></td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">11.1%<br><span style="font-size:0.72rem;">(3/27 패스)</span></td>
+                    <td>극히 단순한 유기실란(<code>TEOS</code>: 2.37, <code>4DMAS</code>: 3.39) 및 페로센형 샌드위치 착물(<code>Ru(EtCp)2</code>: 2.50) <strong>단 3종만 패스</strong></td>
+                    <td><code>TSA</code>(6.91), <code>DMAH</code>(6.31), <code>TMA</code>(4.81), <code>TEMAH</code>(4.10) 등 <strong>팹 양산 전구체 88.9%를 극악 난이도로 오판 기각</strong></td>
+                    <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (단독 불가)</span><br><span style="font-size:0.75rem; color:#475569;">금속 착물 완제품에 사용 시 차세대 후보 대량 사장 초래.</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>BR-SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(1세대 확장)</span></td>
+                    <td style="text-align:center; color:#b45309; font-weight:700;">11.1% &rarr; 조건부<br><span style="font-size:0.72rem;">(리간드 분리 시)</span></td>
+                    <td>금속 중심을 해리한 <strong>순수 유기 리간드 파편($HL_i$) 단위 평가 시 100% 정상 통과</strong></td>
+                    <td>완제품 착물 입력 시 기본 BFrag 사전 내 전이금속 조각 부재로 RDKit과 동일하게 감점</td>
+                    <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">조건부 적합 (리간드 전용)</span><br><span style="font-size:0.75rem; color:#475569;">전구체 리간드 자체의 합성 난이도 1차 필터로 최적.</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Reaxys SCScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 딥러닝)</span></td>
+                    <td style="text-align:center; color:#059669; font-weight:700;">85.2%<br><span style="font-size:0.72rem;">(23/27 패스)</span></td>
+                    <td>Reaxys 1,200만 합성 데이터셋에 포함된 <strong>상용 전구체 대다수(23종)를 합성 용이(1.5~2.2)로 정상 패스</strong></td>
+                    <td>결합 에너지(BDE)를 인식 못해 <strong>상온 폭발성 <code>ZrMe4</code>(1.76)와 $\beta$-탈락 <code>TiEt4</code>(1.88)까지 100% 무비판 통과</strong></td>
+                    <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">부분 적합 (보조 필터)</span><br><span style="font-size:0.75rem; color:#475569;">상용 시약 접근성 평가에 유용하나 폭발/안전 검증 필터 필수.</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>RAscore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 머신러닝)</span></td>
+                    <td style="text-align:center; color:#475569; font-weight:700;">100.0%<br><span style="font-size:0.72rem;">(27/27 패스)</span></td>
+                    <td>27종 전구체 전원을 RAscore $\ge 0.99$로 전원 통과</td>
+                    <td>위험 분자 10종 음성 대조군까지 <strong>전원 통과(FP 100%)</strong>시켜 안전 변별력 완전 상실</td>
+                    <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (변별력 상실)</span><br><span style="font-size:0.75rem; color:#475569;">모든 분자에 1.0을 출력하여 필터링 기능 불가.</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>GASA &amp; DFRscore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 GNN)</span></td>
+                    <td style="text-align:center; color:#dc2626; font-weight:700;">판정 불가<br><span style="font-size:0.72rem;">(원소 미지원)</span></td>
+                    <td>유기물 및 일부 기본 원소 전구체에만 한정적 점수 출력</td>
+                    <td>GASA: <code>Hf, Mo, Ru, Ta, W</code> 7종 <strong>0벡터 침묵 누락</strong><br>DFRscore: 27종 전원 <strong>금속이 'ELSE'로 축퇴</strong></td>
+                    <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (원소 결함)</span><br><span style="font-size:0.75rem; color:#475569;">전이금속 전구체 그래프 노드 인코딩 원천 결함.</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>RxnFlow / SynNet</strong><br><span style="font-size:0.72rem; color:#64748b;">(3세대 경로생성)</span></td>
+                    <td style="text-align:center; color:#dc2626; font-weight:700;">경로 생성 0건<br><span style="font-size:0.72rem;">(템플릿 부재)</span></td>
+                    <td>상용 시약 카탈로그 매칭(85.2%) 및 유기 작용기 부분구조(33.3%) 인식까지는 정상 수행</td>
+                    <td><strong>무기 착물화 반응 템플릿 0건(0%)</strong>으로 인해 중심 금속 착물 완제품 역합성 경로 조제 불가</td>
+                    <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">조건부 적합 (리간드 경로용)</span><br><span style="font-size:0.75rem; color:#475569;">유기 리간드의 역합성 트리 생성용으로만 국한 활용.</span></td>
+                  </tr>
+                  <tr style="background:#f0fdf4;">
+                    <td><strong style="color:#15803d;">차세대 하이브리드</strong><br><span style="font-size:0.72rem; color:#15803d; font-weight:700;">(7net-0 + SambVca + BR-SA)</span></td>
+                    <td style="text-align:center; color:#15803d; font-weight:700;">96.3%<br><span style="font-size:0.72rem;">(26/27 정상 복원)</span></td>
+                    <td><code>TSA, DMAH, TMA, TEMAH</code> 등 <strong>양산 전구체 26종 정상 통과</strong> 및 폭발/분해 위험 분자 10종 <strong>100% 전원 차단</strong></td>
+                    <td>단 1종(초과밀화 입체 장애 전구체)만 경고 격하</td>
+                    <td><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">최종 최적 적합 (권장 표준)</span><br><span style="font-size:0.75rem; color:#166534; font-weight:600;">유기 리간드 역합성 + 양자 MLIP 물리 결합으로 완전 해결.</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="text-align:right;">
+              <button type="button" onclick="jumpToTechnicalSection('paradigm-evolution')" class="btn-pdf" style="cursor:pointer; background:#f8fafc; border-color:#cbd5e1; color:#0f172a;">
+                3세대 모델 및 수식 상세 분석 보기 (Section 3) &rarr;
+              </button>
+            </div>
+          </div>
+        </section>
 
             <div style="text-align:right;">
               <button type="button" onclick="jumpToTechnicalSection('paradigm-evolution')" class="btn-pdf" style="cursor:pointer; background:#f8fafc; border-color:#cbd5e1; color:#0f172a;">
@@ -1664,7 +1732,7 @@
                 </div>
               </div>
               <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; padding:10px 22px; font-size:0.92rem; font-weight:700; cursor:pointer;">
-                15개 섹션 전문 기술 리포트 열기 &rarr;
+                15개 섹션 상세 리포트 열기 &rarr;
               </button>
             </div>
           </div>
@@ -1673,7 +1741,7 @@
       </div> <!-- end #tab-content-storyline -->
 
       <!-- ===================================================================== -->
-      <!-- TAB 2: DEEP TECHNICAL REPORT (15개 전체 섹션 전문 리포트 뷰)            -->
+      <!-- TAB 2: DEEP TECHNICAL REPORT (15개 전체 섹션 리포트 뷰)                  -->
       <!-- ===================================================================== -->
       <div id="tab-content-technical" style="display:none;">
 
