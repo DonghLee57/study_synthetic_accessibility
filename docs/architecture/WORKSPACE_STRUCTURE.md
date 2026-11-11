@@ -16,6 +16,8 @@ synth_acc/
 │   ├── audits/
 │   │   ├── LOCAL_BENCHMARK_ENVIRONMENT_AUDIT.md  # Python runtime, external repos, patches, and 15-model audit
 │   │   └── PHASE2_SEVENN_VALIDATION_AUDIT.md # Audit of Phase 1/2 scripts, hardcoding removal, All-sample/CV/LOO review
+│   ├── guidelines/
+│   │   └── REPORT_WRITING_GUIDELINES.md      # Authoring rules: neutral tone, English stat/model terms, declarative prose
 │   └── literature/
 │       └── BIBLIOGRAPHY.md                   # Section-indexed bibliography (34 DOIs) and BibTeX archive
 ├── scripts/

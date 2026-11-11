@@ -217,6 +217,7 @@ python generate_html.py
 > [!NOTE]
 > For the complete section-by-section categorized bibliography, local file paths, and ready-to-use BibTeX collection, see [**`docs/literature/BIBLIOGRAPHY.md`**](./docs/literature/BIBLIOGRAPHY.md).
 > For the local runtime and Phase 2 validation audits, see [**`docs/audits/LOCAL_BENCHMARK_ENVIRONMENT_AUDIT.md`**](./docs/audits/LOCAL_BENCHMARK_ENVIRONMENT_AUDIT.md) and [**`docs/audits/PHASE2_SEVENN_VALIDATION_AUDIT.md`**](./docs/audits/PHASE2_SEVENN_VALIDATION_AUDIT.md).
+> For mandatory report authoring, English stat/model terminology, and declarative-prose rules, see [**`docs/guidelines/REPORT_WRITING_GUIDELINES.md`**](./docs/guidelines/REPORT_WRITING_GUIDELINES.md).
 
 ### 5.1 Physical Units & Target Precursor Thresholds
 | Physical Quantity | Symbol | Unit | Target Precursor Threshold |
