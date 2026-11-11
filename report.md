@@ -1,22 +1,22 @@
 # Scientific Verification & Feasibility Report: Synthetic Accessibility (SA), Open-Source Codebases & Semiconductor Precursor DFT Extension
 
-- **Evaluation Date**: 2026-11-05
+- **Evaluation Date**: 2026-11-12
 - **Lead Investigator**: Scientific Intelligence & Validation Lead
-- **Status**: PASSED (All 34 Target Literatures Verified, 26 Full-Text PDFs/XMLs Acquired [76.5%], 22 Open-Source Repositories Audited, Semiconductor Precursor + VASP DFT Architecture Validated)
+- **Status**: PASSED (34/34 Literature Records Verified, 26/34 Full-Text PDFs/XMLs Acquired [76.5%], Open-Source Codebases Audited, 55-Molecule Phase 2 Un-Hardcoded & LOOCV Audit Completed)
 
 ---
 
 ## 1. Executive Summary & Verification Metrics
 
-This report validates the evolutionary history of Synthetic Accessibility (SA) prediction methodologies (1st to 4th Generation), audits their publicly available open-source implementations, evaluates their applicability to **semiconductor precursors (ALD/CVD/EUV organometallic and silicon precursors)**, and establishes a formal **Multi-Fidelity DFT + SA Integration Framework**.
+This report reviews the evolutionary trajectory of Synthetic Accessibility (SA) prediction methodologies (1st to 4th Generation), audits their publicly available open-source implementations, evaluates their applicability to **semiconductor precursors (ALD/CVD/EUV organometallic and silicon precursors)**, and documents a **Multi-Fidelity Physics + SA Evaluation Framework** including an un-hardcoded Phase 2 audit.
 
 | Metric | Target | Result | Status |
 | :--- | :--- | :--- | :--- |
-| **DOI & Title Verification Rate** | 100% across SA, Generative, Precursor, ASD, VASP | **34 / 34 (100.0%)** | **PASSED** |
+| **DOI & Title Verification Rate** | Across SA, Generative, Precursor, ASD, VASP | **34 / 34 (100.0%)** | **PASSED** |
 | **Full Literature Acquisition Rate** | Open-Access & Contributed PDFs / XMLs | **26 / 34 (76.5%)** (22 PDFs + 4 XMLs) | **PASSED** |
-| **Open-Source Codebase Verification** | GitHub REST API / PyPI / Zenodo Audit | **27 / 27 Repositories Verified (17 SA + 10 VASP)** | **PASSED** |
-| **Semiconductor Precursor & VASP DFT Stack** | Formal 2-Track SA + 4-Layer VASP Automation | Formulated with governing equations & INCAR standards | **PASSED** |
-| **Reporting Artifact** | Interactive Standalone HTML | `index.html` (10 Sections, Light Theme, Sticky TOC, Collapsible Tables) | **PASSED** |
+| **Open-Source Codebase Verification** | GitHub REST API / PyPI / Zenodo Audit | **27 Repositories Audited (17 SA + 10 VASP)** | **PASSED** |
+| **Phase 2 Un-Hardcoded Physics + ML CV Audit** | `SevenNet-0` + `SambVca` ($N=55$, All-Sample / 5-Fold / LOOCV) | Uniform Analytical Spec **0.500**; Combined LOOCV Acc **0.782** | **AUDITED** |
+| **Reporting Artifact** | Interactive Standalone HTML | `index.html` (Summary Tab + 15 Technical Sections, Sticky TOC, Collapsible Tables) | **PASSED** |
 
 ---
 
@@ -110,14 +110,14 @@ To eliminate ungrounded theoretical scores and ensure strict reproducibility, re
 
 ---
 
-## 4. 4-Stage Execution Pipeline Audit Across 16 Models on 27 Semiconductor Precursors
+## 4. 4-Stage Execution Pipeline Audit Across 15 Unique Models on 27 Semiconductor Precursors
 
-To establish absolute mathematical and physical transparency, eliminate ambiguous pass definitions, and clearly dissect **"up to which stage each model operates and at which stage it fails"**, we systematized the execution pipeline into 4 distinct physical/computational layers and conducted a comprehensive audit across **16 model variants (15 unique open-source & generative/retrosynthetic architectures)** on the 27 industrial semiconductor precursors:
+To establish mathematical and physical transparency, clarify pass definitions, and examine **"up to which stage each model operates and at which stage it fails"**, we structured the execution pipeline into 4 distinct physical/computational layers and audited **15 unique open-source scoring, generative, and CASP architectures (16 evaluation profiles including BR-SAScore reagent-tuned counterfactuals)** on the 27 industrial semiconductor precursors:
 
-1. **Stage 1: Syntax & Ingestion Layer** ($	ext{Parse}(	ext{SMILES}) 	o 	ext{ROMol}$):
+1. **Stage 1: Syntax & Ingestion Layer** ($\text{Parse}(\text{SMILES}) \to \text{ROMol}$):
    Verifies whether the tokenizer vocabulary (e.g. 118 periodic elements vs organic subset) and graph generator ingest the precursor SMILES without throwing unhandled exceptions (`KeyError`, `ValenceError`, `Unknown Atom`).
-2. **Stage 2: Representation & Embedding Layer** ($\mathbf{h} = 	ext{Embed}(G)$):
-   Verifies whether the molecular fingerprint, GNN node embedding, or subword tokenization preserves transition metal coordination centers ($	ext{M-N, M-O, M-C, M-Cp}$) without collapsing them into generic "ELSE" tokens (DFRscore) or pseudo-alkyl carbons (RAscore ECFP6).
+2. **Stage 2: Representation & Embedding Layer** ($\mathbf{h} = \text{Embed}(G)$):
+   Verifies whether the molecular fingerprint, GNN node embedding, or subword tokenization preserves transition metal coordination centers ($\text{M-N, M-O, M-C, M-Cp}$) without collapsing them into generic `"ELSE"` tokens (DFRscore) or pseudo-alkyl carbons (RAscore ECFP6).
 3. **Stage 3: Reaction Policy & Coordination Manifold Layer** ($\mathcal{R}_{\text{cand}} = \pi(a \mid s)$):
    Verifies whether the retrosynthetic or generative reaction rule set contains inorganic coordination templates (salt metathesis, transamination, alkoxylation) or is strictly confined to organic medicinal chemistry (USPTO 50k, Enamine, HB-91, SynFormer-115). Note that for AiZynthFinder and Retro\*, full tree search was not executed locally (weights/USPTO template libraries not downloaded; search metrics set to `null`).
 4. **Stage 4: Physical Synthesizability & Route Completion Layer** ($N_{\text{pass}} = \sum \mathbb{I}(\text{Valid})$):
@@ -129,8 +129,8 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
 
 | No | Model | Model Class / Venue | Stage 1 (Syntax) | Stage 2 (Representation) | Stage 3 (Reaction Policy) | Stage 4 (True $N_{\text{pass}}$) | Execution Barrier & Failure Mechanism Analysis |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **01** | **SAScore (RDKit)** | 1G Heuristic | **100% (27/27)** | **100% Morgan($r=2$)** | N/A (Statistical) | **11.1% (3/27)** | **Stage 2·4 Bias**: PubChem medicinal fragment frequencies lack Si-N, Al-C, and M-N bonds, imposing extreme False Negative penalties on simple industrial precursors (`TSA` 6.91, `DMAH` 6.31, `TMA` 4.81); only 3 ether/amine-like molecules (`TEOS` 2.84, `4DMAS` 3.37, `Ru(EtCp)2` 3.48) pass. |
-| **02** | **SYBA** | 1G Bayesian | **100% (27/27)** | **100% Subtrees** | N/A (Bayesian) | **85.2% (23/27)** | **Stage 2·4 Collapse**: Acyclic alkylamines/alkoxides pass (`+3.96` to `+11.98`), while ZINC drug database (`syba.csv.gz`) lacks metal-Cp fragments, causing catastrophic negative scores on sandwich/metallocene complexes (`Ru(EtCp)2` $-44.27$, `CpTi(NMe2)3` $-24.98$, `Cp(NMe2)3Zr` $-24.98$, `ZMA` $-18.21$). |
+| **01** | **SAScore (RDKit)** | 1G Heuristic | **100% (27/27)** | **100% Morgan($r=2$)** | N/A (Statistical) | **11.1% (3/27)** | **Stage 2·4 Bias**: PubChem medicinal fragment frequencies lack Si-N, Al-C, and M-N bonds, imposing strong False Negative penalties on simple industrial precursors (`TSA` 6.91, `DMAH` 6.31, `TMA` 4.81); only 3 ether/amine-like molecules (`TEOS` 2.84, `4DMAS` 3.37, `Ru(EtCp)2` 3.48) pass. |
+| **02** | **SYBA** | 1G Bayesian | **100% (27/27)** | **100% Subtrees** | N/A (Bayesian) | **85.2% (23/27)** | **Stage 2·4 Misclassification**: Acyclic alkylamines/alkoxides score positive (`+3.96` to `+11.98`), while ZINC drug database (`syba.csv.gz`) lacks metal-Cp fragments, yielding large negative scores on sandwich/metallocene complexes (`Ru(EtCp)2` $-44.27$, `CpTi(NMe2)3` $-24.98$, `Cp(NMe2)3Zr` $-24.98$, `ZMA` $-18.21$). |
 | **03** | **SCScore (Reaxys)** | 2G Reaction Net | **100% (27/27)** | **100% 1024-bit** | N/A (DNN) | **85.2% (23/27)** | **Stage 4 Bias**: Reaxys early-stage reactant bias (`full_reaxys_model_1024bool`) assigns low complexity scores (`1.01~1.94` for 23/27), partially distinguishing bulky ligands (`ZMA` 2.72, `Co(AMD)2` 2.38) while concealing pyrophoric/thermal hazards (`TMA` 1.21, `DMAH` 1.01). |
 | **04** | **RAscore (AiZynth)** | 2G Distillation | **100% (27/27)** | **Severe Distortion** | N/A (Classifier) | **0.0% Valid (100% FP)** | **Stage 2 Failure**: 2048-bit ECFP6 counts project metal centers into surrounding alkyl/dimethylamino bits, scoring all 27 complexes `0.629~0.988` (mean `0.925`, 23/27 $\ge 0.90$) blind to metal instability (100% False Positive). |
 | **05** | **BR-SAScore** | 3G Decoupled | **100% (27/27)** | **BFrag/RFrag Split** | **11.1% (3/27)** | **11.1% (3/27)** | **Stage 3 Barrier**: Both default eMolecules/USPTO dictionaries and strict unleaked reagent tuning (`max(existing, -0.47)`, 0 precursors worsened) lack newly formed M-N/M-C coordination center fragments ($-6.0$), yielding identical 3/27 pass (`TSA`, `TMA`, `DMAH`). Must operate strictly via pro-ligand ($HL_i$) decomposition in 2-Track TMC-SA. |
@@ -187,7 +187,7 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
 
 #### 1. SAScore (Synthetic Accessibility Score) &mdash; Ertl & Schuffenhauer (2009)
 - **Mathematical Architecture & Formalism**:
-  Additive heuristic scoring function mapping molecules onto a continuous scale of $[1, 10]$ ($1 = 	ext{easy}, 10 = 	ext{hard}$):
+  Additive heuristic scoring function mapping molecules onto a continuous scale of $[1, 10]$ ($1 = \text{easy}, 10 = \text{hard}$):
   $$\text{SAScore}(m) = \frac{1}{|A|} \sum_{i \in A} s(f_i) + \text{penalties}(m), \quad s(f) = \log_{10} P(f)$$
   where circular Morgan fragments ($r=2$) are evaluated by historical frequency in PubChem. Complexity penalties incorporate ring complexity (bridgehead, spiro, macrocycle $>8$), chiral centers, and molecular size scaling ($|A|^{1.005}$).
 - **Training Dataset & Chemical Space**:
@@ -195,7 +195,7 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
 - **Semiconductor Precursor Performance (Pass Rate: 11.1%, 3/27)**:
   - *Why It Fails (Severe False Negative)*: Ultra-simple single-step semiconductor precursors such as Trisilylamine (TSA, $(\text{SiH}_3)_3\text{N}$, score **6.91**), DMAH (score **6.31**), and TMA (score **4.81**) are flagged as virtually un-synthesizable. Because $\text{Si-N, Al-C, Ti-N, Zr-O}$ fragments are nearly absent in PubChem, $s(f)$ approaches the minimum floor. Furthermore, metal chelate rings (e.g. amidinate or $\beta$-diketonate) are erroneously penalized as exotic macrocycles or fused bridgehead rings.
   - *Why It Fits (Limited Niche)*: Only passes precursors with organic-like ether linkages such as TEOS ($\text{Si(OEt)}_4$, 2.84) and 4DMAS (3.37).
-  - *Verdict*: Totally unusable for intact precursors; strictly limited to scoring free organic pro-ligands ($HL_i$).
+  - *Verdict*: Unsuitable for intact metal complexes; strictly applicable only to scoring free organic pro-ligands ($HL_i$).
 
 ---
 
@@ -208,8 +208,8 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
   Reaxys database of ~12 million published chemical reaction pairs $(R, P)$. Spans broad organic literature.
 - **Semiconductor Precursor Performance (Pass Rate: 85.2%, 23/27 $\le 2.0$, Mean: 1.62)**:
   - *Why It Gives Low Scores (Early-stage Reactant Bias)*: 23 out of 27 precursors received very low scores (HCDS 1.02, DMAH 1.01, TMA 1.21, TTIP 1.25, TDMAT 1.31). In the Reaxys database, these organometallics are registered as catalysts, alkylating reagents, or starting materials rather than final target products. The neural net therefore confidently identifies them as "early-stage feedstock".
-  - *Hazard Ignorance & Practical Limitations*: Pyrophoric, highly moisture-sensitive compounds like TMA and DMAH are scored near 1.0, completely concealing the extreme handling, sub-ambient purification, and safety hazards in fab chemistry.
-  - *Why It Fits (Steric Bulk Discrimination)*: Bulkier and sterically crowded complexes ($	ext{ZMA}$ 2.72, $	ext{Co(AMD)}_2$ 2.38, $	ext{CpZr}$ 2.22) show elevated scores due to increased subgraph fingerprint density, proving useful for monitoring ligand branchedness.
+  - *Hazard Ignorance & Practical Limitations*: Pyrophoric, highly moisture-sensitive compounds like TMA and DMAH are scored near 1.0, omitting the handling, sub-ambient purification, and safety constraints in fab chemistry.
+  - *Why It Fits (Steric Bulk Discrimination)*: Bulkier and sterically crowded complexes ($\text{ZMA}$ 2.72, $\text{Co(AMD)}_2$ 2.38, $\text{CpZr}$ 2.22) show elevated scores due to increased subgraph fingerprint density, proving useful for monitoring ligand branchedness.
 
 ---
 
@@ -222,7 +222,7 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
   Positive set: 143,303 commercially available ZINC15 drug-like molecules. Negative set: 143,303 generated pseudo-molecules assembled by non-synthesizable random ring topologies.
 - **Semiconductor Precursor Performance (Pass Rate: 85.2%, 23/27 $>0$, Mean: +8.6)**:
   - *Why It Fits on Acyclic Silanes/Amides*: 23 acyclic alkylamide and alkoxide precursors scored positively (+3.96 to +11.98; DIPAS +10.56, BTBAS +11.18, TEMAH +10.56) because their dialkylamino and alkyl chains are abundantly represented in ZINC positive fragments.
-  - *Why It Suffers Catastrophic Collapse on Metallocenes*: Precursors with cyclopentadienyl (Cp) or multi-hapto rings bonded to transition metals collapsed into extreme negative territory: $	ext{Ru(EtCp)}_2$ (**-44.27**), $	ext{CpTi(NMe}_2)_3$ (**-24.98**), $	ext{CpZr(NMe}_2)_3$ (**-24.98**), and $	ext{ZMA}$ (**-18.21**). Because metal-bonded Cp rings are absent in ZINC ($P(f \mid \text{ZINC}) \to 0$), the Bayesian odds ratio erroneously maps them to the non-synthesizable pseudo-molecule class.
+  - *Negative Score Collapse on Metallocenes*: Precursors with cyclopentadienyl (Cp) or multi-hapto rings bonded to transition metals scored strongly negatively: $\text{Ru(EtCp)}_2$ (**-44.27**), $\text{CpTi(NMe}_2)_3$ (**-24.98**), $\text{CpZr(NMe}_2)_3$ (**-24.98**), and $\text{ZMA}$ (**-18.21**). Because metal-bonded Cp rings are absent in ZINC ($P(f \mid \text{ZINC}) \to 0$), the Bayesian odds ratio maps them to the non-synthesizable pseudo-molecule class.
 
 ---
 
@@ -246,7 +246,7 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
   200,000 ChEMBL molecules evaluated by AiZynthFinder MCTS search.
 - **Semiconductor Precursor Performance (Pass Rate: 100.0%, 27/27 $\ge 0.5$, Mean: 0.925)**:
   - *Why It Scores Universally High (ECFP6 Count Bias)*: Small organometallic precursors are dominated by dimethylamino, isopropyl, and ethylamino sub-trees. In the 2048-bit count vector, these simple organic fragments trigger positive leaves trained on ubiquitous ChEMBL drug fragments, generating deceptive confidence ($P > 0.90$).
-  - *Blind Spot*: Completely blind to metal-ligand coordination equilibria, air-sensitive hydrolysis, and thermal disproportionation.
+  - *Blind Spot*: Does not capture metal-ligand coordination equilibria, air-sensitive hydrolysis, or thermal disproportionation.
 
 ---
 
@@ -259,7 +259,7 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
 - **Semiconductor Precursor Performance (Generic Product Substructure Match: 33.3%, 9/27; Metal Coordination Rules in Template Set: 0)**:
   - *Why 9 Precursors Matched*: DIPAS, BTBAS, SAM.24, TEMAH, TEMAZ, BTBMW, BTBMMo, Co(AMD)2, and TBTDET matched reverse reaction product patterns (`reductive_amination_ketone`, `reductive_amination_aliphatic_aldehyde`, `amine_halide_coupling`) solely because they contain generic alkyl-amine substructures (`N-C`).
   - *Why Intact Precursor Generation Fails*: The 72 template SMARTS contain zero metal atoms (`Si, Ti, Zr, Hf, Ru, W, Mo, Al, Co, Ta, Sn, Zn`), so 0 reaction templates exist for salt metathesis ($M\text{-Cl} + \text{LiNR}_2 \to M\text{-NR}_2$), transamination, or halosilane aminolysis ($\text{Si-Cl} + 2\,\text{HNR}_2 \to \text{Si-NR}_2$).
-  - *Solution*: A two-stage hybrid protocol where RxnFlow designs organic pro-ligands ($HL_i$) with 100% synthesis guarantees, and coordination to the metal core is evaluated via DFT thermodynamics ($\Delta G_{\text{syn}}^{\text{DFT}}$) and steric buried volume ($\%V_{\text{bur}}$).
+  - *Solution*: A two-stage hybrid protocol where RxnFlow generates organic pro-ligands ($HL_i$) via valid reaction trees, and coordination to the metal core is evaluated via DFT thermodynamics ($\Delta G_{\text{syn}}^{\text{DFT}}$) and steric buried volume ($\%V_{\text{bur}}$).
 
 ---
 
@@ -270,7 +270,7 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
 - **Training Dataset & Chemical Space**:
   Enamine US Stock catalog + SynFormer 115 reaction templates (`comprehensive.txt`) + 10.5 million aligned (target, predicted pathway, true pathway) triplets.
 - **Semiconductor Precursor Performance (Tokenizer Coverage: 100.0%, 27/27; Coordination Space: 0.0%)**:
-  - *Why Tokenizer Works Perfectly*: ReaSyn's `_smiles_vocab` inherently defines all 118 periodic elements, achieving 100% lossless roundtrip (0 UNK) for all 27 precursors. Note that prior 'false' flags in raw dumps were caused by an internal ID offset in ReaSyn's `decode_smiles()` utility. (Ti, Zr, Hf, Ru, W, Mo, Al, Co, Sn, etc.), achieving 100% roundtrip string reconstruction with 0 unknown tokens across all 27 precursors.
+  - *Tokenizer Roundtrip Coverage (100.0%)*: ReaSyn's `_smiles_vocab` inherently defines all 118 periodic elements, achieving lossless roundtrip tokenization (0 UNK) across all 27 precursors (including Ti, Zr, Hf, Ru, W, Mo, Al, Co, and Sn). Note that earlier `'false'` flags in raw logs stemmed from an internal ID offset in ReaSyn's `decode_smiles()` utility.
   - *Why Pathway Generation Fails on Intact Precursor*: The 115 SynFormer reactions are 100% organic (amides, Suzuki, reductive amination, etc.). The discrete reaction manifold $[R_0, R_{114}]$ contains zero coordinates for inorganic coordination chemistry.
   - *Solution*: Preserve the universal 118-element tokenizer and fine-tune ReaSyn on semiconductor-specific reaction templates ("ReaSyn-Semi") using `database/reactions.json`.
 
@@ -289,9 +289,9 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
 
 ---
 
-## 5. Extension to Semiconductor Precursors & Multi-Fidelity DFT Synergy
+## 5. Extension to Semiconductor Precursors & Audited Phase 2 SevenNet Validation
 
-### 4.1 2-Track Extension for Semiconductor Precursors
+### 5.1 2-Track Extension for Semiconductor Precursors
 1. **Track A — Covalent Main-Group / Silicon Precursors (`Si-BR-SAScore`)**:
    - Aminosilanes, alkoxysilanes, halosilanes, and carbosilanes ($\text{SiO}_2, \text{SiN}_x, \text{SiC}$ ALD/CVD) are $100\%$ compatible with RDKit's Morgan fingerprinting.
    - Replacing `emolecules` with commercial chlorosilane/disilane catalogs (Gelest/Sigma-Aldrich) and `uspto` with aminolysis/hydrosilylation/Grignard templates yields a domain-exact `Si-BR-SAScore` without neural network retraining.
@@ -302,7 +302,7 @@ To establish absolute mathematical and physical transparency, eliminate ambiguou
      \text{SA}_{\text{TMC}}\big(M(L_1)_{n_1}(L_2)_{n_2}\big) = \max_{i} \text{BR-SAScore}(HL_i) + \lambda_{\text{het}} \cdot \mathbf{1}(N_{\text{types}} > 2) + \lambda_{\text{meta}} \cdot \mathcal{P}_{\text{rxn}}(M\text{X}_m, \{HL_i\})
      $$
 
-### 4.2 Physics-Informed DFT Integration (5-Stage Funnel)
+### 5.2 Physics-Informed DFT Integration (5-Stage Funnel)
 To eliminate False Positives where an easily synthesizable organic ligand ($HL$) fails to coordinate or yields a non-volatile/thermally unstable complex, DFT calculations provide four orthogonal physical constraints:
 1. **Complexation Reaction Free Energy ($\Delta G_{\text{syn}}^{\text{DFT}} < 0\text{ kcal/mol}$)**: Evaluates thermodynamic feasibility of sequential ligand substitution ($M\text{X}_n + n\,HL \to ML_n + n\,\text{HX}$).
 2. **3D Steric Buried Volume ($\%V_{\text{bur}} \in [58\%, 82\%]$) & Monomer vs. Dimer Equilibrium ($\Delta G_{\text{dimer}} = G(M_2L_{2n}) - 2G(ML_n) > +5\text{ kcal/mol}$)**: Prevents oligomeric bridging that destroys precursor volatility.
@@ -314,9 +314,21 @@ To eliminate False Positives where an easily synthesizable organic ligand ($HL$)
    R_{\text{Precursor}}(ML_n) = \sigma\big(\tau_{\text{SA}} - \text{BR-SAScore}(HL)\big) \cdot \sigma\big(-\Delta G_{\text{syn}}^{\text{DFT}}\big) \cdot \mathbf{1}\big(58\% \le \%V_{\text{bur}} \le 82\%\big) \cdot \sigma\left(\frac{\text{BDE}_{\min} - \Delta H_{\text{vap}}}{RT}\right)
    $$
 
+### 5.3 Audited Phase 2 `SevenNet-0` Screening & ML Cross-Validation (`N=55`)
+
+Following script/data auditing (`scripts/benchmark/run_phase1_baseline.py`, `scripts/benchmark/run_phase2_sevenn_features.py`, `scripts/benchmark/run_model_tuning_comparison.py`), genuine `BR-SAScore` and cleaved `ligand_sa` scores were combined with `7net-0` single-point / radial bond scan descriptors and SambVca $\%V_{\text{bur}}$ across 55 curated molecules (27 precursors, 18 AS-ALD inhibitors, 10 negative controls; excluding the algebraic $\Delta E_{\text{complex}}$ proxy from ML training):
+- **Uniform Continuous Screening ($\text{TMC-SA}_{\text{phys}} \le 4.0$, zero label branching or ID hardcoding)**:
+  - *Physics Only*: Accuracy `0.836`, Recall `0.956` (`25/27` precursors, `18/18` inhibitors), Specificity `0.300` (`3/10` negatives rejected; `70.0%` FP).
+  - *Physics + General SMARTS (`-COOH` / inert acyclic alkane)*: Accuracy `0.873`, Recall `0.956` (`25/27` precursors; fails `DIPAS`, `Co(AMD)2`), Specificity `0.500` (`5/10` negatives rejected; `50.0%` FP vs `100.0%` baseline consensus FP).
+- **ML Validation Gap (All-Sample vs. 5-Fold Stratified CV vs. LOOCV, `RF Default`)**:
+  - `Base-Only (10 features)`: All-Sample Acc `1.000` (AUC `1.000`) $\to$ 5-Fold CV `0.873` (Spec `0.500`, AUC `0.791`) $\to$ LOOCV `0.873` (Spec `0.500`, AUC `0.779`).
+  - `Phys-Only (6 features)`: All-Sample Acc `0.964` (AUC `1.000`) $\to$ 5-Fold CV `0.836` (Spec `0.100`, AUC `0.511`) $\to$ LOOCV `0.782` (Spec `0.000`, AUC `0.473`).
+  - `Combined (16 features)`: All-Sample Acc `1.000` (AUC `1.000`) $\to$ 5-Fold CV `0.800` (Spec `0.000`, AUC `0.796`) $\to$ LOOCV `0.782` (Spec `0.100`, AUC `0.721`).
+  - *Interpretation*: On $N=55$, tree models overfit in-sample; unrelaxed single-point `7net-0` energies do not yet resolve kinetic $\beta$-H elimination (`TiEt4`), thermal explosion (`ZrMe4`), or hydrolysis stability (`Ti(OH)4`). Full audit details are archived in [`docs/audits/PHASE2_SEVENN_VALIDATION_AUDIT.md`](./docs/audits/PHASE2_SEVENN_VALIDATION_AUDIT.md).
+
 ---
 
-## 5. VASP Automation Stack & Verified Frameworks Registry (10 Repositories)
+## 6. VASP Automation Stack & Verified Frameworks Registry (10 Repositories)
 
 | No | Framework | GitHub Repository | Stars | License | DOI | Role in VASP Precursor Pipeline |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -333,18 +345,18 @@ To eliminate False Positives where an easily synthesizable organic ligand ($HL$)
 
 ---
 
-## 6. Semiconductor Precursor & Reaction Domain Knowledge Database
+## 7. Semiconductor Precursor & Reaction Domain Knowledge Database
 
-To resolve the domain mismatch where organic SA models fail on industrial electronic materials, a proprietary database was synthesized in `database/`:
+To resolve the domain mismatch where organic SA models fail on industrial electronic materials, a curated domain database was compiled in `database/`:
 - **Commercial Precursors (`database/precursors.json`, `database/precursors.csv`)**: 27 high-purity compounds across 6 functional classes (Silicon aminosilanes, High-$k$ Hf/Zr alkylamides & cyclopentadienyls, Titanium amides/alkoxides, Group 13 TMA/DMAH, Metal barriers W/Mo/Ru/Co, and Tin EUV photoresists). All 27 SMILES validated in RDKit.
 - **Starting Materials & Reagents (`database/building_blocks.json`, `database/building_blocks.csv`)**: 29 inorganic halide cores ($\text{SiCl}_4, \text{HfCl}_4, \text{TiCl}_4, \text{WCl}_6$), pro-ligands (amines, amidines, alkoxides), and lithiated bases.
 - **Authenticated Synthesis Reactions (`database/reactions.json`, `database/reactions.csv`)**: 12 industrial reaction pathways with exact SMARTS, solvents, conditions, and reaction free energies ($\Delta G$).
 - **BR-SAScore Ready Dictionaries (`database/br_sascore_inputs/`)**: `semi_bb.csv` and `semi_rxn.csv` formatted for direct building-block scoring ($s_B(f) = 0.0$) and reaction fragment logging.
-- **Experimental SAScore Distortion Finding**: `benchmark_precursor_pipeline.py` proved that ultra-simple industrial precursors such as Trisilylamine ($\text{TSA}$, $(\text{SiH}_3)_3\text{N}$, 4 heavy atoms) are severely misclassified with $\text{SAScore} = 6.91$ due to missing PubChem fragments, confirming the absolute necessity of this custom precursor database.
+- **Experimental SAScore Distortion Finding**: `scripts/benchmark/run_phase1_baseline.py` and `scripts/benchmark/run_all_benchmarks.py` demonstrated that ultra-simple industrial precursors such as Trisilylamine ($\text{TSA}$, $(\text{SiH}_3)_3\text{N}$, 4 heavy atoms) are misclassified with $\text{SAScore} = 6.91$ due to missing PubChem fragments, motivating this custom precursor database.
 
 ---
 
-## 7. AI-Driven Precursor Inverse Design & Substrate-Selective Funnel
+## 8. AI-Driven Precursor Inverse Design & Substrate-Selective Funnel
 
 To inversely design semiconductor precursors satisfying target properties $\mathbf{y}^* = [P_{\text{vap}}^*, \Delta G^\ddagger_{\text{decomp}}^*, \%V_{\text{bur}}^*, \Delta G_{\text{ALD}}^*, \Delta\Delta G_{\text{ads}}^*, S_{\text{ASD}}^*]$, we couple **Inorganic GFlowNet / Conditional 3D Diffusion** with a multi-fidelity computational funnel:
 1. **Governing Physical Constraints**:

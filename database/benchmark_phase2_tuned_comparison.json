@@ -1,60 +1,634 @@
 {
-  "title": "Refined Precursor SA Model Tuning: 4 Core Physical Pillars",
+  "title": "Audited Precursor SA Evaluation: Un-Hardcoded Continuous Physical Screening & ML Cross-Validation",
+  "phase2_metadata": {
+    "framework": "SevenNet (7net-0) + Cavallo SambVca Sphere",
+    "pillars": [
+      "1. Bond Dissociation Energy (BDE_min, kcal/mol)",
+      "2. Cohesion Energy (e_coh, eV/atom)",
+      "3. 3D Steric Buried Volume (%V_bur, %)",
+      "4. Monomer vs Dimerization Interaction (Delta E_dimer, kcal/mol)",
+      "5. Complexation Feasibility Proxy (Delta E_complex, kcal/mol)"
+    ],
+    "total_molecules_computed": 55,
+    "computation_time_seconds": 1290.8
+  },
   "analytical_comparison": {
-    "precursors": {
-      "count": 27,
-      "baseline_sascore_pass": "3/27 (11.1%)",
-      "baseline_false_negative_rate": "88.9%",
-      "tuned_model_pass": "26/27 (96.3%)",
-      "tuned_false_negative_rate": "3.7%"
+    "methodology": "Uniform continuous C-infinity TMC-SA_phys (ligand_sa + smooth E_coh/BDE/Vbur/dE_dimer penalties <= 4.0); zero target_type branching or hardcoded IDs.",
+    "overall_uniform_physics_only": {
+      "accuracy": 0.836,
+      "recall": 0.956,
+      "specificity": 0.3,
+      "f1_score": 0.905,
+      "tp": 43,
+      "fn": 2,
+      "fp": 7,
+      "tn": 3
     },
-    "inhibitors": {
-      "count": 18,
-      "baseline_sascore_pass": "15/18",
-      "tuned_model_pass": "18/18 (100.0%)",
-      "tuned_false_negative_rate": "0.0%"
+    "overall_physics_plus_smarts_chem": {
+      "accuracy": 0.873,
+      "recall": 0.956,
+      "specificity": 0.5,
+      "f1_score": 0.925,
+      "tp": 43,
+      "fn": 2,
+      "fp": 5,
+      "tn": 5
     },
-    "negative_controls": {
-      "count": 10,
-      "baseline_scscore_false_positives": "9/10 (90.0%)",
-      "baseline_consensus_false_positives": "10/10 (100.0%)",
-      "tuned_model_false_positives": "0/10 (0.0%)",
-      "tuned_false_positive_elimination_rate": "100.0%"
+    "baseline_comparison": {
+      "precursors_sascore_pass": "3/27 (11.1%)",
+      "precursors_sascore_fn": "88.9%",
+      "inhibitors_sascore_pass": "15/18 (83.3%)",
+      "negatives_scscore_fp": "9/10 (90.0%)",
+      "negatives_consensus_fp": "10/10 (100.0%)"
+    },
+    "uniform_physics_only_breakdown": {
+      "precursors": {
+        "count": 27,
+        "tp": 25,
+        "fn": 2,
+        "fp": 0,
+        "tn": 0,
+        "pass_count": 25,
+        "pass_rate_pct": 92.6,
+        "failed_ids": [
+          "PREC_SI_01",
+          "PREC_MET_04"
+        ],
+        "missed_negative_ids": []
+      },
+      "inhibitors": {
+        "count": 18,
+        "tp": 18,
+        "fn": 0,
+        "fp": 0,
+        "tn": 0,
+        "pass_count": 18,
+        "pass_rate_pct": 100.0,
+        "failed_ids": [],
+        "missed_negative_ids": []
+      },
+      "negative_controls": {
+        "count": 10,
+        "tp": 0,
+        "fn": 0,
+        "fp": 7,
+        "tn": 3,
+        "pass_count": 7,
+        "pass_rate_pct": 70.0,
+        "failed_ids": [],
+        "missed_negative_ids": [
+          "NEG-001",
+          "NEG-002",
+          "NEG-003",
+          "NEG-005",
+          "NEG-006",
+          "NEG-007",
+          "NEG-008"
+        ]
+      }
+    },
+    "physics_plus_smarts_chem_breakdown": {
+      "precursors": {
+        "count": 27,
+        "tp": 25,
+        "fn": 2,
+        "fp": 0,
+        "tn": 0,
+        "pass_count": 25,
+        "pass_rate_pct": 92.6,
+        "failed_ids": [
+          "PREC_SI_01",
+          "PREC_MET_04"
+        ],
+        "missed_negative_ids": []
+      },
+      "inhibitors": {
+        "count": 18,
+        "tp": 18,
+        "fn": 0,
+        "fp": 0,
+        "tn": 0,
+        "pass_count": 18,
+        "pass_rate_pct": 100.0,
+        "failed_ids": [],
+        "missed_negative_ids": []
+      },
+      "negative_controls": {
+        "count": 10,
+        "tp": 0,
+        "fn": 0,
+        "fp": 5,
+        "tn": 5,
+        "pass_count": 5,
+        "pass_rate_pct": 50.0,
+        "failed_ids": [],
+        "missed_negative_ids": [
+          "NEG-001",
+          "NEG-002",
+          "NEG-003",
+          "NEG-007",
+          "NEG-008"
+        ]
+      }
     }
   },
   "machine_learning_comparison": {
-    "baseline_data_only": {
-      "accuracy": 0.855,
-      "precision": 0.878,
-      "recall": 0.956,
-      "f1_score": 0.915,
-      "auroc": 0.763
+    "note": "Evaluated using genuine computed Phase 1 (fixed BR-SAScore + real ligand_sa) and latest Phase 2 (SevenNet-0 + SambVca without algebraic complexation proxy) features. In-sample Gini importances are reported alongside strict out-of-fold 5-Fold CV and LOOCV metrics.",
+    "full_dataset_n55": {
+      "n_samples": 55,
+      "n_positive": 45,
+      "n_negative": 10,
+      "majority_baseline_acc": 0.818,
+      "random_forest_default": {
+        "base_only": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 45,
+            "fn": 0,
+            "fp": 0,
+            "tn": 10
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.873,
+            "precision": 0.896,
+            "recall": 0.956,
+            "specificity": 0.5,
+            "f1_score": 0.925,
+            "auroc": 0.791,
+            "tp": 43,
+            "fn": 2,
+            "fp": 5,
+            "tn": 5
+          },
+          "loocv": {
+            "accuracy": 0.873,
+            "precision": 0.896,
+            "recall": 0.956,
+            "specificity": 0.5,
+            "f1_score": 0.925,
+            "auroc": 0.779,
+            "tp": 43,
+            "fn": 2,
+            "fp": 5,
+            "tn": 5
+          }
+        },
+        "phys_only": {
+          "all_sample": {
+            "accuracy": 0.964,
+            "precision": 0.957,
+            "recall": 1.0,
+            "specificity": 0.8,
+            "f1_score": 0.978,
+            "auroc": 1.0,
+            "tp": 45,
+            "fn": 0,
+            "fp": 2,
+            "tn": 8
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.836,
+            "precision": 0.833,
+            "recall": 1.0,
+            "specificity": 0.1,
+            "f1_score": 0.909,
+            "auroc": 0.511,
+            "tp": 45,
+            "fn": 0,
+            "fp": 9,
+            "tn": 1
+          },
+          "loocv": {
+            "accuracy": 0.782,
+            "precision": 0.811,
+            "recall": 0.956,
+            "specificity": 0.0,
+            "f1_score": 0.878,
+            "auroc": 0.473,
+            "tp": 43,
+            "fn": 2,
+            "fp": 10,
+            "tn": 0
+          }
+        },
+        "combined_base_and_phys": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 45,
+            "fn": 0,
+            "fp": 0,
+            "tn": 10
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.8,
+            "precision": 0.815,
+            "recall": 0.978,
+            "specificity": 0.0,
+            "f1_score": 0.889,
+            "auroc": 0.796,
+            "tp": 44,
+            "fn": 1,
+            "fp": 10,
+            "tn": 0
+          },
+          "loocv": {
+            "accuracy": 0.782,
+            "precision": 0.824,
+            "recall": 0.933,
+            "specificity": 0.1,
+            "f1_score": 0.875,
+            "auroc": 0.721,
+            "tp": 42,
+            "fn": 3,
+            "fp": 9,
+            "tn": 1
+          }
+        }
+      },
+      "random_forest_balanced": {
+        "base_only": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 45,
+            "fn": 0,
+            "fp": 0,
+            "tn": 10
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.855,
+            "precision": 0.878,
+            "recall": 0.956,
+            "specificity": 0.4,
+            "f1_score": 0.915,
+            "auroc": 0.772,
+            "tp": 43,
+            "fn": 2,
+            "fp": 6,
+            "tn": 4
+          },
+          "loocv": {
+            "accuracy": 0.855,
+            "precision": 0.863,
+            "recall": 0.978,
+            "specificity": 0.3,
+            "f1_score": 0.917,
+            "auroc": 0.778,
+            "tp": 44,
+            "fn": 1,
+            "fp": 7,
+            "tn": 3
+          }
+        },
+        "phys_only": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 45,
+            "fn": 0,
+            "fp": 0,
+            "tn": 10
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.764,
+            "precision": 0.808,
+            "recall": 0.933,
+            "specificity": 0.0,
+            "f1_score": 0.866,
+            "auroc": 0.41,
+            "tp": 42,
+            "fn": 3,
+            "fp": 10,
+            "tn": 0
+          },
+          "loocv": {
+            "accuracy": 0.782,
+            "precision": 0.811,
+            "recall": 0.956,
+            "specificity": 0.0,
+            "f1_score": 0.878,
+            "auroc": 0.398,
+            "tp": 43,
+            "fn": 2,
+            "fp": 10,
+            "tn": 0
+          }
+        },
+        "combined_base_and_phys": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 45,
+            "fn": 0,
+            "fp": 0,
+            "tn": 10
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.818,
+            "precision": 0.83,
+            "recall": 0.978,
+            "specificity": 0.1,
+            "f1_score": 0.898,
+            "auroc": 0.756,
+            "tp": 44,
+            "fn": 1,
+            "fp": 9,
+            "tn": 1
+          },
+          "loocv": {
+            "accuracy": 0.8,
+            "precision": 0.815,
+            "recall": 0.978,
+            "specificity": 0.0,
+            "f1_score": 0.889,
+            "auroc": 0.68,
+            "tp": 44,
+            "fn": 1,
+            "fp": 10,
+            "tn": 0
+          }
+        }
+      },
+      "logistic_regression_balanced": {
+        "base_only": {
+          "all_sample": {
+            "accuracy": 0.745,
+            "precision": 0.919,
+            "recall": 0.756,
+            "specificity": 0.7,
+            "f1_score": 0.829,
+            "auroc": 0.829,
+            "tp": 34,
+            "fn": 11,
+            "fp": 3,
+            "tn": 7
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.691,
+            "precision": 0.85,
+            "recall": 0.756,
+            "specificity": 0.4,
+            "f1_score": 0.8,
+            "auroc": 0.493,
+            "tp": 34,
+            "fn": 11,
+            "fp": 6,
+            "tn": 4
+          },
+          "loocv": {
+            "accuracy": 0.618,
+            "precision": 0.853,
+            "recall": 0.644,
+            "specificity": 0.5,
+            "f1_score": 0.734,
+            "auroc": 0.484,
+            "tp": 29,
+            "fn": 16,
+            "fp": 5,
+            "tn": 5
+          }
+        },
+        "phys_only": {
+          "all_sample": {
+            "accuracy": 0.6,
+            "precision": 0.897,
+            "recall": 0.578,
+            "specificity": 0.7,
+            "f1_score": 0.703,
+            "auroc": 0.649,
+            "tp": 26,
+            "fn": 19,
+            "fp": 3,
+            "tn": 7
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.527,
+            "precision": 0.788,
+            "recall": 0.578,
+            "specificity": 0.3,
+            "f1_score": 0.667,
+            "auroc": 0.402,
+            "tp": 26,
+            "fn": 19,
+            "fp": 7,
+            "tn": 3
+          },
+          "loocv": {
+            "accuracy": 0.473,
+            "precision": 0.767,
+            "recall": 0.511,
+            "specificity": 0.3,
+            "f1_score": 0.613,
+            "auroc": 0.356,
+            "tp": 23,
+            "fn": 22,
+            "fp": 7,
+            "tn": 3
+          }
+        },
+        "combined_base_and_phys": {
+          "all_sample": {
+            "accuracy": 0.836,
+            "precision": 0.974,
+            "recall": 0.822,
+            "specificity": 0.9,
+            "f1_score": 0.892,
+            "auroc": 0.864,
+            "tp": 37,
+            "fn": 8,
+            "fp": 1,
+            "tn": 9
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.636,
+            "precision": 0.821,
+            "recall": 0.711,
+            "specificity": 0.3,
+            "f1_score": 0.762,
+            "auroc": 0.462,
+            "tp": 32,
+            "fn": 13,
+            "fp": 7,
+            "tn": 3
+          },
+          "loocv": {
+            "accuracy": 0.655,
+            "precision": 0.842,
+            "recall": 0.711,
+            "specificity": 0.4,
+            "f1_score": 0.771,
+            "auroc": 0.458,
+            "tp": 32,
+            "fn": 13,
+            "fp": 6,
+            "tn": 4
+          }
+        }
+      }
     },
-    "tuned_7net_augmented": {
-      "accuracy": 0.8,
-      "precision": 0.827,
-      "recall": 0.956,
-      "f1_score": 0.887,
-      "auroc": 0.737
+    "precursor_subset_n35": {
+      "n_samples": 35,
+      "n_positive": 27,
+      "n_negative": 8,
+      "majority_baseline_acc": 0.771,
+      "random_forest_default": {
+        "base_only": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 27,
+            "fn": 0,
+            "fp": 0,
+            "tn": 8
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.829,
+            "precision": 0.862,
+            "recall": 0.926,
+            "specificity": 0.5,
+            "f1_score": 0.893,
+            "auroc": 0.85,
+            "tp": 25,
+            "fn": 2,
+            "fp": 4,
+            "tn": 4
+          },
+          "loocv": {
+            "accuracy": 0.829,
+            "precision": 0.862,
+            "recall": 0.926,
+            "specificity": 0.5,
+            "f1_score": 0.893,
+            "auroc": 0.833,
+            "tp": 25,
+            "fn": 2,
+            "fp": 4,
+            "tn": 4
+          }
+        },
+        "phys_only": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 27,
+            "fn": 0,
+            "fp": 0,
+            "tn": 8
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.714,
+            "precision": 0.758,
+            "recall": 0.926,
+            "specificity": 0.0,
+            "f1_score": 0.833,
+            "auroc": 0.407,
+            "tp": 25,
+            "fn": 2,
+            "fp": 8,
+            "tn": 0
+          },
+          "loocv": {
+            "accuracy": 0.714,
+            "precision": 0.774,
+            "recall": 0.889,
+            "specificity": 0.125,
+            "f1_score": 0.828,
+            "auroc": 0.472,
+            "tp": 24,
+            "fn": 3,
+            "fp": 7,
+            "tn": 1
+          }
+        },
+        "combined_base_and_phys": {
+          "all_sample": {
+            "accuracy": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "specificity": 1.0,
+            "f1_score": 1.0,
+            "auroc": 1.0,
+            "tp": 27,
+            "fn": 0,
+            "fp": 0,
+            "tn": 8
+          },
+          "stratified_5fold_cv": {
+            "accuracy": 0.743,
+            "precision": 0.781,
+            "recall": 0.926,
+            "specificity": 0.125,
+            "f1_score": 0.847,
+            "auroc": 0.778,
+            "tp": 25,
+            "fn": 2,
+            "fp": 7,
+            "tn": 1
+          },
+          "loocv": {
+            "accuracy": 0.686,
+            "precision": 0.75,
+            "recall": 0.889,
+            "specificity": 0.0,
+            "f1_score": 0.814,
+            "auroc": 0.769,
+            "tp": 24,
+            "fn": 3,
+            "fp": 8,
+            "tn": 0
+          }
+        }
+      }
     },
-    "feature_importances": {
-      "SAScore": 0.2047,
-      "7net_E_coh": 0.094,
-      "7net_BDE_min": 0.0831,
-      "SYBA": 0.0736,
-      "7net_dE_Complex": 0.0728,
-      "SCScore": 0.0659,
-      "HeavyAtoms": 0.0627,
-      "7net_Vbur_Percent": 0.0579,
-      "LogP": 0.0556,
-      "MW": 0.053,
-      "7net_V_mol": 0.0452,
-      "7net_Rg": 0.0418,
-      "7net_dE_Dimer": 0.0379,
-      "RAscore": 0.0319,
-      "RotBonds": 0.0198,
-      "BR-SAScore": 0.0
-    }
+    "all_sample_rf_feature_importances": {
+      "SAScore": 0.1713,
+      "BR-SAScore": 0.1007,
+      "7net_BDE_min": 0.0969,
+      "7net_E_coh": 0.0744,
+      "Ligand_SA": 0.0714,
+      "SCScore": 0.0672,
+      "LogP": 0.0666,
+      "SambVca_Vbur": 0.0554,
+      "SYBA": 0.0519,
+      "MW": 0.0477,
+      "V_mol": 0.0433,
+      "HeavyAtoms": 0.0418,
+      "7net_dE_Dimer": 0.037,
+      "RAscore": 0.0307,
+      "Rg": 0.0261,
+      "RotBonds": 0.0176
+    },
+    "all_sample_phys_importance_sum_pct": 33.3
   },
   "molecules_evaluated": [
     {
@@ -73,7 +647,8 @@
       "scscore": 1.73,
       "syba": 10.56,
       "rascore": 0.967,
-      "br_sascore": 9.99,
+      "br_sascore": 8.82,
+      "ligand_sa": 2.15,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -89,8 +664,18 @@
       "mol_volume_ang3": 242.2,
       "is_monomer_volatile": false,
       "is_thermally_labile": true,
-      "tmc_sa_phys": 5.0,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 3.405,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.367,
+        "total_phys_penalty": 3.771
+      },
+      "tmc_sa_phys": 5.92,
+      "tuned_pass": false,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": false
     },
     {
       "id": "PREC_SI_02",
@@ -108,7 +693,8 @@
       "scscore": 1.37,
       "syba": 11.18,
       "rascore": 0.972,
-      "br_sascore": 9.99,
+      "br_sascore": 8.88,
+      "ligand_sa": 1.05,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -124,8 +710,18 @@
       "mol_volume_ang3": 411.6,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 1.05,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_SI_03",
@@ -143,7 +739,8 @@
       "scscore": 1.39,
       "syba": 7.7,
       "rascore": 0.988,
-      "br_sascore": 9.99,
+      "br_sascore": 8.72,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -153,14 +750,24 @@
       "e_coh_ev_per_atom": 3.951,
       "bde_min_kcal_mol": 60.42,
       "vbur_percent": 65.12,
-      "delta_e_dimer_kcal_mol": 15.18,
+      "delta_e_dimer_kcal_mol": 11.28,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.24,
       "mol_volume_ang3": 276.4,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.003,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.003
+      },
+      "tmc_sa_phys": 1.02,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_SI_04",
@@ -178,7 +785,8 @@
       "scscore": 1.48,
       "syba": 7.7,
       "rascore": 0.959,
-      "br_sascore": 9.99,
+      "br_sascore": 8.62,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -188,14 +796,24 @@
       "e_coh_ev_per_atom": 3.991,
       "bde_min_kcal_mol": 103.39,
       "vbur_percent": 82.07,
-      "delta_e_dimer_kcal_mol": 40.6,
+      "delta_e_dimer_kcal_mol": 1001.85,
       "delta_e_complex_kcal_mol": -24.76,
       "radius_of_gyration_ang": 2.33,
       "mol_volume_ang3": 294.9,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.676,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.678
+      },
+      "tmc_sa_phys": 1.7,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_SI_05",
@@ -213,7 +831,8 @@
       "scscore": 1.5,
       "syba": 6.29,
       "rascore": 0.971,
-      "br_sascore": 9.99,
+      "br_sascore": 1.04,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -229,8 +848,18 @@
       "mol_volume_ang3": 180.1,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 1.561,
+        "pen_crowd": 0.0,
+        "pen_olig": 1.159,
+        "total_phys_penalty": 2.72
+      },
+      "tmc_sa_phys": 3.72,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_SI_06",
@@ -248,7 +877,8 @@
       "scscore": 1.02,
       "syba": 4.98,
       "rascore": 0.961,
-      "br_sascore": 9.99,
+      "br_sascore": 8.52,
+      "ligand_sa": 1.0,
       "has_bb_match": true,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -264,8 +894,18 @@
       "mol_volume_ang3": 321.5,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 2.377,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 2.377
+      },
+      "tmc_sa_phys": 3.38,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_SI_07",
@@ -283,7 +923,8 @@
       "scscore": 1.22,
       "syba": 9.16,
       "rascore": 0.984,
-      "br_sascore": 9.99,
+      "br_sascore": 3.82,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -299,8 +940,18 @@
       "mol_volume_ang3": 382.0,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 1.02,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_SI_08",
@@ -318,7 +969,8 @@
       "scscore": 1.62,
       "syba": 10.56,
       "rascore": 0.975,
-      "br_sascore": 9.99,
+      "br_sascore": 8.84,
+      "ligand_sa": 2.15,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -334,8 +986,18 @@
       "mol_volume_ang3": 268.1,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.004,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.003,
+        "total_phys_penalty": 0.007
+      },
+      "tmc_sa_phys": 2.16,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_HK_01",
@@ -353,7 +1015,8 @@
       "scscore": 1.52,
       "syba": 10.56,
       "rascore": 0.935,
-      "br_sascore": 9.99,
+      "br_sascore": 8.8,
+      "ligand_sa": 2.31,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -363,14 +1026,24 @@
       "e_coh_ev_per_atom": 4.079,
       "bde_min_kcal_mol": 70.37,
       "vbur_percent": 77.96,
-      "delta_e_dimer_kcal_mol": 34.44,
+      "delta_e_dimer_kcal_mol": 20.46,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.34,
       "mol_volume_ang3": 296.3,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.014,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.015
+      },
+      "tmc_sa_phys": 2.33,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_HK_02",
@@ -388,7 +1061,8 @@
       "scscore": 1.73,
       "syba": 7.7,
       "rascore": 0.935,
-      "br_sascore": 9.99,
+      "br_sascore": 8.62,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -398,14 +1072,24 @@
       "e_coh_ev_per_atom": 4.041,
       "bde_min_kcal_mol": 72.49,
       "vbur_percent": 76.96,
-      "delta_e_dimer_kcal_mol": 32.94,
+      "delta_e_dimer_kcal_mol": 159.99,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 1.86,
       "mol_volume_ang3": 205.4,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.005,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.006
+      },
+      "tmc_sa_phys": 1.03,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_HK_03",
@@ -423,7 +1107,8 @@
       "scscore": 1.28,
       "syba": 10.35,
       "rascore": 0.909,
-      "br_sascore": 9.99,
+      "br_sascore": 8.71,
+      "ligand_sa": 1.05,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -431,16 +1116,26 @@
       "center_atom": "Hf",
       "e_pot_ev": -317.461,
       "e_coh_ev_per_atom": 4.208,
-      "bde_min_kcal_mol": 133.62,
+      "bde_min_kcal_mol": 84.17,
       "vbur_percent": 80.29,
-      "delta_e_dimer_kcal_mol": 37.94,
+      "delta_e_dimer_kcal_mol": 1074.66,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.51,
       "mol_volume_ang3": 335.0,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.136,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.136
+      },
+      "tmc_sa_phys": 1.19,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_HK_04",
@@ -458,7 +1153,8 @@
       "scscore": 1.54,
       "syba": 10.56,
       "rascore": 0.984,
-      "br_sascore": 9.99,
+      "br_sascore": 8.8,
+      "ligand_sa": 2.31,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -468,14 +1164,24 @@
       "e_coh_ev_per_atom": 4.062,
       "bde_min_kcal_mol": 67.56,
       "vbur_percent": 77.23,
-      "delta_e_dimer_kcal_mol": 33.35,
+      "delta_e_dimer_kcal_mol": 20.95,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.65,
       "mol_volume_ang3": 369.3,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.007,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.008
+      },
+      "tmc_sa_phys": 2.32,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_HK_05",
@@ -493,7 +1199,8 @@
       "scscore": 1.69,
       "syba": 7.7,
       "rascore": 0.98,
-      "br_sascore": 9.99,
+      "br_sascore": 8.62,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -503,14 +1210,24 @@
       "e_coh_ev_per_atom": 4.02,
       "bde_min_kcal_mol": 83.73,
       "vbur_percent": 76.3,
-      "delta_e_dimer_kcal_mol": 31.95,
+      "delta_e_dimer_kcal_mol": 146.31,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.16,
       "mol_volume_ang3": 259.6,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.003,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.004
+      },
+      "tmc_sa_phys": 1.02,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_HK_06",
@@ -528,7 +1245,8 @@
       "scscore": 2.72,
       "syba": -18.21,
       "rascore": 0.923,
-      "br_sascore": 9.99,
+      "br_sascore": 8.39,
+      "ligand_sa": 3.26,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": false,
@@ -544,8 +1262,18 @@
       "mol_volume_ang3": 443.6,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.221,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.222
+      },
+      "tmc_sa_phys": 3.48,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_HK_07",
@@ -563,7 +1291,8 @@
       "scscore": 2.22,
       "syba": -24.98,
       "rascore": 0.959,
-      "br_sascore": 9.99,
+      "br_sascore": 7.2,
+      "ligand_sa": 3.31,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": false,
@@ -573,14 +1302,24 @@
       "e_coh_ev_per_atom": 4.207,
       "bde_min_kcal_mol": 117.11,
       "vbur_percent": 74.12,
-      "delta_e_dimer_kcal_mol": 28.68,
+      "delta_e_dimer_kcal_mol": 180.33,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.39,
       "mol_volume_ang3": 308.3,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 3.31,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_TI_01",
@@ -598,7 +1337,8 @@
       "scscore": 1.31,
       "syba": 7.7,
       "rascore": 0.92,
-      "br_sascore": 9.99,
+      "br_sascore": 8.62,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -608,14 +1348,24 @@
       "e_coh_ev_per_atom": 4.028,
       "bde_min_kcal_mol": 66.96,
       "vbur_percent": 73.57,
-      "delta_e_dimer_kcal_mol": 27.85,
+      "delta_e_dimer_kcal_mol": 82.93,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.43,
       "mol_volume_ang3": 316.9,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 1.02,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_TI_02",
@@ -633,7 +1383,8 @@
       "scscore": 1.25,
       "syba": 9.71,
       "rascore": 0.976,
-      "br_sascore": 9.99,
+      "br_sascore": 8.75,
+      "ligand_sa": 1.04,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -641,7 +1392,7 @@
       "center_atom": "Ti",
       "e_pot_ev": -249.616,
       "e_coh_ev_per_atom": 4.19,
-      "bde_min_kcal_mol": 73.72,
+      "bde_min_kcal_mol": 56.4,
       "vbur_percent": 60.62,
       "delta_e_dimer_kcal_mol": 36.59,
       "delta_e_complex_kcal_mol": -25.0,
@@ -649,8 +1400,18 @@
       "mol_volume_ang3": 459.0,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.012,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.012
+      },
+      "tmc_sa_phys": 1.05,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_TI_03",
@@ -668,7 +1429,8 @@
       "scscore": 2.14,
       "syba": -24.98,
       "rascore": 0.91,
-      "br_sascore": 9.99,
+      "br_sascore": 7.2,
+      "ligand_sa": 3.31,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": false,
@@ -678,14 +1440,24 @@
       "e_coh_ev_per_atom": 4.228,
       "bde_min_kcal_mol": 76.38,
       "vbur_percent": 70.45,
-      "delta_e_dimer_kcal_mol": 23.18,
+      "delta_e_dimer_kcal_mol": 132.54,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.67,
       "mol_volume_ang3": 373.2,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.0
+      },
+      "tmc_sa_phys": 3.31,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_AL_01",
@@ -703,7 +1475,8 @@
       "scscore": 1.21,
       "syba": 5.85,
       "rascore": 0.963,
-      "br_sascore": 9.99,
+      "br_sascore": 1.04,
+      "ligand_sa": 1.0,
       "has_bb_match": true,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -719,8 +1492,18 @@
       "mol_volume_ang3": 176.0,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.022,
+        "pen_crowd": 0.0,
+        "pen_olig": 1.924,
+        "total_phys_penalty": 1.946
+      },
+      "tmc_sa_phys": 2.95,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_AL_02",
@@ -738,7 +1521,8 @@
       "scscore": 1.01,
       "syba": 5.85,
       "rascore": 0.959,
-      "br_sascore": 9.99,
+      "br_sascore": 1.02,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -754,8 +1538,18 @@
       "mol_volume_ang3": 147.6,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.092,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.056,
+        "total_phys_penalty": 0.149
+      },
+      "tmc_sa_phys": 1.15,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_MET_01",
@@ -773,7 +1567,8 @@
       "scscore": 1.61,
       "syba": 10.11,
       "rascore": 0.753,
-      "br_sascore": 9.99,
+      "br_sascore": 8.95,
+      "ligand_sa": 1.05,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -781,16 +1576,26 @@
       "center_atom": "W",
       "e_pot_ev": -256.998,
       "e_coh_ev_per_atom": 4.02,
-      "bde_min_kcal_mol": 110.32,
+      "bde_min_kcal_mol": 97.77,
       "vbur_percent": 79.64,
-      "delta_e_dimer_kcal_mol": 36.96,
+      "delta_e_dimer_kcal_mol": 165.06,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.22,
       "mol_volume_ang3": 271.9,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.072,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.074
+      },
+      "tmc_sa_phys": 1.12,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_MET_02",
@@ -808,7 +1613,8 @@
       "scscore": 1.85,
       "syba": 10.11,
       "rascore": 0.629,
-      "br_sascore": 9.99,
+      "br_sascore": 8.95,
+      "ligand_sa": 1.05,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -816,16 +1622,26 @@
       "center_atom": "Mo",
       "e_pot_ev": -257.464,
       "e_coh_ev_per_atom": 4.023,
-      "bde_min_kcal_mol": 102.29,
+      "bde_min_kcal_mol": 101.91,
       "vbur_percent": 73.43,
-      "delta_e_dimer_kcal_mol": 27.65,
+      "delta_e_dimer_kcal_mol": 272.8,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.55,
       "mol_volume_ang3": 345.7,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 1.05,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_MET_03",
@@ -843,7 +1659,8 @@
       "scscore": 1.94,
       "syba": -44.27,
       "rascore": 0.904,
-      "br_sascore": 9.99,
+      "br_sascore": 4.18,
+      "ligand_sa": 3.13,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -853,14 +1670,24 @@
       "e_coh_ev_per_atom": 4.1,
       "bde_min_kcal_mol": 60.0,
       "vbur_percent": 52.54,
-      "delta_e_dimer_kcal_mol": 10.0,
+      "delta_e_dimer_kcal_mol": 15.0,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 1.54,
       "mol_volume_ang3": 155.5,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": true,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 3.13,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_MET_04",
@@ -878,7 +1705,8 @@
       "scscore": 2.38,
       "syba": 3.96,
       "rascore": 0.639,
-      "br_sascore": 9.99,
+      "br_sascore": 8.29,
+      "ligand_sa": 3.0,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": false,
@@ -894,8 +1722,18 @@
       "mol_volume_ang3": 599.3,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 1.111,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 1.111
+      },
+      "tmc_sa_phys": 4.11,
+      "tuned_pass": false,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": false
     },
     {
       "id": "PREC_MET_05",
@@ -913,7 +1751,8 @@
       "scscore": 1.48,
       "syba": 10.49,
       "rascore": 0.969,
-      "br_sascore": 9.99,
+      "br_sascore": 8.91,
+      "ligand_sa": 2.86,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -923,14 +1762,24 @@
       "e_coh_ev_per_atom": 4.1,
       "bde_min_kcal_mol": 60.0,
       "vbur_percent": 55.76,
-      "delta_e_dimer_kcal_mol": 10.0,
+      "delta_e_dimer_kcal_mol": 15.0,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 1.38,
       "mol_volume_ang3": 134.4,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": true,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 2.86,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_MET_06",
@@ -948,7 +1797,8 @@
       "scscore": 1.89,
       "syba": 11.98,
       "rascore": 0.875,
-      "br_sascore": 9.99,
+      "br_sascore": 9.03,
+      "ligand_sa": 2.14,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -958,14 +1808,24 @@
       "e_coh_ev_per_atom": 4.132,
       "bde_min_kcal_mol": 64.2,
       "vbur_percent": 72.23,
-      "delta_e_dimer_kcal_mol": 25.85,
+      "delta_e_dimer_kcal_mol": 593.09,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.72,
       "mol_volume_ang3": 386.0,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 2.14,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "PREC_EUV_01",
@@ -983,7 +1843,8 @@
       "scscore": 1.84,
       "syba": 11.54,
       "rascore": 0.934,
-      "br_sascore": 9.99,
+      "br_sascore": 8.95,
+      "ligand_sa": 1.04,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -993,14 +1854,24 @@
       "e_coh_ev_per_atom": 4.047,
       "bde_min_kcal_mol": 70.13,
       "vbur_percent": 69.13,
-      "delta_e_dimer_kcal_mol": 21.19,
+      "delta_e_dimer_kcal_mol": 244.68,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.6,
       "mol_volume_ang3": 356.5,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "tmc_sa_phys": 1.5,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 1.04,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-001",
@@ -1018,7 +1889,8 @@
       "scscore": 1.26,
       "syba": 7.7,
       "rascore": 0.96,
-      "br_sascore": 9.99,
+      "br_sascore": 8.84,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1028,14 +1900,24 @@
       "e_coh_ev_per_atom": 3.956,
       "bde_min_kcal_mol": 83.3,
       "vbur_percent": 69.12,
-      "delta_e_dimer_kcal_mol": 21.18,
+      "delta_e_dimer_kcal_mol": 108.55,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.1,
       "mol_volume_ang3": 247.9,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "inhib_sa": 3.57,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.003,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.003
+      },
+      "tmc_sa_phys": 1.02,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-002",
@@ -1053,7 +1935,8 @@
       "scscore": 1.12,
       "syba": 7.7,
       "rascore": 0.964,
-      "br_sascore": 9.99,
+      "br_sascore": 8.8,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1069,8 +1952,18 @@
       "mol_volume_ang3": 212.6,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "inhib_sa": 2.81,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.004,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.004
+      },
+      "tmc_sa_phys": 1.02,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-003",
@@ -1088,7 +1981,8 @@
       "scscore": 1.63,
       "syba": 10.56,
       "rascore": 0.971,
-      "br_sascore": 9.99,
+      "br_sascore": 8.88,
+      "ligand_sa": 2.31,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1096,16 +1990,26 @@
       "center_atom": "Si",
       "e_pot_ev": -175.626,
       "e_coh_ev_per_atom": 3.996,
-      "bde_min_kcal_mol": 119.54,
+      "bde_min_kcal_mol": 118.82,
       "vbur_percent": 71.88,
-      "delta_e_dimer_kcal_mol": 25.32,
+      "delta_e_dimer_kcal_mol": 12.43,
       "delta_e_complex_kcal_mol": -25.0,
       "radius_of_gyration_ang": 2.45,
       "mol_volume_ang3": 320.8,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "inhib_sa": 3.78,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 2.31,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-004",
@@ -1123,7 +2027,8 @@
       "scscore": 1.0,
       "syba": 7.34,
       "rascore": 0.941,
-      "br_sascore": 9.99,
+      "br_sascore": 6.72,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1139,8 +2044,18 @@
       "mol_volume_ang3": 297.9,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "inhib_sa": 3.24,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.003,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.003
+      },
+      "tmc_sa_phys": 1.0,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-005",
@@ -1158,7 +2073,8 @@
       "scscore": 1.0,
       "syba": 5.39,
       "rascore": 0.953,
-      "br_sascore": 9.99,
+      "br_sascore": 1.05,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1174,8 +2090,18 @@
       "mol_volume_ang3": 216.9,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.97,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.01,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.01
+      },
+      "tmc_sa_phys": 1.01,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-006",
@@ -1193,7 +2119,8 @@
       "scscore": 1.15,
       "syba": 2.43,
       "rascore": 0.993,
-      "br_sascore": 9.99,
+      "br_sascore": 8.75,
+      "ligand_sa": 3.44,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1201,7 +2128,7 @@
       "center_atom": "C",
       "e_pot_ev": -47.283,
       "e_coh_ev_per_atom": 3.737,
-      "bde_min_kcal_mol": 59.5,
+      "bde_min_kcal_mol": 118.32,
       "vbur_percent": 31.29,
       "delta_e_dimer_kcal_mol": -3.08,
       "delta_e_complex_kcal_mol": -18.84,
@@ -1209,8 +2136,18 @@
       "mol_volume_ang3": 157.6,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 3.44,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.017,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.017
+      },
+      "tmc_sa_phys": 3.46,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-007",
@@ -1228,7 +2165,8 @@
       "scscore": 1.05,
       "syba": -10.56,
       "rascore": 0.977,
-      "br_sascore": 9.99,
+      "br_sascore": 8.75,
+      "ligand_sa": 3.16,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1236,7 +2174,7 @@
       "center_atom": "C",
       "e_pot_ev": -60.014,
       "e_coh_ev_per_atom": 4.048,
-      "bde_min_kcal_mol": 75.28,
+      "bde_min_kcal_mol": 112.3,
       "vbur_percent": 34.27,
       "delta_e_dimer_kcal_mol": 2.99,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1244,8 +2182,18 @@
       "mol_volume_ang3": 147.1,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 3.16,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 3.16,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-008",
@@ -1263,7 +2211,8 @@
       "scscore": 1.54,
       "syba": 14.53,
       "rascore": 0.982,
-      "br_sascore": 9.99,
+      "br_sascore": 3.19,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1279,8 +2228,18 @@
       "mol_volume_ang3": 1853.2,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.11,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 1.0,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-009",
@@ -1298,7 +2257,8 @@
       "scscore": 1.61,
       "syba": 14.16,
       "rascore": 0.975,
-      "br_sascore": 9.99,
+      "br_sascore": 4.44,
+      "ligand_sa": 2.67,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1306,7 +2266,7 @@
       "center_atom": "Si",
       "e_pot_ev": -186.637,
       "e_coh_ev_per_atom": 3.755,
-      "bde_min_kcal_mol": 63.72,
+      "bde_min_kcal_mol": 61.83,
       "vbur_percent": 54.5,
       "delta_e_dimer_kcal_mol": 478.46,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1314,8 +2274,18 @@
       "mol_volume_ang3": 950.9,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 3.14,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.015,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.015
+      },
+      "tmc_sa_phys": 2.69,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-010",
@@ -1333,7 +2303,8 @@
       "scscore": 1.53,
       "syba": 6.65,
       "rascore": 0.991,
-      "br_sascore": 9.99,
+      "br_sascore": 2.99,
+      "ligand_sa": 1.94,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1341,7 +2312,7 @@
       "center_atom": "C",
       "e_pot_ev": -208.859,
       "e_coh_ev_per_atom": 4.084,
-      "bde_min_kcal_mol": 93.98,
+      "bde_min_kcal_mol": 59.03,
       "vbur_percent": 33.78,
       "delta_e_dimer_kcal_mol": 5.65,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1349,8 +2320,18 @@
       "mol_volume_ang3": 938.8,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 1.94,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.003,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.003
+      },
+      "tmc_sa_phys": 1.94,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-011",
@@ -1368,7 +2349,8 @@
       "scscore": 1.53,
       "syba": 6.65,
       "rascore": 0.992,
-      "br_sascore": 9.99,
+      "br_sascore": 2.9,
+      "ligand_sa": 2.03,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1376,7 +2358,7 @@
       "center_atom": "C",
       "e_pot_ev": -142.858,
       "e_coh_ev_per_atom": 4.034,
-      "bde_min_kcal_mol": 95.91,
+      "bde_min_kcal_mol": 64.09,
       "vbur_percent": 30.98,
       "delta_e_dimer_kcal_mol": 11.11,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1384,8 +2366,18 @@
       "mol_volume_ang3": 546.5,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.03,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 2.03,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-012",
@@ -1403,7 +2395,8 @@
       "scscore": 1.22,
       "syba": 0.64,
       "rascore": 0.992,
-      "br_sascore": 9.99,
+      "br_sascore": 1.02,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1411,7 +2404,7 @@
       "center_atom": "C",
       "e_pot_ev": -43.77,
       "e_coh_ev_per_atom": 3.696,
-      "bde_min_kcal_mol": 95.89,
+      "bde_min_kcal_mol": 56.64,
       "vbur_percent": 29.52,
       "delta_e_dimer_kcal_mol": 2.08,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1419,8 +2412,18 @@
       "mol_volume_ang3": 151.2,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.82,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.024,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.024
+      },
+      "tmc_sa_phys": 1.04,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-013",
@@ -1438,7 +2441,8 @@
       "scscore": 1.13,
       "syba": 23.7,
       "rascore": 0.991,
-      "br_sascore": 9.99,
+      "br_sascore": 3.16,
+      "ligand_sa": 2.53,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1446,7 +2450,7 @@
       "center_atom": "C",
       "e_pot_ev": -95.135,
       "e_coh_ev_per_atom": 4.97,
-      "bde_min_kcal_mol": 97.17,
+      "bde_min_kcal_mol": 114.25,
       "vbur_percent": 36.53,
       "delta_e_dimer_kcal_mol": 12.73,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1454,8 +2458,18 @@
       "mol_volume_ang3": 220.4,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.53,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.0
+      },
+      "tmc_sa_phys": 2.53,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-014",
@@ -1473,7 +2487,8 @@
       "scscore": 1.94,
       "syba": 26.68,
       "rascore": 0.993,
-      "br_sascore": 9.99,
+      "br_sascore": 3.29,
+      "ligand_sa": 2.61,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1489,8 +2504,18 @@
       "mol_volume_ang3": 279.6,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.61,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.0
+      },
+      "tmc_sa_phys": 2.61,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-015",
@@ -1508,7 +2533,8 @@
       "scscore": 1.01,
       "syba": 2.54,
       "rascore": 0.978,
-      "br_sascore": 9.99,
+      "br_sascore": 4.52,
+      "ligand_sa": 3.45,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1516,7 +2542,7 @@
       "center_atom": "C",
       "e_pot_ev": -56.928,
       "e_coh_ev_per_atom": 4.594,
-      "bde_min_kcal_mol": 95.41,
+      "bde_min_kcal_mol": 127.42,
       "vbur_percent": 30.29,
       "delta_e_dimer_kcal_mol": -6.15,
       "delta_e_complex_kcal_mol": -12.7,
@@ -1524,8 +2550,18 @@
       "mol_volume_ang3": 119.7,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 3.45,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.0
+      },
+      "tmc_sa_phys": 3.45,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-016",
@@ -1543,7 +2579,8 @@
       "scscore": 1.32,
       "syba": 2.78,
       "rascore": 0.977,
-      "br_sascore": 9.99,
+      "br_sascore": 8.77,
+      "ligand_sa": 3.74,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1559,8 +2596,18 @@
       "mol_volume_ang3": 120.7,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 3.74,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.0
+      },
+      "tmc_sa_phys": 3.74,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-017",
@@ -1578,7 +2625,8 @@
       "scscore": 2.31,
       "syba": 22.97,
       "rascore": 0.986,
-      "br_sascore": 9.99,
+      "br_sascore": 2.78,
+      "ligand_sa": 2.03,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": false,
@@ -1586,7 +2634,7 @@
       "center_atom": "C",
       "e_pot_ev": -333.575,
       "e_coh_ev_per_atom": 4.144,
-      "bde_min_kcal_mol": 97.92,
+      "bde_min_kcal_mol": 84.44,
       "vbur_percent": 30.9,
       "delta_e_dimer_kcal_mol": 5.55,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1594,8 +2642,18 @@
       "mol_volume_ang3": 2048.9,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.03,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 2.03,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "INHIB-018",
@@ -1613,7 +2671,8 @@
       "scscore": 1.21,
       "syba": 11.57,
       "rascore": 0.986,
-      "br_sascore": 9.99,
+      "br_sascore": 5.2,
+      "ligand_sa": 2.17,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1621,7 +2680,7 @@
       "center_atom": "C",
       "e_pot_ev": -86.829,
       "e_coh_ev_per_atom": 4.35,
-      "bde_min_kcal_mol": 90.23,
+      "bde_min_kcal_mol": 126.03,
       "vbur_percent": 30.44,
       "delta_e_dimer_kcal_mol": -0.84,
       "delta_e_complex_kcal_mol": -23.32,
@@ -1629,8 +2688,18 @@
       "mol_volume_ang3": 218.6,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "inhib_sa": 2.17,
-      "tuned_pass": true
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.0
+      },
+      "tmc_sa_phys": 2.17,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "NEG-001",
@@ -1648,7 +2717,8 @@
       "scscore": 1.65,
       "syba": 7.64,
       "rascore": 0.972,
-      "br_sascore": 9.99,
+      "br_sascore": 8.77,
+      "ligand_sa": 1.01,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1664,8 +2734,18 @@
       "mol_volume_ang3": 289.9,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.002,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.002
+      },
+      "tmc_sa_phys": 1.01,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "NEG-002",
@@ -1683,7 +2763,8 @@
       "scscore": 1.56,
       "syba": 5.85,
       "rascore": 0.956,
-      "br_sascore": 9.99,
+      "br_sascore": 1.0,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1699,8 +2780,18 @@
       "mol_volume_ang3": 130.1,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.176,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.176
+      },
+      "tmc_sa_phys": 1.18,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "NEG-003",
@@ -1718,7 +2809,8 @@
       "scscore": 1.0,
       "syba": -11.9,
       "rascore": 0.981,
-      "br_sascore": 9.99,
+      "br_sascore": 8.75,
+      "ligand_sa": 1.02,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1734,8 +2826,18 @@
       "mol_volume_ang3": 113.2,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.009,
+        "pen_crowd": 0.0,
+        "pen_olig": 1.197,
+        "total_phys_penalty": 1.206
+      },
+      "tmc_sa_phys": 2.23,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "NEG-004",
@@ -1753,7 +2855,8 @@
       "scscore": 1.63,
       "syba": 15.65,
       "rascore": 0.985,
-      "br_sascore": 9.99,
+      "br_sascore": 8.79,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1761,16 +2864,26 @@
       "center_atom": "W",
       "e_pot_ev": -360.116,
       "e_coh_ev_per_atom": 4.836,
-      "bde_min_kcal_mol": 185.85,
+      "bde_min_kcal_mol": 117.04,
       "vbur_percent": 86.42,
-      "delta_e_dimer_kcal_mol": 47.13,
+      "delta_e_dimer_kcal_mol": 616.04,
       "delta_e_complex_kcal_mol": -9.53,
       "radius_of_gyration_ang": 2.94,
       "mol_volume_ang3": 445.9,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.0,
+        "pen_crowd": 3.321,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 3.321
+      },
+      "tmc_sa_phys": 4.32,
+      "tuned_pass": false,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": false
     },
     {
       "id": "NEG-005",
@@ -1788,7 +2901,8 @@
       "scscore": 2.12,
       "syba": 14.99,
       "rascore": 0.985,
-      "br_sascore": 9.99,
+      "br_sascore": 1.01,
+      "ligand_sa": 1.01,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": false,
@@ -1796,7 +2910,7 @@
       "center_atom": "C",
       "e_pot_ev": -172.25,
       "e_coh_ev_per_atom": 4.105,
-      "bde_min_kcal_mol": 93.59,
+      "bde_min_kcal_mol": 140.96,
       "vbur_percent": 35.32,
       "delta_e_dimer_kcal_mol": 7.44,
       "delta_e_complex_kcal_mol": -25.0,
@@ -1804,8 +2918,18 @@
       "mol_volume_ang3": 503.5,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 0.001
+      },
+      "tmc_sa_phys": 1.01,
+      "tuned_pass": true,
+      "chemical_domain_flag": true,
+      "tuned_with_chem_pass": false
     },
     {
       "id": "NEG-006",
@@ -1823,7 +2947,8 @@
       "scscore": 1.01,
       "syba": 1.12,
       "rascore": 0.97,
-      "br_sascore": 9.99,
+      "br_sascore": 8.8,
+      "ligand_sa": 2.54,
       "has_bb_match": false,
       "sascore_pass": true,
       "scscore_pass": true,
@@ -1839,8 +2964,18 @@
       "mol_volume_ang3": 230.1,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": false,
+        "pen_labile": 1.019,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 1.019
+      },
+      "tmc_sa_phys": 3.56,
+      "tuned_pass": true,
+      "chemical_domain_flag": true,
+      "tuned_with_chem_pass": false
     },
     {
       "id": "NEG-007",
@@ -1858,7 +2993,8 @@
       "scscore": 1.81,
       "syba": 4.34,
       "rascore": 0.89,
-      "br_sascore": 9.99,
+      "br_sascore": 1.0,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1874,8 +3010,18 @@
       "mol_volume_ang3": 157.0,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.0,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.903,
+        "total_phys_penalty": 0.903
+      },
+      "tmc_sa_phys": 1.9,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "NEG-008",
@@ -1893,7 +3039,8 @@
       "scscore": 1.37,
       "syba": 7.64,
       "rascore": 0.961,
-      "br_sascore": 9.99,
+      "br_sascore": 8.77,
+      "ligand_sa": 1.01,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1903,14 +3050,24 @@
       "e_coh_ev_per_atom": 3.891,
       "bde_min_kcal_mol": 42.89,
       "vbur_percent": 66.19,
-      "delta_e_dimer_kcal_mol": 16.78,
+      "delta_e_dimer_kcal_mol": 23.57,
       "delta_e_complex_kcal_mol": -14.33,
       "radius_of_gyration_ang": 2.19,
       "mol_volume_ang3": 265.6,
       "is_monomer_volatile": true,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 2.596,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.0,
+        "total_phys_penalty": 2.596
+      },
+      "tmc_sa_phys": 3.61,
+      "tuned_pass": true,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": true
     },
     {
       "id": "NEG-009",
@@ -1928,7 +3085,8 @@
       "scscore": 1.88,
       "syba": 4.98,
       "rascore": 0.959,
-      "br_sascore": 9.99,
+      "br_sascore": 8.75,
+      "ligand_sa": 1.0,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1944,8 +3102,18 @@
       "mol_volume_ang3": 252.3,
       "is_monomer_volatile": false,
       "is_thermally_labile": true,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 3.103,
+        "pen_crowd": 0.0,
+        "pen_olig": 0.031,
+        "total_phys_penalty": 3.134
+      },
+      "tmc_sa_phys": 4.13,
+      "tuned_pass": false,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": false
     },
     {
       "id": "NEG-010",
@@ -1963,7 +3131,8 @@
       "scscore": 1.81,
       "syba": -8.97,
       "rascore": 0.911,
-      "br_sascore": 9.99,
+      "br_sascore": 7.3,
+      "ligand_sa": 3.31,
       "has_bb_match": false,
       "sascore_pass": false,
       "scscore_pass": true,
@@ -1979,8 +3148,18 @@
       "mol_volume_ang3": 413.9,
       "is_monomer_volatile": false,
       "is_thermally_labile": false,
-      "physical_defect_detected": true,
-      "tuned_pass": false
+      "is_fallback_geometry": false,
+      "phys_penalty_detail": {
+        "has_metal_center": true,
+        "pen_labile": 0.001,
+        "pen_crowd": 0.0,
+        "pen_olig": 2.306,
+        "total_phys_penalty": 2.307
+      },
+      "tmc_sa_phys": 5.62,
+      "tuned_pass": false,
+      "chemical_domain_flag": false,
+      "tuned_with_chem_pass": false
     }
   ]
 }

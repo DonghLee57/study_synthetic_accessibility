@@ -40,7 +40,7 @@ sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
 import sascorer
 
 # Add external models
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "scscore"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "rascore"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "reasyn"))

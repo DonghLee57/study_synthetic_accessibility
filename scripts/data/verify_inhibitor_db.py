@@ -24,7 +24,7 @@ from rdkit import Chem
 from rdkit.Chem import Crippen, Descriptors
 from rdkit.Chem import rdMolDescriptors as rdd
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DB_PATH = os.path.join(ROOT, "database", "external", "as_ald_inhibitors.json")
 UA = {"User-Agent": "synth_acc-inhibitor-verify/1.0"}
 

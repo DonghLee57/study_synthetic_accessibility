@@ -149,6 +149,9 @@ def check_github_repos():
 
 def verify_and_fetch_precursor_papers():
     print("\n=== Verifying Semiconductor / Materials Precursor Papers ===")
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    papers_dir = os.path.join(project_root, "downloaded_papers")
+    os.makedirs(papers_dir, exist_ok=True)
     results = []
     for p in PRECURSOR_PAPERS:
         doi = p["doi"]
@@ -175,7 +178,7 @@ def verify_and_fetch_precursor_papers():
         # Try PMC / EuropePMC check for open access PDF
         pdf_saved = False
         size_kb = 0
-        out_path = os.path.join("downloaded_papers", f"{p['id']}.pdf")
+        out_path = os.path.join(papers_dir, f"{p['id']}.pdf")
         if p.get("download_url"):
             cmd = ["curl.exe", "-L", "-s", "--max-time", "25", "-o", out_path, p["download_url"]]
             try:
@@ -198,8 +201,12 @@ def verify_and_fetch_precursor_papers():
     return results
 
 if __name__ == "__main__":
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    meta_dir = os.path.join(project_root, "database", "metadata")
+    os.makedirs(meta_dir, exist_ok=True)
     repos = check_github_repos()
     prec_papers = verify_and_fetch_precursor_papers()
-    with open("downloaded_papers/repos_and_precursors.json", "w", encoding="utf-8") as f:
+    out_meta = os.path.join(meta_dir, "repos_and_precursors.json")
+    with open(out_meta, "w", encoding="utf-8") as f:
         json.dump({"repos": repos, "precursor_papers": prec_papers}, f, ensure_ascii=False, indent=2)
-    print("\nSaved to downloaded_papers/repos_and_precursors.json")
+    print(f"\nSaved to {out_meta}")

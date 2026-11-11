@@ -28,7 +28,7 @@ from rdkit import Chem
 from rdkit.Chem import Descriptors, AllChem, RDConfig
 import xgboost as xgb
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "scscore"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "reasyn"))
@@ -242,11 +242,49 @@ def evaluate_phase1():
         except Exception:
             ra_val = 0.0
             
-        # 6. BR-SAScore
+        # 6. BR-SAScore (must pass SMILES string and unpack (score, contrib))
         try:
-            br_val = round(br_scorer.calculateScore(mol), 2)
+            br_score_val, _ = br_scorer.calculateScore(smi)
+            br_val = round(float(br_score_val), 2)
         except Exception:
             br_val = 9.99
+
+        # 6b. Real Pro-Ligand Decomposition SA (eliminates hardcoded base_ligand_sa = 1.5)
+        tm_metals = {"Ti", "Zr", "Hf", "Al", "Ru", "Co", "W", "Mo", "Ta", "Sn", "Cu", "Zn", "Fe"}
+        syms = {a.GetSymbol() for a in mol.GetAtoms()}
+        centers = (syms & tm_metals) or (syms & {"Si"})
+        if centers:
+            rw = Chem.RWMol(mol)
+            idxs = sorted([a.GetIdx() for a in mol.GetAtoms() if a.GetSymbol() in centers], reverse=True)
+            for c_idx in idxs:
+                rw.RemoveAtom(c_idx)
+            frags = Chem.GetMolFrags(rw.GetMol(), asMols=True, sanitizeFrags=False)
+            lig_scores = []
+            for frag in frags:
+                try:
+                    for a in frag.GetAtoms():
+                        a.SetNumRadicalElectrons(0)
+                        a.SetNoImplicit(False)
+                        a.SetNumExplicitHs(0)
+                    Chem.SanitizeMol(frag)
+                    l_smi = Chem.MolToSmiles(frag)
+                    if l_smi and l_smi not in ("[H]", "Cl", "O"):
+                        cand = []
+                        try:
+                            bs, _ = br_scorer.calculateScore(l_smi)
+                            cand.append(float(bs))
+                        except Exception:
+                            pass
+                        l_mol = Chem.MolFromSmiles(l_smi)
+                        if l_mol:
+                            cand.append(float(sascorer.calculateScore(l_mol)))
+                        if cand:
+                            lig_scores.append(min(cand))
+                except Exception:
+                    pass
+            ligand_sa = round(max(lig_scores), 2) if lig_scores else 1.00
+        else:
+            ligand_sa = min(sa_val, br_val) if br_val < 9.9 else sa_val
             
         # 7. Reagent matching
         has_bb_match = smi in bb_smiles_set
@@ -274,9 +312,10 @@ def evaluate_phase1():
             "syba": syba_val,
             "rascore": ra_val,
             "br_sascore": br_val,
+            "ligand_sa": ligand_sa,
             "has_bb_match": has_bb_match,
             "sascore_pass": sascore_pass,
-            "scscore_pass": scscore_pass,
+            "scscore_pass": sc_val <= 2.0,
             "baseline_consensus_pass": baseline_consensus_pass
         }
         results.append(record)

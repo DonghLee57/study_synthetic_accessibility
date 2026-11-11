@@ -10,7 +10,7 @@ import os
 import subprocess
 import sys
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 EXTERNAL_DIR = os.path.join(PROJECT_ROOT, "external")
 
 REPOSITORIES = {
@@ -90,7 +90,7 @@ def setup_repos():
             print(f"[EXISTS] {name} already present at {repo_path}.")
 
     # Apply patches
-    patch_script = os.path.join(PROJECT_ROOT, "scripts", "patch_external_models.py")
+    patch_script = os.path.join(PROJECT_ROOT, "scripts", "benchmark", "patch_external_models.py")
     if os.path.isfile(patch_script):
         subprocess.run([sys.executable, patch_script], check=True)
 

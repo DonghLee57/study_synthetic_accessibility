@@ -28,7 +28,7 @@ from sevenn.calculator import SevenNetCalculator
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Isolated single-atom reference energies in SevenNet-0 (eV)
 ISOLATED_ATOM_ENERGIES = {
@@ -208,17 +208,18 @@ def compute_precursor_physical_features(smi, calc):
                 pass
     bde_min = float(min(stretches)) if stretches else 60.0
     
-    # 6. Monomer vs Dimerization energy (Delta E_dimer)
-    # If sterically well-shielded (%V_bur >= 65%), dimerization is physically blocked
-    if vbur >= 65.0:
-        dE_dimer = round(float(15.0 + (vbur - 65.0) * 1.5), 2)
-    elif not np.isnan(e_eq):
+    # 6. Monomer vs Dimerization interaction energy (Delta E_dimer) via SevenNet-0
+    # Computed directly on rigid inverted conformer pairs when monomer SevenNet-0 energy is valid.
+    # Disconnected multi-fragment SMILES (e.g., Ru(EtCp)2, CCTBA) hit fallback defaults.
+    is_fallback = bool(np.isnan(e_eq))
+    if not is_fallback:
         try:
             dE_dimer = compute_dimerization_energy(symbols, pos_centered, e_eq, calc)
         except Exception:
             dE_dimer = -5.0
+            is_fallback = True
     else:
-        dE_dimer = 10.0
+        dE_dimer = 15.0
         
     # 7. Molecular volume & Radius of gyration
     masses = [mol.GetAtomWithIdx(i).GetMass() for i in range(mol.GetNumAtoms())]
@@ -226,7 +227,8 @@ def compute_precursor_physical_features(smi, calc):
     rg = float(np.sqrt(sum(m * np.sum(r**2) for m, r in zip(masses, pos_centered)) / total_mass))
     vol_mol = float(4.0 / 3.0 * np.pi * (rg + 1.8)**3)
     
-    # 8. Complexation thermodynamic driving force proxy (Delta E_complexation, kcal/mol)
+    # 8. Empirical Algebraic Complexation Proxy (Delta E_complex_proxy, kcal/mol)
+    # NOTE: Derived deterministically from %V_bur, dE_dimer, and bde_min; not an explicit salt-metathesis DFT/MLIP calculation.
     steric_penalty = max(0.0, (vbur - 82.0) * 3.5) if vbur > 82.0 else 0.0
     dimer_penalty = max(0.0, -dE_dimer * 2.0) if dE_dimer < 0.0 else 0.0
     e_complex_proxy = round(float(-25.0 + steric_penalty + dimer_penalty + max(0.0, (50.0 - bde_min) * 1.5)), 2)
@@ -234,6 +236,7 @@ def compute_precursor_physical_features(smi, calc):
     return {
         "symbols": symbols,
         "center_atom": center_sym,
+        "is_fallback": is_fallback,
         "e_eq": round(e_eq, 3) if not np.isnan(e_eq) else -100.0,
         "e_coh": round(e_coh, 3),
         "bde_min": round(bde_min, 2),

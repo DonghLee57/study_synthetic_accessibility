@@ -19,7 +19,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, RDConfig, rdMolDescriptors
 import xgboost as xgb
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "scscore"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "reasyn"))

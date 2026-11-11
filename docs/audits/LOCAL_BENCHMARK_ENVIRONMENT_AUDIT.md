@@ -1,15 +1,15 @@
 # Local Python Environment, Repository Inventory & Empirical Benchmark Audit Trail
 
-> **Auditor Notice**: This document provides a fully reproducible, academically rigorous audit trail detailing the exact local runtime environment, repository commits, weights/resource artifacts, execution protocols, local git patches, and empirical data files used to evaluate **16 synthetic accessibility (SA) and computer-aided retrosynthesis (CASP) model variants** across **27 industrial semiconductor thin-film precursors**. It addresses and resolves all peer review and verification points identified by external computational audit.
+> **Auditor Notice**: This document provides a reproducible empirical audit trail detailing the local runtime environment, repository commits, weights/resource artifacts, execution protocols, local git patches, and empirical data files used to evaluate **15 unique open-source SA/CASP architectures (16 benchmark profiles including BR-SAScore reagent-tuned counterfactuals)** across **27 industrial semiconductor thin-film precursors** (Phase 1) and the curated **55-molecule evaluation dataset** (Phase 2). For the Phase 2 SevenNet-0 physical feature and LOOCV validation audit, see [`PHASE2_SEVENN_VALIDATION_AUDIT.md`](./PHASE2_SEVENN_VALIDATION_AUDIT.md).
 
 ---
 
 ## 1. Executive Metadata & Audit Scope
 
-- **Date of Execution & Audit**: November 6, 2026
+- **Date of Execution & Audit**: November 6, 2026 (Phase 2 & Path Audit: November 2026)
 - **Lead Role**: Scientific Intelligence & Validation Lead
 - **Workspace Directory Root**: `C:\Users\user\Downloads\dev_w_antigravity\synth_acc`
-- **Audit Target**: Verification of all 16 model evaluation profiles across the **4-Stage Execution Pipeline**:
+- **Audit Target**: Verification of all 15 unique open-source model architectures across the **4-Stage Execution Pipeline**:
   - **Stage 1 (Syntax & Ingestion Layer)**
   - **Stage 2 (Representation & Embedding Layer)**
   - **Stage 3 (Reaction Policy & Coordination Manifold Layer)**
@@ -69,7 +69,7 @@ All 12 open-source model repositories are located in `external/`. Because `exter
 
 To clone and configure all repositories deterministically in a single step, run:
 ```bash
-python scripts/setup_external_models.py
+python scripts/benchmark/setup_external_models.py
 ```
 
 ### 3.1 Repository Inventory & Commit Manifest
@@ -91,7 +91,7 @@ python scripts/setup_external_models.py
 
 ### 3.2 Local Compatibility Patches (Documented Diffs)
 
-A fresh clone from GitHub requires compatibility patches for Python 3.11 and NumPy 1.26. These patches are automated via `python scripts/patch_external_models.py` and saved in `scripts/patches/`:
+A fresh clone from GitHub requires compatibility patches for Python 3.11 and NumPy 1.26. These patches are automated via `python scripts/benchmark/patch_external_models.py` and saved in `scripts/patches/`:
 
 #### 1. `external/scscore` Patch (`scripts/patches/scscore_numpy_compat.patch`)
 - **Issue**: `sigmoid(x)` used `math.exp(-x)` which fails when `x` is a NumPy array/scalar. Furthermore, NumPy 1.24+ removed `np.bool`, and Python 3 removed `cPickle`.
@@ -138,11 +138,12 @@ The benchmark executes over version-controlled datasets located in `database/`:
    - Building Blocks: [`database/br_sascore_inputs/semi_bb.csv`](file:///C:/Users/user/Downloads/dev_w_antigravity\synth_acc/database/br_sascore_inputs/semi_bb.csv) (Gelest chlorosilanes, metal chlorides $HfCl_4, TiCl_4, ZrCl_4, AlCl_3$, amines, alkoxides, alkyl lithiums).
    - Reaction Rules: [`database/br_sascore_inputs/semi_rxn.csv`](file:///C:/Users/user/Downloads/dev_w_antigravity\synth_acc/database/br_sascore_inputs/semi_rxn.csv) (Salt metathesis, transamination, alcoholysis).
 3. **Master Benchmark Execution Script**:
-   - [`scripts/run_all_benchmarks.py`](file:///C:/Users/user/Downloads/dev_w_antigravity\synth_acc/scripts/run_all_benchmarks.py): Regenerates all benchmark databases from scratch.
+   - [`scripts/benchmark/run_all_benchmarks.py`](file:///C:/Users/user/Downloads/dev_w_antigravity/synth_acc/scripts/benchmark/run_all_benchmarks.py): Regenerates all Phase 1 benchmark databases from scratch.
 4. **Empirical Evaluation Outputs**:
-   - [`database/precursor_real_benchmark_results.json`](file:///C:/Users/user/Downloads/dev_w_antigravity\synth_acc/database/precursor_real_benchmark_results.json): Per-precursor scores across all benchmarked models.
-   - [`database/expanded_models_benchmark_results.json`](file:///C:/Users/user/Downloads/dev_w_antigravity\synth_acc/database/expanded_models_benchmark_results.json): Comprehensive diagnostic profiles for all 16 models.
-   - [`database/benchmark_summary_stats.json`](file:///C:/Users/user/Downloads/dev_w_antigravity\synth_acc/database/benchmark_summary_stats.json): Aggregated summary counts and pass rates.
+   - [`database/precursor_real_benchmark_results.json`](file:///C:/Users/user/Downloads/dev_w_antigravity/synth_acc/database/precursor_real_benchmark_results.json): Per-precursor scores across all benchmarked models.
+   - [`database/expanded_models_benchmark_results.json`](file:///C:/Users/user/Downloads/dev_w_antigravity/synth_acc/database/expanded_models_benchmark_results.json): Diagnostic profiles across all 15 unique models (16 profiles).
+   - [`database/benchmark_summary_stats.json`](file:///C:/Users/user/Downloads/dev_w_antigravity/synth_acc/database/benchmark_summary_stats.json): Aggregated summary counts and pass rates.
+   - [`database/benchmark_phase2_tuned_comparison.json`](file:///C:/Users/user/Downloads/dev_w_antigravity/synth_acc/database/benchmark_phase2_tuned_comparison.json): Phase 2 un-hardcoded uniform screening and ML cross-validation (All-Sample, 5-Fold CV, LOOCV) across 55 molecules.
 
 ---
 
@@ -165,11 +166,11 @@ Ran 9 tests in ~6.0s
 OK
 ```
 
-### 5.2 Standalone Audit Script (`scripts/audit_reproduce_all.py`)
+### 5.2 Standalone Audit Script (`scripts/benchmark/audit_reproduce_all.py`)
 
 Run the detailed audit script to verify live recalculations for SAScore, SCScore, SYBA, RAscore, BR-SAScore (Default & Custom), ReaSyn lossless roundtrip, GASA silent mis-encoding, and DFRscore/ChemProjector manifolds:
 ```bash
-python scripts/audit_reproduce_all.py
+python scripts/benchmark/audit_reproduce_all.py
 ```
 
 ---
@@ -182,8 +183,8 @@ python scripts/audit_reproduce_all.py
 | **BR-SAScore (Leaked Baseline)** | **100% (27/27)** | **Memorized ($s=0$)** | **100.0% (27/27)** | **100.0% (27/27)** | **Counterfactual Audit Baseline**: Illustrates the circular data leakage identified by Claude audit where pre-registering all 27 target products into the dictionary zeroes out even the metal-coordination fragments (`score1 = 0`), yielding artificial 27/27 passes (24/27 [88.9%] in earlier commit `fb7305a` when 24 products were listed). |
 | **BR-SAScore (Default)**| **100% (27/27)** | **100% Valid** | **11.1% (3/27)** | **11.1% (3/27)** | **Stage 3 Breakdown**: eMolecules/USPTO dictionaries lack Si-N/M-N, assigning max $-6.0$ penalty to 24 precursors ($4.18 \sim 9.03$ pts). |
 | **SAScore (RDKit)** | **100% (27/27)** | **100% Morgan** | N/A (Scoring) | **11.1% (3/27)** | **Stage 2·4 Breakdown**: Negative log-frequency penalties for near-zero PubChem drug counts cause severe False Negatives (TSA 6.91, DMAH 6.31). |
-| **SCScore (Reaxys)** | **100% (27/27)** | **100% 1024-bit** | N/A (DNN) | **85.2% (23/27)** | **Stage 4 Bias**: Early-stage reactant registration in Reaxys (`full_reaxys_model_1024bool`) yields artificially low scores (stored range 1.01–2.72; 23/27 ≤ 2.0), completely concealing pyrophoric hazards (TMA). |
-| **SYBA (Bayesian)** | **100% (27/27)** | **100% Subtrees** | N/A (Bayesian) | **85.2% (23/27)** | **Stage 2·4 Breakdown**: ZINC drug library (`syba.csv.gz`, method deviation noted) lacks metal-Cp fragments; metallocene sandwich complexes suffer catastrophic collapse (Ru(EtCp)2 $-44.27$). |
+| **SCScore (Reaxys)** | **100% (27/27)** | **100% 1024-bit** | N/A (DNN) | **85.2% (23/27)** | **Stage 4 Bias**: Early-stage reactant registration in Reaxys (`full_reaxys_model_1024bool`) yields low complexity scores (stored range 1.01–2.72; 23/27 ≤ 2.0), not reflecting pyrophoric hazards (TMA). |
+| **SYBA (Bayesian)** | **100% (27/27)** | **100% Subtrees** | N/A (Bayesian) | **85.2% (23/27)** | **Stage 2·4 Misclassification**: ZINC drug library (`syba.csv.gz`, method deviation noted) lacks metal-Cp fragments; metallocene sandwich complexes receive strongly negative scores (Ru(EtCp)2 $-44.27$). |
 | **RAscore (AiZynth)** | **100% (27/27)** | **Severe Distortion** | N/A (Classifier) | **0.0% Valid (100% FP)** | **Stage 2 Breakdown**: ECFP6 projects metal centers as generic alkyl/amine carbons. 23/27 score ≥ 0.9; exceptions: BTBMMo 0.629, Co(AMD)2 0.639, BTBMW 0.753, TBTDET 0.875. |
 | **RxnFlow (ICLR 2025)** | **100% (27/27)** | **100% Synthons** | **33.3% Substruct / 0% Core** | **0.0% (0/27) Core** | **Stage 3 Breakdown**: Live RDKit SMARTS matching of 72 Explore (30) / CGFlow (42) reverse templates matches 9/27 generic alkyl-amine product substructures (`reductive_amination_ketone`, `reductive_amination_aliphatic_aldehyde`, `amine_halide_coupling`) and 0 metal rules in set. |
 | **BioNeMo ReaSyn** | **100% (118 elem)** | **100% Sequence** | **88.9% Substruct (85.2% ≥2-atom) / 0% Core** | **0.0% (0/27) Core** | **Stage 3 Breakdown**: Universal 118-element tokenizer ingests all atoms (100% lossless roundtrip, 0 UNK), while SynFormer 115 patent templates contain 0 metal rules and match 24/27 generic product substructures (23/27 when excluding 1-atom `[N:1]` template `#84` that trivially matches carbon-free `TSA`). |
@@ -211,6 +212,7 @@ When decoded using the consistent 1-based token mapping (`_smiles_vocab`), **all
 
 - **Verification Harness Status**: 100% of live recalculations and diagnostic assertions verified.
 - **Formal Unit Test Suite**: `tests/test_benchmark_reproducibility.py` (9 passing tests).
-- **Master Benchmark Runner**: `scripts/run_all_benchmarks.py` (committed and reproducible).
+- **Master Benchmark Runner**: `scripts/benchmark/run_all_benchmarks.py` (committed and reproducible).
+- **Phase 2 & CV Audit Runner**: `scripts/benchmark/run_model_tuning_comparison.py` (audit documented in [`PHASE2_SEVENN_VALIDATION_AUDIT.md`](./PHASE2_SEVENN_VALIDATION_AUDIT.md)).
 - **Remote Git Repository**: `https://github.com/DonghLee57/study_synthetic_accessibility.git`
 - **Audit Verification State**: Validated against Python 3.11.9, RDKit 2023.9.6, and all 12 cloned sub-repositories in `external/`.

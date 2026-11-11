@@ -2,7 +2,7 @@
 
 [![DOI Verification](https://img.shields.io/badge/DOI_Verification-34%2F34_Passed-emerald.svg)](https://crossref.org)
 [![Full-Text Archived](https://img.shields.io/badge/Full_Text_Archived-26_Papers_(76.5%25)-blue.svg)](./downloaded_papers/)
-[![Section Bibliography](https://img.shields.io/badge/Bibliography-By_Section_(34_Papers)-purple.svg)](./BIBLIOGRAPHY.md)
+[![Section Bibliography](https://img.shields.io/badge/Bibliography-By_Section_(34_Papers)-purple.svg)](./docs/literature/BIBLIOGRAPHY.md)
 [![Open-Source Repos](https://img.shields.io/badge/Open_Source_Code-22_Verified-cyan.svg)](#6-verified-open-source-repositories--python-api)
 [![VASP Automation](https://img.shields.io/badge/VASP_Automation-4_Layer_Stack-purple.svg)](#13-vasp-centered-4-layer-dft-automation-architecture)
 [![Status](https://img.shields.io/badge/Verification-Validated-success.svg)](./report.md)
@@ -119,7 +119,7 @@ synth_acc/
 │   ├── building_blocks.csv             # Formatted table of precursor starting materials with CAS and purity grades
 │   ├── reactions.json                  # 12 authenticated synthesis reaction pathways with SMARTS & deltaG
 │   ├── reactions.csv                   # Synthesis reaction database table
-│   ├── external/                       # AtomicLimits ALD DB derived data (scripts/fetch_external_precursor_dbs.py)
+│   ├── external/                       # AtomicLimits ALD DB derived data (scripts/data/fetch_external_precursor_dbs.py)
 │   │   ├── atomiclimits_snapshot.json  # Snapshot record: date, endpoint, SHA-256, counts (2,447 processes, 4,177 unique DOIs)
 │   │   ├── atomiclimits_aliases.json   # Hand-checked spelling-variant -> canonical name map
 │   │   ├── atomiclimits_precursors_extracted.json # 814 precursors after alias merge (all reactant fields A-D)
@@ -157,7 +157,9 @@ synth_acc/
 ├── synthetic_accessibility_report.html  # Synchronized copy of the HTML report
 ├── template.html                       # Master HTML template
 ├── build_semiconductor_db.py           # Semiconductor database generation and RDKit validation engine
-├── benchmark_precursor_pipeline.py     # SAScore benchmark & VASP POSCAR box builder test script
+├── scripts/
+│   ├── data/                           # Database builders, downloaders & VASP/inhibitor verifiers
+│   └── benchmark/                      # Phase 1, Phase 2 (SevenNet-0), CV audit & HTML harnesses
 ├── download_all.py                     # Core literature DOI verification & PDF fetcher
 ├── verify_github_and_precursors.py     # GitHub API & semiconductor precursor verifier
 ├── generate_html.py                    # HTML compilation harness
@@ -182,16 +184,18 @@ flowchart LR
 ### 4.1 Automated Benchmark Reproduction & Audit Harness
 ```bash
 # 1. Setup, clone pinned repositories in external/, and apply compatibility patches
-python scripts/setup_external_models.py
+python scripts/benchmark/setup_external_models.py
 
-# 2. Run master benchmark engine across all 16 models and 27 semiconductor precursors
-python scripts/run_all_benchmarks.py
+# 2. Run Phase 1, Phase 2 (SevenNet-0) & audited CV benchmarks across curated datasets
+python scripts/benchmark/run_all_benchmarks.py
+python scripts/benchmark/run_phase1_baseline.py
+python scripts/benchmark/run_model_tuning_comparison.py
 
 # 3. Execute formal unit test suite (automated CI/CD & peer audit)
 python -m unittest discover tests
 
 # 4. Run standalone audit verification script (recalculates SAScore, SCScore, SYBA, RAscore, BR-SAScore)
-python scripts/audit_reproduce_all.py
+python scripts/benchmark/audit_reproduce_all.py
 ```
 
 ### 4.2 Web Artifact & Literature Compilation
@@ -211,7 +215,8 @@ python generate_html.py
 ## 5. Physical Standards & Citation References (34 Verified DOIs)
 
 > [!NOTE]
-> For the complete section-by-section categorized bibliography, local file paths, and ready-to-use BibTeX collection, see [**`BIBLIOGRAPHY.md`**](./BIBLIOGRAPHY.md).
+> For the complete section-by-section categorized bibliography, local file paths, and ready-to-use BibTeX collection, see [**`docs/literature/BIBLIOGRAPHY.md`**](./docs/literature/BIBLIOGRAPHY.md).
+> For the local runtime and Phase 2 validation audits, see [**`docs/audits/LOCAL_BENCHMARK_ENVIRONMENT_AUDIT.md`**](./docs/audits/LOCAL_BENCHMARK_ENVIRONMENT_AUDIT.md) and [**`docs/audits/PHASE2_SEVENN_VALIDATION_AUDIT.md`**](./docs/audits/PHASE2_SEVENN_VALIDATION_AUDIT.md).
 
 ### 5.1 Physical Units & Target Precursor Thresholds
 | Physical Quantity | Symbol | Unit | Target Precursor Threshold |

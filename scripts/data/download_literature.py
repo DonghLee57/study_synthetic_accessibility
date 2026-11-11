@@ -302,7 +302,11 @@ def download_with_curl(url, out_path):
         return False, str(e)
 
 def main():
-    os.makedirs("downloaded_papers", exist_ok=True)
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    papers_dir = os.path.join(project_root, "downloaded_papers")
+    meta_dir = os.path.join(project_root, "database", "metadata")
+    os.makedirs(papers_dir, exist_ok=True)
+    os.makedirs(meta_dir, exist_ok=True)
     manifest = []
 
     print(f"=== Starting Comprehensive Literature Acquisition & DOI Verification ===")
@@ -338,11 +342,11 @@ def main():
         pdf_status = {"downloaded": False, "file_path": None, "size_kb": 0, "source": item['source_type']}
         if item['download_url']:
             filename = f"{item['id']}.pdf"
-            filepath = os.path.join("downloaded_papers", filename)
+            filepath = os.path.join(papers_dir, filename)
             success, msg = download_with_curl(item['download_url'], filepath)
             if success:
                 pdf_status["downloaded"] = True
-                pdf_status["file_path"] = filepath
+                pdf_status["file_path"] = f"downloaded_papers/{filename}"
                 pdf_status["size_kb"] = msg // 1024
                 print(f"  [DOWNLOAD] Success -> {filename} ({msg // 1024} KB)")
             else:
@@ -358,7 +362,7 @@ def main():
         time.sleep(0.3)
         print()
 
-    with open("downloaded_papers/manifest.json", "w", encoding="utf-8") as f:
+    with open(os.path.join(meta_dir, "manifest.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
 
     downloaded_count = sum(1 for m in manifest if m["pdf_status"]["downloaded"])

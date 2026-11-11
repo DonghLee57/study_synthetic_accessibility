@@ -41,7 +41,7 @@ import ssl
 import urllib.request
 from collections import defaultdict
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 EXT = os.path.join(ROOT, "database", "external")
 RAW_PATH = os.path.join(EXT, "atomiclimits_raw.json")
 SNAPSHOT_PATH = os.path.join(EXT, "atomiclimits_snapshot.json")

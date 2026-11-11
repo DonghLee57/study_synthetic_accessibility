@@ -1,6 +1,9 @@
+import os
 import subprocess
 import json
 import sys
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -97,5 +100,7 @@ for item in VASP_FRAMEWORKS:
         item["url"] = info.get("html_url", f"https://github.com/{repo}")
         print(f"[VERIFIED] {item['name']:<28} | {repo:<28} | Stars: {item['stars']} | License: {item['license']}")
 
-with open("downloaded_papers/vasp_frameworks.json", "w", encoding="utf-8") as f:
+out_vasp = os.path.join(PROJECT_ROOT, "database", "metadata", "vasp_frameworks.json")
+os.makedirs(os.path.dirname(out_vasp), exist_ok=True)
+with open(out_vasp, "w", encoding="utf-8") as f:
     json.dump(VASP_FRAMEWORKS, f, ensure_ascii=False, indent=2)

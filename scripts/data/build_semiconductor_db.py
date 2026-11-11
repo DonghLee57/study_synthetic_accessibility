@@ -1021,17 +1021,21 @@ for bb in BUILDING_BLOCKS:
 
 print(f"Building blocks validated: {valid_bbs} / {len(BUILDING_BLOCKS)}")
 
-# Write JSON files
-os.makedirs("database", exist_ok=True)
-os.makedirs("database/br_sascore_inputs", exist_ok=True)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DB_DIR = os.path.join(PROJECT_ROOT, "database")
+BR_DIR = os.path.join(DB_DIR, "br_sascore_inputs")
 
-with open("database/precursors.json", "w", encoding="utf-8") as f:
+# Write JSON files
+os.makedirs(DB_DIR, exist_ok=True)
+os.makedirs(BR_DIR, exist_ok=True)
+
+with open(os.path.join(DB_DIR, "precursors.json"), "w", encoding="utf-8") as f:
     json.dump(PRECURSORS, f, ensure_ascii=False, indent=2)
 
-with open("database/building_blocks.json", "w", encoding="utf-8") as f:
+with open(os.path.join(DB_DIR, "building_blocks.json"), "w", encoding="utf-8") as f:
     json.dump(BUILDING_BLOCKS, f, ensure_ascii=False, indent=2)
 
-with open("database/reactions.json", "w", encoding="utf-8") as f:
+with open(os.path.join(DB_DIR, "reactions.json"), "w", encoding="utf-8") as f:
     json.dump(REACTIONS, f, ensure_ascii=False, indent=2)
 
 # Write CSV files for Precursors
@@ -1041,7 +1045,7 @@ prec_fieldnames = [
     "state_at_rt", "vapor_pressure_torr", "boiling_point_c", "thermal_decomposition_temp_c",
     "typical_yield_pct", "smiles"
 ]
-with open("database/precursors.csv", "w", encoding="utf-8", newline="") as f:
+with open(os.path.join(DB_DIR, "precursors.csv"), "w", encoding="utf-8", newline="") as f:
     writer = csv.DictWriter(f, fieldnames=prec_fieldnames)
     writer.writeheader()
     for p in PRECURSORS:
@@ -1066,14 +1070,14 @@ with open("database/precursors.csv", "w", encoding="utf-8", newline="") as f:
         writer.writerow(row)
 
 # Write CSV files for Building Blocks
-with open("database/building_blocks.csv", "w", encoding="utf-8", newline="") as f:
+with open(os.path.join(DB_DIR, "building_blocks.csv"), "w", encoding="utf-8", newline="") as f:
     writer = csv.DictWriter(f, fieldnames=["id", "name", "formula", "cas", "role", "purity", "handling", "smiles"])
     writer.writeheader()
     for bb in BUILDING_BLOCKS:
         writer.writerow(bb)
 
 # Write CSV files for Reactions
-with open("database/reactions.csv", "w", encoding="utf-8", newline="") as f:
+with open(os.path.join(DB_DIR, "reactions.csv"), "w", encoding="utf-8", newline="") as f:
     writer = csv.DictWriter(f, fieldnames=["id", "name", "reaction_type", "reactants", "products", "byproduct", "solvent", "conditions", "thermodynamics_dG_kcal_mol"])
     writer.writeheader()
     for rxn in REACTIONS:
@@ -1090,7 +1094,7 @@ with open("database/reactions.csv", "w", encoding="utf-8", newline="") as f:
         })
 
 # Write BR-SAScore ready files: semi_bb.csv and semi_rxn.csv
-with open("database/br_sascore_inputs/semi_bb.csv", "w", encoding="utf-8", newline="") as f:
+with open(os.path.join(BR_DIR, "semi_bb.csv"), "w", encoding="utf-8", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["SMILES"])
     for bb in BUILDING_BLOCKS:
@@ -1101,7 +1105,7 @@ with open("database/br_sascore_inputs/semi_bb.csv", "w", encoding="utf-8", newli
         for sm in p["synthesis_info"]["starting_materials"]:
             pass
 
-with open("database/br_sascore_inputs/semi_rxn.csv", "w", encoding="utf-8", newline="") as f:
+with open(os.path.join(BR_DIR, "semi_rxn.csv"), "w", encoding="utf-8", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["reaction"])
     for rxn in REACTIONS:

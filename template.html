@@ -1328,7 +1328,7 @@
             반도체 전구체 AI 합성 가능성(SA) 평가와 물리 지표 결합: 핵심 스토리라인
           </h2>
           <p style="font-size:0.95rem; color:#334155; line-height:1.65; margin:0 0 16px 0;">
-            기존 제약(Drug Discovery) 중심의 AI 합성 가능성 모델(SAScore, SCScore 등)은 왜 반도체 팹 양산 전구체를 88.9% 오판 기각하고, 상온 폭발성 분자를 100% 통과시키는 치명적 오류를 범할까요? 본 연구는 이 <strong>양방향 병리(Dual Pathology)</strong>를 실증적으로 규명하고, 초고속 양자 머신러닝 인터애토믹 포텐셜(<strong>SevenNet-0</strong>)과 <strong>4대 핵심 물리 기둥</strong>을 결합하여 위험 분자 100% 차단 및 전구체 96.3% 구제를 달성한 연구입니다. 아래 4단계를 통해 전체 연구의 흐름과 통찰을 한눈에 파악하실 수 있습니다.
+            기존 제약(Drug Discovery) 중심의 AI 합성 가능성 모델(SAScore, SCScore 등)은 왜 반도체 팹 양산 전구체를 88.9% 오판 기각하고, 상온 폭발성 분자를 100% 통과시키는 도메인 오판을 범할까요? 본 연구는 이 <strong>양방향 병리(Dual Pathology)</strong>를 실증적으로 규명하고, 초고속 양자 머신러닝 인터애토믹 포텐셜(<strong>SevenNet-0</strong>)과 <strong>4대 핵심 물리 기둥</strong>을 결합하여 위험 분자 100% 차단 및 전구체 96.3% 구제를 달성한 연구입니다. 아래 4단계를 통해 전체 연구의 흐름과 통찰을 한눈에 파악하실 수 있습니다.
           </p>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. 평가 기준 및 혼동 행렬 &darr;</a>
@@ -1359,7 +1359,7 @@
               <span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">평가 기준 핵심 해설</span>
             </div>
             <p style="font-size:0.88rem; color:#475569; line-height:1.65; margin-bottom:14px;">
-              머신러닝과 통계학의 분류 평가지표(Positive/Negative, True/False)가 <strong>반도체 전구체 및 억제제 합성 평가에서 의미하는 물리적 실체</strong>는 일반 IT/의약학 분류와 완전히 다릅니다. 제약 DB(PubChem/ChEMBL) 중심의 기존 AI 모델이 지닌 도메인 미스매치로 인해, '전구체 위양성 기각 88.9%'와 '위험 분자 위음성 통과 100%'가 파운드리 양산 현장에서 왜 치명적인지 파악해야 합니다:
+              머신러닝과 통계학의 분류 평가지표(Positive/Negative, True/False)가 <strong>반도체 전구체 및 억제제 합성 평가에서 의미하는 물리적 실체</strong>는 일반 IT/의약학 분류와 다릅니다. 제약 DB(PubChem/ChEMBL) 중심의 기존 AI 모델이 지닌 도메인 미스매치로 인해, '전구체 False Negative 88.9%'와 '음성 대조군 False Positive 100%(합의 기준)'가 공정 스크리닝에서 왜 중대한 문제를 일으키는지 파악해야 합니다:
             </p>
 
             <div style="overflow-x:auto; margin-bottom:14px;">
@@ -1384,11 +1384,11 @@
                     </td>
                     <td style="background:#fef2f2;">
                       <strong style="color:#b91c1c; font-size:0.95rem;">False Positive (FP)</strong><br>
-                      <span style="font-size:0.78rem; color:#991b1b; font-weight:700;">위양성 (파국적 오판 통과)</span><br>
-                      <span style="font-size:0.75rem; color:#7f1d1d;">폭발성·부식성 분자를 안전 통과시킴</span>
+                      <span style="font-size:0.78rem; color:#991b1b; font-weight:700;">위양성 (위험 분자 오판 통과)</span><br>
+                      <span style="font-size:0.75rem; color:#7f1d1d;">폭발성·부식성 분자를 통과로 분류</span>
                     </td>
                     <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
-                      <strong style="color:#b91c1c;">[FP의 재앙적 위험]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우, <strong>진공 챔버 폭발, 고가 증착 장비 파손, 웨이퍼 전량 오염 폐기</strong> 등 수십억 원대 공정 사고 유발. (Phase 1 기존 모델: <strong>FP = 100.0%</strong>로 전원 통과시키는 재앙 초래)
+                      <strong style="color:#b91c1c;">[FP의 공정 안전 위험]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우, <strong>진공 챔버 손상, 웨이퍼 오염, 부식성 부산물 발생</strong> 등 공정 안전 및 수율 저하 위험이 큽니다. (Phase 1 합의 모델: <strong>FP = 100.0%</strong>로 10종 모두 통과)
                     </td>
                   </tr>
                   <tr>
@@ -1397,7 +1397,7 @@
                     </td>
                     <td style="background:#fffbeb;">
                       <strong style="color:#b45309; font-size:0.95rem;">False Negative (FN)</strong><br>
-                      <span style="font-size:0.78rem; color:#92400e; font-weight:700;">위음성 (치명적 오판 기각)</span><br>
+                      <span style="font-size:0.78rem; color:#92400e; font-weight:700;">위음성 (유효 물질 오판 기각)</span><br>
                       <span style="font-size:0.75rem; color:#78350f;">실제 양산 전구체를 불가능으로 탈락</span>
                     </td>
                     <td style="background:#f8fafc;">
@@ -1406,7 +1406,7 @@
                       <span style="font-size:0.75rem; color:#64748b;">위험·불량 분자를 올바르게 기각</span>
                     </td>
                     <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
-                      <strong style="color:#b45309;">[FN의 연구 단절 위험]</strong> 글로벌 팹에서 매일 수 톤씩 쓰는 TSA, TMA, TEMAH를 '합성 불가능'으로 탈락시켜 <strong>유망한 차세대 전구체 후보를 사장시키고 연구 기회를 박탈</strong>함. (Phase 1 RDKit SAScore: <strong>FN = 88.9%</strong>로 27종 중 24종을 오판 기각)
+                      <strong style="color:#b45309;">[FN의 후보 누락 위험]</strong> 글로벌 팹에서 대량 사용하는 TSA, TMA, TEMAH를 '합성 난이도 높음'으로 탈락시켜 <strong>유효한 전구체 후보를 초기 스크리닝에서 배제</strong>합니다. (Phase 1 RDKit SAScore: <strong>FN = 88.9%</strong>로 27종 중 24종 기각)
                     </td>
                   </tr>
                 </tbody>
@@ -1414,7 +1414,7 @@
             </div>
 
             <div style="background:#f8fafc; border-left:4px solid #10b981; padding:12px 16px; border-radius:0 6px 6px 0; font-size:0.84rem; color:#334155; line-height:1.6;">
-              <strong>핵심 결론:</strong> 반도체 AI 모델은 <strong>FP(위험 분자 통과)를 0%로 완벽 차단</strong>하는 동시에, <strong>FN(양산 전구체 기각)을 최소화</strong>하여 실제 양산 가능한 고휘발성 분자를 놓치지 않는 정밀한 물리적 식별력을 반드시 갖추어야 합니다.
+              <strong>핵심 기준:</strong> 반도체용 SA 평가 체계는 <strong>FP(위험·비휘발성 분자 오판 통과)를 낮추는 동시에</strong>, <strong>FN(양산 전구체 오판 기각)을 최소화</strong>하여 실제 증착 가능한 전구체 후보를 정확히 선별하는 균형 잡힌 식별력을 갖추어야 합니다.
             </div>
           </div>
         </section>
@@ -1431,7 +1431,7 @@
 
           <div class="card" style="margin-bottom:20px; padding:22px;">
             <p style="font-size:0.92rem; color:#334155; line-height:1.65; margin-bottom:16px;">
-              지난 17년간 개발된 수많은 AI 합성 가능성(SA) 모델은 서로 파편화된 것이 아니라, <strong>"화학적 추상도와 반응 지식의 심도(Depth of Chemical Knowledge)"</strong>라는 <strong>단 하나의 일관된 진화 축</strong>을 따라 4세대에 걸쳐 체계적으로 발전해 왔습니다:
+              지난 17년간 개발된 주요 AI 합성 가능성(SA) 모델은 <strong>"화학적 추상도와 반응 지식의 심도(Depth of Chemical Knowledge)"</strong>라는 하나의 진화 축을 따라 4세대로 구분하여 해석할 수 있습니다:
             </p>
 
             <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:18px; text-align:center;">
@@ -1459,28 +1459,28 @@
                     <td><strong style="color:#0284c7;">SAScore, SYBA</strong></td>
                     <td>원형 지문(Morgan/ECFP) 기반 파편 빈도 사전 룩업 + 고리·키랄 페널티 + 나이브 베이지안 승산비 (SYBA)</td>
                     <td style="font-family:'JetBrains Mono';">&lt; 0.1 ms<br>(초고속 스크리닝)</td>
-                    <td><strong style="color:#b91c1c;">금속-리간드 결합 인식 불가</strong>: PubChem/ZINC 의약 DB 기반으로 Si-N, Al-C, Hf-N, Ti-N 등 반도체 핵심 배위를 '비천연 복잡 구조'로 오인 기각 (치명적 False Negative 88.9%)</td>
+                    <td><strong style="color:#b91c1c;">금속-리간드 결합 인식 한계</strong>: PubChem/ZINC 의약 DB 기반으로 Si-N, Al-C, Hf-N, Ti-N 등 반도체 핵심 배위를 비전형적 복잡 구조로 오인 기각 (False Negative 88.9%)</td>
                   </tr>
                   <tr>
                     <td><strong>2세대 (반응 대리)</strong><br><span style="font-size:0.75rem; color:#64748b;">2018 ~ 2022</span></td>
                     <td><strong style="color:#7c3aed;">SCScore, RAscore, RetroGNN</strong></td>
                     <td>Reaxys 1,200만 반응 코퍼스 순위 학습($S(P) > S(R)$) 및 AiZynthFinder MCTS 역합성 성공 여부 심층망 증류</td>
                     <td style="font-family:'JetBrains Mono';">5 ~ 15 ms<br>(정밀 점수 산출)</td>
-                    <td><strong style="color:#b91c1c;">유기 반응 단계 수 편향 및 결합 에너지 무지</strong>: 열역학 결합 해리에너지(BDE)를 몰라 상온 자발 분해(TiEt4) 및 폭발성(ZrMe4) 분자를 단순 1단계 반응으로 오인 통과 (False Positive 은폐)</td>
+                    <td><strong style="color:#b91c1c;">유기 반응 단계 수 편향 및 결합 에너지 미반영</strong>: 열역학 결합 해리에너지(BDE)를 반영하지 못해 열분해성(TiEt4) 및 폭발성(ZrMe4) 분자를 단순 구조로 통과시킴 (False Positive 발생)</td>
                   </tr>
                   <tr>
                     <td><strong>3세대 (GNN·반응인지)</strong><br><span style="font-size:0.75rem; color:#64748b;">2022 ~ 2024</span></td>
                     <td><strong style="color:#059669;">GASA, DeepSA, DFRscore, BR-SAScore</strong></td>
                     <td>그래프 어텐션(GAT) 기반 위치이성질체 반응성 포착 + 상용 시약 조각(BFrag, $s_B=0$)과 반응 형성 조각(RFrag, $s_R&lt;0$) 정량 분리</td>
                     <td style="font-family:'JetBrains Mono';">1 ~ 10 ms<br>(밀리초 단위 산출)</td>
-                    <td><strong style="color:#b91c1c;">전이금속 노드 결함 및 완제품 직접 투입 시 오판</strong>: GASA(Hf, Ta, Ru, W, Mo 등 7종 0벡터 누락), DFRscore(금속 원자가 ELSE 노드로 축퇴). 단, <strong>중심 금속을 해리한 순수 유기 리간드($HL_i$) 단독 평가 시 100% 정상 통과</strong></td>
+                    <td><strong style="color:#b91c1c;">전이금속 노드 결함 및 완제품 직접 투입 시 오판</strong>: GASA(Hf, Ta, Ru, W, Mo 등 7종 0벡터 누락), DFRscore(금속 원자가 ELSE 노드로 축퇴). 단, <strong>중심 금속을 해리한 순수 유기 프로-리간드($HL_i$) 단독 평가 시 정상 동작함</strong></td>
                   </tr>
                   <tr>
                     <td><strong>4세대 (경로 내재화)</strong><br><span style="font-size:0.75rem; color:#64748b;">2024 ~ 2026</span></td>
                     <td><strong style="color:#d97706;">SynNet, ChemProjector, SynFormer, RxnFlow, BioNeMo ReaSyn</strong></td>
                     <td>점수만 내는 사후 필터링을 탈피하여 상용 출발 시약(Building Block)과 반응 템플릿의 도달 가능 화학 공간($\mathcal{M}_{\text{synth}}$)에서 역합성 트리 직접 생성</td>
-                    <td style="font-family:'JetBrains Mono';">40 ~ 100 ms<br>(완전 경로 생성)</td>
-                    <td><strong style="color:#b91c1c;">무기 착물화 템플릿 부재 (0건)</strong>: 내장된 수만~10만 개 템플릿이 100% 유기화학 전용이라 금속 착물 완제품 경로 생성 불가(0건). 단, <strong>유기 리간드의 역합성 트리 조제는 완벽 지원</strong></td>
+                    <td style="font-family:'JetBrains Mono';">40 ~ 100 ms<br>(경로 트리 생성)</td>
+                    <td><strong style="color:#b91c1c;">무기 착물화 템플릿 부재 (0건)</strong>: 내장된 유기화학 전용 템플릿(72~115종)으로는 금속 착물 완제품 경로 생성 불가(0건). 단, <strong>유기 리간드($HL_i$)의 역합성 트리 생성은 지원됨</strong></td>
                   </tr>
                 </tbody>
               </table>
@@ -1577,7 +1577,7 @@ flowchart TD
 
     subgraph STAGE4 ["Stage 4: 물리화학적 합성성 판정 (Synthesizability Output)"]
         D1 --> D2["2-Track TMC-SA + DFT: 순환 누수 없는 물리 기반 합성성 판정 완성"]
-        C8 --> D3["SAScore: 3/27 통과 (11.1 percent) 치명적 False Negative"]
+        C8 --> D3["SAScore: 3/27 통과 (11.1 percent) False Negative 편향"]
         B2 --> D4["SCScore: 23/27 통과 (85.2 percent) 위험 은폐"]
     end
 
@@ -1611,15 +1611,15 @@ flowchart TD
                   <tr>
                     <td><strong>RDKit SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(1세대 구조통계)</span></td>
                     <td style="text-align:center; color:#b91c1c; font-weight:700;">11.1%<br><span style="font-size:0.72rem;">(3/27 패스)</span></td>
-                    <td>극단적으로 단순한 규소 알콕사이드(<code>TEOS</code>: 2.84, <code>4DMAS</code>: 3.37) 및 페로센형 샌드위치 착물(<code>Ru(EtCp)2</code>: 3.48) <strong>단 3종만 패스</strong></td>
-                    <td><code>TSA</code>(6.91), <code>DMAH</code>(6.31), <code>TMA</code>(4.81), <code>TEMAH</code>(4.10) 등 <strong>팹 양산 전구체 88.9%를 '비천연 극악 구조'로 오판 기각</strong></td>
+                    <td>비교적 단순한 규소 알콕사이드(<code>TEOS</code>: 2.84, <code>4DMAS</code>: 3.37) 및 페로센형 샌드위치 착물(<code>Ru(EtCp)2</code>: 3.48) <strong>3종만 패스</strong></td>
+                    <td><code>TSA</code>(6.91), <code>DMAH</code>(6.31), <code>TMA</code>(4.81), <code>TEMAH</code>(4.10) 등 <strong>팹 양산 전구체 88.9%를 '합성 난이도 높은 구조'로 오판 기각</strong></td>
                     <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (전구체 단독 불가)</span><br><span style="font-size:0.75rem; color:#475569;">의약용 통계 사전 한계로 착물 완제품 직접 평가 불가.</span></td>
                   </tr>
                   <tr>
                     <td><strong>Reaxys SCScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 반응코퍼스)</span></td>
                     <td style="text-align:center; color:#059669; font-weight:700;">85.2%<br><span style="font-size:0.72rem;">(23/27 패스)</span></td>
                     <td>Reaxys 상용 반응 코퍼스 덕분에 <strong>양산 전구체 대다수(23종)를 합성 용이(1.01~1.94)로 정상 패스</strong></td>
-                    <td>화학 결합 에너지(BDE)를 인식하지 못해 <strong>상온 폭발성 <code>ZrMe4</code>(1.56)와 $\beta$-탈락 <code>TiEt4</code>(1.65)까지 100% 무비판 통과</strong></td>
+                    <td>화학 결합 에너지(BDE)를 인식하지 못해 <strong>상온 폭발성 <code>ZrMe4</code>(1.56)와 $\beta$-탈락 <code>TiEt4</code>(1.65)까지 별도 제재 없이 통과</strong></td>
                     <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">부분 적합 (보조 필터)</span><br><span style="font-size:0.75rem; color:#475569;">상용 시약 접근성 평가에 유용하나 폭발/안전 검증 필터 필수.</span></td>
                   </tr>
                   <tr>
@@ -1641,7 +1641,7 @@ flowchart TD
                     <td style="text-align:center; color:#dc2626; font-weight:700;">판정 불가<br><span style="font-size:0.72rem;">(원소 결함)</span></td>
                     <td>유기물 및 일부 기본 비금속 분자에만 한정적 점수 출력</td>
                     <td>GASA: <code>Hf, Mo, Ru, Ta, W</code> 7종 <strong>0벡터 침묵 누락</strong><br>DFRscore: 27종 전원 <strong>금속 원자가 'ELSE' 노드로 축퇴</strong></td>
-                    <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (원소 결함)</span><br><span style="font-size:0.75rem; color:#475569;">전이금속 노드 인코딩 원천 결함.</span></td>
+                    <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (원소 누락)</span><br><span style="font-size:0.75rem; color:#475569;">전이금속 노드 인코딩 시 원소 정보 손실.</span></td>
                   </tr>
                   <tr>
                     <td><strong>RxnFlow / SynNet</strong><br><span style="font-size:0.72rem; color:#64748b;">(4세대 경로생성)</span></td>
@@ -1656,7 +1656,7 @@ flowchart TD
 
             <div style="background:#eff6ff; border-left:4px solid #0284c7; padding:12px 16px; border-radius:0 6px 6px 0; font-size:0.84rem; color:#1e40af; line-height:1.6; margin-bottom:14px;">
               <strong>Step 2 핵심 결론 &amp; Step 3 연계:</strong> 순수 케모인포매틱스 AI 모델은 유기 리간드의 합성 난이도(3G BR-SAScore)나 상용 시약 접근성(2G SCScore, 4G RxnFlow)을 평가하는 데는 유용하지만, <strong>금속-리간드 배위 결합, 열분해 저항성(BDE), 이합체화 등 '무기 물리 화학'을 전혀 알지 못합니다.</strong><br>
-              이로 인해 발생하는 <strong>양산 전구체 오판 기각(FN)과 위험 분자 맹목 통과(FP)</strong>를 극복하기 위해, 다음 <strong>Step 3에서 양자 물리 계산 정보를 어떻게 결합할 것인지</strong>에 대한 통합 플랜으로 연결됩니다.
+              이로 인해 발생하는 <strong>양산 전구체 오판 기각(FN)과 위험 분자 오판 통과(FP)</strong>를 완화하기 위해, 다음 <strong>Step 3에서 양자 물리 계산 정보를 어떻게 결합할 것인지</strong>에 대한 통합 플랜으로 연결됩니다.
             </div>
 
             <div style="text-align:right;">
@@ -1682,45 +1682,45 @@ flowchart TD
 
           <div class="card" style="margin-bottom:20px; padding:20px;">
             <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:10px;">
-              1. 실측으로 드러난 Base 모델의 치명적 양방향 병리 (Dual Pathology)
+              1. 실측으로 확인된 Base 모델의 양방향 오분류 (Dual Error Pattern)
             </div>
             <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:14px;">
-              공개된 오픈소스 케모인포매틱스 모델들을 물리적 계산 없이 55종 실물 분자 세트에 직접 실행한 결과, 다음과 같은 극단적 오류가 발생했습니다:
+              공개된 오픈소스 케모인포매틱스 모델들을 물리적 계산 없이 55종 실증 분자 세트에 직접 실행한 결과, 다음과 같은 도메인 불일치 오류가 관측되었습니다:
             </p>
 
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
               <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:6px; padding:14px;">
                 <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">
-                  병리 1: 양산 전구체 위양성 기각 (False Negative 88.9%)
+                  오류 1: 양산 전구체 위음성 기각 (False Negative 88.9%)
                 </div>
                 <p style="font-size:0.84rem; color:#7f1d1d; line-height:1.55; margin:0;">
-                  글로벌 팹의 핵심 워크호스인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 전원 탈락했습니다. 27종 양산 전구체 중 단 3종만 통과하고 <strong>24종(88.9%)이 기각</strong>당하는 파행을 보였습니다.
+                  주요 팹 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 기준(SA &le; 3.5)을 초과해 기각되었습니다. 27종 양산 전구체 중 3종만 통과하고 <strong>24종(88.9%)이 탈락</strong>했습니다.
                 </p>
               </div>
 
               <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:14px;">
                 <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">
-                  병리 2: 위험·불량 분자 위음성 통과 (False Positive 100.0%)
+                  오류 2: 음성 대조군 위양성 통과 (합의 기준 False Positive 100.0%)
                 </div>
                 <p style="font-size:0.84rem; color:#78350f; line-height:1.55; margin:0;">
-                  반대로 상온 폭발성 <code>ZrMe4</code>(SC 1.76), 자발 열분해 <code>Ti(Et)4</code>(SC 1.88), 챔버 부식산 <code>트리클로로아세트산</code>(SC 1.15) 등 <strong>위험 물질 10종 전원(100.0%)을 '합성 용이'로 통과</strong>시켰습니다.
+                  반대로 열폭발성 <code>ZrMe4</code>(SC 1.56, RA 0.956), 열분해성 <code>Ti(Et)4</code>(SC 1.65, RA 0.972), 부식성 <code>트리클로로아세트산</code>(SC 1.01, RA 0.970) 등 음성 대조군 10종 중 SCScore 9종(90.0%) 및 베이스라인 합의 기준 <strong>10종 전원(100.0%)이 통과</strong>로 분류되었습니다.
                 </p>
               </div>
             </div>
 
             <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin:18px 0 10px 0;">
-              2. SevenNet-0 MLIP 기반 4대 핵심 물리 기둥 결합 플랜
+              2. SevenNet-0 기반 물리 피처 결합 및 감사 프로토콜
             </div>
             <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:14px;">
-              불필요한 표면 흡착 파라미터는 배제하고, 분자 자체의 안정성과 기화 승화성을 물리적으로 지배하는 <strong>4대 원자 스케일 물리 기둥</strong>을 정립하여 모델을 튜닝하였습니다:
+              분자 자체의 열적 안정성과 입체 보호도를 반영하기 위해 <code>7net-0</code> 비이완 단점 에너지·반경 스캔(Pillar 1, 3)과 SambVca 3D 매몰 부피(Pillar 2)를 결합하였습니다. 단, Pillar 4($\Delta E_{\text{complex}}$)는 대수적 근사 프록시로만 계산되어 ML 교차 검증 피처에서는 제외하였습니다:
             </p>
 
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:16px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
-                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Pillar 1. 결합 해리 및 응집 안정도</div>
+                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Pillar 1. 결합 해리 및 응집 에너지</div>
                 <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\text{BDE}_{\min},\; e_{\text{coh}}$$</div>
                 <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
-                  열분해 시작점 및 조기 분해 저항성 검출 (&beta;-수소 탈락 등 불안정성 분자 차단).
+                  결합 해리에너지(&lt; 45 kcal/mol) 및 원자당 응집에너지(&lt; 3.10 eV)를 통한 열적 해리 취약성 탐지.
                 </div>
               </div>
 
@@ -1728,7 +1728,7 @@ flowchart TD
                 <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Pillar 2. 3D 입체 차폐율</div>
                 <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\%V_{\text{bur}}\; (R=3.5\,\text{\AA})$$</div>
                 <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
-                  중심 금속의 리간드 보호도 (적정 단량체 창: 60% ~ 82%). 과밀 분해(&gt;85%) 및 과소배위(&lt;50%) 감지.
+                  중심 금속의 리간드 차폐도 평가. 과밀 충돌(&gt; 83.5%) 페널티 및 과소배위(&lt; 44.0%) 조건 식별.
                 </div>
               </div>
 
@@ -1736,23 +1736,23 @@ flowchart TD
                 <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Pillar 3. 이합체화 상호작용</div>
                 <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\Delta E_{\text{dimer}}$$</div>
                 <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
-                  과소배위로 인한 불휘발성 올리고머/고체 침전 방지 (&ge; 0 kcal 휘발성 단량체 유지).
+                  과소배위(&lt; 44%) 상태에서 $\Delta E_{\text{dimer}} &lt; -1.5\text{ kcal/mol}$일 때의 올리고머화 경향 반영.
                 </div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
-                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Pillar 4. 착물화 복분해 구동력</div>
-                <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\Delta E_{\text{complex}}$$</div>
+                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Pillar 4. 착물화 구동력 (근사 프록시)</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\Delta E_{\text{complex}}^{\text{proxy}}$$</div>
                 <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
-                  금속 할로겐화물로부터 전구체 착물 합성(Salt Metathesis)의 열역학적 자발성 (&lt; 0 kcal/mol).
+                  현재 대수적 페널티 조합으로만 근사 산출(ML 학습 제외). 향후 실제 염 복분해 DFT 계산으로 대체 예정.
                 </div>
               </div>
             </div>
 
             <div style="background:#f0f9ff; border:1px solid #bae6fd; border-left:4px solid #0284c7; border-radius:6px; padding:14px; margin-top:14px;">
-              <div style="font-weight:700; color:#0369a1; font-size:0.9rem; margin-bottom:4px;">수학적 연속 페널티 함수 ($C^\infty$ Smooth Penalty):</div>
+              <div style="font-weight:700; color:#0369a1; font-size:0.9rem; margin-bottom:4px;">수학적 연속 페널티 함수 ($C^\infty$ Smooth Penalty) 및 비편향 평가:</div>
               <div style="font-size:0.84rem; color:#334155; line-height:1.5;">
-                불연속 계단식(Step) 페널티 대신, 미분 가능하고 경계 도약이 없는 페르미-디락(Fermi-Dirac) 시그모이드 장벽과 Softplus 함수를 적용하여 생성형 AI 보상 함수로 직접 활용 가능한 종합 물리 점수 $\text{TMC-SA}_{\text{phys}}$ 수식을 완비하였습니다.
+                계단식 페널티 대신 미분 가능한 페르미-디락(Fermi-Dirac) 시그모이드 장벽을 적용한 <code>TMC-SA<sub>phys</sub> &le; 4.0</code> 기준으로 평가하였으며, 타깃 라벨 분기나 분자 ID 하드코딩을 배제한 균일 판정과 일반 SMARTS 규칙(-COOH / 불활성 알케인) 병용 결과 및 한계를 함께 검증하였습니다.
               </div>
             </div>
           </div>
@@ -1763,34 +1763,34 @@ flowchart TD
           <div class="storyline-step-header">
             <span class="step-badge">4</span>
             <div>
-              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 4 &bull; Empirical Benchmark Synthesis</div>
-              <h3 class="storyline-step-title">55종 실증 벤치마크 평가 결과 정리 &amp; 핵심 시사점</h3>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 4 &bull; Audited Benchmark Results</div>
+              <h3 class="storyline-step-title">55종 실증 벤치마크 재평가 결과 및 방법론적 한계</h3>
             </div>
           </div>
 
           <div class="card" style="margin-bottom:24px; padding:20px;">
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-bottom:20px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">전구체 위양성 기각률 (FN)</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#059669; margin:4px 0;">88.9% &rarr; 3.7%</div>
-                <div style="font-size:0.8rem; color:#475569;">27종 중 26종 정상 판정 복원 (-85.2%p 혁신)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">균일 스크리닝 전구체 FN 감소</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#059669; margin:4px 0;">88.9% &rarr; 7.4%</div>
+                <div style="font-size:0.8rem; color:#475569;">27종 중 25종 통과 (92.6%), 인히비터 18/18 (100.0%)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #6366f1; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">위험 분자 위음성 통과율 (FP)</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#4338ca; margin:4px 0;">100.0% &rarr; 0.0%</div>
-                <div style="font-size:0.8rem; color:#475569;">폭발성·열분해 10종 전원 차단 (100% 정화)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">음성 대조군 오판율 (Un-Hardcoded FP)</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#4338ca; margin:4px 0;">100.0% &rarr; 50.0%</div>
+                <div style="font-size:0.8rem; color:#475569;">물리 3/10 차단 &rarr; +SMARTS 5/10 차단 (5종 미차단 잔존)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">물리 피처 머신러닝 기여도</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#0369a1; margin:4px 0;">34.6%</div>
-                <div style="font-size:0.8rem; color:#475569;">E_coh, BDE, &Delta;E_cplx, %Vbur 누적 기여</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">ML 검증: All-Sample vs LOOCV</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#0369a1; margin:4px 0;">1.000 &rarr; 0.782</div>
+                <div style="font-size:0.8rem; color:#475569;">Combined RF LOOCV Acc 0.782 (Spec 0.100) vs Base 0.873</div>
               </div>
             </div>
 
             <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:10px;">
-              대표 분자별 실측 선별 사례 (SevenNet-0 실측치)
+              대표 분자별 SevenNet-0 실측치 및 균일 판정 결과 (비이완 단점, 1290.8s 실행 기준)
             </div>
             <div style="overflow-x:auto; margin-bottom:20px;">
               <table class="report-table" style="font-size:0.84rem;">
@@ -1801,7 +1801,7 @@ flowchart TD
                     <th style="text-align:center;">입체 차폐율 (%Vbur)</th>
                     <th style="text-align:center;">이합체 에너지 (&Delta;E_dim)</th>
                     <th style="text-align:center;">결합 해리 (BDE)</th>
-                    <th>최종 물리적 판정 및 메커니즘</th>
+                    <th>균일 물리 판정 (TMC-SA<sub>phys</sub> &le; 4.0) 및 관찰 소견</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1809,17 +1809,17 @@ flowchart TD
                     <td><strong>TDMAT</strong></td>
                     <td><span class="badge badge-prec">양산 전구체</span></td>
                     <td style="text-align:center; font-weight:700; color:#047857;">73.6%</td>
-                    <td style="text-align:center; font-weight:700; color:#047857;">+27.9 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700; color:#047857;">+82.9 kcal/mol</td>
                     <td style="text-align:center;">67.0 kcal/mol</td>
-                    <td><span class="badge badge-success">양산 적합 (Pass)</span> 충분한 입체 차폐로 상온 휘발성 단량체 완벽 유지</td>
+                    <td><span class="badge badge-success">통과 TP (1.02)</span> 충분한 입체 차폐 및 BDE로 단량체 구간 충족</td>
                   </tr>
                   <tr>
                     <td><strong>TEMAH</strong></td>
                     <td><span class="badge badge-prec">양산 전구체</span></td>
                     <td style="text-align:center; font-weight:700; color:#047857;">78.0%</td>
-                    <td style="text-align:center; font-weight:700; color:#047857;">+34.4 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700; color:#047857;">+20.5 kcal/mol</td>
                     <td style="text-align:center;">70.4 kcal/mol</td>
-                    <td><span class="badge badge-success">양산 적합 (Pass)</span> 이상적 단량체 윈도우(60~82%) 내 위치, 고휘발성 증기압</td>
+                    <td><span class="badge badge-success">통과 TP (2.33)</span> 적정 입체 창(60~82%) 및 열적 결합 안정성 확인</td>
                   </tr>
                   <tr>
                     <td><strong>TMA (AlMe3)</strong></td>
@@ -1827,31 +1827,31 @@ flowchart TD
                     <td style="text-align:center; font-weight:700; color:#b45309;">41.7%</td>
                     <td style="text-align:center; font-weight:700; color:#b91c1c;">-2.5 kcal/mol</td>
                     <td style="text-align:center;">87.9 kcal/mol</td>
-                    <td><span class="badge badge-warning">가교 이합체 주의</span> 과소배위로 인해 상온에서 자발적 Al2Me6 이합체 형성 실측 재현</td>
+                    <td><span class="badge badge-warning">통과 TP (2.95)</span> 이합체화 페널티(+1.92) 반영되나 리간드 SA(1.00)가 낮아 4.0 이하 통과</td>
                   </tr>
                   <tr>
                     <td><strong>Ti(OH)4 (Sol)</strong></td>
                     <td><span class="badge badge-4g">음성 대조군</span></td>
-                    <td style="text-align:center; font-weight:700; color:#b91c1c;">37.7%</td>
-                    <td style="text-align:center; font-weight:700; color:#b91c1c;">-0.5 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700; color:#b45309;">37.7%</td>
+                    <td style="text-align:center; font-weight:700; color:#b45309;">-0.5 kcal/mol</td>
                     <td style="text-align:center;">104.7 kcal/mol</td>
-                    <td><span class="badge badge-4g">침전 기각 (Reject)</span> 리간드 보호 부재로 분자 간 자발적 비가역 축합 침전 (불용성 TiO2 발생)</td>
+                    <td><span class="badge badge-4g">미차단 FP (1.90)</span> 비이완 단점 이합체 에너지(-0.5)가 -1.5 기준에 미달하여 통과됨(축합 장벽 별도 필요)</td>
                   </tr>
                   <tr>
                     <td><strong>WPh5</strong></td>
                     <td><span class="badge badge-4g">음성 대조군</span></td>
                     <td style="text-align:center; font-weight:700; color:#b91c1c;">86.4%</td>
-                    <td style="text-align:center;">+47.1 kcal/mol</td>
-                    <td style="text-align:center;">185.8 kcal/mol</td>
-                    <td><span class="badge badge-4g">과밀 분해 (Reject)</span> 극단적 입체 과밀(%Vbur &gt; 85%)에 따른 리간드 자발 분해 파괴</td>
+                    <td style="text-align:center;">+616.0 kcal/mol</td>
+                    <td style="text-align:center;">117.0 kcal/mol</td>
+                    <td><span class="badge badge-success">차단 TN (4.32)</span> 높은 입체 과밀(%Vbur 86.4% &gt; 83.5%)에 따른 연속 페널티(+3.32)로 정상 차단</td>
                   </tr>
                   <tr>
                     <td><strong>CoEt4</strong></td>
                     <td><span class="badge badge-4g">음성 대조군</span></td>
                     <td style="text-align:center;">66.2%</td>
-                    <td style="text-align:center;">+16.8 kcal/mol</td>
+                    <td style="text-align:center;">+23.6 kcal/mol</td>
                     <td style="text-align:center; font-weight:700; color:#b91c1c;">42.9 kcal/mol</td>
-                    <td><span class="badge badge-4g">열분해 기각 (Reject)</span> 낮은 BDE(&lt; 45 kcal)로 인해 상온 기화 전 &beta;-수소 탈락 및 라디칼 폭발</td>
+                    <td><span class="badge badge-4g">미차단 FP (3.61)</span> 낮은 BDE(42.9 &lt; 45)로 페널티(+2.60)는 부과되나 에틸 리간드 SA(1.01)가 낮아 4.0 기준 통과</td>
                   </tr>
                 </tbody>
               </table>
@@ -2149,7 +2149,7 @@ flowchart LR
                 <span class="badge badge-4g">4세대: 합성 경로 내재화 생성 및 투영 (2024 ~ 2026)</span>
                 <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">ChemProjector &bull; SynFormer &bull; SynFlowNet &bull; RxnFlow &bull; ReaSyn</span>
               </div>
-              <h4 style="font-size:1.12rem; color:var(--text-primary); margin-bottom:8px;">사후 필터링에서 경로 보장 생성(By-Design Synthesizability)으로의 전환</h4>
+              <h4 style="font-size:1.12rem; color:var(--text-primary); margin-bottom:8px;">사후 필터링에서 경로 내재화 생성(By-Design Synthesizability)으로의 전환</h4>
               <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:10px;">
                 상용 빌딩 블록과 반응 템플릿의 조합으로 도달 가능한 화학 공간($\mathcal{M}_{\text{synth}}$) 내부에서만 분자를 생성하거나, 비합성 분자를 가장 가까운 합성 가능 분자로 투영(Projection)합니다.
               </p>
@@ -2373,7 +2373,7 @@ flowchart LR
                   <td>빌딩 블록 풀 + 합성 반응</td>
                   <td>경로 확률 표집 (Diverse Pool)</td>
                   <td>~ 40 ms</td>
-                  <td>100% (보장된 합성 궤적)</td>
+                  <td>100% (산출 경로 트리 포함)</td>
                   <td><a href="downloaded_papers/SynFlowNet_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SynFlowNet_2025.pdf', 'https://doi.org/10.48550/arXiv.2502.13840')" target="_blank" class="btn-pdf">PDF (8.1MB)</a></td>
                 </tr>
                 <tr>
@@ -2428,7 +2428,7 @@ flowchart LR
         <div class="card">
           <h3 class="card-title">2. V-SYNTH (Sadybekov et al., Nature 2022) &amp; Enamine REAL Space</h3>
           <p style="color:var(--text-secondary); font-size:0.94rem; margin-bottom:10px;">
-            화합물을 임의로 생성하는 대신, 검증된 140여 종의 고수율 반응과 10만 개 이상의 상용 빌딩 블록을 조합하여 <strong>수백억 개 규모의 합성 보장 가상 공간(Synthesizable Chemical Space)</strong>을 탐색하는 접근법입니다.
+            화합물을 임의로 생성하는 대신, 검증된 140여 종의 고수율 반응과 10만 개 이상의 상용 빌딩 블록을 조합하여 <strong>수백억 개 규모의 합성 가능 가상 공간(Synthesizable Chemical Space)</strong>을 탐색하는 접근법입니다.
           </p>
           <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px; line-height:1.7;">
             <li><strong>신톤(Synthon) 기반 계층적 탐색:</strong> 110억 개 화합물 전체를 열거하지 않고 반응 코어 신톤(Core synthon)을 먼저 도킹·스크리닝한 뒤 곁사슬을 확장하여 연산 비용을 수천 분의 일로 절감합니다. (Nature 2022, DOI: <a href="https://doi.org/10.1038/s41586-021-04220-9" target="_blank">10.1038/s41586-021-04220-9</a>)</li>
@@ -2571,7 +2571,7 @@ flowchart TD
 
     subgraph STAGE4 ["Stage 4: 물리화학적 합성성 판정 (Synthesizability Output)"]
         D1 --> D2["2-Track TMC-SA + DFT: 순환 누수 없는 물리 기반 합성성 판정 완성"]
-        C8 --> D3["SAScore: 3/27 통과 (11.1 percent) 치명적 False Negative"]
+        C8 --> D3["SAScore: 3/27 통과 (11.1 percent) False Negative 편향"]
         B2 --> D4["SCScore: 23/27 통과 (85.2 percent) 위험 은폐"]
     end
 
@@ -2675,7 +2675,7 @@ flowchart TD
           <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid var(--accent-blue); border-radius:6px; padding:12px 16px; margin-bottom:16px; font-size:0.88rem; line-height:1.55;">
             <strong>&bull; 최신 생성·역합성 모델(RxnFlow & BioNeMo ReaSyn)의 반도체 프리커서 실측 핵심 진단:</strong><br>
             1. <strong>RxnFlow (ICLR 2025, GFlowNet 기반 합성 인지 분자 설계)</strong>: Explore(30개: 단분자 4 + 이분자 26) 및 CGFlow(42개: 단분자 4 + 이분자 38) 총 72개 템플릿으로 실측한 결과, DIPAS, TEMAH, TEMAZ, BTBMW 등 9종(33.3%)에서 역반응 SMARTS 매칭이 탐지되었으나, 이는 <em>아민에 결합된 이소프로필기 또는 에틸기 알킬 사슬의 일반 생성물 부분구조(환원적 아민화 등)</em>에 불과하며, <strong>템플릿 파일 내 금속 원자가 단 1개도 없어 중심 금속-리간드 결합(Si-N, Ti-N, Zr-N, Ru-Cp, Al-C)을 형성하는 규칙은 0개</strong>로 확인되었습니다. 따라서 반도체 프리커서 생성에는 하이브리드 리간드 분해 프로토콜(\(M(L)_n \rightarrow MCl_n + n HL_i\))이 절대적으로 요구됩니다.<br>
-            2. <strong>BioNeMo ReaSyn (ICLR 2026 Oral, NVIDIA 생성 경로 정제 프레임워크)</strong>: 공식 구현된 <code>tokenize_smiles</code> 실측 결과, <code>_smiles_vocab</code>에 전이금속(Ti, Zr, Hf, Ru, W, Mo, Al, Co 등)이 기본 내장되어 있어 <strong>27종 전체 프리커서에 대해 Out-of-Vocabulary 에러 0건(100% 완벽 토큰화 및 무손실 복원)</strong>을 달성하였습니다. 그러나 115종 반응 템플릿(SynFormer 특허 데이터셋)에는 금속 원자가 전무하고 일반 생성물 부분구조(전체 24/27; 무탄소 TSA를 매칭하는 단일 질소 패턴 <code>#84 [N:1]</code> 제외 시 23/27)만 존재하므로, ALD/CVD 전용 무기 염 복분해(Salt Metathesis) 및 아미노분해(Aminolysis) 규칙 확장이 필수적입니다.
+            2. <strong>BioNeMo ReaSyn (ICLR 2026 Oral, NVIDIA 생성 경로 정제 프레임워크)</strong>: 공식 구현된 <code>tokenize_smiles</code> 실측 결과, <code>_smiles_vocab</code>에 전이금속(Ti, Zr, Hf, Ru, W, Mo, Al, Co 등)이 기본 내장되어 있어 <strong>27종 전체 프리커서에 대해 Out-of-Vocabulary 에러 0건(100% 무손실 토큰화 및 복원)</strong>을 달성하였습니다. 그러나 115종 반응 템플릿(SynFormer 특허 데이터셋)에는 금속 원자가 부재하고 일반 생성물 부분구조(전체 24/27; 무탄소 TSA를 매칭하는 단일 질소 패턴 <code>#84 [N:1]</code> 제외 시 23/27)만 존재하므로, ALD/CVD 전용 무기 염 복분해(Salt Metathesis) 및 아미노분해(Aminolysis) 규칙 확장이 필요합니다.
           </div>
 
           <div class="table-responsive">
@@ -2736,7 +2736,7 @@ flowchart TD
                   <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#b91c1c;">11.1%<br><span style="font-size:0.75rem; font-weight:normal;">(3/27)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>무기 결합 빈도 결여 및 가교 오인:</strong><br>
-                    &bull; Si-N, Al-C, Zr-O 단편 빈도 전무 &rarr; 음의 로그빈도로 극단적 감점.<br>
+                    &bull; Si-N, Al-C, Zr-O 단편 빈도 부재 &rarr; 큰 음의 로그빈도로 높은 감점 부여.<br>
                     &bull; TSA(6.91), DMAH(6.31) 등 초간단 1단계 양산 물질에 비합성 판정.<br>
                     &bull; 금속 킬레이트 고리를 거대고리/브릿지헤드로 오인하여 이중 감점.
                   </td>
@@ -2756,7 +2756,7 @@ flowchart TD
                   <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#15803d;">85.2%<br><span style="font-size:0.75rem; font-weight:normal;">(23/27)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>초기 원료 편향에 의한 위험성 은폐:</strong><br>
-                    &bull; Reaxys 반응쌍에서 유기금속이 '출발 반응물/촉매'로 등록되어 저분자량 전구체를 1점대 극단적 저복잡도로 분류.<br>
+                    &bull; Reaxys 반응쌍에서 유기금속이 '출발 반응물/촉매'로 등록되어 저분자량 전구체를 1점대 저복잡도로 분류.<br>
                     &bull; TMA(1.21), DMAH(1.01) 등 자연발화성(Pyrophoric) 위험 물질의 실무 취급 난이도 완전 무시.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
@@ -2776,7 +2776,7 @@ flowchart TD
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>메탈로센/샌드위치 착체 점수 붕괴:</strong><br>
                     &bull; Ru(EtCp)2(<strong>-44.27</strong>), CpTi(<strong>-24.98</strong>), CpZr(<strong>-24.98</strong>), ZMA(<strong>-18.21</strong>).<br>
-                    &bull; ZINC 의약 DB에 금속-Cp 배위 단편 전무 &rarr; 음성 가상 고리 세트와 유사하여 극단적 음수 붕괴.
+                    &bull; ZINC 의약 DB에 금속-Cp 배위 단편 부재 &rarr; 음성 가상 고리 세트와 유사하게 분류되어 큰 음수로 산출됨.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
                     <strong>비환식 아미노실란/아미드 정상성:</strong><br>
@@ -2813,7 +2813,7 @@ flowchart TD
                   <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#b91c1c;">0.0% 유효<br><span style="font-size:0.75rem; font-weight:normal; color:#64748b;">(수치 100% FP)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>소형 분자 치환기 과대평가 맹점:</strong><br>
-                    &bull; 전수 평균 0.925로 비정상 과대평가.<br>
+                    &bull; 전수 평균 0.925로 과대평가 경향.<br>
                     &bull; ECFP6 핑거프린트 비트가 디메틸아미노, 이소프로필 등 저분자 알킬기에 편향되어 중심금속 결합 불안정성을 감지 못함.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
@@ -2836,8 +2836,8 @@ flowchart TD
                     &bull; 72개 템플릿 파일 내 금속 원자가 단 1개도 없어 온전한 프리커서 역합성 불가.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
-                    <strong>신톤 경로 100% 보장성:</strong><br>
-                    &bull; 생성된 모든 분자가 빌딩블록 라이브러리와 유효 반응 템플릿의 DAG 트리로 보장되어 가상 분자 생성 방지.
+                    <strong>신톤 경로 내재화 특성:</strong><br>
+                    &bull; 생성된 분자가 빌딩블록 라이브러리와 유효 반응 템플릿의 DAG 트리로 구성되어 미지 화학 공간 이탈을 줄임.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45;">
                     <strong>하이브리드 리간드 분해 프로토콜:</strong><br>
@@ -2856,7 +2856,7 @@ flowchart TD
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
                     <strong>118종 전원소 무손실 토큰화:</strong><br>
-                    &bull; Ti, Zr, Hf, Ru, W, Mo, Al, Co 등 전이금속을 기본 어휘로 내장하여 27종 전체 100% 완벽 토큰화 및 복원 달성.
+                    &bull; Ti, Zr, Hf, Ru, W, Mo, Al, Co 등 전이금속을 기본 어휘로 내장하여 27종 전체 손실 없이 토큰화 및 복원(0 UNK) 달성.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45;">
                     <strong>반도체 전용 파인튜닝 (ReaSyn-Semi):</strong><br>
@@ -2871,11 +2871,11 @@ flowchart TD
                   <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#6366f1;">수용 100.0%<br><span style="color:#475569; font-size:0.72rem;">MCTS 미실행(null)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>가중치 미설치(MCTS 미실행 null) &amp; 무기 정책 결여:</strong><br>
-                    &bull; <code>Molecule(smiles=smi).sanitize()</code> 직접 호출로 분자 수용은 27/27 완벽 검증되었으나, 외부 USPTO 가중치 미설치로 실제 MCTS 탐색은 미실행(<code>null</code> 처리). 정적 분석 상 USPTO 50k에는 유기금속 배위 규칙이 부재함.
+                    &bull; <code>Molecule(smiles=smi).sanitize()</code> 직접 호출로 분자 수용은 27/27 검증되었으나, 외부 USPTO 가중치 미설치로 실제 MCTS 탐색은 미실행(<code>null</code> 처리). 정적 분석 상 USPTO 50k에는 유기금속 배위 규칙이 부재함.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
                     <strong>검증된 산업용 CASP 엔진:</strong><br>
-                    &bull; 분자 원자가 검증, InChIKey 생성, 다단계 경로 시각화 및 시약 재고 연동 아키텍처가 완벽히 구축되어 있음.
+                    &bull; 분자 원자가 검증, InChIKey 생성, 다단계 경로 시각화 및 시약 재고 연동 아키텍처가 구축되어 있음.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45;">
                     자체 구축한 <code>reactions.json</code> 기반의 <strong>반도체 커스텀 Policy 및 Stock</strong>을 <code>config.yml</code>에 연결하여 운용.
@@ -2900,11 +2900,11 @@ flowchart TD
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:0.86rem; line-height:1.55;">
                 <div style="background:#f8fafc; padding:12px 14px; border-radius:6px; border-left:3px solid #64748b;">
                   <strong>&bull; 아키텍처 및 수학적 공식:</strong><br>
-                  분자 $m$ 내의 원형 토폴로지 단편($f_i \in 	ext{Morgan}(r=2)$)의 대규모 DB 빈도 로그합과 복잡도 패널티의 선형 결합입니다:
+                  분자 $m$ 내의 원형 토폴로지 단편($f_i \in \text{Morgan}(r=2)$)의 대규모 DB 빈도 로그합과 복잡도 패널티의 선형 결합입니다:
                   <div style="margin:6px 0; overflow-x:auto;">
-                    $$	ext{SAScore}(m) = rac{1}{|A|}\sum_{i \in A} s(f_i) + 	ext{penalties}(m), \quad s(f) = \log_{10} P(f)$$
+                    $$\text{SAScore}(m) = \frac{1}{|A|}\sum_{i \in A} s(f_i) + \text{penalties}(m), \quad s(f) = \log_{10} P(f)$$
                   </div>
-                  $	ext{penalties}$는 거대고리($>8$원환), 브릿지헤드/스피로 탄소, 비대칭 카이랄 중심수 및 원자수 비선형 스케일($|A|^{1.005}$)을 감점합니다.
+                  $\text{penalties}$는 거대고리($>8$원환), 브릿지헤드/스피로 탄소, 비대칭 카이랄 중심수 및 원자수 비선형 스케일($|A|^{1.005}$)을 감점합니다.
                 </div>
                 <div style="background:#f8fafc; padding:12px 14px; border-radius:6px; border-left:3px solid #64748b;">
                   <strong>&bull; 학습 데이터셋:</strong><br>
@@ -2913,8 +2913,8 @@ flowchart TD
               </div>
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#fff7ed; border:1px solid #ffedd5; border-radius:6px; padding:12px 16px;">
                 <strong style="color:#c2410c;">&bull; 반도체 프리커서 실측 왜곡 원인 분석 (Why It Fails):</strong><br>
-                1. <strong>무기 결합 빈도 결여에 의한 허위 감점:</strong> TSA ($	ext{N(SiH}_3)_3$, 실측치 <strong>6.91</strong>), DMAH ($	ext{Al(C}_2	ext{H}_5)_2	ext{H}$, 실측치 <strong>6.31</strong>), TMA ($	ext{Al(CH}_3)_3$, 실측치 <strong>4.81</strong>) 등 양산 라인에서 단 1단계로 합성되는 초간단 물질이 6~7점대의 극심한 합성 불가 판정을 받았습니다. PubChem 의약 DB에 $	ext{Si-N, Al-C, Ti-N, Zr-O}$ 단편이 거의 없어 $s(f) 	o 	ext{min}$ 페널티가 누적되기 때문입니다.<br>
-                2. <strong>배위 유사 고리의 브릿지헤드 오인:</strong> 중심금속을 공유하는 킬레이트 링(아미디네이트, $eta$-디케토네이트 등)을 RDKit 고리 탐색기가 복잡한 가교고리(Bridgehead ring)로 잘못 인식하여 막대한 복잡도 감점을 부과합니다.
+                1. <strong>무기 결합 빈도 결여에 의한 허위 감점:</strong> TSA ($\text{N(SiH}_3)_3$, 실측치 <strong>6.91</strong>), DMAH ($\text{Al(C}_2\text{H}_5)_2\text{H}$, 실측치 <strong>6.31</strong>), TMA ($\text{Al(CH}_3)_3$, 실측치 <strong>4.81</strong>) 등 양산 라인에서 단 1단계로 합성되는 단순 구조 물질이 6~7점대의 높은 합성 난이도 판정을 받았습니다. PubChem 의약 DB에 $\text{Si-N, Al-C, Ti-N, Zr-O}$ 단편이 거의 없어 $s(f) \to \text{min}$ 페널티가 누적되기 때문입니다.<br>
+                2. <strong>배위 유사 고리의 브릿지헤드 오인:</strong> 중심금속을 공유하는 킬레이트 링(아미디네이트, $\beta$-디케토네이트 등)을 RDKit 고리 탐색기가 복잡한 가교고리(Bridgehead ring)로 잘못 인식하여 높은 복잡도 감점을 부과합니다.
               </div>
             </div>
 
@@ -2932,7 +2932,7 @@ flowchart TD
                   <strong>&bull; 아키텍처 및 손실 함수:</strong><br>
                   1024-bit Morgan Fingerprint를 입력받아 12개 완전연결층(Dense layer, 300 은닉노드)을 거쳐 연속 복잡도 점수 $S(m) \in [1, 5]$를 출력하는 심층 신경망입니다:
                   <div style="margin:6px 0; overflow-x:auto;">
-                    $$\mathcal{L}(R, P) = \max\Big(0, 1 - ig(S(P) - S(R)ig)\Big)$$
+                    $$\mathcal{L}(R, P) = \max\Big(0, 1 - \big(S(P) - S(R)\big)\Big)$$
                   </div>
                   반응물 $R$보다 생성물 $P$의 합성 복잡도가 항상 크다는 전제하에 pairwise ranking margin 손실로 훈련되었습니다.
                 </div>
@@ -2945,7 +2945,7 @@ flowchart TD
                 <strong style="color:#1d4ed8;">&bull; 실측 분석: 왜 낮게 나오며, 어떤 위험한 맹점이 있는가? (Early Reactant Bias vs. Complexity):</strong><br>
                 1. <strong>초기 반응물 편향(Early-stage Reactant Bias):</strong> 27종 중 23종이 1.01~1.98의 매우 낮은 점수를 기록했습니다(HCDS 1.02, DMAH 1.01, TMA 1.21, TTIP 1.25, TDMAT 1.31). Reaxys DB에서 이 물질들은 복잡한 의약 분자의 합성 종착점이 아니라 '촉매, 알킬화제, 환원 시약'으로 대량 투입되는 출발 물질이기 때문에 신경망이 합성 초기로 인식합니다.<br>
                 2. <strong>자연발화성 위험성 은폐:</strong> TMA나 DMAH는 공기 중 노출 시 폭발적으로 자연 발화(Pyrophoric)하고 격렬히 가수분해되는 극위험 물질임에도 스코어가 ~1.0으로 매겨져 실무적 공정 취급 난이도와 괴리가 발생합니다.<br>
-                3. <strong>입체 복잡도 감지 유효성:</strong> 반면 입체 장해가 큰 $	ext{ZMA}$(2.72), $	ext{Co(AMD)}_2$(2.38), $	ext{CpZr}$(2.22)은 핑거프린트 밀도 증가에 따라 복잡도가 정량적으로 상승하여 리간드 벌키성 판별에는 유효함이 입증되었습니다.
+                3. <strong>입체 복잡도 감지 유효성:</strong> 반면 입체 장해가 큰 $\text{ZMA}$(2.72), $\text{Co(AMD)}_2$(2.38), $\text{CpZr}$(2.22)은 핑거프린트 밀도 증가에 따라 복잡도가 정량적으로 상승하여 리간드 벌키성 판별에는 유효함이 입증되었습니다.
               </div>
             </div>
 
@@ -2963,9 +2963,9 @@ flowchart TD
                   <strong>&bull; 아키텍처 및 로그 공산비:</strong><br>
                   나이브 베이즈 확률 분류기입니다. 25.7MB 크기의 단편 라이브러리를 기반으로 합성 가능 클래스(ES)와 비합성 클래스(Non-ES) 간의 로그 공산비(Log-odds ratio)를 합산합니다:
                   <div style="margin:6px 0; overflow-x:auto;">
-                    $$	ext{SYBA}(m) = \sum_{f \in \mathcal{F}(m)} \ln rac{P(f \mid 	ext{Synthesizable})}{P(f \mid 	ext{Non-synthesizable})}$$
+                    $$\text{SYBA}(m) = \sum_{f \in \mathcal{F}(m)} \ln \frac{P(f \mid \text{Synthesizable})}{P(f \mid \text{Non-synthesizable})}$$
                   </div>
-                  $	ext{SYBA} > 0$이면 합성 가능(양성), $	ext{SYBA} < 0$이면 합성 불가능(음성)으로 2분 판정합니다.
+                  $\text{SYBA} > 0$이면 합성 가능(양성), $\text{SYBA} < 0$이면 합성 불가능(음성)으로 2분 판정합니다.
                 </div>
                 <div style="background:#f8fafc; padding:12px 14px; border-radius:6px; border-left:3px solid #64748b;">
                   <strong>&bull; 학습 데이터셋:</strong><br>
@@ -2973,9 +2973,9 @@ flowchart TD
                 </div>
               </div>
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#fef2f2; border:1px solid #fee2e2; border-radius:6px; padding:12px 16px;">
-                <strong style="color:#991b1b;">&bull; 실측 분석: 왜 비환식 전구체는 맞고, 샌드위치 착체는 극단적으로 붕괴하는가? (Cp Collapse):</strong><br>
-                1. <strong>비환식 아미노실란/알콕사이드의 적합성:</strong> DIPAS(+10.56), BTBAS(+11.18), TEMAH(+10.56) 등 23종은 $+3.96 \sim +11.98$의 높은 양수를 기록했습니다. 이들 리간드의 알킬아민 및 에테르 단편이 ZINC 의약 DB에 대량 존재하여 양성 확률 $P(f \mid 	ext{Synthesizable})$이 우세하기 때문입니다.<br>
-                2. <strong>사이클로펜타디에닐(Cp) 착체의 재앙적 붕괴:</strong> $	ext{Ru(EtCp)}_2$ (**-44.27**), $	ext{CpTi(NMe}_2)_3$ (**-24.98**), $	ext{CpZr(NMe}_2)_3$ (**-24.98**), $	ext{ZMA}$ (**-18.21**)는 극단적인 음수 폭탄을 맞았습니다. ZINC 의약품에는 전이금속에 $\eta^5$-배위된 방향족 탄소 5원환 단편이 전무하여 $P(f \mid 	ext{ZINC}) 	o 0$인 반면, 무작위 생성 음성 세트의 비정상 고리 토폴로지와 유사하다고 판단하기 때문입니다.
+                <strong style="color:#991b1b;">&bull; 실측 분석: 왜 비환식 전구체는 통과하고, 샌드위치 착체는 큰 음수로 산출되는가? (Cp Collapse):</strong><br>
+                1. <strong>비환식 아미노실란/알콕사이드의 적합성:</strong> DIPAS(+10.56), BTBAS(+11.18), TEMAH(+10.56) 등 23종은 $+3.96 \sim +11.98$의 높은 양수를 기록했습니다. 이들 리간드의 알킬아민 및 에테르 단편이 ZINC 의약 DB에 대량 존재하여 양성 확률 $P(f \mid \text{Synthesizable})$이 우세하기 때문입니다.<br>
+                2. <strong>사이클로펜타디에닐(Cp) 착체의 큰 음수 붕괴:</strong> $\text{Ru(EtCp)}_2$ (<strong>-44.27</strong>), $\text{CpTi(NMe}_2)_3$ (<strong>-24.98</strong>), $\text{CpZr(NMe}_2)_3$ (<strong>-24.98</strong>), $\text{ZMA}$ (<strong>-18.21</strong>)은 큰 음수 점수로 분류되었습니다. ZINC 의약품에는 전이금속에 $\eta^5$-배위된 방향족 탄소 5원환 단편이 부재하여 $P(f \mid \text{ZINC}) \to 0$인 반면, 무작위 생성 음성 세트의 비정상 고리 토폴로지와 유사하다고 판단하기 때문입니다.
               </div>
             </div>
 
@@ -2993,7 +2993,7 @@ flowchart TD
                   <strong>&bull; 아키텍처 및 탈커플링 수학적 원리:</strong><br>
                   합성 접근성을 '시판 원료 단편($BFrag$)'과 '반응 생성 단편($RFrag$)'으로 엄격히 분리하여 연산합니다:
                   <div style="margin:6px 0; overflow-x:auto;">
-                    $$	ext{BR-SAScore}(m) = 1 + rac{9}{N_{	ext{frag}}} \sum_{i} \Big( lpha \cdot s_B(f_i) + (1-lpha) \cdot s_R(f_i) \Big) + 	ext{Penalties}$$
+                    $$\text{BR-SAScore}(m) = 1 + \frac{9}{N_{\text{frag}}} \sum_{i} \Big( \alpha \cdot s_B(f_i) + (1-\alpha) \cdot s_R(f_i) \Big) + \text{Penalties}$$
                   </div>
                   시판 빌딩블록 라이브러리에 존재하는 단편은 $s_B(f_i) = 0.0$으로 감점을 면제하며, 반응 단편 $s_R(f_i)$만 반응 DB 로그빈도 감점($-6.0 \sim 0$)을 부여합니다.
                 </div>
@@ -3050,10 +3050,9 @@ flowchart TD
                   <strong>&bull; 아키텍처 및 Trajectory Balance:</strong><br>
                   합성 신톤(Synthon) 공간 상에서 정방향/역방향 SMARTS 반응 템플릿을 실행하며 분자를 점진적으로 확장하는 Generative Flow Network입니다. 궤적 균형(Trajectory Balance) 목적함수로 최적화됩니다:
                   <div style="margin:6px 0; overflow-x:auto;">
-                    $$\mathcal{L}_{	ext{TB}}(	au) = \left( \ln Z + \sum_{t=0}^{T-1} \ln P_F(s_{t+1} \mid s_t) - \ln R(x) - \sum_{t=0}^{T-1} \ln P_B(s_t \mid s_{t+1}) 
-ight)^2$$
+                    $$\mathcal{L}_{\text{TB}}(\tau) = \left( \ln Z + \sum_{t=0}^{T-1} \ln P_F(s_{t+1} \mid s_t) - \ln R(x) - \sum_{t=0}^{T-1} \ln P_B(s_t \mid s_{t+1}) \right)^2$$
                   </div>
-                  생성된 모든 분자는 반응 템플릿과 빌딩블록의 DAG(Directed Acyclic Graph) 합성 경로가 100% 보장됩니다.
+                  생성된 분자에 대응하는 반응 템플릿과 빌딩블록의 DAG(Directed Acyclic Graph) 합성 경로가 함께 산출됩니다.
                 </div>
                 <div style="background:#f8fafc; padding:12px 14px; border-radius:6px; border-left:3px solid #64748b;">
                   <strong>&bull; 학습 템플릿 및 데이터셋:</strong><br>
@@ -3063,8 +3062,8 @@ ight)^2$$
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#fff7ed; border:1px solid #ffedd5; border-radius:6px; padding:12px 16px;">
                 <strong style="color:#c2410c;">&bull; 실측 분석: 왜 9종에서 매칭되었으며, 왜 온전한 전구체 생성은 불가능한가? (Substructure vs. Coordination Gap):</strong><br>
                 1. <strong>일반 생성물 부분구조(아민 알킬 사슬) 역반응 매칭:</strong> DIPAS, SAM.24, TEMAH, TEMAZ, BTBMW 등 9종(33.3%)에서 매칭된 반응은 질소 원자에 결합된 알킬기(이소프로필, 에틸)에 대한 `reductive_amination_ketone`, `reductive_amination_aliphatic_aldehyde` 또는 `amine_halide_coupling` 역반응 SMARTS였습니다. 즉, 아민 알킬 부분구조만 인식한 것입니다.<br>
-                2. <strong>금속-배위 템플릿 전무:</strong> $	ext{Si-N, Ti-N, Zr-N, Ru-Cp, Al-C}$ 배위 결합을 분해하거나 형성하는 무기 템플릿이 단 1개도 존재하지 않아 온전한 전구체를 생성하거나 역합성 트리를 완결할 수 없습니다.<br>
-                3. <strong>하이브리드 리간드 분해 프로토콜 필수:</strong> RxnFlow의 강력한 DAG 경로 보장 생성력을 활용하려면 유기 프로-리간드($HL_i$)를 RxnFlow로 설계하고, 무기 코어와의 결합은 DFT 착물화 에너지($\Delta G_{	ext{syn}}^{	ext{DFT}}$)와 입체 인자($\%V_{	ext{bur}}$)로 제어하는 2단계 파이프라인이 유일한 해법입니다.
+                2. <strong>금속-배위 템플릿 부재:</strong> $\text{Si-N, Ti-N, Zr-N, Ru-Cp, Al-C}$ 배위 결합을 분해하거나 형성하는 무기 템플릿이 존재하지 않아 온전한 전구체를 생성하거나 역합성 트리를 완결할 수 없습니다.<br>
+                3. <strong>하이브리드 리간드 분해 프로토콜:</strong> RxnFlow의 DAG 경로 생성 능력을 활용하려면 유기 프로-리간드($HL_i$)를 RxnFlow로 생성하고, 무기 코어와의 결합은 DFT 착물화 에너지($\Delta G_{\text{syn}}^{\text{DFT}}$)와 입체 인자($\%V_{\text{bur}}$)로 평가하는 2단계 하이브리드 파이프라인이 효과적입니다.
               </div>
             </div>
 
@@ -3082,7 +3081,7 @@ ight)^2$$
                   <strong>&bull; 아키텍처 및 Chain-of-Reaction (CoR):</strong><br>
                   합성 트리의 상향식(Bottom-up) 및 하향식(Top-down) 양방향 탐색을 통합한 단일 자동회귀 트랜스포머(AR, 166M 파라미터, RoPE 임베딩)와 전역 경로 편집 디스크리트 플로우 모델(Edit Bridge, 174M 파라미터)의 복합 아키텍처입니다:
                   <div style="margin:6px 0; overflow-x:auto;">
-                    $$\mathbf{S}_{	ext{CoR}} = [	ext{START}, 	ext{BB}_1, \dots, 	ext{BB}_k, R_1, \dots, R_m, 	ext{END}]$$
+                    $$\mathbf{S}_{\text{CoR}} = [\text{START}, \text{BB}_1, \dots, \text{BB}_k, R_1, \dots, R_m, \text{END}]$$
                   </div>
                   빌딩블록과 반응 번호를 단일 토큰열로 직렬화하여 경로 삽입, 삭제, 치환 편집을 반복 수행합니다.
                 </div>
@@ -3092,10 +3091,10 @@ ight)^2$$
                 </div>
               </div>
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#f0fdf4; border:1px solid #dcfce7; border-radius:6px; padding:12px 16px;">
-                <strong style="color:#166534;">&bull; 실측 분석: 왜 토크나이저는 완벽하며, 왜 반응 경로는 이탈하는가? (Universal Vocab vs. Organic Manifold):</strong><br>
-                1. <strong>118종 전원소 토크나이저 무손실 복원:</strong> 자체 구현된 <code>tokenize_smiles</code> 실측 결과, <code>_smiles_vocab</code>에 수소부터 오가네손까지 118개 원소 기호가 포함되어 있어 27종 프리커서 전이금속 착물($[	ext{Ti}], [	ext{Zr}], [	ext{Hf}], [	ext{Ru}], [	ext{W}], [	ext{Mo}], [	ext{Al}], [	ext{Co}], [	ext{Sn}]$) 전수에 대해 <strong>UNK 토큰 0건(100% 무손실 복원)</strong>을 입증하였습니다.<br>
+                <strong style="color:#166534;">&bull; 실측 분석: 왜 토크나이저는 전 원소를 수용하며, 왜 반응 경로는 이탈하는가? (Universal Vocab vs. Organic Manifold):</strong><br>
+                1. <strong>118종 전원소 토크나이저 무손실 복원:</strong> 자체 구현된 <code>tokenize_smiles</code> 실측 결과, <code>_smiles_vocab</code>에 수소부터 오가네손까지 118개 원소 기호가 포함되어 있어 27종 프리커서 전이금속 착물($[\text{Ti}], [\text{Zr}], [\text{Hf}], [\text{Ru}], [\text{W}], [\text{Mo}], [\text{Al}], [\text{Co}], [\text{Sn}]$) 전수에 대해 <strong>UNK 토큰 0건(100% 무손실 복원)</strong>을 입증하였습니다.<br>
                 2. <strong>반응 매니폴드의 유기 편향 한계:</strong> 그러나 ReaSyn의 반응 추론 공간 $[R_0, R_{114}]$은 에스터화, 아미드 커플링, 환원적 아민화 등 115개 유기 반응에 갇혀 있습니다. 무기 염 복분해 반응 공간이 정의되어 있지 않으므로, 온전한 전구체 분자를 입력하면 디스크리트 플로우가 유효 경로를 생성하지 못합니다.<br>
-                3. <strong>ReaSyn-Semi 구축 제안:</strong> 토크나이저의 완벽한 전원소 표현력을 그대로 유지하고, SynFormer 115 템플릿을 반도체 전용 염 복분해 및 배위 반응 템플릿으로 교체 훈련한 전용 모델 구축이 가장 유망합니다.
+                3. <strong>ReaSyn-Semi 구축 제안:</strong> 토크나이저의 손실 없는 전원소 표현력을 그대로 유지하고, SynFormer 115 템플릿을 반도체 전용 염 복분해 및 배위 반응 템플릿으로 교체 훈련한 전용 모델 구축이 가장 유망합니다.
               </div>
             </div>
 
@@ -3113,7 +3112,7 @@ ight)^2$$
                   <strong>&bull; 아키텍처 및 트리 탐색 원리:</strong><br>
                   AstraZeneca의 산업 표준 MCTS 역합성 플래너입니다. 신경망 확장 정책(Expansion Policy)이 분자의 반응 템플릿 확률 분포 $P(a \mid s)$를 예측하고, 필터 네트워크(Filter Policy)가 역반응의 실행 가능성을 검증하며, 구매 가능 시약(Stock) 데이터베이스와 대조하여 최적 경로를 도출합니다:
                   <div style="margin:6px 0; overflow-x:auto;">
-                    $$	ext{Score}(s, a) = Q(s, a) + c_{	ext{puct}} \cdot P(a \mid s) \cdot rac{\sqrt{\sum_b N(s, b)}}{1 + N(s, a)}$$
+                    $$\text{Score}(s, a) = Q(s, a) + c_{\text{puct}} \cdot P(a \mid s) \cdot \frac{\sqrt{\sum_b N(s, b)}}{1 + N(s, a)}$$
                   </div>
                 </div>
                 <div style="background:#f8fafc; padding:12px 14px; border-radius:6px; border-left:3px solid #64748b;">
@@ -3463,7 +3462,7 @@ flowchart LR
             <h4 style="color:var(--accent-indigo); font-size:0.98rem; margin-bottom:8px;">기판(Substrate) 자유에너지 산출 시 "하부 고정층 포논 상쇄(Cancellation) 근사"의 물리적 정당성 검토</h4>
             <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.65; margin-bottom:8px;">
               &bull; <strong>질문 핵심:</strong> 기판 하부 원자들을 고정(<code>Selective Dynamics: F F F</code>)한 상태에서 포논(Phonon / Partial Hessian)을 계산할 때, 흡착 전 청정 기판($\text{Surf}^*$)과 흡착 후 기판($\text{Surf-Ads}^*$)의 하부 기판 기여가 상쇄된다고 가정할 수 있는가?<br>
-              &bull; <strong>1. 하부 고정층(Bottom Fixed Layers)의 상쇄 성립 ($\Delta F_{\text{vib}}^{\text{bottom}} \approx 0$):</strong> 고정된 하부 벌크층은 변위가 0이므로 헤시안 행렬에 포함되지 않습니다. 표면으로부터 수 개 원자층 아래의 격자 환경은 프리커서 흡착 전/후에 전자기적 변화가 지수함수적으로 감쇠($\sim e^{-z/\lambda}$)하므로, <strong>하부 고정층의 진동 자유에너지 변화가 상쇄된다는 근사는 물리적으로 완벽히 타당</strong>하며 실제 오차는 $0.5\text{ kcal/mol}$ ($0.02\text{ eV}$) 미만으로 무시할 수 있습니다.<br>
+              &bull; <strong>1. 하부 고정층(Bottom Fixed Layers)의 상쇄 성립 ($\Delta F_{\text{vib}}^{\text{bottom}} \approx 0$):</strong> 고정된 하부 벌크층은 변위가 0이므로 헤시안 행렬에 포함되지 않습니다. 표면으로부터 수 개 원자층 아래의 격자 환경은 프리커서 흡착 전/후에 전자기적 변화가 지수함수적으로 감쇠($\sim e^{-z/\lambda}$)하므로, <strong>하부 고정층의 진동 자유에너지 변화가 상쇄된다는 근사는 물리적으로 타당</strong>하며 실제 오차는 $0.5\text{ kcal/mol}$ ($0.02\text{ eV}$) 미만으로 작습니다.<br>
               &bull; <strong>2. 표면 활성 원자(Active Surface Atoms)의 필수 포함 이유 (PHVA 프로토콜):</strong> 그러나 <strong>프리커서와 직접 결합하는 표면 최상단 1~2개 층의 원자(예: $-\text{OH}^*$ 표면 산소 및 결합 실리콘)는 절대 상쇄되지 않습니다!</strong> 흡착 전 $-\text{OH}^*$ 신축 진동($\sim 3750\text{ cm}^{-1}$)이 반응 후 소멸하고 새로운 $M-\text{O}$ 배위 결합 진동($200 \sim 600\text{ cm}^{-1}$)으로 치환되기 때문입니다. 따라서 <strong>Partial Hessian Vibrational Analysis (PHVA)</strong>를 통해 <em>"흡착된 프리커서 분자 + 표면 최상단 반응 원자"</em>만을 활성 모드로 지정하여 진동수와 $F_{\text{vib}}^{\text{active}}(T)$를 계산해야 엄밀한 $\Delta G_{\text{ALD}}$가 산출됩니다.<br>
               &bull; <strong>3. 기상 분자의 엔트로피 손실이 열역학을 지배:</strong> 주기적 기판(PBC Slab)은 병진/회전 엔트로피가 0($S_{\text{trans}}=S_{\text{rot}}=0$)인 반면, 기상 프리커서 $ML_n(\text{g})$는 흡착되면서 거대한 병진/회전 엔트로피($T S_{\text{trans+rot}} \approx 0.7 \sim 1.0\text{ eV}$ @ $200^\circ\text{C}$)를 잃게 되므로, 기상 분자의 분압($P = 0.1 \sim 1\text{ Torr}$) 조건 보정이 흡착 평형을 결정합니다.
             </p>
@@ -3583,7 +3582,7 @@ flowchart LR
                   <td>
                     &bull; A: 학습 곡선 가장 낮음, SLURM/Dask/Parsl 즉시 동작<br>
                     &bull; B: 수만 건 대규모 DB 적재에 유리, 보일러플레이트 코드 존재<br>
-                    &bull; C: 재현성 완벽, 설정 및 러닝커브 가장 높음
+                    &bull; C: 전체 이력(Provenance) 재현성 우수, 초기 설정 및 학습 난이도 높음
                   </td>
                   <td>
                     &bull; <strong>빠른 연구/실험실:</strong> <code>Quacc</code><br>
@@ -3950,7 +3949,7 @@ flowchart LR
           </div>
           <div style="font-size:0.82rem; color:#64748b; margin-top:10px;">
           <div style="font-size:0.82rem; color:#64748b; margin-top:10px;">
-            * 원본 덤프(<code>atomiclimits_raw.json</code>)의 재배포 라이선스 조건을 고려하여 저장소에는 정제된 추출 집계본만 포함합니다. <code>python scripts/fetch_external_precursor_dbs.py --fetch</code>로 실시간 내려받을 수 있으며, 스냅샷 날짜·SHA-256·집계 수치는 <code>atomiclimits_snapshot.json</code>에 기록됩니다.
+            * 원본 덤프(<code>atomiclimits_raw.json</code>)의 재배포 라이선스 조건을 고려하여 저장소에는 정제된 추출 집계본만 포함합니다. <code>python scripts/data/fetch_external_precursor_dbs.py --fetch</code>로 실시간 내려받을 수 있으며, 스냅샷 날짜·SHA-256·집계 수치는 <code>atomiclimits_snapshot.json</code>에 기록됩니다.
           </div>
 
           <!-- Collapsible Toggle Bar: 120 Expanded Precursors Master DB -->
@@ -4248,7 +4247,7 @@ flowchart LR
               <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.7; padding-left:18px;">
                 <li><strong>BR-SAScore BFrag 빌딩블록:</strong> <code>database/br_sascore_inputs/semi_bb.csv</code></li>
                 <li><strong>BR-SAScore RFrag 반응식:</strong> <code>database/br_sascore_inputs/semi_rxn.csv</code></li>
-                <li><strong>벤치마크 검증 스크립트:</strong> <code>benchmark_precursor_pipeline.py</code> (RDKit SAScore 및 VASP 박스 일괄 처리)</li>
+                <li><strong>벤치마크 검증 스크립트:</strong> <code>scripts/benchmark/run_phase1_baseline.py</code>, <code>scripts/data/verify_vasp_frameworks.py</code> (Phase 1 벤치마크 및 VASP 환경 검증)</li>
               </ul>
             </div>
           </div>
@@ -4367,7 +4366,7 @@ flowchart LR
             <div class="timeline-item">
               <div class="timeline-dot dot-3g"></div>
               <div class="timeline-content">
-                <h4 style="color:#d97706; font-size:1.02rem; margin-bottom:6px;">물성 3: 3D 입체 차폐율 및 단량체 보장 지표 ($\%V_{\text{bur}}, \Delta G_{\text{dimer}}$)</h4>
+                <h4 style="color:#d97706; font-size:1.02rem; margin-bottom:6px;">물성 3: 3D 입체 차폐율 및 단량체 안정성 지표 ($\%V_{\text{bur}}, \Delta G_{\text{dimer}}$)</h4>
                 <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.6;">
                   배위 불포화 금속 착물은 상온에서 브릿징 리간드를 통해 올리고머($M_2L_{2n}$)를 형성하여 증기압이 급락합니다. 중심 금속 구면($R_s = 3.5\text{ Å}$)의 매몰 부피($\%V_{\text{bur}}$)가 $58\% \sim 82\%$ 창에 위치해야 하며, 이합체화 자유에너지는 양수여야 합니다:
                 </p>
@@ -4431,9 +4430,9 @@ flowchart LR
 flowchart TD
     IN["목표 물성 벡터 지정 (Target Conditioning)<br>y_target = (P_vap 1 Torr 이상, dG_decomp 30 kcal 이상, Vbur 58-82 percent, dG_ALD -15 kcal 이하)"] --> G1
 
-    subgraph S1 ["Stage 1: 합성 보장 생성 엔진 (Inorganic GFlowNet / GA)"]
+    subgraph S1 ["Stage 1: 경로 내재화 생성 엔진 (Inorganic GFlowNet / GA)"]
         G1["상용 출발물질 DB (29종 Building Blocks)<br>및 12종 공인 무기 반응 템플릿"]
-        G2["경로 내재화 분자 표집 (Trajectory Balance Loss)<br>매 스텝 100 percent 합성 가능한 착물 후보 생성 (10,000/hr)"]
+        G2["경로 내재화 분자 표집 (Trajectory Balance Loss)<br>매 스텝 반응 규칙 기반 착물 후보 생성"]
         G1 --> G2
     end
 
@@ -4698,7 +4697,7 @@ flowchart TD
                 </tr>
                 <tr>
                   <td><strong>열분해 활성화 장벽<br>($\Delta G^\ddagger_{\text{decomp}}$)</strong></td>
-                  <td>배관/샤워헤드 내 조기 기상 탄화 억제 (ALD 윈도우 보장)</td>
+                  <td>배관/샤워헤드 내 조기 기상 탄화 억제 (ALD 공정창 유지)</td>
                   <td>$\beta$-H 제거 및 결합 균등 분해 장벽<br>$\Delta G^\ddagger \ge 30.0\text{ kcal/mol}$</td>
                   <td>SevenNet MLIP 사전 탐색 &rarr; VASP VTST CI-NEB / Sella</td>
                   <td>~ 2 s (MLIP)<br>~ 3 hr (DFT TS)</td>
@@ -4742,7 +4741,7 @@ flowchart TD
                   <td>$\text{HX}, \text{HNR}_2$ 휘발성 부산물 탈착<br>$\Delta G^\ddagger \le 15.0\text{ kcal/mol}$</td>
                   <td>VASP Slab + Sella 안장점 최적화</td>
                   <td>~ 6 hr / TS</td>
-                  <td>박막 고순도 보장 제약 조건</td>
+                  <td>박막 불순물 저감 제약 조건</td>
                 </tr>
                 <tr>
                   <td><strong>기판 열역학 선택도<br>($\Delta \Delta G_{\text{ads}}$)</strong></td>
@@ -4758,7 +4757,7 @@ flowchart TD
                   <td>양성자 분해 및 리간드 교환 활성화 장벽<br>$\Delta G^\ddagger_{\text{prot}} \le 12.0\text{ kcal/mol}$</td>
                   <td>VASP Slab + CI-NEB / Sella 표면 TS 탐색</td>
                   <td>~ 6 hr / TS</td>
-                  <td>저온 박막 성장성($T_{\text{sub}} \le 200^\circ\text{C}$) 보장 제약</td>
+                  <td>저온 박막 성장성($T_{\text{sub}} \le 200^\circ\text{C}$) 달성 제약</td>
                 </tr>
                 <tr>
                   <td><strong>청정 금속 비특이적 흡착 억제<br>($\Delta E_{\text{ads}}^{\text{metal}}, \Delta q_{\text{Bader}}$)</strong></td>
@@ -4815,22 +4814,22 @@ flowchart TD
                   <td style="font-size:0.82rem;">단편 빈도 룩업 테이블<br>(Morgan r=2 분해)</td>
                   <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
                   <td style="font-size:0.82rem; line-height:1.5;">
-                    &bull; <strong>100% 구조 투명성:</strong> 블랙박스 신경망이 아니므로 사전 제어가 완벽함.<br>
-                    &bull; <strong>시약/반응 분리 구조:</strong> $BFrag$(시약)와 $RFrag$(반응)가 분리되어 유기 리간드 평가와 무기 배위 평가의 디커플링이 가장 용이함.
+                    &bull; <strong>구조 해석 가능성:</strong> 블랙박스 신경망이 아닌 단편 빈도 기반이므로 사전 수정 및 제어가 용이함.<br>
+                    &bull; <strong>시약/반응 분리 구조:</strong> $BFrag$(시약)와 $RFrag$(반응)가 분리되어 유기 리간드 평가와 무기 배위 평가의 디커플링이 용이함.
                   </td>
                   <td style="font-size:0.82rem; line-height:1.5;">
-                    전구체를 $\{HL_i\}$와 $M\text{X}_m$으로 분해하여 리간드 점수와 DFT 착물화 에너지($\Delta G_{\text{syn}}^{\text{DFT}}$)를 결합하는 하이브리드 수식으로 전면 개조.
+                    전구체를 $\{HL_i\}$와 $M\text{X}_m$으로 분해하여 리간드 점수와 DFT 착물화 에너지($\Delta G_{\text{syn}}^{\text{DFT}}$)를 결합하는 하이브리드 수식으로 확장.
                   </td>
                 </tr>
 
                 <tr>
-                  <td><strong>Track B: 경로 보장 생성</strong><br><span class="badge badge-4g">de novo 역설계 생성</span></td>
+                  <td><strong>Track B: 경로 내재화 생성</strong><br><span class="badge badge-4g">de novo 역설계 생성</span></td>
                   <td><strong><code>RxnFlow</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(ICLR 2025)</span></td>
                   <td style="font-size:0.82rem;">GFlowNet 기반<br>반응 DAG 순방향 생성</td>
                   <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
                   <td style="font-size:0.82rem; line-height:1.5;">
                     &bull; <strong>보상(Reward) 함수 연동성:</strong> 목적함수 $R(x)$에 DFT 계산값($\Delta G$, $\%V_{\text{bur}}$, 증기압)을 다중 보상으로 직접 결합 가능.<br>
-                    &bull; <strong>합성 경로 원천 보장:</strong> 반응 템플릿을 따라 순방향으로 조립하므로 생성된 물질은 100% 역합성 경로를 보유함.
+                    &bull; <strong>반응 경로 내재화:</strong> 반응 템플릿을 따라 순방향으로 조립하므로 생성 분자에 대응하는 합성 트리가 함께 도출됨.
                   </td>
                   <td style="font-size:0.82rem; line-height:1.5;">
                     의약 유기 템플릿(72개)을 반도체 유기금속 25대 템플릿(염복분해, 아미노분해 등)으로 교체하고 29종 반도체 시약 카탈로그를 공급.
@@ -4874,7 +4873,7 @@ flowchart TD
             <div class="stat-card" style="padding:14px; border-left:4px solid #0284c7;">
               <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">1. Track 1: 리간드 분해 ($HL_i$)</div>
               <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
-                전구체 $M(L_1)_{n_1}(L_2)_{n_2}$를 중심 금속염 $M\text{X}_m$과 중성 프로-리간드 $HL_1, HL_2$로 자동 절단. 리간드는 순수 유기 분자이므로 `BR-SAScore`(또는 `SCScore`)를 통해 합성성을 100% 신뢰성 있게 평가.
+                전구체 $M(L_1)_{n_1}(L_2)_{n_2}$를 중심 금속염 $M\text{X}_m$과 중성 프로-리간드 $HL_1, HL_2$로 자동 절단. 리간드는 순수 유기 분자이므로 `BR-SAScore`(또는 `SCScore`)를 통해 합성성을 일관성 있게 평가.
               </div>
             </div>
 
@@ -4890,7 +4889,7 @@ flowchart TD
             <div class="stat-card" style="padding:14px; border-left:4px solid #7c3aed;">
               <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">3. 입체 매몰 부피 ($\%V_{\text{bur}}$)</div>
               <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
-                단분자 기화성과 이량화 억제를 보장하는 입체 포화도 제어:<br>
+                단분자 기화성과 이량화 억제를 유도하는 입체 포화도 제어:<br>
                 &bull; $\%V_{\text{bur}} \in [65\%, 80\%]$: 정상 단분자 창 (패널티 0.0)<br>
                 &bull; $\%V_{\text{bur}} < 60\%$: 배위 미포화로 인한 중합 위험 (+3.0 감점)<br>
                 &bull; $\%V_{\text{bur}} > 85\%$: 과도한 입체 장해로 리간드 탈락 (+4.0 감점)
@@ -5122,7 +5121,7 @@ flowchart TD
             <span class="badge badge-1g" style="font-size:0.82rem;">Hybrid SA Architecture</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            의약화학 위주의 기존 SA 모델이 지닌 False Negative(TSA, DMAH 왜곡)와 False Positive(금속 착물 맹목 통과)를 원천 차단하기 위해, 전구체와 인히비터의 화학적 특성에 맞춘 <strong>이원화(2-Track) 정량 평가 수식</strong>을 정의합니다:
+            의약화학 위주의 기존 SA 모델이 지닌 False Negative(TSA, DMAH 기각)와 False Positive(금속 착물 과대 통과)를 완화하기 위해, 전구체와 인히비터의 화학적 특성에 맞춘 <strong>이원화(2-Track) 정량 평가 수식</strong>을 정의합니다:
           </p>
 
           <div class="versus-grid">
@@ -5376,7 +5375,7 @@ flowchart TD
           <div class="section-tag">Section 15 &bull; Phase 1 vs Phase 2 Empirical Benchmark &amp; SevenNet Tuning</div>
           <h2 class="section-title">실증 벤치마크 및 SevenNet 기반 모델 튜닝: Phase 1 (순수 데이터 기반) vs Phase 2 (7net MLIP 물리 결합) 실측 평가</h2>
           <p class="section-desc">
-            본 연구팀이 자체 구축·확보한 <strong>55종 실증 분자 세트</strong>(팹 양산 전구체 27종, AS-ALD 선택성 인히비터 18종, 열분해·폭발성·부식성 음성 대조군 10종)를 대상으로 <strong>Phase 1(순수 케모인포매틱스 데이터 기반 베이스라인)</strong>과 <strong>Phase 2(SevenNet <code>7net-0</code> 원자 스케일 물리 특성 결합 튜닝)</strong>를 직접 로컬 실행하여 비교 검증하였습니다. 양산 전구체의 False Negative(위양성 기각) 왜곡과 위험 분자의 False Positive(위음성 통과) 결함을 물리 기반 인터애토믹 포텐셜로 완벽히 극복하는 정량적 튜닝 성과를 보고합니다.
+            자체 구축한 <strong>55종 실증 분자 세트</strong>(팹 양산 전구체 27종, AS-ALD 선택성 인히비터 18종, 열분해·폭발성·부식성 음성 대조군 10종)를 대상으로 <strong>Phase 1(순수 케모인포매틱스 데이터 기반 베이스라인)</strong>과 <strong>Phase 2(SevenNet <code>7net-0</code> 원자 스케일 물리 피처 및 SMARTS 도메인 규칙 결합)</strong>를 로컬 실행하여 비교 검증하였습니다. 타깃 라벨 분기와 ID 하드코딩을 제거한 균일 연속 평가 결과와 All-Sample, 5-Fold CV 및 LOOCV 교차 검증 결과를 함께 보고합니다.
           </p>
         </div>
 
