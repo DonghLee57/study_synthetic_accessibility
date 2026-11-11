@@ -1163,10 +1163,10 @@
   <nav class="view-mode-bar" aria-label="보고서 뷰 모드 전환">
     <div class="view-mode-inner">
       <button type="button" class="view-mode-btn active" id="btn-tab-storyline" onclick="switchViewTab('storyline')">
-        🧭 [입문 가이드] 핵심 요약 및 스토리라인 (Executive Storyline)
+        [입문 가이드] 핵심 요약 및 스토리라인 (Executive Storyline)
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-technical" onclick="switchViewTab('technical')">
-        🔬 [전문 리포트] 전수 기술 분석 &amp; 벤치마크 (15대 섹션 전문)
+        [전문 리포트] 전수 기술 분석 &amp; 벤치마크 (15대 섹션 전문)
       </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
         열람 목적에 따라 압축 입문 가이드와 전수 기술 분석 뷰를 자유롭게 전환할 수 있습니다.
@@ -1195,7 +1195,7 @@
           <strong style="color:#1e40af;">전체 기술 보고서 열람:</strong><br>
           34편 원문 아카이브, 16개 모델 비교, DFT/VASP 자동화 및 55종 실측 데이터시트는 전문 리포트 탭에 있습니다.
           <button type="button" onclick="switchViewTab('technical')" class="btn-toc-utility" style="margin-top:8px; width:100%; background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer;">
-            🔬 15개 섹션 전문 리포트 열기 &rarr;
+            15개 섹션 전문 리포트 열기 &rarr;
           </button>
         </div>
       </div>
@@ -1245,7 +1245,7 @@
         <div class="card" style="margin-bottom:28px; background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:1px solid #bae6fd; padding:26px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
             <div style="display:inline-flex; align-items:center; gap:8px; background:#0284c7; color:#fff; padding:5px 14px; border-radius:20px; font-size:0.82rem; font-weight:700;">
-              🧭 처음 접하는 연구자를 위한 핵심 입문 가이드 (Executive Guide)
+              처음 접하는 연구자를 위한 핵심 입문 가이드 (Executive Guide)
             </div>
             <span style="font-size:0.84rem; color:#0369a1; font-weight:600;">압축 핵심 스토리라인 &bull; 4단계 체계적 안내</span>
           </div>
@@ -1261,7 +1261,7 @@
             <a href="#storyline-step3" class="btn-pdf" style="text-decoration:none;">Step 3. Base 모델 병리와 7net 플랜 &darr;</a>
             <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 55종 실증 벤치마크 결과 &darr;</a>
             <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer; text-decoration:none;">
-              🔬 15개 섹션 전문 기술 리포트 보기 &rarr;
+              15개 섹션 전문 기술 리포트 보기 &rarr;
             </button>
           </div>
         </div>
@@ -1319,6 +1319,74 @@
               <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:6px; padding:12px; font-size:0.82rem; color:#9f1239; line-height:1.55;">
                 <div style="font-weight:700; color:#be123c; margin-bottom:4px;">치명적 도메인 충돌 (Domain Mismatch):</div>
                 제약 DB(PubChem, ChEMBL)는 99.9%가 C, H, O, N 유기물입니다. 반면 반도체 전구체는 <strong>Si, Al, Ti, Zr, Hf, Ru 등 금속 배위 결합</strong>이 핵심입니다. 기존 AI 모델은 금속 결합을 '비천연성 극악 구조'로 간주하여 팹 양산 전구체를 일괄 기각해 버립니다!
+              </div>
+            </div>
+
+            <!-- 4. Confusion Matrix and TP / FP / TN / FN Concept Card -->
+            <div class="card" style="border-top:4px solid #10b981; padding:20px; grid-column: 1 / -1;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                <div style="font-weight:700; font-size:1.05rem; color:#0f172a;">
+                  4. 반도체 AI 모델 평가의 핵심: 혼동 행렬(Confusion Matrix)과 TP / FP / TN / FN 개념 정의
+                </div>
+                <span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">평가 기준 핵심 해설</span>
+              </div>
+              <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:14px;">
+                머신러닝과 통계학의 분류 평가지표(Positive/Negative, True/False)가 <strong>반도체 전구체 및 억제제 합성 평가에서 의미하는 물리적 실체</strong>는 일반 IT/의약학 분류와 완전히 다릅니다. 이 매트릭스를 명확히 이해해야 이후 보고서의 '전구체 위양성 기각 88.9%'와 '위험 분자 위음성 통과 100%'가 파운드리 양산 현장에서 왜 치명적인지 파악할 수 있습니다:
+              </p>
+
+              <div style="overflow-x:auto; margin-bottom:14px;">
+                <table class="report-table" style="font-size:0.84rem; text-align:center;">
+                  <thead>
+                    <tr style="background:#f1f5f9;">
+                      <th style="width:20%; text-align:left;">구분 (Classification)</th>
+                      <th style="width:20%; background:#ecfdf5; color:#065f46;">실제 상태: 양산 적합 (Actual Positive)</th>
+                      <th style="width:20%; background:#fef2f2; color:#991b1b;">실제 상태: 위험·불량 (Actual Negative)</th>
+                      <th style="width:40%; text-align:left;">반도체 팹(Fab) 관점의 실질적 영향 및 산업적 파급력</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align:left; font-weight:700; background:#f8fafc;">
+                        모델 판정: 통과 (Pass)<br><span style="font-size:0.75rem; color:#0284c7;">(Predicted Positive)</span>
+                      </td>
+                      <td style="background:#f0fdf4;">
+                        <strong style="color:#15803d; font-size:0.95rem;">True Positive (TP)</strong><br>
+                        <span style="font-size:0.78rem; color:#166534; font-weight:700;">진양성 (정상 통과)</span><br>
+                        <span style="font-size:0.75rem; color:#475569;">실제 양산 전구체를 정상 판정</span>
+                      </td>
+                      <td style="background:#fef2f2;">
+                        <strong style="color:#b91c1c; font-size:0.95rem;">False Positive (FP)</strong><br>
+                        <span style="font-size:0.78rem; color:#991b1b; font-weight:700;">위양성 (파국적 오판 통과)</span><br>
+                        <span style="font-size:0.75rem; color:#7f1d1d;">폭발성·부식성 분자를 안전 통과시킴</span>
+                      </td>
+                      <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
+                        <strong style="color:#b91c1c;">[FP의 재앙적 위험]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우, <strong>진공 챔버 폭발, 고가 증착 장비 파손, 웨이퍼 전량 오염 폐기</strong> 등 수십억 원대 공정 사고 유발. (Phase 1 기존 모델: <strong>FP = 100.0%</strong>로 전원 통과시키는 재앙 초래)
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:left; font-weight:700; background:#f8fafc;">
+                        모델 판정: 기각 (Reject)<br><span style="font-size:0.75rem; color:#dc2626;">(Predicted Negative)</span>
+                      </td>
+                      <td style="background:#fffbeb;">
+                        <strong style="color:#b45309; font-size:0.95rem;">False Negative (FN)</strong><br>
+                        <span style="font-size:0.78rem; color:#92400e; font-weight:700;">위음성 (치명적 오판 기각)</span><br>
+                        <span style="font-size:0.75rem; color:#78350f;">실제 양산 전구체를 불가능으로 탈락</span>
+                      </td>
+                      <td style="background:#f8fafc;">
+                        <strong style="color:#475569; font-size:0.95rem;">True Negative (TN)</strong><br>
+                        <span style="font-size:0.78rem; color:#334155; font-weight:700;">진음성 (정상 차단)</span><br>
+                        <span style="font-size:0.75rem; color:#64748b;">위험·불량 분자를 올바르게 기각</span>
+                      </td>
+                      <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
+                        <strong style="color:#b45309;">[FN의 연구 단절 위험]</strong> 글로벌 팹에서 매일 수 톤씩 쓰는 TSA, TMA, TEMAH를 '합성 불가능'으로 탈락시켜 <strong>유망한 차세대 전구체 후보를 사장시키고 연구 기회를 박탈</strong>함. (Phase 1 RDKit SAScore: <strong>FN = 88.9%</strong>로 27종 중 24종을 오판 기각)
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="background:#f8fafc; border-left:4px solid #10b981; padding:10px 14px; border-radius:0 6px 6px 0; font-size:0.82rem; color:#334155; line-height:1.55;">
+                <strong>핵심 결론:</strong> 반도체 AI 모델은 <strong>FP(위험 분자 통과)를 0%로 완벽 차단</strong>하는 동시에, <strong>FN(양산 전구체 기각)을 최소화</strong>하여 실제 양산 가능한 고휘발성 분자를 놓치지 않는 정밀한 물리적 식별력을 반드시 갖추어야 합니다.
               </div>
             </div>
           </div>
@@ -1393,7 +1461,7 @@
 
             <div style="text-align:right;">
               <button type="button" onclick="jumpToTechnicalSection('paradigm-evolution')" class="btn-pdf" style="cursor:pointer; background:#f8fafc; border-color:#cbd5e1; color:#0f172a;">
-                📖 3세대 모델 및 수식 상세 분석 보기 (Section 3) &rarr;
+                3세대 모델 및 수식 상세 분석 보기 (Section 3) &rarr;
               </button>
             </div>
           </div>
@@ -1596,7 +1664,7 @@
                 </div>
               </div>
               <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; padding:10px 22px; font-size:0.92rem; font-weight:700; cursor:pointer;">
-                🔬 15개 섹션 전문 기술 리포트 열기 &rarr;
+                15개 섹션 전문 기술 리포트 열기 &rarr;
               </button>
             </div>
           </div>
@@ -4787,7 +4855,7 @@ flowchart TD
           <div class="section-tag">Section 14 &bull; End-to-End Synthesis Workflow &amp; Multi-Fidelity DFT/MLIP Architecture</div>
           <h2 class="section-title">확장 DB 기반 프리커서·인히비터 합성 가능성 평가 및 합성 경로 자동 설계 워크플로우</h2>
           <p class="section-desc">
-            구축된 <strong>120종 확장 전구체 마스터 DB</strong>, <strong>18종 AS-ALD 인히비터 DB</strong>, <strong>29종 반응 시약(Building Blocks)</strong> 및 <strong>12종 공인 유기금속 반응식</strong>을 바탕으로, 가상 후보 분자의 합성 가능성(SA) 고속 스크리닝부터 시작 물질 선정, 반응 조건·용매·글러브박스 분위기, 부반응물 제거 및 정제법에 이르는 <strong>엔드투엔드 실험 레시피(SOP)를 자동 도출하는 워크플로우</strong>를 구축합니다. 아울러 <strong>초고속 머신러닝 인터애토믹 포텐셜(MLIP: SevenNet, MACE, ALD-MLIP)</strong>과 <strong>고정밀 DFT(VASP, ORCA)</strong>를 다중 충실도(Multi-Fidelity)로 연계하여 반응 활성화 장벽(\(\Delta G^\ddagger\)), 열분해 한계(\(T_{\text{decomp}}\)), 증기압 곡선, 그리고 표면 선택 흡착능(\(\Delta\Delta G_{\text{ads}}\))을 계산·검증하는 전산 아키텍처를 상세히 설계합니다.
+            구축된 <strong>120종 확장 전구체 마스터 DB</strong>, <strong>18종 AS-ALD 인히비터 DB</strong>, <strong>29종 반응 시약(Building Blocks)</strong> 및 <strong>12종 공인 유기금속 반응식</strong>을 바탕으로, 가상 후보 분자의 합성 가능성(SA) 고속 스크리닝부터 시작 물질 선정, 반응 조건·용매·글러브박스 분위기, 부반응물 제거 및 정제법에 이르는 <strong>엔드투엔드 실험 레시피(SOP)를 자동 도출하는 워크플로우</strong>를 구축합니다. 아울러 <strong>초고속 머신러닝 인터애토믹 포텐셜(MLIP: SevenNet, MACE, ALD-MLIP)</strong>과 <strong>고정밀 DFT(VASP, ORCA)</strong>를 다중 충실도(Multi-Fidelity)로 연계하여 반응 활성화 장벽($\Delta G^\ddagger$), 열분해 한계($T_{\text{decomp}}$), 증기압 곡선, 그리고 표면 선택 흡착능($\Delta\Delta G_{\text{ads}}$)을 계산·검증하는 전산 아키텍처를 상세히 설계합니다.
           </p>
         </div>
 
@@ -4802,33 +4870,34 @@ flowchart TD
               <pre class="mermaid">
 flowchart TD
     subgraph S1 ["Stage 1: 분자 입력 및 전처리 (Input Profiling)"]
-        A["후보 분자 입력 (120종 전구체 / 18종 억제제 / AI 역설계 분자)"] --> B["RDKit 2D 정규화 및 원자가 검증 (Metal-Coordination Sanitization)"]
+        A["후보 분자 입력 (120종 전구체 / 18종 억제제 / AI 역설계 분자)"] --> B["RDKit 2D 정규화 및 원자가 검증"]
         B --> C{"분자 도메인 분류"}
         C -- "전이금속 착물" --> C1["Precursor 파이프라인 분기"]
-        C -- "유전체/금속 차단제" --> C2["Inhibitor (SMI / SAM) 파이프라인 분기"]
+        C -- "유전체/금속 차단제" --> C2["Inhibitor 파이프라인 분기"]
     end
 
-    subgraph S2 ["Stage 2: 2-Track 합성 가능성 고속 스크리닝 (Synthetic Accessibility)"]
-        C1 --> D1["Precursor TMC-SA: 유기 리간드 BR-SAScore 및 금속-리간드 복분해 타당성"]
+    subgraph S2 ["Stage 2: 2-Track 합성 가능성 고속 스크리닝"]
+        C1 --> D1["Precursor TMC-SA: 유기 리간드 BR-SAScore 및 금속 복분해 타당성"]
         C2 --> D2["Inhibitor SCScore: Reaxys 유기 합성 복잡도 및 기상 휘발성 평가"]
-        D1 & D2 --> E{"SA 임계치 판정 (SA &lt;= 3.5 &amp; BDE_min &gt;= 40 kcal/mol)"}
-        E -- "Fail (합성 난해/자멸 분해)" --> E_rej["후보 탈락 및 리간드 대체 피드백 (Reject / Redesign)"]
+        D1 --> E{"SA 임계치 판정 (SA 3.5 이하 및 BDE 40 kcal 이상)"}
+        D2 --> E
+        E -- "Fail (합성 난해/자멸 분해)" --> E_rej["후보 탈락 및 리간드 대체 피드백"]
         E -- "Pass (합성 유망)" --> F["합성 경로 탐색 진입"]
     end
 
-    subgraph S3 ["Stage 3: 지능형 역합성 절단 및 실험 SOP 자동 조제 (Retrosynthesis &amp; SOP)"]
-        F --> G["29종 시약 카탈로그 (Building Blocks) 및 12종 반응 템플릿 매칭"]
+    subgraph S3 ["Stage 3: 지능형 역합성 절단 및 실험 SOP 자동 조제"]
+        F --> G["29종 시약 카탈로그 및 12종 반응 템플릿 매칭"]
         G --> H["역합성 트리 생성 (AiZynthFinder-Metal / MCTS 전향 유효성 검증)"]
-        H --> I["실험 프로토콜 자동 조제 (시약 몰비, 용매, 불활성 글러브박스, 온도, 여과, 정제)"]
+        H --> I["실험 프로토콜 자동 조제 (시약 몰비, 용매, 글러브박스, 온도, 여과, 정제)"]
     end
 
-    subgraph S4 ["Stage 4: DFT &amp; MLIP 다중 충실도 물리 검증 (Multi-Fidelity Verification)"]
-        I --> J1["초고속 MLIP (SevenNet-0 / MACE): 3D 컨포머 최적화, BDE, 기화열, ΔE_rxn (&lt;1 ms)"]
-        J1 --> J2["고정밀 DFT (VASP / ORCA): 전이상태 활성화 장벽 ΔG‡, 솔베이션 반응 자유에너지 ΔG_298K"]
-        J2 --> J3["표면 차폐 반응 (Inhibitor: SiO2 vs Cu 표면 ΔΔG_ads, %V_bur, MLIP-GCMC 패킹)"]
+    subgraph S4 ["Stage 4: DFT 및 MLIP 다중 충실도 물리 검증"]
+        I --> J1["초고속 MLIP (SevenNet-0 / MACE): 3D 컨포머 최적화, BDE, 기화열, dE_rxn"]
+        J1 --> J2["고정밀 DFT (VASP / ORCA): 전이상태 활성화 장벽 dG_act, 솔베이션 자유에너지"]
+        J2 --> J3["표면 차폐 반응 (Inhibitor: SiO2 vs Cu 표면 ddG_ads, Vbur 차폐율)"]
     end
 
-    subgraph S5 ["Stage 5: 파운드리 / 합성 연구진용 데이터시트 출력 (Actionable Synthesis Report)"]
+    subgraph S5 ["Stage 5: 파운드리 / 합성 연구진용 데이터시트 출력"]
         J3 --> K1["합성 가능성 종합 등급 (Level A/B/C) 및 화학적 SOP 레시피 출력"]
         K1 --> K2["열분해 온도(T_decomp), 자연발화성(Pyrophoricity), ALD 공정 윈도우 데이터시트 완성"]
     end
@@ -4857,9 +4926,9 @@ flowchart TD
                 $$\text{SA}_{\text{Precursor}} = \max_i \text{BR-SAScore}(HL_i) + w_1 \mathcal{S}_{\text{DFT}}(\Delta G_{\text{syn}}^{\text{DFT}}) + w_2 \mathcal{S}_{\text{steric}}(\%V_{\text{bur}})$$
               </div>
               <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
-                <li>\(HL_i\): 중심 금속(\(\text{Zr, Hf, Ti, Ru, W, Co}\))과 해리된 순수 유기 리간드 파편 (BFrag 사전에 존재 시 감점 배제).</li>
-                <li>\(\Delta G_{\text{syn}}^{\text{DFT}}\): \(\text{MCl}_n + n\,\text{LiNR}_2 \rightarrow \text{M(NR}_2)_n + n\,\text{LiCl}\downarrow\) 염 복분해 자유에너지 (\(\le -10\text{ kcal/mol}\) 시 통과).</li>
-                <li>\(\%V_{\text{bur}}\): SambVca 기반 중심 금속 매몰 부피율 (\(65\% \sim 85\%\) 범위 내에서 단분자 올리고머화 방지).</li>
+                <li>$HL_i$: 중심 금속($\text{Zr, Hf, Ti, Ru, W, Co}$)과 해리된 순수 유기 리간드 파편 (BFrag 사전에 존재 시 감점 배제).</li>
+                <li>$\Delta G_{\text{syn}}^{\text{DFT}}$: $\text{MCl}_n + n\,\text{LiNR}_2 \rightarrow \text{M(NR}_2)_n + n\,\text{LiCl}\downarrow$ 염 복분해 자유에너지 ($\le -10\text{ kcal/mol}$ 시 통과).</li>
+                <li>$\%V_{\text{bur}}$: SambVca 기반 중심 금속 매몰 부피율 ($65\% \sim 85\%$ 범위 내에서 단분자 올리고머화 방지).</li>
               </ul>
             </div>
 
@@ -4872,9 +4941,9 @@ flowchart TD
                 $$\text{SA}_{\text{Inhibitor}} = \text{SCScore}(I) + w_{\text{vol}}\mathcal{P}_{\text{volatility}}(T_{\text{boil}}) + w_{\text{res}}\mathcal{P}_{\text{residue}}(\text{Heteroatom})$$
               </div>
               <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
-                <li>\(\text{SCScore}(I)\): Reaxys 1024bool 신경망 기반 합성 난이도 (상용 화학물질 출발 시 \(1.0 \sim 2.0\)).</li>
-                <li>\(\mathcal{P}_{\text{volatility}}\): 기상 주입을 위한 비점 페널티 (\(T_{\text{boil}} \le 180^\circ\text{C}\) 시 \(0.0\), \(> 250^\circ\text{C}\) 시 지수적 감점).</li>
-                <li>\(\mathcal{P}_{\text{residue}}\): 할로겐(Cl, Br) 잔류물 부식성 위험 및 산소 플라즈마 애싱 후 탄화 잔류 페널티.</li>
+                <li>$\text{SCScore}(I)$: Reaxys 1024bool 신경망 기반 합성 난이도 (상용 화학물질 출발 시 $1.0 \sim 2.0$).</li>
+                <li>$\mathcal{P}_{\text{volatility}}$: 기상 주입을 위한 비점 페널티 ($T_{\text{boil}} \le 180^\circ\text{C}$ 시 $0.0$, $> 250^\circ\text{C}$ 시 지수적 감점).</li>
+                <li>$\mathcal{P}_{\text{residue}}$: 할로겐(Cl, Br) 잔류물 부식성 위험 및 산소 플라즈마 애싱 후 탄화 잔류 페널티.</li>
               </ul>
             </div>
           </div>
@@ -4904,32 +4973,32 @@ flowchart TD
                 <tr>
                   <td><strong>Step 1. 시약 정량</strong></td>
                   <td>당량비 (Stoichiometry)</td>
-                  <td>금속 할로겐화물(\(\text{MCl}_n\)) 대비 리간드 음이온(\(\text{Li-L}\)) 1:1.02 미세 과량 주입.</td>
-                  <td>실란/클로로실란 대비 유기 아민 1:2.05 (발생 \(\text{HCl}\) 포획용 염기 과량).</td>
+                  <td>금속 할로겐화물($\text{MCl}_n$) 대비 리간드 음이온($\text{Li-L}$) 1:1.02 미세 과량 주입.</td>
+                  <td>실란/클로로실란 대비 유기 아민 1:2.05 (발생 $\text{HCl}$ 포획용 염기 과량).</td>
                 </tr>
                 <tr>
                   <td><strong>Step 2. 용매 &amp; 분위기</strong></td>
                   <td>수분/산소 제어, 극성</td>
-                  <td>무수 건조 톨루엔/n-헥산, \(\text{H}_2\text{O}/\text{O}_2 &lt; 0.1\text{ ppm}\) 질소 글러브박스 필수.</td>
+                  <td>무수 건조 톨루엔/n-헥산, $\text{H}_2\text{O}/\text{O}_2 < 0.1\text{ ppm}$ 질소 글러브박스 필수.</td>
                   <td>무수 디에틸에테르 / 무수 THF / 펜탄, 불활성 아르곤 실링.</td>
                 </tr>
                 <tr>
                   <td><strong>Step 3. 반응 온도 프로파일</strong></td>
                   <td>발열 제어, 활성화 장벽</td>
-                  <td>\(-78^\circ\text{C}\) (드라이아이스/아세톤) 저온 적하 후 서서히 실온 승온 (12시간 교반).</td>
-                  <td>\(0^\circ\text{C}\) 빙초산/얼음 배스 적하 후 실온 교반 (4~6시간).</td>
+                  <td>$-78^\circ\text{C}$ (드라이아이스/아세톤) 저온 적하 후 서서히 실온 승온 (12시간 교반).</td>
+                  <td>$0^\circ\text{C}$ 빙초산/얼음 배스 적하 후 실온 교반 (4~6시간).</td>
                 </tr>
                 <tr>
                   <td><strong>Step 4. 부반응물 분리</strong></td>
                   <td>염 침전 및 가스 배기</td>
-                  <td>\(\text{LiCl}\downarrow\) 염 침전물을 Celite 패드 감압 여과로 제거.</td>
-                  <td>\(\text{R}_2\text{NH}\cdot\text{HCl}\downarrow\) 아민염 필터 여과 또는 \(\text{HNMe}_2\uparrow\) 질소 버블링 배기.</td>
+                  <td>$\text{LiCl}\downarrow$ 염 침전물을 Celite 패드 감압 여과로 제거.</td>
+                  <td>$\text{R}_2\text{NH}\cdot\text{HCl}\downarrow$ 아민염 필터 여과 또는 $\text{HNMe}_2\uparrow$ 질소 버블링 배기.</td>
                 </tr>
                 <tr>
                   <td><strong>Step 5. 최종 분별 정제</strong></td>
                   <td>고순도화, 금속 잔류</td>
-                  <td>고진공(\(0.05 \sim 0.1\text{ Torr}\)) 분별 감압 증류 또는 승화 (순도 \(\ge 99.999\%\)).</td>
-                  <td>상압 또는 미세 감압(\(10 \sim 20\text{ Torr}\)) 정밀 증류관 분별.</td>
+                  <td>고진공($0.05 \sim 0.1\text{ Torr}$) 분별 감압 증류 또는 승화 (순도 $\ge 99.999\%$).</td>
+                  <td>상압 또는 미세 감압($10 \sim 20\text{ Torr}$) 정밀 증류관 분별.</td>
                 </tr>
                 <tr>
                   <td><strong>Step 6. 안전 &amp; 보관 규격</strong></td>
@@ -4958,8 +5027,8 @@ flowchart TD
               <p style="font-size:0.85rem; color:#64748b; margin-bottom:8px;"><strong>엔진:</strong> SevenNet-0, MACE-MP-0, ALD-MLIP (ASE 인터페이스)</p>
               <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
                 <li><strong>3D 구조 완화:</strong> 2D SMILES로부터 초기 3D 컨포머 전역 탐색 및 50 스텝 내 평형 구조 수렴.</li>
-                <li><strong>최소 결합 해리 에너지 (\(\text{BDE}_{\min}\)):</strong> 중심 금속-헤테로원자 결합 해리 시뮬레이션으로 열분해 시작 온도(\(T_{\text{decomp}}\)) 즉시 추정.</li>
-                <li><strong>기화 엔탈피 및 증기압 곡선:</strong> Clausius-Clapeyron 관계식(\(\ln P = -\Delta H_{\text{vap}}/RT + C\)) 연동 ALD 버블러 온도별 증기압 산출.</li>
+                <li><strong>최소 결합 해리 에너지 ($\text{BDE}_{\min}$):</strong> 중심 금속-헤테로원자 결합 해리 시뮬레이션으로 열분해 시작 온도($T_{\text{decomp}}$) 즉시 추정.</li>
+                <li><strong>기화 엔탈피 및 증기압 곡선:</strong> Clausius-Clapeyron 관계식($\ln P = -\Delta H_{\text{vap}}/RT + C$) 연동 ALD 버블러 온도별 증기압 산출.</li>
               </ul>
             </div>
 
@@ -4967,9 +5036,9 @@ flowchart TD
               <h4 style="color:#0369a1; font-size:1.02rem; margin-bottom:6px;">Tier 2. 고정밀 분자 DFT 검증 (상위 5% 후보)</h4>
               <p style="font-size:0.85rem; color:#64748b; margin-bottom:8px;"><strong>엔진:</strong> VASP (Plane-wave PAW), ORCA (def2-TZVP / B3LYP-D3)</p>
               <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
-                <li><strong>전이상태(TS) 활성화 장벽 (\(\Delta G^\ddagger\)):</strong> NEB(Nudged Elastic Band) 및 Sella 알고리즘으로 리간드 치환 반응 활성화 에너지 정밀 도출.</li>
-                <li><strong>솔베이션 반응 깁스 자유에너지:</strong> 비극성 용매(SMD 톨루엔/헥산) 보정을 포함한 표준 반응 자유에너지(\(\Delta G_{\text{rxn}, 298\text{K}}^\circ\)) 계산.</li>
-                <li><strong>입체 매몰 부피율 (\(\%V_{\text{bur}}\)):</strong> 금속 배위권의 구형 부피 적분을 통해 2량체화(Dimerization) 방지력 검증.</li>
+                <li><strong>전이상태(TS) 활성화 장벽 ($\Delta G^\ddagger$):</strong> NEB(Nudged Elastic Band) 및 Sella 알고리즘으로 리간드 치환 반응 활성화 에너지 정밀 도출.</li>
+                <li><strong>솔베이션 반응 깁스 자유에너지:</strong> 비극성 용매(SMD 톨루엔/헥산) 보정을 포함한 표준 반응 자유에너지($\Delta G_{\text{rxn}, 298\text{K}}^\circ$) 계산.</li>
+                <li><strong>입체 매몰 부피율 ($\%V_{\text{bur}}$):</strong> 금속 배위권의 구형 부피 적분을 통해 2량체화(Dimerization) 방지력 검증.</li>
               </ul>
             </div>
 
@@ -4977,8 +5046,8 @@ flowchart TD
               <h4 style="color:#b45309; font-size:1.02rem; margin-bottom:6px;">Tier 3. AS-ALD 표면 슬랩 반응 &amp; 패킹 모델링</h4>
               <p style="font-size:0.85rem; color:#64748b; margin-bottom:8px;"><strong>엔진:</strong> VASP Slab DFT + MLIP-GCMC / RSA Dynamics</p>
               <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
-                <li><strong>표면 흡착 선택도:</strong> \(\text{SiO}_2(001)\text{-OH}\) vs \(\text{Cu}(111)/\text{Co}(0001)\) 표면 흡착 에너지 차이(\(\Delta\Delta G_{\text{ads}} = \Delta G_{\text{ads}}^{\text{Target}} - \Delta G_{\text{ads}}^{\text{Growth}}\)).</li>
-                <li><strong>동적 패킹 밀도 (\(\theta(t)\)):</strong> MLIP 기반 Grand Canonical Monte Carlo 시뮬레이션으로 표면 결함 밀도 및 전구체 차폐 지연 주기 수(\(N_{\text{incubation}}\)) 예측.</li>
+                <li><strong>표면 흡착 선택도:</strong> $\text{SiO}_2(001)\text{-OH}$ vs $\text{Cu}(111)/\text{Co}(0001)$ 표면 흡착 에너지 차이($\Delta\Delta G_{\text{ads}} = \Delta G_{\text{ads}}^{\text{Target}} - \Delta G_{\text{ads}}^{\text{Growth}}$).</li>
+                <li><strong>동적 패킹 밀도 ($\theta(t)$):</strong> MLIP 기반 Grand Canonical Monte Carlo 시뮬레이션으로 표면 결함 밀도 및 전구체 차폐 지연 주기 수($N_{\text{incubation}}$) 예측.</li>
               </ul>
             </div>
           </div>
@@ -5009,8 +5078,8 @@ flowchart TD
                 &rarr; SiH3[N(iPr)2] (DIPAS) + (iPr)2NH·HCl↓ (염산염 부산물)
               </div>
               <div style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6;">
-                &bull; <strong>조제 SOP:</strong> 무수 펜탄 용매 중 \(-20^\circ\text{C}\)에서 디이소프로필아민을 모노클로로실란에 서서히 적하. 4시간 교반 후 Celite 여과로 흰색 아민염 제거. 감압 분별 증류(\(122^\circ\text{C}\) / 상압)로 정제 (수율 \(84\%\)).<br>
-                &bull; <strong>DFT / MLIP 예측:</strong> \(\Delta G_{\text{rxn}} = -18.4\text{ kcal/mol}\), \(\text{BDE}(\text{Si-N}) = 78.5\text{ kcal/mol}\), \(T_{\text{decomp}} = 450^\circ\text{C}\), 증기압 \(10\text{ Torr @ } 20^\circ\text{C}\).<br>
+                &bull; <strong>조제 SOP:</strong> 무수 펜탄 용매 중 $-20^\circ\text{C}$에서 디이소프로필아민을 모노클로로실란에 서서히 적하. 4시간 교반 후 Celite 여과로 흰색 아민염 제거. 감압 분별 증류($122^\circ\text{C}$ / 상압)로 정제 (수율 $84\%$).<br>
+                &bull; <strong>DFT / MLIP 예측:</strong> $\Delta G_{\text{rxn}} = -18.4\text{ kcal/mol}$, $\text{BDE}(\text{Si-N}) = 78.5\text{ kcal/mol}$, $T_{\text{decomp}} = 450^\circ\text{C}$, 증기압 $10\text{ Torr @ } 20^\circ\text{C}$.<br>
                 &bull; <strong>안전 등급:</strong> 공기 중 서서히 가수분해, 질소 글러브박스 보관 권고.
               </div>
             </div>
@@ -5029,9 +5098,9 @@ flowchart TD
                 &rarr; Me2Si(NMe2)2 (DMADMS) + 2 Me2NH·HCl↓
               </div>
               <div style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6;">
-                &bull; <strong>조제 SOP:</strong> 무수 디에틸에테르에 디클로로디메틸실란 용해 후 \(0^\circ\text{C}\)에서 디메틸아민 가스를 천천히 버블링. 침전염 여과 후 에테르 유거, \(128^\circ\text{C}\) 상압 분별 증류 정제 (수율 \(89\%\)).<br>
-                &bull; <strong>표면 선택도 DFT:</strong> \(\Delta G_{\text{ads}}(\text{SiO}_2) = -1.45\text{ eV}\) (실릴화 발열 반응) vs \(\Delta G_{\text{ads}}(\text{Cu}) = -0.12\text{ eV}\) (물리흡착 가역 탈착) &rarr; \(\Delta\Delta G_{\text{ads}} = -1.33\text{ eV}\) (\(-30.7\text{ kcal/mol}\), 초고선택적 \(\text{SiO}_2\) 차단).<br>
-                &bull; <strong>ALD 공정 윈도우:</strong> \(150 \sim 250^\circ\text{C}\)에서 100회 이상 핵생성 지연, 산소 플라즈마 애싱 시 잔류 탄소 없이 완전 제거.
+                &bull; <strong>조제 SOP:</strong> 무수 디에틸에테르에 디클로로디메틸실란 용해 후 $0^\circ\text{C}$에서 디메틸아민 가스를 천천히 버블링. 침전염 여과 후 에테르 유거, $128^\circ\text{C}$ 상압 분별 증류 정제 (수율 $89\%$).<br>
+                &bull; <strong>표면 선택도 DFT:</strong> $\Delta G_{\text{ads}}(\text{SiO}_2) = -1.45\text{ eV}$ (실릴화 발열 반응) vs $\Delta G_{\text{ads}}(\text{Cu}) = -0.12\text{ eV}$ (물리흡착 가역 탈착) &rarr; $\Delta\Delta G_{\text{ads}} = -1.33\text{ eV}$ ($-30.7\text{ kcal/mol}$, 초고선택적 $\text{SiO}_2$ 차단).<br>
+                &bull; <strong>ALD 공정 윈도우:</strong> $150 \sim 250^\circ\text{C}$에서 100회 이상 핵생성 지연, 산소 플라즈마 애싱 시 잔류 탄소 없이 완전 제거.
               </div>
             </div>
           </div>
@@ -5153,7 +5222,9 @@ flowchart TD
         renderMathInElement(document.body, {
           delimiters: [
             {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false}
+            {left: '$', right: '$', display: false},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
           ],
           throwOnError: false
         });
@@ -5580,7 +5651,9 @@ flowchart TD
         renderMathInElement(document.body, {
           delimiters: [
             {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false}
+            {left: '$', right: '$', display: false},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
           ],
           throwOnError: false
         });

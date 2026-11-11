@@ -883,28 +883,28 @@ phase1_phase2_tuning_joined = f"""
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Pillar 1: 결합 해리 (BDE) &amp; 응집 에너지 ($e_{{\text{{coh}}}}$)</strong></td>
-                  <td>$$\text{{BDE}}_{{\min}} = [E(r_0 + 1.2\,\text{{\AA}}) - E(r_0)] \times 23.06$$<br>$$e_{{\text{{coh}}}} = \frac{{\sum E_{{\text{{iso}}}}(Z_i) - E_{{\text{{eq}}}}}}{{N_{{\text{{atoms}}}}}}$$</td>
+                  <td><strong>Pillar 1: 결합 해리 (BDE) &amp; 응집 에너지 ($e_{{\\text{{coh}}}}$)</strong></td>
+                  <td>$$\\text{{BDE}}_{{\\min}} = [E(r_0 + 1.2\\,\\text{{\\AA}}) - E(r_0)] \\times 23.06$$<br>$$e_{{\\text{{coh}}}} = \\frac{{\\sum E_{{\\text{{iso}}}}(Z_i) - E_{{\\text{{eq}}}}}}{{N_{{\\text{{atoms}}}}}}$$</td>
                   <td>열적 해리 안정성 및 래빌리티 (&beta;-수소 탈락 등 기상 조기 분해 저항성)</td>
-                  <td>정상 전구체: <strong>BDE &ge; 50 kcal/mol, $e_{{\text{{coh}}}} \ge 3.8\text{{ eV}}$</strong><br>조기 분해/폭발 위험: <strong>BDE &lt; 45 kcal/mol</strong> (예: CoEt4: 42.9 kcal/mol, 1,2-Dichlorodisilane: 40.9 kcal/mol)</td>
+                  <td>정상 전구체: <strong>BDE &ge; 50 kcal/mol, $e_{{\\text{{coh}}}} \\ge 3.8\\text{{ eV}}$</strong><br>조기 분해/폭발 위험: <strong>BDE &lt; 45 kcal/mol</strong> (예: CoEt4: 42.9 kcal/mol, 1,2-Dichlorodisilane: 40.9 kcal/mol)</td>
                 </tr>
                 <tr>
-                  <td><strong>Pillar 2: 3D 입체 차폐율 ($\%V_{{\text{{bur}}}}$)</strong></td>
-                  <td>$$\%V_{{\text{{bur}}}} = \frac{{V_{{\text{{ligand}}}} \cap V_{{\text{{sphere}}}}(R=3.5\,\text{{\AA}})}}{{V_{{\text{{sphere}}}}}} \times 100$$</td>
+                  <td><strong>Pillar 2: 3D 입체 차폐율 ($\\%V_{{\\text{{bur}}}}$)</strong></td>
+                  <td>$$\\%V_{{\\text{{bur}}}} = \\frac{{V_{{\\text{{ligand}}}} \\cap V_{{\\text{{sphere}}}}(R=3.5\\,\\text{{\\AA}})}}{{V_{{\\text{{sphere}}}}}} \\times 100$$</td>
                   <td>중심 금속 주변 리간드 입체 보호도 및 올리고머화 방지 차폐막</td>
-                  <td>단량체 안정 윈도우: <strong>$60\% \sim 82\%$</strong> (TDMAT: 73.6%, TEMAH: 78.0%)<br>과밀 충돌 분해: <strong>&gt; 85%</strong> (WPh5: 86.4%), 과소배위: <strong>&lt; 50%</strong> (TMA: 41.7%)</td>
+                  <td>단량체 안정 윈도우: <strong>$60\\% \\sim 82\\%$</strong> (TDMAT: 73.6%, TEMAH: 78.0%)<br>과밀 충돌 분해: <strong>&gt; 85%</strong> (WPh5: 86.4%), 과소배위: <strong>&lt; 50%</strong> (TMA: 41.7%)</td>
                 </tr>
                 <tr>
-                  <td><strong>Pillar 3: 이합체화 상호작용 (&Delta;E_{{\text{{dimer}}}}$)</strong></td>
-                  <td>$$\Delta E_{{\text{{dimer}}}} = E(\text{{Dimer}}) - 2E(\text{{Monomer}})$$</td>
+                  <td><strong>Pillar 3: 이합체화 상호작용 ($\Delta E_{{\\text{{dimer}}}}$)</strong></td>
+                  <td>$$\\Delta E_{{\\text{{dimer}}}} = E(\\text{{Dimer}}) - 2E(\\text{{Monomer}})$$</td>
                   <td>과소배위에 의한 불휘발성 올리고머/고체 침전 형성 자발성</td>
-                  <td>휘발성 단량체 유지: <strong>$\Delta E_{{\text{{dimer}}}} \ge 0\text{{ kcal/mol}}$</strong> (TDMAT: +27.9 kcal/mol)<br>자발적 이합체화/침전: <strong>$\Delta E_{{\text{{dimer}}}} &lt; 0$</strong> (TMA: -2.5 kcal/mol, Ti(OH)4: -0.5 kcal/mol)</td>
+                  <td>휘발성 단량체 유지: <strong>$\\Delta E_{{\\text{{dimer}}}} \\ge 0\\text{{ kcal/mol}}$</strong> (TDMAT: +27.9 kcal/mol)<br>자발적 이합체화/침전: <strong>$\\Delta E_{{\\text{{dimer}}}} &lt; 0$</strong> (TMA: -2.5 kcal/mol, Ti(OH)4: -0.5 kcal/mol)</td>
                 </tr>
                 <tr>
-                  <td><strong>Pillar 4: 착물화 합성 구동력 (&Delta;E_{{\text{{complex}}}}$)</strong></td>
-                  <td>$$M\text{{Cl}}_m + m\,\text{{Li}}L \rightarrow M(L)_m + m\,\text{{LiCl}}\downarrow$$<br>$$\Delta E_{{\text{{complex}}}} = E(M(L)_m) + m E(\text{{LiCl}}) - [E(M\text{{Cl}}_m) + m E(\text{{Li}}L)]$$</td>
+                  <td><strong>Pillar 4: 착물화 합성 구동력 ($\Delta E_{{\\text{{complex}}}}$)</strong></td>
+                  <td>$$M\\text{{Cl}}_m + m\\,\\text{{Li}}L \\rightarrow M(L)_m + m\\,\\text{{LiCl}}\\downarrow$$<br>$$\\Delta E_{{\\text{{complex}}}} = E(M(L)_m) + m E(\\text{{LiCl}}) - [E(M\\text{{Cl}}_m) + m E(\\text{{Li}}L)]$$</td>
                   <td>금속 할로겐화물로부터 전구체 착물 합성(Salt Metathesis)의 열역학적 유리성</td>
-                  <td>열역학적 자발 합성: <strong>$\Delta E_{{\text{{complex}}}} &lt; 0\text{{ kcal/mol}}$</strong> (통상 -10 ~ -50 kcal/mol)<br>비자발적 합성 불가: <strong>$\Delta E_{{\text{{complex}}}} &gt; 0\text{{ kcal/mol}}$</strong></td>
+                  <td>열역학적 자발 합성: <strong>$\\Delta E_{{\\text{{complex}}}} &lt; 0\\text{{ kcal/mol}}$</strong> (통상 -10 ~ -50 kcal/mol)<br>비자발적 합성 불가: <strong>$\\Delta E_{{\\text{{complex}}}} &gt; 0\\text{{ kcal/mol}}$</strong></td>
                 </tr>
               </tbody>
             </table>
