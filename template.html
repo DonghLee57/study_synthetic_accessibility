@@ -19,7 +19,7 @@
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
     mermaid.initialize({
-      startOnLoad: true,
+      startOnLoad: false,
       theme: 'base',
       themeVariables: {
         primaryColor: '#eff6ff',
@@ -1344,29 +1344,29 @@
           </div>
         </section>
 
-        <!-- Step 2: 세대별 모델 진화 로직 & 반도체 전구체 AI 모델 선정 및 패스 기준 -->
+        <!-- Step 2: 시대별 4단계 패러다임 진화 (1G~4G) & 반도체 전구체 AI 모델 선정 및 패스 한계 -->
         <section id="storyline-step2" class="storyline-step">
           <div class="storyline-step-header">
             <span class="step-badge">2</span>
             <div>
-              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 2 &bull; Evolution Axis &amp; Model Selection Criteria</div>
-              <h3 class="storyline-step-title">세대별 모델 진화 로직과 반도체 전구체 AI 모델 선정 및 패스 한계</h3>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 2 &bull; 4-Generation Evolution Axis &amp; Model Selection Criteria</div>
+              <h3 class="storyline-step-title">시대별 4단계 패러다임 진화 (1G~4G)와 반도체 프리커서 AI 모델 선정 및 패스 한계</h3>
             </div>
           </div>
 
           <div class="card" style="margin-bottom:20px; padding:22px;">
             <p style="font-size:0.92rem; color:#334155; line-height:1.65; margin-bottom:16px;">
-              지난 17년간 개발된 수많은 AI 합성 가능성 모델은 서로 파편화된 것이 아니라, <strong>"표현형의 추상도와 반응 지식의 심도(Depth of Chemical Knowledge)"</strong>라는 <strong>단 하나의 논리적 축</strong>을 따라 3세대에 걸쳐 진화해 왔습니다:
+              리포트(Section 3)에서 정식화한 바와 같이, 지난 17년간 개발된 수많은 AI 합성 가능성 모델은 서로 파편화된 것이 아니라 <strong>"표현형의 화학적 추상도와 반응 지식의 심도(Depth of Chemical Knowledge)"</strong>라는 <strong>단 하나의 논리적 축</strong>을 따라 <strong>시대별 4단계 세대(1G ~ 4G)</strong>에 걸쳐 진화해 왔습니다:
             </p>
 
             <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:18px; text-align:center;">
-              <div style="font-size:0.85rem; font-weight:700; color:#64748b; margin-bottom:6px;">순수 AI 합성 가능성(SA) 모델의 3단계 관통 진화 축</div>
-              <div style="font-size:1.05rem; font-weight:800; color:#0f172a; line-height:1.5;">
-                1세대: 단순 화학 토폴로지 통계 &rarr; 2세대: 대규모 반응 코퍼스 랭킹 학습 &rarr; 3세대: 상용 시약 기반 역합성 경로 직접 생성
+              <div style="font-size:0.85rem; font-weight:700; color:#64748b; margin-bottom:6px;">순수 AI 합성 가능성(SA) 모델의 시대별 4단계 패러다임 진화 축 (리포트 Section 3 기준)</div>
+              <div style="font-size:1.02rem; font-weight:800; color:#0f172a; line-height:1.5;">
+                1세대 (구조 통계/휴리스틱) &rarr; 2세대 (반응 코퍼스 &amp; CASP 대리) &rarr; 3세대 (GNN &amp; 반응 인지형 빌딩블록 분리) &rarr; 4세대 (합성 경로 내재화 생성 및 투영)
               </div>
             </div>
 
-            <!-- Evolution Table (1G ~ 3G Pure AI Models) -->
+            <!-- Evolution Table (1G ~ 4G Pure AI Models: Aligned with Report Section 3) -->
             <div style="overflow-x:auto; margin-bottom:20px;">
               <table class="report-table" style="font-size:0.84rem;">
                 <thead>
@@ -1380,32 +1380,39 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>1세대 (규칙·통계)</strong><br><span style="font-size:0.75rem; color:#64748b;">2009 ~ 2020</span></td>
-                    <td><strong style="color:#0284c7;">SAScore, SYBA, BR-SAScore</strong></td>
-                    <td>PubChem/ZINC 하위 분자 조각(Fragment) 빈도 사전 룩업 + 고리/키랄 복잡도 감점</td>
+                    <td><strong>1세대 (구조 통계)</strong><br><span style="font-size:0.75rem; color:#64748b;">2009 ~ 2020</span></td>
+                    <td><strong style="color:#0284c7;">SAScore, SYBA</strong></td>
+                    <td>원형 지문(Morgan/ECFP) 기반 파편 빈도 사전 룩업 + 고리·키랄 페널티 + 나이브 베이지안 승산비 (SYBA)</td>
                     <td style="font-family:'JetBrains Mono';">&lt; 0.1 ms<br>(초고속 스크리닝)</td>
-                    <td><strong style="color:#b91c1c;">금속-리간드 결합 인식 불가</strong>: Si-N, Al-C, Hf-N 결합이 제약 DB에 없어 '비천연 복잡도'로 오인 기각</td>
+                    <td><strong style="color:#b91c1c;">금속-리간드 결합 인식 불가</strong>: PubChem/ZINC 의약 DB 기반으로 Si-N, Al-C, Hf-N, Ti-N 등 반도체 핵심 배위를 '비천연 복잡 구조'로 오인 기각 (치명적 False Negative 88.9%)</td>
                   </tr>
                   <tr>
-                    <td><strong>2세대 (딥러닝·GNN)</strong><br><span style="font-size:0.75rem; color:#64748b;">2018 ~ 2023</span></td>
-                    <td><strong style="color:#7c3aed;">SCScore, RetroGNN, RAscore, GASA, DFRscore</strong></td>
-                    <td>Reaxys 1,200만 반응 순위 학습(SCScore) + 분자 그래프(GNN) 기반 반응 단계 수 추정</td>
+                    <td><strong>2세대 (반응 대리)</strong><br><span style="font-size:0.75rem; color:#64748b;">2018 ~ 2022</span></td>
+                    <td><strong style="color:#7c3aed;">SCScore, RAscore, RetroGNN</strong></td>
+                    <td>Reaxys 1,200만 반응 코퍼스 순위 학습($S(P) > S(R)$) 및 AiZynthFinder MCTS 역합성 성공 여부 심층망 증류</td>
                     <td style="font-family:'JetBrains Mono';">5 ~ 15 ms<br>(정밀 점수 산출)</td>
-                    <td><strong style="color:#b91c1c;">유기 반응 단계 수 편향</strong>: 결합 에너지를 몰라 자발적 분해·폭발 분자(TiEt4, ZrMe4)를 단순 1단계 시약으로 오인 통과</td>
+                    <td><strong style="color:#b91c1c;">유기 반응 단계 수 편향 및 결합 에너지 무지</strong>: 열역학 결합 해리에너지(BDE)를 몰라 상온 자발 분해(TiEt4) 및 폭발성(ZrMe4) 분자를 단순 1단계 반응으로 오인 통과 (False Positive 은폐)</td>
                   </tr>
                   <tr>
-                    <td><strong>3세대 (경로 생성형)</strong><br><span style="font-size:0.75rem; color:#64748b;">2021 ~ 2025</span></td>
-                    <td><strong style="color:#059669;">SynNet, ChemProjector, SynFormer, RxnFlow, BioNeMo ReaSyn</strong></td>
-                    <td>점수만 내는 대신 상용 출발 시약(Building Block)으로부터 100% 실행 가능한 반응 트리 직접 조제</td>
+                    <td><strong>3세대 (GNN·반응인지)</strong><br><span style="font-size:0.75rem; color:#64748b;">2022 ~ 2024</span></td>
+                    <td><strong style="color:#059669;">GASA, DeepSA, DFRscore, BR-SAScore</strong></td>
+                    <td>그래프 어텐션(GAT) 기반 위치이성질체 반응성 포착 + 상용 시약 조각(BFrag, $s_B=0$)과 반응 형성 조각(RFrag, $s_R&lt;0$) 정량 분리</td>
+                    <td style="font-family:'JetBrains Mono';">1 ~ 10 ms<br>(밀리초 단위 산출)</td>
+                    <td><strong style="color:#b91c1c;">전이금속 노드 결함 및 완제품 직접 투입 시 오판</strong>: GASA(Hf, Ta, Ru, W, Mo 등 7종 0벡터 누락), DFRscore(금속 원자가 ELSE 노드로 축퇴). 단, <strong>중심 금속을 해리한 순수 유기 리간드($HL_i$) 단독 평가 시 100% 정상 통과</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>4세대 (경로 내재화)</strong><br><span style="font-size:0.75rem; color:#64748b;">2024 ~ 2026</span></td>
+                    <td><strong style="color:#d97706;">SynNet, ChemProjector, SynFormer, RxnFlow, BioNeMo ReaSyn</strong></td>
+                    <td>점수만 내는 사후 필터링을 탈피하여 상용 출발 시약(Building Block)과 반응 템플릿의 도달 가능 화학 공간($\mathcal{M}_{\text{synth}}$)에서 역합성 트리 직접 생성</td>
                     <td style="font-family:'JetBrains Mono';">40 ~ 100 ms<br>(완전 경로 생성)</td>
-                    <td><strong style="color:#b91c1c;">무기 착물화 템플릿 부재 (0건)</strong>: 내장된 수만~10만 개 템플릿이 100% 유기화학 전용이라 금속 착물 합성 경로 생성 불가</td>
+                    <td><strong style="color:#b91c1c;">무기 착물화 템플릿 부재 (0건)</strong>: 내장된 수만~10만 개 템플릿이 100% 유기화학 전용이라 금속 착물 완제품 경로 생성 불가(0건). 단, <strong>유기 리간드의 역합성 트리 조제는 완벽 지원</strong></td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <!-- Report-based Precursor AI Model Selection Guide (Section 6) -->
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; margin-bottom:20px;">
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:18px; margin-bottom:20px;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
                 <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
                   리포트(Section 6) 기반: 연구 목적별 반도체 프리커서 AI 모델 선정 가이드
@@ -1413,27 +1420,27 @@
                 <span class="badge badge-prec" style="font-size:0.75rem;">Model Decision Guide</span>
               </div>
               <p style="font-size:0.86rem; color:#475569; line-height:1.6; margin-bottom:12px;">
-                보고서 6대 연구 목적별 매핑 분석 결과, 반도체 전구체 AI 워크플로우에 채택할 수 있는 핵심 AI 모델은 다음과 같이 3개 축으로 압축 선정됩니다:
+                보고서 6대 연구 목적별 매핑 분석 결과, 반도체 전구체 AI 워크플로우에 채택할 수 있는 핵심 AI 모델은 다음과 같이 세대별 목적에 맞추어 압축 선정됩니다:
               </p>
               <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
-                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #0284c7; border-radius:6px; padding:14px;">
-                  <strong style="color:#0369a1; font-size:0.92rem;">목적 1. 초고속 리간드 스크리닝 &rarr; BR-SAScore</strong>
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #059669; border-radius:6px; padding:14px;">
+                  <strong style="color:#047857; font-size:0.92rem;">목적 1. 초고속 리간드 스크리닝 &rarr; 3세대 BR-SAScore</strong>
                   <div style="font-size:0.8rem; color:#334155; margin-top:6px; line-height:1.55;">
                     &bull; <strong>선정 이유</strong>: Building Block 기반 단편 사전을 활용하여 유기 리간드의 합성 용이성을 0.1 ms 내 초고속 평가.<br>
-                    &bull; <strong>선정 기준 및 주의점</strong>: 금속 착물 완제품을 그대로 넣으면 11.1%만 통과하므로, <strong>중심 금속을 해리한 리간드(HL) 단독 평가</strong>에 적용해야 함.
+                    &bull; <strong>선정 기준 및 주의점</strong>: 금속 착물 완제품을 그대로 넣으면 11.1%만 통과하므로, <strong>중심 금속을 해리한 리간드(HL) 단독 평가</strong>에 적용해야 함 (리간드 분리 시 통과율 100%).
                   </div>
                 </div>
 
                 <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #7c3aed; border-radius:6px; padding:14px;">
-                  <strong style="color:#6d28d9; font-size:0.92rem;">목적 2. 반응 복잡도·단계 수 평가 &rarr; SCScore</strong>
+                  <strong style="color:#6d28d9; font-size:0.92rem;">목적 2. 반응 복잡도·단계 수 평가 &rarr; 2세대 SCScore</strong>
                   <div style="font-size:0.8rem; color:#334155; margin-top:6px; line-height:1.55;">
                     &bull; <strong>선정 이유</strong>: Reaxys 1,200만 반응 코퍼스를 학습하여 상용 시약으로부터 합성 단계가 얼마나 짧은지 정밀 산출.<br>
                     &bull; <strong>선정 기준 및 주의점</strong>: 양산 전구체 85.2%를 정상 인식하나, 열분해(TiEt4) 및 폭발성(ZrMe4) 분자도 통과시키므로 <strong>안전성 검증 결합 전제</strong> 하에 채택.
                   </div>
                 </div>
 
-                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #059669; border-radius:6px; padding:14px;">
-                  <strong style="color:#047857; font-size:0.92rem;">목적 3. 역합성 경로 직접 도출 &rarr; RxnFlow / ReaSyn</strong>
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #d97706; border-radius:6px; padding:14px;">
+                  <strong style="color:#b45309; font-size:0.92rem;">목적 3. 역합성 경로 직접 도출 &rarr; 4세대 RxnFlow / ReaSyn</strong>
                   <div style="font-size:0.8rem; color:#334155; margin-top:6px; line-height:1.55;">
                     &bull; <strong>선정 이유</strong>: 단순 스코어링을 넘어 실제 팹/실험실에서 투입할 출발 시약과 6단계 반응 트리를 직접 생성.<br>
                     &bull; <strong>선정 기준 및 주의점</strong>: 유기 리간드 합성은 완벽히 생성하나, <strong>무기 착물화 반응 템플릿(0건) 결함</strong>을 인지하고 유기 리간드 조제용으로 분업화해야 함.
@@ -1459,42 +1466,42 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>RDKit SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(1세대 규칙·통계)</span></td>
+                    <td><strong>RDKit SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(1세대 구조통계)</span></td>
                     <td style="text-align:center; color:#b91c1c; font-weight:700;">11.1%<br><span style="font-size:0.72rem;">(3/27 패스)</span></td>
                     <td>극단적으로 단순한 규소 알콕사이드(<code>TEOS</code>: 2.37, <code>4DMAS</code>: 3.39) 및 페로센형 샌드위치 착물(<code>Ru(EtCp)2</code>: 2.50) <strong>단 3종만 패스</strong></td>
                     <td><code>TSA</code>(6.91), <code>DMAH</code>(6.31), <code>TMA</code>(4.81), <code>TEMAH</code>(4.10) 등 <strong>팹 양산 전구체 88.9%를 '비천연 극악 구조'로 오판 기각</strong></td>
                     <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (전구체 단독 불가)</span><br><span style="font-size:0.75rem; color:#475569;">의약용 통계 사전 한계로 착물 완제품 직접 평가 불가.</span></td>
                   </tr>
                   <tr>
-                    <td><strong>BR-SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(1세대 확장)</span></td>
-                    <td style="text-align:center; color:#b45309; font-weight:700;">11.1% &rarr; 조건부<br><span style="font-size:0.72rem;">(리간드 분리 시)</span></td>
-                    <td>중심 금속과 해리된 <strong>순수 유기 리간드 파편($HL_i$) 단위 평가 시 100% 정상 통과</strong></td>
-                    <td>완제품 착물 입력 시 기본 BFrag 사전 내 전이금속 조각 부재로 RDKit과 동일하게 감점</td>
-                    <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">조건부 적합 (리간드 전용)</span><br><span style="font-size:0.75rem; color:#475569;">전구체 유기 리간드 자체의 합성 난이도 1차 필터로 최적.</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Reaxys SCScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 딥러닝)</span></td>
+                    <td><strong>Reaxys SCScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 반응코퍼스)</span></td>
                     <td style="text-align:center; color:#059669; font-weight:700;">85.2%<br><span style="font-size:0.72rem;">(23/27 패스)</span></td>
                     <td>Reaxys 상용 반응 코퍼스 덕분에 <strong>양산 전구체 대다수(23종)를 합성 용이(1.5~2.2)로 정상 패스</strong></td>
                     <td>화학 결합 에너지(BDE)를 인식하지 못해 <strong>상온 폭발성 <code>ZrMe4</code>(1.76)와 $\beta$-탈락 <code>TiEt4</code>(1.88)까지 100% 무비판 통과</strong></td>
                     <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">부분 적합 (보조 필터)</span><br><span style="font-size:0.75rem; color:#475569;">상용 시약 접근성 평가에 유용하나 폭발/안전 검증 필터 필수.</span></td>
                   </tr>
                   <tr>
-                    <td><strong>RAscore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 머신러닝)</span></td>
+                    <td><strong>RAscore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 CASP대리)</span></td>
                     <td style="text-align:center; color:#475569; font-weight:700;">100.0%<br><span style="font-size:0.72rem;">(27/27 패스)</span></td>
                     <td>27종 전구체 전원을 RAscore $\ge 0.99$로 전원 통과</td>
                     <td>열분해·폭발성·부식성 음성 대조군 10종까지 <strong>전원 통과(FP 100%)</strong>시켜 안전 변별력 완전 상실</td>
                     <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (변별력 상실)</span><br><span style="font-size:0.75rem; color:#475569;">모든 분자에 1.0을 출력하여 필터링 기능 불가.</span></td>
                   </tr>
                   <tr>
-                    <td><strong>GASA &amp; DFRscore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2세대 GNN)</span></td>
+                    <td><strong>BR-SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(3세대 반응인지)</span></td>
+                    <td style="text-align:center; color:#b45309; font-weight:700;">11.1% &rarr; 100%<br><span style="font-size:0.72rem;">(리간드 분리 시)</span></td>
+                    <td>중심 금속과 해리된 <strong>순수 유기 리간드 파편($HL_i$) 단위 평가 시 100% 정상 통과</strong></td>
+                    <td>완제품 착물 입력 시 기본 BFrag 사전 내 전이금속 조각 부재로 RDKit과 동일하게 감점 (11.1% 통과)</td>
+                    <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">조건부 적합 (리간드 전용)</span><br><span style="font-size:0.75rem; color:#475569;">전구체 유기 리간드 자체의 합성 난이도 1차 필터로 최적.</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>GASA &amp; DFRscore</strong><br><span style="font-size:0.72rem; color:#64748b;">(3세대 GNN)</span></td>
                     <td style="text-align:center; color:#dc2626; font-weight:700;">판정 불가<br><span style="font-size:0.72rem;">(원소 결함)</span></td>
                     <td>유기물 및 일부 기본 비금속 분자에만 한정적 점수 출력</td>
                     <td>GASA: <code>Hf, Mo, Ru, Ta, W</code> 7종 <strong>0벡터 침묵 누락</strong><br>DFRscore: 27종 전원 <strong>금속 원자가 'ELSE' 노드로 축퇴</strong></td>
                     <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (원소 결함)</span><br><span style="font-size:0.75rem; color:#475569;">전이금속 노드 인코딩 원천 결함.</span></td>
                   </tr>
                   <tr>
-                    <td><strong>RxnFlow / SynNet</strong><br><span style="font-size:0.72rem; color:#64748b;">(3세대 경로생성)</span></td>
+                    <td><strong>RxnFlow / SynNet</strong><br><span style="font-size:0.72rem; color:#64748b;">(4세대 경로생성)</span></td>
                     <td style="text-align:center; color:#dc2626; font-weight:700;">경로 생성 0건<br><span style="font-size:0.72rem;">(템플릿 부재)</span></td>
                     <td>상용 시약 카탈로그 매칭(85.2%) 및 유기 작용기 부분구조(33.3%) 인식까지는 정상 수행</td>
                     <td><strong>무기 착물화 반응 템플릿 부재(0건)</strong>로 인해 중심 금속 착물 완제품 역합성 경로 조제 불가</td>
@@ -1505,7 +1512,7 @@
             </div>
 
             <div style="background:#eff6ff; border-left:4px solid #0284c7; padding:12px 16px; border-radius:0 6px 6px 0; font-size:0.84rem; color:#1e40af; line-height:1.6; margin-bottom:14px;">
-              <strong>Step 2 핵심 결론 &amp; Step 3 연계:</strong> 순수 케모인포매틱스 AI 모델은 유기 리간드의 합성 난이도(BR-SAScore)나 상용 시약 접근성(SCScore, RxnFlow)을 평가하는 데는 유용하지만, <strong>금속-리간드 배위 결합, 열분해 저항성(BDE), 이합체화 등 '무기 물리 화학'을 전혀 알지 못합니다.</strong><br>
+              <strong>Step 2 핵심 결론 &amp; Step 3 연계:</strong> 순수 케모인포매틱스 AI 모델은 유기 리간드의 합성 난이도(3G BR-SAScore)나 상용 시약 접근성(2G SCScore, 4G RxnFlow)을 평가하는 데는 유용하지만, <strong>금속-리간드 배위 결합, 열분해 저항성(BDE), 이합체화 등 '무기 물리 화학'을 전혀 알지 못합니다.</strong><br>
               이로 인해 발생하는 <strong>양산 전구체 오판 기각(FN)과 위험 분자 맹목 통과(FP)</strong>를 극복하기 위해, 다음 <strong>Step 3에서 양자 물리 계산 정보를 어떻게 결합할 것인지</strong>에 대한 통합 플랜으로 연결됩니다.
             </div>
 
@@ -2415,7 +2422,7 @@ flowchart TD
         C2 -->|"HB-91 / SynFormer-115: 금속 원자 0개"| C5["ChemProjector / SynNet / SynFormer: 코어 규칙 0건 (0.0 percent)"]
         C2 -->|"USPTO 템플릿 미설치: A-Star 미실행 null"| C6["Retro-Star: A-Star 미실행 (null)"]
         C2 -->|"Explore 30 / CGFlow 42: 부분구조 9종만 매칭"| C7["RxnFlow: 코어 합성 0건 (0.0 percent)"]
-        C2 -->|"의약 사전 및 엄격 시약 사전 [max(existing, -0.47)]: M-N 결합 부재"| C8["BR-SAScore: 3/27 통과 (11.1 percent)"]
+        C2 -->|"의약 사전 및 엄격 시약 사전 (max(existing, -0.47)): M-N 결합 부재"| C8["BR-SAScore: 3/27 통과 (11.1 percent)"]
         C2 -->|"리간드 분리형 2-Track TMC-SA + DFT 착물화 에너지 결합"| D1["Stage 4 진입 (물리 기반 반도체 최적화)"]
     end
 
@@ -4273,7 +4280,7 @@ flowchart LR
               <div class="mermaid-svg-container" id="inverse-pipeline-container">
                 <div class="mermaid" id="inverse-pipeline-svg">
 flowchart TD
-    IN["목표 물성 벡터 지정 (Target Conditioning)<br>y* = (P_vap 1 Torr 이상, dG_decomp 30 kcal 이상, Vbur 58-82 percent, dG_ALD -15 kcal 이하)"] --> G1
+    IN["목표 물성 벡터 지정 (Target Conditioning)<br>y_target = (P_vap 1 Torr 이상, dG_decomp 30 kcal 이상, Vbur 58-82 percent, dG_ALD -15 kcal 이하)"] --> G1
 
     subgraph S1 ["Stage 1: 합성 보장 생성 엔진 (Inorganic GFlowNet / GA)"]
         G1["상용 출발물질 DB (29종 Building Blocks)<br>및 12종 공인 무기 반응 템플릿"]
@@ -4469,7 +4476,7 @@ flowchart TD
               <div class="mermaid-svg-container" id="substrate-pipeline-container">
                 <div class="mermaid" id="substrate-pipeline-svg">
 flowchart TD
-    COND["공정 기판 선택 조건 주입 (Target ASD Conditioning)<br>y* = (S_growth: SiO2-OH, S_non-growth: Cu, ddG_ads -12 kcal 이하, S_ASD 0.99 이상)"] --> G1
+    COND["공정 기판 선택 조건 주입 (Target ASD Conditioning)<br>y_target = (S_growth: SiO2-OH, S_non-growth: Cu, ddG_ads -12 kcal 이하, S_ASD 0.99 이상)"] --> G1
 
     subgraph GEN ["1. 역설계 생성 엔진 (GFlowNet / Diffusion)"]
         G1["상용 무기 빌딩 블록 DB (29종 Reagents)"]
@@ -4822,7 +4829,7 @@ flowchart TD
 
     subgraph S3 ["Level 3: 실험 데이터 캘리브레이션 및 닫힌 루프 보상 (Closed-Loop Feedback)"]
         T4 --> E1["실험 데이터 검증: TGA 열분해 창, 증기압, 대기 안정성"]
-        E1 --> R1["보상 함수(Reward) 갱신: R(x) = exp(-[alpha SA + beta dG_syn + gamma dH_vap]/kT)"]
+        E1 --> R1["보상 함수(Reward) 갱신: R(x) = exp(-(alpha SA + beta dG_syn + gamma dH_vap)/kT)"]
         R1 -->|"정책 파라미터 업데이트 (Active Learning)"| G1
     end
 
@@ -4920,13 +4927,13 @@ flowchart TD
           </div>
           <div class="mermaid-viewport">
             <div class="mermaid-svg-container" id="workflow-container">
-              <pre class="mermaid">
+              <div class="mermaid" id="workflow-diagram-svg">
 flowchart TD
     subgraph S1 ["Stage 1: 분자 입력 및 전처리 (Input Profiling)"]
         A["후보 분자 입력 (120종 전구체 / 18종 억제제 / AI 역설계 분자)"] --> B["RDKit 2D 정규화 및 원자가 검증"]
         B --> C{"분자 도메인 분류"}
-        C -- "전이금속 착물" --> C1["Precursor 파이프라인 분기"]
-        C -- "유전체/금속 차단제" --> C2["Inhibitor 파이프라인 분기"]
+        C -->|"전이금속 착물"| C1["Precursor 파이프라인 분기"]
+        C -->|"유전체/금속 차단제"| C2["Inhibitor 파이프라인 분기"]
     end
 
     subgraph S2 ["Stage 2: 2-Track 합성 가능성 고속 스크리닝"]
@@ -4934,8 +4941,8 @@ flowchart TD
         C2 --> D2["Inhibitor SCScore: Reaxys 유기 합성 복잡도 및 기상 휘발성 평가"]
         D1 --> E{"SA 임계치 판정 (SA 3.5 이하 및 BDE 40 kcal 이상)"}
         D2 --> E
-        E -- "Fail (합성 난해/자멸 분해)" --> E_rej["후보 탈락 및 리간드 대체 피드백"]
-        E -- "Pass (합성 유망)" --> F["합성 경로 탐색 진입"]
+        E -->|"Fail (합성 난해/자멸 분해)"| E_rej["후보 탈락 및 리간드 대체 피드백"]
+        E -->|"Pass (합성 유망)"| F["합성 경로 탐색 진입"]
     end
 
     subgraph S3 ["Stage 3: 지능형 역합성 절단 및 실험 SOP 자동 조제"]
@@ -4954,7 +4961,7 @@ flowchart TD
         J3 --> K1["합성 가능성 종합 등급 (Level A/B/C) 및 화학적 SOP 레시피 출력"]
         K1 --> K2["열분해 온도(T_decomp), 자연발화성(Pyrophoricity), ALD 공정 윈도우 데이터시트 완성"]
     end
-              </pre>
+              </div>
             </div>
           </div>
         </div>
@@ -5283,6 +5290,19 @@ flowchart TD
         });
       }
       initScrollSpy();
+
+      // Check URL hash on direct link entry
+      if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const targetEl = document.getElementById(targetId);
+        const contentTechnical = document.getElementById('tab-content-technical');
+        if (targetEl && contentTechnical && contentTechnical.contains(targetEl)) {
+          switchViewTab('technical');
+          setTimeout(() => {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }, 120);
+        }
+      }
     });
 
     // Individual Table Toggle
@@ -5554,73 +5574,42 @@ flowchart TD
 
 
     function openDiagramModal(sourceContainerId, title) {
-
       const modal = document.getElementById('diagramModal');
-
       const modalTitle = document.getElementById('modalDiagramTitle');
-
       const modalContainer = document.getElementById('modalSvgContainer');
-
       const sourceEl = document.getElementById(sourceContainerId);
-
       if (!modal || !sourceEl) return;
 
-
-
       modalTitle.textContent = title || '다이어그램 확대 팝업';
-
-      modalContainer.innerHTML = sourceEl.innerHTML;
-
+      modalContainer.innerHTML = '';
       
-
-      // Ensure the cloned SVG uses its native vector dimensions so transform scaling works crisply
-
-      const svg = modalContainer.querySelector('svg');
-
-      if (svg) {
-
-        const viewBox = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
-
+      const sourceSvg = sourceEl.querySelector('svg');
+      if (sourceSvg) {
+        const clonedSvg = sourceSvg.cloneNode(true);
+        modalContainer.appendChild(clonedSvg);
+        const viewBox = clonedSvg.viewBox && clonedSvg.viewBox.baseVal ? clonedSvg.viewBox.baseVal : null;
         if (viewBox && viewBox.width > 0) {
-
-          svg.style.width = viewBox.width + 'px';
-
-          svg.style.height = viewBox.height + 'px';
-
-          svg.style.maxWidth = 'none';
-
+          clonedSvg.style.width = viewBox.width + 'px';
+          clonedSvg.style.height = viewBox.height + 'px';
+          clonedSvg.style.maxWidth = 'none';
         } else {
-
-          svg.style.width = '100%';
-
-          svg.style.height = 'auto';
-
+          clonedSvg.style.width = '100%';
+          clonedSvg.style.height = 'auto';
         }
-
+      } else {
+        modalContainer.innerHTML = sourceEl.innerHTML;
       }
 
-
-
       currentDiagramZoom = 1.0;
-
       updateDiagramTransform();
 
-
-
       modal.classList.add('active');
-
       document.body.style.overflow = 'hidden';
 
-
-
       // Automatically scale up to comfortably fit the modal window
-
       setTimeout(() => {
-
         fitDiagramToWindow();
-
       }, 40);
-
     }
 
 
@@ -5699,17 +5688,7 @@ flowchart TD
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
         // Trigger Mermaid rendering after technical tab becomes visible
-        if (typeof mermaid !== 'undefined') {
-          setTimeout(() => {
-            try {
-              mermaid.run({
-                querySelector: '#tab-content-technical .mermaid'
-              });
-            } catch(e) {
-              console.warn('Mermaid tab switch render notice:', e);
-            }
-          }, 60);
-        }
+        renderMermaidInTechnicalTab();
       }
 
       // Re-trigger KaTeX rendering on new tab elements
@@ -5724,6 +5703,24 @@ flowchart TD
           throwOnError: false
         });
       }
+    }
+
+    let technicalMermaidRendered = false;
+    function renderMermaidInTechnicalTab() {
+      if (typeof mermaid === 'undefined') return;
+      setTimeout(async () => {
+        try {
+          const unrendered = document.querySelectorAll('#tab-content-technical .mermaid:not([data-processed="true"])');
+          if (unrendered && unrendered.length > 0) {
+            await mermaid.run({
+              nodes: unrendered
+            });
+            technicalMermaidRendered = true;
+          }
+        } catch(e) {
+          console.warn('Mermaid tab switch render notice:', e);
+        }
+      }, 60);
     }
 
     function jumpToTechnicalSection(sectionId) {
