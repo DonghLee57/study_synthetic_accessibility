@@ -143,194 +143,187 @@ repo_semi_metrics = {
 }
 
 
-# 16 Multi-stage evaluated models across the 4 execution pipeline stages
+# 15 Unique Multi-stage evaluated models across the 4 execution pipeline stages (ordered by generation 1G -> 4G -> CASP)
 multistage_models = [
-    {
-        "name": "BR-SAScore (엄격 시약사전, 무누수)",
-        "gen": "3G 엄격 분리",
-        "repo_key": "BR-SAScore",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("max(existing, -0.47) 보정", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("11.1% (3/27) USPTO 결측", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("11.1% (3/27) 통과 (악화 0종)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (무기 매니폴드 결측; max(existing, -0.47) 보정)",
-        "barrier_desc": "BRSAScore는 반경 2 음수 단편(fscore < 0)만 평균내므로, 시약 단편을 max(existing, -0.47)로 갱신하면 점수 악화(0종; CpZr 7.20→6.95, Ru(EtCp)2 4.18→3.99) 없이도 M-N/M-C 결합 중심 단편이 시약에 부재(-6.0)하여 3종(TSA, TMA, DMAH)만 통과함. (단순 0.0 덮어쓰기 시 유기 단편이 분모에서 빠져 4종 악화)"
-    },
-    {
-        "name": "BR-SAScore (생성물 암기 누수 대조군)",
-        "gen": "3G 피팅 대조군",
-        "repo_key": "BR-SAScore",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 암기 등록 (s=0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("100.0% (27/27) 사전 피팅", "background:#fef3c7; color:#b45309; border-color:#fcd34d;"),
-        "s4": ("100.0% (27/27) [누수 왜곡]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
-        "barrier_stage": "감사 검증 (데이터 누수 대조군)",
-        "barrier_desc": "Claude 감사에서 규명된 반사실적 대조군: 타깃 전구체 생성물 단편 자체를 0.0으로 사전에 등록하면 금속 배위 단편까지 모두 평균에서 제외(score1=0)되어 27/27종(100.0%, 이전 24종 등록 시 88.9%)이 통과하나, 이는 미지의 전구체에 일반화할 수 없는 순환 기억(Circular Memorization) 왜곡임을 실증."
-    },
-    {
-        "name": "BR-SAScore (기본 의약사전)",
-        "gen": "3G 사전 분리",
-        "repo_key": "BR-SAScore",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 분리 (BFrag/RFrag)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("11.1% (3/27) 의약 편향", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("11.1% (3/27) 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (반응 매니폴드)",
-        "barrier_desc": "의약 사전(eMolecules/USPTO) 내 Si-N, M-N 결합 부재로 최대 반응 페널티(s_R=-6.0) 부과되어 24종이 4.18~9.03점으로 과대평가."
-    },
     {
         "name": "SAScore (RDKit Built-in)",
         "gen": "1G 단편 빈도",
+        "gen_badge": "badge-1g",
         "repo_key": "SAScore (RDKit Built-in)",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% Morgan 단편 추출", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("N/A (단편 휴리스틱)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("11.1% (3/27) 오판", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2·4 (빈도 라이브러리)",
-        "barrier_desc": "PubChem 의약 빈도 기반 음의 로그빈도 페널티로 TSA(6.91), DMAH(6.31) 등 단순 전구체 24종에 극단적 False Negative 발생."
+        "s2": ("100% Morgan(r=2) 추출", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("N/A (통계 단편 기반)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("11.1% (3/27) [FN 88.9%]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 2·4 — 의약 단편 빈도 편향 및 가교고리 오인",
+        "barrier_desc": "PubChem 유기 의약 분자 기반 단편 빈도 사전에 Si-N, Al-C, M-N 결합이 부재하여 단순 1단계 양산 전구체 TSA(6.91), DMAH(6.31), TMA(4.81) 등 24종(88.9%)에 치명적 False Negative 오판 발생. 에테르/아민 유사 구조 3종(TEOS 2.84, 4DMAS 3.37, Ru(EtCp)2 3.48)만 통과."
+    },
+    {
+        "name": "SYBA",
+        "gen": "1G 나이브 베이지안",
+        "gen_badge": "badge-1g",
+        "repo_key": "SYBA",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 나이브 베이즈 단편", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("N/A (단편 로그공산비)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("85.2% (23/27) [Cp 착체 붕괴]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "barrier_stage": "Stage 2·4 — ZINC 의약 코퍼스 기반 샌드위치 착체 붕괴",
+        "barrier_desc": "비환식 알킬아민·알콕사이드 전구체 23종(+3.96~+11.98)은 정상 판정하나, ZINC 의약 라이브러리(syba.csv.gz) 내 금속-Cp 배위 단편이 전무하여 Ru(EtCp)2(-44.27), CpTi(NMe2)3(-24.98), Cp(NMe2)3Zr(-24.98), ZMA(-18.21) 등 환형·메탈로센 4종에서 극단적 음수 붕괴."
     },
     {
         "name": "SCScore",
         "gen": "2G 반응 신경망",
+        "gen_badge": "badge-2g",
         "repo_key": "SCScore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 1024-bit Morgan", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("N/A (End-to-End DNN)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s3": ("N/A (12층 순위 DNN)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("85.2% (23/27) [위험 은폐]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
-        "barrier_stage": "Stage 4 (초기원료 편향)",
-        "barrier_desc": "Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 저분자 전구체를 1점대로 과소평가하여 TMA 등 자연발화성 위험 완전 은폐."
-    },
-    {
-        "name": "SYBA",
-        "gen": "1G 베이지안",
-        "repo_key": "SYBA",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 나이브 베이즈 단편", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("N/A (단편 확률 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("85.2% (23/27) [착체 붕괴]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
-        "barrier_stage": "Stage 2·4 (ZINC 코퍼스)",
-        "barrier_desc": "ZINC 의약 DB에 금속-Cp 배위 단편이 전무하여 Ru(EtCp)2(-44.27), CpTi(-24.98) 등 메탈로센 4종에서 극단적 음수 붕괴 발생."
+        "barrier_stage": "Stage 4 — Reaxys 초기 반응물 편향에 따른 안전 위험 은폐",
+        "barrier_desc": "Reaxys 1,200만 반응쌍(full_reaxys_model_1024bool)에서 유기금속이 주로 출발 시약으로 등록된 편향으로 23종을 1.01~1.94의 저복잡도로 산출함. ZMA(2.72)·Co(AMD)2(2.38)의 입체 복잡도는 일부 반영하나, TMA(1.21)·DMAH(1.01)의 자연발화성 및 열분해 위험성은 전혀 변별하지 못함."
     },
     {
         "name": "RAscore",
         "gen": "2G MCTS 증류",
+        "gen_badge": "badge-2g",
         "repo_key": "RAscore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("투영 왜곡 (금속→알킬 탄소)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (XGBoost 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% 유효 (수치 100% FP)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2 (ECFP6 특성 표현)",
-        "barrier_desc": "중심금속 배위 안정성을 전혀 인지하지 못하고 디메틸아미노/알킬 비트만으로 23종이 ≥0.9점(전체 0.629~0.988)으로 과대평가 (100% False Positive)."
+        "barrier_stage": "Stage 2 — ECFP6 알킬 치환기 편향 및 중심금속 불안정성 소거",
+        "barrier_desc": "2048-bit ECFP6 카운트 벡터가 디메틸아미노·이소프로필 등 유기 치환기 비트에 편향되어 중심금속 배위 안정성을 인지하지 못함. 전수 평균 0.925(0.629~0.988, 23종 ≥0.90)로 무조건 통과시켜 불안정 분자까지 거르지 못하는 100% False Positive 발생."
     },
     {
-        "name": "RxnFlow",
-        "gen": "4G GFlowNet",
-        "repo_key": "RxnFlow",
+        "name": "BR-SAScore",
+        "gen": "3G 반응 인지 분리",
+        "gen_badge": "badge-3g",
+        "repo_key": "BR-SAScore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 신톤 그래프 표현", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("33.3% 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 코어 경로 도출", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (72종 신톤 템플릿 풀)",
-        "barrier_desc": "Explore(30개)/CGFlow(42개) 총 72개 템플릿에 금속 원자가 전무하여 일반 생성물 부분구조(아민 알킬 사슬 9종) 외에 전구체 코어 합성 불가."
+        "s2": ("100% BFrag/RFrag 분리 (무누수 보정)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("11.1% (3/27) 배위 결합 부재", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("11.1% (3/27) [완제품 한계]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 — 기본·무누수 시약사전 동일 한계 (리간드 분리 평가 필수)",
+        "barrier_desc": "기본 의약사전(eMolecules/USPTO)과 데이터 누수를 배제한 엄격 시약사전(max(existing, -0.47) 보정; 음수 단편 평균 수식에 정합하여 점수 악화 0종 유지) 모두에서 새로 형성된 M-N/M-C 배위 단편이 시약에 부재(-6.0)하여 동일하게 3종(TSA, TMA, DMAH)만 통과함. (단, 타깃 생성물 자체를 사전에 등록 시 27/27 통과하나 이는 순환 암기 왜곡임.) 유기 프로-리간드(HL_i) 단독 평가에 국한하여 운용해야 함."
     },
     {
-        "name": "BioNeMo ReaSyn",
-        "gen": "4G 자기회귀 CoR",
-        "repo_key": "ReaSyn",
-        "s1": ("100.0% (27/27) (118 원소)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 트랜스포머 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("88.9% 부분구조(≥2원자 85.2%) / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 합성 경로 완결", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (SynFormer 115 반응망)",
-        "barrier_desc": "118개 원소 어휘 토큰화 및 무손실 역변환(0 UNK)은 100% 완벽하나, 115종 특허 반응 템플릿에는 금속 원자가 전무하고 일반 생성물 부분구조만 매칭되어 무기 착체 배위 단계 생성 0건."
+        "name": "GASA",
+        "gen": "3G GAT 위치선택성",
+        "gen_badge": "badge-3g",
+        "repo_key": "GASA",
+        "s1": ("74.1% 수용 (7종 25.9% 미지원)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s2": ("0벡터 무음 오인코딩 (Silent Loss)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("N/A (GAT 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("0.0% 물리적 유효성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 1·2 — DGL 의존성 부재 & 미지원 금속 0벡터 무음 손실 (정적 감사)",
+        "barrier_desc": "로컬 dgl/dgllife 미설치로 추론 미실행이며 피처화 코드 정적·정량 감사를 수행함. 원자 허용 집합(allowable_set)에 5대 전이금속(Hf, Ta, Ru, W, Mo)이 누락되어 7종(25.9%)에서 런타임 예외 대신 encode_unknown=False 처리로 전량 0벡터가 생성되는 무음 오인코딩(Silent Mis-encoding) 결함 확인."
     },
     {
-        "name": "AiZynthFinder",
-        "gen": "CASP MCTS 엔진",
-        "repo_key": "AiZynthFinder",
-        "s1": ("100.0% (27/27) Molecule 생성", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% sanitize() 검증 통과", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("미실행 (가중치 미설치 / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("N/A (MCTS 미실행, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
-        "barrier_stage": "Stage 3 (MCTS 가중치 부재 & 정적 분석)",
-        "barrier_desc": "aizynthfinder.chem.Molecule(smiles=smi).sanitize() 직접 호출로 Stage 1·2는 100% 통과 검증했으나, USPTO 정책망 가중치 미설치로 실제 MCTS 탐색은 미실행(null 처리). 정적 분석 상 USPTO 50k에는 전이금속 배위 규칙이 부재함."
-    },
-    {
-        "name": "ChemProjector",
-        "gen": "4G 분자 투영 디퓨전",
-        "repo_key": "ChemProjector",
-        "s1": ("100.0% (27/27) 원자번호≤100", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 이중 잠재 공간 투영", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("85.2% (23/27) 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (HB-91 템플릿 매칭)",
-        "barrier_desc": "HB 91종 SMARTS 매칭 결과 23종에서 일반 생성물 부분구조([N:1][#6:2], [O:1][C:2] 등 2원자 패턴 포함; TSA, HCDS, TMA, DMAH 제외)가 존재하나, 템플릿 파일 내 금속 원자가 전무(0건)하여 전구체 코어 생성 불가."
-    },
-    {
-        "name": "SynNet",
-        "gen": "4G 마코프 순방향 계획",
-        "repo_key": "SynNet",
+        "name": "DeepSA",
+        "gen": "3G 멀티모달 트랜스포머",
+        "gen_badge": "badge-3g",
+        "repo_key": "DeepSA",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% Morgan FP (활성비트>0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("85.2% (23/27) 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (HB-91 반응/BB 매칭)",
-        "barrier_desc": "2048비트 Morgan 지문 내 활성 비트(GetNumOnBits() > 0) 정상 생성을 27/27 실측 검증. ChemProjector와 동일한 HB 91종 SMARTS 매칭 결과 일반 생성물 부분구조 23/27종은 존재하나, 템플릿 파일 내 금속 원자가 전무(0건)하므로 착체 합성 트리 생성 불가."
-    },
-    {
-        "name": "SynFormer",
-        "gen": "4G Seq2Seq 트랜스포머",
-        "repo_key": "SynFormer",
-        "s1": ("100.0% (27/27) 자체 어휘 통과", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% synformer 토큰 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("88.9% (≥2원자 85.2%, ≥4원자 40.7%) / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) 코어 규칙", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 3 (115 특허 반응 SMARTS 매칭)",
-        "barrier_desc": "synformer 자체 토크나이저(smiles_vocab.txt)는 27/27 통과. comprehensive.txt 115종 생성물 SMARTS 매칭 결과 전체 24/27종(무탄소 TSA는 #84 [N:1] 1원자 패턴), ≥2원자 패턴 23/27종(이 중 12종은 N-C 등 2~3원자 패턴만 매칭), ≥4원자 패턴 11/27종이 매칭되며 금속 원자는 전무(0건)함."
-    },
-    {
-        "name": "Retro*",
-        "gen": "신경망 유도 A* 탐색",
-        "repo_key": "Retro*",
-        "s1": ("100.0% (27/27) rdchiralReactants", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 가치 함수 벡터", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("미실행 (USPTO 템플릿 미설치 / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("N/A (A* 미실행, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
-        "barrier_stage": "Stage 3 (가중치 부재 & 정적 분석)",
-        "barrier_desc": "rdchiralReactants(smi) 직접 호출로 객체 초기화(27/27)는 실측 검증했으나, USPTO 50k 템플릿 및 가치 신경망 가중치 미설치로 실제 A* 탐색은 미실행(null 처리). 정적 분석 상 USPTO 유기 반응망에는 금속 배위 규칙이 부재함."
+        "s2": ("Ro5(26/27 적합) / 서브워드 파편화", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("N/A (멀티모달 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("0.0% 물리적 타당성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 2·4 — AutoGluon 부재 & ELECTRA 무기 괄호 파편화 (정적 감사)",
+        "barrier_desc": "로컬 autogluon 미설치로 추론 미실행이며 서술자·토크나이저 정적 감사를 수행함. RDKit 실측 상 26/27종이 Lipinski Ro5를 통과(Hf(OtBu)4만 cLogP=5.06 초과)하나, ELECTRA 기반 SMILES 서브워드 분할 시 [Zr]·[Hf]·[SiH3] 등 무기 괄호 표현이 의약 문맥으로 왜곡·파편화됨."
     },
     {
         "name": "DFRscore",
         "gen": "3G GAT 단계 예측기",
+        "gen_badge": "badge-3g",
         "repo_key": "DFRscore",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("원소 정보 상실 (전수 'ELSE')", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (GAT 회귀)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% 물리적 신뢰도", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2 (원소 인코딩 'ELSE')",
-        "barrier_desc": "Si, Ti, Zr, Hf, Ru, W, Mo, Al, Co 등 모든 금속이 단일 'ELSE' 원소 토큰으로 뭉개져 원소별 합성 난이도 감지 불가."
+        "barrier_stage": "Stage 2 — 원소 인코딩 집합 제한으로 전이금속 전수 'ELSE' 축퇴",
+        "barrier_desc": "그래프 노드 허용 원소가 유기 10원소(C, N, O, F, S, Cl, Br, I, B, P)로 제한되어 27종 전구체 전수(100%)의 규소·금속 원자(Si, Ti, Zr, Hf, Ru, W, Mo, Al, Co 등)가 단일 'ELSE' 토큰으로 뭉개져 원소별 합성 난이도 변별력을 완전 상실함."
     },
     {
-        "name": "DeepSA",
-        "gen": "3G 멀티모달 트랜스포머",
-        "repo_key": "DeepSA",
+        "name": "SynNet",
+        "gen": "4G 마코프 순방향 계획",
+        "gen_badge": "badge-4g",
+        "repo_key": "SynNet",
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("의약 Ro5 (26/27 적합) & NLP 왜곡", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s3": ("N/A (복합 SA 지표)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("0.0% 물리적 타당성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2·4 (AutoGluon 부재 & 정적 분석)",
-        "barrier_desc": "AutoGluon 부재로 미실행(정적 분석). RDKit 실측 상 Ro5는 26종이 통과(Hf(OtBu)4만 LogP=5.06 위반)하나, ELECTRA 서브워드 분할([Zr], [Hf] 파편화)로 무기 원소 표현 왜곡."
+        "s2": ("100% 2048-bit Morgan (>0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("85.2% 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 코어 경로", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 — HB-91 유기 템플릿 한정 (금속 코어 규칙 0건)",
+        "barrier_desc": "2048-bit Morgan 지문 활성 비트 생성(GetNumOnBits() > 0)을 27/27 전구체에서 직접 실측 검증함. 그러나 내장 Hartenfeller-Button(HB) 91종 SMARTS 매칭 시 일반 유기 부분구조 23/27종만 존재하며 템플릿 내 금속 원자가 전무(0건)하여 착물 합성 트리 생성 불가."
     },
     {
-        "name": "GASA",
-        "gen": "3G GAT 위치선택성",
-        "repo_key": "GASA",
-        "s1": ("25.9% (7/27) 미지원 원소", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "s2": ("0벡터 무음 오인코딩 (Silent Mis-encoding)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s3": ("N/A (GAT 분류)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("0.0% 물리적 유효성", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 1·2 (DGL 부재 및 무음 오인코딩)",
-        "barrier_desc": "DGL/DGL-Life 부재로 미실행 상태이며, 코드 정적 분석 상 Hf, Ta, Ru, W, Mo(7종)는 allowable_set 부재로 에러 대신 atom_type_one_hot에 의해 0벡터로 무음 오인코딩(Silent Mis-encoding)되어 특성 완전 상실."
+        "name": "ChemProjector",
+        "gen": "4G 분자 투영 디퓨전",
+        "gen_badge": "badge-4g",
+        "repo_key": "ChemProjector",
+        "s1": ("100.0% (27/27) (Z≤100)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 이중 잠재 공간 투영", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("85.2% 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 코어 경로", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 — HB-91 유기 템플릿 매칭 (금속 배위 규칙 0건)",
+        "barrier_desc": "원자번호 Z≤100 기반 그래프 임베딩 수용은 27/27 통과. HB 91종 SMARTS 매칭 실측 결과 23종에서 [N:1][#6:2] 등 일반 유기 치환기 부분구조만 탐지(TSA, HCDS, TMA, DMAH 제외)될 뿐, 템플릿 내 금속 원자가 0개이므로 전구체 코어 투영 불가."
+    },
+    {
+        "name": "SynFormer",
+        "gen": "4G Seq2Seq 트랜스포머",
+        "gen_badge": "badge-4g",
+        "repo_key": "SynFormer",
+        "s1": ("100.0% (27/27) 자체 어휘", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% CoR 토큰 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("88.9% (≥2원자 85.2%) / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 코어 경로", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 — 115종 특허 반응망 내 무기 배위 규칙 부재 (0건)",
+        "barrier_desc": "자체 smiles_vocab 토크나이저 실측 27/27 전수 통과. comprehensive.txt 115종 생성물 SMARTS 매칭 결과 전체 24/27종(무탄소 TSA는 #84 [N:1] 1원자 패턴), ≥2원자 패턴 23/27종, ≥4원자 패턴 11/27종에서 유기 부분구조만 매칭되며 금속 원자 포함 규칙은 0건임."
+    },
+    {
+        "name": "RxnFlow",
+        "gen": "4G GFlowNet",
+        "gen_badge": "badge-4g",
+        "repo_key": "RxnFlow",
+        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 신톤 그래프 표현", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("33.3% 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 코어 경로", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 — 72종 신톤 템플릿 내 금속 원소 전무 (리간드 전용)",
+        "barrier_desc": "Explore(30종)·CGFlow(42종) 총 72종 SMARTS 역반응 실측 결과 DIPAS, TEMAH, TEMAZ 등 9종(33.3%)의 아민 알킬 사슬(환원적 아민화 등) 부분구조만 매칭되었음. 템플릿 내 금속 원자가 전무하여 코어 착물 생성(0/27)은 불가하며 유기 리간드 조제에만 유효함."
+    },
+    {
+        "name": "BioNeMo ReaSyn",
+        "gen": "4G 자기회귀 CoR",
+        "gen_badge": "badge-4g",
+        "repo_key": "ReaSyn",
+        "s1": ("100.0% (118원소 무손실)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 양방향 CoR 시퀀스", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("88.9% 부분구조 / 0% 코어", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": ("0.0% (0/27) 배위 경로", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "barrier_stage": "Stage 3 — 전원소 어휘 지원 대비 SynFormer 115종 유기 반응 한계",
+        "barrier_desc": "118개 원소 어휘 tokenize_smiles 실측 결과 27/27 전구체에서 UNK 에러 0건(100% 무손실 역변환)을 달성함. 그러나 반응 인덱스 [R0, R114]가 SynFormer 115종 유기 특허 반응에 갇혀 있어 일반 부분구조(24/27) 외 무기 배위 경로 생성은 0건임."
+    },
+    {
+        "name": "AiZynthFinder",
+        "gen": "CASP MCTS 엔진",
+        "gen_badge": "badge-ext",
+        "repo_key": "AiZynthFinder",
+        "s1": ("100.0% (27/27) Molecule", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% sanitize() 검증 통과", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("미실행 (가중치 미설치 / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("N/A (MCTS 미실행, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
+        "barrier_stage": "Stage 3 — 정책 가중치 미설치(null) 및 USPTO 유기 규칙 한계",
+        "barrier_desc": "aizynthfinder.chem.Molecule.sanitize() 직접 호출을 통해 27/27 화학 객체 수용을 실측 검증함. 외부 USPTO 정책 신경망 가중치 및 Stock HDF5 미설치로 MCTS 탐색은 미실행(null)이며, 정적 분석 상 USPTO 50k에는 전이금속 배위 규칙이 부재함."
+    },
+    {
+        "name": "Retro*",
+        "gen": "CASP 신경망 A*",
+        "gen_badge": "badge-ext",
+        "repo_key": "Retro*",
+        "s1": ("100.0% (27/27) rdchiral", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% 가치 함수 입력 벡터", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("미실행 (USPTO 미설치 / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("N/A (A* 탐색 미실행, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
+        "barrier_stage": "Stage 3 — 템플릿·가중치 미설치(null) 및 USPTO 유기 규칙 한계",
+        "barrier_desc": "rdchiralReactants(smiles) 직접 호출을 통해 27/27 전구체 템플릿 객체 초기화 통과를 실측 검증함. 다만 USPTO 50k 반응 템플릿 및 가치 신경망 가중치 미설치로 실제 A* 탐색은 미실행(null)이며, 기존 유기 반응망에는 무기 배위 규칙이 결여되어 있음."
     }
 ]
 
@@ -342,13 +335,14 @@ for idx, m in enumerate(multistage_models, 1):
     s2_text, s2_style = m["s2"]
     s3_text, s3_style = m["s3"]
     s4_text, s4_style = m["s4"]
+    gen_badge = m.get("gen_badge", "badge-1g")
     
     row_html = f"""
             <tr>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
               <td style="white-space:nowrap;">
                 <strong>{m['name']}</strong><br>
-                <span class="badge badge-1g" style="font-size:0.7rem;">{m['gen']}</span>
+                <span class="badge {gen_badge}" style="font-size:0.7rem;">{m['gen']}</span>
               </td>
               <td style="font-size:0.82rem;">
                 <a href="{r.get('url','#')}" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">{r.get('repo','-')}</a>
