@@ -15,20 +15,32 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
-  <!-- Mermaid for Architecture Diagrams (Light Academic Theme) -->
+  <!-- Mermaid for Architecture Diagrams (High-Resolution Academic Theme) -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
     mermaid.initialize({
       startOnLoad: false,
       theme: 'base',
       themeVariables: {
-        primaryColor: '#eff6ff',
+        primaryColor: '#f0f9ff',
         primaryTextColor: '#0f172a',
-        primaryBorderColor: '#3b82f6',
-        lineColor: '#475569',
+        primaryBorderColor: '#0284c7',
+        lineColor: '#334155',
         secondaryColor: '#f0fdf4',
-        tertiaryColor: '#f8fafc',
-        fontFamily: 'Inter, Noto Sans KR, sans-serif'
+        tertiaryColor: '#ffffff',
+        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif',
+        fontSize: '15px',
+        edgeLabelBackground: '#ffffff',
+        clusterBkg: '#f8fafc',
+        clusterBorder: '#cbd5e1'
+      },
+      flowchart: {
+        htmlLabels: true,
+        curve: 'basis',
+        padding: 24,
+        nodeSpacing: 50,
+        rankSpacing: 50,
+        useMaxWidth: false
       }
     });
   </script>
@@ -788,9 +800,10 @@
       border-color: #0284c7;
     }
     .mermaid-viewport {
-      padding: 24px 20px;
-      overflow: auto;
-      max-height: 520px;
+      padding: 28px 20px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-height: 750px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -801,6 +814,68 @@
       width: 100%;
       display: flex;
       justify-content: center;
+      overflow-x: auto;
+    }
+    .mermaid-svg-container .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .mermaid-svg-container .mermaid svg {
+      width: 100% !important;
+      max-width: 1180px !important;
+      height: auto !important;
+      display: block;
+      /* High-DPI Vector Anti-aliasing & Ultra-Crisp Rendering */
+      text-rendering: geometricPrecision !important;
+      shape-rendering: geometricPrecision !important;
+      image-rendering: -webkit-optimize-contrast !important;
+      -webkit-font-smoothing: antialiased !important;
+    }
+    /* Crisp SVG lines and typography */
+    .mermaid svg .node rect,
+    .mermaid svg .node circle,
+    .mermaid svg .node polygon,
+    .mermaid svg .node path {
+      stroke-width: 1.8px !important;
+      rx: 6px !important;
+      ry: 6px !important;
+    }
+    .mermaid svg .edgePath path.path {
+      stroke-width: 2px !important;
+      stroke: #334155 !important;
+    }
+    .mermaid svg marker path {
+      fill: #334155 !important;
+      stroke: #334155 !important;
+    }
+    .mermaid svg .edgeLabel {
+      background-color: #ffffff !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+      padding: 3px 8px !important;
+      border-radius: 4px !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+    .mermaid svg .label {
+      font-size: 14.5px !important;
+      font-weight: 600 !important;
+      line-height: 1.5 !important;
+      color: #0f172a !important;
+    }
+    .mermaid svg .cluster rect {
+      stroke-width: 1.8px !important;
+      stroke: #94a3b8 !important;
+      fill: #f8fafc !important;
+      rx: 8px !important;
+      ry: 8px !important;
+    }
+    .mermaid svg .cluster .label {
+      font-size: 14.5px !important;
+      font-weight: 700 !important;
+      color: #0f172a !important;
     }
     .btn-close-modal {
       background: #0284c7;
@@ -1163,13 +1238,13 @@
   <nav class="view-mode-bar" aria-label="보고서 뷰 모드 전환">
     <div class="view-mode-inner">
       <button type="button" class="view-mode-btn active" id="btn-tab-storyline" onclick="switchViewTab('storyline')">
-        [요약] 핵심 요약 및 스토리라인 (Executive Storyline)
+        요약
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-technical" onclick="switchViewTab('technical')">
-        [리포트] 전수 기술 분석 &amp; 벤치마크 (15대 섹션)
+        리포트
       </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 핵심 요약과 상세 기술 리포트 뷰를 자유롭게 전환할 수 있습니다.
+        열람 목적에 따라 요약과 리포트 뷰를 자유롭게 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -1187,7 +1262,7 @@
         </div>
         <ul class="toc-list">
           <li><a href="#storyline-step1" class="toc-link active" data-target="storyline-step1">1. 모델 평가 핵심 기준 (혼동 행렬 &amp; TP/FP/TN/FN)</a></li>
-          <li><a href="#storyline-step2" class="toc-link" data-target="storyline-step2">2. 세대별 모델 진화 로직 &amp; 적합성·패스 기준</a></li>
+          <li><a href="#storyline-step2" class="toc-link" data-target="storyline-step2">2. 4세대 모델 진화 체계 &amp; 실무 판정 가이드</a></li>
           <li><a href="#storyline-step3" class="toc-link" data-target="storyline-step3">3. Base 모델 병리와 7net 물리 결합 플랜</a></li>
           <li><a href="#storyline-step4" class="toc-link" data-target="storyline-step4">4. 55종 실증 벤치마크 평가 결과</a></li>
         </ul>
@@ -1195,7 +1270,7 @@
           <strong style="color:#1e40af;">전체 기술 보고서 열람:</strong><br>
           34편 원문 아카이브, 16개 모델 비교, DFT/VASP 자동화 및 55종 실측 데이터시트는 리포트 탭에 있습니다.
           <button type="button" onclick="switchViewTab('technical')" class="btn-toc-utility" style="margin-top:8px; width:100%; background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer;">
-            15개 섹션 상세 리포트 열기 &rarr;
+            리포트 탭 열기 &rarr;
           </button>
         </div>
       </div>
@@ -1203,7 +1278,7 @@
       <!-- Technical Deep TOC -->
       <div id="toc-technical" style="display:none;">
         <div class="toc-header">
-          <span>보고서 목차 (Contents)</span>
+          <span>리포트 목차 (15대 섹션)</span>
           <span class="toc-progress" id="tocProgress">Sec 1/15</span>
         </div>
         <ul class="toc-list" id="tocList">
@@ -1344,30 +1419,30 @@
           </div>
         </section>
 
-        <!-- Step 2: 시대별 4단계 패러다임 진화 (1G~4G) & 반도체 전구체 AI 모델 선정 및 패스 한계 -->
+        <!-- Step 2: 4세대 AI 모델 진화 체계 & 실무 판정 가이드 -->
         <section id="storyline-step2" class="storyline-step">
           <div class="storyline-step-header">
             <span class="step-badge">2</span>
             <div>
-              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 2 &bull; 4-Generation Evolution Axis &amp; Model Selection Criteria</div>
-              <h3 class="storyline-step-title">시대별 4단계 패러다임 진화 (1G~4G)와 반도체 프리커서 AI 모델 선정 및 패스 한계</h3>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 2 &bull; 4-Generation Evolution &amp; Decision Framework</div>
+              <h3 class="storyline-step-title">4세대 AI 모델 진화 체계와 반도체 프리커서 실무 판정 가이드</h3>
             </div>
           </div>
 
           <div class="card" style="margin-bottom:20px; padding:22px;">
             <p style="font-size:0.92rem; color:#334155; line-height:1.65; margin-bottom:16px;">
-              리포트(Section 3)에서 정식화한 바와 같이, 지난 17년간 개발된 수많은 AI 합성 가능성 모델은 서로 파편화된 것이 아니라 <strong>"표현형의 화학적 추상도와 반응 지식의 심도(Depth of Chemical Knowledge)"</strong>라는 <strong>단 하나의 논리적 축</strong>을 따라 <strong>시대별 4단계 세대(1G ~ 4G)</strong>에 걸쳐 진화해 왔습니다:
+              지난 17년간 개발된 수많은 AI 합성 가능성(SA) 모델은 서로 파편화된 것이 아니라, <strong>"화학적 추상도와 반응 지식의 심도(Depth of Chemical Knowledge)"</strong>라는 <strong>단 하나의 일관된 진화 축</strong>을 따라 4세대에 걸쳐 체계적으로 발전해 왔습니다:
             </p>
 
             <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:18px; text-align:center;">
-              <div style="font-size:0.85rem; font-weight:700; color:#64748b; margin-bottom:6px;">순수 AI 합성 가능성(SA) 모델의 시대별 4단계 패러다임 진화 축 (리포트 Section 3 기준)</div>
+              <div style="font-size:0.85rem; font-weight:700; color:#64748b; margin-bottom:6px;">순수 AI 합성 가능성(SA) 모델의 4세대 진화 경로</div>
               <div style="font-size:1.02rem; font-weight:800; color:#0f172a; line-height:1.5;">
-                1세대 (구조 통계/휴리스틱) &rarr; 2세대 (반응 코퍼스 &amp; CASP 대리) &rarr; 3세대 (GNN &amp; 반응 인지형 빌딩블록 분리) &rarr; 4세대 (합성 경로 내재화 생성 및 투영)
+                1세대 (구조 통계/휴리스틱) &rarr; 2세대 (반응 코퍼스 &amp; CASP 대리) &rarr; 3세대 (GNN &amp; 반응 인지형 분리) &rarr; 4세대 (합성 경로 내재화 생성 및 투영)
               </div>
             </div>
 
-            <!-- Evolution Table (1G ~ 4G Pure AI Models: Aligned with Report Section 3) -->
-            <div style="overflow-x:auto; margin-bottom:20px;">
+            <!-- Evolution Table (1G ~ 4G Pure AI Models) -->
+            <div style="overflow-x:auto; margin-bottom:22px;">
               <table class="report-table" style="font-size:0.84rem;">
                 <thead>
                   <tr style="background:#f1f5f9;">
@@ -1411,48 +1486,51 @@
               </table>
             </div>
 
-            <!-- Report-based Precursor AI Model Selection Guide (Section 6) -->
-            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:18px; margin-bottom:20px;">
+            <!-- Practical Decision Framework (Scenario-based Action Guide) -->
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:18px; margin-bottom:22px;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
                 <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
-                  리포트(Section 6) 기반: 연구 목적별 반도체 프리커서 AI 모델 선정 가이드
+                  실무 적용 가이드: 어떤 상황에서 어떤 AI 모델을 써야 하는가?
                 </div>
-                <span class="badge badge-prec" style="font-size:0.75rem;">Model Decision Guide</span>
+                <span class="badge badge-prec" style="font-size:0.75rem;">실무 의사결정 나침반</span>
               </div>
               <p style="font-size:0.86rem; color:#475569; line-height:1.6; margin-bottom:12px;">
-                보고서 6대 연구 목적별 매핑 분석 결과, 반도체 전구체 AI 워크플로우에 채택할 수 있는 핵심 AI 모델은 다음과 같이 세대별 목적에 맞추어 압축 선정됩니다:
+                연구 개발 단계와 목적에 따라 가장 효과적인 AI 모델을 아래의 3대 핵심 시나리오로 선별하여 적용합니다:
               </p>
               <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
                 <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #059669; border-radius:6px; padding:14px;">
-                  <strong style="color:#047857; font-size:0.92rem;">목적 1. 초고속 리간드 스크리닝 &rarr; 3세대 BR-SAScore</strong>
-                  <div style="font-size:0.8rem; color:#334155; margin-top:6px; line-height:1.55;">
-                    &bull; <strong>선정 이유</strong>: Building Block 기반 단편 사전을 활용하여 유기 리간드의 합성 용이성을 0.1 ms 내 초고속 평가.<br>
-                    &bull; <strong>선정 기준 및 주의점</strong>: 금속 착물 완제품을 그대로 넣으면 11.1%만 통과하므로, <strong>중심 금속을 해리한 리간드(HL) 단독 평가</strong>에 적용해야 함 (리간드 분리 시 통과율 100%).
+                  <div style="font-size:0.78rem; font-weight:700; color:#059669; margin-bottom:4px; text-transform:uppercase;">시나리오 1 &bull; 대규모 가상 탐색</div>
+                  <strong style="color:#047857; font-size:0.95rem;">초고속 유기 리간드 스크리닝 &rarr; BR-SAScore (3G)</strong>
+                  <div style="font-size:0.8rem; color:#334155; margin-top:8px; line-height:1.55;">
+                    &bull; <strong>적용 상황</strong>: 10만 개 이상의 생성 분자 풀에서 합성 가능한 유기 리간드만 밀리초 단위로 걸러낼 때.<br>
+                    &bull; <strong>실무 팁</strong>: 금속 착물 완제품을 그대로 넣으면 11.1%만 통과하므로, <strong>중심 금속을 해리한 프로-리간드($HL$)만 단독 입력</strong>해야 100% 정상 판정됩니다.
                   </div>
                 </div>
 
                 <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #7c3aed; border-radius:6px; padding:14px;">
-                  <strong style="color:#6d28d9; font-size:0.92rem;">목적 2. 반응 복잡도·단계 수 평가 &rarr; 2세대 SCScore</strong>
-                  <div style="font-size:0.8rem; color:#334155; margin-top:6px; line-height:1.55;">
-                    &bull; <strong>선정 이유</strong>: Reaxys 1,200만 반응 코퍼스를 학습하여 상용 시약으로부터 합성 단계가 얼마나 짧은지 정밀 산출.<br>
-                    &bull; <strong>선정 기준 및 주의점</strong>: 양산 전구체 85.2%를 정상 인식하나, 열분해(TiEt4) 및 폭발성(ZrMe4) 분자도 통과시키므로 <strong>안전성 검증 결합 전제</strong> 하에 채택.
+                  <div style="font-size:0.78rem; font-weight:700; color:#7c3aed; margin-bottom:4px; text-transform:uppercase;">시나리오 2 &bull; 합성 난이도 서열화</div>
+                  <strong style="color:#6d28d9; font-size:0.95rem;">반응 단계 수 및 복잡도 판정 &rarr; SCScore (2G)</strong>
+                  <div style="font-size:0.8rem; color:#334155; margin-top:8px; line-height:1.55;">
+                    &bull; <strong>적용 상황</strong>: 상용 시약으로부터 몇 단계의 화학 반응을 거쳐야 합성 가능한지 합성 거리를 가늠할 때.<br>
+                    &bull; <strong>실무 팁</strong>: 양산 전구체 85.2%를 정상 인식하나, 상온 폭발성(ZrMe4)이나 열분해 분자도 통과시키므로 <strong>열역학 안전성 검증 병행</strong>이 필수입니다.
                   </div>
                 </div>
 
                 <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #d97706; border-radius:6px; padding:14px;">
-                  <strong style="color:#b45309; font-size:0.92rem;">목적 3. 역합성 경로 직접 도출 &rarr; 4세대 RxnFlow / ReaSyn</strong>
-                  <div style="font-size:0.8rem; color:#334155; margin-top:6px; line-height:1.55;">
-                    &bull; <strong>선정 이유</strong>: 단순 스코어링을 넘어 실제 팹/실험실에서 투입할 출발 시약과 6단계 반응 트리를 직접 생성.<br>
-                    &bull; <strong>선정 기준 및 주의점</strong>: 유기 리간드 합성은 완벽히 생성하나, <strong>무기 착물화 반응 템플릿(0건) 결함</strong>을 인지하고 유기 리간드 조제용으로 분업화해야 함.
+                  <div style="font-size:0.78rem; font-weight:700; color:#d97706; margin-bottom:4px; text-transform:uppercase;">시나리오 3 &bull; 실험실 실제 조제</div>
+                  <strong style="color:#b45309; font-size:0.95rem;">역합성 경로 및 레시피 도출 &rarr; RxnFlow / ReaSyn (4G)</strong>
+                  <div style="font-size:0.8rem; color:#334155; margin-top:8px; line-height:1.55;">
+                    &bull; <strong>적용 상황</strong>: 단순 점수가 아니라 실제 구매 가능한 시약으로부터 6단계 전합성 반응 트리를 직접 생성할 때.<br>
+                    &bull; <strong>실무 팁</strong>: 내장 규칙이 유기화학 전용이므로 <strong>유기 리간드의 조제 레시피 도출에만 집중</strong>하고, 금속 착물화는 물리 기반 템플릿과 분업합니다.
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Pass Boundary & Suitability Matrix Table (Section 7 Empirical Findings) -->
+            <!-- Empirical Diagnostic Scorecard (Pass Boundary & Limitations) -->
             <div style="overflow-x:auto; margin-bottom:16px;">
               <div style="font-weight:700; font-size:0.95rem; color:#0f172a; margin-bottom:8px;">
-                리포트(Section 7 실측 평가) 기반: 세대별 AI 모델이 어디까지 정상 패스하는가? (실측 패스 한계)
+                AI 모델별 실제 통과 가능 범위와 한계 진단표 (어디까지 믿을 수 있는가?)
               </div>
               <table class="report-table" style="font-size:0.82rem;">
                 <thead>
@@ -1518,10 +1596,10 @@
 
             <div style="text-align:right;">
               <button type="button" onclick="jumpToTechnicalSection('decision-guide')" class="btn-pdf" style="cursor:pointer; background:#f8fafc; border-color:#cbd5e1; color:#0f172a; margin-right:6px;">
-                연구 목적별 모델 선정 가이드 보기 (Section 6) &rarr;
+                상세 모델 선정 가이드 보기 &rarr;
               </button>
               <button type="button" onclick="jumpToTechnicalSection('opensource-eval')" class="btn-pdf" style="cursor:pointer; background:#f8fafc; border-color:#cbd5e1; color:#0f172a;">
-                16대 모델 전수 실측 평가 보기 (Section 7) &rarr;
+                16대 모델 전수 실측 데이터 보기 &rarr;
               </button>
             </div>
           </div>
@@ -13061,8 +13139,8 @@ flowchart TD
         modalContainer.appendChild(clonedSvg);
         const viewBox = clonedSvg.viewBox && clonedSvg.viewBox.baseVal ? clonedSvg.viewBox.baseVal : null;
         if (viewBox && viewBox.width > 0) {
-          clonedSvg.style.width = viewBox.width + 'px';
-          clonedSvg.style.height = viewBox.height + 'px';
+          clonedSvg.style.width = Math.max(viewBox.width, 1050) + 'px';
+          clonedSvg.style.height = 'auto';
           clonedSvg.style.maxWidth = 'none';
         } else {
           clonedSvg.style.width = '100%';
