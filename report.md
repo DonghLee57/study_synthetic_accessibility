@@ -208,7 +208,7 @@ To establish mathematical and physical transparency, clarify pass definitions, a
   Reaxys database of ~12 million published chemical reaction pairs $(R, P)$. Spans broad organic literature.
 - **Semiconductor Precursor Performance (Pass Rate: 77.8%, 21/27 $\le 2.0$, Mean: 1.68)**:
   - *Why It Gives Low Scores (Early-stage Reactant Bias)*: 21 out of 27 precursors received very low scores (HCDS 1.02, DMAH 1.01, TMA 1.21, TTIP 1.25, TDMAT 1.31). In the Reaxys database, these organometallics are registered as catalysts, alkylating reagents, or starting materials rather than final target products. The neural net therefore confidently identifies them as "early-stage feedstock".
-  - *Hazard Ignorance & Practical Limitations*: Pyrophoric, highly moisture-sensitive compounds like TMA and DMAH are scored near 1.0, omitting the handling, sub-ambient purification, and safety constraints in fab chemistry.
+  - *Hazard Ignorance & Practical Limitations*: Pyrophoric, highly moisture-sensitive compounds like TMA and DMAH are scored near 1.0, omitting the handling, sub-ambient purification, and safety constraints in semiconductor process chemistry.
   - *Why It Fits (Steric Bulk Discrimination)*: Bulkier and sterically crowded complexes ($\text{ZMA}$ 2.72, $\text{Co(AMD)}_2$ 2.38, $\text{CCTBA}$ 2.32, $\text{Ru(EtCp)}_2$ 2.27, $\text{CpZr}$ 2.22) show elevated scores due to increased subgraph fingerprint density, proving useful for monitoring ligand branchedness.
 
 ---

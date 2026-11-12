@@ -339,20 +339,20 @@ for idx, m in enumerate(multistage_models, 1):
     
     row_html = f"""
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
-              <td style="white-space:nowrap;">
-                <strong>{m['name']}</strong><br>
-                <span class="badge {gen_badge}" style="font-size:0.7rem;">{m['gen']}</span>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">{idx:02d}</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.81rem;">{m['name']}</strong><br>
+                <span class="badge {gen_badge}" style="font-size:0.67rem; margin-top:2px;">{m['gen']}</span>
               </td>
-              <td style="font-size:0.82rem;">
-                <a href="{r.get('url','#')}" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600;">{r.get('repo','-')}</a>
-                <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Stars: {r.get('stars','-')} &bull; {r.get('license','-')}</div>
+              <td style="font-size:0.76rem; overflow-wrap:anywhere;">
+                <a href="{r.get('url','#')}" target="_blank" style="font-family:'JetBrains Mono'; font-weight:600; font-size:0.73rem;">{r.get('repo','-')}</a>
+                <div style="font-size:0.70rem; color:#64748b; margin-top:2px;">Stars: {r.get('stars','-')} &bull; {r.get('license','-')}</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s1_style} font-size:0.75rem;">{s1_text}</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s2_style} font-size:0.75rem;">{s2_text}</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s3_style} font-size:0.75rem;">{s3_text}</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="{s4_style} font-size:0.78rem;">{s4_text}</span></td>
-              <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
+              <td style="text-align:center;"><span class="badge" style="{s1_style}">{s1_text}</span></td>
+              <td style="text-align:center;"><span class="badge" style="{s2_style}">{s2_text}</span></td>
+              <td style="text-align:center;"><span class="badge" style="{s3_style}">{s3_text}</span></td>
+              <td style="text-align:center;"><span class="badge" style="{s4_style}">{s4_text}</span></td>
+              <td style="font-size:0.77rem; line-height:1.45; word-break:keep-all;">
                 <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[{m['barrier_stage']}]</strong>
                 <span style="color:#475569;">{m['barrier_desc']}</span>
               </td>

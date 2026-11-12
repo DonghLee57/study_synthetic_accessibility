@@ -46,6 +46,10 @@ All technical terminology belonging to **statistics, evaluation metrics, machine
 - Natural Korean grammar particles, verbs, and semiconductor/chemistry domain prose remain in Korean (e.g., `반도체 전구체`, `결합 해리에너지`, `입체 차폐`, `이합체화`, `올리고머화`, `표면 흡착`, `양자화학 계산`, `유기 프로-리간드`, `판정 기준`).
 - Do **not** wrap Korean chemistry nouns with redundant English synonyms when the term is purely domain-chemical rather than a statistical/model term, unless introducing a specific chemical property acronym once (e.g., `$\%V_{\text{bur}}$`, `$\text{BDE}_{\min}$`).
 
+### 3.4 Semiconductor Process Terminology
+- Do **not** use `파운드리`, `팹`, or `Fab` (case-insensitive) in headings, tables, body prose, or diagrams.
+- Standardize uniformly onto **`반도체 공정`** in Korean prose/labels and **`semiconductor process`** in English technical reports.
+
 ---
 
 ## 4. Technical Formatting & Rendering Integrity

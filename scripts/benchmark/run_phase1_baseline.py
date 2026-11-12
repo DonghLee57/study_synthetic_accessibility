@@ -3,7 +3,7 @@
 Phase 1: Pure Data-Driven Baseline Evaluation
 --------------------------------------------
 Evaluates 55 molecules:
- - 27 fab baseline precursors (Positive)
+ - 27 semiconductor-process baseline precursors (Positive)
  - 18 AS-ALD inhibitor molecules (Positive)
  - 10 representative negative controls (Synthetic failures, decomposing, or non-functional)
 
