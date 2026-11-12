@@ -16,7 +16,7 @@ This report reviews the evolutionary trajectory of Synthetic Accessibility (SA) 
 | **Full Literature Acquisition Rate** | Open-Access & Contributed PDFs / XMLs | **26 / 34 (76.5%)** (22 PDFs + 4 XMLs) | **PASSED** |
 | **Open-Source Codebase Verification** | GitHub REST API / PyPI / Zenodo Audit | **27 Repositories Audited (17 SA + 10 VASP)** | **PASSED** |
 | **Phase 2 Un-Hardcoded Physics + ML CV Audit** | `SevenNet-0` LBFGS + `SambVca` ($N=55$, All-Sample / 5-Fold / LOOCV) | Uniform Analytical Spec **0.600** (6/10 TN); Combined LOOCV Acc **0.836** (**AUROC 0.849**) | **AUDITED** |
-| **Reporting Artifact** | Interactive Standalone HTML | `index.html` (Summary Tab + 15 Technical Sections, Sticky TOC, Collapsible Tables) | **PASSED** |
+| **Reporting Artifact** | Interactive Standalone HTML | `index.html` (Summary Tab + 16 Technical Sections, Sticky TOC, Collapsible Tables) | **PASSED** |
 
 ---
 

@@ -424,19 +424,22 @@
 
     .table-responsive.no-scroll-72,
     .table-responsive.no-scroll-73,
-    .table-responsive.no-scroll-74 {
+    .table-responsive.no-scroll-74,
+    .table-responsive.no-scroll-16 {
       overflow-x: visible;
     }
 
     table.table-compact-72,
     table.table-compact-73,
-    table.table-compact-74 {
+    table.table-compact-74,
+    table.table-compact-16 {
       table-layout: fixed;
       width: 100%;
     }
 
     table.table-compact-72 th,
-    table.table-compact-74 th {
+    table.table-compact-74 th,
+    table.table-compact-16 th {
       padding: 9px 6px;
       font-size: 0.71rem;
       line-height: 1.3;
@@ -444,7 +447,8 @@
     }
 
     table.table-compact-72 td,
-    table.table-compact-74 td {
+    table.table-compact-74 td,
+    table.table-compact-16 td {
       padding: 8px 6px;
       font-size: 0.77rem;
       vertical-align: top;
@@ -469,7 +473,8 @@
     }
 
     table.table-compact-72 .badge,
-    table.table-compact-74 .badge {
+    table.table-compact-74 .badge,
+    table.table-compact-16 .badge {
       white-space: normal;
       display: inline-block;
       max-width: 100%;
@@ -494,12 +499,14 @@
     @media (max-width: 960px) {
       .table-responsive.no-scroll-72,
       .table-responsive.no-scroll-73,
-      .table-responsive.no-scroll-74 {
+      .table-responsive.no-scroll-74,
+      .table-responsive.no-scroll-16 {
         overflow-x: auto;
       }
       table.table-compact-72,
       table.table-compact-73,
-      table.table-compact-74 {
+      table.table-compact-74,
+      table.table-compact-16 {
         min-width: 820px;
       }
     }
@@ -1359,8 +1366,8 @@
       <!-- Technical Deep TOC -->
       <div id="toc-technical" style="display:none;">
         <div class="toc-header">
-          <span>리포트 목차 (15대 섹션)</span>
-          <span class="toc-progress" id="tocProgress">Sec 1/15</span>
+          <span>리포트 목차 (16대 섹션)</span>
+          <span class="toc-progress" id="tocProgress">Sec 1/16</span>
         </div>
         <ul class="toc-list" id="tocList">
           <li><a href="#verification-hub" class="toc-link active" data-target="verification-hub">1. 문헌 종합 통계 및 아카이브 (34편)</a></li>
@@ -1378,6 +1385,7 @@
           <li><a href="#dft-tuning-roadmap" class="toc-link" data-target="dft-tuning-roadmap">13. 반도체 Model Tuning &amp; DFT·실험 융합 전략</a></li>
           <li><a href="#synthesis-workflow" class="toc-link" data-target="synthesis-workflow">14. 전구체·인히비터 합성 Workflow &amp; DFT·MLIP 설계</a></li>
           <li><a href="#phase1-phase2-benchmark" class="toc-link" data-target="phase1-phase2-benchmark">15. Benchmark &amp; SevenNet Audit (Phase 1 vs Phase 2)</a></li>
+          <li><a href="#general-metal-expansion" class="toc-link" data-target="general-metal-expansion">16. 세대별 유기 Dataset 및 일반 금속 반응 확장</a></li>
         </ul>
 
         <div class="toc-sub-actions">
@@ -1417,7 +1425,7 @@
             <a href="#storyline-step3" class="btn-pdf" style="text-decoration:none;">Step 3. Base Model Error &amp; SevenNet-0 Plan &darr;</a>
             <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 55-Molecule Benchmark &amp; LOOCV Results &darr;</a>
             <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer; text-decoration:none;">
-              15개 섹션 전체 리포트 열기 &rarr;
+              16개 섹션 전체 리포트 열기 &rarr;
             </button>
           </div>
         </div>
@@ -13398,6 +13406,214 @@ flowchart TD
           </div>
         </div>
 
+      </section>
+
+      <!-- Section 16: Generational Organic Datasets & General Organometallic Reaction Extension -->
+      <section id="general-metal-expansion">
+        <div class="section-header">
+          <div class="section-tag">Section 16 &bull; Generational Organic Datasets &amp; General Organometallic Reaction Extension</div>
+          <h2 class="section-title">유기 분자 세대별 학습 Dataset 현황 및 범용 금속 포함 분자 반응 확장 분석</h2>
+          <p class="section-desc">
+            1G~4G 및 CASP 계열 유기 SA·역합성 Model이 기반으로 삼은 공개·상용 <code>Dataset</code> 구성을 세대별로 체계화하고, 반도체 공정 전구체 외 일반 금속 포함 분자(균일계 촉매, OLED 인광체, MOF·배위 고분자, 금속의약품)로 반응 생성 및 합성 가능성 평가 범위를 확장하기 위한 외부 <code>Dataset</code> 연계 전략과 Cheminformatics·물리 제약 해결 과제를 정리합니다.
+          </p>
+        </div>
+
+        <!-- Card 1: Generational Organic Datasets Matrix -->
+        <div class="card" style="margin-bottom:20px; border-top:3px solid var(--accent-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+            <h3 class="card-title" style="margin-bottom:0;">1. [유기 분자 1G ~ 4G + CASP] 세대별 활용 Dataset 및 코퍼스 비교</h3>
+            <span class="badge badge-3g" style="font-size:0.8rem;">1G~4G &bull; Organic Corpora Audit</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:14px; line-height:1.6;">
+            기존 SA Model들은 1G 정적 분자 빈도 사전에서 출발해 2G 반응쌍·CASP <code>Distillation</code>, 3G 시약·반응 단편 분리, 4G 경로 내재화 조합 공간으로 진화했으나, 학습 <code>Dataset</code> 전반이 의약·유기 특허 화학 공간에 집중되어 있습니다.
+          </p>
+
+          <div class="table-responsive no-scroll-16" style="margin-bottom:14px;">
+            <table class="table-compact-16">
+              <colgroup>
+                <col style="width:10%;">
+                <col style="width:19%;">
+                <col style="width:36%;">
+                <col style="width:35%;">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>세대 / 분류</th>
+                  <th>대표 Model</th>
+                  <th>활용 <code>Dataset</code> 및 시약·반응 코퍼스</th>
+                  <th>데이터 성격 및 금속 도메인 한계</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-1g">1G</span><br><span style="font-size:0.68rem; color:#64748b;">2009~2020</span></td>
+                  <td><strong>SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">Ertl &amp; Schuffenhauer</span></td>
+                  <td><strong>PubChem</strong> (약 100만 샘플링 / ~1,300만 의약 중심 화합물 카탈로그에서 추출한 Morgan $r=2$ <code>Fragment Frequency</code> 사전)</td>
+                  <td>반응 경로 정보 없이 정적 분자 빈도만 집계하며, $\text{Si-N}$, $\text{Al-C}$, $\text{M-N}$ 결합의 <code>Fragment Frequency</code>가 부재함.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-1g">1G</span><br><span style="font-size:0.68rem; color:#64748b;">2020</span></td>
+                  <td><strong>SYBA</strong><br><span style="font-size:0.72rem; color:#64748b;">Naive Bayes</span></td>
+                  <td><strong>ZINC15</strong> (Positive: 구매 가능 의약 분자 <code>143,303</code>종) vs <strong>비합성 가상 고리 생성 집합</strong> (Negative: 무작위 토폴로지 <code>143,303</code>종)</td>
+                  <td>ZINC 약물 공간에 부재한 전이금속-Cp 착체를 비합성 고리 클래스로 분류함.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-2g">2G</span><br><span style="font-size:0.68rem; color:#64748b;">2018</span></td>
+                  <td><strong>SCScore</strong><br><span style="font-size:0.72rem; color:#64748b;">Pairwise Ranking DNN</span></td>
+                  <td><strong>Reaxys</strong> (<code>1,200만</code> 건 출판·특허 화학 반응쌍 $(R, P)$)</td>
+                  <td>반응 진행 방향성($S(P) &gt; S(R)$)을 반영하나, 유기금속이 출발 시약·촉매로 등재되어 열·화학적 위험성에 대한 <code>Underestimation</code> 경향을 보임.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-2g">2G</span><br><span style="font-size:0.68rem; color:#64748b;">2021~2022</span></td>
+                  <td><strong>RAscore / RetroGNN</strong><br><span style="font-size:0.72rem; color:#64748b;">CASP Surrogate</span></td>
+                  <td><strong>ChEMBL</strong> (<code>200,000</code>개 의약 분자에 대한 <strong>AiZynthFinder</strong> MCTS 탐색 결과 <code>Distillation Dataset</code>)</td>
+                  <td><code>ECFP6</code> 알킬 비트 편향과 유기 <code>MCTS</code> 분포로 금속 배위 불안정성을 변별하지 못함.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-3g">3G</span><br><span style="font-size:0.68rem; color:#64748b;">2022~2023</span></td>
+                  <td><strong>GASA / DeepSA / DFRscore</strong><br><span style="font-size:0.72rem; color:#64748b;">GNN &amp; Transformer</span></td>
+                  <td><strong>GASA:</strong> USPTO + 문헌 <code>Synthesis DB</code><br><strong>DeepSA:</strong> ChEMBL + Synthetic Tree<br><strong>DFRscore:</strong> 유기 Retrosynthesis Step Count 집합</td>
+                  <td>GASA의 <code>Hf, Ta, Ru, W, Mo</code> 누락 및 DFRscore의 유기 10원소 제한(금속 원자의 <code>ELSE</code> <code>Token</code> 축퇴)이 확인됨.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-3g">3G</span><br><span style="font-size:0.68rem; color:#64748b;">2024</span></td>
+                  <td><strong>BR-SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">BFrag / RFrag Split</span></td>
+                  <td><strong>eMolecules</strong> (<code>120만</code> Building Blocks; 공식 사전 <code>244,572</code>개 키) + <strong>USPTO</strong> (<code>180만</code> 특허 반응)</td>
+                  <td><code>BFrag</code>/<code>RFrag</code> 사전 교체를 통한 도메인 조정이 가능하나 기본 사전에는 $\text{M-N/M-C}$ 배위 규칙이 부재함.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-4g">4G</span><br><span style="font-size:0.68rem; color:#64748b;">2022~2025</span></td>
+                  <td><strong>SynNet / ChemProjector / SynFormer / RxnFlow</strong></td>
+                  <td><strong>Enamine / ZINC</strong> 시약 카탈로그(<code>5,000~200,000</code>종) + <strong>HB-91</strong>(<code>91</code>종), <strong>SynFormer <code>comprehensive.txt</code></strong>(<code>115</code>종), <strong>Explore+CGFlow</strong>(<code>72</code>종) 유기 반응 <code>Template</code></td>
+                  <td>합성 트리를 직접 생성하나 전체 <code>Template</code> 라이브러리 내 금속 원자가 <code>0</code>건으로 코어 배위 경로 생성이 불가함.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-4g">4G</span><br><span style="font-size:0.68rem; color:#64748b;">2025~2026</span></td>
+                  <td><strong>BioNeMo ReaSyn</strong><br><span style="font-size:0.72rem; color:#64748b;">AR + Edit Flow</span></td>
+                  <td><strong>Enamine US Stock</strong> + <strong>SynFormer <code>115</code>종</strong> 반응 <code>Template</code> + <strong><code>1,050만(10.5M)</code></strong> 정렬 <code>CoR</code> 트리플렛</td>
+                  <td><code>118</code>원소 <code>Tokenizer</code>(<code>Vocabulary</code>)는 전 원소를 수용하나 생성 공간 $[R_0, R_{114}]$이 유기 <code>115</code>종 반응에 고정됨.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-ext">CASP</span><br><span style="font-size:0.68rem; color:#64748b;">2020~2024</span></td>
+                  <td><strong>AiZynthFinder / Retro*</strong><br><span style="font-size:0.72rem; color:#64748b;">MCTS &amp; Neural A*</span></td>
+                  <td><strong>USPTO 50k / Pistachio</strong> 반응 특허 + <strong>ZINC / Enamine / MolPort</strong> 상용 Stock 카탈로그</td>
+                  <td>알고리즘 구조는 도메인 중립적이며, Custom Policy 및 Stock 주입 시 무기 반응 탐색으로 확장 가능함.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background:#f8fafc; border-left:4px solid var(--accent-blue); border-radius:0 6px 6px 0; padding:10px 14px; font-size:0.83rem; line-height:1.55; color:#334155;">
+            <strong>소재·무기 특화 선행 Model 대조:</strong> Jelfs 그룹의 <strong>MPScore</strong>(JCIM 2021)는 소재 합성 화학자가 직접 <code>Label</code>을 부여한 다공성·소재 전구체 점수를 학습했으며, Kulik 그룹의 <strong>TMC Synthesizability</strong>(JACS Au 2022)는 <strong>CSD</strong> 추출 전이금속 착물을 대상으로 유기 리간드 합성성과 금속 배위 규칙을 결합하여 기존 의약 <code>Dataset</code>의 <code>Domain Shift</code>를 보완했습니다.
+          </div>
+        </div>
+
+        <!-- Card 2: External Metal Corpora & Extension Architecture -->
+        <div class="card" style="margin-bottom:20px; border-top:3px solid var(--accent-teal);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+            <h3 class="card-title" style="margin-bottom:0;">2. [일반 금속 포함 분자 확장] 활용 가능 외부 DB 및 저장소 확장 경로</h3>
+            <span class="badge badge-prec" style="font-size:0.8rem;">General Organometallics &bull; Catalysis &bull; OLED &bull; MOF</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:14px; line-height:1.6;">
+            반도체 ALD/CVD 전구체 외의 일반 금속 포함 분자(균일계 Pd·Ni·Ru 촉매, OLED Ir·Pt 발광체, MOF·배위 고분자, 금속의약품) 반응도 동일한 다단계 하이브리드 아키텍처 위에서 확장 가능합니다.
+          </p>
+
+          <div class="versus-grid" style="margin-bottom:16px;">
+            <div class="versus-card" style="border-top:3px solid #0d9488;">
+              <div class="versus-header" style="color:#0f766e;">A. 외부 반응 코퍼스 연계 (<code>ORD</code>, <code>Reaxys</code>, <code>Pistachio</code>, <code>SynMOF</code>)</div>
+              <ul style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6; padding-left:18px; margin:0;">
+                <li><strong>ORD (Open Reaction Database):</strong> 오픈소스 구조화 스키마로 촉매·리간드·첨가제·수율을 분리 저장하며 Pd/Ni/Cu 촉매 교차결합 등 HTE 데이터를 다수 보유함(<code>ORDerly</code> 등 전처리 도구로 ML 학습용 정제 지원). 다만 착물 자체 합성보다 전이금속 <em>촉매 유기반응</em> 비중이 높음.</li>
+                <li><strong>Reaxys / Pistachio vs Raw USPTO:</strong> 원문 <code>USPTO</code> 텍스트 마이닝 코퍼스는 유기 작용기 변환에 편중되고 자연 원자 균형 비율이 소수에 불과한 반면, 상용 <strong>Reaxys</strong>는 유기 <code>Beilstein</code>과 무기·유기금속 <code>Gmelin Handbook</code>을 통합해 배위 합성 및 리간드 교환 조건을 포괄함.</li>
+                <li><strong>MOF·배위 고분자 문헌 DB:</strong> 다공성 배위 고분자(MOF) 합성 레시피 및 결정화 조건은 <code>SynMOF</code>, <code>DigiMOF</code>, <code>QMOF</code> 등 문헌 텍스트 마이닝 기반 특화 DB를 연계할 수 있음.</li>
+              </ul>
+            </div>
+
+            <div class="versus-card" style="border-top:3px solid #2563eb;">
+              <div class="versus-header" style="color:#1d4ed8;">B. 3D 구조·양자화학 <code>Dataset</code> (<code>CSD</code>, <code>tmQM</code>, <code>OMol25</code>, <code>Architector</code>)</div>
+              <ul style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6; padding-left:18px; margin:0;">
+                <li><strong>CSD &amp; tmQM:</strong> 실험 X-선 결정 구조 저장소인 <strong>CSD</strong> 및 이로부터 전이금속 착물의 3D 기하·양자 물성을 추출한 <strong>tmQM</strong>은 반응 데이터가 부족한 착물 영역의 구조적 기준선 역할을 수행함.</li>
+                <li><strong>Architector &amp; OMol25 (2025):</strong> <strong>Architector</strong>로 산화수·배위수·스핀 상태를 조합 생성하고 Meta FAIR/LBNL이 $\omega\text{B97M-V/def2-TZVPD}$ 수준 1억 건 이상 DFT 계산을 축적한 <strong>OMol25</strong>를 연계하면 범용 유기금속 반응 경로 보간 및 스핀·전하 인지형 <code>MLIP</code> <code>Reward Function</code> 학습이 가능함.</li>
+                <li><strong>2-Track 저장소 재사용:</strong> 유기 리간드($HL_i$)는 <code>BR-SAScore</code>·<code>RxnFlow</code>·<code>BioNeMo ReaSyn</code>으로 생성·평가하고, 중심금속 배위 및 열역학은 <code>run_phase2_sevenn_features.py</code> 구조와 동일한 <code>MLIP</code>/<code>DFT</code> 검증 계층으로 연계함.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="table-responsive no-scroll-16">
+            <table class="table-compact-16">
+              <colgroup>
+                <col style="width:22%;">
+                <col style="width:42%;">
+                <col style="width:36%;">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>확장 대상 금속 반응 클래스</th>
+                  <th>대표 적용 영역 및 <code>Template</code> 확장 방식 (<code>reactions.json</code> · <code>AiZynthFinder</code> · <code>ReaSyn</code>)</th>
+                  <th>필수 물리·화학적 검증 지표 (<code>MLIP</code> / <code>DFT</code>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>리간드 교환 및 치환 반응</strong><br><span style="font-size:0.7rem; color:#64748b;">Ligand Exchange / Chelation</span></td>
+                  <td>포스핀($\text{PR}_3$), NHC, 바이피리딘, $\beta$-디케토네이트 등 일반 배위 착물 합성. 전구체 DB의 염 복분해·아미노분해 규칙을 중성·킬레이트 배위 <code>SMARTS</code>로 일반화함.</td>
+                  <td>단계별 치환 자유에너지 $\Delta G_{\text{syn}}$, 리간드 킬레이트 효과, 입체 차폐율($\%V_{\text{bur}}$)</td>
+                </tr>
+                <tr>
+                  <td><strong>산화적 첨가 · 환원적 제거 · 금속교환</strong><br><span style="font-size:0.7rem; color:#64748b;">Catalytic Cycle &amp; Transmetallation</span></td>
+                  <td>Pd/Ni/Pt/Ir 균일계 촉매 중간체 및 B·Sn·Zn·Li 경유 금속교환(Transmetallation). <strong>ORD</strong> 내 촉매·리간드 쌍 코퍼스를 Custom Policy로 편입함.</td>
+                  <td>촉매 회전 전이상태 활성화 장벽($\Delta G^\ddagger$), 산화환원 전위(Redox Potential)</td>
+                </tr>
+                <tr>
+                  <td><strong>고리금속화 반응</strong><br><span style="font-size:0.7rem; color:#64748b;">Cyclometalation</span></td>
+                  <td>OLED 인광 발광체($\text{Ir(ppy)}_3$, Pt 착물) 및 광촉매용 C^N·C^C 킬레이트 $\text{M-C}$/$\text{M-N}$ 이중 결합 형성 규칙 추가.</td>
+                  <td>고리 형성 자유에너지, 여기상태(Triplet $T_1$) 안정성 및 배위 해리 $\text{BDE}_{\min}$</td>
+                </tr>
+                <tr>
+                  <td><strong>$\eta^n$-아렌/Cp 및 카보닐 치환</strong><br><span style="font-size:0.7rem; color:#64748b;">Metallocene &amp; Carbonyls</span></td>
+                  <td>메탈로센, 하프샌드위치 촉매, $\text{M(CO)}_6$ 유도체의 다중심 배위 및 카보닐 리간드 치환 반응 규칙 정식화.</td>
+                  <td>단편 해리 $\text{BDE}$, 다중심 배위 기하 안정성, 스핀 다중도(Spin Multiplicity) 차</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Card 3: 4 Core Technical Bottlenecks -->
+        <div class="card" style="border-top:3px solid var(--accent-rose);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+            <h3 class="card-title" style="margin-bottom:0;">3. 일반 금속 반응 확장 시 해결해야 할 4대 기술적 병목</h3>
+            <span class="badge badge-4g" style="font-size:0.8rem;">Cheminformatics &amp; Physical Constraints</span>
+          </div>
+          <div class="versus-grid">
+            <div class="versus-card" style="border-left:4px solid #e11d48;">
+              <div class="versus-header" style="color:#be123c;">병목 1: Dative Bond (<code>-&gt;</code>, <code>&lt;-</code>) 및 <code>ReactionFromSmarts</code> 파싱 제약</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                RDKit <code>SMILES</code>는 배위결합 화살표 표기를 지원하나 <code>ReactionFromSmarts</code> 파서에서는 배위결합 직접 표현에 제약이 발생합니다. 범용 배위 반응 규칙에서는 단일결합(<code>-</code>) 기반 절단 이후 Python <code>RWMol</code> API로 <code>Chem.BondType.DATIVE</code>, 형식전하, 및 <code>UpdatePropertyCache(strict=False)</code>(필요 시 <code>sanitize=False</code>)를 프로그래밍 방식으로 제어해야 합니다.
+              </p>
+            </div>
+
+            <div class="versus-card" style="border-left:4px solid #d97706;">
+              <div class="versus-header" style="color:#b45309;">병목 2: $\eta^n$ 다중심 배위 결합 표현 한계</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                $\eta^5$-Cp(예: <code>Ru(EtCp)2</code>, <code>Cp(NMe2)3Zr</code>), $\eta^3$-allyl, $\eta^6$-arene 등 파이 착물은 2D 루이스 원자가 그래프 상에서 연결 차수와 형식전하 표기가 문헌·DB마다 상이해 표준 유기 Subgraph 기반 <code>Template</code> 매칭 시 정규화 규칙이 추가로 요구됩니다.
+              </p>
+            </div>
+
+            <div class="versus-card" style="border-left:4px solid #7c3aed;">
+              <div class="versus-header" style="color:#6d28d9;">병목 3: Atom-to-Atom Mapping (<code>AAM</code>) 도메인 편향</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                <code>RXNMapper</code> 등 기존 비지도 원자 매핑 도구는 유기 반응 분포에 맞춰 학습되어, 금속 중심 산화수 변화나 구경꾼 리간드·다성분 염·첨가제가 공존하는 무기·유기금속 반응식에서 자동 반응 중심 추출 <code>Accuracy</code>가 저하됩니다.
+              </p>
+            </div>
+
+            <div class="versus-card" style="border-left:4px solid #0284c7;">
+              <div class="versus-header" style="color:#0369a1;">병목 4: 비반도체 도메인 맞춤형 물리 <code>Reward Function</code> 재정의</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                반도체 ALD/CVD 전구체에서는 기화성($P_{\text{vap}}$)·단량체 유지($\%V_{\text{bur}}$, $\Delta E_{\text{dimer}}$)·기상 열안정성($\text{BDE}_{\min}$)이 핵심 제약입니다. 반면 일반 촉매·OLED·금속의약품 영역으로 확장하려면 용액상 용매화 안정성, 산화환원 전위, 스핀 상태 다중도, 촉매 전이상태 장벽($\Delta G^\ddagger$)을 기준으로 <code>MLIP</code>(예: <strong>OMol25</strong> 학습 포텐셜) 및 <code>DFT</code> 보상을 재구성해야 합니다.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       </div> <!-- end #tab-content-technical -->
