@@ -526,28 +526,30 @@ for idx, b in enumerate(benchmarks, 1):
     syba_style = "color:#15803d; font-weight:600;" if syba >= 0 else "color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;"
     ra_style = "color:#0284c7; font-weight:600;" if (ra is not None and ra >= 0.5) else "color:#b91c1c; font-weight:600;"
     
-    rxnflow_badge = f"<span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure ({len(rxnflow_rules)})</span>" if rxnflow else "<span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span>"
-    reasyn_badge = f"<span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span>" if reasyn_ok else "<span class='badge badge-1g'>Vocab Error</span>"
-    aizynth_badge = f"<span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span>" if aizynth_ok else "<span class='badge badge-1g'>Sanitize Error</span>"
+    rxnflow_badge = f"<span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct ({len(rxnflow_rules)})</span>" if rxnflow else "<span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span>"
+    reasyn_badge = f"<span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span>" if reasyn_ok else "<span class='badge badge-1g'>Vocab Error</span>"
+    aizynth_badge = f"<span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span>" if aizynth_ok else "<span class='badge badge-1g'>Sanitize Error</span>"
     
     row = f"""
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">{idx:02d}</td>
-              <td style="white-space:nowrap;">
-                <strong>{name}</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">{pid}</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">{idx:02d}</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">{name}</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">{pid}</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">{metal}</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">{formula}</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {sa_style}">{sa}</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {sc_style}">{sc}</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {syba_style}">{syba}</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {br_style}">{br}</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; {ra_style}">{ra}</td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">{metal}</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">{formula}</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; {sa_style}">{sa}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; {sc_style}">{sc}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; {syba_style}">{syba}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; {br_style}">{br}</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; {ra_style}">{ra}</td>
               <td style="text-align:center;">{rxnflow_badge}</td>
               <td style="text-align:center;">{reasyn_badge}</td>
               <td style="text-align:center;">{aizynth_badge}</td>
-              <td style="font-size:0.8rem; line-height:1.4;">{diag_str}</td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;">{diag_str}</td>
             </tr>"""
     empirical_rows.append(row)
 empirical_db_joined = "\n".join(empirical_rows)

@@ -422,23 +422,29 @@
       border-radius: 10px;
     }
 
-    .table-responsive.no-scroll-72 {
+    .table-responsive.no-scroll-72,
+    .table-responsive.no-scroll-73,
+    .table-responsive.no-scroll-74 {
       overflow-x: visible;
     }
 
-    table.table-compact-72 {
+    table.table-compact-72,
+    table.table-compact-73,
+    table.table-compact-74 {
       table-layout: fixed;
       width: 100%;
     }
 
-    table.table-compact-72 th {
+    table.table-compact-72 th,
+    table.table-compact-74 th {
       padding: 9px 6px;
       font-size: 0.71rem;
       line-height: 1.3;
       letter-spacing: 0.01em;
     }
 
-    table.table-compact-72 td {
+    table.table-compact-72 td,
+    table.table-compact-74 td {
       padding: 8px 6px;
       font-size: 0.77rem;
       vertical-align: top;
@@ -446,7 +452,24 @@
       overflow-wrap: anywhere;
     }
 
-    table.table-compact-72 .badge {
+    table.table-compact-73 th {
+      padding: 8px 3px;
+      font-size: 0.67rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    table.table-compact-73 td {
+      padding: 7px 4px;
+      font-size: 0.74rem;
+      vertical-align: top;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    table.table-compact-72 .badge,
+    table.table-compact-74 .badge {
       white-space: normal;
       display: inline-block;
       max-width: 100%;
@@ -456,11 +479,27 @@
       font-size: 0.69rem;
     }
 
+    table.table-compact-73 .badge {
+      white-space: normal;
+      display: inline-block;
+      max-width: 100%;
+      text-align: center;
+      line-height: 1.2;
+      padding: 2px 3px;
+      font-size: 0.64rem;
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
     @media (max-width: 960px) {
-      .table-responsive.no-scroll-72 {
+      .table-responsive.no-scroll-72,
+      .table-responsive.no-scroll-73,
+      .table-responsive.no-scroll-74 {
         overflow-x: auto;
       }
-      table.table-compact-72 {
+      table.table-compact-72,
+      table.table-compact-73,
+      table.table-compact-74 {
         min-width: 820px;
       }
     }
@@ -3831,538 +3870,605 @@ flowchart TD
             2. <strong>BioNeMo ReaSyn (ICLR 2026 Oral)</strong>: <code>tokenize_smiles</code> 실측 결과 <code>_smiles_vocab</code>에 전이금속(Ti, Zr, Hf, Ru, W, Mo, Al, Co 등)이 내장되어 <strong>27종 전수에서 Out-of-Vocabulary 에러 0건(100% 무손실 Tokenization 및 복원)</strong>을 기록했습니다. 그러나 SynFormer 115종 Reaction Template에는 금속 원자가 부재해 일반 부분구조(24/27; 무탄소 TSA 패턴 <code>#84 [N:1]</code> 제외 시 23/27)만 매칭되므로 무기 염 복분해 및 아미노분해 Template 확장이 요구됩니다.
           </div>
 
-          <div class="table-responsive">
-            <table>
+          <div class="table-responsive no-scroll-73">
+            <table class="table-compact-73">
+              <colgroup>
+                <col style="width:3.2%;">
+                <col style="width:9.8%;">
+                <col style="width:8.2%;">
+                <col style="width:6.0%;">
+                <col style="width:6.0%;">
+                <col style="width:6.0%;">
+                <col style="width:5.8%;">
+                <col style="width:6.0%;">
+                <col style="width:7.6%;">
+                <col style="width:7.6%;">
+                <col style="width:7.6%;">
+                <col style="width:26.2%;">
+              </colgroup>
               <thead>
                 <tr>
-                  <th style="width:35px; text-align:center;">No</th>
-                  <th style="width:110px;">Precursor / ID</th>
-                  <th style="width:50px; text-align:center;">Metal</th>
-                  <th style="width:125px;">Formula</th>
-                  <th style="width:70px; text-align:center;">SAScore<br><span style="font-size:0.68rem; font-weight:normal;">(&le;3.5)</span></th>
-                  <th style="width:70px; text-align:center;">SCScore<br><span style="font-size:0.68rem; font-weight:normal;">(&le;2.0)</span></th>
-                  <th style="width:70px; text-align:center;">SYBA<br><span style="font-size:0.68rem; font-weight:normal;">(&gt;0)</span></th>
-                  <th style="width:70px; text-align:center;">BR-SAS<br><span style="font-size:0.68rem; font-weight:normal;">(Default)</span></th>
-                  <th style="width:70px; text-align:center;">RAscore<br><span style="font-size:0.68rem; font-weight:normal;">(&ge;0.5)</span></th>
-                  <th style="width:90px; text-align:center;">RxnFlow<br><span style="font-size:0.68rem; font-weight:normal;">(ICLR 25)</span></th>
-                  <th style="width:95px; text-align:center;">BioNeMo ReaSyn<br><span style="font-size:0.68rem; font-weight:normal;">(ICLR 26)</span></th>
-                  <th style="width:90px; text-align:center;">AiZynthFinder<br><span style="font-size:0.68rem; font-weight:normal;">(MCTS)</span></th>
+                  <th style="text-align:center;">No</th>
+                  <th>Precursor<br><span style="font-size:0.62rem; font-weight:normal;">(ID)</span></th>
+                  <th>Metal /<br>Formula</th>
+                  <th style="text-align:center;">SAScore<br><span style="font-size:0.62rem; font-weight:normal;">(&le;3.5)</span></th>
+                  <th style="text-align:center;">SCScore<br><span style="font-size:0.62rem; font-weight:normal;">(&le;2.0)</span></th>
+                  <th style="text-align:center;">SYBA<br><span style="font-size:0.62rem; font-weight:normal;">(&gt;0)</span></th>
+                  <th style="text-align:center;">BR-SAS<br><span style="font-size:0.62rem; font-weight:normal;">(Def)</span></th>
+                  <th style="text-align:center;">RAscore<br><span style="font-size:0.62rem; font-weight:normal;">(&ge;0.5)</span></th>
+                  <th style="text-align:center;">RxnFlow<br><span style="font-size:0.62rem; font-weight:normal;">(ICLR 25)</span></th>
+                  <th style="text-align:center;">BioNeMo<br>ReaSyn</th>
+                  <th style="text-align:center;">AiZynth<br><span style="font-size:0.62rem; font-weight:normal;">(MCTS)</span></th>
                   <th>Empirical Mechanism &amp; Physical Diagnosis</th>
                 </tr>
               </thead>
               <tbody>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">01</td>
-              <td style="white-space:nowrap;">
-                <strong>DIPAS</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_01</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">01</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">DIPAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_01</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C6H17NSi</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.69</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.73</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.82</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.967</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (3)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.82 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_ketone) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C6H17NSi</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.69</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.73</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.82</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.967</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (3)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.82 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_ketone) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">02</td>
-              <td style="white-space:nowrap;">
-                <strong>BTBAS</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_02</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">02</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">BTBAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_02</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H22N2Si</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.98</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.37</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">11.18</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.88</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.972</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (1)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +11.18</span> &bull; <span style='color:#d97706;'>BR-SAS 8.88 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C8H22N2Si</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.98</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.37</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">11.18</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.88</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.972</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (1)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +11.18</span> &bull; <span style='color:#d97706;'>BR-SAS 8.88 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">03</td>
-              <td style="white-space:nowrap;">
-                <strong>3DMAS</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_03</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">03</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">3DMAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_03</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C6H19N3Si</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.94</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.39</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.72</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.988</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.72 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C6H19N3Si</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.94</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.39</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.72</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.988</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.72 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">04</td>
-              <td style="white-space:nowrap;">
-                <strong>4DMAS</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_04</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">04</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">4DMAS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_04</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24N4Si</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">3.37</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.48</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.959</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d; font-weight:600;'>SAScore 3.37 (양호)</span> &bull; <span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C8H24N4Si</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">3.37</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.48</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.959</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d; font-weight:600;'>SAScore 3.37 (양호)</span> &bull; <span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">05</td>
-              <td style="white-space:nowrap;">
-                <strong>TSA</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_05</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">05</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TSA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_05</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">H9NSi3</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">6.91</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.5</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">6.29</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.04</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.971</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 6.91 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +6.29</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">H9NSi3</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">6.91</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.5</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">6.29</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.04</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.971</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 6.91 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +6.29</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">06</td>
-              <td style="white-space:nowrap;">
-                <strong>HCDS</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_06</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">06</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">HCDS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_06</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">Cl6Si2</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.01</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.02</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">4.98</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.52</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.961</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +4.98</span> &bull; <span style='color:#d97706;'>BR-SAS 8.52 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">Cl6Si2</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.01</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.02</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">4.98</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.52</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.961</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +4.98</span> &bull; <span style='color:#d97706;'>BR-SAS 8.52 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">07</td>
-              <td style="white-space:nowrap;">
-                <strong>TEOS</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_07</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">07</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TEOS</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_07</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H20O4Si</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">2.84</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.22</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">9.16</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.82</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.984</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d; font-weight:600;'>SAScore 2.84 (양호)</span> &bull; <span style='color:#15803d;'>SYBA +9.16</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C8H20O4Si</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">2.84</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.22</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">9.16</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.82</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.984</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d; font-weight:600;'>SAScore 2.84 (양호)</span> &bull; <span style='color:#15803d;'>SYBA +9.16</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">08</td>
-              <td style="white-space:nowrap;">
-                <strong>SAM.24</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_SI_08</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">08</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">SAM.24</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_SI_08</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Si</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C7H19NSi</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.93</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.62</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.84</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.975</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (3)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.84 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_ketone) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Si</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C7H19NSi</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.93</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.84</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.975</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (3)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.84 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_ketone) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">09</td>
-              <td style="white-space:nowrap;">
-                <strong>TEMAH</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_01</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">09</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TEMAH</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_HK_01</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Hf</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H32HfN4</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.1</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.52</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.8</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.935</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (3)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_aliphatic_aldehyde) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Hf</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C12H32HfN4</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.1</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.52</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.8</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.935</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (3)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_aliphatic_aldehyde) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">10</td>
-              <td style="white-space:nowrap;">
-                <strong>TDMAH</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_02</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">10</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TDMAH</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_HK_02</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Hf</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24HfN4</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.96</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.73</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.935</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Hf</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C8H24HfN4</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.96</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.73</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.935</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">11</td>
-              <td style="white-space:nowrap;">
-                <strong>Hf(OtBu)4</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_03</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">11</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">Hf(OtBu)4</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_HK_03</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Hf</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C16H36HfO4</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.63</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.28</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.35</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.71</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.909</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.35</span> &bull; <span style='color:#d97706;'>BR-SAS 8.71 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Hf</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C16H36HfO4</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.63</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.28</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">10.35</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.71</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.909</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +10.35</span> &bull; <span style='color:#d97706;'>BR-SAS 8.71 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">12</td>
-              <td style="white-space:nowrap;">
-                <strong>TEMAZ</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_04</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">12</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TEMAZ</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_HK_04</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H32N4Zr</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.1</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.54</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.56</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.8</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.984</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (3)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_aliphatic_aldehyde) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Zr</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C12H32N4Zr</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.1</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.54</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">10.56</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.8</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.984</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (3)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +10.56</span> &bull; <span style='color:#d97706;'>BR-SAS 8.8 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_aliphatic_aldehyde) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">13</td>
-              <td style="white-space:nowrap;">
-                <strong>TDMAZ</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_05</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">13</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TDMAZ</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_HK_05</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24N4Zr</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.96</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.69</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.98</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Zr</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C8H24N4Zr</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.96</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.69</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.98</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">14</td>
-              <td style="white-space:nowrap;">
-                <strong>ZMA</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_06</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">14</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">ZMA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_HK_06</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C14H20OZr</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.82</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.72</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-18.21</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.39</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.923</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.82 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -18.21 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#d97706;'>BR-SAS 8.39 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Zr</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C14H20OZr</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">4.82</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">2.72</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-18.21</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.39</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.923</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.82 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -18.21 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#d97706;'>BR-SAS 8.39 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">15</td>
-              <td style="white-space:nowrap;">
-                <strong>Cp(NMe2)3Zr</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_07</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">15</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">Cp(NMe2)3Zr</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_HK_07</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H23N3Zr</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.53</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.22</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">7.2</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.959</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.53 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -24.98 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Zr</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C11H23N3Zr</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">4.53</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">2.22</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">7.2</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.959</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.53 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -24.98 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">16</td>
-              <td style="white-space:nowrap;">
-                <strong>TDMAT</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_01</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">16</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TDMAT</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_TI_01</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C8H24N4Ti</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.96</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.31</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">7.7</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.62</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.92</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Ti</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C8H24N4Ti</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.96</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.31</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">7.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.62</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.92</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +7.7</span> &bull; <span style='color:#d97706;'>BR-SAS 8.62 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">17</td>
-              <td style="white-space:nowrap;">
-                <strong>TTIP</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_02</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">17</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TTIP</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_TI_02</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H28O4Ti</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.05</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.25</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">9.71</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.75</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.976</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +9.71</span> &bull; <span style='color:#d97706;'>BR-SAS 8.75 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Ti</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C12H28O4Ti</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.05</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.25</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">9.71</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.75</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.976</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +9.71</span> &bull; <span style='color:#d97706;'>BR-SAS 8.75 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">18</td>
-              <td style="white-space:nowrap;">
-                <strong>CpTi(NMe2)3</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_03</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">18</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">CpTi(NMe2)3</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_TI_03</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H23N3Ti</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.53</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.14</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">7.2</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.91</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.53 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -24.98 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Ti</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C11H23N3Ti</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">4.53</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">2.14</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">7.2</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.91</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.53 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -24.98 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">19</td>
-              <td style="white-space:nowrap;">
-                <strong>TMA</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_AL_01</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">19</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TMA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_AL_01</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Al</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C3H9Al</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.81</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.21</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">5.85</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.04</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.963</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.81 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +5.85</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Al</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C3H9Al</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">4.81</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.21</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">5.85</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.04</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.963</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.81 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +5.85</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">20</td>
-              <td style="white-space:nowrap;">
-                <strong>DMAH</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_AL_02</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">20</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">DMAH</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_AL_02</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Al</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C2H7Al</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">6.31</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.01</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">5.85</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.02</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.959</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 6.31 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +5.85</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Al</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C2H7Al</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">6.31</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.01</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">5.85</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.02</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.959</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 6.31 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +5.85</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">21</td>
-              <td style="white-space:nowrap;">
-                <strong>BTBMW</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_01</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">21</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">BTBMW</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_MET_01</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">W</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H30N4W</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.21</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.61</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.11</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.95</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.753</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (1)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.11</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">W</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C12H30N4W</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.21</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.61</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">10.11</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.95</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.753</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (1)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +10.11</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">22</td>
-              <td style="white-space:nowrap;">
-                <strong>BTBMMo</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_02</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">22</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">BTBMMo</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_MET_02</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Mo</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H30MoN4</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.26</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.85</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.11</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.95</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.629</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (1)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +10.11</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Mo</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C12H30MoN4</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.26</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.85</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">10.11</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.95</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.629</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (1)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +10.11</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">23</td>
-              <td style="white-space:nowrap;">
-                <strong>Ru(EtCp)2</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_03</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">23</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">Ru(EtCp)2</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_MET_03</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Ru</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C14H18Ru</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.7</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.27</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-17.31</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">7.48</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.941</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.7 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -17.31 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Ru</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C14H18Ru</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">4.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">2.27</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-17.31</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">7.48</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.941</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.7 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -17.31 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">24</td>
-              <td style="white-space:nowrap;">
-                <strong>Co(AMD)2</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_04</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">24</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">Co(AMD)2</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_MET_04</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Co</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C16H34CoN4</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.18</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.38</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">3.96</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.29</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.639</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (1)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +3.96</span> &bull; <span style='color:#d97706;'>BR-SAS 8.29 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Co</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C16H34CoN4</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.18</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">2.38</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">3.96</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.29</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.639</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (1)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +3.96</span> &bull; <span style='color:#d97706;'>BR-SAS 8.29 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(cgflow:amine_halide_coupling) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">25</td>
-              <td style="white-space:nowrap;">
-                <strong>CCTBA</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_05</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">25</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">CCTBA</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_MET_05</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Co</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H10Co2O6</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">5.52</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.32</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">2.28</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">10.0</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.602</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 5.52 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +2.28</span> &bull; <span style='color:#d97706;'>BR-SAS 10.0 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Co</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C12H10Co2O6</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">5.52</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:700;">2.32</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">2.28</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">10.0</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.602</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#b91c1c; font-weight:600;'>SAScore 5.52 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +2.28</span> &bull; <span style='color:#d97706;'>BR-SAS 10.0 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">26</td>
-              <td style="white-space:nowrap;">
-                <strong>TBTDET</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_06</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">26</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">TBTDET</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_MET_06</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Ta</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C16H39N4Ta</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.29</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.89</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">11.98</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">9.03</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.875</td>
-              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-size:0.75rem; font-weight:600;'>Substructure (3)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +11.98</span> &bull; <span style='color:#d97706;'>BR-SAS 9.03 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_aliphatic_aldehyde) 매칭 &bull; 금속배위 부재</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Ta</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C16H39N4Ta</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">4.29</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.89</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">11.98</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">9.03</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.875</td>
+              <td style="text-align:center;"><span class='badge' style='background:#fef3c7; color:#b45309; font-weight:600;'>Substruct (3)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +11.98</span> &bull; <span style='color:#d97706;'>BR-SAS 9.03 (유기사전 감점)</span> &bull; <span style='color:#ea580c;'>RxnFlow: 일반 생성물 부분구조(explore:reductive_amination_aliphatic_aldehyde) 매칭 &bull; 금속배위 부재</span></td>
             </tr>
 
             <tr>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">27</td>
-              <td style="white-space:nowrap;">
-                <strong>tBuSn(OiPr)3</strong>
-                <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_EUV_01</div>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; color:#64748b;">27</td>
+              <td style="word-break:keep-all; overflow-wrap:anywhere;">
+                <strong style="font-size:0.77rem;">tBuSn(OiPr)3</strong>
+                <div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b;">PREC_EUV_01</div>
               </td>
-              <td style="text-align:center;"><span class="badge badge-1g">Sn</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C13H30O3Sn</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">3.77</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.84</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">11.54</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.95</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.934</td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
-              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d;'>SYBA +11.54</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="text-align:center;">
+                <span class="badge badge-1g" style="margin-bottom:2px;">Sn</span>
+                <div style="font-family:'JetBrains Mono'; font-size:0.67rem; color:#334155; overflow-wrap:anywhere;">C13H30O3Sn</div>
+              </td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#475569;">3.77</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#15803d; font-weight:600;">1.84</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem; color:#15803d; font-weight:600;">11.54</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#b91c1c; font-weight:600;">8.95</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem; color:#0284c7; font-weight:600;">0.934</td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b;'>0 Core</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-weight:600;'>0 Route (Token OK)</span></td>
+              <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
+              <td style="font-size:0.74rem; line-height:1.4; word-break:keep-all;"><span style='color:#15803d;'>SYBA +11.54</span> &bull; <span style='color:#d97706;'>BR-SAS 8.95 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
               </tbody>
             </table>
@@ -4380,16 +4486,25 @@ flowchart TD
           </p>
 
           <!-- Executive Comparative Matrix Table for 8 Tested Models -->
-          <div class="table-responsive" style="margin-bottom:24px;">
-            <table>
+          <div class="table-responsive no-scroll-74" style="margin-bottom:24px;">
+            <table class="table-compact-74">
+              <colgroup>
+                <col style="width:10.5%;">
+                <col style="width:14.5%;">
+                <col style="width:13.5%;">
+                <col style="width:9.5%;">
+                <col style="width:20%;">
+                <col style="width:17.5%;">
+                <col style="width:14.5%;">
+              </colgroup>
               <thead>
                 <tr>
-                  <th style="width:110px;">Model / Generation</th>
-                  <th style="width:140px;">Algorithm &amp; Architecture</th>
-                  <th style="width:130px;">Training Dataset</th>
-                  <th style="width:75px; text-align:center;">Empirical<br><span style="font-size:0.68rem; font-weight:normal;">(Pass Rate)</span></th>
-                  <th style="width:230px;">Failure Mechanism (왜곡 원인)</th>
-                  <th style="width:220px;">Valid Domain (적용 범위)</th>
+                  <th>Model / Gen</th>
+                  <th>Algorithm &amp; Architecture</th>
+                  <th>Training Dataset</th>
+                  <th style="text-align:center;">Empirical<br><span style="font-size:0.65rem; font-weight:normal;">(Pass Rate)</span></th>
+                  <th>Failure Mechanism (왜곡 원인)</th>
+                  <th>Valid Domain (적용 범위)</th>
                   <th>Semiconductor Solution</th>
                 </tr>
               </thead>
