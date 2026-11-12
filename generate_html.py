@@ -93,34 +93,34 @@ lit_rows_joined = "\n".join(lit_rows_html)
 # Strictly filtered to the 8 directly installed, executed, and benchmarked models
 repo_semi_metrics = {
     "SAScore (RDKit Built-in)": {
-        "rate": "11.1% (3/27)",
+        "rate": "7.4% (2/27)",
         "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
         "eval": "Direct Execution (False Negative Bias)",
-        "desc": "[Empirical 11.1%] TEOS(2.84), 4DMAS(3.37), Ru(EtCp)2(3.48) 3종만 threshold 3.5 이하로 통과함. TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등 단순 1단계 양산 전구체에 높은 감점이 부여됨. PubChem 의약 Fragment Frequency 기반으로 Si-N, Al-C, Zr-O 배위를 희귀 구조로 분류한 결과임."
+        "desc": "[Empirical 7.4%] TEOS(2.84), 4DMAS(3.37) 2종만 threshold 3.5 이하로 통과함(연결형 Ru(EtCp)2 보정 시 4.70). TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등 단순 1단계 양산 전구체에 높은 감점이 부여됨. PubChem 의약 Fragment Frequency 기반으로 Si-N, Al-C, Zr-O 배위를 희귀 구조로 분류한 결과임."
     },
     "SCScore": {
-        "rate": "85.2% (23/27)",
+        "rate": "77.8% (21/27)",
         "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
         "eval": "Direct Execution (Early-Reactant Bias)",
-        "desc": "[Empirical 85.2%] Reaxys 1024bool DNN 직접 실행 결과 23종이 1.01~1.94의 낮은 점수로 산출됨(DMAH 1.01, HCDS 1.02, TTIP 1.25, DIPAS 1.73). Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 저분자량 착체가 낮은 complexity로 평가되며(ZMA 2.72, Co(AMD)2 2.38), 자연발화성(Pyrophoric) 위험은 반영되지 않음."
+        "desc": "[Empirical 77.8%] Reaxys 1024bool DNN 직접 실행 결과 21종이 1.01~1.89의 낮은 점수로 산출됨(DMAH 1.01, HCDS 1.02, TTIP 1.25, DIPAS 1.73). Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 저분자량 착체가 낮은 complexity로 평가되며(ZMA 2.72, Co(AMD)2 2.38, CCTBA 2.32, Ru(EtCp)2 2.27), 자연발화성(Pyrophoric) 위험은 반영되지 않음."
     },
     "SYBA": {
         "rate": "85.2% (23/27)",
         "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
         "eval": "Direct Execution (Cp Collapse / syba.csv.gz)",
-        "desc": "[Empirical 85.2%] 25.7MB Naive Bayes Lookup Table(syba.csv.gz; 기본 syba4.csv.gz 대비 방법론적 변경 명시) 직접 연산 결과 23종은 +3.96~+11.98 양수로 분류됨. 반면 ZINC DB에 부재한 메탈로센/Cp 샌드위치 착체인 Ru(EtCp)2(-44.27), CpTi(-24.98), CpZr(-24.98), ZMA(-18.21) 4종은 큰 음수로 산출됨."
+        "desc": "[Empirical 85.2%] 25.7MB Naive Bayes Lookup Table(syba.csv.gz; 기본 syba4.csv.gz 대비 방법론적 변경 명시) 직접 연산 결과 23종은 +2.28~+11.98 양수로 분류됨. 반면 ZINC DB에 부재한 메탈로센/Cp 착체인 CpTi(-24.98), CpZr(-24.98), ZMA(-18.21), Ru(EtCp)2(-17.31) 4종은 큰 음수로 산출됨."
     },
     "BR-SAScore": {
         "rate": "11.1% (Strict Reagent 3/27) / 100% (Leaked)",
         "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
         "eval": "Direct Execution (Unleaked max(existing, -0.47))",
-        "desc": "[Empirical] 기본 사전(11.1%, 3/27)과 Data Leakage(생성물 등록 및 CCTBA A>>A 규칙)를 배제한 Strict Reagent Dictionary(음수 fragment 평균 수식 fscore < 0에 맞춰 max(existing, -0.47) 보정) 모두 점수 악화 0종에 Pass Rate 11.1%(3/27: TSA, TMA, DMAH)로 동일함(신규 형성 M-N/M-C 단편 -6.0 유지; 0.0 덮어쓰기 시 유기 단편 제외로 4종 악화). 생성물 사전 등록 시 100.0%(27/27)는 Circular Memorization 결과이므로 Pro-ligand 분리형 2-Track TMC-SA 적용이 필요함."
+        "desc": "[Empirical] 기본 사전(11.1%, 3/27)과 Data Leakage(생성물 등록 및 CCTBA A>>A 규칙)를 배제한 Strict Reagent Dictionary(음수 fragment 평균 수식 fscore < 0에 맞춰 max(existing, -0.47) 보정) 모두 점수 악화 0종에 Pass Rate 11.1%(3/27: TSA, TMA, DMAH)로 동일함(신규 형성 M-N/M-C 단편 -6.0 유지; 0.0 덮어쓰기 시 유기 단편 제외로 3종 악화). 생성물 사전 등록 시 100.0%(27/27)는 Circular Memorization 결과이므로 Pro-ligand 분리형 2-Track TMC-SA 적용이 필요함."
     },
     "RAscore": {
         "rate": "0.0% Physical Validity (100% FP)",
         "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
         "eval": "Direct Execution (False Positive Distortion)",
-        "desc": "[Empirical] 27종 전수 0.629~0.988(Mean 0.925)로 수치상 100% Pass 판정이나, ECFP6(radius 3) Fingerprint Count Vector가 중심금속을 일반 알킬/아민 탄소 환경으로 투영한 결과임. 실제 금속 결합 안정성 및 열분해 위험에 대한 물리적 변별력은 0.0%임."
+        "desc": "[Empirical] 27종 전수 0.602~0.988(Mean 0.908)로 수치상 100% Pass 판정이나, ECFP6(radius 3) Fingerprint Count Vector가 중심금속을 일반 알킬/아민 탄소 환경으로 투영한 결과임. 실제 금속 결합 안정성 및 열분해 위험에 대한 물리적 변별력은 0.0%임."
     },
     "RxnFlow": {
         "rate": "0.0% Core (33.3% Substructure)",
@@ -153,9 +153,9 @@ multistage_models = [
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Morgan(r=2)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("N/A (Statistical Lookup)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("11.1% (3/27) [FN 88.9%]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s4": ("7.4% (2/27) [FN 92.6%]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 2·4 — Fragment Frequency Bias & Ring Penalty",
-        "barrier_desc": "PubChem 의약 DB 기반 Fragment Frequency 사전에 Si-N, Al-C, M-N 결합이 부재하여 1단계 양산 전구체 TSA(6.91), DMAH(6.31), TMA(4.81) 등 24종(88.9%)에서 False Negative 발생. 에테르/아민 유사 구조 3종(TEOS 2.84, 4DMAS 3.37, Ru(EtCp)2 3.48)만 통과."
+        "barrier_desc": "PubChem 의약 DB 기반 Fragment Frequency 사전에 Si-N, Al-C, M-N 결합이 부재하여 1단계 양산 전구체 TSA(6.91), DMAH(6.31), TMA(4.81) 등 25종(92.6%)에서 False Negative 발생. 에테르/아민 유사 구조 2종(TEOS 2.84, 4DMAS 3.37)만 통과."
     },
     {
         "name": "SYBA",
@@ -167,7 +167,7 @@ multistage_models = [
         "s3": ("N/A (Log-Odds Ratio)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("85.2% (23/27) [Cp Collapse]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
         "barrier_stage": "Stage 2·4 — ZINC Fragment Bias & Metallocene Collapse",
-        "barrier_desc": "비환식 알킬아민·알콕사이드 전구체 23종(+3.96~+11.98)은 양수로 분류되나, ZINC 라이브러리(syba.csv.gz) 내 금속-Cp 단편 부재로 Ru(EtCp)2(-44.27), CpTi(NMe2)3(-24.98), Cp(NMe2)3Zr(-24.98), ZMA(-18.21) 4종이 큰 음수로 산출됨."
+        "barrier_desc": "비환식 알킬아민·알콕사이드 전구체 23종(+2.28~+11.98)은 양수로 분류되나, ZINC 라이브러리(syba.csv.gz) 내 금속-Cp 단편 부재로 CpTi(NMe2)3(-24.98), Cp(NMe2)3Zr(-24.98), ZMA(-18.21), Ru(EtCp)2(-17.31) 4종이 큰 음수로 산출됨."
     },
     {
         "name": "SCScore",
@@ -177,9 +177,9 @@ multistage_models = [
         "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 1024-bit Morgan", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("N/A (12-Layer Ranking DNN)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("85.2% (23/27) [Hazard Blind]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "s4": ("77.8% (21/27) [Hazard Blind]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
         "barrier_stage": "Stage 4 — Reaxys Early-Stage Reactant Bias",
-        "barrier_desc": "Reaxys 1,200만 반응쌍(full_reaxys_model_1024bool)에서 유기금속이 출발 시약으로 등록된 편향으로 23종이 1.01~1.94로 산출됨. ZMA(2.72)·Co(AMD)2(2.38)의 입체 복잡도는 일부 반영하나 TMA(1.21)·DMAH(1.01)의 자연발화성 및 열분해 위험성은 변별하지 못함."
+        "barrier_desc": "Reaxys 1,200만 반응쌍(full_reaxys_model_1024bool)에서 유기금속이 출발 시약으로 등록된 편향으로 21종이 1.01~1.89로 산출됨. ZMA(2.72)·Co(AMD)2(2.38)·CCTBA(2.32)·Ru(EtCp)2(2.27)의 복잡도는 구분하나 TMA(1.21)·DMAH(1.01)의 자연발화성 및 열분해 위험성은 변별하지 못함."
     },
     {
         "name": "RAscore",
@@ -191,7 +191,7 @@ multistage_models = [
         "s3": ("N/A (XGBoost Classifier)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% Valid (100% FP)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 2 — ECFP6 Alkyl Bias & Metal Instability Blindness",
-        "barrier_desc": "2048-bit ECFP6 Count Vector가 디메틸아미노·이소프로필 등 유기 치환기 비트에 편향되어 중심금속 배위 안정성을 인지하지 못함. 전수 Mean 0.925(0.629~0.988, 23종 ≥0.90)로 통과하여 불안정 분자를 걸러내지 못하는 100% False Positive 발생."
+        "barrier_desc": "2048-bit ECFP6 Count Vector가 디메틸아미노·이소프로필 등 유기 치환기 비트에 편향되어 중심금속 배위 안정성을 인지하지 못함. 전수 Mean 0.908(0.602~0.988, 22종 ≥0.90)로 통과하여 불안정 분자를 걸러내지 못하는 100% False Positive 발생."
     },
     {
         "name": "BR-SAScore",
@@ -726,15 +726,20 @@ ml_n35 = ml_comp["precursor_subset_n35"]
 rf_imp = ml_comp["all_sample_rf_feature_importances"]
 phys_imp_pct = ml_comp["all_sample_phys_importance_sum_pct"]
 comp_time = float(p2_meta.get("computation_time_seconds", 0.0))
+fallback_cnt = int(p2_meta.get("fallback_count", sum(1 for m in molecules_eval if m.get("is_fallback_geometry"))))
 
 # Lookup key reference molecules dynamically for prose accuracy
 mol_by_id = {m["id"]: m for m in molecules_eval}
 _tiet4 = mol_by_id.get("NEG-001", {})
 _zrme4 = mol_by_id.get("NEG-002", {})
+_silcb = mol_by_id.get("NEG-003", {})
 _tca = mol_by_id.get("NEG-006", {})
 _tdmat = mol_by_id.get("PREC_TI_01", {})
 _temah = mol_by_id.get("PREC_HK_01", {})
+_dipas = mol_by_id.get("PREC_SI_01", {})
 _tma = mol_by_id.get("PREC_AL_01", {})
+_ruetc = mol_by_id.get("PREC_MET_03", {})
+_cctba = mol_by_id.get("PREC_MET_05", {})
 _wph5 = mol_by_id.get("NEG-004", {})
 _tioh4 = mol_by_id.get("NEG-007", {})
 _coet4 = mol_by_id.get("NEG-008", {})
@@ -916,14 +921,112 @@ rf_base_loo = ml_n55["random_forest_default"]["base_only"]["loocv"]
 rf_comb_in = ml_n55["random_forest_default"]["combined_base_and_phys"]["all_sample"]
 rf_comb_loo = ml_n55["random_forest_default"]["combined_base_and_phys"]["loocv"]
 
+prec_sa_passers = [b for b in benchmarks if b["sascore"] <= 3.5]
+prec_sa_pass_names = ", ".join(f"{b['name']} {b['sascore']:.2f}" for b in prec_sa_passers)
+prec_sa_fn_cnt = len(benchmarks) - len(prec_sa_passers)
+
+neg_cons_tn = int(base_cmp.get("negatives_consensus_tn", neg_cnt - int(str(base_cmp["negatives_consensus_fp"]).split("/")[0])))
+neg_cons_fp_cnt = neg_cnt - neg_cons_tn
+neg_cons_fp_pct = round(neg_cons_fp_cnt / neg_cnt * 100.0, 1)
+neg_cons_spec_pct = round(100.0 - neg_cons_fp_pct, 1)
+
+prec_failed_names = [mol_by_id[i]["name"].split(" (")[0] for i in brk_chem["precursors"]["failed_ids"]]
+prec_failed_note = (", ".join(prec_failed_names) + f" {len(prec_failed_names)}종 FN") if prec_failed_names else "전구체 0종 FN"
+neg_rejected_names = [m["name"].split(" (")[0] for m in molecules_eval if m["target_type"] == "Negative Control" and not m.get("tuned_with_chem_pass", True)]
+neg_missed_names = [mol_by_id[i]["name"].split(" (")[0] for i in brk_chem["negative_controls"]["missed_negative_ids"]]
+neg_rejected_note = ", ".join(neg_rejected_names[:3]) + (" 등" if len(neg_rejected_names) > 3 else "")
+
+phase2_banner_metrics = (
+    f"Precursor Pass Rate {prec_pct_chem:.1f}% [{prec_pass_chem}/{prec_cnt}], "
+    f"Negative Control Specificity {100.0 - neg_fp_pct_chem:.1f}% [{neg_tn_chem}/{neg_cnt}]"
+)
+
+
+def _step4_sample_row(mid: str, note: str) -> str:
+    m = mol_by_id.get(mid, {})
+    ttype = m.get("target_type", "Precursor")
+    if ttype == "Precursor":
+        tbadge = '<span class="badge badge-prec">Precursor</span>'
+    else:
+        tbadge = '<span class="badge badge-4g">Negative Control</span>'
+    pass_flag = bool(m.get("tuned_with_chem_pass", False))
+    tmc_sa = float(m.get("tmc_sa_phys", 0.0))
+    if ttype == "Precursor":
+        vbadge = f'<span class="badge badge-success">TP ({tmc_sa:.2f})</span>' if pass_flag else f'<span class="badge badge-warning">FN ({tmc_sa:.2f})</span>'
+    else:
+        vbadge = f'<span class="badge badge-success">TN ({tmc_sa:.2f})</span>' if not pass_flag else f'<span class="badge badge-4g">FP ({tmc_sa:.2f})</span>'
+    return f"""
+                  <tr>
+                    <td><strong>{m.get('name', mid).split(' (')[0]}</strong></td>
+                    <td>{tbadge}</td>
+                    <td style="text-align:center; font-weight:700;">{float(m.get('vbur_percent', 0.0)):.1f}%</td>
+                    <td style="text-align:center; font-weight:700;">{float(m.get('delta_e_dimer_kcal_mol', 0.0)):+.1f} kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">{float(m.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol</td>
+                    <td>{vbadge} {note}</td>
+                  </tr>"""
+
+
+_step4_rows = "\n".join([
+    _step4_sample_row("PREC_TI_01", "SevenNet-0 LBFGS 이완 후 단량체 입체 차폐 및 BDE 창 충족"),
+    _step4_sample_row("PREC_SI_01", "분리 단편 BDE(55.5 kcal/mol)로 단일 원자 충돌 저평가 해소; Si-H %V_bur < 44% 일괄 Penalty로 FN"),
+    _step4_sample_row("PREC_AL_01", f"과소배위(%V_bur {float(_tma.get('vbur_percent', 0.0)):.1f}%) 조건에서의 이합체화 경향 및 낮은 Ligand SA 반영"),
+    _step4_sample_row("PREC_MET_03", "연결형 SMILES 보정으로 NaN Fallback 제거 및 LBFGS 이완(%V_bur 36.9% 일괄 Penalty로 FN)"),
+    _step4_sample_row("PREC_MET_05", "Co2(CO)6 카보닐 배위 정정(C12H10Co2O6); Co-CO 해리 반영 (T_decomp 160 C)"),
+    _step4_sample_row("NEG-003", f"이완 고리 신장 BDE {float(_silcb.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol 산출로 반방향족 고리 변형 TN 차단"),
+    _step4_sample_row("NEG-004", f"비중첩 간격({float(_wph5.get('dimer_init_gap_ang', 2.8)):.2f} A) 적용으로 이합체 충돌 해소; LBFGS 이완 후 %V_bur {float(_wph5.get('vbur_percent', 0.0)):.1f}%로 Threshold 미만(FP)"),
+    _step4_sample_row("NEG-008", f"분리 단편 BDE {float(_coet4.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol 및 Ligand SA 합산으로 TN 차단"),
+])
+
+phase2_step4_summary_joined = f"""
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-bottom:20px;">
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (FNR)</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#059669; margin:4px 0;">{base_cmp['precursors_sascore_fn']} &rarr; {prec_fn_chem_pct:.1f}%</div>
+                <div style="font-size:0.8rem; color:#475569;">Precursor {prec_pass_chem}/{prec_cnt} Pass ({prec_pct_chem:.1f}%), Inhibitor {inhib_pass_chem}/{inhib_cnt} Pass ({inhib_pct_chem:.1f}%)</div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #6366f1; border-radius:6px; padding:16px;">
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Negative Control FPR (Un-Hardcoded)</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#4338ca; margin:4px 0;">{neg_cons_fp_pct:.1f}% &rarr; {neg_fp_pct_chem:.1f}%</div>
+                <div style="font-size:0.8rem; color:#475569;">Physics Only TN {neg_tn_phys}/{neg_cnt} &rarr; +SMARTS TN {neg_tn_chem}/{neg_cnt} ({neg_fp_chem}종 FP 잔존)</div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Random Forest Validation: All-Sample vs LOOCV</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#0369a1; margin:4px 0;">{rf_comb_in['accuracy']:.3f} &rarr; {rf_comb_loo['accuracy']:.3f}</div>
+                <div style="font-size:0.8rem; color:#475569;">Combined LOOCV Accuracy {rf_comb_loo['accuracy']:.3f} (Specificity {rf_comb_loo['specificity']:.3f}) vs Base-Only {rf_base_loo['accuracy']:.3f}</div>
+              </div>
+            </div>
+
+            <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:10px;">
+              대표 분자별 SevenNet-0 LBFGS 이완 실측치 및 Uniform Screening 판정 ({comp_time:.1f}s 실행, Fallback {fallback_cnt}/{len(molecules_eval)}종)
+            </div>
+            <div style="overflow-x:auto; margin-bottom:20px;">
+              <table class="report-table" style="font-size:0.84rem;">
+                <thead>
+                  <tr style="background:#f1f5f9;">
+                    <th>Molecule</th>
+                    <th>Target Class</th>
+                    <th style="text-align:center;">$\\%V_{{\\text{{bur}}}}$</th>
+                    <th style="text-align:center;">$\\Delta E_{{\\text{{dimer}}}}$</th>
+                    <th style="text-align:center;">$\\text{{BDE}}_{{\\min}}$</th>
+                    <th>Uniform Verdict (TMC-SA<sub>phys</sub> &le; 4.0) &amp; Physical Diagnosis</th>
+                  </tr>
+                </thead>
+                <tbody>
+{_step4_rows}
+                </tbody>
+              </table>
+            </div>"""
+
 phase1_phase2_tuning_joined = f"""
         <!-- 15.1 Summary Stat Cards -->
         <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:16px; margin-bottom:24px;">
           <div class="stat-card" style="border-left:4px solid #ef4444; padding:18px;">
             <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 1 Baseline Error (Data-Only)</div>
-            <div style="font-size:1.75rem; font-weight:800; color:#b91c1c; margin:6px 0;">FN {base_cmp['precursors_sascore_fn']} / FP 100.0%</div>
+            <div style="font-size:1.75rem; font-weight:800; color:#b91c1c; margin:6px 0;">FN {base_cmp['precursors_sascore_fn']} / FP {neg_cons_fp_pct:.1f}%</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              SAScore Precursor FNR <strong>{base_cmp['precursors_sascore_fn']}</strong> (3/27 Pass)<br>
+              SAScore Precursor FNR <strong>{base_cmp['precursors_sascore_fn']}</strong> ({base_cmp['precursors_sascore_pass']} Pass)<br>
               SCScore Negative FPR <strong>{base_cmp['negatives_scscore_fp']}</strong>, Consensus <strong>{base_cmp['negatives_consensus_fp']}</strong>
             </div>
           </div>
@@ -932,8 +1035,8 @@ phase1_phase2_tuning_joined = f"""
             <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 2 Uniform Screening (TMC-SA &le; 4.0)</div>
             <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:6px 0;">Precursor {prec_pct_chem:.1f}% ({prec_pass_chem}/{prec_cnt})</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              Label/ID-free Continuous Penalty (FNR 88.9% &rarr; <strong>{prec_fn_chem_pct:.1f}%</strong>)<br>
-              Inhibitor Pass Rate <strong>{inhib_pass_chem}/{inhib_cnt} ({inhib_pct_chem:.1f}%)</strong>, DIPAS·Co(AMD)2 2종 FN
+              Label/ID-free Continuous Penalty (FNR {base_cmp['precursors_sascore_fn']} &rarr; <strong>{prec_fn_chem_pct:.1f}%</strong>)<br>
+              Inhibitor Pass Rate <strong>{inhib_pass_chem}/{inhib_cnt} ({inhib_pct_chem:.1f}%)</strong>, {prec_failed_note}
             </div>
           </div>
 
@@ -942,7 +1045,7 @@ phase1_phase2_tuning_joined = f"""
             <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:6px 0;">{neg_tn_chem}/{neg_cnt} (Spec {100.0 - neg_fp_pct_chem:.1f}%)</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
               Physics Only TN <strong>{neg_tn_phys}/{neg_cnt}</strong> (FPR {neg_fp_pct_phys:.1f}%), +SMARTS TN <strong>{neg_tn_chem}/{neg_cnt}</strong> (FPR {neg_fp_pct_chem:.1f}%)<br>
-              WPh5·Cp2AlH·Cl2Si2H4 등 차단; Non-relaxed Single-Point 한계로 5종 FP 잔존
+              {neg_rejected_note} 차단; Ground-State 한계로 {neg_fp_chem}종 FP 잔존 ({', '.join(neg_missed_names) if neg_missed_names else '없음'})
             </div>
           </div>
 
@@ -968,29 +1071,29 @@ phase1_phase2_tuning_joined = f"""
 
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
             <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:6px; padding:14px;">
-              <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">Error Type 1: Precursor False Negative (88.9%)</div>
+              <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">Error Type 1: Precursor False Negative ({base_cmp['precursors_sascore_fn']})</div>
               <p style="font-size:0.84rem; color:#7f1d1d; line-height:1.55; margin:0;">
-                RDKit SAScore(&le; 3.5)는 27개 반도체 전구체 중 3개(TEOS 2.84, 4DMAS 3.37, Ru(EtCp)2 3.48)만 통과시키고 <strong>24개를 기각(FNR 88.9%)</strong>합니다. 주요 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 탈락하며, 이는 PubChem 의약 통계 내 Si-N, Al-C, Hf-N Fragment Frequency가 매우 낮기 때문입니다.
+                RDKit SAScore(&le; 3.5)는 27개 반도체 전구체 중 {len(prec_sa_passers)}개({prec_sa_pass_names})만 통과시키고 <strong>{prec_sa_fn_cnt}개를 기각(FNR {base_cmp['precursors_sascore_fn']})</strong>합니다. 주요 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 탈락하며, 이는 PubChem 의약 통계 내 Si-N, Al-C, Hf-N Fragment Frequency가 매우 낮기 때문입니다.
               </p>
             </div>
 
             <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:14px;">
-              <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">Error Type 2: Negative Control False Positive (Consensus 100.0%, SCScore 90.0%)</div>
+              <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">Error Type 2: Negative Control False Positive (Consensus {neg_cons_fp_pct:.1f}%, SCScore {base_cmp['negatives_scscore_fp']})</div>
               <p style="font-size:0.84rem; color:#78350f; line-height:1.55; margin:0;">
-                Reaxys/USPTO 기반 SCScore(&le; 2.0)와 RAscore(&ge; 0.5)는 열분해성 <code>Ti(Et)4</code>(SC {_tiet4.get('scscore', 1.65):.2f}, RA {_tiet4.get('rascore', 0.972):.3f}), 폭발성 <code>ZrMe4</code>(SC {_zrme4.get('scscore', 1.56):.2f}, RA {_zrme4.get('rascore', 0.956):.3f}), 부식성 <code>트리클로로아세트산</code>(SC {_tca.get('scscore', 1.01):.2f}, RA {_tca.get('rascore', 0.970):.3f}) 등 Negative Control 10종 중 SCScore 9종(90.0%) 및 Baseline Consensus <strong>10종 전원(100.0%)을 Pass로 판정</strong>합니다.
+                Reaxys/USPTO 기반 SCScore(&le; 2.0)와 RAscore(&ge; 0.5)는 열분해성 <code>Ti(Et)4</code>(SC {_tiet4.get('scscore', 1.65):.2f}, RA {_tiet4.get('rascore', 0.972):.3f}), 폭발성 <code>ZrMe4</code>(SC {_zrme4.get('scscore', 1.56):.2f}, RA {_zrme4.get('rascore', 0.956):.3f}), 부식성 <code>트리클로로아세트산</code>(SC {_tca.get('scscore', 1.01):.2f}, RA {_tca.get('rascore', 0.970):.3f}) 등 Negative Control 10종 중 SCScore {base_cmp['negatives_scscore_fp']} 및 Baseline Consensus <strong>{base_cmp['negatives_consensus_fp']}을 Pass로 판정</strong>합니다.
               </p>
             </div>
           </div>
         </div>
 
-        <!-- 15.3 Module 2: SevenNet Physical Feature Pipeline -->
+        <!-- 15.3 Module 2: SevenNet Physical Feature Pipeline (Upgraded Protocol) -->
         <div class="card" style="margin-bottom:24px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 Physical Features] SevenNet-0 + SambVca 기반 원자 스케일 물리 Descriptor</h3>
-            <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet-0 Single-Point + SambVca</span>
+            <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 Physical Features] SevenNet-0 LBFGS 이완 및 비중첩 이합체·분리 단편 BDE</h3>
+            <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet-0 LBFGS + SambVca (Fallback {fallback_cnt}/55)</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            범용 MLIP <strong>SevenNet (<code>7net-0</code>)</strong>과 <strong>Cavallo SambVca 구면 적분</strong>을 로컬에서 실행하여(55종 총 연산 시간 <strong>{comp_time:.1f} s</strong>) 3D 입체·에너지 Descriptor를 산출하였습니다. 본 실측은 RDKit ETKDGv3 기하 구조에 대한 <strong>비이완 Single-Point Energy 및 강체 반경 스캔</strong>이며, 분리된 다중 단편 SMILES 2종(<code>Ru(EtCp)2</code>, <code>CCTBA</code>)은 Fallback 값이 적용되었고 <code>&Delta;E<sub>complex</sub></code>는 Algebraic Proxy이므로 ML Feature Matrix에서 제외하였습니다.
+            구조 정합성 감사에서 확인된 <code>CCTBA</code>(<code>[Co](=O)(=O)=O</code> &rarr; hexacarbonyl <code>C12H10Co2O6</code>), <code>Ru(EtCp)2</code>(분리형 &rarr; 연결형 <code>C14H18Ru</code>), <code>CpZr</code>/<code>CpTi</code>(화학식 <code>H23</code> 정합), 및 <code>Cp2AlH</code> SMILES를 정정하여 Multi-Fragment 3D 중첩 NaN Fallback을 <strong>{fallback_cnt}/55종(전수 정상 계산)</strong>으로 제거하였습니다. 모든 55종 분자는 <strong>SevenNet (<code>7net-0</code>) ASE LBFGS 구조 이완</strong>(단량체 <code>fmax=0.04 eV/&Aring;</code>), 비중첩 주축 정렬 이합체 간격($\\Delta z_{{\\text{{shift}}}} = z_{{\\text{{span}}}} + 2.8\\,\\text{{\\AA}}$ 후 이합체 이완), 및 분리 단편 해리 BDE(비고리 결합 <code>E(ML_{{n-1}})+E(L)-E(ML_n)</code>; 고리 결합 <code>FixAtoms</code> 외환 이동 신장)로 재연산되었으며 총 실행 시간은 <strong>{comp_time:.1f} s</strong>입니다. (<code>&Delta;E<sub>complex</sub></code>는 Algebraic Proxy이므로 ML Feature Matrix에서 제외됨)
           </p>
 
           <div style="overflow-x:auto; margin-bottom:16px;">
@@ -999,31 +1102,31 @@ phase1_phase2_tuning_joined = f"""
                 <tr style="background:#f1f5f9;">
                   <th style="width:20%;">Physical Descriptor</th>
                   <th style="width:24%;">수학적 정의 및 계산 방식</th>
-                  <th style="width:22%;">Continuous Penalty 경계 ($C^\infty$ Fermi-Dirac Sigmoid)</th>
+                  <th style="width:22%;">Continuous Penalty 경계 ($C^\\infty$ Fermi-Dirac Sigmoid)</th>
                   <th>실측 범위 및 대표 사례</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>Descriptor 1: 결합 해리 (BDE) &amp; 응집 에너지 ($e_{{\\text{{coh}}}}$)</strong></td>
-                  <td>$$\\text{{BDE}}_{{\\min}} = [E(r_0 + 1.2\\,\\text{{\\AA}}) - E(r_0)] \\times 23.06$$<br>$$e_{{\\text{{coh}}}} = \\frac{{\\sum E_{{\\text{{iso}}}}(Z_i) - E}}{{N_{{\\text{{atoms}}}}}}$$</td>
+                  <td>$$\\text{{BDE}}_{{\\min}} = \\min_b [E_{{\\text{{rel}}}}(ML_{{n-1}}) + E_{{\\text{{rel}}}}(L) - E_{{\\text{{rel}}}}(ML_n)] \\times 23.06$$<br>$$e_{{\\text{{coh}}}} = \\frac{{\\sum E_{{\\text{{iso}}}}(Z_i) - E_{{\\text{{rel}}}}}}{{N_{{\\text{{atoms}}}}}}$$</td>
                   <td>열 해리 안정성: $\\text{{BDE}} &lt; 45\\text{{ kcal/mol}}$ 또는 $e_{{\\text{{coh}}}} &lt; 3.10\\text{{ eV/atom}}$ 부근에서 연속 상승</td>
-                  <td>정상 전구체: TEMAH BDE <strong>{_temah.get('bde_min_kcal_mol', 70.4):.1f}</strong>, TDMAT <strong>{_tdmat.get('bde_min_kcal_mol', 67.0):.1f} kcal/mol</strong><br>취약 사례: CoEt4 <strong>{_coet4.get('bde_min_kcal_mol', 42.9):.1f}</strong>, DIPAS <strong>37.9 kcal/mol</strong></td>
+                  <td>정상 전구체: TEMAH BDE <strong>{_temah.get('bde_min_kcal_mol', 0.0):.1f}</strong>, TDMAT <strong>{_tdmat.get('bde_min_kcal_mol', 0.0):.1f}</strong>, DIPAS <strong>{_dipas.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong><br>고리 변형/저안정: Silacyclobutadiene <strong>{_silcb.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CoEt4 <strong>{_coet4.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CCTBA <strong>{_cctba.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Descriptor 2: 3D 입체 매몰 부피 ($\\%V_{{\\text{{bur}}}}$)</strong></td>
                   <td>$$\\%V_{{\\text{{bur}}}} = \\frac{{V_{{\\text{{ligand}}}} \\cap V_{{\\text{{sphere}}}}(R=3.5\\,\\text{{\\AA}})}}{{V_{{\\text{{sphere}}}}}} \\times 100$$</td>
                   <td>과밀 충돌 Penalty 중심: $\\%V_{{\\text{{bur}}}} &gt; 83.5\\%$<br>과소배위 조건: $\\%V_{{\\text{{bur}}}} &lt; 44.0\\%$</td>
-                  <td>단량체 안정: TDMAT <strong>{_tdmat.get('vbur_percent', 73.6):.1f}%</strong>, TEMAH <strong>{_temah.get('vbur_percent', 78.0):.1f}%</strong><br>과밀 차단: WPh5 <strong>{_wph5.get('vbur_percent', 86.4):.1f}%</strong> (TMC-SA {_wph5.get('tmc_sa_phys', 4.32):.2f})</td>
+                  <td>LBFGS 이완 단량체: TDMAT <strong>{_tdmat.get('vbur_percent', 0.0):.1f}%</strong>, TEMAH <strong>{_temah.get('vbur_percent', 0.0):.1f}%</strong>, Ru(EtCp)2 <strong>{_ruetc.get('vbur_percent', 0.0):.1f}%</strong><br>고차폐 사례: WPh5 <strong>{_wph5.get('vbur_percent', 0.0):.1f}%</strong> (TMC-SA {_wph5.get('tmc_sa_phys', 0.0):.2f}), TBTDET <strong>{float(mol_by_id.get('PREC_MET_06', {}).get('vbur_percent', 0.0)):.1f}%</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Descriptor 3: 이합체화 에너지 ($\Delta E_{{\\text{{dimer}}}}$)</strong></td>
-                  <td>$$\\Delta E_{{\\text{{dimer}}}} = E(\\text{{Dimer}}) - 2E(\\text{{Monomer}})$$</td>
+                  <td><strong>Descriptor 3: 비중첩 이합체화 에너지 ($\\Delta E_{{\\text{{dimer}}}}$)</strong></td>
+                  <td>$$\\Delta E_{{\\text{{dimer}}}} = [E_{{\\text{{rel}}}}(\\text{{Dimer}}; \\Delta z \\ge z_{{\\text{{span}}}}+2.8\\text{{\\AA}}) - 2E_{{\\text{{rel}}}}(\\text{{Monomer}})] \\times 23.06$$</td>
                   <td>금속/Si 중심에서 $\\%V_{{\\text{{bur}}}} &lt; 44\\%$와 $\\Delta E_{{\\text{{dimer}}}} &lt; -1.5\\text{{ kcal/mol}}$ 동시 만족 시 상승</td>
-                  <td>비회합(양수): TDMAT <strong>{_tdmat.get('delta_e_dimer_kcal_mol', 82.9):+.1f}</strong>, TEMAH <strong>{_temah.get('delta_e_dimer_kcal_mol', 20.5):+.1f} kcal/mol</strong><br>음수 사례: TMA <strong>{_tma.get('delta_e_dimer_kcal_mol', -2.5):+.1f}</strong>, Ti(OH)4 <strong>{_tioh4.get('delta_e_dimer_kcal_mol', -0.5):+.1f} kcal/mol</strong> (Threshold 미달)</td>
+                  <td>초기 간격 $\\ge 2.8\\text{{\\AA}}$ 보장 (WPh5 gap <strong>{_wph5.get('dimer_init_gap_ang', 0.0):.2f} &Aring;</strong>, $\\Delta E_{{\\text{{dim}}}}$ <strong>{_wph5.get('delta_e_dimer_kcal_mol', 0.0):+.1f} kcal/mol</strong>)<br>주요 사례: TDMAT <strong>{_tdmat.get('delta_e_dimer_kcal_mol', 0.0):+.1f}</strong>, TMA <strong>{_tma.get('delta_e_dimer_kcal_mol', 0.0):+.1f}</strong>, Ti(OH)4 <strong>{_tioh4.get('delta_e_dimer_kcal_mol', 0.0):+.1f} kcal/mol</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Descriptor 4 (Proxy): 착물화 에너지 근사 ($\Delta E_{{\\text{{complex}}}}$)</strong></td>
+                  <td><strong>Descriptor 4 (Proxy): 착물화 에너지 근사 ($\\Delta E_{{\\text{{complex}}}}$)</strong></td>
                   <td>$$\\Delta E_{{\\text{{complex}}}}^{{\\text{{proxy}}}} = -25.0 + P_{{\\text{{steric}}}} + P_{{\\text{{dimer}}}} + P_{{\\text{{BDE}}}}$$</td>
                   <td>본 단계에서는 Algebraic Proxy로만 산출(실제 VASP/DFT 미수행); <strong>ML Feature Set에서 제외됨</strong></td>
                   <td>후속 단계에서 $M\\text{{Cl}}_m + m\\,\\text{{Li}}L$ 실제 양자화학 반응 에너지로 대체 필요</td>
@@ -1040,7 +1143,7 @@ phase1_phase2_tuning_joined = f"""
             <span class="badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;">Audited Un-Hardcoded Evaluation</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6; margin-bottom:14px;">
-            기존 비교 스크립트의 Target Label Branching, 개별 ID Hardcoding(NEG-001~010), 및 <code>BR-SAScore</code> 연산 예외(<code>TypeError</code>로 9.99 고정)를 수정·제거한 뒤 재실행한 정량 결과입니다.
+            SMILES 정정, LBFGS 이완·비중첩 이합체·분리 단편 BDE 재계산, Target Label Branching 제거, 개별 ID Hardcoding 제거, 및 <code>BR-SAScore</code> 연산 정상화를 모두 반영하여 재실행한 정량 결과입니다.
           </p>
 
           <div style="display:grid; grid-template-columns: 3fr 2fr; gap:18px; margin-bottom:20px;">
@@ -1058,7 +1161,7 @@ phase1_phase2_tuning_joined = f"""
                 <tbody>
                   <tr>
                     <td><strong>Accuracy / Specificity</strong></td>
-                    <td style="text-align:center;">Consensus Spec 0.000</td>
+                    <td style="text-align:center;">Consensus Spec {base_cmp.get('negatives_consensus_specificity', neg_cons_tn / neg_cnt):.3f}</td>
                     <td style="text-align:center; font-family:'JetBrains Mono';">{ana_phys['accuracy']:.3f} / <strong>{ana_phys['specificity']:.3f}</strong></td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; color:#0369a1;"><strong>{ana_chem['accuracy']:.3f} / {ana_chem['specificity']:.3f}</strong></td>
                   </tr>
@@ -1088,7 +1191,7 @@ phase1_phase2_tuning_joined = f"""
                   </tr>
                   <tr>
                     <td><strong>Negative Control Specificity (TN/10)</strong></td>
-                    <td style="text-align:center; color:#b91c1c;">0.0% (0/10, Cons)</td>
+                    <td style="text-align:center; color:#b91c1c;">{neg_cons_spec_pct:.1f}% ({neg_cons_tn}/{neg_cnt}, Cons)</td>
                     <td style="text-align:center;">{100.0 - neg_fp_pct_phys:.1f}% ({neg_tn_phys}/{neg_cnt})</td>
                     <td style="text-align:center; font-weight:700; color:#0369a1;">{100.0 - neg_fp_pct_chem:.1f}% ({neg_tn_chem}/{neg_cnt})</td>
                   </tr>
@@ -1131,7 +1234,7 @@ phase1_phase2_tuning_joined = f"""
               </table>
             </div>
             <div style="margin-top:10px; background:#f8fafc; border-left:4px solid #64748b; padding:10px 14px; font-size:0.82rem; color:#334155; line-height:1.55;">
-              <strong>Validation Analysis:</strong> In-Sample에서 Random Forest는 <code>Accuracy 1.000</code>을 기록하나 Stratified 5-Fold CV 및 LOOCV에서 크게 하락하여($N=55$ Combined LOOCV Accuracy <code>{rf_comb_loo['accuracy']:.3f}</code>, Specificity <code>{rf_comb_loo['specificity']:.3f}</code> vs Base-Only LOOCV Accuracy <code>{rf_base_loo['accuracy']:.3f}</code>, Specificity <code>{rf_base_loo['specificity']:.3f}</code>) 소규모 Sample에서의 Overfitting이 확인됩니다. ETKDGv3 비이완 Single-Point <code>7net-0</code> Feature만으로는 <code>Ti(Et)4</code>(&beta;-H 제거)나 <code>ZrMe4</code>(열폭발) 같은 반응 속도론적·가수분해 장벽 결함을 직접 분별할 수 없습니다.
+              <strong>Validation Analysis:</strong> In-Sample에서 Random Forest는 <code>Accuracy 1.000</code>을 기록하나 Stratified 5-Fold CV 및 LOOCV에서 하락하여($N=55$ Combined LOOCV Accuracy <code>{rf_comb_loo['accuracy']:.3f}</code>, Specificity <code>{rf_comb_loo['specificity']:.3f}</code> vs Base-Only LOOCV Accuracy <code>{rf_base_loo['accuracy']:.3f}</code>, Specificity <code>{rf_base_loo['specificity']:.3f}</code>) 소규모 Sample에서의 Overfitting이 확인됩니다. 다만 LBFGS 이완·비중첩 이합체·분리 단편 BDE 적용 후 Combined LOOCV AUROC는 <strong><code>{rf_comb_loo['auroc']:.3f}</code></strong>로 Base-Only(<code>{rf_base_loo['auroc']:.3f}</code>)를 상회하며, Ground-State <code>7net-0</code> Feature만으로는 <code>Ti(Et)4</code>(&beta;-H 제거)나 <code>ZrMe4</code>(열폭발) 같은 활성화 장벽($\\Delta G^\\ddagger$) 의존 반응 속도론적 결함을 직접 분별할 수 없으므로 원소군별 Guardrail로 병행 운용합니다(<code>tests/test_benchmark_reproducibility.py</code> 12건 단위 테스트로 Phase 1·SevenNet·LOOCV 결정론적 재현성 검증 완료).
             </div>
           </div>
         </div>
@@ -1142,7 +1245,7 @@ phase1_phase2_tuning_joined = f"""
             <div>
               <h3 class="card-title" style="margin-bottom:2px;">4. [Benchmark Datasheet] 55종 분자 전수 실측 테이블 (Interactive Benchmark Table)</h3>
               <p style="color:var(--text-secondary); font-size:0.84rem; margin:0;">
-                양산 전구체 27종, AS-ALD 인히비터 18종, Negative Control 10종에 대한 Phase 1(수정 산출 BR-SAScore 포함) vs Phase 2(Uniform Physics + SMARTS Screening) 결과입니다.
+                양산 전구체 27종, AS-ALD 인히비터 18종, Negative Control 10종에 대한 Phase 1(정정 SMILES &amp; BR-SAScore 포함) vs Phase 2(Relaxed LBFGS Physics + SMARTS Screening) 결과입니다.
               </p>
             </div>
             <div style="display:flex; gap:8px; align-items:center;">
@@ -1193,6 +1296,8 @@ final_html = final_html.replace("<!-- BB_DB_ROWS_PLACEHOLDER -->", bb_db_joined)
 final_html = final_html.replace("<!-- RXN_DB_ROWS_PLACEHOLDER -->", rxn_db_joined)
 final_html = final_html.replace("<!-- EXPANDED_PREC_DB_ROWS_PLACEHOLDER -->", expanded_prec_db_joined)
 final_html = final_html.replace("<!-- INHIBITOR_DB_ROWS_PLACEHOLDER -->", inhibitor_db_joined)
+final_html = final_html.replace("<!-- PHASE2_BANNER_METRICS -->", phase2_banner_metrics)
+final_html = final_html.replace("<!-- PHASE2_STEP4_SUMMARY_PLACEHOLDER -->", phase2_step4_summary_joined)
 final_html = final_html.replace("<!-- PHASE1_PHASE2_TUNING_PLACEHOLDER -->", phase1_phase2_tuning_joined)
 
 with open("index.html", "w", encoding="utf-8") as f:

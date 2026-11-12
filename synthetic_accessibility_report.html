@@ -1328,7 +1328,7 @@
             반도체 전구체 Synthetic Accessibility (SA) 평가와 물리 Descriptor 결합 분석 요약
           </h2>
           <p style="font-size:0.95rem; color:#334155; line-height:1.65; margin:0 0 16px 0;">
-            기존 제약(Drug Discovery) 중심의 SA Model(SAScore, SCScore 등)은 도메인 불일치로 인해 반도체 양산 전구체의 88.9%를 False Negative로 기각하고 Negative Control의 최대 100.0%(Baseline Consensus 기준)를 False Positive로 통과시킵니다. 본 리포트는 이 Dual-Error Misclassification 메커니즘을 실증 규명하고, <strong>SevenNet-0</strong> 기반 원자 스케일 물리 Descriptor 및 SMARTS 규칙을 결합한 Label/ID-Free 균일 평가 결과(Precursor Pass Rate 92.6% [25/27], Negative Control Specificity 50.0% [5/10])와 ML Cross-Validation (All-Sample vs Stratified 5-Fold CV vs LOOCV) 일반화 한계를 정리합니다.
+            기존 제약(Drug Discovery) 중심의 SA Model(SAScore, SCScore 등)은 도메인 불일치로 인해 반도체 양산 전구체의 92.6%를 False Negative로 기각하고 Negative Control의 90.0%(Baseline Consensus 기준)를 False Positive로 통과시킵니다. 본 리포트는 이 Dual-Error Misclassification 메커니즘을 실증 규명하고, <strong>SevenNet-0</strong> LBFGS 구조 이완·비중첩 이합체·단편 해리 BDE 및 SMARTS 규칙을 결합한 Label/ID-Free 균일 평가 결과(Precursor Pass Rate 81.5% [22/27], Negative Control Specificity 60.0% [6/10])와 ML Cross-Validation (All-Sample vs Stratified 5-Fold CV vs LOOCV) 일반화 한계를 정리합니다.
           </p>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. Evaluation Metrics &amp; Confusion Matrix &darr;</a>
@@ -1359,7 +1359,7 @@
               <span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">Classification Metrics Specification</span>
             </div>
             <p style="font-size:0.88rem; color:#475569; line-height:1.65; margin-bottom:14px;">
-              통계학 및 ML 분류 지표(Positive/Negative, True/False)가 <strong>반도체 전구체 및 억제제 합성 평가에서 지니는 물리적 의미</strong>는 일반 의약학 분류와 구별됩니다. 제약 DB(PubChem/ChEMBL) 기반 Baseline Model의 도메인 불일치는 Precursor False Negative Rate (FNR) 88.9%와 Negative Control False Positive Rate (FPR) 100.0%(Baseline Consensus)로 나타나며, 각 Misclassification 유형의 공정 영향은 다음과 같습니다.
+              통계학 및 ML 분류 지표(Positive/Negative, True/False)가 <strong>반도체 전구체 및 억제제 합성 평가에서 지니는 물리적 의미</strong>는 일반 의약학 분류와 구별됩니다. 제약 DB(PubChem/ChEMBL) 기반 Baseline Model의 도메인 불일치는 Precursor False Negative Rate (FNR) 92.6%와 Negative Control False Positive Rate (FPR) 90.0%(Baseline Consensus)로 나타나며, 각 Misclassification 유형의 공정 영향은 다음과 같습니다.
             </p>
 
             <div style="overflow-x:auto; margin-bottom:14px;">
@@ -1386,7 +1386,7 @@
                       <span style="font-size:0.75rem; color:#7f1d1d;">폭발성·부식성 분자를 Pass로 Misclassification</span>
                     </td>
                     <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
-                      <strong style="color:#b91c1c;">[FP Risk]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우 진공 챔버 손상, 웨이퍼 오염, 부식성 부산물 발생 등 공정 안전 및 수율 저하 위험을 초래합니다. (Phase 1 Baseline Consensus: Negative Control <strong>FPR = 100.0%</strong>)
+                      <strong style="color:#b91c1c;">[FP Risk]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우 진공 챔버 손상, 웨이퍼 오염, 부식성 부산물 발생 등 공정 안전 및 수율 저하 위험을 초래합니다. (Phase 1 Baseline Consensus: Negative Control <strong>FPR = 90.0%</strong>)
                     </td>
                   </tr>
                   <tr>
@@ -1402,7 +1402,7 @@
                       <span style="font-size:0.75rem; color:#64748b;">위험·불량 분자를 Reject로 차단</span>
                     </td>
                     <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
-                      <strong style="color:#b45309;">[FN Risk]</strong> 글로벌 팹에서 대량 사용하는 TSA, TMA, TEMAH가 높은 복잡도 점수로 탈락하여 유효한 전구체 후보가 초기 Screening에서 배제됩니다. (Phase 1 RDKit SAScore: Precursor <strong>FNR = 88.9%</strong>, 24/27 기각)
+                      <strong style="color:#b45309;">[FN Risk]</strong> 글로벌 팹에서 대량 사용하는 TSA, TMA, TEMAH가 높은 복잡도 점수로 탈락하여 유효한 전구체 후보가 초기 Screening에서 배제됩니다. (Phase 1 RDKit SAScore: Precursor <strong>FNR = 92.6%</strong>, 25/27 기각)
                     </td>
                   </tr>
                 </tbody>
@@ -1455,7 +1455,7 @@
                     <td><strong style="color:#0284c7;">SAScore, SYBA</strong></td>
                     <td>Circular Fingerprint (Morgan/ECFP) 기반 Fragment Frequency Lookup + Ring/Chiral Penalty + Naive Bayes Log-Odds (SYBA)</td>
                     <td style="font-family:'JetBrains Mono';">&lt; 0.1 ms</td>
-                    <td><strong style="color:#b91c1c;">금속-리간드 결합 인식 한계</strong>: PubChem/ZINC DB 기반으로 Si-N, Al-C, Hf-N, Ti-N 배위를 희귀 구조로 기각 (FNR 88.9%)</td>
+                    <td><strong style="color:#b91c1c;">금속-리간드 결합 인식 한계</strong>: PubChem/ZINC DB 기반으로 Si-N, Al-C, Hf-N, Ti-N 배위를 희귀 구조로 기각 (FNR 92.6%)</td>
                   </tr>
                   <tr>
                     <td><strong>2G (Surrogate)</strong><br><span style="font-size:0.75rem; color:#64748b;">2018 ~ 2022</span></td>
@@ -1508,7 +1508,7 @@
                   <strong style="color:#6d28d9; font-size:0.95rem;">반응 단계 수 및 Complexity 서열화 &rarr; SCScore (2G)</strong>
                   <div style="font-size:0.8rem; color:#334155; margin-top:8px; line-height:1.55;">
                     &bull; <strong>적용 대상</strong>: 상용 시약 대비 합성 단계 수 기반 상대적 Complexity 비교.<br>
-                    &bull; <strong>운용 조건</strong>: Precursor Pass Rate는 85.2%이나 ZrMe4(1.56) 등 Negative Control도 통과하므로 열역학 안정성 필터 병행이 필요함.
+                    &bull; <strong>운용 조건</strong>: Precursor Pass Rate는 77.8%이나 ZrMe4(1.56) 등 Negative Control도 통과하므로 열역학 안정성 필터 병행이 필요함.
                   </div>
                 </div>
 
@@ -1556,7 +1556,7 @@ flowchart TD
         B2 -->|"Metals collapsed to ELSE token"| B3["DFRscore: Loss of Metal Identity"]
         B2 -->|"Metal projected as alkyl C"| B4["RAscore: 100 percent False Positive Bias"]
         B2 -->|"Lipinski Ro5 + Subword Split"| B5["DeepSA: Medicinal Domain Bias"]
-        B2 -->|"No metal-Cp fragments in ZINC"| B6["SYBA: Metallocene Negative Collapse (-44.27)"]
+        B2 -->|"No metal-Cp fragments in ZINC"| B6["SYBA: Metallocene Negative Collapse (-24.98)"]
         B2 -->|"Valid Embedding / Decomposition"| C1["Proceed to Stage 3 (Generative / Dictionary)"]
     end
 
@@ -1573,8 +1573,8 @@ flowchart TD
 
     subgraph STAGE4 ["Stage 4: Physical Synthesizability Output"]
         D1 --> D2["2-Track TMC-SA + Physics: Un-hardcoded Screening"]
-        C8 --> D3["SAScore: 3/27 Pass (11.1 percent) False Negative Bias"]
-        B2 --> D4["SCScore: 23/27 Pass (85.2 percent) Hazard Blindness"]
+        C8 --> D3["SAScore: 2/27 Pass (7.4 percent) False Negative Bias"]
+        B2 --> D4["SCScore: 21/27 Pass (77.8 percent) Hazard Blindness"]
     end
 
     classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
@@ -1606,23 +1606,23 @@ flowchart TD
                 <tbody>
                   <tr>
                     <td><strong>RDKit SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(1G Heuristic)</span></td>
-                    <td style="text-align:center; color:#b91c1c; font-weight:700;">11.1%<br><span style="font-size:0.72rem;">(3/27 Pass)</span></td>
-                    <td>비교적 단순한 규소 알콕사이드(<code>TEOS</code>: 2.84, <code>4DMAS</code>: 3.37) 및 샌드위치 착물(<code>Ru(EtCp)2</code>: 3.48) <strong>3종만 통과</strong></td>
-                    <td><code>TSA</code>(6.91), <code>DMAH</code>(6.31), <code>TMA</code>(4.81), <code>TEMAH</code>(4.10) 등 <strong>전구체 88.9%를 False Negative 기각</strong></td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">7.4%<br><span style="font-size:0.72rem;">(2/27 Pass)</span></td>
+                    <td>유기 에테르·아민 유사 규소 착물(<code>TEOS</code>: 2.84, <code>4DMAS</code>: 3.37) <strong>2종만 통과</strong> (연결형 <code>Ru(EtCp)2</code>: 4.70)</td>
+                    <td><code>TSA</code>(6.91), <code>DMAH</code>(6.31), <code>TMA</code>(4.81), <code>TEMAH</code>(4.10) 등 <strong>전구체 92.6%를 False Negative 기각</strong></td>
                     <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (전구체 단독)</span><br><span style="font-size:0.75rem; color:#475569;">의약용 Fragment Frequency 사전 한계로 완제품 평가 불가.</span></td>
                   </tr>
                   <tr>
                     <td><strong>Reaxys SCScore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2G Reaction DNN)</span></td>
-                    <td style="text-align:center; color:#059669; font-weight:700;">85.2%<br><span style="font-size:0.72rem;">(23/27 Pass)</span></td>
-                    <td>Reaxys 반응 쌍 학습 기반으로 <strong>양산 전구체 23종을 1.01~1.94로 통과</strong></td>
+                    <td style="text-align:center; color:#059669; font-weight:700;">77.8%<br><span style="font-size:0.72rem;">(21/27 Pass)</span></td>
+                    <td>Reaxys 반응 쌍 학습 기반으로 <strong>양산 전구체 21종을 1.01~1.89로 통과</strong></td>
                     <td>결합 에너지(BDE) 미반영으로 <strong>폭발성 <code>ZrMe4</code>(1.56), 열분해성 <code>TiEt4</code>(1.65)를 Pass 판정 (FPR 90.0%)</strong></td>
                     <td><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d;">조건부 적합 (보조 Descriptor)</span><br><span style="font-size:0.75rem; color:#475569;">합성 복잡도 서열화에 유효하나 열역학 안전성 필터 병행 필요.</span></td>
                   </tr>
                   <tr>
                     <td><strong>RAscore</strong><br><span style="font-size:0.72rem; color:#64748b;">(2G MCTS Distillation)</span></td>
                     <td style="text-align:center; color:#475569; font-weight:700;">100.0%<br><span style="font-size:0.72rem;">(27/27 Pass)</span></td>
-                    <td>27종 전구체 전원을 Mean 0.925 (0.629 ~ 0.988)로 통과</td>
-                    <td>Negative Control 10종 전원 통과 (<strong>FPR 100.0%</strong>)로 안전성 변별력 상실</td>
+                    <td>27종 전구체 전원을 Mean 0.908 (0.602 ~ 0.988)로 통과</td>
+                    <td>Negative Control 9/10 통과 (<strong>FPR 90.0%</strong>; <code>Cp2AlH</code> 보정 후 0.458만 제외)로 안전성 변별력 상실</td>
                     <td><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">부적합 (변별력 상실)</span><br><span style="font-size:0.75rem; color:#475569;">유기 치환기 편향으로 위험 분자 필터링 기능 부재.</span></td>
                   </tr>
                   <tr>
@@ -1686,19 +1686,19 @@ flowchart TD
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
               <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:6px; padding:14px;">
                 <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">
-                  Error 1: Precursor False Negative Rate (FNR 88.9%)
+                  Error 1: Precursor False Negative Rate (FNR 92.6%)
                 </div>
                 <p style="font-size:0.84rem; color:#7f1d1d; line-height:1.55; margin:0;">
-                  주요 팹 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 Threshold(SA &le; 3.5)를 초과하여 Reject 판정을 받았습니다. 27종 전구체 중 3종만 통과하고 <strong>24종(88.9%)에서 FN이 발생</strong>했습니다.
+                  주요 팹 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 Threshold(SA &le; 3.5)를 초과하여 Reject 판정을 받았습니다. 27종 전구체 중 2종(<code>TEOS</code>, <code>4DMAS</code>)만 통과하고 <strong>25종(92.6%)에서 FN이 발생</strong>했습니다.
                 </p>
               </div>
 
               <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:14px;">
                 <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">
-                  Error 2: Negative Control False Positive Rate (Consensus FPR 100.0%)
+                  Error 2: Negative Control False Positive Rate (Consensus FPR 90.0%)
                 </div>
                 <p style="font-size:0.84rem; color:#78350f; line-height:1.55; margin:0;">
-                  열폭발성 <code>ZrMe4</code>(SC 1.56, RA 0.956), 열분해성 <code>Ti(Et)4</code>(SC 1.65, RA 0.972), 부식성 <code>트리클로로아세트산</code>(SC 1.01, RA 0.970) 등 Negative Control 10종 중 SCScore 9종(90.0%) 및 Baseline Consensus <strong>10종 전원(100.0%)이 Pass로 Misclassification</strong>되었습니다.
+                  열폭발성 <code>ZrMe4</code>(SC 1.56, RA 0.956), 열분해성 <code>Ti(Et)4</code>(SC 1.65, RA 0.972), 부식성 <code>트리클로로아세트산</code>(SC 1.01, RA 0.970) 등 Negative Control 10종 중 SCScore 9종(90.0%) 및 Baseline Consensus <strong>9종(90.0%)이 Pass로 Misclassification</strong>되었습니다(<code>Cp2AlH</code> 정정 후 1종만 차단).
                 </p>
               </div>
             </div>
@@ -1707,7 +1707,7 @@ flowchart TD
               2. SevenNet-0 기반 물리 Descriptor 결합 및 감사 프로토콜
             </div>
             <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:14px;">
-              분자 자체의 열적 안정성과 입체 보호도를 반영하기 위해 <code>7net-0</code> 비이완 Single-Point Energy 및 반경 스캔(Pillar 1, 3)과 SambVca 3D 매몰 부피(Pillar 2)를 결합하였습니다. Pillar 4($\Delta E_{\text{complex}}$)는 Algebraic Proxy로만 산출되어 ML Cross-Validation Feature Set에서는 제외하였습니다.
+              분자 자체의 열적 안정성과 입체 보호도를 반영하기 위해 <code>7net-0</code> <strong>LBFGS 구조 이완</strong> 기반 응집 에너지·분리 단편 해리 BDE(Pillar 1), 이완 기하 구조 상 SambVca 3D 매몰 부피(Pillar 2), 및 비중첩 간격($\Delta z_{\text{shift}} = z_{\text{span}} + 2.8\,\text{\AA}$) 이합체 이완 에너지(Pillar 3)를 결합하였습니다. Pillar 4($\Delta E_{\text{complex}}$)는 Algebraic Proxy로만 산출되어 ML Cross-Validation Feature Set에서는 제외하였습니다.
             </p>
 
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:16px;">
@@ -1764,28 +1764,29 @@ flowchart TD
           </div>
 
           <div class="card" style="margin-bottom:24px; padding:20px;">
+
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-bottom:20px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (FNR)</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#059669; margin:4px 0;">88.9% &rarr; 7.4%</div>
-                <div style="font-size:0.8rem; color:#475569;">Precursor 25/27 Pass (92.6%), Inhibitor 18/18 Pass (100.0%)</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#059669; margin:4px 0;">92.6% &rarr; 18.5%</div>
+                <div style="font-size:0.8rem; color:#475569;">Precursor 22/27 Pass (81.5%), Inhibitor 16/18 Pass (88.9%)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #6366f1; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Negative Control FPR (Un-Hardcoded)</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#4338ca; margin:4px 0;">100.0% &rarr; 50.0%</div>
-                <div style="font-size:0.8rem; color:#475569;">Physics Only TN 3/10 &rarr; +SMARTS TN 5/10 (5종 FP 잔존)</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#4338ca; margin:4px 0;">90.0% &rarr; 40.0%</div>
+                <div style="font-size:0.8rem; color:#475569;">Physics Only TN 4/10 &rarr; +SMARTS TN 6/10 (4종 FP 잔존)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Random Forest Validation: All-Sample vs LOOCV</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#0369a1; margin:4px 0;">1.000 &rarr; 0.782</div>
-                <div style="font-size:0.8rem; color:#475569;">Combined LOOCV Accuracy 0.782 (Specificity 0.100) vs Base-Only 0.873</div>
+                <div style="font-size:1.8rem; font-weight:800; color:#0369a1; margin:4px 0;">1.000 &rarr; 0.836</div>
+                <div style="font-size:0.8rem; color:#475569;">Combined LOOCV Accuracy 0.836 (Specificity 0.200) vs Base-Only 0.855</div>
               </div>
             </div>
 
             <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:10px;">
-              대표 분자별 SevenNet-0 실측치 및 Uniform Screening 판정 (Single-Point, 1290.8s 실행 기준)
+              대표 분자별 SevenNet-0 LBFGS 이완 실측치 및 Uniform Screening 판정 (2534.7s 실행, Fallback 0/55종)
             </div>
             <div style="overflow-x:auto; margin-bottom:20px;">
               <table class="report-table" style="font-size:0.84rem;">
@@ -1800,53 +1801,77 @@ flowchart TD
                   </tr>
                 </thead>
                 <tbody>
+
                   <tr>
                     <td><strong>TDMAT</strong></td>
                     <td><span class="badge badge-prec">Precursor</span></td>
-                    <td style="text-align:center; font-weight:700; color:#047857;">73.6%</td>
-                    <td style="text-align:center; font-weight:700; color:#047857;">+82.9 kcal/mol</td>
-                    <td style="text-align:center;">67.0 kcal/mol</td>
-                    <td><span class="badge badge-success">TP (1.02)</span> 충분한 입체 차폐 및 BDE로 단량체 구간 충족</td>
+                    <td style="text-align:center; font-weight:700;">69.8%</td>
+                    <td style="text-align:center; font-weight:700;">-3.1 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">65.9 kcal/mol</td>
+                    <td><span class="badge badge-success">TP (1.02)</span> SevenNet-0 LBFGS 이완 후 단량체 입체 차폐 및 BDE 창 충족</td>
                   </tr>
+
                   <tr>
-                    <td><strong>TEMAH</strong></td>
+                    <td><strong>DIPAS</strong></td>
                     <td><span class="badge badge-prec">Precursor</span></td>
-                    <td style="text-align:center; font-weight:700; color:#047857;">78.0%</td>
-                    <td style="text-align:center; font-weight:700; color:#047857;">+20.5 kcal/mol</td>
-                    <td style="text-align:center;">70.4 kcal/mol</td>
-                    <td><span class="badge badge-success">TP (2.33)</span> 적정 입체 창(60~82%) 및 열적 결합 안정성 확인</td>
+                    <td style="text-align:center; font-weight:700;">41.2%</td>
+                    <td style="text-align:center; font-weight:700;">-8.0 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">55.5 kcal/mol</td>
+                    <td><span class="badge badge-warning">FN (4.97)</span> 분리 단편 BDE(55.5 kcal/mol)로 단일 원자 충돌 저평가 해소; Si-H %V_bur < 44% 일괄 Penalty로 FN</td>
                   </tr>
+
                   <tr>
-                    <td><strong>TMA (AlMe3)</strong></td>
+                    <td><strong>TMA</strong></td>
                     <td><span class="badge badge-prec">Precursor</span></td>
-                    <td style="text-align:center; font-weight:700; color:#b45309;">41.7%</td>
-                    <td style="text-align:center; font-weight:700; color:#b91c1c;">-2.5 kcal/mol</td>
-                    <td style="text-align:center;">87.9 kcal/mol</td>
-                    <td><span class="badge badge-warning">TP (2.95)</span> 이합체화 Penalty(+1.92) 부과되나 Ligand SA(1.00)가 낮아 4.0 이하 통과</td>
+                    <td style="text-align:center; font-weight:700;">41.9%</td>
+                    <td style="text-align:center; font-weight:700;">-1.2 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">70.6 kcal/mol</td>
+                    <td><span class="badge badge-success">TP (2.13)</span> 과소배위(%V_bur 41.9%) 조건에서의 이합체화 경향 및 낮은 Ligand SA 반영</td>
                   </tr>
+
                   <tr>
-                    <td><strong>Ti(OH)4 (Sol)</strong></td>
+                    <td><strong>Ru(EtCp)2</strong></td>
+                    <td><span class="badge badge-prec">Precursor</span></td>
+                    <td style="text-align:center; font-weight:700;">36.9%</td>
+                    <td style="text-align:center; font-weight:700;">-3.2 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">95.8 kcal/mol</td>
+                    <td><span class="badge badge-warning">FN (6.03)</span> 연결형 SMILES 보정으로 NaN Fallback 제거 및 LBFGS 이완(%V_bur 36.9% 일괄 Penalty로 FN)</td>
+                  </tr>
+
+                  <tr>
+                    <td><strong>CCTBA</strong></td>
+                    <td><span class="badge badge-prec">Precursor</span></td>
+                    <td style="text-align:center; font-weight:700;">65.2%</td>
+                    <td style="text-align:center; font-weight:700;">-3.5 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">11.1 kcal/mol</td>
+                    <td><span class="badge badge-warning">FN (5.49)</span> Co2(CO)6 카보닐 배위 정정(C12H10Co2O6); Co-CO 해리 반영 (T_decomp 160 C)</td>
+                  </tr>
+
+                  <tr>
+                    <td><strong>Silacyclobutadiene</strong></td>
                     <td><span class="badge badge-4g">Negative Control</span></td>
-                    <td style="text-align:center; font-weight:700; color:#b45309;">37.7%</td>
-                    <td style="text-align:center; font-weight:700; color:#b45309;">-0.5 kcal/mol</td>
-                    <td style="text-align:center;">104.7 kcal/mol</td>
-                    <td><span class="badge badge-4g">FP (1.90)</span> 비이완 Single-Point $\Delta E_{\text{dimer}}$(-0.5)가 Threshold(-1.5) 미달로 미차단(축합 장벽 별도 계산 필요)</td>
+                    <td style="text-align:center; font-weight:700;">31.9%</td>
+                    <td style="text-align:center; font-weight:700;">-0.5 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">15.5 kcal/mol</td>
+                    <td><span class="badge badge-success">TN (5.43)</span> 이완 고리 신장 BDE 15.5 kcal/mol 산출로 반방향족 고리 변형 TN 차단</td>
                   </tr>
+
                   <tr>
                     <td><strong>WPh5</strong></td>
                     <td><span class="badge badge-4g">Negative Control</span></td>
-                    <td style="text-align:center; font-weight:700; color:#b91c1c;">86.4%</td>
-                    <td style="text-align:center;">+616.0 kcal/mol</td>
-                    <td style="text-align:center;">117.0 kcal/mol</td>
-                    <td><span class="badge badge-success">TN (4.32)</span> 높은 입체 과밀($\%V_{\text{bur}}$ 86.4% &gt; 83.5%) Smooth Penalty(+3.32)로 정상 차단</td>
+                    <td style="text-align:center; font-weight:700;">79.1%</td>
+                    <td style="text-align:center; font-weight:700;">+0.0 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">53.9 kcal/mol</td>
+                    <td><span class="badge badge-4g">FP (1.08)</span> 비중첩 간격(4.18 A) 적용으로 이합체 충돌 해소; LBFGS 이완 후 %V_bur 79.1%로 Threshold 미만(FP)</td>
                   </tr>
+
                   <tr>
                     <td><strong>CoEt4</strong></td>
                     <td><span class="badge badge-4g">Negative Control</span></td>
-                    <td style="text-align:center;">66.2%</td>
-                    <td style="text-align:center;">+23.6 kcal/mol</td>
-                    <td style="text-align:center; font-weight:700; color:#b91c1c;">42.9 kcal/mol</td>
-                    <td><span class="badge badge-4g">FP (3.61)</span> 낮은 BDE(42.9 &lt; 45) Penalty(+2.60)는 부과되나 에틸 Ligand SA(1.01) 합산값이 4.0 이하로 통과</td>
+                    <td style="text-align:center; font-weight:700;">71.1%</td>
+                    <td style="text-align:center; font-weight:700;">-0.5 kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">35.3 kcal/mol</td>
+                    <td><span class="badge badge-success">TN (4.48)</span> 분리 단편 BDE 35.3 kcal/mol 및 Ligand SA 합산으로 TN 차단</td>
                   </tr>
                 </tbody>
               </table>
@@ -3062,7 +3087,7 @@ flowchart TD
         B2 -->|"Metals collapsed to ELSE token"| B3["DFRscore: Loss of Metal Identity"]
         B2 -->|"Metal projected as alkyl C"| B4["RAscore: 100 percent False Positive Bias"]
         B2 -->|"Lipinski Ro5 + Subword Split"| B5["DeepSA: Medicinal Domain Bias"]
-        B2 -->|"No metal-Cp fragments in ZINC"| B6["SYBA: Metallocene Negative Collapse (-44.27)"]
+        B2 -->|"No metal-Cp fragments in ZINC"| B6["SYBA: Metallocene Negative Collapse (-24.98)"]
         B2 -->|"Valid Embedding / Decomposition"| C1["Proceed to Stage 3 (Generative / Dictionary)"]
     end
 
@@ -3079,8 +3104,8 @@ flowchart TD
 
     subgraph STAGE4 ["Stage 4: Physical Synthesizability Output"]
         D1 --> D2["2-Track TMC-SA + Physics: Un-hardcoded Screening"]
-        C8 --> D3["SAScore: 3/27 Pass (11.1 percent) False Negative Bias"]
-        B2 --> D4["SCScore: 23/27 Pass (85.2 percent) Hazard Blindness"]
+        C8 --> D3["SAScore: 2/27 Pass (7.4 percent) False Negative Bias"]
+        B2 --> D4["SCScore: 21/27 Pass (77.8 percent) Hazard Blindness"]
     end
 
     classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
@@ -3135,10 +3160,10 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% Morgan(r=2)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (Statistical Lookup)</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">11.1% (3/27) [FN 88.9%]</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">7.4% (2/27) [FN 92.6%]</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
                 <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 — Fragment Frequency Bias & Ring Penalty]</strong>
-                <span style="color:#475569;">PubChem 의약 DB 기반 Fragment Frequency 사전에 Si-N, Al-C, M-N 결합이 부재하여 1단계 양산 전구체 TSA(6.91), DMAH(6.31), TMA(4.81) 등 24종(88.9%)에서 False Negative 발생. 에테르/아민 유사 구조 3종(TEOS 2.84, 4DMAS 3.37, Ru(EtCp)2 3.48)만 통과.</span>
+                <span style="color:#475569;">PubChem 의약 DB 기반 Fragment Frequency 사전에 Si-N, Al-C, M-N 결합이 부재하여 1단계 양산 전구체 TSA(6.91), DMAH(6.31), TMA(4.81) 등 25종(92.6%)에서 False Negative 발생. 에테르/아민 유사 구조 2종(TEOS 2.84, 4DMAS 3.37)만 통과.</span>
               </td>
             </tr>
 
@@ -3158,7 +3183,7 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700; font-size:0.78rem;">85.2% (23/27) [Cp Collapse]</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
                 <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2·4 — ZINC Fragment Bias & Metallocene Collapse]</strong>
-                <span style="color:#475569;">비환식 알킬아민·알콕사이드 전구체 23종(+3.96~+11.98)은 양수로 분류되나, ZINC 라이브러리(syba.csv.gz) 내 금속-Cp 단편 부재로 Ru(EtCp)2(-44.27), CpTi(NMe2)3(-24.98), Cp(NMe2)3Zr(-24.98), ZMA(-18.21) 4종이 큰 음수로 산출됨.</span>
+                <span style="color:#475569;">비환식 알킬아민·알콕사이드 전구체 23종(+2.28~+11.98)은 양수로 분류되나, ZINC 라이브러리(syba.csv.gz) 내 금속-Cp 단편 부재로 CpTi(NMe2)3(-24.98), Cp(NMe2)3Zr(-24.98), ZMA(-18.21), Ru(EtCp)2(-17.31) 4종이 큰 음수로 산출됨.</span>
               </td>
             </tr>
 
@@ -3175,10 +3200,10 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100.0% (27/27)</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border-color:#86efac; font-size:0.75rem;">100% 1024-bit Morgan</span></td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-size:0.75rem;">N/A (12-Layer Ranking DNN)</span></td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700; font-size:0.78rem;">85.2% (23/27) [Hazard Blind]</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700; font-size:0.78rem;">77.8% (21/27) [Hazard Blind]</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
                 <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 4 — Reaxys Early-Stage Reactant Bias]</strong>
-                <span style="color:#475569;">Reaxys 1,200만 반응쌍(full_reaxys_model_1024bool)에서 유기금속이 출발 시약으로 등록된 편향으로 23종이 1.01~1.94로 산출됨. ZMA(2.72)·Co(AMD)2(2.38)의 입체 복잡도는 일부 반영하나 TMA(1.21)·DMAH(1.01)의 자연발화성 및 열분해 위험성은 변별하지 못함.</span>
+                <span style="color:#475569;">Reaxys 1,200만 반응쌍(full_reaxys_model_1024bool)에서 유기금속이 출발 시약으로 등록된 편향으로 21종이 1.01~1.89로 산출됨. ZMA(2.72)·Co(AMD)2(2.38)·CCTBA(2.32)·Ru(EtCp)2(2.27)의 복잡도는 구분하나 TMA(1.21)·DMAH(1.01)의 자연발화성 및 열분해 위험성은 변별하지 못함.</span>
               </td>
             </tr>
 
@@ -3198,7 +3223,7 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700; font-size:0.78rem;">0.0% Valid (100% FP)</span></td>
               <td style="font-size:0.8rem; line-height:1.45; min-width:320px;">
                 <strong style="color:#b91c1c; display:block; margin-bottom:2px;">[Stage 2 — ECFP6 Alkyl Bias & Metal Instability Blindness]</strong>
-                <span style="color:#475569;">2048-bit ECFP6 Count Vector가 디메틸아미노·이소프로필 등 유기 치환기 비트에 편향되어 중심금속 배위 안정성을 인지하지 못함. 전수 Mean 0.925(0.629~0.988, 23종 ≥0.90)로 통과하여 불안정 분자를 걸러내지 못하는 100% False Positive 발생.</span>
+                <span style="color:#475569;">2048-bit ECFP6 Count Vector가 디메틸아미노·이소프로필 등 유기 치환기 비트에 편향되어 중심금속 배위 안정성을 인지하지 못함. 전수 Mean 0.908(0.602~0.988, 22종 ≥0.90)로 통과하여 불안정 분자를 걸러내지 못하는 100% False Positive 발생.</span>
               </td>
             </tr>
 
@@ -3427,7 +3452,7 @@ flowchart TD
 
           <div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #7c3aed; border-radius:6px; padding:12px 16px; font-size:0.84rem; line-height:1.6; color:#334155;">
             <strong style="color:#5b21b6;">Methodological Audit &mdash; BR-SAScore Sensitivity Analysis &amp; Circular Data Leakage:</strong><br>
-            &bull; <strong>Strict Reagent Dictionary (<code>max(existing, -0.47)</code>):</strong> `BRSAScore`의 radius-2 음수 fragment 평균(<code>fscore &lt; 0</code>) 수식에 정합시켜 시약 단편 하한을 $-0.47$로 보정 시 점수 악화 0종(예: <code>CpZr</code> $7.20 \to 6.95$, <code>Ru(EtCp)2</code> $4.18 \to 3.99$; $0.0$ 덮어쓰기 시 4종 악화)을 유지하나 $\text{M-N/M-C}$ 배위 단편 부재($-6.0$)로 Pass Rate <strong>$11.1\% (3/27)$</strong>를 기록합니다.<br>
+            &bull; <strong>Strict Reagent Dictionary (<code>max(existing, -0.47)</code>):</strong> `BRSAScore`의 radius-2 음수 fragment 평균(<code>fscore &lt; 0</code>) 수식에 정합시켜 시약 단편 하한을 $-0.47$로 보정 시 점수 악화 0종(예: <code>CpZr</code> $7.20 \to 6.95$, <code>Co(AMD)2</code> $8.29 \to 7.91$; $0.0$ 덮어쓰기 시 3종 악화)을 유지하나 $\text{M-N/M-C}$ 배위 단편 부재($-6.0$)로 Pass Rate <strong>$11.1\% (3/27)$</strong>를 기록합니다.<br>
             &bull; <strong>Counterfactual Data Leakage Control:</strong> 타깃 전구체 생성물 자체를 $0.0$으로 사전 등록 시 <strong>$100.0\% (27/27)$</strong> 통과가 산출되나, 이는 Out-of-Sample 일반화가 불가능한 Circular Memorization 결과이므로 본 매트릭스에서 배제하고 Pro-ligand ($HL_i$) 분리형 2-Track 결합 전략을 적용합니다.
           </div>
         </div>
@@ -3445,24 +3470,24 @@ flowchart TD
           <!-- 8-Stat Cards Grid (2 rows x 4 cols) -->
           <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:16px;">
             <div class="stat-card" style="padding:12px 14px;">
-              <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">11.1% (3/27)</div>
-              <div class="stat-label"><strong>SAScore Pass Rate</strong><br>&bull; TEOS(2.84), 4DMAS(3.37), Ru(3.48)만 &le;3.5<br>&bull; TSA(6.91), DMAH(6.31) 무기/금속 감점 편향</div>
+              <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">7.4% (2/27)</div>
+              <div class="stat-label"><strong>SAScore Pass Rate</strong><br>&bull; TEOS(2.84), 4DMAS(3.37)만 &le;3.5 (Ru 4.70)<br>&bull; TSA(6.91), DMAH(6.31) 무기/금속 감점 편향</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
               <div class="stat-value" style="font-size:1.3rem; color:#d97706;">11.1% (3/27)</div>
-              <div class="stat-label"><strong>BR-SAScore (Default Dict)</strong><br>&bull; TSA(1.04), TMA(1.04), DMAH(1.02) Pass<br>&bull; 유기 사전 감점(-6.0)으로 24종 8~9점 산출</div>
+              <div class="stat-label"><strong>BR-SAScore (Default Dict)</strong><br>&bull; TSA(1.04), TMA(1.04), DMAH(1.02) Pass<br>&bull; 유기 사전 감점(-6.0)으로 24종 7~10점 산출</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
-              <div class="stat-value" style="font-size:1.3rem; color:#059669;">85.2% (23/27)</div>
-              <div class="stat-label"><strong>SCScore Pass Rate</strong><br>&bull; 23종 &le;2.0 (Early-Stage Reactant Bias)<br>&bull; ZMA(2.72), Co(AMD)2(2.38) 등 Cp/착체 점수 상승</div>
+              <div class="stat-value" style="font-size:1.3rem; color:#059669;">77.8% (21/27)</div>
+              <div class="stat-label"><strong>SCScore Pass Rate</strong><br>&bull; 21종 &le;2.0 (Early-Stage Reactant Bias)<br>&bull; ZMA(2.72), Co(AMD)2(2.38), CCTBA(2.32), Ru(2.27)</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
               <div class="stat-value" style="font-size:1.3rem; color:#7c3aed;">85.2% (23/27)</div>
-              <div class="stat-label"><strong>SYBA Pass Rate</strong><br>&bull; 23종 +3.96~+11.98 양수 판정<br>&bull; Ru(EtCp)2(-44.27), CpTi(-24.98) Cp Collapse</div>
+              <div class="stat-label"><strong>SYBA Pass Rate</strong><br>&bull; 23종 +2.28~+11.98 양수 판정<br>&bull; CpTi/CpZr(-24.98), ZMA(-18.21), Ru(-17.31) Collapse</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
               <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">0.0% Valid (100% FP)</div>
-              <div class="stat-label"><strong>RAscore Physical Validity</strong><br>&bull; Mean 0.925로 전수 Pass이나 중심금속 무시<br>&bull; ECFP6 Fingerprint 알킬 비트 편향 (100% FP)</div>
+              <div class="stat-label"><strong>RAscore Physical Validity</strong><br>&bull; Mean 0.908로 전수 Pass이나 중심금속 무시<br>&bull; ECFP6 Fingerprint 알킬 비트 편향 (100% FP)</div>
             </div>
             <div class="stat-card" style="padding:12px 14px;">
               <div class="stat-value" style="font-size:1.3rem; color:#b91c1c;">0.0% Core (33.3% Substruct)</div>
@@ -3779,7 +3804,7 @@ flowchart TD
                 <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_07</div>
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H24N3Zr</td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H23N3Zr</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.53</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.22</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
@@ -3836,7 +3861,7 @@ flowchart TD
                 <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_03</div>
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H24N3Ti</td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C11H23N3Ti</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.53</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.14</td>
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-24.98</td>
@@ -3932,15 +3957,15 @@ flowchart TD
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">Ru</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C14H18Ru</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">3.48</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.94</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-44.27</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">4.18</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.904</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.7</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.27</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700; background:#fee2e2; padding:2px 6px; border-radius:4px;">-17.31</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#475569;">7.48</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.941</td>
               <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#15803d; font-weight:600;'>SAScore 3.48 (양호)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -44.27 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.7 (무기원소 빈도왜곡)</span> &bull; <span style='color:#b91c1c; font-weight:600;'>SYBA -17.31 (샌드위치/Cp 착체 붕괴)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
@@ -3969,16 +3994,16 @@ flowchart TD
                 <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_05</div>
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">Co</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H9Co2O6</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">4.82</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">1.48</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">10.49</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">8.91</td>
-              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.969</td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#334155;">C12H10Co2O6</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">5.52</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:700;">2.32</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#15803d; font-weight:600;">2.28</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#b91c1c; font-weight:600;">10.0</td>
+              <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.85rem; color:#0284c7; font-weight:600;">0.602</td>
               <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#64748b; font-size:0.75rem;'>0 Core</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:600;'>0 Route (Token OK)</span></td>
               <td style="text-align:center;"><span class='badge' style='background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:600;'>Unexecuted null (Sanitize OK)</span></td>
-              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 4.82 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +10.49</span> &bull; <span style='color:#d97706;'>BR-SAS 8.91 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
+              <td style="font-size:0.8rem; line-height:1.4;"><span style='color:#b91c1c; font-weight:600;'>SAScore 5.52 (무기원소 빈도왜곡)</span> &bull; <span style='color:#15803d;'>SYBA +2.28</span> &bull; <span style='color:#d97706;'>BR-SAS 10.0 (유기사전 감점)</span> &bull; <span style='color:#64748b;'>RxnFlow: 배위 템플릿 전무(0건)</span></td>
             </tr>
 
             <tr>
@@ -4052,7 +4077,7 @@ flowchart TD
                   <td><strong>SAScore</strong><br><span class="badge badge-1g">1G Heuristic</span><br><span style="font-size:0.75rem; color:#64748b;">(2009)</span></td>
                   <td style="font-size:0.82rem;"><strong>Fragment Frequency + Complexity Penalty</strong><br>&bull; Morgan r=2 Log-Frequency<br>&bull; Ring/Chiral/Size Penalty</td>
                   <td style="font-size:0.82rem;"><strong>PubChem</strong><br>&bull; 13M Drug Molecules<br>&bull; C, H, N, O, S, P 중심</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#b91c1c;">11.1%<br><span style="font-size:0.75rem; font-weight:normal;">(3/27)</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#b91c1c;">7.4%<br><span style="font-size:0.75rem; font-weight:normal;">(2/27)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>무기 결합 빈도 결여 및 가교 오인:</strong><br>
                     &bull; Si-N, Al-C, Zr-O Fragment Frequency 부재 &rarr; 큰 음의 Log-Frequency 감점.<br>
@@ -4072,7 +4097,7 @@ flowchart TD
                   <td><strong>SCScore</strong><br><span class="badge badge-2g">2G Reaction DNN</span><br><span style="font-size:0.75rem; color:#64748b;">(2018)</span></td>
                   <td style="font-size:0.82rem;"><strong>12-Layer DNN</strong><br>&bull; 1024-bit Morgan Fingerprint<br>&bull; Pairwise Ranking Loss</td>
                   <td style="font-size:0.82rem;"><strong>Reaxys</strong><br>&bull; 12M Reaction Pairs<br>&bull; Literature &amp; Patents</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#15803d;">85.2%<br><span style="font-size:0.75rem; font-weight:normal;">(23/27)</span></td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#15803d;">77.8%<br><span style="font-size:0.75rem; font-weight:normal;">(21/27)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>Early-Stage Reactant Bias:</strong><br>
                     &bull; Reaxys 반응쌍에서 유기금속이 출발 시약/촉매로 등록되어 저분자량 전구체를 1점대로 산출.<br>
@@ -4080,7 +4105,7 @@ flowchart TD
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
                     <strong>입체 장해 착체 Complexity 감지:</strong><br>
-                    &bull; ZMA(2.72), Co(AMD)2(2.38), CpZr(2.22) 등 Subgraph 밀도 증가에 따른 점수 상승 관측.
+                    &bull; ZMA(2.72), Co(AMD)2(2.38), CCTBA(2.32), Ru(EtCp)2(2.27) 등 Subgraph 밀도 증가에 따른 점수 상승 관측.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45;">
                     리간드 가지화 및 합성 단계 Complexity 제어 지표로 조건부 활용.
@@ -4094,12 +4119,12 @@ flowchart TD
                   <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#15803d;">85.2%<br><span style="font-size:0.75rem; font-weight:normal;">(23/27)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>Cp Sandwich Collapse:</strong><br>
-                    &bull; Ru(EtCp)2(<strong>-44.27</strong>), CpTi(<strong>-24.98</strong>), CpZr(<strong>-24.98</strong>), ZMA(<strong>-18.21</strong>).<br>
+                    &bull; CpTi(<strong>-24.98</strong>), CpZr(<strong>-24.98</strong>), ZMA(<strong>-18.21</strong>), Ru(EtCp)2(<strong>-17.31</strong>).<br>
                     &bull; ZINC DB 내 금속-Cp 단편 부재로 Non-Synth 클래스와 유사하게 분류되어 큰 음수 산출.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
                     <strong>비환식 아미노실란/아미드:</strong><br>
-                    &bull; DIPAS, TEMAH, TEMAZ 등 23종(+3.96~+11.98)은 ZINC 내 알킬아민 빈도로 양수 판정.
+                    &bull; DIPAS, TEMAH, CCTBA(+2.28) 등 23종(+2.28~+11.98)은 양수 판정.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45;">
                     Cp·다핵 착체 배제. 비환식 아미노실란 선별에만 제한적 활용.
@@ -4132,7 +4157,7 @@ flowchart TD
                   <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#b91c1c;">0.0% Valid<br><span style="font-size:0.75rem; font-weight:normal; color:#64748b;">(100% FP)</span></td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#991b1b;">
                     <strong>ECFP6 Alkyl Bias &amp; Overestimation:</strong><br>
-                    &bull; Mean 0.925로 전수 Overestimation.<br>
+                    &bull; Mean 0.908 (0.602 ~ 0.988)로 전수 Overestimation.<br>
                     &bull; ECFP6 Fingerprint 비트가 디메틸아미노, 이소프로필 등 알킬기에 편향되어 중심금속 결합 불안정성을 감지하지 못함.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#166534;">
@@ -4213,7 +4238,7 @@ flowchart TD
                 <h4 style="margin:0; font-size:1.08rem; color:#0f172a;">1. SAScore (Synthetic Accessibility Score) &mdash; Ertl &amp; Schuffenhauer (2009)</h4>
                 <div>
                   <span class="badge badge-1g">1G Heuristic</span>
-                  <span class="badge" style="background:#fee2e2; color:#991b1b; font-size:0.75rem; font-weight:700;">Pass Rate 11.1% (3/27)</span>
+                  <span class="badge" style="background:#fee2e2; color:#991b1b; font-size:0.75rem; font-weight:700;">Pass Rate 7.4% (2/27)</span>
                 </div>
               </div>
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:0.86rem; line-height:1.55;">
@@ -4243,7 +4268,7 @@ flowchart TD
                 <h4 style="margin:0; font-size:1.08rem; color:#0f172a;">2. SCScore (Synthetic Complexity Score) &mdash; Coley et al., MIT (2018)</h4>
                 <div>
                   <span class="badge badge-2g">2G Neural Reaction Net</span>
-                  <span class="badge" style="background:#dcfce7; color:#15803d; font-size:0.75rem; font-weight:700;">Pass Rate 85.2% (23/27)</span>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; font-size:0.75rem; font-weight:700;">Pass Rate 77.8% (21/27)</span>
                 </div>
               </div>
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:0.86rem; line-height:1.55;">
@@ -4262,9 +4287,9 @@ flowchart TD
               </div>
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#eff6ff; border:1px solid #dbeafe; border-radius:6px; padding:12px 16px;">
                 <strong style="color:#1d4ed8;">&bull; 실측 분석: Low Score 원인 및 구조적 맹점 (Early Reactant Bias vs. Complexity):</strong><br>
-                1. <strong>Early-Stage Reactant Bias:</strong> 27종 중 23종이 1.01~1.98의 매우 낮은 점수를 기록했습니다(HCDS 1.02, DMAH 1.01, TMA 1.21, TTIP 1.25, TDMAT 1.31). Reaxys DB에서 이 물질들은 복잡한 의약 분자의 합성 종착점이 아니라 '촉매, 알킬화제, 환원 시약'으로 대량 투입되는 출발 물질이기 때문에 DNN 모델이 합성 초기로 인식합니다.<br>
+                1. <strong>Early-Stage Reactant Bias:</strong> 27종 중 21종이 1.01~1.89의 매우 낮은 점수를 기록했습니다(HCDS 1.02, DMAH 1.01, TMA 1.21, TTIP 1.25, TDMAT 1.31). Reaxys DB에서 이 물질들은 복잡한 의약 분자의 합성 종착점이 아니라 '촉매, 알킬화제, 환원 시약'으로 대량 투입되는 출발 물질이기 때문에 DNN 모델이 합성 초기로 인식합니다.<br>
                 2. <strong>자연발화성 위험성 은폐:</strong> TMA나 DMAH는 공기 중 노출 시 폭발적으로 자연 발화(Pyrophoric)하고 격렬히 가수분해되는 극위험 물질임에도 스코어가 ~1.0으로 매겨져 실무적 공정 취급 난이도와 괴리가 발생합니다.<br>
-                3. <strong>입체 복잡도 감지 유효성:</strong> 반면 입체 장해가 큰 $\text{ZMA}$(2.72), $\text{Co(AMD)}_2$(2.38), $\text{CpZr}$(2.22)은 핑거프린트 밀도 증가에 따라 복잡도가 정량적으로 상승하여 리간드 벌키성 판별에는 유효함이 입증되었습니다.
+                3. <strong>입체 복잡도 감지 유효성:</strong> 반면 입체 장해가 큰 $\text{ZMA}$(2.72), $\text{Co(AMD)}_2$(2.38), $\text{CCTBA}$(2.32), $\text{Ru(EtCp)}_2$(2.27), $\text{CpZr}$(2.22)은 핑거프린트 밀도 증가에 따라 복잡도가 정량적으로 상승하여 리간드 벌키성 판별에는 유효함이 입증되었습니다.
               </div>
             </div>
 
@@ -4274,7 +4299,7 @@ flowchart TD
                 <h4 style="margin:0; font-size:1.08rem; color:#0f172a;">3. SYBA (Synthetic Bayesian Accessibility) &mdash; Mikolajczyk et al. (2020)</h4>
                 <div>
                   <span class="badge badge-1g">1G Bayesian</span>
-                  <span class="badge" style="background:#dcfce7; color:#15803d; font-size:0.75rem; font-weight:700;">Pass Rate 85.2% (23/27)</span>
+                  <span class="badge" style="background:#dcfce7; color:#15803d; font-size:0.75rem; font-weight:700;">Pass Rate 77.8% (21/27)</span>
                 </div>
               </div>
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:0.86rem; line-height:1.55;">
@@ -4293,8 +4318,8 @@ flowchart TD
               </div>
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#fef2f2; border:1px solid #fee2e2; border-radius:6px; padding:12px 16px;">
                 <strong style="color:#991b1b;">&bull; 실측 분석: 비환식 전구체 통과 vs. 샌드위치 착체 급감 원인 (Cp Collapse):</strong><br>
-                1. <strong>비환식 아미노실란/알콕사이드의 적합성:</strong> DIPAS(+10.56), BTBAS(+11.18), TEMAH(+10.56) 등 23종은 $+3.96 \sim +11.98$의 높은 양수를 기록했습니다. 이들 리간드의 알킬아민 및 에테르 단편이 ZINC 의약 DB에 대량 존재하여 양성 확률 $P(f \mid \text{Synthesizable})$이 우세하기 때문입니다.<br>
-                2. <strong>사이클로펜타디에닐(Cp) 착체의 큰 음수 붕괴:</strong> $\text{Ru(EtCp)}_2$ (<strong>-44.27</strong>), $\text{CpTi(NMe}_2)_3$ (<strong>-24.98</strong>), $\text{CpZr(NMe}_2)_3$ (<strong>-24.98</strong>), $\text{ZMA}$ (<strong>-18.21</strong>)은 큰 음수 점수로 분류되었습니다. ZINC 의약품에는 전이금속에 $\eta^5$-배위된 방향족 탄소 5원환 단편이 부재하여 $P(f \mid \text{ZINC}) \to 0$인 반면, 무작위 생성 음성 세트의 비정상 고리 토폴로지와 유사하다고 판단하기 때문입니다.
+                1. <strong>비환식 아미노실란/알콕사이드의 적합성:</strong> DIPAS(+10.56), BTBAS(+11.18), TEMAH(+10.56), CCTBA(+2.28) 등 23종은 $+2.28 \sim +11.98$의 양수를 기록했습니다. 이들 리간드의 알킬아민 및 에테르 단편이 ZINC 의약 DB에 대량 존재하여 양성 확률 $P(f \mid \text{Synthesizable})$이 우세하기 때문입니다.<br>
+                2. <strong>사이클로펜타디에닐(Cp) 착체의 큰 음수 붕괴:</strong> $\text{CpTi(NMe}_2)_3$ (<strong>-24.98</strong>), $\text{CpZr(NMe}_2)_3$ (<strong>-24.98</strong>), $\text{ZMA}$ (<strong>-18.21</strong>), $\text{Ru(EtCp)}_2$ (<strong>-17.31</strong>)은 큰 음수 점수로 분류되었습니다. ZINC 의약품에는 전이금속에 배위된 탄소 5원환 단편이 부재하여 $P(f \mid \text{ZINC}) \to 0$인 반면, 무작위 생성 음성 세트의 비정상 고리 토폴로지와 유사하다고 판단하기 때문입니다.
               </div>
             </div>
 
@@ -4323,7 +4348,7 @@ flowchart TD
               </div>
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#fff7ed; border:1px solid #ffedd5; border-radius:6px; padding:12px 16px;">
                 <strong style="color:#c2410c;">&bull; 실측 및 반사실적 감사(Counterfactual Audit) 결론: max(existing, -0.47) 보정 후에도 3/27에 머물며 2-Track 리간드 분리가 필요한 원인:</strong><br>
-                1. <strong>엄격 시약 사전(Leakage-Free, <code>max(existing, -0.47)</code>) 실측 (11.1%, 3/27 통과, 악화 0종):</strong> <code>BRSAScore.calculateScore</code>는 반경 2 ($r=2$, <code>vs[0][1] == 2</code>) 단편 중 <strong>점수가 음수인 단편(<code>fscore &lt; 0</code>)들의 평균</strong>만 산출합니다(공식 <code>BScores_emolecules.pkl.gz</code>는 244,572개 항목이 $-3.0 \sim +3.0$ 범위를 가지며 중앙값은 $-2.54$, 양수 항목은 65개, 정확히 $0.0$인 키는 0개). 따라서 시약 단편을 <code>max(existing, -0.47)</code>(또는 $-0.1, -0.01$)로 갱신하면 유기 단편이 음수 평균 내에 유지되어 <strong>점수가 악화되는 전구체가 단 1종도 없으며</strong>(예: <code>Cp(NMe2)3Zr</code> 7.20 &rarr; <strong>6.95</strong>, <code>CpTi(NMe2)3</code> 7.20 &rarr; <strong>6.95</strong>, <code>Ru(EtCp)2</code> 4.18 &rarr; <strong>3.99</strong>, <code>Co(AMD)2</code> 8.29 &rarr; <strong>8.04</strong>), 그럼에도 반응 후 새로 형성된 $\text{M-N, M-O, M-C}$ 결합 중심의 반경 2 단편은 어떤 시약에도 존재하지 않아 $-6.0$ 페널티를 유지하므로 Pass Rate는 <strong>3/27 (11.1%: TSA, TMA, DMAH)</strong>로 불변입니다. (반면 시약 단편을 단순 $0.0$으로 덮어쓰면 유기 단편이 분모 $N_{f&lt;0}$에서 빠져 위 4종의 점수가 오히려 악화됩니다.)<br>
+                1. <strong>엄격 시약 사전(Leakage-Free, <code>max(existing, -0.47)</code>) 실측 (11.1%, 3/27 통과, 악화 0종):</strong> <code>BRSAScore.calculateScore</code>는 반경 2 ($r=2$, <code>vs[0][1] == 2</code>) 단편 중 <strong>점수가 음수인 단편(<code>fscore &lt; 0</code>)들의 평균</strong>만 산출합니다(공식 <code>BScores_emolecules.pkl.gz</code>는 244,572개 항목이 $-3.0 \sim +3.0$ 범위를 가지며 중앙값은 $-2.54$, 양수 항목은 65개, 정확히 $0.0$인 키는 0개). 따라서 시약 단편을 <code>max(existing, -0.47)</code>(또는 $-0.1, -0.01$)로 갱신하면 유기 단편이 음수 평균 내에 유지되어 <strong>점수가 악화되는 전구체가 단 1종도 없으며</strong>(예: <code>Cp(NMe2)3Zr</code> 7.20 &rarr; <strong>6.95</strong>, <code>CpTi(NMe2)3</code> 7.20 &rarr; <strong>6.95</strong>, <code>Co(AMD)2</code> 8.29 &rarr; <strong>7.91</strong>), 그럼에도 반응 후 새로 형성된 $\text{M-N, M-O, M-C}$ 결합 중심의 반경 2 단편은 어떤 시약에도 존재하지 않아 $-6.0$ 페널티를 유지하므로 Pass Rate는 <strong>3/27 (11.1%: TSA, TMA, DMAH)</strong>로 불변입니다. (반면 시약 단편을 단순 $0.0$으로 덮어쓰면 유기 단편이 분모 $N_{f&lt;0}$에서 빠져 3종 <code>CpZr, CpTi, Co(AMD)2</code> 점수가 악화됩니다.)<br>
                 2. <strong>생성물 암기 누수 대조군 (100.0%, 27/27; 구버전 24/27):</strong> 타깃 전구체 생성물 자체의 단편을 $0.0$으로 사전 등록하면 금속 배위 단편까지 모두 평균에서 빠져(<code>score1 = 0</code>) 27종 전수가 $1.0 \sim 1.9$점으로 통과하나, 이는 테스트셋 생성물을 암기(Circular Data Leakage)한 결과이므로 미지의 신규 전구체에는 전혀 일반화되지 않습니다.<br>
                 3. <strong>구조적 해법 (2-Track TMC-SA):</strong> 따라서 온전한 유기금속 착물에 1G/3G 단편 사전을 직접 적용하는 방식을 폐기하고, 착물을 금속 코어($MX_m$)와 유기 프로-리간드($HL_i$)로 분해하여 리간드 합성성은 `BR-SAScore`($HL_i$)로 평가하고 금속 배위 열역학은 DFT($\Delta G_{\text{syn}}^{\text{DFT}}$)로 결합하는 <strong>Section 8의 2-Track TMC-SA 아키텍처</strong>가 유일하게 정합적인 해법입니다.
               </div>
@@ -4350,7 +4375,7 @@ flowchart TD
               </div>
               <div style="margin-top:12px; font-size:0.85rem; line-height:1.6; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px 16px;">
                 <strong style="color:#0f172a;">&bull; 실측 분석: 100% Pass Rate 배경 및 구조적 한계 (ECFP6 Count Bias):</strong><br>
-                1. <strong>저분자 유기 치환기 Overestimation:</strong> 27종 전구체의 평균 스코어가 0.925 (3DMAS 0.988, BTBAS 0.972, TEOS 0.984)로 전수 통과했습니다. 반도체 전구체는 분자 크기가 작고, ECFP6 Count Vector의 Active Bit가 디메틸아미노, 에틸, 이소프로필 등 ChEMBL에서 가장 흔하고 합성하기 쉬운 단순 알킬기에 집중되어 있어 XGBoost가 최상위 합성 가능 잎 노드로 분류하기 때문입니다.<br>
+                1. <strong>저분자 유기 치환기 Overestimation:</strong> 27종 전구체의 평균 스코어가 0.908 (0.602 ~ 0.988; 3DMAS 0.988, BTBAS 0.972, TEOS 0.984)로 전수 통과했습니다. 반도체 전구체는 분자 크기가 작고, ECFP6 Count Vector의 Active Bit가 디메틸아미노, 에틸, 이소프로필 등 ChEMBL에서 가장 흔하고 합성하기 쉬운 단순 알킬기에 집중되어 있어 XGBoost가 최상위 합성 가능 잎 노드로 분류하기 때문입니다.<br>
                 2. <strong>무기 배위 불안정성 미반영:</strong> 중심금속의 배위 결합 세기, 배위 불포화에 의한 다량체화, 수분/공기 접촉 시의 폭발적 분해 등 무기화학적 공정 한계를 전혀 감지하지 못합니다. 따라서 전구체 전체가 아닌 <strong>Pro-ligand ($HL_i$) Screening Filter</strong>로 사용하는 것이 타당합니다.
               </div>
             </div>
@@ -8205,7 +8230,7 @@ flowchart LR
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a;"><code>CO[Zr](C)(C1=CC=C(C)C1)C2=CC=C(C)C2</code></td>
             </tr>
 
-            <tr class="prec-row" data-cat="high-k" data-search="cp(nme2)3zr cyclopentadienyltris(dimethylamino)zirconium c11h24n3zr zr high-k dielectric (hf/zr) zro2 ald">
+            <tr class="prec-row" data-cat="high-k" data-search="cp(nme2)3zr cyclopentadienyltris(dimethylamino)zirconium c11h23n3zr zr high-k dielectric (hf/zr) zro2 ald">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">15</td>
               <td style="white-space:nowrap;">
                 <strong>Cp(NMe2)3Zr</strong>
@@ -8213,7 +8238,7 @@ flowchart LR
               </td>
               <td>
                 <div style="font-weight:600; color:#0f172a;">Cyclopentadienyltris(dimethylamino)zirconium</div>
-                <div style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#475569;">C11H24N3Zr &bull; MW: 289.55 &bull; CAS: 87227-56-3</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#475569;">C11H23N3Zr &bull; MW: 288.54 &bull; CAS: 87227-56-3</div>
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">Zr</span></td>
               <td style="white-space:nowrap;"><span class="badge badge-prec">High-k Dielectric (Hf/Zr)</span></td>
@@ -8289,7 +8314,7 @@ flowchart LR
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a;"><code>CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C</code></td>
             </tr>
 
-            <tr class="prec-row" data-cat="titanium" data-search="cpti(nme2)3 cyclopentadienyltris(dimethylamino)titanium c11h24n3ti ti titanium & dielectrics tio2, tin ald">
+            <tr class="prec-row" data-cat="titanium" data-search="cpti(nme2)3 cyclopentadienyltris(dimethylamino)titanium c11h23n3ti ti titanium & dielectrics tio2, tin ald">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">18</td>
               <td style="white-space:nowrap;">
                 <strong>CpTi(NMe2)3</strong>
@@ -8297,7 +8322,7 @@ flowchart LR
               </td>
               <td>
                 <div style="font-weight:600; color:#0f172a;">Cyclopentadienyltris(dimethylamino)titanium</div>
-                <div style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#475569;">C11H24N3Ti &bull; MW: 246.21 &bull; CAS: 1072-67-9</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#475569;">C11H23N3Ti &bull; MW: 245.2 &bull; CAS: 1072-67-9</div>
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
               <td style="white-space:nowrap;"><span class="badge badge-prec">Titanium & Dielectrics</span></td>
@@ -8454,7 +8479,7 @@ flowchart LR
                 <div style="font-size:0.75rem; color:#64748b;">Salt Metathesis / Reductive Coordination (79.0% 수율)</div>
               </td>
               <td style="font-size:0.78rem; color:#475569; white-space:nowrap;">Strem, Merck, Adeka</td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a;"><code>CCC1=CC=CC1.[Ru].CCC2=CC=CC2</code></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a;"><code>CCC1=CC=C([Ru]C2=CC=C(CC)C2)C1</code></td>
             </tr>
 
             <tr class="prec-row" data-cat="metal" data-search="co(amd)2 bis(n,n'-diisopropylacetamidinato)cobalt(ii) c16h34con4 co metal & barrier (w/mo/ru/co) co metal (contact plug, cu liner) ald">
@@ -8485,7 +8510,7 @@ flowchart LR
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a;"><code>CC(C)N=C(C)N(C(C)C)[Co]N(C(C)C)C(C)=NC(C)C</code></td>
             </tr>
 
-            <tr class="prec-row" data-cat="metal" data-search="cctba dicobalt hexacarbonyl tert-butylacetylene c12h9co2o6 co metal & barrier (w/mo/ru/co) co (cvd interconnect) cvd / ald">
+            <tr class="prec-row" data-cat="metal" data-search="cctba dicobalt hexacarbonyl tert-butylacetylene c12h10co2o6 co metal & barrier (w/mo/ru/co) co (cvd interconnect) cvd / ald">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">25</td>
               <td style="white-space:nowrap;">
                 <strong>CCTBA</strong>
@@ -8493,7 +8518,7 @@ flowchart LR
               </td>
               <td>
                 <div style="font-weight:600; color:#0f172a;">Dicobalt hexacarbonyl tert-butylacetylene</div>
-                <div style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#475569;">C12H9Co2O6 &bull; MW: 367.06 &bull; CAS: 56703-46-9</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.78rem; color:#475569;">C12H10Co2O6 &bull; MW: 368.07 &bull; CAS: 56792-69-9</div>
               </td>
               <td style="text-align:center;"><span class="badge badge-1g">Co</span></td>
               <td style="white-space:nowrap;"><span class="badge badge-prec">Metal & Barrier (W/Mo/Ru/Co)</span></td>
@@ -8510,7 +8535,7 @@ flowchart LR
                 <div style="font-size:0.75rem; color:#64748b;">Alkyne Substitution / CO displacement (90.0% 수율)</div>
               </td>
               <td style="font-size:0.78rem; color:#475569; white-space:nowrap;">Adeka, Strem, Merck</td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a;"><code>CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O</code></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a;"><code>CC(C)(C)C12[CH]3[Co]1([C-]#[O+])([C-]#[O+])([C-]#[O+])[Co]23([C-]#[O+])([C-]#[O+])[C-]#[O+]</code></td>
             </tr>
 
             <tr class="prec-row" data-cat="metal" data-search="tbtdet tert-butylimidotris(diethylamino)tantalum c16h39n4ta ta metal & barrier (w/mo/ru/co) tan (cu diffusion barrier) ald">
@@ -9210,7 +9235,7 @@ flowchart LR
               <td style="white-space:nowrap;"><span class="badge badge-3g">Alkyne Displacement</span></td>
               <td>
                 <div style="font-size:0.82rem; color:#0f172a; font-family:'JetBrains Mono';"><strong>반응물:</strong> CC(C)(C)C#C</div>
-                <div style="font-size:0.82rem; color:#0369a1; font-family:'JetBrains Mono'; margin-top:2px;"><strong>생성물:</strong> CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O + 2 CO (gas)</div>
+                <div style="font-size:0.82rem; color:#0369a1; font-family:'JetBrains Mono'; margin-top:2px;"><strong>생성물:</strong> CC(C)(C)C12[CH]3[Co]1([C-]#[O+])([C-]#[O+])([C-]#[O+])[Co]23([C-]#[O+])([C-]#[O+])[C-]#[O+] + 2 CO (gas)</div>
               </td>
               <td style="white-space:nowrap; font-family:'JetBrains Mono'; font-weight:600; color:#059669;">-12.3 kcal/mol</td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#334155;"><code>[Co2(CO)8].[C:1]#[C:2]>>[Co2(CO)6]([C:1]#[C:2]) + 2 CO</code></td>
@@ -11165,37 +11190,37 @@ flowchart TD
         <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:16px; margin-bottom:24px;">
           <div class="stat-card" style="border-left:4px solid #ef4444; padding:18px;">
             <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 1 Baseline Error (Data-Only)</div>
-            <div style="font-size:1.75rem; font-weight:800; color:#b91c1c; margin:6px 0;">FN 88.9% / FP 100.0%</div>
+            <div style="font-size:1.75rem; font-weight:800; color:#b91c1c; margin:6px 0;">FN 92.6% / FP 90.0%</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              SAScore Precursor FNR <strong>88.9%</strong> (3/27 Pass)<br>
-              SCScore Negative FPR <strong>9/10 (90.0%)</strong>, Consensus <strong>10/10 (100.0%)</strong>
+              SAScore Precursor FNR <strong>92.6%</strong> (2/27 (7.4%) Pass)<br>
+              SCScore Negative FPR <strong>9/10 (90.0%)</strong>, Consensus <strong>9/10 (90.0%)</strong>
             </div>
           </div>
 
           <div class="stat-card" style="border-left:4px solid #10b981; padding:18px;">
             <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 2 Uniform Screening (TMC-SA &le; 4.0)</div>
-            <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:6px 0;">Precursor 92.6% (25/27)</div>
+            <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:6px 0;">Precursor 81.5% (22/27)</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              Label/ID-free Continuous Penalty (FNR 88.9% &rarr; <strong>7.4%</strong>)<br>
-              Inhibitor Pass Rate <strong>18/18 (100.0%)</strong>, DIPAS·Co(AMD)2 2종 FN
+              Label/ID-free Continuous Penalty (FNR 92.6% &rarr; <strong>18.5%</strong>)<br>
+              Inhibitor Pass Rate <strong>16/18 (88.9%)</strong>, DIPAS, TSA, Ru(EtCp)2, CCTBA, tBuSn(OiPr)3 5종 FN
             </div>
           </div>
 
           <div class="stat-card" style="border-left:4px solid #6366f1; padding:18px;">
             <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Negative Control Specificity (Un-Hardcoded)</div>
-            <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:6px 0;">5/10 (Spec 50.0%)</div>
+            <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:6px 0;">6/10 (Spec 60.0%)</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              Physics Only TN <strong>3/10</strong> (FPR 70.0%), +SMARTS TN <strong>5/10</strong> (FPR 50.0%)<br>
-              WPh5·Cp2AlH·Cl2Si2H4 등 차단; Non-relaxed Single-Point 한계로 5종 FP 잔존
+              Physics Only TN <strong>4/10</strong> (FPR 60.0%), +SMARTS TN <strong>6/10</strong> (FPR 40.0%)<br>
+              Silacyclobutadiene, Decane, Trichloroacetic acid 등 차단; Ground-State 한계로 4종 FP 잔존 (Ti(Et)4, ZrMe4, WPh5, Ti(OH)4)
             </div>
           </div>
 
           <div class="stat-card" style="border-left:4px solid #0284c7; padding:18px;">
             <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">ML Cross-Validation: All-Sample vs LOOCV</div>
-            <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:6px 0;">1.000 &rarr; 0.782</div>
+            <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:6px 0;">1.000 &rarr; 0.836</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              Combined Random Forest (N=55): In-Sample 1.000 vs <strong>LOOCV Accuracy 0.782</strong> (Specificity 0.100)<br>
-              Base-Only LOOCV 0.873; Physical Gini Importance Sum <strong>33.3%</strong> (Proxy 제외)
+              Combined Random Forest (N=55): In-Sample 1.000 vs <strong>LOOCV Accuracy 0.836</strong> (Specificity 0.200)<br>
+              Base-Only LOOCV 0.855; Physical Gini Importance Sum <strong>40.6%</strong> (Proxy 제외)
             </div>
           </div>
         </div>
@@ -11212,29 +11237,29 @@ flowchart TD
 
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
             <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:6px; padding:14px;">
-              <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">Error Type 1: Precursor False Negative (88.9%)</div>
+              <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">Error Type 1: Precursor False Negative (92.6%)</div>
               <p style="font-size:0.84rem; color:#7f1d1d; line-height:1.55; margin:0;">
-                RDKit SAScore(&le; 3.5)는 27개 반도체 전구체 중 3개(TEOS 2.84, 4DMAS 3.37, Ru(EtCp)2 3.48)만 통과시키고 <strong>24개를 기각(FNR 88.9%)</strong>합니다. 주요 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 탈락하며, 이는 PubChem 의약 통계 내 Si-N, Al-C, Hf-N Fragment Frequency가 매우 낮기 때문입니다.
+                RDKit SAScore(&le; 3.5)는 27개 반도체 전구체 중 2개(4DMAS 3.37, TEOS 2.84)만 통과시키고 <strong>25개를 기각(FNR 92.6%)</strong>합니다. 주요 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 탈락하며, 이는 PubChem 의약 통계 내 Si-N, Al-C, Hf-N Fragment Frequency가 매우 낮기 때문입니다.
               </p>
             </div>
 
             <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:14px;">
-              <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">Error Type 2: Negative Control False Positive (Consensus 100.0%, SCScore 90.0%)</div>
+              <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">Error Type 2: Negative Control False Positive (Consensus 90.0%, SCScore 9/10 (90.0%))</div>
               <p style="font-size:0.84rem; color:#78350f; line-height:1.55; margin:0;">
-                Reaxys/USPTO 기반 SCScore(&le; 2.0)와 RAscore(&ge; 0.5)는 열분해성 <code>Ti(Et)4</code>(SC 1.65, RA 0.972), 폭발성 <code>ZrMe4</code>(SC 1.56, RA 0.956), 부식성 <code>트리클로로아세트산</code>(SC 1.01, RA 0.970) 등 Negative Control 10종 중 SCScore 9종(90.0%) 및 Baseline Consensus <strong>10종 전원(100.0%)을 Pass로 판정</strong>합니다.
+                Reaxys/USPTO 기반 SCScore(&le; 2.0)와 RAscore(&ge; 0.5)는 열분해성 <code>Ti(Et)4</code>(SC 1.65, RA 0.972), 폭발성 <code>ZrMe4</code>(SC 1.56, RA 0.956), 부식성 <code>트리클로로아세트산</code>(SC 1.01, RA 0.970) 등 Negative Control 10종 중 SCScore 9/10 (90.0%) 및 Baseline Consensus <strong>9/10 (90.0%)을 Pass로 판정</strong>합니다.
               </p>
             </div>
           </div>
         </div>
 
-        <!-- 15.3 Module 2: SevenNet Physical Feature Pipeline -->
+        <!-- 15.3 Module 2: SevenNet Physical Feature Pipeline (Upgraded Protocol) -->
         <div class="card" style="margin-bottom:24px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 Physical Features] SevenNet-0 + SambVca 기반 원자 스케일 물리 Descriptor</h3>
-            <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet-0 Single-Point + SambVca</span>
+            <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 Physical Features] SevenNet-0 LBFGS 이완 및 비중첩 이합체·분리 단편 BDE</h3>
+            <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet-0 LBFGS + SambVca (Fallback 0/55)</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            범용 MLIP <strong>SevenNet (<code>7net-0</code>)</strong>과 <strong>Cavallo SambVca 구면 적분</strong>을 로컬에서 실행하여(55종 총 연산 시간 <strong>1290.8 s</strong>) 3D 입체·에너지 Descriptor를 산출하였습니다. 본 실측은 RDKit ETKDGv3 기하 구조에 대한 <strong>비이완 Single-Point Energy 및 강체 반경 스캔</strong>이며, 분리된 다중 단편 SMILES 2종(<code>Ru(EtCp)2</code>, <code>CCTBA</code>)은 Fallback 값이 적용되었고 <code>&Delta;E<sub>complex</sub></code>는 Algebraic Proxy이므로 ML Feature Matrix에서 제외하였습니다.
+            구조 정합성 감사에서 확인된 <code>CCTBA</code>(<code>[Co](=O)(=O)=O</code> &rarr; hexacarbonyl <code>C12H10Co2O6</code>), <code>Ru(EtCp)2</code>(분리형 &rarr; 연결형 <code>C14H18Ru</code>), <code>CpZr</code>/<code>CpTi</code>(화학식 <code>H23</code> 정합), 및 <code>Cp2AlH</code> SMILES를 정정하여 Multi-Fragment 3D 중첩 NaN Fallback을 <strong>0/55종(전수 정상 계산)</strong>으로 제거하였습니다. 모든 55종 분자는 <strong>SevenNet (<code>7net-0</code>) ASE LBFGS 구조 이완</strong>(단량체 <code>fmax=0.04 eV/&Aring;</code>), 비중첩 주축 정렬 이합체 간격($\Delta z_{\text{shift}} = z_{\text{span}} + 2.8\,\text{\AA}$ 후 이합체 이완), 및 분리 단편 해리 BDE(비고리 결합 <code>E(ML_{n-1})+E(L)-E(ML_n)</code>; 고리 결합 <code>FixAtoms</code> 외환 이동 신장)로 재연산되었으며 총 실행 시간은 <strong>2534.7 s</strong>입니다. (<code>&Delta;E<sub>complex</sub></code>는 Algebraic Proxy이므로 ML Feature Matrix에서 제외됨)
           </p>
 
           <div style="overflow-x:auto; margin-bottom:16px;">
@@ -11250,21 +11275,21 @@ flowchart TD
               <tbody>
                 <tr>
                   <td><strong>Descriptor 1: 결합 해리 (BDE) &amp; 응집 에너지 ($e_{\text{coh}}$)</strong></td>
-                  <td>$$\text{BDE}_{\min} = [E(r_0 + 1.2\,\text{\AA}) - E(r_0)] \times 23.06$$<br>$$e_{\text{coh}} = \frac{\sum E_{\text{iso}}(Z_i) - E}{N_{\text{atoms}}}$$</td>
+                  <td>$$\text{BDE}_{\min} = \min_b [E_{\text{rel}}(ML_{n-1}) + E_{\text{rel}}(L) - E_{\text{rel}}(ML_n)] \times 23.06$$<br>$$e_{\text{coh}} = \frac{\sum E_{\text{iso}}(Z_i) - E_{\text{rel}}}{N_{\text{atoms}}}$$</td>
                   <td>열 해리 안정성: $\text{BDE} &lt; 45\text{ kcal/mol}$ 또는 $e_{\text{coh}} &lt; 3.10\text{ eV/atom}$ 부근에서 연속 상승</td>
-                  <td>정상 전구체: TEMAH BDE <strong>70.4</strong>, TDMAT <strong>67.0 kcal/mol</strong><br>취약 사례: CoEt4 <strong>42.9</strong>, DIPAS <strong>37.9 kcal/mol</strong></td>
+                  <td>정상 전구체: TEMAH BDE <strong>69.2</strong>, TDMAT <strong>65.9</strong>, DIPAS <strong>55.5 kcal/mol</strong><br>고리 변형/저안정: Silacyclobutadiene <strong>15.5</strong>, CoEt4 <strong>35.3</strong>, CCTBA <strong>11.1 kcal/mol</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Descriptor 2: 3D 입체 매몰 부피 ($\%V_{\text{bur}}$)</strong></td>
                   <td>$$\%V_{\text{bur}} = \frac{V_{\text{ligand}} \cap V_{\text{sphere}}(R=3.5\,\text{\AA})}{V_{\text{sphere}}} \times 100$$</td>
                   <td>과밀 충돌 Penalty 중심: $\%V_{\text{bur}} &gt; 83.5\%$<br>과소배위 조건: $\%V_{\text{bur}} &lt; 44.0\%$</td>
-                  <td>단량체 안정: TDMAT <strong>73.6%</strong>, TEMAH <strong>78.0%</strong><br>과밀 차단: WPh5 <strong>86.4%</strong> (TMC-SA 4.32)</td>
+                  <td>LBFGS 이완 단량체: TDMAT <strong>69.8%</strong>, TEMAH <strong>66.8%</strong>, Ru(EtCp)2 <strong>36.9%</strong><br>고차폐 사례: WPh5 <strong>79.1%</strong> (TMC-SA 1.08), TBTDET <strong>71.9%</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Descriptor 3: 이합체화 에너지 ($\Delta E_{\text{dimer}}$)</strong></td>
-                  <td>$$\Delta E_{\text{dimer}} = E(\text{Dimer}) - 2E(\text{Monomer})$$</td>
+                  <td><strong>Descriptor 3: 비중첩 이합체화 에너지 ($\Delta E_{\text{dimer}}$)</strong></td>
+                  <td>$$\Delta E_{\text{dimer}} = [E_{\text{rel}}(\text{Dimer}; \Delta z \ge z_{\text{span}}+2.8\text{\AA}) - 2E_{\text{rel}}(\text{Monomer})] \times 23.06$$</td>
                   <td>금속/Si 중심에서 $\%V_{\text{bur}} &lt; 44\%$와 $\Delta E_{\text{dimer}} &lt; -1.5\text{ kcal/mol}$ 동시 만족 시 상승</td>
-                  <td>비회합(양수): TDMAT <strong>+82.9</strong>, TEMAH <strong>+20.5 kcal/mol</strong><br>음수 사례: TMA <strong>-2.5</strong>, Ti(OH)4 <strong>-0.5 kcal/mol</strong> (Threshold 미달)</td>
+                  <td>초기 간격 $\ge 2.8\text{\AA}$ 보장 (WPh5 gap <strong>4.18 &Aring;</strong>, $\Delta E_{\text{dim}}$ <strong>+0.0 kcal/mol</strong>)<br>주요 사례: TDMAT <strong>-3.1</strong>, TMA <strong>-1.2</strong>, Ti(OH)4 <strong>-2.9 kcal/mol</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Descriptor 4 (Proxy): 착물화 에너지 근사 ($\Delta E_{\text{complex}}$)</strong></td>
@@ -11284,7 +11309,7 @@ flowchart TD
             <span class="badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;">Audited Un-Hardcoded Evaluation</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6; margin-bottom:14px;">
-            기존 비교 스크립트의 Target Label Branching, 개별 ID Hardcoding(NEG-001~010), 및 <code>BR-SAScore</code> 연산 예외(<code>TypeError</code>로 9.99 고정)를 수정·제거한 뒤 재실행한 정량 결과입니다.
+            SMILES 정정, LBFGS 이완·비중첩 이합체·분리 단편 BDE 재계산, Target Label Branching 제거, 개별 ID Hardcoding 제거, 및 <code>BR-SAScore</code> 연산 정상화를 모두 반영하여 재실행한 정량 결과입니다.
           </p>
 
           <div style="display:grid; grid-template-columns: 3fr 2fr; gap:18px; margin-bottom:20px;">
@@ -11302,39 +11327,39 @@ flowchart TD
                 <tbody>
                   <tr>
                     <td><strong>Accuracy / Specificity</strong></td>
-                    <td style="text-align:center;">Consensus Spec 0.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono';">0.836 / <strong>0.300</strong></td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; color:#0369a1;"><strong>0.873 / 0.500</strong></td>
+                    <td style="text-align:center;">Consensus Spec 0.100</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono';">0.764 / <strong>0.400</strong></td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; color:#0369a1;"><strong>0.800 / 0.600</strong></td>
                   </tr>
                   <tr>
                     <td><strong>Precursor Pass Rate (TP/27)</strong></td>
-                    <td style="text-align:center; color:#b91c1c; font-weight:700;">3/27 (11.1%)</td>
-                    <td style="text-align:center; font-weight:700; color:#15803d;">92.6% (25/27)</td>
-                    <td style="text-align:center; font-weight:700; color:#15803d;">92.6% (25/27)</td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">2/27 (7.4%)</td>
+                    <td style="text-align:center; font-weight:700; color:#15803d;">81.5% (22/27)</td>
+                    <td style="text-align:center; font-weight:700; color:#15803d;">81.5% (22/27)</td>
                   </tr>
                   <tr>
                     <td><strong>Precursor FNR (FN/27)</strong></td>
-                    <td style="text-align:center; color:#b91c1c; font-weight:700;">88.9%</td>
-                    <td style="text-align:center;">7.4% (2/27)</td>
-                    <td style="text-align:center;">7.4% (2/27)</td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">92.6%</td>
+                    <td style="text-align:center;">18.5% (5/27)</td>
+                    <td style="text-align:center;">18.5% (5/27)</td>
                   </tr>
                   <tr>
                     <td><strong>Inhibitor Pass Rate (TP/18)</strong></td>
                     <td style="text-align:center;">15/18 (83.3%)</td>
-                    <td style="text-align:center; font-weight:700; color:#0369a1;">100.0% (18/18)</td>
-                    <td style="text-align:center; font-weight:700; color:#0369a1;">100.0% (18/18)</td>
+                    <td style="text-align:center; font-weight:700; color:#0369a1;">88.9% (16/18)</td>
+                    <td style="text-align:center; font-weight:700; color:#0369a1;">88.9% (16/18)</td>
                   </tr>
                   <tr>
                     <td><strong>Negative Control FPR (FP/10)</strong></td>
-                    <td style="text-align:center; color:#b91c1c; font-weight:700;">SC 9/10 (90.0%) / Cons 10/10 (100.0%)</td>
-                    <td style="text-align:center;">70.0% (7/10)</td>
-                    <td style="text-align:center; font-weight:700;">50.0% (5/10)</td>
+                    <td style="text-align:center; color:#b91c1c; font-weight:700;">SC 9/10 (90.0%) / Cons 9/10 (90.0%)</td>
+                    <td style="text-align:center;">60.0% (6/10)</td>
+                    <td style="text-align:center; font-weight:700;">40.0% (4/10)</td>
                   </tr>
                   <tr>
                     <td><strong>Negative Control Specificity (TN/10)</strong></td>
-                    <td style="text-align:center; color:#b91c1c;">0.0% (0/10, Cons)</td>
-                    <td style="text-align:center;">30.0% (3/10)</td>
-                    <td style="text-align:center; font-weight:700; color:#0369a1;">50.0% (5/10)</td>
+                    <td style="text-align:center; color:#b91c1c;">10.0% (1/10, Cons)</td>
+                    <td style="text-align:center;">40.0% (4/10)</td>
+                    <td style="text-align:center; font-weight:700; color:#0369a1;">60.0% (6/10)</td>
                   </tr>
                 </tbody>
               </table>
@@ -11347,56 +11372,56 @@ flowchart TD
               </div>
               <div style="display:flex; flex-direction:column; gap:5px;">
                 
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
-                  <span>1. RDKit SAScore</span>
-                  <span style="font-family:'JetBrains Mono';">17.13%</span>
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
+                  <span>1. 7net BDE_min</span>
+                  <span style="font-family:'JetBrains Mono';">17.33%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:17.13%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:17.33%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
-                  <span>2. BR-SAScore</span>
-                  <span style="font-family:'JetBrains Mono';">10.07%</span>
+                  <span>2. RDKit SAScore</span>
+                  <span style="font-family:'JetBrains Mono';">13.52%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:10.07%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:13.52%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
+                  <span>3. BR-SAScore</span>
+                  <span style="font-family:'JetBrains Mono';">10.28%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:10.28%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
+                  <span>4. Reaxys SCScore</span>
+                  <span style="font-family:'JetBrains Mono';">8.12%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:8.12%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>3. 7net BDE_min</span>
-                  <span style="font-family:'JetBrains Mono';">9.69%</span>
+                  <span>5. 7net E_coh</span>
+                  <span style="font-family:'JetBrains Mono';">6.76%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:9.69%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:6.76%; height:100%;"></div></div>
+
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
+                  <span>6. Ligand SA</span>
+                  <span style="font-family:'JetBrains Mono';">6.07%</span>
+                </div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:6.07%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>4. 7net E_coh</span>
-                  <span style="font-family:'JetBrains Mono';">7.44%</span>
+                  <span>7. SambVca %V_bur</span>
+                  <span style="font-family:'JetBrains Mono';">5.04%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:7.44%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:5.04%; height:100%;"></div></div>
 
                 <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
-                  <span>5. Ligand SA</span>
-                  <span style="font-family:'JetBrains Mono';">7.14%</span>
+                  <span>8. LogP</span>
+                  <span style="font-family:'JetBrains Mono';">4.77%</span>
                 </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:7.14%; height:100%;"></div></div>
-
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
-                  <span>6. Reaxys SCScore</span>
-                  <span style="font-family:'JetBrains Mono';">6.72%</span>
-                </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:6.72%; height:100%;"></div></div>
-
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0f172a;">
-                  <span>7. LogP</span>
-                  <span style="font-family:'JetBrains Mono';">6.66%</span>
-                </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:6.66%; height:100%;"></div></div>
-
-                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#0369a1; font-weight:700;">
-                  <span>8. SambVca %V_bur</span>
-                  <span style="font-family:'JetBrains Mono';">5.54%</span>
-                </div>
-                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#0284c7; width:5.54%; height:100%;"></div></div>
+                <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:#64748b; width:4.77%; height:100%;"></div></div>
               </div>
               <div style="margin-top:10px; font-size:0.75rem; color:#0369a1; font-weight:600;">
-                &bull; Physical Feature (6종) Gini Importance 합계: <strong>33.3%</strong> (Proxy &Delta;E<sub>cplx</sub> 제외)
+                &bull; Physical Feature (6종) Gini Importance 합계: <strong>40.6%</strong> (Proxy &Delta;E<sub>cplx</sub> 제외)
               </div>
             </div>
           </div>
@@ -11423,17 +11448,17 @@ flowchart TD
                     <td style="font-size:0.8rem;">Random Forest (Default)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Base-Only (10)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.873 (Spec 0.500, AUC 0.791)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.873</strong> (Spec 0.500, AUC 0.779)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.836 (Spec 0.400, AUC 0.794)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.855</strong> (Spec 0.400, AUC 0.782)</td>
                   </tr>
 
                   <tr style="">
                     <td style="font-size:0.8rem;">Full Dataset N=55 (Majority 0.818)</td>
                     <td style="font-size:0.8rem;">Random Forest (Default)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Phys-Only (6)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.964 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.836 (Spec 0.100, AUC 0.511)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.782</strong> (Spec 0.000, AUC 0.473)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.836 (Spec 0.300, AUC 0.659)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.800</strong> (Spec 0.100, AUC 0.662)</td>
                   </tr>
 
                   <tr style="background:#f8fafc;">
@@ -11441,8 +11466,8 @@ flowchart TD
                     <td style="font-size:0.8rem;">Random Forest (Default)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Combined (16)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.800 (Spec 0.000, AUC 0.796)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.782</strong> (Spec 0.100, AUC 0.721)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.818 (Spec 0.100, AUC 0.833)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.836</strong> (Spec 0.200, AUC 0.849)</td>
                   </tr>
 
                   <tr style="">
@@ -11450,7 +11475,7 @@ flowchart TD
                     <td style="font-size:0.8rem;">Random Forest (Balanced)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Base-Only (10)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.855 (Spec 0.400, AUC 0.772)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.873 (Spec 0.500, AUC 0.773)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.855</strong> (Spec 0.300, AUC 0.778)</td>
                   </tr>
 
@@ -11459,26 +11484,26 @@ flowchart TD
                     <td style="font-size:0.8rem;">Random Forest (Balanced)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Combined (16)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.818 (Spec 0.100, AUC 0.756)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.800</strong> (Spec 0.000, AUC 0.680)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.818 (Spec 0.100, AUC 0.828)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.855</strong> (Spec 0.200, AUC 0.813)</td>
                   </tr>
 
                   <tr style="">
                     <td style="font-size:0.8rem;">Full Dataset N=55 (Majority 0.818)</td>
                     <td style="font-size:0.8rem;">Logistic Regression (Balanced)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Base-Only (10)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.745 / 0.829</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.691 (Spec 0.400, AUC 0.493)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.618</strong> (Spec 0.500, AUC 0.484)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.691 / 0.787</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.673 (Spec 0.400, AUC 0.449)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.600</strong> (Spec 0.500, AUC 0.422)</td>
                   </tr>
 
                   <tr style="">
                     <td style="font-size:0.8rem;">Full Dataset N=55 (Majority 0.818)</td>
                     <td style="font-size:0.8rem;">Logistic Regression (Balanced)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Combined (16)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.836 / 0.864</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.636 (Spec 0.300, AUC 0.462)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.655</strong> (Spec 0.400, AUC 0.458)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.782 / 0.851</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.655 (Spec 0.400, AUC 0.398)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.618</strong> (Spec 0.400, AUC 0.367)</td>
                   </tr>
 
                   <tr style="">
@@ -11486,8 +11511,8 @@ flowchart TD
                     <td style="font-size:0.8rem;">Random Forest (Default)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Base-Only (10)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.829 (Spec 0.500, AUC 0.850)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.829</strong> (Spec 0.500, AUC 0.833)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.857 (Spec 0.625, AUC 0.847)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.800</strong> (Spec 0.375, AUC 0.836)</td>
                   </tr>
 
                   <tr style="">
@@ -11495,8 +11520,8 @@ flowchart TD
                     <td style="font-size:0.8rem;">Random Forest (Default)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Phys-Only (6)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.714 (Spec 0.000, AUC 0.407)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.714</strong> (Spec 0.125, AUC 0.472)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.800 (Spec 0.375, AUC 0.817)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.743</strong> (Spec 0.250, AUC 0.782)</td>
                   </tr>
 
                   <tr style="background:#f8fafc;">
@@ -11504,14 +11529,14 @@ flowchart TD
                     <td style="font-size:0.8rem;">Random Forest (Default)</td>
                     <td style="font-size:0.8rem; font-weight:600;">Combined (16)</td>
                     <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">1.000 / 1.000</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.743 (Spec 0.125, AUC 0.778)</td>
-                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.686</strong> (Spec 0.000, AUC 0.769)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;">0.771 (Spec 0.375, AUC 0.831)</td>
+                    <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.78rem;"><strong>0.743</strong> (Spec 0.250, AUC 0.836)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div style="margin-top:10px; background:#f8fafc; border-left:4px solid #64748b; padding:10px 14px; font-size:0.82rem; color:#334155; line-height:1.55;">
-              <strong>Validation Analysis:</strong> In-Sample에서 Random Forest는 <code>Accuracy 1.000</code>을 기록하나 Stratified 5-Fold CV 및 LOOCV에서 크게 하락하여($N=55$ Combined LOOCV Accuracy <code>0.782</code>, Specificity <code>0.100</code> vs Base-Only LOOCV Accuracy <code>0.873</code>, Specificity <code>0.500</code>) 소규모 Sample에서의 Overfitting이 확인됩니다. ETKDGv3 비이완 Single-Point <code>7net-0</code> Feature만으로는 <code>Ti(Et)4</code>(&beta;-H 제거)나 <code>ZrMe4</code>(열폭발) 같은 반응 속도론적·가수분해 장벽 결함을 직접 분별할 수 없습니다.
+              <strong>Validation Analysis:</strong> In-Sample에서 Random Forest는 <code>Accuracy 1.000</code>을 기록하나 Stratified 5-Fold CV 및 LOOCV에서 하락하여($N=55$ Combined LOOCV Accuracy <code>0.836</code>, Specificity <code>0.200</code> vs Base-Only LOOCV Accuracy <code>0.855</code>, Specificity <code>0.400</code>) 소규모 Sample에서의 Overfitting이 확인됩니다. 다만 LBFGS 이완·비중첩 이합체·분리 단편 BDE 적용 후 Combined LOOCV AUROC는 <strong><code>0.849</code></strong>로 Base-Only(<code>0.782</code>)를 상회하며, Ground-State <code>7net-0</code> Feature만으로는 <code>Ti(Et)4</code>(&beta;-H 제거)나 <code>ZrMe4</code>(열폭발) 같은 활성화 장벽($\Delta G^\ddagger$) 의존 반응 속도론적 결함을 직접 분별할 수 없으므로 원소군별 Guardrail로 병행 운용합니다(<code>tests/test_benchmark_reproducibility.py</code> 12건 단위 테스트로 Phase 1·SevenNet·LOOCV 결정론적 재현성 검증 완료).
             </div>
           </div>
         </div>
@@ -11522,7 +11547,7 @@ flowchart TD
             <div>
               <h3 class="card-title" style="margin-bottom:2px;">4. [Benchmark Datasheet] 55종 분자 전수 실측 테이블 (Interactive Benchmark Table)</h3>
               <p style="color:var(--text-secondary); font-size:0.84rem; margin:0;">
-                양산 전구체 27종, AS-ALD 인히비터 18종, Negative Control 10종에 대한 Phase 1(수정 산출 BR-SAScore 포함) vs Phase 2(Uniform Physics + SMARTS Screening) 결과입니다.
+                양산 전구체 27종, AS-ALD 인히비터 18종, Negative Control 10종에 대한 Phase 1(정정 SMILES &amp; BR-SAScore 포함) vs Phase 2(Relaxed LBFGS Physics + SMARTS Screening) 결과입니다.
               </p>
             </div>
             <div style="display:flex; gap:8px; align-items:center;">
@@ -11571,11 +11596,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>45.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>37.9</strong> kcal &bull; E<sub>coh</sub>: <strong>3.84</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.6 &bull; Proxy: -5.6 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>41.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>55.5</strong> kcal &bull; E<sub>coh</sub>: <strong>3.89</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -8.0 &bull; Proxy: -8.9 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 5.92)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 4.97)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)N([SiH3])C(C)C</code></td>
             </tr>
 
@@ -11596,11 +11621,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>53.9%</strong></div>
-                <div style="color:#475569;">BDE: <strong>64.0</strong> kcal &bull; E<sub>coh</sub>: <strong>3.98</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +299.5 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>50.4%</strong></div>
+                <div style="color:#475569;">BDE: <strong>77.5</strong> kcal &bull; E<sub>coh</sub>: <strong>4.01</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.4 &bull; Proxy: -24.3 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.05)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.08)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)(C)N[SiH2]NC(C)(C)C</code></td>
             </tr>
 
@@ -11621,9 +11646,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>65.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>60.4</strong> kcal &bull; E<sub>coh</sub>: <strong>3.95</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +11.3 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>62.7%</strong></div>
+                <div style="color:#475569;">BDE: <strong>74.7</strong> kcal &bull; E<sub>coh</sub>: <strong>3.98</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.7 &bull; Proxy: -23.7 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[SiH](N(C)C)N(C)C</code></td>
@@ -11646,11 +11671,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>82.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>103.4</strong> kcal &bull; E<sub>coh</sub>: <strong>3.99</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +1001.9 &bull; Proxy: -24.8 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>76.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>69.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.04</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.3 &bull; Proxy: -25.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.70)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Si](N(C)C)(N(C)C)N(C)C</code></td>
             </tr>
 
@@ -11671,11 +11696,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>36.4%</strong></div>
-                <div style="color:#475569;">BDE: <strong>63.7</strong> kcal &bull; E<sub>coh</sub>: <strong>3.13</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.8 &bull; Proxy: -23.3 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>35.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>76.4</strong> kcal &bull; E<sub>coh</sub>: <strong>3.14</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -7.9 &bull; Proxy: -9.2 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.72)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 5.90)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>[SiH3]N([SiH3])[SiH3]</code></td>
             </tr>
 
@@ -11696,11 +11721,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>57.7%</strong></div>
-                <div style="color:#475569;">BDE: <strong>46.2</strong> kcal &bull; E<sub>coh</sub>: <strong>3.01</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +512.1 &bull; Proxy: -19.3 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>56.4%</strong></div>
+                <div style="color:#475569;">BDE: <strong>42.2</strong> kcal &bull; E<sub>coh</sub>: <strong>3.04</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.5 &bull; Proxy: -10.3 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.38)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.82)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>Cl[Si](Cl)(Cl)[Si](Cl)(Cl)Cl</code></td>
             </tr>
 
@@ -11721,9 +11746,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>61.9%</strong></div>
-                <div style="color:#475569;">BDE: <strong>99.1</strong> kcal &bull; E<sub>coh</sub>: <strong>4.15</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -4.1 &bull; Proxy: -16.7 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>56.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>95.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.19</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.1 &bull; Proxy: -24.8 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCO[Si](OCC)(OCC)OCC</code></td>
@@ -11746,11 +11771,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>51.2%</strong></div>
-                <div style="color:#475569;">BDE: <strong>64.0</strong> kcal &bull; E<sub>coh</sub>: <strong>3.92</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +1.8 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>48.7%</strong></div>
+                <div style="color:#475569;">BDE: <strong>61.8</strong> kcal &bull; E<sub>coh</sub>: <strong>3.96</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.0 &bull; Proxy: -24.9 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.16)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.21)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)N(C(C)C)[SiH2]C</code></td>
             </tr>
 
@@ -11771,11 +11796,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>78.0%</strong></div>
-                <div style="color:#475569;">BDE: <strong>70.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.08</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +20.5 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>66.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>69.2</strong> kcal &bull; E<sub>coh</sub>: <strong>4.14</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.6 &bull; Proxy: -21.8 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.33)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.31)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCN(C)[Hf](N(C)CC)(N(C)CC)N(C)CC</code></td>
             </tr>
 
@@ -11796,11 +11821,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>77.0%</strong></div>
-                <div style="color:#475569;">BDE: <strong>72.5</strong> kcal &bull; E<sub>coh</sub>: <strong>4.04</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +160.0 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>64.5%</strong></div>
+                <div style="color:#475569;">BDE: <strong>69.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.11</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.2 &bull; Proxy: -25.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.03)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Hf](N(C)C)(N(C)C)N(C)C</code></td>
             </tr>
 
@@ -11821,11 +11846,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>80.3%</strong></div>
-                <div style="color:#475569;">BDE: <strong>84.2</strong> kcal &bull; E<sub>coh</sub>: <strong>4.21</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +1074.7 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>55.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>79.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.27</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.1 &bull; Proxy: -25.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.19)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.05)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)(C)O[Hf](OC(C)(C)C)(OC(C)(C)C)OC(C)(C)C</code></td>
             </tr>
 
@@ -11846,11 +11871,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>77.2%</strong></div>
-                <div style="color:#475569;">BDE: <strong>67.6</strong> kcal &bull; E<sub>coh</sub>: <strong>4.06</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +20.9 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>65.3%</strong></div>
+                <div style="color:#475569;">BDE: <strong>68.5</strong> kcal &bull; E<sub>coh</sub>: <strong>4.12</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.4 &bull; Proxy: -22.1 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.32)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.31)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCN(C)[Zr](N(C)CC)(N(C)CC)N(C)CC</code></td>
             </tr>
 
@@ -11871,9 +11896,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>76.3%</strong></div>
-                <div style="color:#475569;">BDE: <strong>83.7</strong> kcal &bull; E<sub>coh</sub>: <strong>4.02</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +146.3 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>63.1%</strong></div>
+                <div style="color:#475569;">BDE: <strong>72.1</strong> kcal &bull; E<sub>coh</sub>: <strong>4.09</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.1 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Zr](N(C)C)(N(C)C)N(C)C</code></td>
@@ -11896,22 +11921,22 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>62.8%</strong></div>
-                <div style="color:#475569;">BDE: <strong>50.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.40</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -4.2 &bull; Proxy: -16.5 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>52.7%</strong></div>
+                <div style="color:#475569;">BDE: <strong>67.9</strong> kcal &bull; E<sub>coh</sub>: <strong>4.50</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.0 &bull; Proxy: -25.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.48)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.27)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CO[Zr](C)(C1=CC=C(C)C1)C2=CC=C(C)C2</code></td>
             </tr>
 
-            <tr class="benchmark-row" data-type="prec" data-search="prec_hk_07 cp(nme2)3zr c11h24n3zr semiconductor precursor precursor cn(c)[zr](n(c)c)(n(c)c)c1=cc=cc1">
+            <tr class="benchmark-row" data-type="prec" data-search="prec_hk_07 cp(nme2)3zr c11h23n3zr semiconductor precursor precursor cn(c)[zr](n(c)c)(n(c)c)c1=cc=cc1">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">15</td>
               <td style="white-space:nowrap;">
                 <strong>Cp(NMe2)3Zr</strong>
                 <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_HK_07</div>
               </td>
               <td>
-                <div style="font-weight:600; color:#0f172a; font-size:0.8rem;">C11H24N3Zr</div>
+                <div style="font-weight:600; color:#0f172a; font-size:0.8rem;">C11H23N3Zr</div>
                 <div style="font-size:0.75rem; color:#64748b;">Semiconductor Precursor</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Precursor</span></td>
@@ -11921,9 +11946,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>74.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>117.1</strong> kcal &bull; E<sub>coh</sub>: <strong>4.21</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +180.3 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>62.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>70.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.27</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.0 &bull; Proxy: -24.9 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.31)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Zr](N(C)C)(N(C)C)C1=CC=CC1</code></td>
@@ -11946,9 +11971,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>73.6%</strong></div>
-                <div style="color:#475569;">BDE: <strong>67.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.03</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +82.9 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>69.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>65.9</strong> kcal &bull; E<sub>coh</sub>: <strong>4.08</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -3.1 &bull; Proxy: -18.8 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Ti](N(C)C)(N(C)C)N(C)C</code></td>
@@ -11971,22 +11996,22 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>60.6%</strong></div>
-                <div style="color:#475569;">BDE: <strong>56.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.19</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +36.6 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>53.7%</strong></div>
+                <div style="color:#475569;">BDE: <strong>81.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.24</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: -0.0 &bull; Proxy: -25.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.05)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.04)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C</code></td>
             </tr>
 
-            <tr class="benchmark-row" data-type="prec" data-search="prec_ti_03 cpti(nme2)3 c11h24n3ti semiconductor precursor precursor cn(c)[ti](n(c)c)(n(c)c)c1=cc=cc1">
+            <tr class="benchmark-row" data-type="prec" data-search="prec_ti_03 cpti(nme2)3 c11h23n3ti semiconductor precursor precursor cn(c)[ti](n(c)c)(n(c)c)c1=cc=cc1">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">18</td>
               <td style="white-space:nowrap;">
                 <strong>CpTi(NMe2)3</strong>
                 <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_TI_03</div>
               </td>
               <td>
-                <div style="font-weight:600; color:#0f172a; font-size:0.8rem;">C11H24N3Ti</div>
+                <div style="font-weight:600; color:#0f172a; font-size:0.8rem;">C11H23N3Ti</div>
                 <div style="font-size:0.75rem; color:#64748b;">Semiconductor Precursor</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Precursor</span></td>
@@ -11996,9 +12021,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>70.5%</strong></div>
-                <div style="color:#475569;">BDE: <strong>76.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.23</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +132.5 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>69.5%</strong></div>
+                <div style="color:#475569;">BDE: <strong>68.3</strong> kcal &bull; E<sub>coh</sub>: <strong>4.27</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.0 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.31)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1</code></td>
@@ -12021,11 +12046,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>41.7%</strong></div>
-                <div style="color:#475569;">BDE: <strong>87.9</strong> kcal &bull; E<sub>coh</sub>: <strong>3.71</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -2.5 &bull; Proxy: -20.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>41.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>70.6</strong> kcal &bull; E<sub>coh</sub>: <strong>3.73</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.2 &bull; Proxy: -22.6 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.95)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.13)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C[Al](C)C</code></td>
             </tr>
 
@@ -12047,10 +12072,10 @@ flowchart TD
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
                 <div>%V<sub>bur</sub>: <strong>31.8%</strong></div>
-                <div style="color:#475569;">BDE: <strong>56.8</strong> kcal &bull; E<sub>coh</sub>: <strong>3.53</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +2.6 &bull; Proxy: -25.0 kcal</div>
+                <div style="color:#475569;">BDE: <strong>77.4</strong> kcal &bull; E<sub>coh</sub>: <strong>3.54</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -2.3 &bull; Proxy: -20.5 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.15)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.48)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C[AlH]C</code></td>
             </tr>
 
@@ -12071,11 +12096,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>79.6%</strong></div>
-                <div style="color:#475569;">BDE: <strong>97.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.02</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +165.1 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>63.5%</strong></div>
+                <div style="color:#475569;">BDE: <strong>70.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.18</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.0 &bull; Proxy: -23.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.12)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.05)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[W](=NC(C)(C)C)(=NC(C)(C)C)N(C)C</code></td>
             </tr>
 
@@ -12096,18 +12121,18 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>73.4%</strong></div>
-                <div style="color:#475569;">BDE: <strong>101.9</strong> kcal &bull; E<sub>coh</sub>: <strong>4.02</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +272.8 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>65.3%</strong></div>
+                <div style="color:#475569;">BDE: <strong>65.7</strong> kcal &bull; E<sub>coh</sub>: <strong>4.12</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.1 &bull; Proxy: -24.9 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.05)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Mo](=NC(C)(C)C)(=NC(C)(C)C)N(C)C</code></td>
             </tr>
 
-            <tr class="benchmark-row" data-type="prec" data-search="prec_met_03 ru(etcp)2 c14h18ru semiconductor precursor precursor ccc1=cc=cc1.[ru].ccc2=cc=cc2">
+            <tr class="benchmark-row" data-type="prec" data-search="prec_met_03 ru(etcp)2 c14h18ru semiconductor precursor precursor ccc1=cc=c([ru]c2=cc=c(cc)c2)c1">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">23</td>
               <td style="white-space:nowrap;">
-                <strong>Ru(EtCp)2</strong> <span style="font-size:0.68rem; color:#b45309; font-weight:700;">[Fallback]</span>
+                <strong>Ru(EtCp)2</strong>
                 <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_03</div>
               </td>
               <td>
@@ -12116,17 +12141,17 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Precursor</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>SA: <span style="color:#15803d; font-weight:700;">3.48</span> &bull; SC: <span style="color:#15803d; font-weight:700;">1.94</span></div>
-                <div style="color:#475569;">BR: 4.18 &bull; Lig: <strong>3.13</strong></div>
+                <div>SA: <span style="color:#dc2626; font-weight:700;">4.70</span> &bull; SC: <span style="color:#dc2626; font-weight:700;">2.27</span></div>
+                <div style="color:#475569;">BR: 7.48 &bull; Lig: <strong>3.13</strong></div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>52.5%</strong></div>
-                <div style="color:#475569;">BDE: <strong>60.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.10</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +15.0 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>36.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>95.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.50</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -3.2 &bull; Proxy: -18.5 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.13)</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCC1=CC=CC1.[Ru].CCC2=CC=CC2</code></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 6.03)</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCC1=CC=C([Ru]C2=CC=C(CC)C2)C1</code></td>
             </tr>
 
             <tr class="benchmark-row" data-type="prec" data-search="prec_met_04 co(amd)2 c16h34con4 semiconductor precursor precursor cc(c)n=c(c)n(c(c)c)[co]n(c(c)c)c(c)=nc(c)c">
@@ -12146,37 +12171,37 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>52.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>46.5</strong> kcal &bull; E<sub>coh</sub>: <strong>4.15</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +548.6 &bull; Proxy: -19.8 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>53.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>55.6</strong> kcal &bull; E<sub>coh</sub>: <strong>4.18</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.7 &bull; Proxy: -21.6 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 4.11)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.03)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)N=C(C)N(C(C)C)[Co]N(C(C)C)C(C)=NC(C)C</code></td>
             </tr>
 
-            <tr class="benchmark-row" data-type="prec" data-search="prec_met_05 cctba c12h9co2o6 semiconductor precursor precursor cc(c)(c)c#c.[co](=o)(=o)=o.[co](=o)(=o)=o">
+            <tr class="benchmark-row" data-type="prec" data-search="prec_met_05 cctba c12h10co2o6 semiconductor precursor precursor cc(c)(c)c12[ch]3[co]1([c-]#[o+])([c-]#[o+])([c-]#[o+])[co]23([c-]#[o+])([c-]#[o+])[c-]#[o+]">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">25</td>
               <td style="white-space:nowrap;">
-                <strong>CCTBA</strong> <span style="font-size:0.68rem; color:#b45309; font-weight:700;">[Fallback]</span>
+                <strong>CCTBA</strong>
                 <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#64748b;">PREC_MET_05</div>
               </td>
               <td>
-                <div style="font-weight:600; color:#0f172a; font-size:0.8rem;">C12H9Co2O6</div>
+                <div style="font-weight:600; color:#0f172a; font-size:0.8rem;">C12H10Co2O6</div>
                 <div style="font-size:0.75rem; color:#64748b;">Semiconductor Precursor</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge badge-prec" style="font-size:0.75rem;">Precursor</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>SA: <span style="color:#dc2626; font-weight:700;">4.82</span> &bull; SC: <span style="color:#15803d; font-weight:700;">1.48</span></div>
-                <div style="color:#475569;">BR: 8.91 &bull; Lig: <strong>2.86</strong></div>
+                <div>SA: <span style="color:#dc2626; font-weight:700;">5.52</span> &bull; SC: <span style="color:#dc2626; font-weight:700;">2.32</span></div>
+                <div style="color:#475569;">BR: 10.00 &bull; Lig: <strong>1.99</strong></div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>55.8%</strong></div>
-                <div style="color:#475569;">BDE: <strong>60.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.10</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +15.0 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>65.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>11.1</strong> kcal &bull; E<sub>coh</sub>: <strong>4.78</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -3.5 &bull; Proxy: +40.4 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.86)</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O</code></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 5.49)</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)(C)C12[CH]3[Co]1([C-]#[O+])([C-]#[O+])([C-]#[O+])[Co]23([C-]#[O+])([C-]#[O+])[C-]#[O+]</code></td>
             </tr>
 
             <tr class="benchmark-row" data-type="prec" data-search="prec_met_06 tbtdet c16h39n4ta semiconductor precursor precursor ccn(cc)[ta](=nc(c)(c)c)(n(cc)cc)n(cc)cc">
@@ -12196,9 +12221,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>72.2%</strong></div>
-                <div style="color:#475569;">BDE: <strong>64.2</strong> kcal &bull; E<sub>coh</sub>: <strong>4.13</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +593.1 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>71.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>76.1</strong> kcal &bull; E<sub>coh</sub>: <strong>4.19</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.3 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.14)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCN(CC)[Ta](=NC(C)(C)C)(N(CC)CC)N(CC)CC</code></td>
@@ -12221,11 +12246,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>69.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>70.1</strong> kcal &bull; E<sub>coh</sub>: <strong>4.05</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +244.7 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>64.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>3.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.07</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.0 &bull; Proxy: +44.3 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.04)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 4.54)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(C)O[Sn](C(C)(C)C)(OC(C)C)OC(C)C</code></td>
             </tr>
 
@@ -12246,9 +12271,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>69.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>83.3</strong> kcal &bull; E<sub>coh</sub>: <strong>3.96</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +108.5 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>66.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>68.1</strong> kcal &bull; E<sub>coh</sub>: <strong>3.98</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.2 &bull; Proxy: -24.6 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CN(C)[Si](C)(C)N(C)C</code></td>
@@ -12271,9 +12296,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>62.9%</strong></div>
-                <div style="color:#475569;">BDE: <strong>111.9</strong> kcal &bull; E<sub>coh</sub>: <strong>3.93</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +32.1 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>61.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>68.3</strong> kcal &bull; E<sub>coh</sub>: <strong>3.94</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: -0.0 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C[Si](C)(C)N(C)C</code></td>
@@ -12296,9 +12321,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>71.9%</strong></div>
-                <div style="color:#475569;">BDE: <strong>118.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.00</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +12.4 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>67.1%</strong></div>
+                <div style="color:#475569;">BDE: <strong>66.9</strong> kcal &bull; E<sub>coh</sub>: <strong>4.03</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.4 &bull; Proxy: -24.3 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.31)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCN(C)[Si](C)(C)N(C)CC</code></td>
@@ -12321,9 +12346,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>63.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>104.0</strong> kcal &bull; E<sub>coh</sub>: <strong>3.93</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +90.4 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>61.0%</strong></div>
+                <div style="color:#475569;">BDE: <strong>71.3</strong> kcal &bull; E<sub>coh</sub>: <strong>3.95</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.7 &bull; Proxy: -23.7 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.00)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C[Si](C)(C)N[Si](C)(C)C</code></td>
@@ -12346,11 +12371,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>54.7%</strong></div>
-                <div style="color:#475569;">BDE: <strong>61.0</strong> kcal &bull; E<sub>coh</sub>: <strong>3.80</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +29.2 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>54.3%</strong></div>
+                <div style="color:#475569;">BDE: <strong>75.3</strong> kcal &bull; E<sub>coh</sub>: <strong>3.81</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -2.3 &bull; Proxy: -20.5 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.01)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.02)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C[Si](C)(C)Cl</code></td>
             </tr>
 
@@ -12371,11 +12396,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>31.3%</strong></div>
-                <div style="color:#475569;">BDE: <strong>118.3</strong> kcal &bull; E<sub>coh</sub>: <strong>3.74</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -3.1 &bull; Proxy: -18.8 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>30.7%</strong></div>
+                <div style="color:#475569;">BDE: <strong>79.5</strong> kcal &bull; E<sub>coh</sub>: <strong>4.17</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -2.3 &bull; Proxy: -20.4 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.46)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.44)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C#CCN</code></td>
             </tr>
 
@@ -12396,9 +12421,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>34.3%</strong></div>
-                <div style="color:#475569;">BDE: <strong>112.3</strong> kcal &bull; E<sub>coh</sub>: <strong>4.05</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +3.0 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>34.0%</strong></div>
+                <div style="color:#475569;">BDE: <strong>63.6</strong> kcal &bull; E<sub>coh</sub>: <strong>4.07</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -2.8 &bull; Proxy: -19.4 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.16)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C=CCN</code></td>
@@ -12421,9 +12446,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>59.5%</strong></div>
-                <div style="color:#475569;">BDE: <strong>60.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.07</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +29.9 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>57.4%</strong></div>
+                <div style="color:#475569;">BDE: <strong>62.6</strong> kcal &bull; E<sub>coh</sub>: <strong>4.11</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.2 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.00)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCCCCCCCCCCCCCCCCC[Si](Cl)(Cl)Cl</code></td>
@@ -12446,9 +12471,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>54.5%</strong></div>
-                <div style="color:#475569;">BDE: <strong>61.8</strong> kcal &bull; E<sub>coh</sub>: <strong>3.75</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +478.5 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>53.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>63.5</strong> kcal &bull; E<sub>coh</sub>: <strong>3.83</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.8 &bull; Proxy: -21.5 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.69)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>Cl[Si](Cl)(Cl)CCC(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)C(F)(F)F</code></td>
@@ -12471,9 +12496,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>33.8%</strong></div>
-                <div style="color:#475569;">BDE: <strong>59.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.08</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +5.7 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>33.1%</strong></div>
+                <div style="color:#475569;">BDE: <strong>88.7</strong> kcal &bull; E<sub>coh</sub>: <strong>4.11</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.5 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.94)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCCCCCCCCCCCS</code></td>
@@ -12496,9 +12521,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>31.0%</strong></div>
-                <div style="color:#475569;">BDE: <strong>64.1</strong> kcal &bull; E<sub>coh</sub>: <strong>4.03</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +11.1 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>30.3%</strong></div>
+                <div style="color:#475569;">BDE: <strong>87.6</strong> kcal &bull; E<sub>coh</sub>: <strong>4.06</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.6 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.03)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCCCCCCCS</code></td>
@@ -12521,9 +12546,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>29.5%</strong></div>
-                <div style="color:#475569;">BDE: <strong>56.6</strong> kcal &bull; E<sub>coh</sub>: <strong>3.70</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +2.1 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>29.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>80.4</strong> kcal &bull; E<sub>coh</sub>: <strong>3.73</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.5 &bull; Proxy: -24.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 1.04)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCS</code></td>
@@ -12546,11 +12571,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>36.5%</strong></div>
-                <div style="color:#475569;">BDE: <strong>114.2</strong> kcal &bull; E<sub>coh</sub>: <strong>4.97</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +12.7 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>36.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>34.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.99</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -4.2 &bull; Proxy: +6.2 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.53)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 6.01)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>c1ccc2[nH]nnc2c1</code></td>
             </tr>
 
@@ -12571,11 +12596,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>32.1%</strong></div>
-                <div style="color:#475569;">BDE: <strong>90.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.84</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.3 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>32.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>34.6</strong> kcal &bull; E<sub>coh</sub>: <strong>4.87</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.6 &bull; Proxy: +1.4 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.61)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fffbeb; color:#b45309; border:1px solid #fcd34d; font-weight:700;">FN (SA 6.09)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>Cc1ccc2[nH]nnc2c1</code></td>
             </tr>
 
@@ -12596,9 +12621,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>30.3%</strong></div>
-                <div style="color:#475569;">BDE: <strong>127.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.59</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -6.2 &bull; Proxy: -12.7 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>30.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>95.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.63</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -10.2 &bull; Proxy: -4.7 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.45)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>c1c[nH]cn1</code></td>
@@ -12621,9 +12646,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>30.2%</strong></div>
-                <div style="color:#475569;">BDE: <strong>78.3</strong> kcal &bull; E<sub>coh</sub>: <strong>4.52</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -5.7 &bull; Proxy: -13.7 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>30.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>60.7</strong> kcal &bull; E<sub>coh</sub>: <strong>4.57</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -10.3 &bull; Proxy: -4.3 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 3.74)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>c1cc[nH]n1</code></td>
@@ -12646,9 +12671,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>30.9%</strong></div>
-                <div style="color:#475569;">BDE: <strong>84.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.14</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +5.5 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>30.6%</strong></div>
+                <div style="color:#475569;">BDE: <strong>86.7</strong> kcal &bull; E<sub>coh</sub>: <strong>4.19</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.1 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.03)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCCCCCCCCCCCCCCCCCP(=O)(O)O</code></td>
@@ -12671,9 +12696,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>30.4%</strong></div>
-                <div style="color:#475569;">BDE: <strong>126.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.35</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.8 &bull; Proxy: -23.3 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>31.0%</strong></div>
+                <div style="color:#475569;">BDE: <strong>67.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.38</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -4.3 &bull; Proxy: -16.3 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-weight:700;">TP (SA 2.17)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC(=O)CC(=O)C</code></td>
@@ -12696,11 +12721,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>64.9%</strong></div>
-                <div style="color:#475569;">BDE: <strong>64.5</strong> kcal &bull; E<sub>coh</sub>: <strong>4.00</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +175.6 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>67.7%</strong></div>
+                <div style="color:#475569;">BDE: <strong>52.4</strong> kcal &bull; E<sub>coh</sub>: <strong>4.02</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.4 &bull; Proxy: -25.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 1.01)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 1.09)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC[Ti](CC)(CC)CC</code></td>
             </tr>
 
@@ -12721,11 +12746,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>55.7%</strong></div>
-                <div style="color:#475569;">BDE: <strong>50.9</strong> kcal &bull; E<sub>coh</sub>: <strong>3.72</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +3.2 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>49.2%</strong></div>
+                <div style="color:#475569;">BDE: <strong>71.7</strong> kcal &bull; E<sub>coh</sub>: <strong>3.88</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.3 &bull; Proxy: -22.4 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 1.18)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 1.11)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C[Zr](C)(C)C</code></td>
             </tr>
 
@@ -12746,11 +12771,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>32.2%</strong></div>
-                <div style="color:#475569;">BDE: <strong>59.3</strong> kcal &bull; E<sub>coh</sub>: <strong>3.81</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.8 &bull; Proxy: -23.3 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>31.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>15.5</strong> kcal &bull; E<sub>coh</sub>: <strong>3.90</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.5 &bull; Proxy: +27.6 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 2.23)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (Physics 5.43)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C1=C[SiH2]C=1</code></td>
             </tr>
 
@@ -12771,11 +12796,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>86.4%</strong></div>
-                <div style="color:#475569;">BDE: <strong>117.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.84</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +616.0 &bull; Proxy: -9.5 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>79.1%</strong></div>
+                <div style="color:#475569;">BDE: <strong>53.9</strong> kcal &bull; E<sub>coh</sub>: <strong>5.01</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.0 &bull; Proxy: -25.0 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (Physics 4.32)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 1.08)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>c1ccccc1[W](c2ccccc2)(c3ccccc3)(c4ccccc4)c5ccccc5</code></td>
             </tr>
 
@@ -12796,9 +12821,9 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>35.3%</strong></div>
-                <div style="color:#475569;">BDE: <strong>141.0</strong> kcal &bull; E<sub>coh</sub>: <strong>4.11</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +7.4 &bull; Proxy: -25.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>33.1%</strong></div>
+                <div style="color:#475569;">BDE: <strong>88.8</strong> kcal &bull; E<sub>coh</sub>: <strong>4.12</strong> eV</div>
+                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +0.3 &bull; Proxy: -25.0 kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (SMARTS 1.01)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CCCCCCCCCC</code></td>
@@ -12821,11 +12846,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>51.6%</strong></div>
-                <div style="color:#475569;">BDE: <strong>46.8</strong> kcal &bull; E<sub>coh</sub>: <strong>3.68</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +62.0 &bull; Proxy: -20.2 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>51.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>49.4</strong> kcal &bull; E<sub>coh</sub>: <strong>3.76</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.8 &bull; Proxy: -22.4 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (SMARTS 3.56)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (SMARTS 2.90)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>O=C(O)C(Cl)(Cl)Cl</code></td>
             </tr>
 
@@ -12846,11 +12871,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>37.7%</strong></div>
-                <div style="color:#475569;">BDE: <strong>104.7</strong> kcal &bull; E<sub>coh</sub>: <strong>4.36</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.5 &bull; Proxy: -24.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>37.4%</strong></div>
+                <div style="color:#475569;">BDE: <strong>101.9</strong> kcal &bull; E<sub>coh</sub>: <strong>4.45</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -2.9 &bull; Proxy: -19.2 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 1.90)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 3.70)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>O[Ti](O)(O)O</code></td>
             </tr>
 
@@ -12871,11 +12896,11 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>66.2%</strong></div>
-                <div style="color:#475569;">BDE: <strong>42.9</strong> kcal &bull; E<sub>coh</sub>: <strong>3.89</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +23.6 &bull; Proxy: -14.3 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>71.1%</strong></div>
+                <div style="color:#475569;">BDE: <strong>35.3</strong> kcal &bull; E<sub>coh</sub>: <strong>3.92</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -0.5 &bull; Proxy: -1.9 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA 3.61)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (Physics 4.48)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>CC[Co](CC)(CC)CC</code></td>
             </tr>
 
@@ -12896,15 +12921,15 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>39.7%</strong></div>
-                <div style="color:#475569;">BDE: <strong>40.9</strong> kcal &bull; E<sub>coh</sub>: <strong>2.87</strong> eV</div>
-                <div style="font-size:0.72rem; color:#059669;">&Delta;E<sub>dim</sub>: +3.1 &bull; Proxy: -11.3 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>38.9%</strong></div>
+                <div style="color:#475569;">BDE: <strong>46.5</strong> kcal &bull; E<sub>coh</sub>: <strong>2.89</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -1.7 &bull; Proxy: -16.3 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (Physics 4.13)</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (Physics 5.77)</span></td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>Cl[SiH2][SiH2]Cl</code></td>
             </tr>
 
-            <tr class="benchmark-row" data-type="neg" data-search="neg-010 cp2alh (bis(cyclopentadienyl)aluminium hydride) c10h11al valence/hapticity collapse negative control c1=cc=c[c]1[alh][c]2c=cc=c2">
+            <tr class="benchmark-row" data-type="neg" data-search="neg-010 cp2alh (bis(cyclopentadienyl)aluminium hydride) c10h11al valence/hapticity collapse negative control c1=cc=cc1[alh]c1c=cc=c1">
               <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem; color:#64748b;">55</td>
               <td style="white-space:nowrap;">
                 <strong>Cp2AlH (Bis(cyclopentadienyl)aluminium hydride)</strong>
@@ -12916,17 +12941,17 @@ flowchart TD
               </td>
               <td style="text-align:center; white-space:nowrap;"><span class="badge badge-4g" style="font-size:0.75rem; background:#fee2e2; color:#991b1b; border:1px solid #f87171;">Negative Control</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>SA: <span style="color:#dc2626; font-weight:700;">4.64</span> &bull; SC: <span style="color:#15803d; font-weight:700;">1.81</span></div>
-                <div style="color:#475569;">BR: 7.30 &bull; Lig: <strong>3.31</strong></div>
+                <div>SA: <span style="color:#dc2626; font-weight:700;">4.74</span> &bull; SC: <span style="color:#15803d; font-weight:700;">1.40</span></div>
+                <div style="color:#475569;">BR: 7.21 &bull; Lig: <strong>3.31</strong></div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span></td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>42.4%</strong></div>
-                <div style="color:#475569;">BDE: <strong>61.6</strong> kcal &bull; E<sub>coh</sub>: <strong>4.62</strong> eV</div>
-                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -4.5 &bull; Proxy: -16.0 kcal</div>
+                <div>%V<sub>bur</sub>: <strong>61.8%</strong></div>
+                <div style="color:#475569;">BDE: <strong>29.7</strong> kcal &bull; E<sub>coh</sub>: <strong>4.60</strong> eV</div>
+                <div style="font-size:0.72rem; color:#dc2626;">&Delta;E<sub>dim</sub>: -14.1 &bull; Proxy: +33.7 kcal</div>
               </td>
-              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (Physics 5.62)</span></td>
-              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C1=CC=C[C]1[AlH][C]2C=CC=C2</code></td>
+              <td style="text-align:center; white-space:nowrap;"><span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN (Physics 6.81)</span></td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>C1=CC=CC1[AlH]C1C=CC=C1</code></td>
             </tr>
               </tbody>
             </table>

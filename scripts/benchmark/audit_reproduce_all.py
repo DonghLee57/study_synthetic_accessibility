@@ -66,8 +66,8 @@ def run_full_audit():
         assert abs(score - expected) < 1e-2, f"SAScore mismatch for {p['name']}: {score} vs {expected}"
         if score <= 3.5:
             sa_pass += 1
-    print(f"  -> Recalculated SAScore for all 27 precursors. Pass (<=3.5): {sa_pass}/27 (Expected: 3/27, 11.1%)")
-    assert sa_pass == 3, f"Expected 3 passes, got {sa_pass}"
+    print(f"  -> Recalculated SAScore for all 27 precursors. Pass (<=3.5): {sa_pass}/27 (Expected: 2/27, 7.4%)")
+    assert sa_pass == 2, f"Expected 2 passes, got {sa_pass}"
 
     # 2. Recalculate SCScore (NumPy Standalone)
     print("\n[CHECK 2/9] Recalculating SCScore (Reaxys NumPy Standalone, 1024bool)...")
@@ -82,8 +82,8 @@ def run_full_audit():
         assert abs(score - expected) < 1e-2, f"SCScore mismatch for {p['name']}: {score} vs {expected}"
         if score <= 2.0:
             sc_pass += 1
-    print(f"  -> Recalculated SCScore for all 27 precursors. Pass (<=2.0): {sc_pass}/27 (Expected: 23/27, 85.2%)")
-    assert sc_pass == 23, f"Expected 23 passes, got {sc_pass}"
+    print(f"  -> Recalculated SCScore for all 27 precursors. Pass (<=2.0): {sc_pass}/27 (Expected: 21/27, 77.8%)")
+    assert sc_pass == 21, f"Expected 21 passes, got {sc_pass}"
 
     # 3. Recalculate SYBA (Naive Bayesian)
     print("\n[CHECK 3/9] Recalculating SYBA (with syba.csv.gz; method deviation noted)...")
@@ -194,7 +194,7 @@ def run_full_audit():
     assert br_strict_pass == 3, f"Expected 3 strict passes, got {br_strict_pass}"
     worsened_zero = [p["name"] for p in precursors if stored_results[p["id"]]["br_sascore_custom_strict_zero_overwrite"] > stored_results[p["id"]]["br_sascore_default"]]
     print(f"  -> Methodological Note: Using max(existing, -0.47) prevents the 0.0-overwrite exclusion artifact")
-    print(f"     (which worsened 4 precursors {worsened_zero}) while confirming 3/27 pass rate.")
+    print(f"     (which worsened {len(worsened_zero)} precursors {worsened_zero}) while confirming 3/27 pass rate.")
 
     # 6. Verify BioNeMo ReaSyn Tokenizer Roundtrip & Decoding Offset Bug Analysis
     print("\n[CHECK 6/9] Auditing BioNeMo ReaSyn Tokenizer & Decoding Offset...")

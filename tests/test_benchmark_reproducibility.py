@@ -12,6 +12,7 @@ Usage:
 
 import copy
 import csv
+import importlib.util
 import json
 import math
 import os
@@ -25,6 +26,8 @@ from rdkit.Chem import AllChem, RDConfig, rdMolDescriptors
 import xgboost as xgb
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "scscore"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "external", "reasyn"))
@@ -68,6 +71,11 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             mol = Chem.MolFromSmiles(p["smiles"])
             self.assertIsNotNone(mol, f"SMILES parsing failed for {p['name']}: {p['smiles']}")
             self.assertTrue(len(p.get("metal_center", "")) > 0 or len(p.get("metal", "")) > 0)
+            self.assertEqual(
+                rdMolDescriptors.CalcMolFormula(mol),
+                p["formula"],
+                f"Formula mismatch for {p['name']}: JSON={p['formula']} vs RDKit={rdMolDescriptors.CalcMolFormula(mol)}",
+            )
 
     def test_02_sascore_recalculation(self):
         """Recalculate RDKit SAScore and assert against database values."""
@@ -79,7 +87,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             self.assertAlmostEqual(score, expected, places=2, msg=f"SAScore mismatch for {p['name']}")
             if score <= 3.5:
                 pass_count += 1
-        self.assertEqual(pass_count, 3, "SAScore should pass exactly 3 out of 27 precursors (TSA, TMA, DMAH)")
+        self.assertEqual(pass_count, 2, "SAScore should pass 2 out of 27 precursors (TEOS, 4DMAS) after connected metallocene SMILES fix")
 
     def test_03_scscore_recalculation(self):
         """Recalculate SCScore with patched standalone NumPy runner (full_reaxys_model_1024bool)."""
@@ -95,7 +103,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             self.assertAlmostEqual(score, expected, places=2, msg=f"SCScore mismatch for {p['name']}")
             if score <= 2.0:
                 pass_count += 1
-        self.assertEqual(pass_count, 23, "SCScore should pass exactly 23 out of 27 precursors (<=2.0)")
+        self.assertEqual(pass_count, 21, "SCScore should pass 21 out of 27 precursors (<=2.0) after Ru(EtCp)2 & CCTBA SMILES fix")
 
     def test_04_syba_recalculation(self):
         """Recalculate SYBA score using default syba.csv.gz count table."""
@@ -235,11 +243,11 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(strict_passes, 3, "BR-SAScore Strict Reagent Domain (Unleaked) should pass exactly 3/27 (TSA, TMA, DMAH)")
         self.assertEqual(leaked_passes, 27, "BR-SAScore Product-Memorized baseline confirms 27/27 circular data leakage")
 
-        # Verify that max(existing, -0.47) worsens 0 precursors, whereas 0.0-overwriting worsens 4 specific precursors
+        # Verify that max(existing, -0.47) worsens 0 precursors, whereas 0.0-overwriting worsens 3 Cp/amidinate precursors
         worsened_strict = [p["name"] for p in self.precursors if self.stored_results[p["id"]]["br_sascore_custom_strict"] > self.stored_results[p["id"]]["br_sascore_default"]]
         self.assertEqual(worsened_strict, [])
         worsened_zero = [p["name"] for p in self.precursors if self.stored_results[p["id"]]["br_sascore_custom_strict_zero_overwrite"] > self.stored_results[p["id"]]["br_sascore_default"]]
-        self.assertEqual(sorted(worsened_zero), sorted(["Cp(NMe2)3Zr", "CpTi(NMe2)3", "Ru(EtCp)2", "Co(AMD)2"]))
+        self.assertEqual(sorted(worsened_zero), sorted(["Cp(NMe2)3Zr", "CpTi(NMe2)3", "Co(AMD)2"]))
 
     def test_07_reasyn_lossless_tokenization(self):
         """Verify BioNeMo ReaSyn universal tokenizer losslessly roundtrips all 27 SMILES."""
@@ -347,6 +355,103 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             self.assertIsNotNone(az_mol.rd_mol, f"AiZynthFinder Molecule failed for {p['name']}")
             rdc_obj = rdchiralReactants(p["smiles"])
             self.assertIsNotNone(rdc_obj.reactants, f"rdchiralReactants failed for {p['name']}")
+
+    @staticmethod
+    def _load_script_module(rel_path: str, module_name: str):
+        full_path = os.path.join(PROJECT_ROOT, rel_path)
+        spec = importlib.util.spec_from_file_location(module_name, full_path)
+        if spec is None or spec.loader is None:
+            raise ImportError(f"Could not load module from {full_path}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def test_10_phase1_55_molecule_baseline_reproducibility(self):
+        """Verify 55-molecule Phase 1 baseline integrity, formula parity, and deterministic SAScore/BR-SAScore metrics."""
+        p1_mod = self._load_script_module(
+            os.path.join("scripts", "benchmark", "run_phase1_baseline.py"),
+            "repo_run_phase1_baseline",
+        )
+        expected_mols = p1_mod.load_all_molecules()
+        self.assertEqual(len(expected_mols), 55)
+
+        p1_path = os.path.join(PROJECT_ROOT, "database", "benchmark_phase1_baseline.json")
+        with open(p1_path, "r", encoding="utf-8") as f:
+            p1_json = json.load(f)
+        rows = p1_json["results"]
+        self.assertEqual(len(rows), 55)
+
+        by_id = {r["id"]: r for r in rows}
+        self.assertEqual([m["id"] for m in expected_mols], [r["id"] for r in rows])
+
+        br = BRSAScorer()
+        for m in expected_mols:
+            r = by_id[m["id"]]
+            self.assertEqual(r["smiles"], m["smiles"])
+            mol = Chem.MolFromSmiles(m["smiles"])
+            self.assertIsNotNone(mol, f"Invalid SMILES in Phase 1: {m['id']}")
+            self.assertEqual(
+                rdMolDescriptors.CalcMolFormula(mol),
+                m["formula"],
+                f"Formula mismatch in 55-molecule dataset for {m['id']} ({m['name']})",
+            )
+            sa_calc = round(sascorer.calculateScore(mol), 2)
+            self.assertAlmostEqual(sa_calc, r["sascore"], places=2)
+            br_calc, _ = br.calculateScore(m["smiles"])
+            self.assertAlmostEqual(round(float(br_calc), 2), r["br_sascore"], places=2)
+
+    def test_11_sevenn_physical_features_integrity(self):
+        """Verify sevenn_physical_features.json completeness, 0 fallbacks, relaxed invariants, and dimer gap >= 2.8 A."""
+        p1_path = os.path.join(PROJECT_ROOT, "database", "benchmark_phase1_baseline.json")
+        with open(p1_path, "r", encoding="utf-8") as f:
+            p1_rows = json.load(f)["results"]
+
+        p2_path = os.path.join(PROJECT_ROOT, "database", "external", "sevenn_physical_features.json")
+        with open(p2_path, "r", encoding="utf-8") as f:
+            p2_json = json.load(f)
+
+        meta = p2_json["metadata"]
+        feats = p2_json["features"]
+        self.assertEqual(meta["total_molecules_computed"], 55)
+        self.assertEqual(len(feats), 55)
+        self.assertEqual(meta.get("fallback_count", -1), 0)
+        self.assertEqual([r["id"] for r in p1_rows], [x["id"] for x in feats])
+
+        for p1_item, feat in zip(p1_rows, feats):
+            self.assertEqual(feat["smiles"], p1_item["smiles"])
+            self.assertFalse(feat.get("is_fallback", True), f"Fallback triggered for {feat['id']}")
+            self.assertNotEqual(feat["e_pot_ev"], -100.0)
+            self.assertGreaterEqual(feat.get("mono_relax_steps", 0), 1)
+            self.assertGreaterEqual(feat.get("dimer_init_gap_ang", 0.0), 2.8)
+            self.assertTrue(0.0 <= feat["vbur_percent"] <= 100.0)
+            self.assertGreater(feat["e_coh_ev_per_atom"], 0.0)
+            for key in ("e_pot_ev", "e_coh_ev_per_atom", "bde_min_kcal_mol", "vbur_percent", "delta_e_dimer_kcal_mol", "radius_of_gyration_ang", "mol_volume_ang3"):
+                self.assertTrue(math.isfinite(float(feat[key])), f"Non-finite {key} for {feat['id']}")
+
+    def test_12_model_tuning_cv_loocv_reproducibility(self):
+        """Verify deterministic reproduction of run_model_tuning_comparison.py analytical & CV/LOOCV outputs."""
+        tuning_mod = self._load_script_module(
+            os.path.join("scripts", "benchmark", "run_model_tuning_comparison.py"),
+            "repo_run_model_tuning_comparison",
+        )
+        evaluate_machine_learning_models = tuning_mod.evaluate_machine_learning_models
+        evaluate_unbiased_analytical_models = tuning_mod.evaluate_unbiased_analytical_models
+        load_merged_data = tuning_mod.load_merged_data
+
+        tuned_path = os.path.join(PROJECT_ROOT, "database", "benchmark_phase2_tuned_comparison.json")
+        with open(tuned_path, "r", encoding="utf-8") as f:
+            stored = json.load(f)
+
+        merged, _ = load_merged_data()
+        ana_live = evaluate_unbiased_analytical_models(merged)
+        ml_live = evaluate_machine_learning_models(merged)
+
+        self.assertEqual(ana_live["overall_uniform_physics_only"], stored["analytical_comparison"]["overall_uniform_physics_only"])
+        self.assertEqual(ana_live["overall_physics_plus_smarts_chem"], stored["analytical_comparison"]["overall_physics_plus_smarts_chem"])
+        self.assertEqual(ml_live["full_dataset_n55"], stored["machine_learning_comparison"]["full_dataset_n55"])
+        self.assertEqual(ml_live["precursor_subset_n35"], stored["machine_learning_comparison"]["precursor_subset_n35"])
+        self.assertEqual(ml_live["all_sample_phys_importance_sum_pct"], stored["machine_learning_comparison"]["all_sample_phys_importance_sum_pct"])
+        self.assertNotIn("delta_e_complex_kcal_mol", ml_live["all_sample_rf_feature_importances"])
 
 
 if __name__ == "__main__":

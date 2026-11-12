@@ -124,7 +124,7 @@ def load_all_molecules():
         {
             "id": "NEG-010",
             "name": "Cp2AlH (Bis(cyclopentadienyl)aluminium hydride)",
-            "smiles": "C1=CC=C[C]1[AlH][C]2C=CC=C2",
+            "smiles": "C1=CC=CC1[AlH]C1C=CC=C1",
             "formula": "C10H11Al",
             "domain": "Valence/Hapticity Collapse",
             "failure_reason": "Oligomerizes to non-volatile amorphous polymers; unstable monomer."

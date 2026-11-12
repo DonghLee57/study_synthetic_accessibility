@@ -180,7 +180,7 @@
       "CC(C)(C)C#C"
     ],
     "products": [
-      "CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O"
+      "CC(C)(C)C12[CH]3[Co]1([C-]#[O+])([C-]#[O+])([C-]#[O+])[Co]23([C-]#[O+])([C-]#[O+])[C-]#[O+]"
     ],
     "byproduct": "2 CO (gas)",
     "solvent": "Dichloromethane / Hexane",

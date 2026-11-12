@@ -69,7 +69,7 @@ def load_merged_data():
     for m in p1:
         feat = p2.get(m["id"], {})
         entry = {**m, **feat}
-        entry["is_fallback_geometry"] = bool(entry.get("e_pot_ev") == -100.0)
+        entry["is_fallback_geometry"] = bool(entry.get("is_fallback", entry.get("e_pot_ev") == -100.0))
         merged.append(entry)
     return merged, p2_json.get("metadata", {})
 
@@ -206,6 +206,8 @@ def evaluate_unbiased_analytical_models(merged):
             "inhibitors_sascore_pass": f"{inhib_sa_pass}/{len(inhibitors)} ({inhib_sa_pass/len(inhibitors)*100:.1f}%)",
             "negatives_scscore_fp": f"{neg_sc_pass}/{len(negatives)} ({neg_sc_pass/len(negatives)*100:.1f}%)",
             "negatives_consensus_fp": f"{neg_cons_pass}/{len(negatives)} ({neg_cons_pass/len(negatives)*100:.1f}%)",
+            "negatives_consensus_tn": int(len(negatives) - neg_cons_pass),
+            "negatives_consensus_specificity": round(float((len(negatives) - neg_cons_pass) / len(negatives)), 3),
         },
         "uniform_physics_only_breakdown": {
             "precursors": phys_prec,
