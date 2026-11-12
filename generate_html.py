@@ -1,5 +1,10 @@
 import json
 import os
+import re
+
+from rdkit import Chem
+from rdkit.Chem import Descriptors, rdDepictor
+from rdkit.Chem.Draw import rdMolDraw2D
 
 def load_meta(filename):
     p1 = os.path.join("database", "metadata", filename)
@@ -1285,6 +1290,301 @@ phase1_phase2_tuning_joined = f"""
         </div>
 """
 
+# -----------------------------------------------------------------------------
+# DB Explorer Payload Builder (RDKit 2D SVGs + Unified Searchable DB Records)
+# -----------------------------------------------------------------------------
+def _render_mol2d_svg(smi: str) -> str:
+    """Render compact standalone RDKit 2D SVG for a SMILES string."""
+    if not smi:
+        return ""
+    mol = Chem.MolFromSmiles(smi)
+    if mol is None:
+        mol = Chem.MolFromSmiles(smi, sanitize=False)
+        if mol is None:
+            return ""
+        mol.UpdatePropertyCache(strict=False)
+    try:
+        rdDepictor.Compute2DCoords(mol)
+    except Exception:
+        pass
+    drawer = rdMolDraw2D.MolDraw2DSVG(240, 165)
+    opts = drawer.drawOptions()
+    opts.clearBackground = False
+    opts.padding = 0.08
+    opts.bondLineWidth = 1.6
+    opts.minFontSize = 11
+    drawer.DrawMolecule(mol)
+    drawer.FinishDrawing()
+    svg = drawer.GetDrawingText()
+    svg = svg.split("?>", 1)[-1]
+    svg = re.sub(r"<!--.*?-->", "", svg, flags=re.S)
+    svg = re.sub(r"\s+width=['\"][^'\"]*['\"]", "", svg, count=1)
+    svg = re.sub(r"\s+height=['\"][^'\"]*['\"]", "", svg, count=1)
+    svg = re.sub(r"\s+", " ", svg).strip()
+    return svg
+
+
+expanded_by_id = {x.get("id"): x for x in expanded_prec_db}
+bench_by_id = {b["id"]: b for b in benchmarks}
+svg_dict = {}
+
+
+def _ensure_svg(smi: str) -> bool:
+    if not smi:
+        return False
+    if smi not in svg_dict:
+        rendered = _render_mol2d_svg(smi)
+        if rendered:
+            svg_dict[smi] = rendered
+    return smi in svg_dict
+
+
+db_records = []
+
+# 1. Baseline 27 Precursors (enriched with AtomicLimits, SA, and SevenNet-0 physics)
+for p in prec_db:
+    pid = p["id"]
+    smi = p.get("smiles") or ""
+    _ensure_svg(smi)
+    exp = expanded_by_id.get(pid, {})
+    ev = mol_by_id.get(pid, {})
+    bm = bench_by_id.get(pid, {})
+    props = p.get("physical_properties", {})
+    synth = p.get("synthesis_info", {})
+    db_records.append({
+        "id": pid,
+        "db_type": "precursor",
+        "db_label": "Baseline Precursor",
+        "is_expanded_master": True,
+        "name": p["name"],
+        "chemical_name": p.get("chemical_name", "-"),
+        "formula": p.get("formula", "-"),
+        "mw": p.get("molecular_weight"),
+        "cas": p.get("cas_number", "-"),
+        "element": p.get("metal_center", "-"),
+        "category": p.get("category", "-"),
+        "smiles": smi,
+        "has_2d": bool(smi and smi in svg_dict),
+        "target_films": p.get("target_films", "-"),
+        "process_type": p.get("process_type", "-"),
+        "vapor_pressure": props.get("vapor_pressure_torr", "-"),
+        "t_decomp_c": props.get("thermal_decomposition_temp_c"),
+        "state_at_rt": props.get("state_at_rt", "-"),
+        "bp_c": props.get("boiling_point_c"),
+        "mp_c": props.get("melting_point_c"),
+        "starting_materials": synth.get("starting_materials", []),
+        "reaction_type": synth.get("reaction_type", "-"),
+        "yield_pct": synth.get("typical_yield_pct"),
+        "byproduct": synth.get("byproduct", "-"),
+        "vendors": p.get("commercial_vendors", []),
+        "doi": p.get("reference_doi", ""),
+        "atomiclimits_name": exp.get("atomiclimits_name", ""),
+        "atomiclimits_process_count": exp.get("atomiclimits_process_count", 0),
+        "atomiclimits_materials": exp.get("atomiclimits_materials", []),
+        "atomiclimits_co_reactants": exp.get("atomiclimits_co_reactants", []),
+        "atomiclimits_doi_count": exp.get("atomiclimits_unique_doi_count", 0),
+        "sascore": ev.get("sascore"),
+        "scscore": ev.get("scscore"),
+        "syba": ev.get("syba"),
+        "rascore": ev.get("rascore"),
+        "br_sascore": ev.get("br_sascore"),
+        "ligand_sa": ev.get("ligand_sa"),
+        "rxnflow_match": bm.get("rxnflow_match"),
+        "rxnflow_rules": bm.get("rxnflow_templates", []),
+        "reasyn_in_vocab": bm.get("reasyn_in_vocab"),
+        "bde_min": ev.get("bde_min_kcal_mol"),
+        "vbur": ev.get("vbur_percent"),
+        "de_dimer": ev.get("delta_e_dimer_kcal_mol"),
+        "e_coh": ev.get("e_coh_ev_per_atom"),
+        "tmc_sa_phys": ev.get("tmc_sa_phys"),
+        "phase2_pass": ev.get("tuned_with_chem_pass"),
+        "domain_flag": ev.get("chemical_domain_flag", "-"),
+    })
+
+# 2. Expanded AtomicLimits Precursors (93 additional entries -> total 120 Master)
+for idx, exp in enumerate(expanded_prec_db, 1):
+    pid = exp.get("id", f"EXP-{idx:03d}")
+    if pid in prec_map:
+        continue
+    smi = exp.get("smiles") or ""
+    _ensure_svg(smi)
+    db_records.append({
+        "id": pid,
+        "db_type": "expanded",
+        "db_label": "AtomicLimits ALD",
+        "is_expanded_master": True,
+        "name": exp.get("name", "-"),
+        "chemical_name": exp.get("chemical_name") or exp.get("atomiclimits_name") or "-",
+        "formula": exp.get("formula") or "-",
+        "mw": exp.get("molecular_weight"),
+        "cas": exp.get("cas_number") or "-",
+        "element": exp.get("center_element") or "-",
+        "category": exp.get("origin", "AtomicLimits ALD Database"),
+        "smiles": smi,
+        "has_2d": bool(smi and smi in svg_dict),
+        "target_films": ", ".join(exp.get("atomiclimits_materials", [])) or "-",
+        "process_type": "ALD",
+        "atomiclimits_name": exp.get("atomiclimits_name", ""),
+        "atomiclimits_process_count": exp.get("atomiclimits_process_count", 0),
+        "atomiclimits_materials": exp.get("atomiclimits_materials", []),
+        "atomiclimits_co_reactants": exp.get("atomiclimits_co_reactants", []),
+        "atomiclimits_doi_count": exp.get("atomiclimits_unique_doi_count", 0),
+    })
+
+# 3. AS-ALD Inhibitors (18 entries)
+for inh in inhib_list:
+    iid = inh.get("id", "-")
+    smi = inh.get("smiles") or ""
+    _ensure_svg(smi)
+    ev = mol_by_id.get(iid, {})
+    lit = inh.get("literature_reference", {})
+    m_obj = Chem.MolFromSmiles(smi) if smi else None
+    calc_elem = "Si" if (m_obj and any(a.GetSymbol() == "Si" for a in m_obj.GetAtoms())) else "Organic"
+    db_records.append({
+        "id": iid,
+        "db_type": "inhibitor",
+        "db_label": "AS-ALD Inhibitor",
+        "is_expanded_master": False,
+        "name": inh.get("abbreviation", "-"),
+        "chemical_name": inh.get("name", "-"),
+        "formula": inh.get("formula", "-"),
+        "mw": inh.get("molecular_weight"),
+        "cas": inh.get("cas_number", "-"),
+        "element": ev.get("center_atom") or calc_elem,
+        "category": inh.get("chemical_family", "-"),
+        "smiles": smi,
+        "has_2d": bool(smi and smi in svg_dict),
+        "selectivity_type": inh.get("selectivity_type", "-"),
+        "target_surface": inh.get("target_passivation_surface", "-"),
+        "growth_surface": inh.get("growth_surface", "-"),
+        "passivation_mechanism": inh.get("passivation_mechanism", "-"),
+        "surface_bond": inh.get("surface_bond_type", "-"),
+        "delivery_phase": inh.get("delivery_phase", "-"),
+        "removal_method": inh.get("removal_method", "-"),
+        "logp": inh.get("logp"),
+        "doi": lit.get("doi", ""),
+        "authors": f"{lit.get('authors', '-')} ({lit.get('year', '-')})",
+        "sascore": ev.get("sascore"),
+        "scscore": ev.get("scscore"),
+        "syba": ev.get("syba"),
+        "rascore": ev.get("rascore"),
+        "br_sascore": ev.get("br_sascore"),
+        "ligand_sa": ev.get("ligand_sa"),
+        "bde_min": ev.get("bde_min_kcal_mol"),
+        "vbur": ev.get("vbur_percent"),
+        "de_dimer": ev.get("delta_e_dimer_kcal_mol"),
+        "e_coh": ev.get("e_coh_ev_per_atom"),
+        "tmc_sa_phys": ev.get("tmc_sa_phys"),
+        "phase2_pass": ev.get("tuned_with_chem_pass"),
+        "domain_flag": ev.get("chemical_domain_flag", "-"),
+    })
+
+# 4. Building Blocks / Commercial Reagents (29 entries)
+for bb in bb_db:
+    smi = bb.get("smiles") or ""
+    _ensure_svg(smi)
+    m_obj = Chem.MolFromSmiles(smi) if smi else None
+    mw_val = round(Descriptors.MolWt(m_obj), 2) if m_obj else None
+    elem = "-"
+    if m_obj:
+        metals = [a.GetSymbol() for a in m_obj.GetAtoms() if a.GetSymbol() not in {"C", "H", "N", "O", "F", "Cl", "Br", "I", "S", "P", "B"}]
+        elem = metals[0] if metals else "Organic"
+    db_records.append({
+        "id": bb["id"],
+        "db_type": "reagent",
+        "db_label": "Reagent / BB",
+        "is_expanded_master": False,
+        "name": bb["name"],
+        "chemical_name": bb["name"],
+        "formula": bb.get("formula", "-"),
+        "mw": mw_val,
+        "cas": bb.get("cas", "-"),
+        "element": elem,
+        "category": bb.get("role", "-"),
+        "smiles": smi,
+        "has_2d": bool(smi and smi in svg_dict),
+        "purity": bb.get("purity", "-"),
+        "handling": bb.get("handling", "-"),
+    })
+
+# 5. Accredited Synthesis Reactions (12 entries)
+for r in rxn_db:
+    reactants = r.get("reactants", [])
+    products = r.get("products", [])
+    for s in reactants + products:
+        _ensure_svg(s)
+    elem = "-"
+    for s in products:
+        m_obj = Chem.MolFromSmiles(s)
+        if m_obj:
+            metals = [a.GetSymbol() for a in m_obj.GetAtoms() if a.GetSymbol() not in {"C", "H", "N", "O", "F", "Cl", "Br", "I", "S", "P", "B"}]
+            if metals:
+                elem = metals[0]
+                break
+    db_records.append({
+        "id": r["id"],
+        "db_type": "reaction",
+        "db_label": "Reaction Template",
+        "is_expanded_master": False,
+        "name": r["name"],
+        "chemical_name": r.get("reaction_type", "-"),
+        "formula": " + ".join(reactants) + " -> " + " + ".join(products),
+        "mw": None,
+        "cas": "-",
+        "element": elem,
+        "category": r.get("reaction_type", "-"),
+        "smiles": r.get("reaction_smarts", ""),
+        "reactants": reactants,
+        "products": products,
+        "byproduct": r.get("byproduct", "-"),
+        "solvent": r.get("solvent", "-"),
+        "conditions": r.get("conditions", "-"),
+        "dg_kcal_mol": r.get("thermodynamics_dG_kcal_mol"),
+        "has_2d": any(s in svg_dict for s in reactants + products),
+    })
+
+# 6. Negative Controls (10 entries)
+for ev in molecules_eval:
+    if not ev["id"].startswith("NEG-"):
+        continue
+    smi = ev.get("smiles") or ""
+    _ensure_svg(smi)
+    db_records.append({
+        "id": ev["id"],
+        "db_type": "negative",
+        "db_label": "Negative Control",
+        "is_expanded_master": False,
+        "name": ev["name"],
+        "chemical_name": ev.get("domain", "Negative Control"),
+        "formula": ev.get("formula", "-"),
+        "mw": ev.get("mw"),
+        "cas": "-",
+        "element": ev.get("center_atom", "-"),
+        "category": ev.get("domain", "-"),
+        "smiles": smi,
+        "has_2d": bool(smi and smi in svg_dict),
+        "sascore": ev.get("sascore"),
+        "scscore": ev.get("scscore"),
+        "syba": ev.get("syba"),
+        "rascore": ev.get("rascore"),
+        "br_sascore": ev.get("br_sascore"),
+        "ligand_sa": ev.get("ligand_sa"),
+        "bde_min": ev.get("bde_min_kcal_mol"),
+        "vbur": ev.get("vbur_percent"),
+        "de_dimer": ev.get("delta_e_dimer_kcal_mol"),
+        "e_coh": ev.get("e_coh_ev_per_atom"),
+        "tmc_sa_phys": ev.get("tmc_sa_phys"),
+        "phase2_pass": ev.get("tuned_with_chem_pass"),
+        "domain_flag": ev.get("chemical_domain_flag", "-"),
+        "phys_penalty_detail": ev.get("phys_penalty_detail", ""),
+    })
+
+db_explorer_payload_json = json.dumps(
+    {"svgs": svg_dict, "records": db_records},
+    ensure_ascii=False,
+).replace("</", "<\\/")
+
+
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
     template = f.read()
@@ -1301,6 +1601,7 @@ final_html = final_html.replace("<!-- INHIBITOR_DB_ROWS_PLACEHOLDER -->", inhibi
 final_html = final_html.replace("<!-- PHASE2_BANNER_METRICS -->", phase2_banner_metrics)
 final_html = final_html.replace("<!-- PHASE2_STEP4_SUMMARY_PLACEHOLDER -->", phase2_step4_summary_joined)
 final_html = final_html.replace("<!-- PHASE1_PHASE2_TUNING_PLACEHOLDER -->", phase1_phase2_tuning_joined)
+final_html = final_html.replace("<!-- DB_EXPLORER_DATA_PLACEHOLDER -->", db_explorer_payload_json)
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(final_html)

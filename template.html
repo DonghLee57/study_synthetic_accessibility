@@ -1277,13 +1277,285 @@
     }
 
     #modalSvgContainer .mermaid {
-
       display: flex !important;
-
       justify-content: center !important;
-
       align-items: center !important;
+    }
 
+    /* DB Explorer Tab & 2D Structure Viewer */
+    .db-controls-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .db-search-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .db-search-input {
+      flex: 1;
+      min-width: 240px;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      background: #f8fafc;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .db-search-input:focus {
+      background: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.14);
+    }
+
+    .db-pill-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .db-pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .db-pill:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+    }
+
+    .db-pill.active {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: #ffffff;
+    }
+
+    .db-subfilter-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      padding-top: 10px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .db-select {
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--text-primary);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .db-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+      gap: 16px;
+    }
+
+    .db-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .db-card:hover {
+      transform: translateY(-2px);
+      border-color: #0284c7;
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.10);
+    }
+
+    .db-card.db-card-reaction {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 900px) {
+      .db-card.db-card-reaction {
+        grid-column: span 1;
+      }
+    }
+
+    .db-svg-stage {
+      background: #fcfcfd;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      height: 155px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      overflow: hidden;
+    }
+
+    .db-svg-stage svg {
+      width: 100%;
+      height: 100%;
+      max-height: 142px;
+      display: block;
+    }
+
+    .db-rxn-stage {
+      background: #fcfcfd;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      min-height: 155px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .db-rxn-mol {
+      width: 145px;
+      height: 112px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .db-rxn-mol svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .db-rxn-op {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #0284c7;
+      padding: 0 2px;
+    }
+
+    .db-meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .db-mini-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+    }
+
+    table.table-compact-db {
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    table.table-compact-db th {
+      padding: 8px 6px;
+      font-size: 0.71rem;
+    }
+
+    table.table-compact-db td {
+      padding: 8px 6px;
+      font-size: 0.76rem;
+      vertical-align: middle;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .db-thumb-cell svg {
+      width: 100%;
+      max-width: 105px;
+      height: 70px;
+      display: block;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+    }
+
+    .db-detail-window {
+      width: min(920px, 95vw);
+      max-height: 90vh;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .db-detail-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .db-detail-svg-wrap {
+      background: #fcfcfd;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      min-height: 220px;
+    }
+
+    .db-detail-svg-wrap svg {
+      max-width: 420px;
+      width: 100%;
+      height: 250px;
+      display: block;
+    }
+
+    .db-detail-svg-wrap .db-rxn-mol {
+      width: 210px;
+      height: 155px;
+    }
+
+    .db-detail-svg-wrap .db-rxn-mol svg {
+      max-width: 200px;
+      height: 145px;
     }
 
   </style>
@@ -1331,8 +1603,11 @@
       <button type="button" class="view-mode-btn" id="btn-tab-technical" onclick="switchViewTab('technical')">
         리포트
       </button>
+      <button type="button" class="view-mode-btn" id="btn-tab-database" onclick="switchViewTab('database')">
+        DB 탐색 (2D 구조)
+      </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 요약과 리포트 뷰를 자유롭게 전환할 수 있습니다.
+        열람 목적에 따라 요약, 리포트, DB 탐색 뷰를 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -1395,6 +1670,32 @@
           <a href="#" class="btn-toc-utility" style="text-decoration:none;">맨 위로 이동 (Top)</a>
         </div>
       </div>
+
+      <!-- Database Explorer Sidebar -->
+      <div id="toc-database" style="display:none;">
+        <div class="toc-header">
+          <span>DB 탐색 필터</span>
+          <span class="toc-progress" id="dbSideBadge">189건</span>
+        </div>
+        <ul class="toc-list">
+          <li><a href="javascript:void(0)" class="toc-link active" data-dbcat="all" onclick="setDbCategoryFromSidebar('all', this)">전체 통합 DB (189)</a></li>
+          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="precursor" onclick="setDbCategoryFromSidebar('precursor', this)">양산 전구체 Baseline (27)</a></li>
+          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="expanded_master" onclick="setDbCategoryFromSidebar('expanded_master', this)">확장 ALD 마스터 (120)</a></li>
+          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="inhibitor" onclick="setDbCategoryFromSidebar('inhibitor', this)">AS-ALD 인히비터 (18)</a></li>
+          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="reagent" onclick="setDbCategoryFromSidebar('reagent', this)">출발물질·시약 (29)</a></li>
+          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="reaction" onclick="setDbCategoryFromSidebar('reaction', this)">공인 합성 반응 (12)</a></li>
+          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="negative" onclick="setDbCategoryFromSidebar('negative', this)">Negative Controls (10)</a></li>
+        </ul>
+        <div style="margin-top:16px; padding:12px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; font-size:0.77rem; line-height:1.55; color:#334155;">
+          <strong>2D 구조 렌더링 현황:</strong><br>
+          &bull; RDKit <code>MolDraw2DSVG</code> 기반 Vector 2D 구조 내장.<br>
+          &bull; 고유 <code>SMILES</code> 85종 및 반응식 12종 실시간 시각화 지원.
+        </div>
+        <div class="toc-sub-actions">
+          <button type="button" class="btn-toc-utility" onclick="switchViewTab('storyline')">요약 탭으로 이동</button>
+          <button type="button" class="btn-toc-utility" onclick="switchViewTab('technical')">리포트 탭으로 이동</button>
+        </div>
+      </div>
     </aside>
 
     <!-- Main Content -->
@@ -1426,6 +1727,9 @@
             <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 55-Molecule Benchmark &amp; LOOCV Results &darr;</a>
             <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer; text-decoration:none;">
               16개 섹션 전체 리포트 열기 &rarr;
+            </button>
+            <button type="button" onclick="switchViewTab('database')" class="btn-pdf" style="background:#0d9488; color:#fff; border-color:#0d9488; cursor:pointer; text-decoration:none;">
+              DB 탐색 (2D 구조) 열기 &rarr;
             </button>
           </div>
         </div>
@@ -5595,7 +5899,119 @@ flowchart TD
       </section>
 
       </div> <!-- end #tab-content-technical -->
+
+      <!-- ===================================================================== -->
+      <!-- TAB 3: DOMAIN DB EXPLORER & 2D STRUCTURE VIEWER (DB 탐색)              -->
+      <!-- ===================================================================== -->
+      <div id="tab-content-database" style="display:none;">
+        <div class="card" style="margin-bottom:20px; background:linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%); border:1px solid #bae6fd; padding:22px 24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+            <span class="badge badge-prec" style="font-size:0.78rem;">Semiconductor Synthesis Domain Database Explorer</span>
+            <span style="font-size:0.82rem; color:#0369a1; font-weight:600;" id="dbHeaderStats">189 Unified Records &bull; RDKit 2D SVG Embedded</span>
+          </div>
+          <h2 style="font-size:1.55rem; font-weight:800; color:#0f172a; margin:0 0 8px 0;">
+            확보 DB 통합 검색 및 2D 분자·반응 구조 뷰어
+          </h2>
+          <p style="font-size:0.9rem; color:#334155; line-height:1.6; margin:0;">
+            본 프로젝트에서 구축·검증한 반도체 양산 전구체(27종), 확장 ALD 마스터 DB(120종), AS-ALD 선택성 인히비터(18종), 상용 출발물질·시약(29종), 공인 무기/유기금속 합성 반응 템플릿(12종), 및 Negative Control(10종)을 <code>SMILES</code>·원소·물성 키워드로 즉시 검색하고 RDKit <code>2D</code> 분자 구조와 <code>SevenNet-0</code>·SA 실측 지표를 함께 조회할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="db-controls-card">
+          <div class="db-search-row">
+            <input type="text" id="dbSearchInput" class="db-search-input" placeholder="이름, 약칭, ID, 분자식, CAS, SMILES, 중심 원소, 타깃 박막, 반응 조건 검색..." oninput="renderDbExplorer()">
+            <button type="button" class="btn-toc-utility" style="width:auto; padding:9px 14px;" onclick="resetDbFilters()">초기화</button>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="db-pill active" id="btnDbViewCards" onclick="setDbViewMode('cards')">2D 카드 뷰</button>
+              <button type="button" class="db-pill" id="btnDbViewTable" onclick="setDbViewMode('table')">테이블 뷰</button>
+            </div>
+          </div>
+
+          <div class="db-pill-bar" id="dbCategoryPills">
+            <button type="button" class="db-pill active" data-dbcat="all" onclick="setDbCategory('all')">전체 통합 (189)</button>
+            <button type="button" class="db-pill" data-dbcat="precursor" onclick="setDbCategory('precursor')">양산 전구체 Baseline (27)</button>
+            <button type="button" class="db-pill" data-dbcat="expanded_master" onclick="setDbCategory('expanded_master')">확장 ALD 마스터 (120)</button>
+            <button type="button" class="db-pill" data-dbcat="inhibitor" onclick="setDbCategory('inhibitor')">AS-ALD 인히비터 (18)</button>
+            <button type="button" class="db-pill" data-dbcat="reagent" onclick="setDbCategory('reagent')">출발물질·시약 (29)</button>
+            <button type="button" class="db-pill" data-dbcat="reaction" onclick="setDbCategory('reaction')">공인 합성 반응 (12)</button>
+            <button type="button" class="db-pill" data-dbcat="negative" onclick="setDbCategory('negative')">Negative Controls (10)</button>
+          </div>
+
+          <div class="db-subfilter-row">
+            <label style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+              중심 원소:
+              <select id="dbElementFilter" class="db-select" onchange="renderDbExplorer()">
+                <option value="all">전체 원소</option>
+              </select>
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer; font-weight:600;">
+              <input type="checkbox" id="dbOnly2dCheck" onchange="renderDbExplorer()">
+              <span>2D 구조(<code>SMILES</code>) 보유 항목만 표시</span>
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+              정렬:
+              <select id="dbSortSelect" class="db-select" onchange="renderDbExplorer()">
+                <option value="default">기본 등록 순 (ID)</option>
+                <option value="mw_asc">분자량 오름차순</option>
+                <option value="mw_desc">분자량 내림차순</option>
+                <option value="bde_desc">SevenNet BDE_min 높은 순</option>
+                <option value="sa_asc">SAScore 낮은 순</option>
+              </select>
+            </label>
+            <div style="margin-left:auto; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;" id="dbResultCountBadge">
+              검색 결과: 0건
+            </div>
+          </div>
+        </div>
+
+        <div id="dbEmptyState" class="card" style="display:none; text-align:center; padding:36px; color:#64748b;">
+          검색 조건에 일치하는 레코드가 없습니다. 검색어 또는 필터 조건을 조정하십시오.
+        </div>
+
+        <div id="dbCardGrid" class="db-card-grid"></div>
+
+        <div id="dbTableWrap" class="table-responsive" style="display:none; overflow-x:visible;">
+          <table class="table-compact-db">
+            <colgroup>
+              <col style="width:12%;">
+              <col style="width:15%;">
+              <col style="width:17%;">
+              <col style="width:7%;">
+              <col style="width:27%;">
+              <col style="width:22%;">
+            </colgroup>
+            <thead>
+              <tr>
+                <th style="text-align:center;">2D Structure</th>
+                <th>Name / ID / DB</th>
+                <th>Chemical / CAS / Formula</th>
+                <th style="text-align:center;">Elem</th>
+                <th>Domain Properties &amp; SA / MLIP Metrics</th>
+                <th>SMILES / SMARTS</th>
+              </tr>
+            </thead>
+            <tbody id="dbTableBody"></tbody>
+          </table>
+        </div>
+      </div> <!-- end #tab-content-database -->
     </main>
+  </div>
+
+  <!-- Embedded JSON + RDKit 2D SVG Payload for Standalone DB Explorer -->
+  <script id="db-explorer-payload" type="application/json"><!-- DB_EXPLORER_DATA_PLACEHOLDER --></script>
+
+  <!-- Modal Window for DB Record Detailed Inspection -->
+  <div id="dbDetailModal" class="modal-overlay" onclick="closeDbDetailModalOnOverlay(event)">
+    <div class="db-detail-window">
+      <div class="modal-header">
+        <div>
+          <strong id="dbModalTitle" style="font-size:1.05rem; color:#0f172a;">분자 상세 정보</strong>
+          <div id="dbModalSub" style="font-size:0.78rem; color:#64748b; margin-top:2px;"></div>
+        </div>
+        <button type="button" class="btn-close-modal" onclick="closeDbDetailModal()">✕ 닫기 (Esc)</button>
+      </div>
+      <div class="db-detail-body" id="dbModalBody"></div>
+    </div>
   </div>
 
   <!-- Modal Window for Diagram Zoom/Inspection -->
@@ -6000,6 +6416,7 @@ flowchart TD
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeDiagramModal();
+        closeDbDetailModal();
       }
     });
 
@@ -6022,38 +6439,41 @@ flowchart TD
       }
     }
 
-    // Top View Mode Switcher (Storyline vs Full Technical Report)
+    // Top View Mode Switcher (Summary vs Full Report vs DB Explorer)
     function switchViewTab(tabName) {
       const btnStoryline = document.getElementById('btn-tab-storyline');
       const btnTechnical = document.getElementById('btn-tab-technical');
+      const btnDatabase = document.getElementById('btn-tab-database');
       const contentStoryline = document.getElementById('tab-content-storyline');
       const contentTechnical = document.getElementById('tab-content-technical');
+      const contentDatabase = document.getElementById('tab-content-database');
       const tocStoryline = document.getElementById('toc-storyline');
       const tocTechnical = document.getElementById('toc-technical');
+      const tocDatabase = document.getElementById('toc-database');
 
       if (!btnStoryline || !btnTechnical) return;
 
+      [btnStoryline, btnTechnical, btnDatabase].forEach(b => b && b.classList.remove('active'));
+      [contentStoryline, contentTechnical, contentDatabase].forEach(c => { if (c) c.style.display = 'none'; });
+      [tocStoryline, tocTechnical, tocDatabase].forEach(t => { if (t) t.style.display = 'none'; });
+
       if (tabName === 'storyline') {
         btnStoryline.classList.add('active');
-        btnTechnical.classList.remove('active');
         if (contentStoryline) contentStoryline.style.display = 'block';
-        if (contentTechnical) contentTechnical.style.display = 'none';
         if (tocStoryline) tocStoryline.style.display = 'block';
-        if (tocTechnical) tocTechnical.style.display = 'none';
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        // Trigger Mermaid rendering after storyline tab becomes visible
         renderMermaidInStorylineTab();
+      } else if (tabName === 'database') {
+        if (btnDatabase) btnDatabase.classList.add('active');
+        if (contentDatabase) contentDatabase.style.display = 'block';
+        if (tocDatabase) tocDatabase.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        ensureDbExplorerInitialized();
       } else {
-        btnStoryline.classList.remove('active');
         btnTechnical.classList.add('active');
-        if (contentStoryline) contentStoryline.style.display = 'none';
         if (contentTechnical) contentTechnical.style.display = 'block';
-        if (tocStoryline) tocStoryline.style.display = 'none';
         if (tocTechnical) tocTechnical.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        // Trigger Mermaid rendering after technical tab becomes visible
         renderMermaidInTechnicalTab();
       }
 
@@ -6068,6 +6488,390 @@ flowchart TD
           ],
           throwOnError: false
         });
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Domain DB Explorer & 2D Structure Viewer State & Renderer
+    // -------------------------------------------------------------------------
+    let dbPayloadCache = null;
+    let dbExplorerReady = false;
+    let dbCurrentCategory = 'all';
+    let dbCurrentViewMode = 'cards';
+
+    function escapeHtmlStr(str) {
+      return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function loadDbPayload() {
+      if (dbPayloadCache) return dbPayloadCache;
+      const el = document.getElementById('db-explorer-payload');
+      if (!el) return { svgs: {}, records: [] };
+      try {
+        dbPayloadCache = JSON.parse(el.textContent || '{}');
+      } catch (err) {
+        console.error('DB payload parse error:', err);
+        dbPayloadCache = { svgs: {}, records: [] };
+      }
+      return dbPayloadCache;
+    }
+
+    function ensureDbExplorerInitialized() {
+      if (!dbExplorerReady) {
+        const data = loadDbPayload();
+        const elemSelect = document.getElementById('dbElementFilter');
+        if (elemSelect && data.records) {
+          const elemCounts = {};
+          data.records.forEach(r => {
+            const e = (r.element || '-').trim();
+            if (e && e !== '-') {
+              elemCounts[e] = (elemCounts[e] || 0) + 1;
+            }
+          });
+          const sortedElems = Object.keys(elemCounts).sort((a, b) => elemCounts[b] - elemCounts[a]);
+          sortedElems.forEach(e => {
+            const opt = document.createElement('option');
+            opt.value = e;
+            opt.textContent = `${e} (${elemCounts[e]})`;
+            elemSelect.appendChild(opt);
+          });
+        }
+        const headerStats = document.getElementById('dbHeaderStats');
+        if (headerStats && data.records) {
+          const n2d = data.records.filter(r => r.has_2d).length;
+          const svgCnt = data.svgs ? Object.keys(data.svgs).length : 0;
+          headerStats.innerHTML = `${data.records.length} Unified Records &bull; ${n2d} Entries with 2D Structures (${svgCnt} Unique SMILES SVGs)`;
+        }
+        dbExplorerReady = true;
+      }
+      renderDbExplorer();
+    }
+
+    function setDbCategory(cat) {
+      dbCurrentCategory = cat;
+      document.querySelectorAll('#dbCategoryPills .db-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-dbcat') === cat);
+      });
+      document.querySelectorAll('#toc-database .toc-link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('data-dbcat') === cat);
+      });
+      renderDbExplorer();
+    }
+
+    function setDbCategoryFromSidebar(cat, el) {
+      setDbCategory(cat);
+    }
+
+    function setDbViewMode(mode) {
+      dbCurrentViewMode = mode;
+      const bCards = document.getElementById('btnDbViewCards');
+      const bTable = document.getElementById('btnDbViewTable');
+      if (bCards) bCards.classList.toggle('active', mode === 'cards');
+      if (bTable) bTable.classList.toggle('active', mode === 'table');
+      renderDbExplorer();
+    }
+
+    function resetDbFilters() {
+      const inp = document.getElementById('dbSearchInput');
+      const elSel = document.getElementById('dbElementFilter');
+      const chk2d = document.getElementById('dbOnly2dCheck');
+      const sortSel = document.getElementById('dbSortSelect');
+      if (inp) inp.value = '';
+      if (elSel) elSel.value = 'all';
+      if (chk2d) chk2d.checked = false;
+      if (sortSel) sortSel.value = 'default';
+      setDbCategory('all');
+    }
+
+    function getDbBadgeStyle(dbType) {
+      if (dbType === 'precursor') return 'badge-prec';
+      if (dbType === 'expanded') return 'badge-ext';
+      if (dbType === 'inhibitor') return 'badge-2g';
+      if (dbType === 'reagent') return 'badge-1g';
+      if (dbType === 'reaction') return 'badge-3g';
+      if (dbType === 'negative') return 'badge-4g';
+      return 'badge-ext';
+    }
+
+    function buildRecordSearchBlob(r) {
+      const parts = [
+        r.id, r.name, r.chemical_name, r.formula, r.cas, r.element, r.category,
+        r.smiles, r.target_films, r.process_type, r.reaction_type, r.byproduct,
+        r.solvent, r.conditions, r.target_surface, r.growth_surface,
+        r.passivation_mechanism, r.surface_bond, r.handling, r.atomiclimits_name,
+        (r.vendors || []).join(' '), (r.starting_materials || []).join(' '),
+        (r.atomiclimits_materials || []).join(' '), (r.atomiclimits_co_reactants || []).join(' '),
+        (r.reactants || []).join(' '), (r.products || []).join(' ')
+      ];
+      return parts.filter(Boolean).join(' ').toLowerCase();
+    }
+
+    function renderReactionSchemeHtml(r, svgs, compact) {
+      const rx = r.reactants || [];
+      const px = r.products || [];
+      let html = '';
+      rx.forEach((s, idx) => {
+        if (idx > 0) html += '<span class="db-rxn-op">+</span>';
+        const svg = svgs[s] || `<span style="font-family:'JetBrains Mono';font-size:0.7rem;">${escapeHtmlStr(s)}</span>`;
+        html += `<div class="db-rxn-mol" title="${escapeHtmlStr(s)}">${svg}</div>`;
+      });
+      html += '<span class="db-rxn-op">&rarr;</span>';
+      px.forEach((s, idx) => {
+        if (idx > 0) html += '<span class="db-rxn-op">+</span>';
+        const svg = svgs[s] || `<span style="font-family:'JetBrains Mono';font-size:0.7rem;">${escapeHtmlStr(s)}</span>`;
+        html += `<div class="db-rxn-mol" title="${escapeHtmlStr(s)}">${svg}</div>`;
+      });
+      if (compact && r.byproduct) {
+        html += `<span style="font-family:'JetBrains Mono';font-size:0.72rem;color:#64748b;margin-left:4px;">+ ${escapeHtmlStr(r.byproduct)}</span>`;
+      }
+      return html;
+    }
+
+    function renderDbExplorer() {
+      const data = loadDbPayload();
+      const svgs = data.svgs || {};
+      const allRecords = data.records || [];
+      const query = ((document.getElementById('dbSearchInput') || {}).value || '').trim().toLowerCase();
+      const elemFilter = ((document.getElementById('dbElementFilter') || {}).value || 'all');
+      const only2d = Boolean((document.getElementById('dbOnly2dCheck') || {}).checked);
+      const sortMode = ((document.getElementById('dbSortSelect') || {}).value || 'default');
+
+      let filtered = allRecords.filter(r => {
+        if (dbCurrentCategory === 'expanded_master') {
+          if (!r.is_expanded_master) return false;
+        } else if (dbCurrentCategory !== 'all' && r.db_type !== dbCurrentCategory) {
+          return false;
+        }
+        if (elemFilter !== 'all' && r.element !== elemFilter) return false;
+        if (only2d && !r.has_2d) return false;
+        if (query && !buildRecordSearchBlob(r).includes(query)) return false;
+        return true;
+      });
+
+      if (sortMode === 'mw_asc') {
+        filtered.sort((a, b) => (a.mw ?? 1e9) - (b.mw ?? 1e9));
+      } else if (sortMode === 'mw_desc') {
+        filtered.sort((a, b) => (b.mw ?? -1) - (a.mw ?? -1));
+      } else if (sortMode === 'bde_desc') {
+        filtered.sort((a, b) => (b.bde_min ?? -1e9) - (a.bde_min ?? -1e9));
+      } else if (sortMode === 'sa_asc') {
+        filtered.sort((a, b) => (a.sascore ?? 1e9) - (b.sascore ?? 1e9));
+      }
+
+      const cntBadge = document.getElementById('dbResultCountBadge');
+      if (cntBadge) cntBadge.textContent = `검색 결과: ${filtered.length}건`;
+      const sideBadge = document.getElementById('dbSideBadge');
+      if (sideBadge) sideBadge.textContent = `${filtered.length}건`;
+
+      const emptyEl = document.getElementById('dbEmptyState');
+      const gridEl = document.getElementById('dbCardGrid');
+      const tblWrap = document.getElementById('dbTableWrap');
+      const tblBody = document.getElementById('dbTableBody');
+
+      if (filtered.length === 0) {
+        if (emptyEl) emptyEl.style.display = 'block';
+        if (gridEl) { gridEl.style.display = 'none'; gridEl.innerHTML = ''; }
+        if (tblWrap) tblWrap.style.display = 'none';
+        if (tblBody) tblBody.innerHTML = '';
+        return;
+      }
+      if (emptyEl) emptyEl.style.display = 'none';
+
+      window._dbFilteredMap = {};
+      filtered.forEach((r, i) => { window._dbFilteredMap[i] = r; });
+
+      if (dbCurrentViewMode === 'cards') {
+        if (tblWrap) tblWrap.style.display = 'none';
+        if (gridEl) {
+          gridEl.style.display = 'grid';
+          gridEl.innerHTML = filtered.map((r, idx) => {
+            const badgeCls = getDbBadgeStyle(r.db_type);
+            let visualHtml = '';
+            if (r.db_type === 'reaction') {
+              visualHtml = `<div class="db-rxn-stage">${renderReactionSchemeHtml(r, svgs, true)}</div>`;
+            } else if (r.has_2d && svgs[r.smiles]) {
+              visualHtml = `<div class="db-svg-stage">${svgs[r.smiles]}</div>`;
+            } else {
+              visualHtml = `<div class="db-svg-stage" style="background:#f8fafc; color:#94a3b8; font-size:0.78rem; text-align:center; flex-direction:column; gap:4px;">
+                <strong style="color:#64748b;">2D SMILES 미수록</strong>
+                <span>AtomicLimits ALD 문헌 레코드 (${escapeHtmlStr(r.atomiclimits_name || r.name)})</span>
+              </div>`;
+            }
+
+            const pills = [];
+            if (r.mw != null) pills.push(`<span class="db-mini-pill">MW ${r.mw}</span>`);
+            if (r.sascore != null) pills.push(`<span class="db-mini-pill">SA ${r.sascore}</span>`);
+            if (r.br_sascore != null) pills.push(`<span class="db-mini-pill">BR ${r.br_sascore}</span>`);
+            if (r.bde_min != null) pills.push(`<span class="db-mini-pill">BDE ${r.bde_min}</span>`);
+            if (r.vbur != null) pills.push(`<span class="db-mini-pill">Vbur ${r.vbur}%</span>`);
+            if (r.dg_kcal_mol != null) pills.push(`<span class="db-mini-pill">dG ${r.dg_kcal_mol} kcal/mol</span>`);
+            if (r.atomiclimits_process_count) pills.push(`<span class="db-mini-pill">ALD ${r.atomiclimits_process_count}건</span>`);
+            if (r.phase2_pass === true) pills.push(`<span class="db-mini-pill" style="background:#dcfce7;color:#15803d;border-color:#86efac;">Phase 2 Pass</span>`);
+            if (r.phase2_pass === false) pills.push(`<span class="db-mini-pill" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;">Phase 2 Reject</span>`);
+
+            let subLine = escapeHtmlStr(r.chemical_name);
+            if (r.db_type === 'precursor' || r.db_type === 'expanded') {
+              subLine += ` &bull; ${escapeHtmlStr(r.target_films || '-')}`;
+            } else if (r.db_type === 'inhibitor') {
+              subLine += ` &bull; 차단: ${escapeHtmlStr(r.target_surface || '-')}`;
+            } else if (r.db_type === 'reagent') {
+              subLine = `${escapeHtmlStr(r.category)} &bull; ${escapeHtmlStr(r.purity || '-')}`;
+            } else if (r.db_type === 'reaction') {
+              subLine = `${escapeHtmlStr(r.solvent)} &bull; ${escapeHtmlStr(r.conditions)}`;
+            }
+
+            return `<div class="db-card ${r.db_type === 'reaction' ? 'db-card-reaction' : ''}" onclick="openDbDetailModal(${idx})">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                <span class="badge ${badgeCls}" style="font-size:0.68rem;">${escapeHtmlStr(r.db_label)}</span>
+                <div style="display:flex; gap:5px; align-items:center;">
+                  ${r.element && r.element !== '-' ? `<span class="badge badge-1g" style="font-size:0.68rem;">${escapeHtmlStr(r.element)}</span>` : ''}
+                  <span style="font-family:'JetBrains Mono'; font-size:0.71rem; color:#64748b;">${escapeHtmlStr(r.id)}</span>
+                </div>
+              </div>
+              ${visualHtml}
+              <div>
+                <div style="font-weight:700; font-size:0.95rem; color:#0f172a; line-height:1.35;">${escapeHtmlStr(r.name)}</div>
+                <div style="font-size:0.78rem; color:#475569; margin-top:2px; line-height:1.4;">${subLine}</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.73rem; color:#0369a1; margin-top:3px;">${escapeHtmlStr(r.formula)}${r.cas && r.cas !== '-' ? ' &bull; CAS ' + escapeHtmlStr(r.cas) : ''}</div>
+              </div>
+              <div class="db-meta-tags">${pills.join('')}</div>
+              ${r.smiles ? `<div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b; background:#f8fafc; padding:4px 7px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtmlStr(r.smiles)}">${escapeHtmlStr(r.smiles)}</div>` : ''}
+            </div>`;
+          }).join('');
+        }
+      } else {
+        if (gridEl) gridEl.style.display = 'none';
+        if (tblWrap) tblWrap.style.display = 'block';
+        if (tblBody) {
+          tblBody.innerHTML = filtered.map((r, idx) => {
+            const badgeCls = getDbBadgeStyle(r.db_type);
+            let thumbHtml = '<span style="font-size:0.7rem; color:#94a3b8;">No SMILES</span>';
+            if (r.db_type === 'reaction') {
+              const p0 = (r.products || [])[0];
+              thumbHtml = (p0 && svgs[p0]) ? svgs[p0] : '<span style="font-size:0.7rem; color:#0284c7;">Reaction</span>';
+            } else if (r.has_2d && svgs[r.smiles]) {
+              thumbHtml = svgs[r.smiles];
+            }
+            const metricTxt = [];
+            if (r.mw != null) metricTxt.push(`MW ${r.mw}`);
+            if (r.sascore != null) metricTxt.push(`SA ${r.sascore}`);
+            if (r.scscore != null) metricTxt.push(`SC ${r.scscore}`);
+            if (r.bde_min != null) metricTxt.push(`BDE ${r.bde_min}`);
+            if (r.vbur != null) metricTxt.push(`%Vbur ${r.vbur}`);
+            if (r.de_dimer != null) metricTxt.push(`dE_dim ${r.de_dimer}`);
+            if (r.target_films && r.target_films !== '-') metricTxt.push(`Film: ${r.target_films}`);
+            if (r.target_surface) metricTxt.push(`Passiv: ${r.target_surface}`);
+            if (r.dg_kcal_mol != null) metricTxt.push(`dG ${r.dg_kcal_mol} kcal/mol`);
+
+            return `<tr style="cursor:pointer;" onclick="openDbDetailModal(${idx})">
+              <td class="db-thumb-cell" style="text-align:center;">${thumbHtml}</td>
+              <td>
+                <strong>${escapeHtmlStr(r.name)}</strong><br>
+                <span style="font-family:'JetBrains Mono'; font-size:0.7rem; color:#64748b;">${escapeHtmlStr(r.id)}</span><br>
+                <span class="badge ${badgeCls}" style="font-size:0.65rem; margin-top:2px;">${escapeHtmlStr(r.db_label)}</span>
+              </td>
+              <td>
+                <div style="font-weight:600; font-size:0.76rem; color:#0f172a;">${escapeHtmlStr(r.chemical_name)}</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0369a1;">${escapeHtmlStr(r.formula)}</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.69rem; color:#64748b;">CAS: ${escapeHtmlStr(r.cas)}</div>
+              </td>
+              <td style="text-align:center;"><span class="badge badge-1g">${escapeHtmlStr(r.element || '-')}</span></td>
+              <td style="font-size:0.74rem; line-height:1.45; color:#334155;">${escapeHtmlStr(metricTxt.join(' | ') || r.category || '-')}</td>
+              <td style="font-family:'JetBrains Mono'; font-size:0.69rem; color:#0f172a;"><code>${escapeHtmlStr(r.smiles || '-')}</code></td>
+            </tr>`;
+          }).join('');
+        }
+      }
+    }
+
+    function copyDbText(btn, text) {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '복사 완료';
+        setTimeout(() => { btn.textContent = orig; }, 1400);
+      });
+    }
+
+    function openDbDetailModal(filteredIdx) {
+      const r = window._dbFilteredMap ? window._dbFilteredMap[filteredIdx] : null;
+      if (!r) return;
+      const data = loadDbPayload();
+      const svgs = data.svgs || {};
+      const modal = document.getElementById('dbDetailModal');
+      const titleEl = document.getElementById('dbModalTitle');
+      const subEl = document.getElementById('dbModalSub');
+      const bodyEl = document.getElementById('dbModalBody');
+      if (!modal || !bodyEl) return;
+
+      titleEl.textContent = `${r.name} (${r.id})`;
+      subEl.textContent = `${r.db_label} | ${r.chemical_name} | Formula: ${r.formula}${r.cas && r.cas !== '-' ? ' | CAS: ' + r.cas : ''}`;
+
+      let svgBlock = '';
+      if (r.db_type === 'reaction') {
+        svgBlock = `<div class="db-detail-svg-wrap">${renderReactionSchemeHtml(r, svgs, false)}</div>`;
+      } else if (r.has_2d && svgs[r.smiles]) {
+        svgBlock = `<div class="db-detail-svg-wrap">${svgs[r.smiles]}</div>`;
+      } else {
+        svgBlock = `<div class="db-detail-svg-wrap" style="min-height:100px; color:#64748b;">2D SMILES 미수록 (AtomicLimits 문헌 기반 레코드)</div>`;
+      }
+
+      const rows = [];
+      const addRow = (k, v) => {
+        if (v !== undefined && v !== null && v !== '' && v !== '-') {
+          rows.push(`<tr><th style="width:28%; text-align:left; background:#f8fafc;">${escapeHtmlStr(k)}</th><td>${v}</td></tr>`);
+        }
+      };
+
+      addRow('Element / Category', `${escapeHtmlStr(r.element)} &bull; ${escapeHtmlStr(r.category)}`);
+      if (r.mw != null) addRow('Molecular Weight', `${r.mw} g/mol`);
+      if (r.target_films) addRow('Target Films / Process', `${escapeHtmlStr(r.target_films)} (${escapeHtmlStr(r.process_type || '-')})`);
+      if (r.vapor_pressure) addRow('Vapor Pressure / T_decomp', `${escapeHtmlStr(r.vapor_pressure)} &bull; >${escapeHtmlStr(r.t_decomp_c)} &deg;C`);
+      if (r.starting_materials && r.starting_materials.length) addRow('Starting Materials & Route', `${escapeHtmlStr(r.starting_materials.join(' + '))} (${escapeHtmlStr(r.reaction_type)}, ${escapeHtmlStr(r.yield_pct)}% yield)`);
+      if (r.vendors && r.vendors.length) addRow('Commercial Vendors', escapeHtmlStr(r.vendors.join(', ')));
+      if (r.target_surface) addRow('AS-ALD Selectivity', `Passivation: <strong>${escapeHtmlStr(r.target_surface)}</strong> | Growth: ${escapeHtmlStr(r.growth_surface)} (${escapeHtmlStr(r.selectivity_type)})`);
+      if (r.passivation_mechanism) addRow('Mechanism & Surface Bond', `${escapeHtmlStr(r.passivation_mechanism)} (${escapeHtmlStr(r.surface_bond)})`);
+      if (r.removal_method) addRow('Removal Method', escapeHtmlStr(r.removal_method));
+      if (r.purity) addRow('Purity / Handling', `${escapeHtmlStr(r.purity)} &bull; ${escapeHtmlStr(r.handling)}`);
+      if (r.solvent) addRow('Reaction Conditions', `Solvent: ${escapeHtmlStr(r.solvent)} | Conditions: ${escapeHtmlStr(r.conditions)} | Byproduct: ${escapeHtmlStr(r.byproduct)} | dG: ${r.dg_kcal_mol} kcal/mol`);
+      if (r.atomiclimits_process_count) addRow('AtomicLimits ALD Data', `Processes: ${r.atomiclimits_process_count} | Materials: ${escapeHtmlStr((r.atomiclimits_materials || []).join(', '))} | Co-reactants: ${escapeHtmlStr((r.atomiclimits_co_reactants || []).join(', '))} | DOIs: ${r.atomiclimits_doi_count}`);
+      if (r.sascore != null) addRow('Phase 1 SA Scores', `SAScore: <strong>${r.sascore}</strong> | SCScore: <strong>${r.scscore}</strong> | SYBA: <strong>${r.syba}</strong> | BR-SAScore: <strong>${r.br_sascore}</strong> | RAscore: <strong>${r.rascore}</strong> | Ligand SA: <strong>${r.ligand_sa}</strong>`);
+      if (r.bde_min != null) addRow('SevenNet-0 Physics (LBFGS)', `BDE_min: <strong>${r.bde_min} kcal/mol</strong> | %V_bur: <strong>${r.vbur}%</strong> | dE_dimer: <strong>${r.de_dimer} kcal/mol</strong> | e_coh: <strong>${r.e_coh} eV/atom</strong>`);
+      if (r.tmc_sa_phys != null) addRow('Phase 2 Analytical Verdict', `TMC-SA_phys: <strong>${r.tmc_sa_phys}</strong> | Flag: <code>${escapeHtmlStr(r.domain_flag)}</code> | Pass: <strong>${r.phase2_pass}</strong>`);
+      if (r.doi) addRow('Reference DOI', `<a href="https://doi.org/${escapeHtmlStr(r.doi)}" target="_blank">${escapeHtmlStr(r.doi)}</a>`);
+
+      const smiBlock = r.smiles
+        ? `<div style="display:flex; align-items:center; gap:8px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px 12px;">
+             <code style="flex:1; font-size:0.78rem; word-break:break-all; color:#0f172a;">${escapeHtmlStr(r.smiles)}</code>
+             <button type="button" class="btn-modal-tool" id="btnCopyDbSmiles">복사</button>
+           </div>`
+        : '';
+
+      bodyEl.innerHTML = `${svgBlock}${smiBlock}<table style="font-size:0.82rem;"><tbody>${rows.join('')}</tbody></table>`;
+      const copyBtn = document.getElementById('btnCopyDbSmiles');
+      if (copyBtn) {
+        copyBtn.onclick = () => copyDbText(copyBtn, r.smiles);
+      }
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDbDetailModal() {
+      const modal = document.getElementById('dbDetailModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeDbDetailModalOnOverlay(event) {
+      if (event.target && event.target.id === 'dbDetailModal') {
+        closeDbDetailModal();
       }
     }
 
