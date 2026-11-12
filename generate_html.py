@@ -1329,6 +1329,13 @@ bench_by_id = {b["id"]: b for b in benchmarks}
 svg_dict = {}
 
 
+def _norm_elem(val: str) -> str:
+    v = (val or "").strip()
+    if not v or v in {"C", "N", "O", "S", "Cl", "F"}:
+        return "Organic"
+    return v
+
+
 def _ensure_svg(smi: str) -> bool:
     if not smi:
         return False
@@ -1450,7 +1457,7 @@ for inh in inhib_list:
         "formula": inh.get("formula", "-"),
         "mw": inh.get("molecular_weight"),
         "cas": inh.get("cas_number", "-"),
-        "element": ev.get("center_atom") or calc_elem,
+        "element": _norm_elem(ev.get("center_atom") or calc_elem),
         "category": inh.get("chemical_family", "-"),
         "smiles": smi,
         "has_2d": bool(smi and smi in svg_dict),
@@ -1559,7 +1566,7 @@ for ev in molecules_eval:
         "formula": ev.get("formula", "-"),
         "mw": ev.get("mw"),
         "cas": "-",
-        "element": ev.get("center_atom", "-"),
+        "element": _norm_elem(ev.get("center_atom", "-")),
         "category": ev.get("domain", "-"),
         "smiles": smi,
         "has_2d": bool(smi and smi in svg_dict),
