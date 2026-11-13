@@ -1827,11 +1827,11 @@
           <li><a href="#storyline-step1" class="toc-link active" data-target="storyline-step1">1. Evaluation Metrics (Confusion Matrix &amp; TP/FP/TN/FN)</a></li>
           <li><a href="#storyline-step2" class="toc-link" data-target="storyline-step2">2. 4-Generation Model Evolution &amp; Suitability</a></li>
           <li><a href="#storyline-step3" class="toc-link" data-target="storyline-step3">3. Base Model Error &amp; SevenNet-0 Coupling Plan</a></li>
-          <li><a href="#storyline-step4" class="toc-link" data-target="storyline-step4">4. 55-Molecule Benchmark &amp; LOOCV Results</a></li>
+          <li><a href="#storyline-step4" class="toc-link" data-target="storyline-step4">4. 160-Molecule Unified Evaluation &amp; Extrapolation Results</a></li>
         </ul>
         <div style="margin-top:20px; padding:12px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; font-size:0.78rem; line-height:1.5;">
           <strong style="color:#1e40af;">전체 기술 보고서 열람:</strong><br>
-          34편 원문 아카이브, 16개 모델 비교, DFT/VASP 자동화 및 55종 실측 데이터시트는 리포트 탭에 있습니다.
+          34편 원문 아카이브, 16개 모델 비교, DFT/VASP 자동화 및 통합 실측 데이터시트는 리포트 탭에 있습니다.
           <button type="button" onclick="switchViewTab('technical')" class="btn-toc-utility" style="margin-top:8px; width:100%; background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer;">
             리포트 탭 열기 &rarr;
           </button>
@@ -1924,7 +1924,7 @@
             <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. Evaluation Metrics &amp; Confusion Matrix &darr;</a>
             <a href="#storyline-step2" class="btn-pdf" style="text-decoration:none;">Step 2. 4-Generation Model Evolution &amp; Suitability &darr;</a>
             <a href="#storyline-step3" class="btn-pdf" style="text-decoration:none;">Step 3. Base Model Error &amp; SevenNet-0 Plan &darr;</a>
-            <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 55-Molecule Benchmark &amp; LOOCV Results &darr;</a>
+            <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 160-Molecule Unified Evaluation &darr;</a>
             <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer; text-decoration:none;">
               16개 섹션 전체 리포트 열기 &rarr;
             </button>
@@ -2222,8 +2222,8 @@ flowchart TD
 
               <div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #7c3aed; border-radius:6px; padding:11px 14px; font-size:0.82rem; line-height:1.58; color:#334155;">
                 <strong style="color:#5b21b6;">Methodological Audit &mdash; BR-SAScore Sensitivity Analysis &amp; Circular Data Leakage:</strong><br>
-                &bull; <strong>Strict Reagent Dictionary (<code>max(existing, -0.47)</code>):</strong> <code>BRSAScore</code>의 radius-2 음수 fragment 평균(<code>fscore &lt; 0</code>) 수식에 정합시켜 시약 단편 하한을 $-0.47$로 보정 시, 확장 DB(102종) Pass Rate는 <strong>$18.6\% (19/102)$</strong>(상용 시약 29종 $28/29$), 초기 27종 코호트 민감도 검증에서는 점수 악화 0종 및 <strong>$11.1\% (3/27)$</strong>를 기록합니다.<br>
-                &bull; <strong>Counterfactual Data Leakage Control (초기 27종 코호트 검증):</strong> 타깃 프리커서 생성물 자체를 $0.0$으로 사전 등록 시 <strong>$100.0\% (27/27)$</strong> 통과가 산출되나, 이는 Out-of-Sample 일반화가 불가능한 Circular Memorization 결과이므로 본 매트릭스에서 배제하고 Pro-ligand ($HL_i$) 분리형 2-Track 결합 전략을 적용합니다.
+                &bull; <strong>Strict Reagent Dictionary (<code>max(existing, -0.47)</code>):</strong> <code>BRSAScore</code>의 radius-2 음수 fragment 평균(<code>fscore &lt; 0</code>) 수식에 정합시켜 시약 단편 하한을 $-0.47$로 보정 시, 확장 DB(102종) Pass Rate는 <strong>$18.6\% (19/102)$</strong>(상용 시약 29종 $28/29$), 초기 27종 프리커서 집합 민감도 검증에서는 점수 악화 0종 및 <strong>$11.1\% (3/27)$</strong>를 기록합니다.<br>
+                &bull; <strong>Counterfactual Data Leakage Control (초기 27종 프리커서 집합 검증):</strong> 타깃 프리커서 생성물 자체를 $0.0$으로 사전 등록 시 <strong>$100.0\% (27/27)$</strong> 통과가 산출되나, 이는 Out-of-Sample 일반화가 불가능한 Circular Memorization 결과이므로 본 매트릭스에서 배제하고 Pro-ligand ($HL_i$) 분리형 2-Track 결합 전략을 적용합니다.
               </div>
             </div>
 
@@ -2330,13 +2330,13 @@ flowchart TD
           </div>
         </section>
 
-        <!-- Step 4: 55-Molecule Benchmark & LOOCV Results -->
+        <!-- Step 4: 160-Molecule Unified Evaluation & Extrapolation Results -->
         <section id="storyline-step4" class="storyline-step">
           <div class="storyline-step-header">
             <span class="step-badge">4</span>
             <div>
-              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 4 &bull; Audited Benchmark &amp; Expanded Evaluation</div>
-              <h3 class="storyline-step-title">55종 감사 Benchmark 및 85종 SevenNet-0 확장 평가 결과 요약</h3>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 4 &bull; Unified 160-Molecule Latest Evaluation</div>
+              <h3 class="storyline-step-title">통합 160종 최신 모델(TMC-SA<sub>v2</sub> + Coord/Topology Gate) 평가 결과</h3>
             </div>
           </div>
 
@@ -2349,7 +2349,7 @@ flowchart TD
                   16개 섹션 전체 Technical Report 및 정량 데이터시트
                 </div>
                 <div style="font-size:0.85rem; color:#475569;">
-                  34편 원문 아카이브, Model 비교 매트릭스, DFT/VASP 자동화 Pipeline 및 55종 분자 Benchmark 데이터시트를 리포트 탭에서 열람할 수 있습니다.
+                  34편 원문 아카이브, Model 비교 매트릭스, DFT/VASP 자동화 Pipeline 및 감사·통합 평가 데이터시트를 리포트 탭에서 열람할 수 있습니다.
                 </div>
               </div>
               <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; padding:10px 22px; font-size:0.92rem; font-weight:700; cursor:pointer;">
@@ -3013,7 +3013,7 @@ flowchart TD
               <div style="font-weight:700; color:#0f172a; font-size:0.95rem; margin-bottom:4px;">Stage 4: Physical Output ($N_{\text{pass}}$) &amp; Data Leakage</div>
               <div style="font-size:0.8rem; color:#64748b; line-height:1.5;">
                 &bull; <strong>평가 기준:</strong> 상용 프리커서 합성 판정 및 Data Leakage 검증.<br>
-                &bull; <strong>Strict Reagent Dictionary:</strong> BR-SAScore 확장 DB 18.6% (19/102) &bull; 초기 27종 코호트 11.1% (3/27: TSA, TMA, DMAH) 통과.<br>
+                &bull; <strong>Strict Reagent Dictionary:</strong> BR-SAScore 확장 DB 18.6% (19/102) &bull; 초기 27종 프리커서 집합 11.1% (3/27: TSA, TMA, DMAH) 통과.<br>
                 &bull; <strong>Counterfactual Control (초기 27종):</strong> 생성물 사전 등록 시 100.0% (27/27) 통과하는 Circular Memorization을 확인하여 생성물 사전 등록을 배제함.
               </div>
             </div>
@@ -3108,8 +3108,8 @@ flowchart TD
 
           <div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #7c3aed; border-radius:6px; padding:12px 16px; font-size:0.84rem; line-height:1.6; color:#334155;">
             <strong style="color:#5b21b6;">Methodological Audit &mdash; BR-SAScore Sensitivity Analysis &amp; Circular Data Leakage:</strong><br>
-            &bull; <strong>Strict Reagent Dictionary (<code>max(existing, -0.47)</code>):</strong> <code>BRSAScore</code>의 radius-2 음수 fragment 평균(<code>fscore &lt; 0</code>) 수식에 정합시켜 시약 단편 하한을 $-0.47$로 보정 시, 확장 DB(102종) Pass Rate는 <strong>$18.6\% (19/102)$</strong>(상용 시약 29종 $28/29$), 초기 27종 코호트 민감도 검증에서는 점수 악화 0종(예: <code>CpZr</code> $7.20 \to 6.95$, <code>Co(AMD)2</code> $8.29 \to 7.91$; $0.0$ 덮어쓰기 시 3종 악화) 및 <strong>$11.1\% (3/27)$</strong>를 기록합니다.<br>
-            &bull; <strong>Counterfactual Data Leakage Control (초기 27종 코호트 검증):</strong> 타깃 프리커서 생성물 자체를 $0.0$으로 사전 등록 시 <strong>$100.0\% (27/27)$</strong> 통과가 산출되나, 이는 Out-of-Sample 일반화가 불가능한 Circular Memorization 결과이므로 본 매트릭스에서 배제하고 Pro-ligand ($HL_i$) 분리형 2-Track 결합 전략을 적용합니다.
+            &bull; <strong>Strict Reagent Dictionary (<code>max(existing, -0.47)</code>):</strong> <code>BRSAScore</code>의 radius-2 음수 fragment 평균(<code>fscore &lt; 0</code>) 수식에 정합시켜 시약 단편 하한을 $-0.47$로 보정 시, 확장 DB(102종) Pass Rate는 <strong>$18.6\% (19/102)$</strong>(상용 시약 29종 $28/29$), 초기 27종 프리커서 집합 민감도 검증에서는 점수 악화 0종(예: <code>CpZr</code> $7.20 \to 6.95$, <code>Co(AMD)2</code> $8.29 \to 7.91$; $0.0$ 덮어쓰기 시 3종 악화) 및 <strong>$11.1\% (3/27)$</strong>를 기록합니다.<br>
+            &bull; <strong>Counterfactual Data Leakage Control (초기 27종 프리커서 집합 검증):</strong> 타깃 프리커서 생성물 자체를 $0.0$으로 사전 등록 시 <strong>$100.0\% (27/27)$</strong> 통과가 산출되나, 이는 Out-of-Sample 일반화가 불가능한 Circular Memorization 결과이므로 본 매트릭스에서 배제하고 Pro-ligand ($HL_i$) 분리형 2-Track 결합 전략을 적용합니다.
           </div>
         </div>
 
@@ -5883,13 +5883,13 @@ flowchart TD
 
       </section>
 
-      <!-- Section 15: Phase 1 & Phase 2 Empirical Benchmark and SevenNet MLIP Tuning -->
+      <!-- Section 15: Unified 160-Molecule Evaluation & SevenNet-0 Empirical Benchmark -->
       <section id="phase1-phase2-benchmark">
         <div class="section-header">
-          <div class="section-tag">Section 15 &bull; Phase 1 vs Phase 2 Empirical Benchmark &amp; SevenNet Tuning</div>
-          <h2 class="section-title">실증 벤치마크 및 SevenNet 기반 모델 튜닝: Phase 1 (Data-Driven Baseline) vs Phase 2 (7net MLIP Physics-Coupled) 실측 평가</h2>
+          <div class="section-tag">Section 15 &bull; Unified Latest Benchmark &amp; SevenNet-0 Audit</div>
+          <h2 class="section-title">통합 160종 최신 모델 평가 및 55종 SevenNet-0 물리 결합 기준선 검증 (Phase 1 vs TMC-SA<sub>v2</sub>)</h2>
           <p class="section-desc">
-            자체 구축한 <strong>55종 실증 분자 세트</strong>(반도체 공정 양산 프리커서 27종, AS-ALD 선택성 인히비터 18종, 열분해·폭발성·부식성 Negative Control 10종)를 대상으로 <strong>Phase 1 (Cheminformatics Data-Driven Baseline)</strong>과 <strong>Phase 2 (SevenNet <code>7net-0</code> Atomic-Scale Physics Features 및 SMARTS Domain Rule 결합)</strong>를 로컬 실행하여 비교 검증하였습니다. Target Label Branching과 ID Hardcoding을 제거한 균일 연속 평가 결과와 All-Sample, 5-Fold CV 및 LOOCV 결과를 함께 보고합니다.
+            전체 업데이트 DB <strong>160종 평가 데이터셋</strong>(양산 프리커서 27종 + 확장 원소 프리커서 75종 = 102종, AS-ALD 선택성 인히비터 18종, 6대 물리·화학적 실패 메커니즘별 Negative Control 40종)을 대상으로 최신 <strong><code>TMC-SA<sub>v2</sub></code>(적응형 $V_{\min}$ + &pi;-햅티시티·킬레이트 배위 게이트)</strong> 성능을 통합 평가하고, <code>SevenNet-0</code> 정밀 LBFGS 이완 기준 집합(55종 감사 + 30종 확장 = 85종)의 물리 지표 및 All-Sample &middot; CV-5 &middot; LOOCV &middot; LOFMO 외삽 검증 결과를 보고합니다.
           </p>
         </div>
 

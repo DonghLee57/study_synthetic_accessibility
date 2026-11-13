@@ -515,3 +515,19 @@ To resolve missing coverage for group III-V (`Ga, In, As`) and noble/platinum-gr
      2. Upgrade `SevenNet-0` (`MPtrj` inorganic crystal training set, which produces negative neutral-ligand BDEs on `CO`/halide/arene radicals) to spin/charge-aware `MACE-OMol` or `g-xTB`/DFT tiers.
      3. Integrate condensed-phase `LiCl(s)`-referenced stoichiometric synthesis energies ($\Delta E_{\text{syn}}$) and Clausius–Clapeyron volatility margins ($\Delta T = T_{\text{decomp}} - T_{\text{vap}}$).
      4. Standardize Leave-One-Element-Out (`LOEO`) and `LOFMO` alongside random `CV-5` in automated regression tests.
+
+
+---
+
+## 15. Unified Latest 160-Molecule Evaluation (`TMC-SA_v2`) & Academic Terminology Audit
+
+1. **Consolidation of Historical Test Outputs & Clean Unified 160-Molecule Analysis (`scripts/benchmark/run_unified_latest_160_analysis.py` -> `database/benchmark_unified_latest_160.json`)**:
+   - Replaced all legacy intermediate `55`-molecule (`10` Negative Control) scatter plots, `130`/`85` latent plots, and stacked incremental patch cards in HTML Step 4 (`index.html`, `synthetic_accessibility_report.html`, `template.html`, `generate_html.py`) with a **single unified latest-version dashboard** computed across the entire **160-molecule Evaluation Set** (`27` audited precursors + `75` expanded `Ir/Rh/As/Ga/In/Ru` precursors = `102` precursors, `18` AS-ALD inhibitors, `40` negative controls across `6` failure mechanisms).
+   - **Unified 3D `%V_bur` & Pro-Ligand `TMC-SA_v2` Coverage**: Combined exact `SevenNet-0` LBFGS geometries (`85` molecules) with deterministic RDKit `ETKDGv3` (`randomSeed=42`) 3D `%V_bur` (`75` molecules), pro-ligand `ligand_sa`, `pi_hapticity_index`, `chelate_ring_count`, Adaptive $V_{\min}$ (`34%` / `44%`), and the 6-mechanism Coordination/Reactivity Gate (`24` features total):
+     - **Precursor TPR**: **`94/102` (`92.2%`, `FNR 7.8%`)** vs RDKit `SAScore` `2/102` (`2.0%`), spanning both audited (`25/27` = `92.6%`) and expanded (`69/75` = `92.0%`) sets without any false coordination flags.
+     - **Negative Control TNR**: **`37/40` (`92.5%`, `FPR 7.5%`)** vs `SAScore` `18/40` (`45.0%`) and `SYBA` `4/40` (`10.0%`). Replacing raw metal `SAScore` with pro-ligand `ligand_sa` cleanly identified the exact `3` remaining mechanistic gaps: `NEG-019` (`CrPh3`, off-list transition metal), `NEG-039` (`1,1,2,2-Tetrachlorodisilane`, `Si-Si` disproportionation), and `NEG-040` (`Cp2GaH`, gallium hydride without `SevenNet-0` dimer/BDE checks).
+     - **24-Feature Latent Projections & Extrapolation (`CV-5` vs `LOFMO`)**: `PCA` (`21.0% + 17.6%`, Silhouette `0.128`) and `t-SNE` (Silhouette `0.197`) across all `160` molecules confirm 2D linear compression (`PCA 2D Bal.Acc = 0.563`) is insufficient compared to full-space non-linear gating (`24D SVC_RBF Bal.Acc = 0.950`, `CV-5 LogisticRegression Bal.Acc = 0.958`, `AUC = 0.981`). Under Leave-One-Failure-Mechanism-Out (`LOFMO`), supervised classifiers collapse (`LogisticRegression = 0.024`, `SVC_RBF = 0.000`, `RandomForest = 0.000`), whereas **`OneClassSVM_RBF` achieves `0.865`** and **`Unified TMC-SA_v2 + Coord Gate` achieves `0.917`**.
+
+2. **Academic Terminology Audit (`"코호트"` / `"Cohort"`)**:
+   - `"코호트"` (`Cohort`) is standard in epidemiology, biostatistics, and longitudinal clinical studies for groups of human subjects, and is **non-standard** in computational chemistry, cheminformatics, and materials informatics.
+   - Replaced all user-facing instances of `"코호트"` and `"Cohort"` in `template.html`, `generate_html.py`, `index.html`, and `synthetic_accessibility_report.html` with domain-appropriate terminology (`"평가 데이터셋"`, `"벤치마크 데이터셋"`, `"프리커서 집합"`), verified automatically in `test_18_unified_latest_160_analysis`.

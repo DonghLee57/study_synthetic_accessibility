@@ -591,6 +591,43 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertGreaterEqual(lofmo["OneClassSVM_RBF"]["mean_unseen_tnr"], 0.80)
         self.assertGreaterEqual(lofmo["Coord_Chem_Gate"]["mean_unseen_tnr"], 0.95)
 
+    def test_18_unified_latest_160_analysis(self):
+        """Verify unified latest 160-molecule evaluation JSON and clean HTML terminology/plots."""
+        res_path = os.path.join(PROJECT_ROOT, "database", "benchmark_unified_latest_160.json")
+        self.assertTrue(os.path.exists(res_path), "Missing database/benchmark_unified_latest_160.json")
+        with open(res_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        ds = data["dataset_summary"]
+        self.assertEqual(ds["total_molecules"], 160)
+        self.assertEqual(ds["precursors_total"], 102)
+        self.assertEqual(ds["inhibitors_total"], 18)
+        self.assertEqual(ds["negative_controls_total"], 40)
+        self.assertEqual(ds["sevenn_relaxed_count"] + ds["etkdg_3d_count"], 160)
+        self.assertEqual(len(data["records"]), 160)
+
+        v2 = data["unified_v2_summary"]
+        self.assertEqual(v2["precursors_all_tp"], "94/102")
+        self.assertAlmostEqual(v2["precursors_all_tpr_pct"], 92.2, places=1)
+        self.assertEqual(v2["audited_precursors_tp"], "25/27")
+        self.assertEqual(v2["expanded_precursors_tp"], "69/75")
+        self.assertEqual(v2["negative_all_tn"], "37/40")
+        self.assertAlmostEqual(v2["negative_all_tnr_pct"], 92.5, places=1)
+
+        lofmo = data["lofmo_extrapolation_160"]
+        self.assertLess(lofmo["LogisticRegression"]["mean_unseen_tnr"], 0.10)
+        self.assertGreaterEqual(lofmo["OneClassSVM_RBF"]["mean_unseen_tnr"], 0.85)
+        self.assertGreaterEqual(lofmo["Unified_TMC_SA_v2_Gate"]["mean_unseen_tnr"], 0.90)
+
+        html_path = os.path.join(PROJECT_ROOT, "index.html")
+        with open(html_path, "r", encoding="utf-8") as f:
+            html_txt = f.read()
+        self.assertNotIn("전구체", html_txt)
+        self.assertNotIn("코호트", html_txt)
+        self.assertNotIn("cohort", html_txt.lower())
+        self.assertIn("[Unified Plot 1]", html_txt)
+        self.assertIn("[Unified Plot 2]", html_txt)
+
 
 if __name__ == "__main__":
     unittest.main()
