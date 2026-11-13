@@ -105,6 +105,52 @@
       "cv5_tnr_specificity": 0.85
     }
   },
+  "lofmo_extrapolation": {
+    "LogisticRegression": {
+      "mean_unseen_tnr": 0.0238,
+      "per_unseen_mechanism_tnr": {
+        "corrosive_carboxylic_acid": 0.0,
+        "inert_nonfunctional_alkane": 0.1429,
+        "nonvolatile_poly_aryl": 0.0,
+        "polyhydroxide_solgel_condensation": 0.0,
+        "strained_or_pyrophoric_hydride_halide": 0.0,
+        "unstable_homoleptic_tm_alkyl": 0.0
+      }
+    },
+    "SVC_RBF": {
+      "mean_unseen_tnr": 0.1627,
+      "per_unseen_mechanism_tnr": {
+        "corrosive_carboxylic_acid": 0.0,
+        "inert_nonfunctional_alkane": 0.0,
+        "nonvolatile_poly_aryl": 0.8333,
+        "polyhydroxide_solgel_condensation": 0.1429,
+        "strained_or_pyrophoric_hydride_halide": 0.0,
+        "unstable_homoleptic_tm_alkyl": 0.0
+      }
+    },
+    "OneClassSVM_RBF": {
+      "mean_unseen_tnr": 0.8651,
+      "per_unseen_mechanism_tnr": {
+        "corrosive_carboxylic_acid": 0.8571,
+        "inert_nonfunctional_alkane": 1.0,
+        "nonvolatile_poly_aryl": 1.0,
+        "polyhydroxide_solgel_condensation": 1.0,
+        "strained_or_pyrophoric_hydride_halide": 0.3333,
+        "unstable_homoleptic_tm_alkyl": 1.0
+      }
+    },
+    "Coord_Chem_Gate": {
+      "mean_unseen_tnr": 0.9722,
+      "per_unseen_mechanism_tnr": {
+        "corrosive_carboxylic_acid": 1.0,
+        "inert_nonfunctional_alkane": 1.0,
+        "nonvolatile_poly_aryl": 0.833,
+        "polyhydroxide_solgel_condensation": 1.0,
+        "strained_or_pyrophoric_hydride_halide": 1.0,
+        "unstable_homoleptic_tm_alkyl": 1.0
+      }
+    }
+  },
   "records": [
     {
       "id": "NEG-001",

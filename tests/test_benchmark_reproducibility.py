@@ -585,6 +585,12 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertGreaterEqual(ml["SVC_RBF"]["cv5_balanced_acc"], 0.90)
         self.assertGreaterEqual(ml["LogisticRegression"]["cv5_tnr_specificity"], 0.90)
 
+        lofmo = data["lofmo_extrapolation"]
+        self.assertLess(lofmo["LogisticRegression"]["mean_unseen_tnr"], 0.10)
+        self.assertLess(lofmo["SVC_RBF"]["mean_unseen_tnr"], 0.25)
+        self.assertGreaterEqual(lofmo["OneClassSVM_RBF"]["mean_unseen_tnr"], 0.80)
+        self.assertGreaterEqual(lofmo["Coord_Chem_Gate"]["mean_unseen_tnr"], 0.95)
+
 
 if __name__ == "__main__":
     unittest.main()

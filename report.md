@@ -497,3 +497,21 @@ To resolve missing coverage for group III-V (`Ga, In, As`) and noble/platinum-gr
      - `RandomForest`: `ROC-AUC = 0.9815`, `Bal.Acc = 0.8583`, `TPR = 0.9917`, `TNR = 0.7250`.
      - `XGBoost_Weighted`: `ROC-AUC = 0.9367`, `Bal.Acc = 0.8250`, `TPR = 0.9000`, `TNR = 0.7500`.
      - `OneClassSVM_RBF`: `ROC-AUC = 0.8698`, `Bal.Acc = 0.7792`, `TPR = 0.7083`, `TNR = 0.8500`.
+
+
+---
+
+## 14. Physical Rationale of Selected Descriptors & Extrapolation Audit (`LOFMO`)
+
+1. **Physical Rationale & Process Relevance of Selected Descriptors**:
+   - **Steric/Coordination Shielding (`%V_bur` + Adaptive $V_{\min}$)**: Quantifies ligand steric protection within $R = 3.5\text{ Å}$ around the central element (DOI `10.1038/s41557-019-0319-5`). Adaptive $V_{\min} = 34.0\%$ for small $\text{Si}$ centers and $\pi$-haptic complexes vs $44.0\%$ for standard TM complexes prevents pyrophoric/oligomeric under-coordination (`< V_min`) and non-volatile steric overcrowding (`> 83.5%`).
+   - **Thermal Decomposition Resistance (`BDE_min`, `DeltaE_dimer`)**: Weakest metal–ligand dissociation energy governs bubbler/delivery thermal stability ($T_{\text{decomp}} \leftrightarrow \text{BDE}_{\min} \ge 45\text{ kcal/mol}$), while non-overlapping dimer energy separates volatile monomers from sol-gel networks (`M(OH)n`).
+   - **Coordination & Surface Topology (`pi_hapticity_index`, `chelate_ring_count`, `is_homoleptic_tm_sp3`, `metal_oh_count`, `cooh_count`, `is_inert_alkane`, `strained_si_ring`, `TPSA/HBD/MW`)**: Separates stabilizing $\pi$/chelate complexes from thermally labile $sp^3$ alkyls ($\beta$-H elimination), corrosive acids, inert solvents, and strained anti-aromatic rings.
+
+2. **Leave-One-Failure-Mechanism-Out (`LOFMO`) Extrapolation Audit & 4 Improvement Priorities**:
+   - Under `LOFMO` (holding out an entire failure mechanism from training on the `160`-molecule cohort), supervised binary classifiers collapsed on unseen failure mechanisms (`LogisticRegression`: **`mean_unseen_tnr = 0.0238`**, `SVC_RBF`: **`mean_unseen_tnr = 0.1627`**), whereas positive-only **`OneClassSVM_RBF` achieved `0.8651`** and the physics-grounded **`Coord/Chem Gate` achieved `0.9722`**.
+   - **4 Key Extrapolation Improvements Identified**:
+     1. Replace the hardcoded `16`-element semiconductor center list (which caused the single `NEG-019 CrPh3` miss) with periodic-table block ($d/f/p$-block), valence-electron count, and oxidation-state descriptors.
+     2. Upgrade `SevenNet-0` (`MPtrj` inorganic crystal training set, which produces negative neutral-ligand BDEs on `CO`/halide/arene radicals) to spin/charge-aware `MACE-OMol` or `g-xTB`/DFT tiers.
+     3. Integrate condensed-phase `LiCl(s)`-referenced stoichiometric synthesis energies ($\Delta E_{\text{syn}}$) and Clausius–Clapeyron volatility margins ($\Delta T = T_{\text{decomp}} - T_{\text{vap}}$).
+     4. Standardize Leave-One-Element-Out (`LOEO`) and `LOFMO` alongside random `CV-5` in automated regression tests.

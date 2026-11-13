@@ -1064,12 +1064,25 @@
       overflow-x: clip;
     }
 
+    .mobile-table-scroll {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 8px 0;
+    }
+
     @media (max-width: 768px) {
       header {
-        padding: 20px 14px 18px;
+        width: 100%;
+        padding: 18px 12px 16px;
+      }
+      .header-inner {
+        width: 100%;
+        max-width: 100%;
       }
       .hero-title {
-        font-size: 1.4rem;
+        font-size: 1.38rem;
         line-height: 1.35;
         word-break: keep-all;
         overflow-wrap: break-word;
@@ -1077,32 +1090,36 @@
       .hero-desc {
         font-size: 0.9rem;
         line-height: 1.6;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
         overflow-wrap: break-word;
       }
-      .nav-container,
-      .main-nav,
-      .nav-tabs {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-wrap: nowrap !important;
-        gap: 6px;
-        scrollbar-width: thin;
-        max-width: 100%;
+      .view-mode-bar {
+        width: 100%;
+        padding: 8px 0;
       }
-      .nav-tab {
-        white-space: nowrap;
+      .view-mode-inner {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 12px;
+        gap: 6px;
+      }
+      .view-mode-inner > div[style*="margin-left:auto"] {
+        margin-left: 0 !important;
+        width: 100%;
+        font-size: 0.74rem !important;
+      }
+      .view-mode-btn {
+        padding: 7px 11px;
+        font-size: 0.8rem;
         flex: 0 0 auto;
-        font-size: 0.82rem;
-        padding: 8px 12px;
       }
       .page-wrapper,
       .container {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
-        padding: 14px 12px !important;
-        gap: 14px !important;
+        padding: 12px 12px !important;
+        gap: 12px !important;
       }
       main.main-content {
         width: 100% !important;
@@ -1118,21 +1135,40 @@
         min-width: 0;
       }
       section {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        padding: 18px 14px !important;
-        margin-bottom: 16px;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 16px 12px !important;
+        margin-bottom: 14px;
         overflow-wrap: break-word;
       }
-      .card {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        padding: 14px 12px;
+      .card,
+      .card-subtle,
+      .math-callout,
+      .versus-card,
+      .timeline-content,
+      .mermaid-card,
+      .table-toggle-bar,
+      .db-controls-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 14px 12px !important;
         overflow-wrap: break-word;
+      }
+      .badge,
+      .click-to-expand-badge,
+      .btn-toggle-table,
+      .btn-pdf,
+      .hero-badge {
+        white-space: normal !important;
+        max-width: 100%;
+        text-align: left;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
       }
       p, li, h1, h2, h3, h4, h5, blockquote {
+        max-width: 100%;
         overflow-wrap: break-word;
         word-break: keep-all;
       }
@@ -1146,26 +1182,48 @@
         white-space: pre-wrap;
         word-break: break-word;
       }
-      [style*="grid-template-columns"] {
+      [style*="grid-template-columns"],
+      .versus-grid,
+      .db-card-grid {
         grid-template-columns: 1fr !important;
         gap: 12px !important;
       }
-      div[style*="overflow-x:auto"],
-      .table-responsive {
-        -webkit-overflow-scrolling: touch;
+      .db-search-input {
+        min-width: 0 !important;
         width: 100%;
+      }
+      .mermaid-viewport {
+        padding: 12px 8px !important;
+        justify-content: flex-start !important;
         max-width: 100%;
         overflow-x: auto !important;
+      }
+      .mermaid-svg-container {
+        justify-content: flex-start !important;
+        max-width: 100%;
+        overflow-x: auto !important;
+      }
+      div[style*="overflow-x:auto"],
+      .table-responsive,
+      .mobile-table-scroll {
+        display: block;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
       }
       table,
       .report-table,
       .data-table {
-        display: block;
         width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
         font-size: 0.78rem;
+      }
+      table.table-compact-72,
+      table.table-compact-73,
+      table.table-compact-74,
+      table.table-compact-16 {
+        min-width: 680px !important;
       }
       th[style*="min-width"],
       td[style*="min-width"] {
@@ -1183,15 +1241,29 @@
         max-width: 100%;
         height: auto;
       }
+      p .katex,
+      li .katex,
+      td .katex {
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: inline-block;
+        vertical-align: middle;
+      }
       #step4-plot-tooltip {
         max-width: calc(100vw - 24px);
         white-space: normal;
+      }
+      footer {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 12px;
       }
     }
 
     @media (max-width: 480px) {
       .hero-title {
-        font-size: 1.25rem;
+        font-size: 1.24rem;
       }
       .hero-badge {
         font-size: 0.7rem;
@@ -7266,6 +7338,23 @@ flowchart TD
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     }
+
+    (function wrapUncontainedTables() {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.main-content table').forEach(function(tbl) {
+          var p = tbl.parentElement;
+          if (!p) return;
+          var st = p.getAttribute('style') || '';
+          if (p.classList.contains('table-responsive') || p.classList.contains('mobile-table-scroll') || st.indexOf('overflow-x') !== -1) {
+            return;
+          }
+          var wrap = document.createElement('div');
+          wrap.className = 'mobile-table-scroll';
+          p.insertBefore(wrap, tbl);
+          wrap.appendChild(tbl);
+        });
+      });
+    })();
   </script>
 </body>
 </html>

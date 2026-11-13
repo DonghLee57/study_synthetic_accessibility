@@ -213,6 +213,7 @@ def main() -> None:
             "id": r["id"],
             "label": 0,
             "group": "Negative_Control",
+            "failure_mechanism": r["failure_mechanism"],
             "sascore": r["sascore"],
             "syba": r["syba"],
             "desc": r["descriptors"],
@@ -268,12 +269,38 @@ def main() -> None:
         "cv5_tnr_specificity": round(float(recall_score(y, oc_preds, pos_label=0)), 4),
     }
 
-    # Check Physics + Coordination Gate TPR on 102 precursors & 18 inhibitors too
-    pos_gate_pass = 0
-    for r in cohort_rows:
-        if r["label"] == 1:
-            pass
-    # Re-evaluate positive cohort using same gate (note: for TMC precursors, TMC-SA_v2 replaces raw SAScore; here report raw SAScore+Gate vs Negative Control TNR)
+    # Leave-One-Failure-Mechanism-Out (LOFMO) extrapolation benchmark
+    row_mechs = [r.get("failure_mechanism", "pos") for r in cohort_rows]
+    unique_mechs = sorted({m for m in row_mechs if m != "pos"})
+    lofmo_results: Dict[str, Any] = {}
+    for mname, fn in [
+        ("LogisticRegression", lambda: make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000, class_weight="balanced", random_state=42))),
+        ("SVC_RBF", lambda: make_pipeline(StandardScaler(), SVC(kernel="rbf", class_weight="balanced", random_state=42))),
+    ]:
+        per_mech = {}
+        for hold in unique_mechs:
+            tr = np.array([m != hold for m in row_mechs])
+            te = np.array([m == hold for m in row_mechs])
+            clf = fn()
+            clf.fit(X[tr], y[tr])
+            per_mech[hold] = round(float(np.mean(clf.predict(X[te]) == 0)), 4)
+        lofmo_results[mname] = {
+            "mean_unseen_tnr": round(float(np.mean(list(per_mech.values()))), 4),
+            "per_unseen_mechanism_tnr": per_mech,
+        }
+
+    # Positive-only OneClassSVM_RBF is invariant to negative mechanism labels
+    oc_full = make_pipeline(StandardScaler(), OneClassSVM(kernel="rbf", nu=0.08, gamma="scale"))
+    oc_full.fit(X[y == 1])
+    oc_per_mech = {}
+    for hold in unique_mechs:
+        te = np.array([m == hold for m in row_mechs])
+        oc_per_mech[hold] = round(float(np.mean(oc_full.predict(X[te]) == -1)), 4)
+    lofmo_results["OneClassSVM_RBF"] = {
+        "mean_unseen_tnr": round(float(np.mean(list(oc_per_mech.values()))), 4),
+        "per_unseen_mechanism_tnr": oc_per_mech,
+    }
+
     mech_summary = {}
     for mech, st in mech_stats.items():
         tot = st["total"]
@@ -283,6 +310,10 @@ def main() -> None:
             "syba_tnr_pct": round(100.0 * st["syba_rejected"] / tot, 1),
             "gate_tnr_pct": round(100.0 * st["gate_rejected"] / tot, 1),
         }
+    lofmo_results["Coord_Chem_Gate"] = {
+        "mean_unseen_tnr": round(float(np.mean([mech_summary[m]["gate_tnr_pct"] / 100.0 for m in unique_mechs])), 4),
+        "per_unseen_mechanism_tnr": {m: round(mech_summary[m]["gate_tnr_pct"] / 100.0, 4) for m in unique_mechs},
+    }
 
     out = {
         "cohort_summary": {
@@ -305,6 +336,7 @@ def main() -> None:
         },
         "by_failure_mechanism": mech_summary,
         "ml_cv5_cohort_160": ml_results,
+        "lofmo_extrapolation": lofmo_results,
         "records": neg_records_eval,
     }
 

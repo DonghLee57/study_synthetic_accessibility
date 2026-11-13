@@ -965,6 +965,7 @@ with open(exp_neg_path, "r", encoding="utf-8") as f:
 _en_base = exp_neg_res["negative_control_40_baselines"]
 _en_mech = exp_neg_res["by_failure_mechanism"]
 _en_ml = exp_neg_res["ml_cv5_cohort_160"]
+_en_lofmo = exp_neg_res["lofmo_extrapolation"]
 _en_neg_by_id = {r["id"]: r for r in exp_neg_res["records"]}
 _rescued_by_id = {r["id"]: r for r in refine_res["items_1_and_4"]["newly_rescued_precursors"]}
 
@@ -1471,6 +1472,66 @@ phase2_step4_summary_joined = f"""
                     {_mech_rows_html}
                   </tbody>
                 </table>
+              </div>
+            </div>
+
+            <div class="card" style="border-left:4px solid #0284c7; margin-top:20px;">
+              <h4 style="margin-top:0; color:#0f172a;">선택된 계산 물성(Descriptor)의 물리적 배경·공정 중요성 및 외삽(Extrapolation) 개선 점검</h4>
+              <p style="font-size:0.84rem; color:#475569; margin-bottom:12px; line-height:1.6;">
+                본 프레임워크의 물리·배위 Descriptor는 단순 통계 상관이 아니라 <strong>반도체 기상 공정(ALD/CVD) 프리커서의 단량체 휘발성·열적 배관 안정성·합성 분리 가능성</strong>을 결정짓는 미시 물리 법칙에 근거해 선정되었습니다.
+              </p>
+              <div style="overflow-x:auto; margin-bottom:14px;">
+                <table class="report-table" style="font-size:0.81rem;">
+                  <thead>
+                    <tr style="background:#f1f5f9;">
+                      <th>물성 그룹 및 핵심 Descriptor</th>
+                      <th>물리·화학적 선정 배경 (기구적 의미)</th>
+                      <th>반도체 ALD/CVD 공정 중요성 및 임계 경계</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>입체 배위 차폐</strong><br><code>%V<sub>bur</sub> (R=3.5 A)</code><br>적응형 하한 <code>V<sub>min</sub></code></td>
+                      <td>중심 원자 반경 $R=3.5\text{{ Å}}$ 구 내 리간드 점유 부피 비율(Falivene et al., DOI <code>10.1038/s41557-019-0319-5</code>). 과소배위 시 이합체화·자연발화가 발생하며, 과밀 배위 시 결합 약화·승화 저해가 유발됨.</td>
+                      <td><strong>Si·&pi;-햅틱 $V_{{\min}}=34\%$ / 일반 TM $44\% \sim 83.5\%$</strong>: <code>DIPAS</code>(41.2%)·<code>TSA</code>(35.8%)·<code>Ru(EtCp)2</code>(36.9%)의 정상 단량체성을 구제하고 <code>WPh5</code>류 과밀 아릴 비휘발군을 구별함.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>열분해 내성</strong><br><code>BDE<sub>min</sub></code>, <code>&Delta;E<sub>dimer</sub></code></td>
+                      <td><code>SevenNet-0</code> 3D 이완 후 최약 리간드 해리 에너지($\text{{BDE}}_{{\min}}$) 및 비중첩 이합체(&ge;2.8 A) 응집 에너지($\Delta E_{{\text{{dimer}}}}$). 기체상 전달 중 최약 결합 절단이 열분해 온도 $T_{{\text{{decomp}}}}$를 지배함.</td>
+                      <td><strong>$\text{{BDE}}_{{\min}} \ge 45\text{{ kcal/mol}}$</strong>: 버블러 가열 구간 내 조기 열분해(<code>CCTBA</code> CO 이탈, <code>TiEt4</code> &beta;-H 제거)와 수산화물 솔-겔 중합(<code>M(OH)n</code>)을 구분하는 열역학 축.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>배위·위상 안정성</strong><br><code>pi_hapticity_index</code>,<br><code>chelate_ring_count</code>,<br><code>is_homoleptic_tm_sp3</code></td>
+                      <td>$\pi$-역공여(&eta;-Cp/diene) 및 킬레이트 고리 효과를 동종 $sp^3$ &sigma;-알킬(&beta;-수소 제거 취약)과 위상적으로 구분함.</td>
+                      <td>SMILES에서 $sp^3$로 표기된 $\eta$-디엔 착물(<code>Ru(IMBCH)</code>, <code>Ru(EBCHD)</code>) 오탐 <code>0/75</code> 해소 및 불안정 호모렙틱 알킬(<code>TiEt4</code>, <code>ZrMe4</code>, <code>HfEt4</code>, <code>TaMe5</code>) <code>100%</code> 차단.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>휘발성·표면 반응성</strong><br><code>metal_oh_count</code>, <code>cooh_count</code>,<br><code>is_inert_alkane</code>, <code>strained_si_ring</code>,<br><code>TPSA / HBD / MW</code></td>
+                      <td>분자 간 수소결합·옥솔레이션 중합(<code>M-OH</code>), 강프로톤 산 식각(<code>-COOH</code>), 비활성 알케인(흡착점 부재), 3/4각 실라사이클 고리 변형과 분자량·극성 표면적을 정량화함.</td>
+                      <td>ALD 기화 불가 솔-겔(<code>Ti/Zr/Hf/Si(OH)4</code>)과 무반응 용매(<code>Decane</code>, <code>Cyclohexane</code>) 및 부식성 산(<code>TFA</code>, <code>TCA</code>)의 공정 부적합성을 <code>0</code> 오탐으로 필터링함.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:14px;">
+                <div style="font-weight:700; font-size:0.9rem; color:#9a3412; margin-bottom:8px;">
+                  외삽(Extrapolation) 정량 감사: Leave-One-Failure-Mechanism-Out (LOFMO) 실측 및 4대 개선 방향
+                </div>
+                <p style="font-size:0.82rem; color:#7c2d12; margin:0 0 10px 0; line-height:1.55;">
+                  무작위 Stratified <code>CV-5</code>에서는 지도학습 모델(<code>LogisticRegression</code> TNR <strong>{_en_ml['LogisticRegression']['cv5_tnr_specificity']:.3f}</strong>, <code>SVC_RBF</code> TNR <strong>{_en_ml['SVC_RBF']['cv5_tnr_specificity']:.3f}</strong>)이 높게 측정되나, 학습 시 보지 못한 신규 실패 메커니즘 1종을 통째로 제외하는 <strong>LOFMO 외삽 검증</strong>에서는 지도학습이 급격히 붕괴합니다:
+                  <code>LogisticRegression</code> 미지 TNR <strong>{_en_lofmo['LogisticRegression']['mean_unseen_tnr']:.3f}</strong>,
+                  <code>SVC_RBF</code> 미지 TNR <strong>{_en_lofmo['SVC_RBF']['mean_unseen_tnr']:.3f}</strong>
+                  vs 양성(Positive) 분포만 학습하는 <strong><code>OneClassSVM_RBF</code> 미지 TNR {_en_lofmo['OneClassSVM_RBF']['mean_unseen_tnr']:.3f}</strong> &middot;
+                  <strong>물리 배위 게이트 {_en_lofmo['Coord_Chem_Gate']['mean_unseen_tnr']:.3f}</strong>.
+                  진정한 미지 프리커서·신규 원소군 외삽을 위해 다음 4가지 고도화가 필요합니다:
+                </p>
+                <ul style="font-size:0.81rem; color:#7c2d12; margin:0; padding-left:18px; line-height:1.6;">
+                  <li><strong>주기율표 블록·산화수 일반화</strong>: 현재 <code>16</code>개 반도체 중심원소 목록을 벗어난 <code>NEG-019 CrPh3</code>가 <code>Coord/Chem Gate</code>에서 미탐(<code>39/40</code>)되었으므로, 고정 원자번호 목록 대신 전체 d/f/p-블록 금속 판별·원자가전자 수(VE)·산화수 디스크립터로 일반화해야 합니다.</li>
+                  <li><strong>스핀·전하 인지 MLIP / DFT 결합</strong>: <code>SevenNet-0</code>(MPtrj 무기 결정 학습)은 중성 <code>CO</code>·할라이드·아렌 라디칼 해리에서 음의 BDE(<code>Ir(CO)3(tBu3Cyp) -8.8</code>, <code>GaCl3 -3.5 kcal/mol</code>)를 산출하므로, 분자 스핀·전하를 학습한 <code>MACE-OMol</code> 또는 <code>g-xTB</code>/$\omega\text{{B97M-V}}$로 BDE 산출층을 교체해야 합니다.</li>
+                  <li><strong>응축상 &Delta;E<sub>syn</sub> 및 정량 증기압(P<sub>vap</sub>) 통합</strong>: <code>LiCl(s)</code> 암염 기준을 자동 반영한 합성 반응 에너지(&Delta;E<sub>syn</sub>)와 Clausius-Clapeyron 기화 창($\Delta T = T_{{\text{{decomp}}}} - T_{{\text{{vap}}}}$)을 점수식에 직접 결합해야 합니다.</li>
+                  <li><strong>외삽 표준 프로토콜 상시화</strong>: 무작위 CV-5가 아닌 <strong>Leave-One-Element-Out (LOEO)</strong> 및 <strong>LOFMO</strong>를 정규 회귀 테스트 기준으로 채택해야 합니다.</li>
+                </ul>
               </div>
             </div>"""
 
