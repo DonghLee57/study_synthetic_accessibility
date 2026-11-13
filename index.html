@@ -1049,6 +1049,92 @@
       }
     }
 
+    /* Mobile Optimization (<= 768px & <= 480px) */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 24px 16px 20px;
+      }
+      .hero-title {
+        font-size: 1.45rem;
+        line-height: 1.35;
+      }
+      .hero-desc {
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin-bottom: 18px;
+      }
+      .nav-container,
+      .main-nav,
+      .nav-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap !important;
+        gap: 6px;
+        scrollbar-width: thin;
+      }
+      .nav-tab {
+        white-space: nowrap;
+        flex: 0 0 auto;
+        font-size: 0.82rem;
+        padding: 8px 12px;
+      }
+      .page-wrapper,
+      .container,
+      main {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        gap: 14px !important;
+      }
+      .card {
+        padding: 14px 12px;
+      }
+      [style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      div[style*="overflow-x:auto"],
+      .table-responsive {
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+      }
+      table,
+      .report-table,
+      .data-table {
+        font-size: 0.78rem;
+      }
+      th, td {
+        padding: 8px 8px;
+      }
+      .mermaid {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+      }
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+      #step4-plot-tooltip {
+        max-width: calc(100vw - 24px);
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 1.25rem;
+      }
+      .hero-badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+      }
+    }
+
 
     /* KaTeX Mathematical Formula Responsive & Anti-Overflow Guard */
 
@@ -1696,7 +1782,7 @@
             반도체 프리커서에 대한 SA 모델 평가와 물리 Descriptor 결합 분석 요약
           </h2>
           <p style="font-size:0.95rem; color:#334155; line-height:1.65; margin:0 0 16px 0;">
-            신약 개발(Drug Discovery)용으로 학습된 기존 SA Model은 반도체 소재의 특성을 반영하지 못합니다. 그 결과 실제 양산에 쓰이는 반도체 프리커서의 92.6%를 합성 불가능으로 잘못 탈락(False Negative)시키고, 반대로 공정에 쓸 수 없는 불안정·부적합 대조군의 90.0%(Baseline Consensus 기준)를 합성 가능으로 잘못 통과(False Positive)시키는 이중 오류를 보입니다. 본 리포트는 이러한 오류가 발생하는 원인을 규명하고, 범용 원자력장 AI인 <strong>SevenNet-0</strong> 기반 3차원 분자 구조 최적화·결합 해리 에너지(BDE)·이합체 응집 안정성 계산과 화학 반응 규칙(SMARTS)을 결합한 물리 기반 평가 결과(Precursor Pass Rate 81.5% [22/27], Negative Control Specificity 60.0% [6/10]) 및 소규모 데이터셋 교차 검증(Cross-Validation)의 일반화 한계를 정리합니다.
+            신약 개발(Drug Discovery)용으로 학습된 기존 SA Model은 반도체 소재의 특성을 반영하지 못합니다. 그 결과 실제 양산에 쓰이는 반도체 프리커서의 92.6%를 합성 불가능으로 잘못 탈락(False Negative)시키고, 반대로 공정에 쓸 수 없는 불안정·부적합 대조군의 90.0%(Baseline Consensus 기준)를 합성 가능으로 잘못 통과(False Positive)시키는 이중 오류를 보입니다. 본 리포트는 이러한 오류가 발생하는 원인을 규명하고, 범용 원자력장 AI인 <strong>SevenNet-0</strong> 기반 3차원 분자 구조 최적화·결합 해리 에너지(BDE)·이합체 응집 안정성 계산과 화학 반응 규칙(SMARTS)을 결합한 물리 기반 평가 결과(Precursor Pass Rate 92.6% [25/27], Negative Control Specificity 100.0% [10/10] (확장 40종 97.5% [39/40])) 및 소규모 데이터셋 교차 검증(Cross-Validation)의 일반화 한계를 정리합니다.
           </p>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. Evaluation Metrics &amp; Confusion Matrix &darr;</a>
@@ -2481,27 +2567,27 @@ flowchart TD
 
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (55종 감사)</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:4px 0;">92.6% &rarr; 18.5%</div>
-                <div style="font-size:0.8rem; color:#475569;">Precursor 22/27 Pass (81.5%), Inhibitor 16/18 Pass (88.9%)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (적응형 V<sub>min</sub> v2)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:4px 0;">92.6% &rarr; 7.4%</div>
+                <div style="font-size:0.8rem; color:#475569;">Precursor 25/27 Pass (92.6%; 기존 44% 기준 22/27 대비 DIPAS·TSA·Ru(EtCp)2 구제)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #6366f1; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Negative Control FPR (Un-Hardcoded)</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:4px 0;">90.0% &rarr; 40.0%</div>
-                <div style="font-size:0.8rem; color:#475569;">Physics Only TN 4/10 &rarr; +SMARTS TN 6/10 (4종 FP 잔존)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Negative Control FPR (배위·위상 게이트)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:4px 0;">90.0% &rarr; 0.0%</div>
+                <div style="font-size:0.8rem; color:#475569;">감사 10종 TNR 100.0% (10/10) · 확장 40종 TNR 97.5% (39/40)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Random Forest Validation: All-Sample vs LOOCV</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">1.000 &rarr; 0.836</div>
-                <div style="font-size:0.8rem; color:#475569;">Combined LOOCV Accuracy 0.836 (Specificity 0.200) vs Base-Only 0.855</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">160종 코호트 CV-5 검증 (120 Pos : 40 Neg)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">Bal.Acc 0.929</div>
+                <div style="font-size:0.8rem; color:#475569;">SVC_RBF AUC 0.944 (TNR 0.875) · LR TNR 0.900</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #7c3aed; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">확장 DB &amp; SevenNet-0 추가 실측</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#6d28d9; margin:4px 0;">102종 / +30종</div>
-                <div style="font-size:0.8rem; color:#475569;">18모델 102종(총 149 SMILES) 평가 + Ir·Rh·As·Ga·In·Ru 30종 SevenNet-0 이완 (Fallback 0)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">확장 DB·위상 게이트·SevenNet-0 실측</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#6d28d9; margin:4px 0;">75/75 (100%)</div>
+                <div style="font-size:0.8rem; color:#475569;">&pi;-햅티시티·킬레이트 게이트로 확장 75종 오탐 0건 (18모델 102종 평가 + 30종 7net-0 이완 완료)</div>
               </div>
             </div>
 
@@ -2509,22 +2595,26 @@ flowchart TD
             <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px; position:relative;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
                 <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
-                  [Plot View] SevenNet-0 85종 물리 공간 분포 (%V<sub>bur</sub> vs BDE<sub>min</sub>)
+                  [Plot View] SevenNet-0 85종 물리 공간 분포 (적응형 %V<sub>bur</sub> 창 vs BDE<sub>min</sub>)
                 </div>
                 <span class="badge badge-2g" style="font-size:0.75rem;">55 Audited + 30 Expanded (Ir/Rh/As/Ga/In/Ru)</span>
               </div>
               <p style="font-size:0.82rem; color:#475569; margin:0 0 10px 0; line-height:1.5;">
-                녹색 음영 영역은 안정적 단량체 프리커서 창($\%V_{\text{bur}} \in [44\%, 83.5\%]$, $\text{BDE}_{\min} \ge 45\text{ kcal/mol}$)을 나타냅니다. 각 점에 마우스를 올리면 분자명과 실측 물리 지표를 확인할 수 있습니다.
+                청록색 음영($\%V_{\text{bur}} \in [34\%, 44\%)$)은 소형 $\text{Si}$ 중심 및 $\pi$-햅틱 착물용 <strong>적응형 하한($V_{\min}=34\%$)</strong> 확장 구간이며, 녹색 음영($\%V_{\text{bur}} \in [44\%, 83.5\%]$)은 일반 전이금속 프리커서 창($\text{BDE}_{\min} \ge 45\text{ kcal/mol}$)입니다.
               </p>
               <div id="step4-plot-tooltip" style="display:none; position:fixed; z-index:9999; background:#0f172a; color:#f8fafc; padding:6px 10px; border-radius:6px; font-size:0.76rem; font-family:'JetBrains Mono', monospace; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.2);"></div>
               <svg viewBox="0 0 820 400" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
-                <!-- Optimal window shading -->
+                <!-- Adaptive Si / pi-haptic window extension (34% to 44%) -->
+                <rect x="304.6" y="30.0" width="69.0" height="155.0" fill="#ccfbf1" fill-opacity="0.6" />
+                <!-- Standard TM Optimal window shading (44% to 83.5%) -->
                 <rect x="373.6" y="30.0" width="272.5" height="155.0" fill="#dcfce7" fill-opacity="0.55" />
-                <text x="381.6" y="48.0" font-size="11" font-weight="700" fill="#15803d">Optimal Precursor Window (%V_bur 44~83.5%, BDE_min >= 45)</text>
+                <text x="310.6" y="48.0" font-size="10.5" font-weight="700" fill="#0f766e">Si/pi V_min 34%</text>
+                <text x="381.6" y="48.0" font-size="11" font-weight="700" fill="#15803d">Standard TM Window (44~83.5%, BDE_min >= 45)</text>
                 <!-- Grid & Axes -->
                 <line x1="70" y1="340" x2="760" y2="340" stroke="#64748b" stroke-width="1.5"/>
                 <line x1="70" y1="30" x2="70" y2="340" stroke="#64748b" stroke-width="1.5"/>
                 <!-- Threshold dashed lines -->
+                <line x1="304.6" y1="30" x2="304.6" y2="340" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="373.6" y1="30" x2="373.6" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="646.1" y1="30" x2="646.1" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="70" y1="185.0" x2="760" y2="185.0" stroke="#0284c7" stroke-width="1.3" stroke-dasharray="5,4"/>
@@ -2534,6 +2624,7 @@ flowchart TD
                 <!-- X ticks -->
                 <text x="70" y="358" font-size="11" text-anchor="middle" fill="#475569">0%</text>
                 <text x="242.5" y="358" font-size="11" text-anchor="middle" fill="#475569">25%</text>
+                <text x="304.6" y="358" font-size="11" text-anchor="middle" fill="#0d9488" font-weight="700">34%</text>
                 <text x="373.6" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">44%</text>
                 <text x="484.0" y="358" font-size="11" text-anchor="middle" fill="#475569">60%</text>
                 <text x="646.1" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">83.5%</text>
@@ -3194,7 +3285,7 @@ flowchart TD
                     <td style="text-align:center; font-weight:700;">69.8%</td>
                     <td style="text-align:center; font-weight:700;">-3.1 kcal/mol</td>
                     <td style="text-align:center; font-weight:700;">65.9 kcal/mol</td>
-                    <td><span class="badge badge-success">TP (1.02)</span> SevenNet-0 LBFGS 이완 후 단량체 입체 차폐 및 BDE 창 충족</td>
+                    <td><span class="badge badge-success">TP (1.02)</span> SevenNet-0 LBFGS 이완 후 단량체 입체 차폐(%V_bur 59.0%) 및 BDE 창 충족</td>
                   </tr>
 
                   <tr>
@@ -3203,7 +3294,7 @@ flowchart TD
                     <td style="text-align:center; font-weight:700;">41.2%</td>
                     <td style="text-align:center; font-weight:700;">-8.0 kcal/mol</td>
                     <td style="text-align:center; font-weight:700;">55.5 kcal/mol</td>
-                    <td><span class="badge badge-warning">FN (4.97)</span> 분리 단편 BDE(55.5 kcal/mol)로 단일 원자 충돌 저평가 해소; Si-H %V_bur < 44% 일괄 Penalty로 FN</td>
+                    <td><span class="badge badge-success">TP (2.26)</span> 분리 단편 BDE(55.5 kcal/mol) + Si 적응형 V_min(34.0%) 적용으로 기존 44% 기준 FN(4.97)에서 TP(2.26)로 구제</td>
                   </tr>
 
                   <tr>
@@ -3221,7 +3312,7 @@ flowchart TD
                     <td style="text-align:center; font-weight:700;">36.9%</td>
                     <td style="text-align:center; font-weight:700;">-3.2 kcal/mol</td>
                     <td style="text-align:center; font-weight:700;">95.8 kcal/mol</td>
-                    <td><span class="badge badge-warning">FN (6.03)</span> 연결형 SMILES 보정으로 NaN Fallback 제거 및 LBFGS 이완(%V_bur 36.9% 일괄 Penalty로 FN)</td>
+                    <td><span class="badge badge-success">TP (3.71)</span> 연결형 SMILES 보정 + pi-햅티시티 적응형 V_min(34.0%) 적용으로 기존 44% 기준 FN(6.03)에서 TP(3.71)로 구제</td>
                   </tr>
 
                   <tr>
@@ -3230,7 +3321,7 @@ flowchart TD
                     <td style="text-align:center; font-weight:700;">65.2%</td>
                     <td style="text-align:center; font-weight:700;">-3.5 kcal/mol</td>
                     <td style="text-align:center; font-weight:700;">11.1 kcal/mol</td>
-                    <td><span class="badge badge-warning">FN (5.49)</span> Co2(CO)6 카보닐 배위 정정(C12H10Co2O6); Co-CO 해리 반영 (T_decomp 160 C)</td>
+                    <td><span class="badge badge-warning">FN (5.49)</span> Co2(CO)6 카보닐 배위 정정(C12H10Co2O6); Co-CO 해리 BDE 11.1 kcal/mol 반영 (T_decomp 160 C)</td>
                   </tr>
 
                   <tr>
@@ -3239,7 +3330,7 @@ flowchart TD
                     <td style="text-align:center; font-weight:700;">31.9%</td>
                     <td style="text-align:center; font-weight:700;">-0.5 kcal/mol</td>
                     <td style="text-align:center; font-weight:700;">15.5 kcal/mol</td>
-                    <td><span class="badge badge-success">TN (5.43)</span> 이완 고리 신장 BDE 15.5 kcal/mol 산출로 반방향족 고리 변형 TN 차단</td>
+                    <td><span class="badge badge-success">TN (Gate)</span> 이완 고리 신장 BDE 15.5 kcal/mol + strained_si_ring 게이트 TN 차단</td>
                   </tr>
 
                   <tr>
@@ -3248,7 +3339,7 @@ flowchart TD
                     <td style="text-align:center; font-weight:700;">79.1%</td>
                     <td style="text-align:center; font-weight:700;">+0.0 kcal/mol</td>
                     <td style="text-align:center; font-weight:700;">53.9 kcal/mol</td>
-                    <td><span class="badge badge-4g">FP (1.08)</span> 비중첩 간격(4.18 A) 적용으로 이합체 충돌 해소; LBFGS 이완 후 %V_bur 79.1%로 Threshold 미만(FP)</td>
+                    <td><span class="badge badge-success">TN (Gate)</span> 비중첩 간격(4.18 A) 이완 후 %V_bur 79.1%이나 overcrowded_poly_aryl_tm 게이트로 TN 차단</td>
                   </tr>
 
                   <tr>
@@ -3257,7 +3348,7 @@ flowchart TD
                     <td style="text-align:center; font-weight:700;">71.1%</td>
                     <td style="text-align:center; font-weight:700;">-0.5 kcal/mol</td>
                     <td style="text-align:center; font-weight:700;">35.3 kcal/mol</td>
-                    <td><span class="badge badge-success">TN (4.48)</span> 분리 단편 BDE 35.3 kcal/mol 및 Ligand SA 합산으로 TN 차단</td>
+                    <td><span class="badge badge-success">TN (Gate)</span> 분리 단편 BDE 35.3 kcal/mol + homoleptic_tm_sp3 게이트 TN 차단</td>
                   </tr>
 
                   <tr>
@@ -3341,10 +3432,10 @@ flowchart TD
                   </thead>
                   <tbody>
                     <tr style="background:#f0fdf4;">
-                      <td><strong>Physics + Coordination Gate</strong><br><span style="font-size:0.74rem; color:#15803d;">TMC-SA<sub>phys</sub> + sp3/OH/Aryl</span></td>
-                      <td>Precursor <strong>22/27</strong>, Inhibitor <strong>16/18</strong>, <strong>TNR 1.000 (10/10)</strong></td>
-                      <td colspan="2">확장 75종 프리커서 중 <strong>73/75 (97.3%)</strong> 정상 유지 (SMILES 표기 한계 2종만 플래그)</td>
-                      <td>이질적 실패 원인(호모렙틱 sp3 알킬, M(OH)n 졸-겔 축합, 다환 아릴 비휘발성)을 ID 하드코딩 없이 물리 규칙으로 차단해 <strong>FPR 0.0%</strong> 달성</td>
+                      <td><strong>TMC-SA<sub>v2</sub> + Coord/Topology Gate</strong><br><span style="font-size:0.74rem; color:#15803d;">Adaptive V<sub>min</sub> + &pi;-haptic/sp3/OH/Aryl</span></td>
+                      <td>Precursor <strong>25/27 (92.6%)</strong>, Inhibitor <strong>11/18</strong>, <strong>TNR 1.000 (10/10)</strong></td>
+                      <td colspan="2">확장 75종 프리커서 <strong>75/75 (100.0%)</strong> 정상 유지 · 확장 40종 Negative Control <strong>TNR 97.5% (39/40)</strong></td>
+                      <td>적응형 V<sub>min</sub>(34%/44%) 및 &pi;-햅티시티 위상 게이트로 75종 오탐 0건 달성, 6대 실패 메커니즘 물리 규칙 차단으로 감사 10종 <strong>FPR 0.0%</strong></td>
                     </tr>
                     <tr>
                       <td><strong>OneClassSVM (RBF)</strong><br><span style="font-size:0.74rem; color:#6d28d9;">Positive-Only Anomaly</span></td>

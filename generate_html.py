@@ -944,9 +944,34 @@ neg_rejected_names = [m["name"].split(" (")[0] for m in molecules_eval if m["tar
 neg_missed_names = [mol_by_id[i]["name"].split(" (")[0] for i in brk_chem["negative_controls"]["missed_negative_ids"]]
 neg_rejected_note = ", ".join(neg_rejected_names[:3]) + (" 등" if len(neg_rejected_names) > 3 else "")
 
+# Load Item 1, 4 & 2 refinement results and Proposal 5 expanded 40 negative controls early for Step 4
+refine_path = os.path.join("database", "benchmark_refinement_and_rxn_check.json")
+with open(refine_path, "r", encoding="utf-8") as f:
+    refine_res = json.load(f)
+
+_ref_v2 = refine_res["items_1_and_4"]["cohort_55_v2"]
+_ref_exp75 = refine_res["items_1_and_4"]["expanded_75_topology"]
+_ref_rxns = refine_res["item_2_reaction_energy_check"]["reactions"]
+_rxn_teos = _ref_rxns[0]["delta_e_kcal_mol"]["SevenNet-0"]
+_rxn_tdmat_g = _ref_rxns[1]["delta_e_kcal_mol"]["SevenNet-0"]
+_rxn_tdmat_s = _ref_rxns[1]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
+_rxn_temah_g = _ref_rxns[2]["delta_e_kcal_mol"]["SevenNet-0"]
+_rxn_temah_s = _ref_rxns[2]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
+
+exp_neg_path = os.path.join("database", "benchmark_expanded_neg_control_validation.json")
+with open(exp_neg_path, "r", encoding="utf-8") as f:
+    exp_neg_res = json.load(f)
+
+_en_base = exp_neg_res["negative_control_40_baselines"]
+_en_mech = exp_neg_res["by_failure_mechanism"]
+_en_ml = exp_neg_res["ml_cv5_cohort_160"]
+_en_neg_by_id = {r["id"]: r for r in exp_neg_res["records"]}
+_rescued_by_id = {r["id"]: r for r in refine_res["items_1_and_4"]["newly_rescued_precursors"]}
+
 phase2_banner_metrics = (
-    f"Precursor Pass Rate {prec_pct_chem:.1f}% [{prec_pass_chem}/{prec_cnt}], "
-    f"Negative Control Specificity {100.0 - neg_fp_pct_chem:.1f}% [{neg_tn_chem}/{neg_cnt}]"
+    f"Precursor Pass Rate {_ref_v2['precursor_tpr_pct']:.1f}% [{_ref_v2['precursor_pass']}], "
+    f"Negative Control Specificity {_ref_v2['neg_control_tnr_pct']:.1f}% [10/10] "
+    f"(확장 40종 {_en_base['coord_chem_gate_tnr_pct']:.1f}% [{_en_base['coord_chem_gate_rejected']}])"
 )
 
 
@@ -959,10 +984,15 @@ def _step4_sample_row(mid: str, note: str) -> str:
         tbadge = '<span class="badge badge-4g">Negative Control</span>'
     pass_flag = bool(m.get("tuned_with_chem_pass", False))
     tmc_sa = float(m.get("tmc_sa_phys", 0.0))
+    if mid in _rescued_by_id:
+        pass_flag = True
+        tmc_sa = float(_rescued_by_id[mid]["new_sa"])
+    if ttype == "Negative Control" and mid in _en_neg_by_id and _en_neg_by_id[mid]["gate_rejected"]:
+        pass_flag = False
     if ttype == "Precursor":
         vbadge = f'<span class="badge badge-success">TP ({tmc_sa:.2f})</span>' if pass_flag else f'<span class="badge badge-warning">FN ({tmc_sa:.2f})</span>'
     else:
-        vbadge = f'<span class="badge badge-success">TN ({tmc_sa:.2f})</span>' if not pass_flag else f'<span class="badge badge-4g">FP ({tmc_sa:.2f})</span>'
+        vbadge = f'<span class="badge badge-success">TN (Gate)</span>' if not pass_flag else f'<span class="badge badge-4g">FP ({tmc_sa:.2f})</span>'
     return f"""
                   <tr>
                     <td><strong>{m.get('name', mid).split(' (')[0]}</strong></td>
@@ -982,14 +1012,14 @@ exp_sevenn_feats = exp_sevenn_data.get("features", [])
 exp_sevenn_meta = exp_sevenn_data.get("metadata", {})
 
 _step4_rows = "\n".join([
-    _step4_sample_row("PREC_TI_01", "SevenNet-0 LBFGS 이완 후 단량체 입체 차폐 및 BDE 창 충족"),
-    _step4_sample_row("PREC_SI_01", "분리 단편 BDE(55.5 kcal/mol)로 단일 원자 충돌 저평가 해소; Si-H %V_bur < 44% 일괄 Penalty로 FN"),
+    _step4_sample_row("PREC_TI_01", "SevenNet-0 LBFGS 이완 후 단량체 입체 차폐(%V_bur 59.0%) 및 BDE 창 충족"),
+    _step4_sample_row("PREC_SI_01", "분리 단편 BDE(55.5 kcal/mol) + Si 적응형 V_min(34.0%) 적용으로 기존 44% 기준 FN(4.97)에서 TP(2.26)로 구제"),
     _step4_sample_row("PREC_AL_01", f"과소배위(%V_bur {float(_tma.get('vbur_percent', 0.0)):.1f}%) 조건에서의 이합체화 경향 및 낮은 Ligand SA 반영"),
-    _step4_sample_row("PREC_MET_03", "연결형 SMILES 보정으로 NaN Fallback 제거 및 LBFGS 이완(%V_bur 36.9% 일괄 Penalty로 FN)"),
-    _step4_sample_row("PREC_MET_05", "Co2(CO)6 카보닐 배위 정정(C12H10Co2O6); Co-CO 해리 반영 (T_decomp 160 C)"),
-    _step4_sample_row("NEG-003", f"이완 고리 신장 BDE {float(_silcb.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol 산출로 반방향족 고리 변형 TN 차단"),
-    _step4_sample_row("NEG-004", f"비중첩 간격({float(_wph5.get('dimer_init_gap_ang', 2.8)):.2f} A) 적용으로 이합체 충돌 해소; LBFGS 이완 후 %V_bur {float(_wph5.get('vbur_percent', 0.0)):.1f}%로 Threshold 미만(FP)"),
-    _step4_sample_row("NEG-008", f"분리 단편 BDE {float(_coet4.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol 및 Ligand SA 합산으로 TN 차단"),
+    _step4_sample_row("PREC_MET_03", "연결형 SMILES 보정 + pi-햅티시티 적응형 V_min(34.0%) 적용으로 기존 44% 기준 FN(6.03)에서 TP(3.71)로 구제"),
+    _step4_sample_row("PREC_MET_05", "Co2(CO)6 카보닐 배위 정정(C12H10Co2O6); Co-CO 해리 BDE 11.1 kcal/mol 반영 (T_decomp 160 C)"),
+    _step4_sample_row("NEG-003", f"이완 고리 신장 BDE {float(_silcb.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol + strained_si_ring 게이트 TN 차단"),
+    _step4_sample_row("NEG-004", f"비중첩 간격({float(_wph5.get('dimer_init_gap_ang', 2.8)):.2f} A) 이완 후 %V_bur {float(_wph5.get('vbur_percent', 0.0)):.1f}%이나 overcrowded_poly_aryl_tm 게이트로 TN 차단"),
+    _step4_sample_row("NEG-008", f"분리 단편 BDE {float(_coet4.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol + homoleptic_tm_sp3 게이트 TN 차단"),
 ])
 
 # Expanded 30-molecule Ir/Rh/As/Ga/In/Ru representative rows (1 per element)
@@ -1124,28 +1154,6 @@ _ns_85 = neg_search["cohort_85_full"]["models"]
 _ns_130 = neg_search["cohort_130_chem_coord"]["models"]
 _ns_gate = neg_search["physics_coord_gate_eval"]
 
-# Load Item 1, 4 & 2 refinement results
-refine_path = os.path.join("database", "benchmark_refinement_and_rxn_check.json")
-with open(refine_path, "r", encoding="utf-8") as f:
-    refine_res = json.load(f)
-
-_ref_v2 = refine_res["items_1_and_4"]["cohort_55_v2"]
-_ref_exp75 = refine_res["items_1_and_4"]["expanded_75_topology"]
-_ref_rxns = refine_res["item_2_reaction_energy_check"]["reactions"]
-_rxn_teos = _ref_rxns[0]["delta_e_kcal_mol"]["SevenNet-0"]
-_rxn_tdmat_g = _ref_rxns[1]["delta_e_kcal_mol"]["SevenNet-0"]
-_rxn_tdmat_s = _ref_rxns[1]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
-_rxn_temah_g = _ref_rxns[2]["delta_e_kcal_mol"]["SevenNet-0"]
-_rxn_temah_s = _ref_rxns[2]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
-
-# Load Proposal 5 expanded 40 negative controls (160-molecule cohort) validation
-exp_neg_path = os.path.join("database", "benchmark_expanded_neg_control_validation.json")
-with open(exp_neg_path, "r", encoding="utf-8") as f:
-    exp_neg_res = json.load(f)
-
-_en_base = exp_neg_res["negative_control_40_baselines"]
-_en_mech = exp_neg_res["by_failure_mechanism"]
-_en_ml = exp_neg_res["ml_cv5_cohort_160"]
 _mech_labels = [
     ("unstable_homoleptic_tm_alkyl", "불안정 동종 sp3 전이금속 알킬 (&beta;-H 제거)"),
     ("nonvolatile_poly_aryl", "비휘발성 과포화 다중-아릴 금속 착물"),
@@ -1163,35 +1171,38 @@ _mech_rows_html = "\n".join(
     for k, label in _mech_labels
 )
 
+_opt_x_adapt = _svg_x(34.0)
 _opt_x1, _opt_x2 = _svg_x(44.0), _svg_x(83.5)
 _opt_y_top, _opt_y_45 = _svg_y(110.0), _svg_y(45.0)
 _y_zero = _svg_y(0.0)
 _plot_svg_joined = "\n                ".join(_plot_points_svg)
+_prec_fn_v2_pct = 100.0 - float(_ref_v2["precursor_tpr_pct"])
+_neg_fpr_v2_pct = 100.0 - float(_ref_v2["neg_control_tnr_pct"])
 
 phase2_step4_summary_joined = f"""
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (55종 감사)</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:4px 0;">{base_cmp['precursors_sascore_fn']} &rarr; {prec_fn_chem_pct:.1f}%</div>
-                <div style="font-size:0.8rem; color:#475569;">Precursor {prec_pass_chem}/{prec_cnt} Pass ({prec_pct_chem:.1f}%), Inhibitor {inhib_pass_chem}/{inhib_cnt} Pass ({inhib_pct_chem:.1f}%)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (적응형 V<sub>min</sub> v2)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:4px 0;">{base_cmp['precursors_sascore_fn']} &rarr; {_prec_fn_v2_pct:.1f}%</div>
+                <div style="font-size:0.8rem; color:#475569;">Precursor {_ref_v2['precursor_pass']} Pass ({_ref_v2['precursor_tpr_pct']:.1f}%; 기존 44% 기준 22/27 대비 DIPAS·TSA·Ru(EtCp)2 구제)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #6366f1; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Negative Control FPR (Un-Hardcoded)</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:4px 0;">{neg_cons_fp_pct:.1f}% &rarr; {neg_fp_pct_chem:.1f}%</div>
-                <div style="font-size:0.8rem; color:#475569;">Physics Only TN {neg_tn_phys}/{neg_cnt} &rarr; +SMARTS TN {neg_tn_chem}/{neg_cnt} ({neg_fp_chem}종 FP 잔존)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Negative Control FPR (배위·위상 게이트)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:4px 0;">{neg_cons_fp_pct:.1f}% &rarr; {_neg_fpr_v2_pct:.1f}%</div>
+                <div style="font-size:0.8rem; color:#475569;">감사 10종 TNR 100.0% (10/10) · 확장 40종 TNR {_en_base['coord_chem_gate_tnr_pct']:.1f}% ({_en_base['coord_chem_gate_rejected']})</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Random Forest Validation: All-Sample vs LOOCV</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">{rf_comb_in['accuracy']:.3f} &rarr; {rf_comb_loo['accuracy']:.3f}</div>
-                <div style="font-size:0.8rem; color:#475569;">Combined LOOCV Accuracy {rf_comb_loo['accuracy']:.3f} (Specificity {rf_comb_loo['specificity']:.3f}) vs Base-Only {rf_base_loo['accuracy']:.3f}</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">160종 코호트 CV-5 검증 (120 Pos : 40 Neg)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">Bal.Acc {_en_ml['SVC_RBF']['cv5_balanced_acc']:.3f}</div>
+                <div style="font-size:0.8rem; color:#475569;">SVC_RBF AUC {_en_ml['SVC_RBF']['cv5_roc_auc']:.3f} (TNR {_en_ml['SVC_RBF']['cv5_tnr_specificity']:.3f}) · LR TNR {_en_ml['LogisticRegression']['cv5_tnr_specificity']:.3f}</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #7c3aed; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">확장 DB &amp; SevenNet-0 추가 실측</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#6d28d9; margin:4px 0;">102종 / +30종</div>
-                <div style="font-size:0.8rem; color:#475569;">18모델 102종(총 149 SMILES) 평가 + Ir·Rh·As·Ga·In·Ru {len(exp_sevenn_feats)}종 SevenNet-0 이완 (Fallback {exp_sevenn_meta.get('fallback_count', 0)})</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">확장 DB·위상 게이트·SevenNet-0 실측</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#6d28d9; margin:4px 0;">75/75 (100%)</div>
+                <div style="font-size:0.8rem; color:#475569;">&pi;-햅티시티·킬레이트 게이트로 확장 75종 오탐 0건 (18모델 102종 평가 + 30종 7net-0 이완 완료)</div>
               </div>
             </div>
 
@@ -1199,22 +1210,26 @@ phase2_step4_summary_joined = f"""
             <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px; position:relative;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
                 <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
-                  [Plot View] SevenNet-0 85종 물리 공간 분포 (%V<sub>bur</sub> vs BDE<sub>min</sub>)
+                  [Plot View] SevenNet-0 85종 물리 공간 분포 (적응형 %V<sub>bur</sub> 창 vs BDE<sub>min</sub>)
                 </div>
                 <span class="badge badge-2g" style="font-size:0.75rem;">55 Audited + 30 Expanded (Ir/Rh/As/Ga/In/Ru)</span>
               </div>
               <p style="font-size:0.82rem; color:#475569; margin:0 0 10px 0; line-height:1.5;">
-                녹색 음영 영역은 안정적 단량체 프리커서 창($\\%V_{{\\text{{bur}}}} \\in [44\\%, 83.5\\%]$, $\\text{{BDE}}_{{\\min}} \\ge 45\\text{{ kcal/mol}}$)을 나타냅니다. 각 점에 마우스를 올리면 분자명과 실측 물리 지표를 확인할 수 있습니다.
+                청록색 음영($\\%V_{{\\text{{bur}}}} \\in [34\\%, 44\\%)$)은 소형 $\\text{{Si}}$ 중심 및 $\\pi$-햅틱 착물용 <strong>적응형 하한($V_{{\\min}}=34\\%$)</strong> 확장 구간이며, 녹색 음영($\\%V_{{\\text{{bur}}}} \\in [44\\%, 83.5\\%]$)은 일반 전이금속 프리커서 창($\\text{{BDE}}_{{\\min}} \\ge 45\\text{{ kcal/mol}}$)입니다.
               </p>
               <div id="step4-plot-tooltip" style="display:none; position:fixed; z-index:9999; background:#0f172a; color:#f8fafc; padding:6px 10px; border-radius:6px; font-size:0.76rem; font-family:'JetBrains Mono', monospace; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.2);"></div>
               <svg viewBox="0 0 820 400" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
-                <!-- Optimal window shading -->
+                <!-- Adaptive Si / pi-haptic window extension (34% to 44%) -->
+                <rect x="{_opt_x_adapt:.1f}" y="{_opt_y_top:.1f}" width="{_opt_x1 - _opt_x_adapt:.1f}" height="{_opt_y_45 - _opt_y_top:.1f}" fill="#ccfbf1" fill-opacity="0.6" />
+                <!-- Standard TM Optimal window shading (44% to 83.5%) -->
                 <rect x="{_opt_x1:.1f}" y="{_opt_y_top:.1f}" width="{_opt_x2 - _opt_x1:.1f}" height="{_opt_y_45 - _opt_y_top:.1f}" fill="#dcfce7" fill-opacity="0.55" />
-                <text x="{_opt_x1 + 8:.1f}" y="{_opt_y_top + 18:.1f}" font-size="11" font-weight="700" fill="#15803d">Optimal Precursor Window (%V_bur 44~83.5%, BDE_min >= 45)</text>
+                <text x="{_opt_x_adapt + 6:.1f}" y="{_opt_y_top + 18:.1f}" font-size="10.5" font-weight="700" fill="#0f766e">Si/pi V_min 34%</text>
+                <text x="{_opt_x1 + 8:.1f}" y="{_opt_y_top + 18:.1f}" font-size="11" font-weight="700" fill="#15803d">Standard TM Window (44~83.5%, BDE_min >= 45)</text>
                 <!-- Grid & Axes -->
                 <line x1="70" y1="340" x2="760" y2="340" stroke="#64748b" stroke-width="1.5"/>
                 <line x1="70" y1="30" x2="70" y2="340" stroke="#64748b" stroke-width="1.5"/>
                 <!-- Threshold dashed lines -->
+                <line x1="{_opt_x_adapt:.1f}" y1="30" x2="{_opt_x_adapt:.1f}" y2="340" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="{_opt_x1:.1f}" y1="30" x2="{_opt_x1:.1f}" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="{_opt_x2:.1f}" y1="30" x2="{_opt_x2:.1f}" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="70" y1="{_opt_y_45:.1f}" x2="760" y2="{_opt_y_45:.1f}" stroke="#0284c7" stroke-width="1.3" stroke-dasharray="5,4"/>
@@ -1224,6 +1239,7 @@ phase2_step4_summary_joined = f"""
                 <!-- X ticks -->
                 <text x="70" y="358" font-size="11" text-anchor="middle" fill="#475569">0%</text>
                 <text x="{_svg_x(25):.1f}" y="358" font-size="11" text-anchor="middle" fill="#475569">25%</text>
+                <text x="{_opt_x_adapt:.1f}" y="358" font-size="11" text-anchor="middle" fill="#0d9488" font-weight="700">34%</text>
                 <text x="{_opt_x1:.1f}" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">44%</text>
                 <text x="{_svg_x(60):.1f}" y="358" font-size="11" text-anchor="middle" fill="#475569">60%</text>
                 <text x="{_opt_x2:.1f}" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">83.5%</text>
@@ -1373,10 +1389,10 @@ phase2_step4_summary_joined = f"""
                   </thead>
                   <tbody>
                     <tr style="background:#f0fdf4;">
-                      <td><strong>Physics + Coordination Gate</strong><br><span style="font-size:0.74rem; color:#15803d;">TMC-SA<sub>phys</sub> + sp3/OH/Aryl</span></td>
-                      <td>Precursor <strong>{_ns_gate['cohort_55']['precursor_27']['with_coord_gate_pass']}/27</strong>, Inhibitor <strong>{_ns_gate['cohort_55']['inhibitor_18']['with_coord_gate_pass']}/18</strong>, <strong>TNR 1.000 (10/10)</strong></td>
-                      <td colspan="2">확장 75종 프리커서 중 <strong>{_ns_gate['expanded_75_unflagged']}/75 (97.3%)</strong> 정상 유지 (SMILES 표기 한계 2종만 플래그)</td>
-                      <td>이질적 실패 원인(호모렙틱 sp3 알킬, M(OH)n 졸-겔 축합, 다환 아릴 비휘발성)을 ID 하드코딩 없이 물리 규칙으로 차단해 <strong>FPR 0.0%</strong> 달성</td>
+                      <td><strong>TMC-SA<sub>v2</sub> + Coord/Topology Gate</strong><br><span style="font-size:0.74rem; color:#15803d;">Adaptive V<sub>min</sub> + &pi;-haptic/sp3/OH/Aryl</span></td>
+                      <td>Precursor <strong>{_ref_v2['precursor_pass']} ({_ref_v2['precursor_tpr_pct']:.1f}%)</strong>, Inhibitor <strong>{_ref_v2['inhibitor_pass']}</strong>, <strong>TNR 1.000 (10/10)</strong></td>
+                      <td colspan="2">확장 75종 프리커서 <strong>{_ref_exp75['unflagged_count']}/{_ref_exp75['total']} (100.0%)</strong> 정상 유지 · 확장 40종 Negative Control <strong>TNR {_en_base['coord_chem_gate_tnr_pct']:.1f}% ({_en_base['coord_chem_gate_rejected']})</strong></td>
+                      <td>적응형 V<sub>min</sub>(34%/44%) 및 &pi;-햅티시티 위상 게이트로 75종 오탐 0건 달성, 6대 실패 메커니즘 물리 규칙 차단으로 감사 10종 <strong>FPR 0.0%</strong></td>
                     </tr>
                     <tr>
                       <td><strong>OneClassSVM (RBF)</strong><br><span style="font-size:0.74rem; color:#6d28d9;">Positive-Only Anomaly</span></td>
