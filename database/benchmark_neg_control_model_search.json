@@ -1,0 +1,413 @@
+{
+  "new_descriptors_added": [
+    "metal_c_sigma_frac",
+    "metal_hetero_frac",
+    "is_homoleptic_mc",
+    "is_homoleptic_tm_sp3",
+    "beta_h_alkyl_count",
+    "metal_oh_count",
+    "cooh_count",
+    "is_inert_alkane",
+    "hbd",
+    "hba",
+    "tpsa",
+    "aromatic_rings",
+    "vbur_x_bde"
+  ],
+  "cohort_55_full": {
+    "n_samples": 55,
+    "n_pos": 45,
+    "n_neg": 10,
+    "n_features": 29,
+    "best_model_by_cv5_bal_acc": "SVC_RBF",
+    "models": {
+      "LogisticRegression": {
+        "cv5_roc_auc": 0.56,
+        "cv5_balanced_acc": 0.667,
+        "cv5_tpr_sensitivity": 0.933,
+        "cv5_tnr_specificity": 0.4,
+        "loocv_roc_auc": 0.54,
+        "loocv_balanced_acc": 0.667,
+        "loocv_tpr_sensitivity": 0.933,
+        "loocv_tnr_specificity": 0.4
+      },
+      "SVC_RBF": {
+        "cv5_roc_auc": 0.842,
+        "cv5_balanced_acc": 0.706,
+        "cv5_tpr_sensitivity": 0.911,
+        "cv5_tnr_specificity": 0.5,
+        "loocv_roc_auc": 0.84,
+        "loocv_balanced_acc": 0.667,
+        "loocv_tpr_sensitivity": 0.933,
+        "loocv_tnr_specificity": 0.4
+      },
+      "MLP_NeuralNet": {
+        "cv5_roc_auc": 0.682,
+        "cv5_balanced_acc": 0.678,
+        "cv5_tpr_sensitivity": 0.956,
+        "cv5_tnr_specificity": 0.4,
+        "loocv_roc_auc": 0.731,
+        "loocv_balanced_acc": 0.678,
+        "loocv_tpr_sensitivity": 0.956,
+        "loocv_tnr_specificity": 0.4
+      },
+      "RandomForest": {
+        "cv5_roc_auc": 0.864,
+        "cv5_balanced_acc": 0.578,
+        "cv5_tpr_sensitivity": 0.956,
+        "cv5_tnr_specificity": 0.2,
+        "loocv_roc_auc": 0.842,
+        "loocv_balanced_acc": 0.589,
+        "loocv_tpr_sensitivity": 0.978,
+        "loocv_tnr_specificity": 0.2
+      },
+      "ExtraTrees": {
+        "cv5_roc_auc": 0.784,
+        "cv5_balanced_acc": 0.567,
+        "cv5_tpr_sensitivity": 0.933,
+        "cv5_tnr_specificity": 0.2,
+        "loocv_roc_auc": 0.771,
+        "loocv_balanced_acc": 0.567,
+        "loocv_tpr_sensitivity": 0.933,
+        "loocv_tnr_specificity": 0.2
+      },
+      "GradientBoosting": {
+        "cv5_roc_auc": 0.687,
+        "cv5_balanced_acc": 0.606,
+        "cv5_tpr_sensitivity": 0.911,
+        "cv5_tnr_specificity": 0.3,
+        "loocv_roc_auc": 0.567,
+        "loocv_balanced_acc": 0.667,
+        "loocv_tpr_sensitivity": 0.933,
+        "loocv_tnr_specificity": 0.4
+      },
+      "XGBoost_Weighted": {
+        "cv5_roc_auc": 0.663,
+        "cv5_balanced_acc": 0.622,
+        "cv5_tpr_sensitivity": 0.844,
+        "cv5_tnr_specificity": 0.4,
+        "loocv_roc_auc": 0.709,
+        "loocv_balanced_acc": 0.65,
+        "loocv_tpr_sensitivity": 0.8,
+        "loocv_tnr_specificity": 0.5
+      },
+      "IsolationForest_OneClass": {
+        "cv5_roc_auc": 0.747,
+        "cv5_balanced_acc": 0.622,
+        "cv5_tpr_sensitivity": 0.844,
+        "cv5_tnr_specificity": 0.4
+      },
+      "OneClassSVM_RBF": {
+        "cv5_roc_auc": 0.833,
+        "cv5_balanced_acc": 0.689,
+        "cv5_tpr_sensitivity": 0.378,
+        "cv5_tnr_specificity": 1.0
+      }
+    },
+    "rf_top10_features": [
+      [
+        "bde_min_kcal_mol",
+        0.1031
+      ],
+      [
+        "sascore",
+        0.0868
+      ],
+      [
+        "tpsa",
+        0.0727
+      ],
+      [
+        "hba",
+        0.0682
+      ],
+      [
+        "is_homoleptic_mc",
+        0.0591
+      ],
+      [
+        "radius_of_gyration_ang",
+        0.0441
+      ],
+      [
+        "mol_volume_ang3",
+        0.0441
+      ],
+      [
+        "metal_c_sigma_frac",
+        0.0437
+      ],
+      [
+        "heavy_atoms",
+        0.0431
+      ],
+      [
+        "mw",
+        0.0401
+      ]
+    ]
+  },
+  "cohort_85_full": {
+    "n_samples": 85,
+    "n_pos": 75,
+    "n_neg": 10,
+    "n_features": 29,
+    "best_model_by_cv5_bal_acc": "OneClassSVM_RBF",
+    "models": {
+      "LogisticRegression": {
+        "cv5_roc_auc": 0.513,
+        "cv5_balanced_acc": 0.587,
+        "cv5_tpr_sensitivity": 0.973,
+        "cv5_tnr_specificity": 0.2,
+        "loocv_roc_auc": 0.464,
+        "loocv_balanced_acc": 0.573,
+        "loocv_tpr_sensitivity": 0.947,
+        "loocv_tnr_specificity": 0.2
+      },
+      "SVC_RBF": {
+        "cv5_roc_auc": 0.709,
+        "cv5_balanced_acc": 0.593,
+        "cv5_tpr_sensitivity": 0.987,
+        "cv5_tnr_specificity": 0.2,
+        "loocv_roc_auc": 0.667,
+        "loocv_balanced_acc": 0.6,
+        "loocv_tpr_sensitivity": 1.0,
+        "loocv_tnr_specificity": 0.2
+      },
+      "MLP_NeuralNet": {
+        "cv5_roc_auc": 0.629,
+        "cv5_balanced_acc": 0.6,
+        "cv5_tpr_sensitivity": 1.0,
+        "cv5_tnr_specificity": 0.2,
+        "loocv_roc_auc": 0.601,
+        "loocv_balanced_acc": 0.6,
+        "loocv_tpr_sensitivity": 1.0,
+        "loocv_tnr_specificity": 0.2
+      },
+      "RandomForest": {
+        "cv5_roc_auc": 0.69,
+        "cv5_balanced_acc": 0.493,
+        "cv5_tpr_sensitivity": 0.987,
+        "cv5_tnr_specificity": 0.0,
+        "loocv_roc_auc": 0.615,
+        "loocv_balanced_acc": 0.493,
+        "loocv_tpr_sensitivity": 0.987,
+        "loocv_tnr_specificity": 0.0
+      },
+      "ExtraTrees": {
+        "cv5_roc_auc": 0.635,
+        "cv5_balanced_acc": 0.58,
+        "cv5_tpr_sensitivity": 0.96,
+        "cv5_tnr_specificity": 0.2,
+        "loocv_roc_auc": 0.56,
+        "loocv_balanced_acc": 0.587,
+        "loocv_tpr_sensitivity": 0.973,
+        "loocv_tnr_specificity": 0.2
+      },
+      "GradientBoosting": {
+        "cv5_roc_auc": 0.637,
+        "cv5_balanced_acc": 0.587,
+        "cv5_tpr_sensitivity": 0.973,
+        "cv5_tnr_specificity": 0.2,
+        "loocv_roc_auc": 0.644,
+        "loocv_balanced_acc": 0.587,
+        "loocv_tpr_sensitivity": 0.973,
+        "loocv_tnr_specificity": 0.2
+      },
+      "XGBoost_Weighted": {
+        "cv5_roc_auc": 0.651,
+        "cv5_balanced_acc": 0.55,
+        "cv5_tpr_sensitivity": 0.8,
+        "cv5_tnr_specificity": 0.3,
+        "loocv_roc_auc": 0.616,
+        "loocv_balanced_acc": 0.483,
+        "loocv_tpr_sensitivity": 0.867,
+        "loocv_tnr_specificity": 0.1
+      },
+      "IsolationForest_OneClass": {
+        "cv5_roc_auc": 0.633,
+        "cv5_balanced_acc": 0.513,
+        "cv5_tpr_sensitivity": 0.827,
+        "cv5_tnr_specificity": 0.2
+      },
+      "OneClassSVM_RBF": {
+        "cv5_roc_auc": 0.804,
+        "cv5_balanced_acc": 0.717,
+        "cv5_tpr_sensitivity": 0.533,
+        "cv5_tnr_specificity": 0.9
+      }
+    },
+    "rf_top10_features": [
+      [
+        "mw",
+        0.0923
+      ],
+      [
+        "sascore",
+        0.0671
+      ],
+      [
+        "heavy_atoms",
+        0.0599
+      ],
+      [
+        "br_sascore",
+        0.0589
+      ],
+      [
+        "scscore",
+        0.0562
+      ],
+      [
+        "bde_min_kcal_mol",
+        0.0562
+      ],
+      [
+        "radius_of_gyration_ang",
+        0.0523
+      ],
+      [
+        "mol_volume_ang3",
+        0.0511
+      ],
+      [
+        "vbur_percent",
+        0.0483
+      ],
+      [
+        "tpsa",
+        0.0463
+      ]
+    ]
+  },
+  "cohort_130_chem_coord": {
+    "n_samples": 130,
+    "n_pos": 120,
+    "n_neg": 10,
+    "n_features": 22,
+    "best_model_by_cv5_bal_acc": "OneClassSVM_RBF",
+    "models": {
+      "LogisticRegression": {
+        "cv5_roc_auc": 0.526,
+        "cv5_balanced_acc": 0.621,
+        "cv5_tpr_sensitivity": 0.942,
+        "cv5_tnr_specificity": 0.3
+      },
+      "SVC_RBF": {
+        "cv5_roc_auc": 0.761,
+        "cv5_balanced_acc": 0.492,
+        "cv5_tpr_sensitivity": 0.983,
+        "cv5_tnr_specificity": 0.0
+      },
+      "MLP_NeuralNet": {
+        "cv5_roc_auc": 0.57,
+        "cv5_balanced_acc": 0.487,
+        "cv5_tpr_sensitivity": 0.975,
+        "cv5_tnr_specificity": 0.0
+      },
+      "RandomForest": {
+        "cv5_roc_auc": 0.695,
+        "cv5_balanced_acc": 0.5,
+        "cv5_tpr_sensitivity": 1.0,
+        "cv5_tnr_specificity": 0.0
+      },
+      "ExtraTrees": {
+        "cv5_roc_auc": 0.654,
+        "cv5_balanced_acc": 0.496,
+        "cv5_tpr_sensitivity": 0.992,
+        "cv5_tnr_specificity": 0.0
+      },
+      "GradientBoosting": {
+        "cv5_roc_auc": 0.543,
+        "cv5_balanced_acc": 0.487,
+        "cv5_tpr_sensitivity": 0.975,
+        "cv5_tnr_specificity": 0.0
+      },
+      "XGBoost_Weighted": {
+        "cv5_roc_auc": 0.738,
+        "cv5_balanced_acc": 0.608,
+        "cv5_tpr_sensitivity": 0.817,
+        "cv5_tnr_specificity": 0.4
+      },
+      "IsolationForest_OneClass": {
+        "cv5_roc_auc": 0.752,
+        "cv5_balanced_acc": 0.633,
+        "cv5_tpr_sensitivity": 0.867,
+        "cv5_tnr_specificity": 0.4
+      },
+      "OneClassSVM_RBF": {
+        "cv5_roc_auc": 0.844,
+        "cv5_balanced_acc": 0.8,
+        "cv5_tpr_sensitivity": 0.7,
+        "cv5_tnr_specificity": 0.9
+      }
+    },
+    "rf_top10_features": [
+      [
+        "mw",
+        0.1766
+      ],
+      [
+        "scscore",
+        0.0968
+      ],
+      [
+        "br_sascore",
+        0.0775
+      ],
+      [
+        "sascore",
+        0.0754
+      ],
+      [
+        "heavy_atoms",
+        0.0736
+      ],
+      [
+        "metal_hetero_frac",
+        0.067
+      ],
+      [
+        "logp",
+        0.0644
+      ],
+      [
+        "rascore",
+        0.053
+      ],
+      [
+        "syba",
+        0.0475
+      ],
+      [
+        "tpsa",
+        0.0462
+      ]
+    ]
+  },
+  "physics_coord_gate_eval": {
+    "cohort_55": {
+      "precursor_27": {
+        "total": 27,
+        "prior_tmc_sa_chem_pass": 22,
+        "with_coord_gate_pass": 22
+      },
+      "inhibitor_18": {
+        "total": 18,
+        "prior_tmc_sa_chem_pass": 16,
+        "with_coord_gate_pass": 16
+      },
+      "negative_control_10": {
+        "total": 10,
+        "prior_tmc_sa_chem_pass": 4,
+        "with_coord_gate_pass": 0
+      }
+    },
+    "negative_control_tnr_specificity": 1.0,
+    "expanded_75_unflagged": 73,
+    "expanded_75_flagged_names": [
+      "Ru(IMBCH)",
+      "Ru(EBCHD)"
+    ]
+  }
+}

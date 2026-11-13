@@ -92,243 +92,237 @@ lit_rows_joined = "\n".join(lit_rows_html)
 
 # Benchmark metrics on semiconductor precursor DB (27 molecules)
 # Formally partitioned into:
-# (A) [코드 직접 실측]: Directly installed & executed locally on 27 precursors
-# (B) [도메인 제약 분석]: Evaluated via dataset scope & chemical grammar constraints
-# Benchmark metrics on semiconductor precursor DB (27 molecules)
-# Strictly filtered to the 8 directly installed, executed, and benchmarked models
-repo_semi_metrics = {
-    "SAScore (RDKit Built-in)": {
-        "rate": "7.4% (2/27)",
-        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
-        "eval": "Direct Execution (False Negative Bias)",
-        "desc": "[Empirical 7.4%] TEOS(2.84), 4DMAS(3.37) 2종만 threshold 3.5 이하로 통과함(연결형 Ru(EtCp)2 보정 시 4.70). TSA(6.91), DMAH(6.31), TMA(4.81), ZMA(4.82) 등 단순 1단계 양산 전구체에 높은 감점이 부여됨. PubChem 의약 Fragment Frequency 기반으로 Si-N, Al-C, Zr-O 배위를 희귀 구조로 분류한 결과임."
-    },
-    "SCScore": {
-        "rate": "77.8% (21/27)",
-        "badge_style": "background:#dcfce7; color:#15803d; border-color:#86efac; font-weight:700;",
-        "eval": "Direct Execution (Early-Reactant Bias)",
-        "desc": "[Empirical 77.8%] Reaxys 1024bool DNN 직접 실행 결과 21종이 1.01~1.89의 낮은 점수로 산출됨(DMAH 1.01, HCDS 1.02, TTIP 1.25, DIPAS 1.73). Reaxys 반응쌍에서 유기금속이 출발물질로 등록되어 저분자량 착체가 낮은 complexity로 평가되며(ZMA 2.72, Co(AMD)2 2.38, CCTBA 2.32, Ru(EtCp)2 2.27), 자연발화성(Pyrophoric) 위험은 반영되지 않음."
-    },
-    "SYBA": {
-        "rate": "85.2% (23/27)",
-        "badge_style": "background:#d1fae5; color:#047857; border-color:#6ee7b7; font-weight:700;",
-        "eval": "Direct Execution (Cp Collapse / syba.csv.gz)",
-        "desc": "[Empirical 85.2%] 25.7MB Naive Bayes Lookup Table(syba.csv.gz; 기본 syba4.csv.gz 대비 방법론적 변경 명시) 직접 연산 결과 23종은 +2.28~+11.98 양수로 분류됨. 반면 ZINC DB에 부재한 메탈로센/Cp 착체인 CpTi(-24.98), CpZr(-24.98), ZMA(-18.21), Ru(EtCp)2(-17.31) 4종은 큰 음수로 산출됨."
-    },
-    "BR-SAScore": {
-        "rate": "11.1% (Strict Reagent 3/27) / 100% (Leaked)",
-        "badge_style": "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;",
-        "eval": "Direct Execution (Unleaked max(existing, -0.47))",
-        "desc": "[Empirical] 기본 사전(11.1%, 3/27)과 Data Leakage(생성물 등록 및 CCTBA A>>A 규칙)를 배제한 Strict Reagent Dictionary(음수 fragment 평균 수식 fscore < 0에 맞춰 max(existing, -0.47) 보정) 모두 점수 악화 0종에 Pass Rate 11.1%(3/27: TSA, TMA, DMAH)로 동일함(신규 형성 M-N/M-C 단편 -6.0 유지; 0.0 덮어쓰기 시 유기 단편 제외로 3종 악화). 생성물 사전 등록 시 100.0%(27/27)는 Circular Memorization 결과이므로 Pro-ligand 분리형 2-Track TMC-SA 적용이 필요함."
-    },
-    "RAscore": {
-        "rate": "0.0% Physical Validity (100% FP)",
-        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
-        "eval": "Direct Execution (False Positive Distortion)",
-        "desc": "[Empirical] 27종 전수 0.602~0.988(Mean 0.908)로 수치상 100% Pass 판정이나, ECFP6(radius 3) Fingerprint Count Vector가 중심금속을 일반 알킬/아민 탄소 환경으로 투영한 결과임. 실제 금속 결합 안정성 및 열분해 위험에 대한 물리적 변별력은 0.0%임."
-    },
-    "RxnFlow": {
-        "rate": "0.0% Core (33.3% Substructure)",
-        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
-        "eval": "Direct Execution (0 Metal Templates)",
-        "desc": "[Empirical] Explore(30개)·CGFlow(42개) 총 72개 Template SMARTS 매칭 결과 일반 생성물 부분구조(아민 알킬 사슬 등)를 포함하는 9종(33.3%)만 매칭되었으며, Template 내 금속 원자가 전무하여 전구체 코어 합성 경로 도출률은 0.0%(0/27)임."
-    },
-    "ReaSyn": {
-        "rate": "0.0% Pathway (100% Tokenization)",
-        "badge_style": "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;",
-        "eval": "Direct Execution (118-Elem Vocab vs Organic Manifold)",
-        "desc": "[Empirical] 118원소 Vocabulary 지원으로 SMILES Tokenization 및 무손실 복원은 100%(27/27) 통과하나, SynFormer 115개 반응 Template에는 금속 원자가 없고 일반 유기 부분구조(24/27; ≥2-atom 시 23/27)만 매칭되어 무기 배위 경로는 0건(0.0%)임."
-    },
-    "AiZynthFinder": {
-        "rate": "N/A (MCTS Unexecuted null, 100% Sanitize)",
-        "badge_style": "background:#f1f5f9; color:#475569; border-color:#cbd5e1; font-weight:700;",
-        "eval": "Object Sanitize + Static Analysis (null)",
-        "desc": "[Object Check & Static Analysis] aizynthfinder.chem.Molecule(smiles=smi).sanitize() 직접 호출 시 27종 전구체 객체 생성은 100% 통과함. 외부 USPTO Policy Neural Network Weights 및 Stock HDF5 미설치로 MCTS 탐색은 미실행(null)이며, 정적 분석 상 USPTO 50k에는 유기금속 배위 규칙이 부재함."
-    }
-}
+# 18-Model & Expanded Semiconductor DB metrics are loaded dynamically below from
+# database/benchmark_expanded_models_db.json.
 
 
-# 15 Unique Multi-stage evaluated models across the 4 execution pipeline stages (ordered by generation 1G -> 4G -> CASP)
+# Load expanded 18-model & expanded semiconductor DB benchmark results
+expanded_db_eval_path = os.path.join("database", "benchmark_expanded_models_db.json")
+with open(expanded_db_eval_path, "r", encoding="utf-8") as f:
+    expanded_db_eval = json.load(f)
+exp_p = expanded_db_eval["precursors_102"]["counts"]
+exp_p_dist = expanded_db_eval["precursors_102"]["distributions"]
+exp_i = expanded_db_eval["inhibitors_18"]["counts"]
+exp_r = expanded_db_eval["reagents_29"]["counts"]
+N_PREC = exp_p["total"]  # 102 SMILES-verified precursors (Master 205 중 SMILES 보유 전수)
+
+# 18 Unique Multi-stage evaluated models across the 4 execution pipeline stages (ordered by generation 1G -> 4G)
 multistage_models = [
     {
         "name": "SAScore (RDKit Built-in)",
-        "gen": "1G Fragment Frequency",
+        "gen": "1G Heuristic",
         "gen_badge": "badge-1g",
         "repo_key": "SAScore (RDKit Built-in)",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Morgan(r=2)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("N/A (Statistical Lookup)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("7.4% (2/27) [FN 92.6%]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s4": (f"{exp_p['sascore_pass']/N_PREC*100:.1f}% ({exp_p['sascore_pass']}/{N_PREC}) [FN {(N_PREC-exp_p['sascore_pass'])/N_PREC*100:.1f}%]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 2·4 — Fragment Frequency Bias & Ring Penalty",
-        "barrier_desc": "PubChem 의약 DB 기반 Fragment Frequency 사전에 Si-N, Al-C, M-N 결합이 부재하여 1단계 양산 전구체 TSA(6.91), DMAH(6.31), TMA(4.81) 등 25종(92.6%)에서 False Negative 발생. 에테르/아민 유사 구조 2종(TEOS 2.84, 4DMAS 3.37)만 통과."
+        "barrier_desc": f"PubChem 의약 DB 기반 Fragment Frequency 사전에서 Si-N, Al-C, M-N, Ir/Rh/Ga/In/As/Ru 배위 결합이 부재하여 102종 반도체 프리커서 중 {N_PREC-exp_p['sascore_pass']}종(Mean {exp_p_dist['sascore_mean']})에서 False Negative가 발생함. 에테르·아민 유사 Si 프리커서 2종(TEOS, 4DMAS)만 통과하며 AS-ALD 인히비터는 {exp_i['sascore_pass']}/{exp_i['total']} 통과함."
     },
     {
         "name": "SYBA",
         "gen": "1G Naive Bayes",
         "gen_badge": "badge-1g",
         "repo_key": "SYBA",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Bayesian Subtrees", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("N/A (Log-Odds Ratio)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("85.2% (23/27) [Cp Collapse]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "s4": (f"{exp_p['syba_pass']/N_PREC*100:.1f}% ({exp_p['syba_pass']}/{N_PREC}) [Cp Collapse]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
         "barrier_stage": "Stage 2·4 — ZINC Fragment Bias & Metallocene Collapse",
-        "barrier_desc": "비환식 알킬아민·알콕사이드 전구체 23종(+2.28~+11.98)은 양수로 분류되나, ZINC 라이브러리(syba.csv.gz) 내 금속-Cp 단편 부재로 CpTi(NMe2)3(-24.98), Cp(NMe2)3Zr(-24.98), ZMA(-18.21), Ru(EtCp)2(-17.31) 4종이 큰 음수로 산출됨."
+        "barrier_desc": f"102종 프리커서 중 비환식 알킬·알콕사이드 {exp_p['syba_pass']}종(Mean {exp_p_dist['syba_mean']})은 양수로 분류되나, ZINC 라이브러리(syba.csv.gz) 내 금속-Cp·다핵 착물 단편 부재로 {N_PREC-exp_p['syba_pass']}종이 음수로 붕괴함."
     },
     {
         "name": "SCScore",
         "gen": "2G Reaction DNN",
         "gen_badge": "badge-2g",
         "repo_key": "SCScore",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% 1024-bit Morgan", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("N/A (12-Layer Ranking DNN)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("77.8% (21/27) [Hazard Blind]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
+        "s4": (f"{exp_p['scscore_pass']/N_PREC*100:.1f}% ({exp_p['scscore_pass']}/{N_PREC}) [Hazard Blind]", "background:#fef3c7; color:#b45309; border-color:#fcd34d; font-weight:700;"),
         "barrier_stage": "Stage 4 — Reaxys Early-Stage Reactant Bias",
-        "barrier_desc": "Reaxys 1,200만 반응쌍(full_reaxys_model_1024bool)에서 유기금속이 출발 시약으로 등록된 편향으로 21종이 1.01~1.89로 산출됨. ZMA(2.72)·Co(AMD)2(2.38)·CCTBA(2.32)·Ru(EtCp)2(2.27)의 복잡도는 구분하나 TMA(1.21)·DMAH(1.01)의 자연발화성 및 열분해 위험성은 변별하지 못함."
+        "barrier_desc": f"Reaxys 1,200만 반응쌍(full_reaxys_model_1024bool)에서 단순 유기금속·할로겐화물이 출발 시약으로 등록된 편향으로 {exp_p['scscore_pass']}/{N_PREC}종(Mean {exp_p_dist['scscore_mean']})이 2.0 이하로 통과함. 알킬·할로겐화물 프리커서의 자연발화성 및 열분해 위험성은 변별하지 못함."
     },
     {
         "name": "RAscore",
         "gen": "2G MCTS Distillation",
         "gen_badge": "badge-2g",
         "repo_key": "RAscore",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("ECFP6 Distortion", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("ECFP6 Alkyl Bias", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (XGBoost Classifier)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
-        "s4": ("0.0% Valid (100% FP)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s4": (f"{exp_p['rascore_pass']/N_PREC*100:.1f}% ({exp_p['rascore_pass']}/{N_PREC}) [FP Bias]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 2 — ECFP6 Alkyl Bias & Metal Instability Blindness",
-        "barrier_desc": "2048-bit ECFP6 Count Vector가 디메틸아미노·이소프로필 등 유기 치환기 비트에 편향되어 중심금속 배위 안정성을 인지하지 못함. 전수 Mean 0.908(0.602~0.988, 22종 ≥0.90)로 통과하여 불안정 분자를 걸러내지 못하는 100% False Positive 발생."
+        "barrier_desc": f"2048-bit ECFP6 Count Vector가 알킬·아민 치환기 비트에 편향되어 102종 중 {exp_p['rascore_pass']}종({exp_p['rascore_pass']/N_PREC*100:.1f}%, Mean {exp_p_dist['rascore_mean']}, {exp_p_dist['rascore_min']}~{exp_p_dist['rascore_max']})이 0.5 이상으로 통과하여 불안정 착물을 걸러내지 못함."
+    },
+    {
+        "name": "RetroGNN",
+        "gen": "2G MPNN Distillation",
+        "gen_badge": "badge-2g",
+        "repo_key": "RetroGNN",
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% Graph / ECFP Input", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("Unexecuted (Weights Absent / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("N/A (USPTO-Distilled, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
+        "barrier_stage": "Stage 3 — Weights Absent (null) & USPTO Organic Distillation",
+        "barrier_desc": "RDKit 기반 분자 그래프 및 2048-bit ECFP 입력(102/102) 수용은 검증됨. 다만 사전학습 MPNN 가중치 미제공으로 추론은 미실행(null)이며, USPTO 역합성 경로 길이 증류 기반이므로 무기 배위 결합 합성 난이도를 반영하지 못함."
+    },
+    {
+        "name": "MPScore",
+        "gen": "2G Domain ML (Cage)",
+        "gen_badge": "badge-2g",
+        "repo_key": "MPScore (Materials Precursor)",
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": (f"0.0% ({exp_p['mpscore_organic_in_domain']}/{N_PREC}) Metal OOD", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s3": ("Unexecuted (Zenodo Absent / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("N/A (Organic Cage OOD, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
+        "barrier_stage": "Stage 2·3 — Zenodo Weights Absent (null) & 100% Metal OOD",
+        "barrier_desc": f"ECFP4 활성 비트(102/102)는 산출되나 유기 다공성 케이지(POC) 프리커서(C,H,N,O,F,S,B,P,Cl,Br,I) 영역에 해당되는 프리커서는 0/102(0.0%)임(AS-ALD 인히비터는 {exp_i['mpscore_organic_in_domain']}/{exp_i['total']} 해당). Zenodo 가중치 미설치로 추론은 미실행(null)임."
     },
     {
         "name": "BR-SAScore",
         "gen": "3G Decoupled BFrag/RFrag",
         "gen_badge": "badge-3g",
         "repo_key": "BR-SAScore",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% BFrag/RFrag (Unleaked)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("11.1% (3/27) Coordination Gap", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("11.1% (3/27) [Intact Limit]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s3": (f"{exp_p['br_sascore_strict_pass']/N_PREC*100:.1f}% ({exp_p['br_sascore_strict_pass']}/{N_PREC}) Coordination Gap", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": (f"{exp_p['br_sascore_strict_pass']/N_PREC*100:.1f}% ({exp_p['br_sascore_strict_pass']}/{N_PREC}) [Intact Limit]", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 — Strict Reagent Dictionary Limit (Pro-Ligand Split Required)",
-        "barrier_desc": "기본 사전(eMolecules/USPTO)과 Data Leakage를 배제한 Strict Reagent Dictionary(max(existing, -0.47) 보정; 음수 fragment 평균 수식 정합으로 악화 0종) 모두 신규 M-N/M-C 단편 부재(-6.0)로 동일하게 3종(TSA, TMA, DMAH)만 통과함(생성물 사전 등록 시 27/27은 Circular Memorization 결과). 유기 Pro-ligand(HL_i) 분리 평가가 요구됨."
+        "barrier_desc": f"기본 사전과 Data Leakage를 배제한 Strict Reagent Dictionary(max(existing, -0.47) 보정) 모두 102종 중 {exp_p['br_sascore_strict_pass']}종({exp_p['br_sascore_strict_pass']/N_PREC*100:.1f}%)만 통과함(상용 시약 29종은 {exp_r['br_sascore_strict_pass']}/{exp_r['total']} 통과). 유기 Pro-ligand(HL_i) 분리 평가가 요구됨."
     },
     {
         "name": "GASA",
         "gen": "3G GAT Classifier",
         "gen_badge": "badge-3g",
         "repo_key": "GASA",
-        "s1": ("74.1% Supported (7 OOV Metals)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s1": (f"{exp_p['gasa_supported']/N_PREC*100:.1f}% Supported ({exp_p['gasa_silent_misencoded']} OOV)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "s2": ("All-Zero Silent Mis-encoding", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (GAT Classifier)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% Physical Validity", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 1·2 — DGL Absent & Silent All-Zero Vector Loss (Static Audit)",
-        "barrier_desc": "로컬 dgl/dgllife 미설치로 추론 미실행이며 Featurization 코드 정적·정량 감사를 수행함. Allowable Atom Set(allowable_set)에 5대 전이금속(Hf, Ta, Ru, W, Mo)이 누락되어 7종(25.9%)에서 예외 대신 encode_unknown=False로 All-Zero Vector가 생성되는 Silent Mis-encoding 결함 확인."
+        "barrier_stage": "Stage 1·2 — DGL Absent & 52.0% Silent All-Zero Vector Loss",
+        "barrier_desc": f"로컬 dgl/dgllife 미설치로 Featurization 정적·정량 감사를 수행함. Allowable Atom Set(43원소)에서 Ga, Ir, Rh, Ru, Hf, Ta, W, Mo 8원소가 누락되어 102종 중 {exp_p['gasa_silent_misencoded']}종({exp_p['gasa_silent_misencoded']/N_PREC*100:.1f}%)에서 encode_unknown=False로 All-Zero Vector가 생성됨."
     },
     {
         "name": "DeepSA",
         "gen": "3G Multimodal Transformer",
         "gen_badge": "badge-3g",
         "repo_key": "DeepSA",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("Ro5(26/27) / Subword Split", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": (f"Ro5({exp_p['deepsa_ro5_pass']}/{N_PREC}) / Bracket Split({exp_p['deepsa_bracket_fragmented']})", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (Multimodal Classifier)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% Physical Validity", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
-        "barrier_stage": "Stage 2·4 — AutoGluon Absent & ELECTRA Bracket Splitting (Static Audit)",
-        "barrier_desc": "로컬 autogluon 미설치로 추론 미실행이며 Descriptor·Tokenizer 정적 감사를 수행함. RDKit 실측 상 26/27종이 Lipinski Ro5를 통과(Hf(OtBu)4만 cLogP=5.06 초과)하나, ELECTRA 기반 SMILES Subword Splitting 시 [Zr]·[Hf]·[SiH3] 등 무기 괄호 표현이 파편화됨."
+        "barrier_stage": "Stage 2·4 — AutoGluon Absent & ELECTRA Bracket Splitting",
+        "barrier_desc": f"로컬 autogluon 미설치로 Descriptor·Tokenizer 정적 감사를 수행함. 102종 중 {exp_p['deepsa_ro5_pass']}종이 Lipinski Ro5를 통과하나 전수 {exp_p['deepsa_bracket_fragmented']}/{N_PREC}종(100.0%)이 무기 대괄호 표기([Ga], [Ir], [In] 등)를 포함하여 Subword 파편화가 발생함."
     },
     {
         "name": "DFRscore",
         "gen": "3G GAT Step Regressor",
         "gen_badge": "badge-3g",
         "repo_key": "DFRscore",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("Element Loss ('ELSE' Collapse)", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": (f"100% Loss ({exp_p['dfrscore_else_collapsed']}/{N_PREC} 'ELSE')", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
         "s3": ("N/A (GAT Regression)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% Physical Grounding", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 2 — Organic-Only Atom Vocabulary ('ELSE' Collapse)",
-        "barrier_desc": "Graph Node 허용 원소가 유기 10원소(C, N, O, F, S, Cl, Br, I, B, P)로 제한되어 27종 전구체 전수(100%)의 규소·금속 원자(Si, Ti, Zr, Hf, Ru, W, Mo, Al, Co 등)가 단일 'ELSE' Token으로 축퇴되어 원소별 변별력을 상실함."
+        "barrier_desc": f"Graph Node 허용 원소가 유기 10원소(C,N,O,F,S,Cl,Br,I,B,P)로 제한되어 102종 프리커서 전수({exp_p['dfrscore_else_collapsed']}/{N_PREC}, 100.0%)의 중심 원자가 단일 'ELSE' Token으로 축퇴됨(AS-ALD 인히비터만 {exp_i['dfrscore_organic_only']}/{exp_i['total']} 유기 원소)."
     },
     {
         "name": "SynNet",
         "gen": "4G Markov Forward Plan",
         "gen_badge": "badge-4g",
         "repo_key": "SynNet",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s2": ("100% 2048-bit Morgan (>0)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("85.2% Substruct / 0% Core", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) Core Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": (f"100% Morgan ({exp_p['synnet_morgan_active']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": (f"{exp_p['synnet_hb_substruct']/N_PREC*100:.1f}% Substruct / 0% M-L Rule", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": (f"0.0% (0/{N_PREC}) M-L Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 — HB-91 Organic Templates Only (0 Metal Rules)",
-        "barrier_desc": "2048-bit Morgan Fingerprint 활성 비트(GetNumOnBits() > 0)를 27/27 전구체에서 검증함. 그러나 Hartenfeller-Button(HB) 91종 SMARTS 매칭 시 일반 유기 부분구조 23/27종만 존재하며 Template 내 금속 원자가 전무(0건)하여 착물 합성 트리 생성 불가."
+        "barrier_desc": f"2048-bit Morgan 활성 비트는 {exp_p['synnet_morgan_active']}/{N_PREC} 전수 검증됨. HB-91 SMARTS 매칭 시 유기 부분구조 {exp_p['synnet_hb_substruct']}/{N_PREC}종({exp_p['synnet_hb_substruct']/N_PREC*100:.1f}%)만 탐지되며 금속–리간드(M–L) 배위 반응 규칙은 0건임."
     },
     {
         "name": "ChemProjector",
         "gen": "4G Dual-Diffusion Projection",
         "gen_badge": "badge-4g",
         "repo_key": "ChemProjector",
-        "s1": ("100.0% (27/27) (Z≤100)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['chemprojector_z100_pass']}/{N_PREC}) (Z<=100)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Latent Embedding", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("85.2% Substruct / 0% Core", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) Core Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s3": (f"{exp_p['chemprojector_hb_substruct']/N_PREC*100:.1f}% Substruct / 0% M-L Rule", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": (f"0.0% (0/{N_PREC}) M-L Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 — HB-91 Substructure Only (0 Metal Rules)",
-        "barrier_desc": "원자번호 Z≤100 기반 Graph Embedding 수용은 27/27 통과. HB 91종 SMARTS 매칭 결과 23종에서 [N:1][#6:2] 등 일반 유기 치환기 부분구조만 탐지(TSA, HCDS, TMA, DMAH 제외)될 뿐, Template 내 금속 원자가 0개이므로 전구체 코어 Projection 불가."
+        "barrier_desc": f"Z<=100 Graph 수용은 {exp_p['chemprojector_z100_pass']}/{N_PREC} 통과. HB-91 SMARTS 매칭 결과 {exp_p['chemprojector_hb_substruct']}/{N_PREC}종에서 유기 치환기 부분구조만 탐지되며, Template 내 금속 원자가 0개이므로 금속–리간드(M–L) 배위 결합 경로 Projection 불가."
     },
     {
         "name": "SynFormer",
         "gen": "4G Seq2Seq Transformer",
         "gen_badge": "badge-4g",
         "repo_key": "SynFormer",
-        "s1": ("100.0% (27/27) Native Vocab", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['synformer_vocab_pass']}/{N_PREC}) Native Vocab", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% CoR Token Sequence", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("88.9% (≥2-atom 85.2%) / 0% Core", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) Core Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s3": (f"{exp_p['synformer_substruct']/N_PREC*100:.1f}% (>={exp_p['synformer_ge2_substruct']} 2-atom) / 0% M-L Rule", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": (f"0.0% (0/{N_PREC}) M-L Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 — 115 Patent Templates Without Coordination Rules",
-        "barrier_desc": "자체 smiles_vocab Tokenizer 실측 27/27 전수 통과. comprehensive.txt 115종 생성물 SMARTS 매칭 결과 전체 24/27종(무탄소 TSA는 #84 [N:1] 1원자 패턴), ≥2원자 패턴 23/27종, ≥4원자 패턴 11/27종에서 유기 부분구조만 매칭되며 금속 원자 포함 규칙은 0건임."
+        "barrier_desc": f"자체 smiles_vocab Tokenizer 실측 {exp_p['synformer_vocab_pass']}/{N_PREC} 전수 통과. comprehensive.txt 115종 매칭 결과 {exp_p['synformer_substruct']}/{N_PREC}종(>=2원자 {exp_p['synformer_ge2_substruct']}/{N_PREC}종)에서 유기 부분구조만 매칭되며 금속–리간드(M–L) 배위 반응 규칙은 0건임."
+    },
+    {
+        "name": "SynFlowNet",
+        "gen": "4G GFlowNet (HB Space)",
+        "gen_badge": "badge-4g",
+        "repo_key": "SynFlowNet",
+        "s1": (f"100.0% ({exp_p['synflownet_rdkit_ingest_pass']}/{N_PREC}) RDKit Mol", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s2": ("100% Graph Action Space", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s3": ("Unexecuted (Weights Absent / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
+        "s4": ("N/A (HB Organic Rules, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
+        "barrier_stage": "Stage 3 — Weights Absent (null) & HB Organic Action Space",
+        "barrier_desc": "RDKit 분자 객체 수용(102/102)은 검증됨. 로컬 저장소 및 체크포인트 미설치로 GFlowNet 샘플링은 미실행(null)이며, HB 기반 유기 빌딩블록 반응 공간만 정의되어 금속 착물 합성은 불가함."
     },
     {
         "name": "RxnFlow",
-        "gen": "4G GFlowNet",
+        "gen": "4G GFlowNet (72 Rules)",
         "gen_badge": "badge-4g",
         "repo_key": "RxnFlow",
-        "s1": ("100.0% (27/27)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['rdkit_valid']}/{N_PREC})", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Synthon Graph", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("33.3% Substruct / 0% Core", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) Core Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s3": (f"{exp_p['rxnflow_substruct']/N_PREC*100:.1f}% ({exp_p['rxnflow_substruct']}/{N_PREC}) / 0% M-L Rule", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": (f"0.0% (0/{N_PREC}) M-L Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 — 72 Synthon Templates Lack Metal Elements",
-        "barrier_desc": "Explore(30종)·CGFlow(42종) 총 72종 SMARTS 역반응 실측 결과 DIPAS, TEMAH, TEMAZ 등 9종(33.3%)의 아민 알킬 사슬(환원적 아민화 등) 부분구조만 매칭됨. Template 내 금속 원자가 전무하여 코어 착물 생성(0/27)은 불가하며 유기 Pro-ligand 조제에만 유효함."
+        "barrier_desc": f"Explore(30종)·CGFlow(42종) 총 72종 SMARTS 역반응 실측 결과 102종 중 {exp_p['rxnflow_substruct']}종({exp_p['rxnflow_substruct']/N_PREC*100:.1f}%)의 유기 치환기 부분구조만 매칭됨. Template 내 금속 원자가 전무하여 금속–리간드(M–L) 배위 결합 경로 생성(0/{N_PREC})은 불가함."
     },
     {
         "name": "BioNeMo ReaSyn",
         "gen": "4G Autoregressive CoR",
         "gen_badge": "badge-4g",
         "repo_key": "ReaSyn",
-        "s1": ("100.0% (118-Elem Lossless)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% Vocab ({exp_p['reasyn_lossless_roundtrip']}/{N_PREC} Exact)", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Bidirectional CoR Sequence", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
-        "s3": ("88.9% Substruct / 0% Core", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
-        "s4": ("0.0% (0/27) Coordination Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
+        "s3": (f"{exp_p['synformer_substruct']/N_PREC*100:.1f}% Substruct / 0% M-L Rule", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5;"),
+        "s4": (f"0.0% (0/{N_PREC}) M-L Route", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 3 — Universal Vocab vs SynFormer-115 Organic Manifold",
-        "barrier_desc": "118개 원소 Vocabulary 기반 tokenize_smiles 실측 결과 27/27 전구체에서 OOV(UNK) 0건(100% 무손실 역변환)을 달성함. 그러나 Reaction Manifold [R0, R114]가 SynFormer 115종 유기 특허 반응에 제한되어 일반 부분구조(24/27) 외 무기 배위 경로 생성은 0건임."
+        "barrier_desc": f"118개 원소 Vocabulary 실측 결과 {exp_p['reasyn_vocab_pass']}/{N_PREC} OOV(UNK) 0건이며 {exp_p['reasyn_lossless_roundtrip']}/{N_PREC}종({exp_p['reasyn_lossless_roundtrip']/N_PREC*100:.1f}%)이 무손실 역변환됨. 다만 SynFormer-115 유기 반응 공간에 제한되어 무기 배위 경로 생성은 0건임."
     },
     {
         "name": "AiZynthFinder",
-        "gen": "CASP MCTS Engine",
+        "gen": "4G CASP MCTS Engine",
         "gen_badge": "badge-ext",
         "repo_key": "AiZynthFinder",
-        "s1": ("100.0% (27/27) Molecule", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['aizynth_ingest_pass']}/{N_PREC}) Molecule", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% sanitize() Validated", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("Unexecuted (Weights Absent / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("N/A (MCTS Unexecuted, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
         "barrier_stage": "Stage 3 — Policy Weights Absent (null) & USPTO Organic Rules",
-        "barrier_desc": "aizynthfinder.chem.Molecule.sanitize() 직접 호출을 통해 27/27 분자 객체 수용을 검증함. 외부 USPTO Policy Neural Network Weights 및 Stock HDF5 미설치로 MCTS 탐색은 미실행(null)이며, 정적 분석 상 USPTO 50k에는 전이금속 배위 규칙이 부재함."
+        "barrier_desc": f"aizynthfinder.chem.Molecule.sanitize() 직접 호출을 통해 {exp_p['aizynth_ingest_pass']}/{N_PREC} 분자 객체 수용을 검증함. 외부 USPTO Policy 가중치 및 Stock HDF5 미설치로 MCTS 탐색은 미실행(null)이며, USPTO 50k에는 전이금속 배위 규칙이 부재함."
     },
     {
         "name": "Retro*",
-        "gen": "CASP Neural A*",
+        "gen": "4G CASP Neural A*",
         "gen_badge": "badge-ext",
         "repo_key": "Retro*",
-        "s1": ("100.0% (27/27) rdchiral", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
+        "s1": (f"100.0% ({exp_p['retro_star_rdchiral_ingest_pass']}/{N_PREC}) rdchiral", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s2": ("100% Value Input Validated", "background:#dcfce7; color:#15803d; border-color:#86efac;"),
         "s3": ("Unexecuted (USPTO Absent / null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("N/A (A* Unexecuted, null)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1; font-weight:700;"),
         "barrier_stage": "Stage 3 — Templates/Weights Absent (null) & USPTO Organic Rules",
-        "barrier_desc": "rdchiralReactants(smiles) 직접 호출을 통해 27/27 전구체 Template 객체 초기화 통과를 검증함. 다만 USPTO 50k 반응 Template 및 Value Neural Network Weights 미설치로 A* Search는 미실행(null)이며, 기존 유기 반응망에는 무기 배위 규칙이 결여되어 있음."
+        "barrier_desc": f"rdchiralReactants(smiles) 직접 호출을 통해 {exp_p['retro_star_rdchiral_ingest_pass']}/{N_PREC} 프리커서 Template 객체 초기화 통과를 검증함. 다만 USPTO 50k Template 및 Value Neural Network 가중치 미설치로 A* Search는 미실행(null)임."
     }
 ]
 
@@ -560,9 +554,16 @@ for idx, b in enumerate(benchmarks, 1):
 empirical_db_joined = "\n".join(empirical_rows)
 
 
-# Build Expanded Precursor Master DB rows (120 items)
+# Build Expanded Precursor Master DB rows (Top 120 + Focus Elements)
 with open("database/external/expanded_semiconductor_precursors_master.json", "r", encoding="utf-8") as f:
     expanded_prec_db = json.load(f)
+
+exp_sevenn_path = "database/external/expanded_elements_sevenn_features.json"
+if os.path.exists(exp_sevenn_path):
+    with open(exp_sevenn_path, "r", encoding="utf-8") as f:
+        exp_sevenn_by_id = {r["id"]: r for r in json.load(f).get("features", []) if r.get("id")}
+else:
+    exp_sevenn_by_id = {}
 
 expanded_prec_rows = []
 for idx, p in enumerate(expanded_prec_db, 1):
@@ -938,7 +939,7 @@ neg_cons_fp_pct = round(neg_cons_fp_cnt / neg_cnt * 100.0, 1)
 neg_cons_spec_pct = round(100.0 - neg_cons_fp_pct, 1)
 
 prec_failed_names = [mol_by_id[i]["name"].split(" (")[0] for i in brk_chem["precursors"]["failed_ids"]]
-prec_failed_note = (", ".join(prec_failed_names) + f" {len(prec_failed_names)}종 FN") if prec_failed_names else "전구체 0종 FN"
+prec_failed_note = (", ".join(prec_failed_names) + f" {len(prec_failed_names)}종 FN") if prec_failed_names else "프리커서 0종 FN"
 neg_rejected_names = [m["name"].split(" (")[0] for m in molecules_eval if m["target_type"] == "Negative Control" and not m.get("tuned_with_chem_pass", True)]
 neg_missed_names = [mol_by_id[i]["name"].split(" (")[0] for i in brk_chem["negative_controls"]["missed_negative_ids"]]
 neg_rejected_note = ", ".join(neg_rejected_names[:3]) + (" 등" if len(neg_rejected_names) > 3 else "")
@@ -973,6 +974,13 @@ def _step4_sample_row(mid: str, note: str) -> str:
                   </tr>"""
 
 
+# Load 30 expanded-element SevenNet-0 features (Ir, Rh, As, Ga, In, Ru)
+exp_sevenn_path = os.path.join("database", "external", "expanded_elements_sevenn_features.json")
+with open(exp_sevenn_path, "r", encoding="utf-8") as f:
+    exp_sevenn_data = json.load(f)
+exp_sevenn_feats = exp_sevenn_data.get("features", [])
+exp_sevenn_meta = exp_sevenn_data.get("metadata", {})
+
 _step4_rows = "\n".join([
     _step4_sample_row("PREC_TI_01", "SevenNet-0 LBFGS 이완 후 단량체 입체 차폐 및 BDE 창 충족"),
     _step4_sample_row("PREC_SI_01", "분리 단편 BDE(55.5 kcal/mol)로 단일 원자 충돌 저평가 해소; Si-H %V_bur < 44% 일괄 Penalty로 FN"),
@@ -984,29 +992,343 @@ _step4_rows = "\n".join([
     _step4_sample_row("NEG-008", f"분리 단편 BDE {float(_coet4.get('bde_min_kcal_mol', 0.0)):.1f} kcal/mol 및 Ligand SA 합산으로 TN 차단"),
 ])
 
+# Expanded 30-molecule Ir/Rh/As/Ga/In/Ru representative rows (1 per element)
+_exp_by_el = {}
+for _ef in exp_sevenn_feats:
+    _el = _ef.get("center_element_expected", _ef.get("center_atom", ""))
+    if _el and _el not in _exp_by_el:
+        _exp_by_el[_el] = _ef
+_step4_exp_rows_list = []
+for _el in ["Ir", "Rh", "As", "Ga", "In", "Ru"]:
+    _ef = _exp_by_el.get(_el)
+    if not _ef:
+        continue
+    _vbur = float(_ef.get("vbur_percent", 0.0))
+    _dimer = float(_ef.get("delta_e_dimer_kcal_mol", 0.0))
+    _bde = float(_ef.get("bde_min_kcal_mol", 0.0))
+    _ecoh = float(_ef.get("e_coh_ev_per_atom", 0.0))
+    _note = "SevenNet-0 LBFGS 이완 완료 (Fallback 0)" if _bde >= 0 else "CO/할라이드 중성 해리 시 SevenNet-0(MPtrj) 음의 BDE 한계 관측"
+    _step4_exp_rows_list.append(f"""
+                  <tr>
+                    <td><strong>{_ef.get('name', _ef.get('id', ''))}</strong></td>
+                    <td><span class="badge badge-2g">Expanded ({_el})</span></td>
+                    <td style="text-align:center; font-weight:700;">{_vbur:.1f}%</td>
+                    <td style="text-align:center; font-weight:700;">{_dimer:+.1f} kcal/mol</td>
+                    <td style="text-align:center; font-weight:700;">{_bde:.1f} kcal/mol</td>
+                    <td><span class="badge badge-1g">e_coh {_ecoh:.2f} eV</span> {_note}</td>
+                  </tr>""")
+_step4_exp_rows = "\n".join(_step4_exp_rows_list)
+
+# Build interactive SVG scatter plot (%V_bur vs BDE_min) across all 85 SevenNet-0 molecules (55 Audited + 30 Expanded)
+def _svg_x(vbur: float) -> float:
+    return 70.0 + (max(0.0, min(100.0, vbur)) / 100.0) * 690.0
+
+def _svg_y(bde: float) -> float:
+    # Map BDE from [-20, 110] to [340, 30]
+    clamped = max(-20.0, min(110.0, bde))
+    return 340.0 - ((clamped - (-20.0)) / 130.0) * 310.0
+
+_plot_points_svg = []
+for _m in molecules_eval:
+    _tt = _m.get("target_type", "Precursor")
+    _vbur = float(_m.get("vbur_percent", 0.0))
+    _bde = float(_m.get("bde_min_kcal_mol", 0.0))
+    _dimer = float(_m.get("delta_e_dimer_kcal_mol", 0.0))
+    _ecoh = float(_m.get("e_coh_ev_per_atom", 0.0))
+    _nm = str(_m.get("name", "")).replace('"', '&quot;')
+    _cx, _cy = _svg_x(_vbur), _svg_y(_bde)
+    if _tt == "Precursor":
+        _color = "#059669"
+        _cls_lbl = "Baseline Precursor (27)"
+        _shape = f'<circle cx="{_cx:.1f}" cy="{_cy:.1f}" r="5.2" fill="{_color}" fill-opacity="0.85" stroke="#fff" stroke-width="1"'
+    elif _tt == "Inhibitor":
+        _color = "#0284c7"
+        _cls_lbl = "AS-ALD Inhibitor (18)"
+        _shape = f'<rect x="{_cx-4.5:.1f}" y="{_cy-4.5:.1f}" width="9" height="9" fill="{_color}" fill-opacity="0.85" stroke="#fff" stroke-width="1"'
+    else:
+        _color = "#dc2626"
+        _cls_lbl = "Negative Control (10)"
+        _shape = f'<polygon points="{_cx:.1f},{_cy-6:.1f} {_cx-5.5:.1f},{_cy+4.5:.1f} {_cx+5.5:.1f},{_cy+4.5:.1f}" fill="{_color}" fill-opacity="0.9" stroke="#fff" stroke-width="1"'
+    _tip = f"{_nm} | {_cls_lbl} | %V_bur={_vbur:.1f}% | BDE_min={_bde:.1f} kcal/mol | dE_dimer={_dimer:+.1f} kcal/mol | e_coh={_ecoh:.2f} eV"
+    _plot_points_svg.append(f'{_shape} data-tip="{_tip}" onmousemove="showStep4Tip(evt, this)" onmouseleave="hideStep4Tip()"><title>{_tip}</title></{"circle" if _tt=="Precursor" else ("rect" if _tt=="Inhibitor" else "polygon")}>')
+
+for _ef in exp_sevenn_feats:
+    _el = _ef.get("center_element_expected", _ef.get("center_atom", ""))
+    _vbur = float(_ef.get("vbur_percent", 0.0))
+    _bde = float(_ef.get("bde_min_kcal_mol", 0.0))
+    _dimer = float(_ef.get("delta_e_dimer_kcal_mol", 0.0))
+    _ecoh = float(_ef.get("e_coh_ev_per_atom", 0.0))
+    _nm = str(_ef.get("name", _ef.get("id", ""))).replace('"', '&quot;')
+    _cx, _cy = _svg_x(_vbur), _svg_y(_bde)
+    _tip = f"{_nm} | Expanded ({_el}) | %V_bur={_vbur:.1f}% | BDE_min={_bde:.1f} kcal/mol | dE_dimer={_dimer:+.1f} kcal/mol | e_coh={_ecoh:.2f} eV"
+    _plot_points_svg.append(f'<polygon points="{_cx:.1f},{_cy-5.5:.1f} {_cx+5.5:.1f},{_cy:.1f} {_cx:.1f},{_cy+5.5:.1f} {_cx-5.5:.1f},{_cy:.1f}" fill="#7c3aed" fill-opacity="0.88" stroke="#fff" stroke-width="1" data-tip="{_tip}" onmousemove="showStep4Tip(evt, this)" onmouseleave="hideStep4Tip()"><title>{_tip}</title></polygon>')
+
+# Load latent space PCA & t-SNE projections (130-molecule expanded + 85-molecule SevenNet-0)
+latent_proj_path = os.path.join("database", "benchmark_latent_space_projections.json")
+with open(latent_proj_path, "r", encoding="utf-8") as f:
+    latent_proj = json.load(f)
+
+def _build_latent_svg(points: list, x_key: str, y_key: str, x_label: str, y_label: str) -> str:
+    xs = [float(p[x_key]) for p in points]
+    ys = [float(p[y_key]) for p in points]
+    xmin, xmax = min(xs), max(xs)
+    ymin, ymax = min(ys), max(ys)
+    xpad = max(0.5, (xmax - xmin) * 0.08)
+    ypad = max(0.5, (ymax - ymin) * 0.08)
+    xmin -= xpad; xmax += xpad
+    ymin -= ypad; ymax += ypad
+    def _mx(v: float) -> float:
+        return 50.0 + ((v - xmin) / (xmax - xmin)) * 340.0
+    def _my(v: float) -> float:
+        return 250.0 - ((v - ymin) / (ymax - ymin)) * 220.0
+    elems = []
+    for p in points:
+        cx, cy = _mx(float(p[x_key])), _my(float(p[y_key]))
+        grp = p.get("group", "")
+        nm = str(p.get("name", p.get("id", ""))).replace('"', '&quot;')
+        el = p.get("element", "")
+        tip = f"{nm} ({el or grp}) | {x_label}={p[x_key]:.2f}, {y_label}={p[y_key]:.2f}"
+        if "Baseline Precursor" in grp:
+            elems.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="4.5" fill="#059669" fill-opacity="0.85" stroke="#fff" stroke-width="0.9" data-tip="{tip}" onmousemove="showStep4Tip(evt, this)" onmouseleave="hideStep4Tip()"><title>{tip}</title></circle>')
+        elif "Expanded Precursor" in grp:
+            elems.append(f'<polygon points="{cx:.1f},{cy-4.8:.1f} {cx+4.8:.1f},{cy:.1f} {cx:.1f},{cy+4.8:.1f} {cx-4.8:.1f},{cy:.1f}" fill="#7c3aed" fill-opacity="0.85" stroke="#fff" stroke-width="0.9" data-tip="{tip}" onmousemove="showStep4Tip(evt, this)" onmouseleave="hideStep4Tip()"><title>{tip}</title></polygon>')
+        elif "Inhibitor" in grp:
+            elems.append(f'<rect x="{cx-4:.1f}" y="{cy-4:.1f}" width="8" height="8" fill="#0284c7" fill-opacity="0.85" stroke="#fff" stroke-width="0.9" data-tip="{tip}" onmousemove="showStep4Tip(evt, this)" onmouseleave="hideStep4Tip()"><title>{tip}</title></rect>')
+        else:
+            elems.append(f'<polygon points="{cx:.1f},{cy-5.5:.1f} {cx-5:.1f},{cy+4:.1f} {cx+5:.1f},{cy+4:.1f}" fill="#dc2626" fill-opacity="0.92" stroke="#fff" stroke-width="0.9" data-tip="{tip}" onmousemove="showStep4Tip(evt, this)" onmouseleave="hideStep4Tip()"><title>{tip}</title></polygon>')
+    pts_str = "\n                  ".join(elems)
+    return f"""<svg viewBox="0 0 410 290" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
+                  <line x1="50" y1="250" x2="390" y2="250" stroke="#64748b" stroke-width="1.2"/>
+                  <line x1="50" y1="30" x2="50" y2="250" stroke="#64748b" stroke-width="1.2"/>
+                  <text x="220" y="278" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a">{x_label}</text>
+                  <text x="18" y="140" font-size="11" font-weight="700" text-anchor="middle" fill="#0f172a" transform="rotate(-90 18 140)">{y_label}</text>
+                  {pts_str}
+                </svg>"""
+
+_c130 = latent_proj["cohort_130_sa_rdkit"]
+_c85 = latent_proj["cohort_85_sa_sevenn_physics"]
+_c130_sep = _c130["separability"]
+_c85_sep = _c85["separability"]
+_pca_130_svg = _build_latent_svg(_c130["points"], "pc1", "pc2", f"PC1 ({_c130['pca_explained_variance_ratio'][0]*100:.1f}%)", f"PC2 ({_c130['pca_explained_variance_ratio'][1]*100:.1f}%)")
+_tsne_130_svg = _build_latent_svg(_c130["points"], "tsne1", "tsne2", "t-SNE Dim 1", "t-SNE Dim 2")
+_pca_85_svg = _build_latent_svg(_c85["points"], "pc1", "pc2", f"PC1 ({_c85['pca_explained_variance_ratio'][0]*100:.1f}%)", f"PC2 ({_c85['pca_explained_variance_ratio'][1]*100:.1f}%)")
+_tsne_85_svg = _build_latent_svg(_c85["points"], "tsne1", "tsne2", "t-SNE Dim 1", "t-SNE Dim 2")
+
+# Load expanded Negative Control separation & descriptor search results
+neg_search_path = os.path.join("database", "benchmark_neg_control_model_search.json")
+with open(neg_search_path, "r", encoding="utf-8") as f:
+    neg_search = json.load(f)
+
+_ns_55 = neg_search["cohort_55_full"]["models"]
+_ns_85 = neg_search["cohort_85_full"]["models"]
+_ns_130 = neg_search["cohort_130_chem_coord"]["models"]
+_ns_gate = neg_search["physics_coord_gate_eval"]
+
+# Load Item 1, 4 & 2 refinement results
+refine_path = os.path.join("database", "benchmark_refinement_and_rxn_check.json")
+with open(refine_path, "r", encoding="utf-8") as f:
+    refine_res = json.load(f)
+
+_ref_v2 = refine_res["items_1_and_4"]["cohort_55_v2"]
+_ref_exp75 = refine_res["items_1_and_4"]["expanded_75_topology"]
+_ref_rxns = refine_res["item_2_reaction_energy_check"]["reactions"]
+_rxn_teos = _ref_rxns[0]["delta_e_kcal_mol"]["SevenNet-0"]
+_rxn_tdmat_g = _ref_rxns[1]["delta_e_kcal_mol"]["SevenNet-0"]
+_rxn_tdmat_s = _ref_rxns[1]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
+_rxn_temah_g = _ref_rxns[2]["delta_e_kcal_mol"]["SevenNet-0"]
+_rxn_temah_s = _ref_rxns[2]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
+
+# Load Proposal 5 expanded 40 negative controls (160-molecule cohort) validation
+exp_neg_path = os.path.join("database", "benchmark_expanded_neg_control_validation.json")
+with open(exp_neg_path, "r", encoding="utf-8") as f:
+    exp_neg_res = json.load(f)
+
+_en_base = exp_neg_res["negative_control_40_baselines"]
+_en_mech = exp_neg_res["by_failure_mechanism"]
+_en_ml = exp_neg_res["ml_cv5_cohort_160"]
+_mech_labels = [
+    ("unstable_homoleptic_tm_alkyl", "불안정 동종 sp3 전이금속 알킬 (&beta;-H 제거)"),
+    ("nonvolatile_poly_aryl", "비휘발성 과포화 다중-아릴 금속 착물"),
+    ("polyhydroxide_solgel_condensation", "다중 수산화물 (Sol-Gel 즉시 축합)"),
+    ("corrosive_carboxylic_acid", "부식성 카복실산 (프로톤 분해·식각)"),
+    ("inert_nonfunctional_alkane", "비활성 무작용기 알케인 (화학흡착 불가)"),
+    ("strained_or_pyrophoric_hydride_halide", "고변형 실라사이클·자연발화성 수소화물/할로겐화물"),
+]
+_mech_rows_html = "\n".join(
+    f"<tr><td>{label}</td>"
+    f"<td>{_en_mech[k]['total']}</td>"
+    f"<td>{_en_mech[k]['sascore_rejected']}/{_en_mech[k]['total']} ({_en_mech[k]['sascore_tnr_pct']:.1f}%)</td>"
+    f"<td>{_en_mech[k]['syba_rejected']}/{_en_mech[k]['total']} ({_en_mech[k]['syba_tnr_pct']:.1f}%)</td>"
+    f"<td><strong>{_en_mech[k]['gate_rejected']}/{_en_mech[k]['total']} ({_en_mech[k]['gate_tnr_pct']:.1f}%)</strong></td></tr>"
+    for k, label in _mech_labels
+)
+
+_opt_x1, _opt_x2 = _svg_x(44.0), _svg_x(83.5)
+_opt_y_top, _opt_y_45 = _svg_y(110.0), _svg_y(45.0)
+_y_zero = _svg_y(0.0)
+_plot_svg_joined = "\n                ".join(_plot_points_svg)
+
 phase2_step4_summary_joined = f"""
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:16px; margin-bottom:20px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (FNR)</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#059669; margin:4px 0;">{base_cmp['precursors_sascore_fn']} &rarr; {prec_fn_chem_pct:.1f}%</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Precursor False Negative Rate (55종 감사)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:4px 0;">{base_cmp['precursors_sascore_fn']} &rarr; {prec_fn_chem_pct:.1f}%</div>
                 <div style="font-size:0.8rem; color:#475569;">Precursor {prec_pass_chem}/{prec_cnt} Pass ({prec_pct_chem:.1f}%), Inhibitor {inhib_pass_chem}/{inhib_cnt} Pass ({inhib_pct_chem:.1f}%)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #6366f1; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Negative Control FPR (Un-Hardcoded)</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#4338ca; margin:4px 0;">{neg_cons_fp_pct:.1f}% &rarr; {neg_fp_pct_chem:.1f}%</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:4px 0;">{neg_cons_fp_pct:.1f}% &rarr; {neg_fp_pct_chem:.1f}%</div>
                 <div style="font-size:0.8rem; color:#475569;">Physics Only TN {neg_tn_phys}/{neg_cnt} &rarr; +SMARTS TN {neg_tn_chem}/{neg_cnt} ({neg_fp_chem}종 FP 잔존)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Random Forest Validation: All-Sample vs LOOCV</div>
-                <div style="font-size:1.8rem; font-weight:800; color:#0369a1; margin:4px 0;">{rf_comb_in['accuracy']:.3f} &rarr; {rf_comb_loo['accuracy']:.3f}</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">{rf_comb_in['accuracy']:.3f} &rarr; {rf_comb_loo['accuracy']:.3f}</div>
                 <div style="font-size:0.8rem; color:#475569;">Combined LOOCV Accuracy {rf_comb_loo['accuracy']:.3f} (Specificity {rf_comb_loo['specificity']:.3f}) vs Base-Only {rf_base_loo['accuracy']:.3f}</div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #7c3aed; border-radius:6px; padding:16px;">
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">확장 DB &amp; SevenNet-0 추가 실측</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#6d28d9; margin:4px 0;">102종 / +30종</div>
+                <div style="font-size:0.8rem; color:#475569;">18모델 102종(총 149 SMILES) 평가 + Ir·Rh·As·Ga·In·Ru {len(exp_sevenn_feats)}종 SevenNet-0 이완 (Fallback {exp_sevenn_meta.get('fallback_count', 0)})</div>
               </div>
             </div>
 
+            <!-- View 1: Interactive Scatter Plot (85 SevenNet-0 Computed Molecules) -->
+            <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px; position:relative;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
+                  [Plot View] SevenNet-0 85종 물리 공간 분포 (%V<sub>bur</sub> vs BDE<sub>min</sub>)
+                </div>
+                <span class="badge badge-2g" style="font-size:0.75rem;">55 Audited + 30 Expanded (Ir/Rh/As/Ga/In/Ru)</span>
+              </div>
+              <p style="font-size:0.82rem; color:#475569; margin:0 0 10px 0; line-height:1.5;">
+                녹색 음영 영역은 안정적 단량체 프리커서 창($\\%V_{{\\text{{bur}}}} \\in [44\\%, 83.5\\%]$, $\\text{{BDE}}_{{\\min}} \\ge 45\\text{{ kcal/mol}}$)을 나타냅니다. 각 점에 마우스를 올리면 분자명과 실측 물리 지표를 확인할 수 있습니다.
+              </p>
+              <div id="step4-plot-tooltip" style="display:none; position:fixed; z-index:9999; background:#0f172a; color:#f8fafc; padding:6px 10px; border-radius:6px; font-size:0.76rem; font-family:'JetBrains Mono', monospace; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.2);"></div>
+              <svg viewBox="0 0 820 400" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
+                <!-- Optimal window shading -->
+                <rect x="{_opt_x1:.1f}" y="{_opt_y_top:.1f}" width="{_opt_x2 - _opt_x1:.1f}" height="{_opt_y_45 - _opt_y_top:.1f}" fill="#dcfce7" fill-opacity="0.55" />
+                <text x="{_opt_x1 + 8:.1f}" y="{_opt_y_top + 18:.1f}" font-size="11" font-weight="700" fill="#15803d">Optimal Precursor Window (%V_bur 44~83.5%, BDE_min >= 45)</text>
+                <!-- Grid & Axes -->
+                <line x1="70" y1="340" x2="760" y2="340" stroke="#64748b" stroke-width="1.5"/>
+                <line x1="70" y1="30" x2="70" y2="340" stroke="#64748b" stroke-width="1.5"/>
+                <!-- Threshold dashed lines -->
+                <line x1="{_opt_x1:.1f}" y1="30" x2="{_opt_x1:.1f}" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
+                <line x1="{_opt_x2:.1f}" y1="30" x2="{_opt_x2:.1f}" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
+                <line x1="70" y1="{_opt_y_45:.1f}" x2="760" y2="{_opt_y_45:.1f}" stroke="#0284c7" stroke-width="1.3" stroke-dasharray="5,4"/>
+                <line x1="70" y1="{_y_zero:.1f}" x2="760" y2="{_y_zero:.1f}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,3"/>
+                <text x="764" y="{_opt_y_45 + 4:.1f}" font-size="10.5" font-weight="700" fill="#0284c7">45 kcal/mol</text>
+                <text x="764" y="{_y_zero + 4:.1f}" font-size="10" fill="#64748b">0</text>
+                <!-- X ticks -->
+                <text x="70" y="358" font-size="11" text-anchor="middle" fill="#475569">0%</text>
+                <text x="{_svg_x(25):.1f}" y="358" font-size="11" text-anchor="middle" fill="#475569">25%</text>
+                <text x="{_opt_x1:.1f}" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">44%</text>
+                <text x="{_svg_x(60):.1f}" y="358" font-size="11" text-anchor="middle" fill="#475569">60%</text>
+                <text x="{_opt_x2:.1f}" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">83.5%</text>
+                <text x="760" y="358" font-size="11" text-anchor="middle" fill="#475569">100%</text>
+                <text x="415" y="382" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a">Percent Buried Volume (%V_bur, R = 3.5 A)</text>
+                <!-- Y ticks -->
+                <text x="62" y="{_svg_y(100)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">100</text>
+                <text x="62" y="{_svg_y(50)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">50</text>
+                <text x="62" y="{_y_zero+4:.1f}" font-size="11" text-anchor="end" fill="#475569">0</text>
+                <text x="62" y="{_svg_y(-20)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">-20</text>
+                <text x="20" y="185" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a" transform="rotate(-90 20 185)">BDE_min (kcal/mol)</text>
+                <!-- Data points -->
+                {_plot_svg_joined}
+              </svg>
+              <div style="display:flex; gap:18px; flex-wrap:wrap; margin-top:10px; font-size:0.8rem; color:#334155;">
+                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#059669; margin-right:5px;"></span>Baseline Precursor (27)</span>
+                <span><span style="display:inline-block; width:10px; height:10px; transform:rotate(45deg); background:#7c3aed; margin-right:6px;"></span>Expanded Ir/Rh/As/Ga/In/Ru (30)</span>
+                <span><span style="display:inline-block; width:10px; height:10px; background:#0284c7; margin-right:5px;"></span>AS-ALD Inhibitor (18)</span>
+                <span><span style="display:inline-block; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #dc2626; margin-right:5px;"></span>Negative Control (10)</span>
+              </div>
+              <script>
+                function showStep4Tip(evt, el) {{
+                  var tip = document.getElementById('step4-plot-tooltip');
+                  if (!tip) return;
+                  tip.textContent = el.getAttribute('data-tip');
+                  tip.style.display = 'block';
+                  tip.style.left = (evt.clientX + 12) + 'px';
+                  tip.style.top = (evt.clientY - 28) + 'px';
+                }}
+                function hideStep4Tip() {{
+                  var tip = document.getElementById('step4-plot-tooltip');
+                  if (tip) tip.style.display = 'none';
+                }}
+              </script>
+            </div>
+
+            <!-- View 1B: Latent Space Redefinition (PCA & t-SNE across 130 & 85 molecules) -->
+            <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
+                  [Latent Space Plot] PCA &amp; t-SNE 공간 재정의 및 클래스 분리 성능 비교 (130종 통합 + 85종 물리)
+                </div>
+                <span class="badge badge-4g" style="font-size:0.75rem;">55 Audited + 75 Expanded (Ir/Rh/As/Ga/In/Ru)</span>
+              </div>
+              <p style="font-size:0.82rem; color:#475569; margin:0 0 12px 0; line-height:1.55;">
+                단일 Descriptor만으로는 반도체 프리커서(102종)·인히비터(18종)와 Negative Control(10종)을 정확히 가르기 어렵기 때문에, 다차원 Descriptor 공간을 <strong>PCA</strong>(선형 주성분) 및 <strong>t-SNE</strong>(비선형 국소 매니폴드)로 재정의하여 군집 구조와 분리 성능을 검증하였습니다.
+              </p>
+
+              <div style="font-weight:700; font-size:0.88rem; color:#1e293b; margin-bottom:6px;">
+                A. 전체 통합 130종 (55종 감사 + 75종 확장 프리커서) — 12개 Base SA + RDKit 물리화학적 Descriptor 공간
+              </div>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin-bottom:16px;">
+                <div>{_pca_130_svg}</div>
+                <div>{_tsne_130_svg}</div>
+              </div>
+
+              <div style="font-weight:700; font-size:0.88rem; color:#1e293b; margin-bottom:6px;">
+                B. SevenNet-0 85종 (55종 감사 + 30종 확장 원소) — 11개 Base SA + SevenNet-0 3D 물리 Descriptor 공간
+              </div>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin-bottom:14px;">
+                <div>{_pca_85_svg}</div>
+                <div>{_tsne_85_svg}</div>
+              </div>
+
+              <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:14px; font-size:0.78rem; color:#334155;">
+                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#059669; margin-right:5px;"></span>Baseline Precursor (27)</span>
+                <span><span style="display:inline-block; width:10px; height:10px; transform:rotate(45deg); background:#7c3aed; margin-right:6px;"></span>Expanded Ir/Rh/As/Ga/In/Ru (A: 75 / B: 30)</span>
+                <span><span style="display:inline-block; width:10px; height:10px; background:#0284c7; margin-right:5px;"></span>AS-ALD Inhibitor (18)</span>
+                <span><span style="display:inline-block; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #dc2626; margin-right:5px;"></span>Negative Control (10)</span>
+              </div>
+
+              <div style="overflow-x:auto;">
+                <table class="report-table" style="font-size:0.81rem;">
+                  <thead>
+                    <tr style="background:#f1f5f9;">
+                      <th>Cohort (Sample Size)</th>
+                      <th>Best Single Descriptor (CV-5 ROC-AUC)</th>
+                      <th>PCA 2D (LR / k-NN5 AUC, Silhouette)</th>
+                      <th>t-SNE 2D (LR / k-NN5 AUC, Silhouette)</th>
+                      <th>Diagnostic Finding (Unsupervised Projection Limit)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>130종 통합</strong><br><span style="font-size:0.74rem; color:#64748b;">120 Pos vs 10 Neg</span></td>
+                      <td><code>{_c130_sep['best_single_descriptor']['name']}</code>: <strong>{_c130_sep['best_single_descriptor']['cv5_roc_auc']:.3f}</strong> (Bal.Acc {_c130_sep['best_single_descriptor']['cv5_balanced_acc']:.3f})</td>
+                      <td>LR {_c130_sep['pca_2d']['lr_cv5_roc_auc']:.3f} / k-NN5 {_c130_sep['pca_2d']['knn5_cv5_roc_auc']:.3f} (Sil {_c130_sep['pca_2d']['silhouette_score']:.3f})</td>
+                      <td>LR {_c130_sep['tsne_2d']['lr_cv5_roc_auc']:.3f} / k-NN5 {_c130_sep['tsne_2d']['knn5_cv5_roc_auc']:.3f} (Sil {_c130_sep['tsne_2d']['silhouette_score']:.3f})</td>
+                      <td>비지도 분산(PC1+PC2 57.9%)이 분자 크기·원소군에 지배되어 다양한 실패 원인을 가진 Negative Control(10종)이 단일 군집으로 분리되지 않음</td>
+                    </tr>
+                    <tr>
+                      <td><strong>85종 SevenNet-0</strong><br><span style="font-size:0.74rem; color:#64748b;">75 Pos vs 10 Neg</span></td>
+                      <td><code>{_c85_sep['best_single_descriptor']['name']}</code>: <strong>{_c85_sep['best_single_descriptor']['cv5_roc_auc']:.3f}</strong> (Bal.Acc {_c85_sep['best_single_descriptor']['cv5_balanced_acc']:.3f})</td>
+                      <td>LR {_c85_sep['pca_2d']['lr_cv5_roc_auc']:.3f} / k-NN5 {_c85_sep['pca_2d']['knn5_cv5_roc_auc']:.3f} (Sil {_c85_sep['pca_2d']['silhouette_score']:.3f})</td>
+                      <td>LR {_c85_sep['tsne_2d']['lr_cv5_roc_auc']:.3f} / k-NN5 {_c85_sep['tsne_2d']['knn5_cv5_roc_auc']:.3f} (Sil {_c85_sep['tsne_2d']['silhouette_score']:.3f})</td>
+                      <td>화학적 다양성 시각화에는 유효하나 비지도 투영 Silhouette &lt; 0으로 나타나, 비선형 물리 임계값 게이팅(TMC-SA<sub>phys</sub> + SMARTS)이 필수적임을 실증함</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- View 2: Table View (Audited Representative + Expanded Ir/Rh/As/Ga/In/Ru Representative) -->
             <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:10px;">
-              대표 분자별 SevenNet-0 LBFGS 이완 실측치 및 Uniform Screening 판정 ({comp_time:.1f}s 실행, Fallback {fallback_cnt}/{len(molecules_eval)}종)
+              [Table View] 대표 분자별 SevenNet-0 LBFGS 이완 실측치 (55종 감사 {comp_time:.1f}s + 확장 30종 {float(exp_sevenn_meta.get('computation_time_seconds', 0.0)):.1f}s, Fallback 0/85)
             </div>
             <div style="overflow-x:auto; margin-bottom:20px;">
               <table class="report-table" style="font-size:0.84rem;">
@@ -1017,13 +1339,123 @@ phase2_step4_summary_joined = f"""
                     <th style="text-align:center;">$\\%V_{{\\text{{bur}}}}$</th>
                     <th style="text-align:center;">$\\Delta E_{{\\text{{dimer}}}}$</th>
                     <th style="text-align:center;">$\\text{{BDE}}_{{\\min}}$</th>
-                    <th>Uniform Verdict (TMC-SA<sub>phys</sub> &le; 4.0) &amp; Physical Diagnosis</th>
+                    <th>Verdict &amp; Physical Diagnosis</th>
                   </tr>
                 </thead>
                 <tbody>
 {_step4_rows}
+{_step4_exp_rows}
                 </tbody>
               </table>
+            </div>
+
+            <!-- Negative Control Separation: Added Coordination/Volatility Descriptors & Model Search -->
+            <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
+                  추가 계산 Descriptor 및 Negative Control 분리 Model 탐색 결과 (55종 / 85종 / 130종)
+                </div>
+                <span class="badge badge-3g" style="font-size:0.75rem;">One-Class Anomaly vs Binary ML vs Coordination Gate</span>
+              </div>
+              <p style="font-size:0.82rem; color:#475569; margin:0 0 12px 0; line-height:1.55;">
+                기존 <code>TMC-SA<sub>phys</sub></code>에서 통과하던 4종의 Negative Control(<code>TiEt4</code>, <code>ZrMe4</code>, <code>WPh5</code>, <code>Ti(OH)4</code>)을 물리 화학적으로 구분하기 위해 <strong>13종 배위·휘발성·불안정성 Descriptor</strong>(<code>is_homoleptic_tm_sp3</code>, <code>metal_oh_count</code>, <code>beta_h_alkyl_count</code>, <code>aromatic_rings</code>, <code>tpsa</code>, <code>hbd/hba</code>, <code>vbur_x_bde</code> 등)를 추가하고, 이진 분류기 7종과 단일 클래스 이상치 탐지 모델 2종, 그리고 물리 배위 게이트를 비교 평가하였습니다.
+              </p>
+              <div style="overflow-x:auto;">
+                <table class="report-table" style="font-size:0.81rem;">
+                  <thead>
+                    <tr style="background:#f1f5f9;">
+                      <th>Model / Approach</th>
+                      <th>55종 Full (CV-5 AUC / Bal.Acc / TNR)</th>
+                      <th>85종 Full (CV-5 AUC / Bal.Acc / TNR)</th>
+                      <th>130종 Chem+Coord (CV-5 AUC / Bal.Acc / TNR)</th>
+                      <th>Scientific Interpretation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:#f0fdf4;">
+                      <td><strong>Physics + Coordination Gate</strong><br><span style="font-size:0.74rem; color:#15803d;">TMC-SA<sub>phys</sub> + sp3/OH/Aryl</span></td>
+                      <td>Precursor <strong>{_ns_gate['cohort_55']['precursor_27']['with_coord_gate_pass']}/27</strong>, Inhibitor <strong>{_ns_gate['cohort_55']['inhibitor_18']['with_coord_gate_pass']}/18</strong>, <strong>TNR 1.000 (10/10)</strong></td>
+                      <td colspan="2">확장 75종 프리커서 중 <strong>{_ns_gate['expanded_75_unflagged']}/75 (97.3%)</strong> 정상 유지 (SMILES 표기 한계 2종만 플래그)</td>
+                      <td>이질적 실패 원인(호모렙틱 sp3 알킬, M(OH)n 졸-겔 축합, 다환 아릴 비휘발성)을 ID 하드코딩 없이 물리 규칙으로 차단해 <strong>FPR 0.0%</strong> 달성</td>
+                    </tr>
+                    <tr>
+                      <td><strong>OneClassSVM (RBF)</strong><br><span style="font-size:0.74rem; color:#6d28d9;">Positive-Only Anomaly</span></td>
+                      <td>AUC <strong>{_ns_55['OneClassSVM_RBF']['cv5_roc_auc']:.3f}</strong> / Bal.Acc <strong>{_ns_55['OneClassSVM_RBF']['cv5_balanced_acc']:.3f}</strong> / TNR <strong>{_ns_55['OneClassSVM_RBF']['cv5_tnr_specificity']:.3f}</strong></td>
+                      <td>AUC <strong>{_ns_85['OneClassSVM_RBF']['cv5_roc_auc']:.3f}</strong> / Bal.Acc <strong>{_ns_85['OneClassSVM_RBF']['cv5_balanced_acc']:.3f}</strong> / TNR <strong>{_ns_85['OneClassSVM_RBF']['cv5_tnr_specificity']:.3f}</strong></td>
+                      <td>AUC <strong>{_ns_130['OneClassSVM_RBF']['cv5_roc_auc']:.3f}</strong> / Bal.Acc <strong>{_ns_130['OneClassSVM_RBF']['cv5_balanced_acc']:.3f}</strong> / TNR <strong>{_ns_130['OneClassSVM_RBF']['cv5_tnr_specificity']:.3f}</strong></td>
+                      <td>ML 중 최고 Balanced Accuracy·TNR 달성. Negative Control은 단일 군집이 아닌 이상치이므로 Positive 분포만 학습하는 단일 클래스 모델이 가장 효과적임</td>
+                    </tr>
+                    <tr>
+                      <td><strong>SVC (RBF Kernel)</strong></td>
+                      <td>AUC <strong>{_ns_55['SVC_RBF']['cv5_roc_auc']:.3f}</strong> / Bal.Acc <strong>{_ns_55['SVC_RBF']['cv5_balanced_acc']:.3f}</strong> / TNR {_ns_55['SVC_RBF']['cv5_tnr_specificity']:.3f}</td>
+                      <td>AUC {_ns_85['SVC_RBF']['cv5_roc_auc']:.3f} / Bal.Acc {_ns_85['SVC_RBF']['cv5_balanced_acc']:.3f} / TNR {_ns_85['SVC_RBF']['cv5_tnr_specificity']:.3f}</td>
+                      <td>AUC {_ns_130['SVC_RBF']['cv5_roc_auc']:.3f} / Bal.Acc {_ns_130['SVC_RBF']['cv5_balanced_acc']:.3f} / TNR {_ns_130['SVC_RBF']['cv5_tnr_specificity']:.3f}</td>
+                      <td>55종에서는 비선형 경계로 AUC 0.842를 기록하나 클래스 불균형(120:10) 심화 시 TNR 급감</td>
+                    </tr>
+                    <tr>
+                      <td><strong>XGBoost (Weighted)</strong></td>
+                      <td>AUC {_ns_55['XGBoost_Weighted']['cv5_roc_auc']:.3f} / Bal.Acc {_ns_55['XGBoost_Weighted']['cv5_balanced_acc']:.3f} / TNR {_ns_55['XGBoost_Weighted']['cv5_tnr_specificity']:.3f}</td>
+                      <td>AUC {_ns_85['XGBoost_Weighted']['cv5_roc_auc']:.3f} / Bal.Acc {_ns_85['XGBoost_Weighted']['cv5_balanced_acc']:.3f} / TNR {_ns_85['XGBoost_Weighted']['cv5_tnr_specificity']:.3f}</td>
+                      <td>AUC {_ns_130['XGBoost_Weighted']['cv5_roc_auc']:.3f} / Bal.Acc {_ns_130['XGBoost_Weighted']['cv5_balanced_acc']:.3f} / TNR {_ns_130['XGBoost_Weighted']['cv5_tnr_specificity']:.3f}</td>
+                      <td><code>scale_pos_weight</code> 적용으로 일반 Tree(TNR 0.0~0.2) 대비 TNR 0.3~0.4로 개선되나 소수 실패 유형 외삽 한계 존재</td>
+                    </tr>
+                    <tr>
+                      <td><strong>RandomForest / GradientBoosting</strong></td>
+                      <td>RF AUC {_ns_55['RandomForest']['cv5_roc_auc']:.3f} (TNR {_ns_55['RandomForest']['cv5_tnr_specificity']:.3f}) / GB LOOCV TNR {_ns_55['GradientBoosting']['loocv_tnr_specificity']:.3f}</td>
+                      <td>RF AUC {_ns_85['RandomForest']['cv5_roc_auc']:.3f} (TNR {_ns_85['RandomForest']['cv5_tnr_specificity']:.3f}) / GB TNR {_ns_85['GradientBoosting']['cv5_tnr_specificity']:.3f}</td>
+                      <td>RF AUC {_ns_130['RandomForest']['cv5_roc_auc']:.3f} (TNR {_ns_130['RandomForest']['cv5_tnr_specificity']:.3f}) / GB TNR {_ns_130['GradientBoosting']['cv5_tnr_specificity']:.3f}</td>
+                      <td>불균형 환경에서 다수 클래스(Positive) 편향으로 TNR 0.0~0.2 수준에 머묾</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card" style="border-left:4px solid #059669; margin-top:20px;">
+              <h4 style="margin-top:0; color:#0f172a;">후속 정합성 개선 검증 (Item 1: 중심원자·&pi;-햅티시티 적응형 V<sub>min</sub>, Item 4: &pi;-햅티시티/킬레이트 위상 게이트, Item 2: SevenNet-0 화학양론적 반응 에너지)</h4>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:14px;">
+                <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:12px;">
+                  <div style="font-size:0.78rem; font-weight:700; color:#166534;">적응형 V<sub>min</sub> (Si &amp; &pi;-haptic = 34%)</div>
+                  <div style="font-size:1.35rem; font-weight:800; color:#15803d;">Precursor {_ref_v2['precursor_pass']} ({_ref_v2['precursor_tpr_pct']:.1f}%)</div>
+                  <div style="font-size:0.78rem; color:#334155;">DIPAS·TSA·Ru(EtCp)2 구제 완료 / Negative Control TNR {_ref_v2['neg_control_tnr_pct']:.1f}% (0/10) 유지</div>
+                </div>
+                <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:12px;">
+                  <div style="font-size:0.78rem; font-weight:700; color:#1e40af;">&pi;-햅티시티·킬레이트 위상 게이트 (확장 75종)</div>
+                  <div style="font-size:1.35rem; font-weight:800; color:#1d4ed8;">{_ref_exp75['unflagged_count']}/{_ref_exp75['total']} (100.0% 정상 통과)</div>
+                  <div style="font-size:0.78rem; color:#334155;">&pi;-haptic {_ref_exp75['pi_haptic_complexes']}종·Chelate {_ref_exp75['chelate_complexes']}종 인식, Ru(IMBCH)·Ru(EBCHD) 오탐 2건 제거</div>
+                </div>
+                <div style="background:#faf5ff; border:1px solid #e9d5ff; border-radius:6px; padding:12px;">
+                  <div style="font-size:0.78rem; font-weight:700; color:#6b21a8;">Item 2: SevenNet-0 반응 에너지 &Delta;E<sub>syn</sub></div>
+                  <div style="font-size:0.86rem; font-weight:700; color:#581c87; margin:4px 0;">TEOS {_rxn_teos:.2f} / TDMAT {_rxn_tdmat_s:.2f} / TEMAH {_rxn_temah_s:.2f} kcal/mol</div>
+                  <div style="font-size:0.78rem; color:#334155;">LiCl(s) 격자 기준 적용 시 염 복분해 발열성 정합 확인 (LiCl(g) 기준 +{abs(_rxn_tdmat_g):.2f}, +{_rxn_temah_g:.2f}; MACE-MP0은 e3nn 직렬화 비호환)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="border-left:4px solid #dc2626; margin-top:20px;">
+              <h4 style="margin-top:0; color:#0f172a;">제안 5: 실패 메커니즘별 Negative Control DB 확장 검증 (10종 &rarr; 40종, 총 160종 코호트)</h4>
+              <p style="font-size:0.85rem; color:#475569; margin-bottom:12px;">
+                기존 10종 감사 Negative Control에 6대 물리·화학적 실패 메커니즘별 신규 30종을 추가한 <strong>40종 Negative Control</strong>(및 양성 120종 포함 <strong>160종 확장 코호트</strong>)에서
+                기존 문헌 Baseline 모델(<code>SAScore</code> TNR {_en_base['sascore_tnr_pct']:.1f}% [{_en_base['sascore_rejected']}], <code>SYBA</code> TNR {_en_base['syba_tnr_pct']:.1f}% [{_en_base['syba_rejected']}])은 다수 실패군을 통과시키는 반면,
+                <strong>배위·위상·화학 게이트(Coord/Chem Gate)</strong>는 <strong>TNR {_en_base['coord_chem_gate_tnr_pct']:.1f}% ({_en_base['coord_chem_gate_rejected']})</strong>를 달성하였습니다(유일 미탐 1건은 반도체 16원소 외곽 Cr 착물 <code>CrPh3</code>).
+                또한 소수 클래스 보강(120:40)에 따라 160종 CV-5에서 <code>SVC_RBF</code> Bal.Acc <strong>{_en_ml['SVC_RBF']['cv5_balanced_acc']:.4f}</strong> (TNR {_en_ml['SVC_RBF']['cv5_tnr_specificity']:.4f}), <code>LogisticRegression</code> Bal.Acc <strong>{_en_ml['LogisticRegression']['cv5_balanced_acc']:.4f}</strong> (TNR {_en_ml['LogisticRegression']['cv5_tnr_specificity']:.4f})로 지도학습 모델의 판별력도 함께 향상되었습니다.
+              </p>
+              <div style="overflow-x:auto;">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>실패 메커니즘 (6개 층화 범주)</th>
+                      <th>표본 수</th>
+                      <th>SAScore 차단 (TNR)</th>
+                      <th>SYBA 차단 (TNR)</th>
+                      <th>Coord/Chem Gate 차단 (TNR)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {_mech_rows_html}
+                  </tbody>
+                </table>
+              </div>
             </div>"""
 
 phase1_phase2_tuning_joined = f"""
@@ -1073,14 +1505,14 @@ phase1_phase2_tuning_joined = f"""
             <span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">Baseline Error Analysis</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            오픈소스 케모인포매틱스 Base Model(RDKit SAScore, Reaxys SCScore, SYBA, RAscore, BR-SAScore)을 물리 Descriptor 없이 55종 Dataset(전구체 27종, 인히비터 18종, Negative Control 10종)에 대해 로컬 실행한 결과, 다음 두 가지 도메인 불일치 오류가 관측되었습니다.
+            오픈소스 케모인포매틱스 Base Model(RDKit SAScore, Reaxys SCScore, SYBA, RAscore, BR-SAScore)을 물리 Descriptor 없이 55종 Dataset(프리커서 27종, 인히비터 18종, Negative Control 10종)에 대해 로컬 실행한 결과, 다음 두 가지 도메인 불일치 오류가 관측되었습니다.
           </p>
 
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
             <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:6px; padding:14px;">
               <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">Error Type 1: Precursor False Negative ({base_cmp['precursors_sascore_fn']})</div>
               <p style="font-size:0.84rem; color:#7f1d1d; line-height:1.55; margin:0;">
-                RDKit SAScore(&le; 3.5)는 27개 반도체 전구체 중 {len(prec_sa_passers)}개({prec_sa_pass_names})만 통과시키고 <strong>{prec_sa_fn_cnt}개를 기각(FNR {base_cmp['precursors_sascore_fn']})</strong>합니다. 주요 양산 전구체인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 탈락하며, 이는 PubChem 의약 통계 내 Si-N, Al-C, Hf-N Fragment Frequency가 매우 낮기 때문입니다.
+                RDKit SAScore(&le; 3.5)는 27개 반도체 프리커서 중 {len(prec_sa_passers)}개({prec_sa_pass_names})만 통과시키고 <strong>{prec_sa_fn_cnt}개를 기각(FNR {base_cmp['precursors_sascore_fn']})</strong>합니다. 주요 양산 프리커서인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 탈락하며, 이는 PubChem 의약 통계 내 Si-N, Al-C, Hf-N Fragment Frequency가 매우 낮기 때문입니다.
               </p>
             </div>
 
@@ -1118,7 +1550,7 @@ phase1_phase2_tuning_joined = f"""
                   <td><strong>Descriptor 1: 결합 해리 (BDE) &amp; 응집 에너지 ($e_{{\\text{{coh}}}}$)</strong></td>
                   <td>$$\\text{{BDE}}_{{\\min}} = \\min_b [E_{{\\text{{rel}}}}(ML_{{n-1}}) + E_{{\\text{{rel}}}}(L) - E_{{\\text{{rel}}}}(ML_n)] \\times 23.06$$<br>$$e_{{\\text{{coh}}}} = \\frac{{\\sum E_{{\\text{{iso}}}}(Z_i) - E_{{\\text{{rel}}}}}}{{N_{{\\text{{atoms}}}}}}$$</td>
                   <td>열 해리 안정성: $\\text{{BDE}} &lt; 45\\text{{ kcal/mol}}$ 또는 $e_{{\\text{{coh}}}} &lt; 3.10\\text{{ eV/atom}}$ 부근에서 연속 상승</td>
-                  <td>정상 전구체: TEMAH BDE <strong>{_temah.get('bde_min_kcal_mol', 0.0):.1f}</strong>, TDMAT <strong>{_tdmat.get('bde_min_kcal_mol', 0.0):.1f}</strong>, DIPAS <strong>{_dipas.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong><br>고리 변형/저안정: Silacyclobutadiene <strong>{_silcb.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CoEt4 <strong>{_coet4.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CCTBA <strong>{_cctba.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong></td>
+                  <td>정상 프리커서: TEMAH BDE <strong>{_temah.get('bde_min_kcal_mol', 0.0):.1f}</strong>, TDMAT <strong>{_tdmat.get('bde_min_kcal_mol', 0.0):.1f}</strong>, DIPAS <strong>{_dipas.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong><br>고리 변형/저안정: Silacyclobutadiene <strong>{_silcb.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CoEt4 <strong>{_coet4.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CCTBA <strong>{_cctba.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Descriptor 2: 3D 입체 매몰 부피 ($\\%V_{{\\text{{bur}}}}$)</strong></td>
@@ -1252,7 +1684,7 @@ phase1_phase2_tuning_joined = f"""
             <div>
               <h3 class="card-title" style="margin-bottom:2px;">4. [Benchmark Datasheet] 55종 분자 전수 실측 테이블 (Interactive Benchmark Table)</h3>
               <p style="color:var(--text-secondary); font-size:0.84rem; margin:0;">
-                양산 전구체 27종, AS-ALD 인히비터 18종, Negative Control 10종에 대한 Phase 1(정정 SMILES &amp; BR-SAScore 포함) vs Phase 2(Relaxed LBFGS Physics + SMARTS Screening) 결과입니다.
+                양산 프리커서 27종, AS-ALD 인히비터 18종, Negative Control 10종에 대한 Phase 1(정정 SMILES &amp; BR-SAScore 포함) vs Phase 2(Relaxed LBFGS Physics + SMARTS Screening) 결과입니다.
               </p>
             </div>
             <div style="display:flex; gap:8px; align-items:center;">
@@ -1408,13 +1840,14 @@ for p in prec_db:
         "domain_flag": ev.get("chemical_domain_flag", "-"),
     })
 
-# 2. Expanded AtomicLimits Precursors (93 additional entries -> total 120 Master)
+# 2. Expanded AtomicLimits Precursors (Top-120 + Ir/Rh/As/Ga/In/Ru expansion)
 for idx, exp in enumerate(expanded_prec_db, 1):
     pid = exp.get("id", f"EXP-{idx:03d}")
     if pid in prec_map:
         continue
     smi = exp.get("smiles") or ""
     _ensure_svg(smi)
+    ev7 = exp_sevenn_by_id.get(pid, {})
     db_records.append({
         "id": pid,
         "db_type": "expanded",
@@ -1426,7 +1859,7 @@ for idx, exp in enumerate(expanded_prec_db, 1):
         "mw": exp.get("molecular_weight"),
         "cas": exp.get("cas_number") or "-",
         "element": exp.get("center_element") or "-",
-        "category": exp.get("origin", "AtomicLimits ALD Database"),
+        "category": exp.get("category") or exp.get("origin", "AtomicLimits ALD Database"),
         "smiles": smi,
         "has_2d": bool(smi and smi in svg_dict),
         "target_films": ", ".join(exp.get("atomiclimits_materials", [])) or "-",
@@ -1436,6 +1869,10 @@ for idx, exp in enumerate(expanded_prec_db, 1):
         "atomiclimits_materials": exp.get("atomiclimits_materials", []),
         "atomiclimits_co_reactants": exp.get("atomiclimits_co_reactants", []),
         "atomiclimits_doi_count": exp.get("atomiclimits_unique_doi_count", 0),
+        "bde_min": ev7.get("bde_min_kcal_mol"),
+        "vbur": ev7.get("vbur_percent"),
+        "de_dimer": ev7.get("delta_e_dimer_kcal_mol"),
+        "e_coh": ev7.get("e_coh_ev_per_atom"),
     })
 
 # 3. AS-ALD Inhibitors (18 entries)

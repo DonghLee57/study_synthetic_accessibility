@@ -57,18 +57,28 @@ ISOLATED_ATOM_ENERGIES = {
     'Mo': -4.5894,
     'Sn': -0.9625,
     'Br': -0.6409,
-    'I': -0.6888
+    'I': -0.6888,
+    # Expanded III-V / PGM ALD elements computed in 50 A non-PBC box via SevenNet-0 (eV)
+    'Ga': -0.5708,
+    'As': -1.3476,
+    'Rh': -1.9016,
+    'In': -0.7678,
+    'Ir': -1.9783,
 }
 
+# van der Waals radii (units: A): Bondi (1964, DOI 10.1021/j100785a001),
+# Mantina et al. (2009, DOI 10.1021/jp8111556) for Ga (1.87), As (1.85), In (1.93),
+# and RDKit PeriodicTable Rvdw scale for Rh (2.00) and Ir (2.00).
 BONDI_RADII = {
     'H': 1.20, 'C': 1.70, 'N': 1.55, 'O': 1.52, 'F': 1.47,
     'Si': 2.10, 'P': 1.80, 'S': 1.80, 'Cl': 1.75, 'Ti': 2.00,
-    'Al': 2.00, 'Zr': 2.15, 'Hf': 2.15, 'Ru': 2.05, 'Co': 2.00,
-    'W': 2.10, 'Mo': 2.10, 'Ta': 2.15, 'Sn': 2.17, 'Cu': 2.00,
-    'Br': 1.85, 'I': 1.98
+    'Al': 2.00, 'Ga': 1.87, 'As': 1.85, 'Zr': 2.15, 'Hf': 2.15,
+    'Ru': 2.05, 'Rh': 2.00, 'In': 1.93, 'Co': 2.00, 'W': 2.10,
+    'Mo': 2.10, 'Ta': 2.15, 'Ir': 2.00, 'Sn': 2.17, 'Cu': 2.00,
+    'Br': 1.85, 'I': 1.98,
 }
 
-METAL_SET = {'Ti', 'Zr', 'Hf', 'Al', 'Ru', 'Co', 'W', 'Mo', 'Ta', 'Sn', 'Cu', 'Si'}
+METAL_SET = {'Ti', 'Zr', 'Hf', 'Al', 'Ga', 'In', 'As', 'Ru', 'Rh', 'Ir', 'Co', 'W', 'Mo', 'Ta', 'Sn', 'Cu', 'Si'}
 
 def find_central_atom_idx(mol):
     """Identify the central metal or metalloid atom in precursor."""

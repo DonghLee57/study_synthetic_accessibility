@@ -1,0 +1,771 @@
+{
+  "metadata": {
+    "description": "RDKit-validated SMILES, molecular formula, molecular weight, and verified CAS identifiers for expanded ALD precursor elements (Ir, Rh, As, Ga, In, Ru).",
+    "focus_elements": [
+      "Ir",
+      "Rh",
+      "As",
+      "Ga",
+      "In",
+      "Ru"
+    ],
+    "total_curated_entries": 75,
+    "validation_checks": [
+      "Chem.MolFromSmiles",
+      "CalcMolFormula exact match",
+      "AllChem.ETKDGv3 3D conformer generation"
+    ]
+  },
+  "identifiers": {
+    "Ir(CpEt)(CHD)": {
+      "center_element": "Ir",
+      "chemical_name": "(Ethylcyclopentadienyl)(1,3-cyclohexadiene)iridium(I)",
+      "formula": "C13H17Ir",
+      "molecular_weight": 365.5,
+      "smiles": "CCC1=CC=C([Ir]<-C2=CC=CCC2)C1",
+      "cas_number": "721427-58-3",
+      "category": "PGM / Ir Organometallic",
+      "identifier_source": "Literature CAS 721427-58-3 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ir(acac)3": {
+      "center_element": "Ir",
+      "chemical_name": "Tris(acetylacetonato)iridium(III)",
+      "formula": "C15H21IrO6",
+      "molecular_weight": 489.54,
+      "smiles": "CC(=O)/C=C(\\C)/O[Ir](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+      "cas_number": "15635-87-7",
+      "category": "PGM / Ir Beta-Diketonate",
+      "identifier_source": "Literature CAS 15635-87-7 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ir(CO)3(tBu3Cyp)": {
+      "center_element": "Ir",
+      "chemical_name": "Tricarbonyl(1,2,3-tri-tert-butylcyclopropenyl)iridium(I)",
+      "formula": "C18H27IrO3",
+      "molecular_weight": 483.63,
+      "smiles": "[C-]#[O+]->[Ir](<-[C-]#[O+])(<-[C-]#[O+])C1=C(C(C)(C)C)C1(C(C)(C)C)C(C)(C)C",
+      "cas_number": null,
+      "category": "PGM / Ir Carbonyl",
+      "identifier_source": "DOI 10.1002/smll.202402543 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ir(CpEt)(cod)": {
+      "center_element": "Ir",
+      "chemical_name": "(Ethylcyclopentadienyl)(1,5-cyclooctadiene)iridium(I)",
+      "formula": "C15H21Ir",
+      "molecular_weight": 393.55,
+      "smiles": "CCC1=CC=C([Ir]<-C2=CCCC=CCC2)C1",
+      "cas_number": null,
+      "category": "PGM / Ir Organometallic",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.apsusc.2011.06.093 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ir(CpMe)(CHD)": {
+      "center_element": "Ir",
+      "chemical_name": "(Methylcyclopentadienyl)(1,3-cyclohexadiene)iridium(I)",
+      "formula": "C12H15Ir",
+      "molecular_weight": 351.47,
+      "smiles": "CC1=CC=C([Ir]<-C2=CC=CCC2)C1",
+      "cas_number": null,
+      "category": "PGM / Ir Organometallic",
+      "identifier_source": "AtomicLimits DOI 10.1039/C1JM12245B + RDKit formula & 3D ETKDGv3"
+    },
+    "Ir(CpMe)(COD)": {
+      "center_element": "Ir",
+      "chemical_name": "(Methylcyclopentadienyl)(1,5-cyclooctadiene)iridium(I)",
+      "formula": "C14H19Ir",
+      "molecular_weight": 379.52,
+      "smiles": "CC1=CC=C([Ir]<-C2=CCCC=CCC2)C1",
+      "cas_number": "32948-43-1",
+      "category": "PGM / Ir Organometallic",
+      "identifier_source": "Literature CAS 32948-43-1 + RDKit formula & 3D ETKDGv3"
+    },
+    "Rh(acac)3": {
+      "center_element": "Rh",
+      "chemical_name": "Tris(acetylacetonato)rhodium(III)",
+      "formula": "C15H21O6Rh",
+      "molecular_weight": 400.23,
+      "smiles": "CC(=O)/C=C(\\C)/O[Rh](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+      "cas_number": "14284-92-5",
+      "category": "PGM / Rh Beta-Diketonate",
+      "identifier_source": "Literature CAS 14284-92-5 + RDKit formula & 3D ETKDGv3"
+    },
+    "AsH3": {
+      "center_element": "As",
+      "chemical_name": "Arsine",
+      "formula": "H3As",
+      "molecular_weight": 77.95,
+      "smiles": "[AsH3]",
+      "cas_number": "7784-42-1",
+      "category": "Group V Hydride",
+      "identifier_source": "Literature CAS 7784-42-1 + RDKit formula & 3D ETKDGv3"
+    },
+    "As(NMe2)3": {
+      "center_element": "As",
+      "chemical_name": "Tris(dimethylamino)arsine",
+      "formula": "C6H18AsN3",
+      "molecular_weight": 207.15,
+      "smiles": "CN(C)[As](N(C)C)N(C)C",
+      "cas_number": "6596-96-9",
+      "category": "Group V Amide",
+      "identifier_source": "Literature CAS 6596-96-9 + RDKit formula & 3D ETKDGv3"
+    },
+    "tBuAsH2": {
+      "center_element": "As",
+      "chemical_name": "tert-Butylarsine",
+      "formula": "C4H11As",
+      "molecular_weight": 134.05,
+      "smiles": "CC(C)(C)[AsH2]",
+      "cas_number": "4262-43-5",
+      "category": "Group V Organoarsenic",
+      "identifier_source": "Literature CAS 4262-43-5 + RDKit formula & 3D ETKDGv3"
+    },
+    "(Et3Si)3As": {
+      "center_element": "As",
+      "chemical_name": "Tris(triethylsilyl)arsine",
+      "formula": "C18H45AsSi3",
+      "molecular_weight": 420.74,
+      "smiles": "CC[Si](CC)(CC)[As]([Si](CC)(CC)CC)[Si](CC)(CC)CC",
+      "cas_number": null,
+      "category": "Group V Silylarsine",
+      "identifier_source": "AtomicLimits DOI 10.1039/c5tc03079j + RDKit formula & 3D ETKDGv3"
+    },
+    "EtAsH2": {
+      "center_element": "As",
+      "chemical_name": "Ethylarsine",
+      "formula": "C2H7As",
+      "molecular_weight": 106.0,
+      "smiles": "CC[AsH2]",
+      "cas_number": null,
+      "category": "Group V Organoarsenic",
+      "identifier_source": "AtomicLimits DOI 10.1063/1.105083 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaMe3": {
+      "center_element": "Ga",
+      "chemical_name": "Trimethylgallium",
+      "formula": "C3H9Ga",
+      "molecular_weight": 114.83,
+      "smiles": "C[Ga](C)C",
+      "cas_number": "1445-79-0",
+      "category": "Group III Alkyl",
+      "identifier_source": "Literature CAS 1445-79-0 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaEt3": {
+      "center_element": "Ga",
+      "chemical_name": "Triethylgallium",
+      "formula": "C6H15Ga",
+      "molecular_weight": 156.91,
+      "smiles": "CC[Ga](CC)CC",
+      "cas_number": "1115-99-7",
+      "category": "Group III Alkyl",
+      "identifier_source": "Literature CAS 1115-99-7 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaCl3": {
+      "center_element": "Ga",
+      "chemical_name": "Gallium(III) chloride",
+      "formula": "Cl3Ga",
+      "molecular_weight": 176.08,
+      "smiles": "Cl[Ga](Cl)Cl",
+      "cas_number": "13450-90-3",
+      "category": "Group III Halide",
+      "identifier_source": "Literature CAS 13450-90-3 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ga2(NMe2)6": {
+      "center_element": "Ga",
+      "chemical_name": "Hexakis(dimethylamido)digallium",
+      "formula": "C12H36Ga2N6",
+      "molecular_weight": 403.91,
+      "smiles": "CN(C)[Ga-]1(N(C)C)[N+](C)(C)[Ga-](N(C)C)(N(C)C)[N+]1(C)C",
+      "cas_number": null,
+      "category": "Group III Amide Dimer",
+      "identifier_source": "AtomicLimits DOI 10.1002/adfm.201401002 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ga(acac)3": {
+      "center_element": "Ga",
+      "chemical_name": "Tris(acetylacetonato)gallium(III)",
+      "formula": "C15H21GaO6",
+      "molecular_weight": 367.05,
+      "smiles": "CC(=O)/C=C(\\C)/O[Ga](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+      "cas_number": "14405-43-7",
+      "category": "Group III Beta-Diketonate",
+      "identifier_source": "Literature CAS 14405-43-7 + RDKit formula & 3D ETKDGv3"
+    },
+    "[Ga(NMe2)3]2": {
+      "center_element": "Ga",
+      "chemical_name": "Hexakis(dimethylamido)digallium",
+      "formula": "C12H36Ga2N6",
+      "molecular_weight": 403.91,
+      "smiles": "CN(C)[Ga-]1(N(C)C)[N+](C)(C)[Ga-](N(C)C)(N(C)C)[N+]1(C)C",
+      "cas_number": null,
+      "category": "Group III Amide Dimer",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.apsusc.2024.161024 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaCl": {
+      "center_element": "Ga",
+      "chemical_name": "Gallium(I) chloride",
+      "formula": "ClGa",
+      "molecular_weight": 105.18,
+      "smiles": "Cl[Ga]",
+      "cas_number": null,
+      "category": "Group III Halide",
+      "identifier_source": "AtomicLimits DOI 10.1016/0022-0248(90)90581-5 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ga(CpMe5)": {
+      "center_element": "Ga",
+      "chemical_name": "(Pentamethylcyclopentadienyl)gallium(I)",
+      "formula": "C10H15Ga",
+      "molecular_weight": 204.95,
+      "smiles": "CC1=C(C)C(C)([Ga])C(C)=C1C",
+      "cas_number": null,
+      "category": "Group III Cyclopentadienyl",
+      "identifier_source": "AtomicLimits DOI 10.1116/1.5134738 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ga(NMe2)3": {
+      "center_element": "Ga",
+      "chemical_name": "Tris(dimethylamido)gallium(III)",
+      "formula": "C6H18GaN3",
+      "molecular_weight": 201.95,
+      "smiles": "CN(C)[Ga](N(C)C)N(C)C",
+      "cas_number": null,
+      "category": "Group III Amide",
+      "identifier_source": "AtomicLimits DOI 10.1039/C6QM00291A + RDKit formula & 3D ETKDGv3"
+    },
+    "Ga(iPr-triaz)3": {
+      "center_element": "Ga",
+      "chemical_name": "Tris(1,3-diisopropyltriazenido)gallium(III)",
+      "formula": "C18H42GaN9",
+      "molecular_weight": 454.32,
+      "smiles": "CC(C)/N=N/N(C(C)C)[Ga](N(C(C)C)/N=N/C(C)C)N(C(C)C)/N=N/C(C)C",
+      "cas_number": null,
+      "category": "Group III Triazenide",
+      "identifier_source": "DOI 10.1021/acs.chemmater.1c00244 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaEt2Cl": {
+      "center_element": "Ga",
+      "chemical_name": "Diethylgallium chloride",
+      "formula": "C4H10ClGa",
+      "molecular_weight": 163.3,
+      "smiles": "CC[Ga](Cl)CC",
+      "cas_number": null,
+      "category": "Group III Alkyl Halide",
+      "identifier_source": "AtomicLimits DOI 10.1063/1.353328 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaI3": {
+      "center_element": "Ga",
+      "chemical_name": "Gallium(III) iodide",
+      "formula": "GaI3",
+      "molecular_weight": 450.44,
+      "smiles": "I[Ga](I)I",
+      "cas_number": null,
+      "category": "Group III Halide",
+      "identifier_source": "AtomicLimits DOI 10.1021/acs.cgd.3c00502 + RDKit formula & 3D ETKDGv3"
+    },
+    "(GaMe2NH2)3": {
+      "center_element": "Ga",
+      "chemical_name": "Cyclotris(mu-amido-dimethylgallium)",
+      "formula": "C6H24Ga3N3",
+      "molecular_weight": 347.45,
+      "smiles": "C[Ga-]1(C)[NH2+][Ga-](C)(C)[NH2+][Ga-](C)(C)[NH2+]1",
+      "cas_number": null,
+      "category": "Group III Amido Trimer",
+      "identifier_source": "AtomicLimits DOI 10.1063/1.1980535 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ga(OiPr)3": {
+      "center_element": "Ga",
+      "chemical_name": "Gallium(III) triisopropoxide",
+      "formula": "C9H21GaO3",
+      "molecular_weight": 246.99,
+      "smiles": "CC(C)O[Ga](OC(C)C)OC(C)C",
+      "cas_number": null,
+      "category": "Group III Alkoxide",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.tsf.2013.03.066 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ga(thd)3": {
+      "center_element": "Ga",
+      "chemical_name": "Tris(2,2,6,6-tetramethyl-3,5-heptanedionato)gallium(III)",
+      "formula": "C33H57GaO6",
+      "molecular_weight": 619.54,
+      "smiles": "CC(C)(C)C(=O)/C=C(\\C(C)(C)C)/O[Ga](O/C(=C/C(=O)C(C)(C)C)C(C)(C)C)O/C(=C/C(=O)C(C)(C)C)C(C)(C)C",
+      "cas_number": null,
+      "category": "Group III Beta-Diketonate",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.snb.2019.02.046 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaBr": {
+      "center_element": "Ga",
+      "chemical_name": "Gallium(I) bromide",
+      "formula": "BrGa",
+      "molecular_weight": 149.63,
+      "smiles": "Br[Ga]",
+      "cas_number": null,
+      "category": "Group III Halide",
+      "identifier_source": "AtomicLimits DOI 10.1016/S0169-4332(96)01025-2 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaBr3": {
+      "center_element": "Ga",
+      "chemical_name": "Gallium(III) bromide",
+      "formula": "Br3Ga",
+      "molecular_weight": 309.44,
+      "smiles": "Br[Ga](Br)Br",
+      "cas_number": null,
+      "category": "Group III Halide",
+      "identifier_source": "AtomicLimits DOI 10.1021/acsomega.5c06913 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaEt2Me": {
+      "center_element": "Ga",
+      "chemical_name": "Diethylmethylgallium",
+      "formula": "C5H13Ga",
+      "molecular_weight": 142.88,
+      "smiles": "CC[Ga](C)CC",
+      "cas_number": null,
+      "category": "Group III Alkyl",
+      "identifier_source": "AtomicLimits DOI 10.1063/1.346980 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaI": {
+      "center_element": "Ga",
+      "chemical_name": "Gallium(I) iodide",
+      "formula": "GaI",
+      "molecular_weight": 196.63,
+      "smiles": "I[Ga]",
+      "cas_number": null,
+      "category": "Group III Halide",
+      "identifier_source": "AtomicLimits DOI 10.1016/S0169-4332(96)01025-2 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaMe2(NtBu(CH2)2NMe2)": {
+      "center_element": "Ga",
+      "chemical_name": "Dimethyl[N-tert-butyl-N',N'-dimethylethylenediaminato]gallium(III)",
+      "formula": "C10H25GaN2",
+      "molecular_weight": 243.05,
+      "smiles": "C[Ga](C)N(CCN(C)C)C(C)(C)C",
+      "cas_number": null,
+      "category": "Group III Alkylamide",
+      "identifier_source": "AtomicLimits DOI 10.1021/acsami.5c24086 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaMe2(OiPr)": {
+      "center_element": "Ga",
+      "chemical_name": "Dimethyl(isopropoxy)gallium(III)",
+      "formula": "C5H13GaO",
+      "molecular_weight": 158.88,
+      "smiles": "C[Ga](C)OC(C)C",
+      "cas_number": null,
+      "category": "Group III Alkylalkoxide",
+      "identifier_source": "AtomicLimits DOI 10.1002/cvde.201106879 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaMe2NH2": {
+      "center_element": "Ga",
+      "chemical_name": "Dimethylgallium amide",
+      "formula": "C2H8GaN",
+      "molecular_weight": 115.82,
+      "smiles": "C[Ga](C)N",
+      "cas_number": null,
+      "category": "Group III Alkylamide",
+      "identifier_source": "AtomicLimits DOI 10.1063/1.2034100 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaMe3(CH3OCH2CH2NHtBu)": {
+      "center_element": "Ga",
+      "chemical_name": "Trimethylgallium N-tert-butyl-2-methoxyethylamine adduct",
+      "formula": "C10H26GaNO",
+      "molecular_weight": 246.05,
+      "smiles": "C[Ga-](C)(C)[NH+](CCOC)C(C)(C)C",
+      "cas_number": null,
+      "category": "Group III Lewis Adduct",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.ceramint.2020.08.272 + RDKit formula & 3D ETKDGv3"
+    },
+    "GaMe3[MeO(CH2)2NHtBu]": {
+      "center_element": "Ga",
+      "chemical_name": "Trimethylgallium N-tert-butyl-2-methoxyethylamine adduct",
+      "formula": "C10H26GaNO",
+      "molecular_weight": 246.05,
+      "smiles": "C[Ga-](C)(C)[NH+](CCOC)C(C)(C)C",
+      "cas_number": null,
+      "category": "Group III Lewis Adduct",
+      "identifier_source": "AtomicLimits DOI 10.1021/acsami.1c06575 + RDKit formula & 3D ETKDGv3"
+    },
+    "InMe3": {
+      "center_element": "In",
+      "chemical_name": "Trimethylindium",
+      "formula": "C3H9In",
+      "molecular_weight": 159.92,
+      "smiles": "C[In](C)C",
+      "cas_number": "3385-78-2",
+      "category": "Group III Alkyl",
+      "identifier_source": "Literature CAS 3385-78-2 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(PrNMe2)Me2": {
+      "center_element": "In",
+      "chemical_name": "[3-(Dimethylamino)propyl]dimethylindium (DADI)",
+      "formula": "C7H18InN",
+      "molecular_weight": 231.05,
+      "smiles": "C[In](C)CCCN(C)C",
+      "cas_number": "120441-92-1",
+      "category": "Group III Aminoalkyl",
+      "identifier_source": "Literature CAS 120441-92-1 + RDKit formula & 3D ETKDGv3"
+    },
+    "InEt3": {
+      "center_element": "In",
+      "chemical_name": "Triethylindium",
+      "formula": "C6H15In",
+      "molecular_weight": 202.0,
+      "smiles": "CC[In](CC)CC",
+      "cas_number": "923-34-2",
+      "category": "Group III Alkyl",
+      "identifier_source": "Literature CAS 923-34-2 + RDKit formula & 3D ETKDGv3"
+    },
+    "InCl3": {
+      "center_element": "In",
+      "chemical_name": "Indium(III) chloride",
+      "formula": "Cl3In",
+      "molecular_weight": 221.18,
+      "smiles": "Cl[In](Cl)Cl",
+      "cas_number": "10025-82-8",
+      "category": "Group III Halide",
+      "identifier_source": "Literature CAS 10025-82-8 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(acac)3": {
+      "center_element": "In",
+      "chemical_name": "Tris(acetylacetonato)indium(III)",
+      "formula": "C15H21InO6",
+      "molecular_weight": 412.15,
+      "smiles": "CC(=O)/C=C(\\C)/O[In](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+      "cas_number": "14405-45-9",
+      "category": "Group III Beta-Diketonate",
+      "identifier_source": "Literature CAS 14405-45-9 + RDKit formula & 3D ETKDGv3"
+    },
+    "InCp": {
+      "center_element": "In",
+      "chemical_name": "Cyclopentadienylindium(I)",
+      "formula": "C5H5In",
+      "molecular_weight": 179.91,
+      "smiles": "[In]C1C=CC=C1",
+      "cas_number": "34822-89-4",
+      "category": "Group III Cyclopentadienyl",
+      "identifier_source": "Literature CAS 34822-89-4 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(iPrAMD)3": {
+      "center_element": "In",
+      "chemical_name": "Tris(N,N'-diisopropylacetamidinato)indium(III)",
+      "formula": "C24H51InN6",
+      "molecular_weight": 538.53,
+      "smiles": "CC(=NC(C)C)N(C(C)C)[In](N(C(C)C)C(C)=NC(C)C)N(C(C)C)C(C)=NC(C)C",
+      "cas_number": null,
+      "category": "Group III Amidinate",
+      "identifier_source": "AtomicLimits DOI 10.1002/chem.201802317 + RDKit formula & 3D ETKDGv3"
+    },
+    "InEt2(N(SiMe3)2)": {
+      "center_element": "In",
+      "chemical_name": "Diethyl[bis(trimethylsilyl)amido]indium(III)",
+      "formula": "C10H28InNSi2",
+      "molecular_weight": 333.33,
+      "smiles": "CC[In](CC)N([Si](C)(C)C)[Si](C)(C)C",
+      "cas_number": null,
+      "category": "Group III Silylamide",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.jallcom.2015.07.150 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(EtCp)": {
+      "center_element": "In",
+      "chemical_name": "(Ethylcyclopentadienyl)indium(I)",
+      "formula": "C7H9In",
+      "molecular_weight": 207.97,
+      "smiles": "CCC1=CC=CC1[In]",
+      "cas_number": null,
+      "category": "Group III Cyclopentadienyl",
+      "identifier_source": "AtomicLimits DOI 10.1063/1.5081727 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(thd)3": {
+      "center_element": "In",
+      "chemical_name": "Tris(2,2,6,6-tetramethyl-3,5-heptanedionato)indium(III)",
+      "formula": "C33H57InO6",
+      "molecular_weight": 664.63,
+      "smiles": "CC(C)(C)C(=O)/C=C(\\C(C)(C)C)/O[In](O/C(=C/C(=O)C(C)(C)C)C(C)(C)C)O/C(=C/C(=O)C(C)(C)C)C(C)(C)C",
+      "cas_number": null,
+      "category": "Group III Beta-Diketonate",
+      "identifier_source": "AtomicLimits DOI 10.1021/acs.jpcc.5b03255 + RDKit formula & 3D ETKDGv3"
+    },
+    "InCl": {
+      "center_element": "In",
+      "chemical_name": "Indium(I) chloride",
+      "formula": "ClIn",
+      "molecular_weight": 150.27,
+      "smiles": "Cl[In]",
+      "cas_number": null,
+      "category": "Group III Halide",
+      "identifier_source": "AtomicLimits DOI 10.1016/0022-0248(90)90581-5 + RDKit formula & 3D ETKDGv3"
+    },
+    "InMe2(edpa)": {
+      "center_element": "In",
+      "chemical_name": "Dimethyl(N-ethoxy-2,2-dimethylpropanamido)indium(III)",
+      "formula": "C9H20InNO2",
+      "molecular_weight": 289.08,
+      "smiles": "CC(C)(C)C(=O)N(OCC)[In](C)C",
+      "cas_number": null,
+      "category": "Group III Alkoxycarboxamide",
+      "identifier_source": "Literature edpa structure + RDKit formula & 3D ETKDGv3"
+    },
+    "InMe3(NMe2Bu)": {
+      "center_element": "In",
+      "chemical_name": "Trimethylindium N,N-dimethylbutylamine adduct",
+      "formula": "C9H24InN",
+      "molecular_weight": 261.12,
+      "smiles": "C[In-](C)(C)[N+](C)(C)CCCC",
+      "cas_number": null,
+      "category": "Group III Lewis Adduct",
+      "identifier_source": "AtomicLimits DOI 10.1109/LED.2025.3601554 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(iPrFMD)3": {
+      "center_element": "In",
+      "chemical_name": "Tris(N,N'-diisopropylformamidinato)indium(III)",
+      "formula": "C21H45InN6",
+      "molecular_weight": 496.45,
+      "smiles": "CC(C)N=CN(C(C)C)[In](N(C(C)C)C=NC(C)C)N(C(C)C)C=NC(C)C",
+      "cas_number": null,
+      "category": "Group III Formamidinate",
+      "identifier_source": "AtomicLimits DOI 10.1002/chem.201802317 + RDKit formula & 3D ETKDGv3"
+    },
+    "InEtMe2": {
+      "center_element": "In",
+      "chemical_name": "Ethyldimethylindium",
+      "formula": "C4H11In",
+      "molecular_weight": 173.95,
+      "smiles": "CC[In](C)C",
+      "cas_number": null,
+      "category": "Group III Alkyl",
+      "identifier_source": "AtomicLimits DOI 10.1016/S0169-4332(96)00992-0 + RDKit formula & 3D ETKDGv3"
+    },
+    "InMe3(MeO(CH2)2NHtBu)": {
+      "center_element": "In",
+      "chemical_name": "Trimethylindium N-tert-butyl-2-methoxyethylamine adduct",
+      "formula": "C10H26InNO",
+      "molecular_weight": 291.14,
+      "smiles": "C[In-](C)(C)[NH+](CCOC)C(C)(C)C",
+      "cas_number": null,
+      "category": "Group III Lewis Adduct",
+      "identifier_source": "AtomicLimits DOI 10.1021/acs.chemmater.0c02306 + RDKit formula & 3D ETKDGv3"
+    },
+    "InMe3(THF)": {
+      "center_element": "In",
+      "chemical_name": "Trimethylindium tetrahydrofuran adduct",
+      "formula": "C7H17InO",
+      "molecular_weight": 232.03,
+      "smiles": "C[In-](C)(C)[O+]1CCCC1",
+      "cas_number": null,
+      "category": "Group III Lewis Adduct",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.tsf.2025.140714 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(NMe2)Me2": {
+      "center_element": "In",
+      "chemical_name": "(Dimethylamido)dimethylindium(III)",
+      "formula": "C4H12InN",
+      "molecular_weight": 188.97,
+      "smiles": "C[In](C)N(C)C",
+      "cas_number": null,
+      "category": "Group III Alkylamide",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.tsf.2015.01.027 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(dmamp)2(OiPr)": {
+      "center_element": "In",
+      "chemical_name": "Bis(1-dimethylamino-2-methyl-2-propoxy)(isopropoxy)indium(III)",
+      "formula": "C15H35InN2O3",
+      "molecular_weight": 406.27,
+      "smiles": "CC(C)O[In](OC(C)(C)CN(C)C)OC(C)(C)CN(C)C",
+      "cas_number": null,
+      "category": "Group III Aminoalkoxide",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.ceramint.2019.10.018 + RDKit formula & 3D ETKDGv3"
+    },
+    "In(dmamp)3": {
+      "center_element": "In",
+      "chemical_name": "Tris(1-dimethylamino-2-methyl-2-propoxy)indium(III)",
+      "formula": "C18H42InN3O3",
+      "molecular_weight": 463.37,
+      "smiles": "CC(C)(CN(C)C)O[In](OC(C)(C)CN(C)C)OC(C)(C)CN(C)C",
+      "cas_number": null,
+      "category": "Group III Aminoalkoxide",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.apsusc.2016.04.120 + RDKit formula & 3D ETKDGv3"
+    },
+    "InClMe2": {
+      "center_element": "In",
+      "chemical_name": "Chlorodimethylindium(III)",
+      "formula": "C2H6ClIn",
+      "molecular_weight": 180.34,
+      "smiles": "C[In](C)Cl",
+      "cas_number": null,
+      "category": "Group III Alkyl Halide",
+      "identifier_source": "AtomicLimits DOI 10.1063/1.107480 + RDKit formula & 3D ETKDGv3"
+    },
+    "InMe2(NtBu(CH2)2NMe2)": {
+      "center_element": "In",
+      "chemical_name": "Dimethyl[N-tert-butyl-N',N'-dimethylethylenediaminato]indium(III)",
+      "formula": "C10H25InN2",
+      "molecular_weight": 288.14,
+      "smiles": "C[In](C)N(CCN(C)C)C(C)(C)C",
+      "cas_number": null,
+      "category": "Group III Alkylamide",
+      "identifier_source": "AtomicLimits DOI 10.1021/acsami.5c24086 + RDKit formula & 3D ETKDGv3"
+    },
+    "InMe2(tBuAMD)": {
+      "center_element": "In",
+      "chemical_name": "Dimethyl(N,N'-di-tert-butylacetamidinato)indium(III)",
+      "formula": "C12H27InN2",
+      "molecular_weight": 314.18,
+      "smiles": "CC(=NC(C)(C)C)N(C(C)(C)C)[In](C)C",
+      "cas_number": null,
+      "category": "Group III Amidinate",
+      "identifier_source": "AtomicLimits DOI 10.1088/1361-6528/ad5848 + RDKit formula & 3D ETKDGv3"
+    },
+    "InN(SiMe3)2": {
+      "center_element": "In",
+      "chemical_name": "[Bis(trimethylsilyl)amido]indium(I)",
+      "formula": "C6H18InNSi2",
+      "molecular_weight": 275.21,
+      "smiles": "C[Si](C)(C)N([In])[Si](C)(C)C",
+      "cas_number": null,
+      "category": "Group III Silylamide",
+      "identifier_source": "AtomicLimits DOI 10.1021/acsami.7b04985 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(DMBD)(CO)3": {
+      "center_element": "Ru",
+      "chemical_name": "(eta4-2,3-Dimethyl-1,3-butadiene)tricarbonylruthenium(0)",
+      "formula": "C9H10O3Ru",
+      "molecular_weight": 267.25,
+      "smiles": "C=C(C)C(C)=C->[Ru](<-[C-]#[O+])(<-[C-]#[O+])<-[C-]#[O+]",
+      "cas_number": "52649-53-3",
+      "category": "Electrode / Barrier Ru Carbonyl",
+      "identifier_source": "Literature CAS 52649-53-3 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(CO)2(mhdk)2": {
+      "center_element": "Ru",
+      "chemical_name": "Dicarbonylbis(5-methyl-2,4-hexanedionato)ruthenium(II)",
+      "formula": "C16H22O6Ru",
+      "molecular_weight": 411.42,
+      "smiles": "CC(C)C(=O)/C=C(\\C)/O[Ru](<-[C-]#[O+])(<-[C-]#[O+])O/C(C)=C\\C(=O)C(C)C",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Beta-Diketonate",
+      "identifier_source": "Literature mhdk complex + RDKit formula & 3D ETKDGv3"
+    },
+    "RuO4": {
+      "center_element": "Ru",
+      "chemical_name": "Ruthenium(VIII) tetroxide",
+      "formula": "O4Ru",
+      "molecular_weight": 165.07,
+      "smiles": "O=[Ru](=O)(=O)=O",
+      "cas_number": "20427-56-9",
+      "category": "Electrode / Barrier Ru Oxide",
+      "identifier_source": "Literature CAS 20427-56-9 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(IMBCH)": {
+      "center_element": "Ru",
+      "chemical_name": "(eta6-p-Cymene)(eta4-1,3-cyclohexadiene)ruthenium(0)",
+      "formula": "C16H22Ru",
+      "molecular_weight": 315.42,
+      "smiles": "Cc1ccc(C(C)C)cc1->[Ru]<-C1=CC=CCC1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Arene-Diene",
+      "identifier_source": "Literature Ru(p-cymene)(CHD) + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(EBCHD)": {
+      "center_element": "Ru",
+      "chemical_name": "(eta6-Ethylbenzene)(eta4-1-ethyl-1,3-cyclohexadiene)ruthenium(0)",
+      "formula": "C16H22Ru",
+      "molecular_weight": 315.42,
+      "smiles": "CCc1ccccc1->[Ru]<-C1=C(CC)CCC=C1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Arene-Diene",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.jallcom.2014.04.186 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(TMM)(CO)3": {
+      "center_element": "Ru",
+      "chemical_name": "Tricarbonyl(trimethylenemethane)ruthenium(0)",
+      "formula": "C7H6O3Ru",
+      "molecular_weight": 239.19,
+      "smiles": "C=C1C[Ru](<-[C-]#[O+])(<-[C-]#[O+])(<-[C-]#[O+])C1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Carbonyl",
+      "identifier_source": "AtomicLimits DOI 10.1002/adfm.202206667 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(CpEt)(pyr)": {
+      "center_element": "Ru",
+      "chemical_name": "(Ethylcyclopentadienyl)(pyrrolyl)ruthenium(II)",
+      "formula": "C11H13NRu",
+      "molecular_weight": 260.3,
+      "smiles": "CCC1=CC=C([Ru]N2C=CC=C2)C1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Heterocycle",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.mee.2012.08.026 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(CpMe)(pyr)": {
+      "center_element": "Ru",
+      "chemical_name": "(Methylcyclopentadienyl)(pyrrolyl)ruthenium(II)",
+      "formula": "C10H11NRu",
+      "molecular_weight": 246.28,
+      "smiles": "CC1=CC=C([Ru]N2C=CC=C2)C1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Heterocycle",
+      "identifier_source": "AtomicLimits DOI 10.1116/1.3625566 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(DMPD)2": {
+      "center_element": "Ru",
+      "chemical_name": "Bis(2,4-dimethylpentadienyl)ruthenium(II)",
+      "formula": "C14H22Ru",
+      "molecular_weight": 291.4,
+      "smiles": "CC(=CC=C(C)C)[Ru]C(C)=CC=C(C)C",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Open-Metallocene",
+      "identifier_source": "AtomicLimits DOI 10.1039/C2JM35332F + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(tBuAMD)2(CO)2": {
+      "center_element": "Ru",
+      "chemical_name": "Dicarbonylbis(N,N'-di-tert-butylacetamidinato)ruthenium(II)",
+      "formula": "C22H42N4O2Ru",
+      "molecular_weight": 495.67,
+      "smiles": "CC(C)(C)N=C(C)N(C(C)(C)C)[Ru](<-[C-]#[O+])(<-[C-]#[O+])N(C(C)(C)C)C(C)=NC(C)(C)C",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Amidinate",
+      "identifier_source": "AtomicLimits DOI 10.1002/cvde.200806737 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(thd)3": {
+      "center_element": "Ru",
+      "chemical_name": "Tris(2,2,6,6-tetramethyl-3,5-heptanedionato)ruthenium(III)",
+      "formula": "C33H57O6Ru",
+      "molecular_weight": 650.88,
+      "smiles": "CC(C)(C)C(=O)/C=C(\\C(C)(C)C)/O[Ru](O/C(=C/C(=O)C(C)(C)C)C(C)(C)C)O/C(=C/C(=O)C(C)(C)C)C(C)(C)C",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Beta-Diketonate",
+      "identifier_source": "AtomicLimits DOI 10.1002/cvde.200306288 + RDKit formula & 3D ETKDGv3"
+    },
+    "RuCp(CO)2Et": {
+      "center_element": "Ru",
+      "chemical_name": "Cyclopentadienyldicarbonylethylruthenium(II)",
+      "formula": "C9H10O2Ru",
+      "molecular_weight": 251.25,
+      "smiles": "CC[Ru](<-[C-]#[O+])(<-[C-]#[O+])C1C=CC=C1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Carbonyl",
+      "identifier_source": "AtomicLimits DOI 10.1021/cm903793u + RDKit formula & 3D ETKDGv3"
+    },
+    "RuCp2": {
+      "center_element": "Ru",
+      "chemical_name": "Bis(cyclopentadienyl)ruthenium(II) (Ruthenocene)",
+      "formula": "C10H10Ru",
+      "molecular_weight": 231.26,
+      "smiles": "C1=CC=C([Ru]C2=CC=CC2)C1",
+      "cas_number": "1287-13-4",
+      "category": "Electrode / Barrier Ru Metallocene",
+      "identifier_source": "Literature CAS 1287-13-4 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(CpEt)(CpMe)": {
+      "center_element": "Ru",
+      "chemical_name": "1-Ethyl-1'-methylruthenocene",
+      "formula": "C13H16Ru",
+      "molecular_weight": 273.34,
+      "smiles": "CCC1=CC=C([Ru]C2=CC=C(C)C2)C1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Metallocene",
+      "identifier_source": "AtomicLimits DOI 10.1016/j.jcrysgro.2010.03.033 + RDKit formula & 3D ETKDGv3"
+    },
+    "Ru(CpEt)(DMPD)": {
+      "center_element": "Ru",
+      "chemical_name": "(Ethylcyclopentadienyl)(2,4-dimethylpentadienyl)ruthenium(II)",
+      "formula": "C14H20Ru",
+      "molecular_weight": 289.38,
+      "smiles": "CCC1=CC=C([Ru]C(C)=CC=C(C)C)C1",
+      "cas_number": null,
+      "category": "Electrode / Barrier Ru Half-Open-Metallocene",
+      "identifier_source": "AtomicLimits DOI 10.1021/cm100057y + RDKit formula & 3D ETKDGv3"
+    }
+  }
+}

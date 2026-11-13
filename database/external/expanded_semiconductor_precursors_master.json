@@ -534,12 +534,12 @@
     "id": "PREC_HK_07",
     "name": "Cp(NMe2)3Zr",
     "chemical_name": "Cyclopentadienyltris(dimethylamino)zirconium",
-    "formula": "C11H24N3Zr",
+    "formula": "C11H23N3Zr",
     "center_element": "Zr",
     "category": "High-k Dielectric (Hf/Zr)",
     "smiles": "CN(C)[Zr](N(C)C)(N(C)C)C1=CC=CC1",
     "cas_number": "87227-56-3",
-    "molecular_weight": 289.55,
+    "molecular_weight": 288.54,
     "vapor_pressure": "0.1 Torr @ 55 °C",
     "thermal_decomposition_temp_c": 310.0,
     "commercial_vendors": [
@@ -715,12 +715,12 @@
     "id": "PREC_TI_03",
     "name": "CpTi(NMe2)3",
     "chemical_name": "Cyclopentadienyltris(dimethylamino)titanium",
-    "formula": "C11H24N3Ti",
+    "formula": "C11H23N3Ti",
     "center_element": "Ti",
     "category": "Titanium & Dielectrics",
     "smiles": "CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1",
     "cas_number": "1072-67-9",
-    "molecular_weight": 246.21,
+    "molecular_weight": 245.2,
     "vapor_pressure": "0.5 Torr @ 60 °C",
     "thermal_decomposition_temp_c": 290.0,
     "commercial_vendors": [
@@ -1019,7 +1019,7 @@
     "formula": "C14H18Ru",
     "center_element": "Ru",
     "category": "Metal & Barrier (W/Mo/Ru/Co)",
-    "smiles": "CCC1=CC=CC1.[Ru].CCC2=CC=CC2",
+    "smiles": "CCC1=CC=C([Ru]C2=CC=C(CC)C2)C1",
     "cas_number": "32992-96-4",
     "molecular_weight": 287.36,
     "vapor_pressure": "0.1 Torr @ 70 °C",
@@ -1096,12 +1096,12 @@
     "id": "PREC_MET_05",
     "name": "CCTBA",
     "chemical_name": "Dicobalt hexacarbonyl tert-butylacetylene",
-    "formula": "C12H9Co2O6",
+    "formula": "C12H10Co2O6",
     "center_element": "Co",
     "category": "Metal & Barrier (W/Mo/Ru/Co)",
-    "smiles": "CC(C)(C)C#C.[Co](=O)(=O)=O.[Co](=O)(=O)=O",
-    "cas_number": "56703-46-9",
-    "molecular_weight": 367.06,
+    "smiles": "CC(C)(C)C12[CH]3[Co]1([C-]#[O+])([C-]#[O+])([C-]#[O+])[Co]23([C-]#[O+])([C-]#[O+])[C-]#[O+]",
+    "cas_number": "56792-69-9",
+    "molecular_weight": 368.07,
     "vapor_pressure": "0.5 Torr @ 25 °C",
     "thermal_decomposition_temp_c": 160.0,
     "commercial_vendors": [
@@ -1407,19 +1407,19 @@
   {
     "id": "EXT-ALD-030",
     "name": "GaMe3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Trimethylgallium",
+    "formula": "C3H9Ga",
     "center_element": "Ga",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group III Alkyl",
+    "smiles": "C[Ga](C)C",
+    "cas_number": "1445-79-0",
+    "molecular_weight": 114.83,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 1445-79-0 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "GaMe3",
     "atomiclimits_aliases": [
       "Ga(Me3"
@@ -1683,19 +1683,19 @@
   {
     "id": "EXT-ALD-034",
     "name": "InMe3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Trimethylindium",
+    "formula": "C3H9In",
     "center_element": "In",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group III Alkyl",
+    "smiles": "C[In](C)C",
+    "cas_number": "3385-78-2",
+    "molecular_weight": 159.92,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 3385-78-2 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "InMe3",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 30,
@@ -1745,19 +1745,19 @@
   {
     "id": "EXT-ALD-035",
     "name": "GaEt3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Triethylgallium",
+    "formula": "C6H15Ga",
     "center_element": "Ga",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group III Alkyl",
+    "smiles": "CC[Ga](CC)CC",
+    "cas_number": "1115-99-7",
+    "molecular_weight": 156.91,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 1115-99-7 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "GaEt3",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 28,
@@ -2024,19 +2024,19 @@
   {
     "id": "EXT-ALD-040",
     "name": "AsH3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Arsine",
+    "formula": "H3As",
     "center_element": "As",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group V Hydride",
+    "smiles": "[AsH3]",
+    "cas_number": "7784-42-1",
+    "molecular_weight": 77.95,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 7784-42-1 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "AsH3",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 23,
@@ -2662,19 +2662,19 @@
   {
     "id": "EXT-ALD-053",
     "name": "In(PrNMe2)Me2",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "[3-(Dimethylamino)propyl]dimethylindium (DADI)",
+    "formula": "C7H18InN",
     "center_element": "In",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group III Aminoalkyl",
+    "smiles": "C[In](C)CCCN(C)C",
+    "cas_number": "120441-92-1",
+    "molecular_weight": 231.05,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 120441-92-1 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "In(PrNMe2)Me2",
     "atomiclimits_aliases": [
       "InMe2(PrNMe2)"
@@ -3644,19 +3644,19 @@
   {
     "id": "EXT-ALD-074",
     "name": "GaCl3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Gallium(III) chloride",
+    "formula": "Cl3Ga",
     "center_element": "Ga",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group III Halide",
+    "smiles": "Cl[Ga](Cl)Cl",
+    "cas_number": "13450-90-3",
+    "molecular_weight": 176.08,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 13450-90-3 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "GaCl3",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 11,
@@ -4521,19 +4521,19 @@
   {
     "id": "EXT-ALD-094",
     "name": "InEt3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Triethylindium",
+    "formula": "C6H15In",
     "center_element": "In",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group III Alkyl",
+    "smiles": "CC[In](CC)CC",
+    "cas_number": "923-34-2",
+    "molecular_weight": 202.0,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 923-34-2 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "InEt3",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 9,
@@ -4771,19 +4771,19 @@
   {
     "id": "EXT-ALD-100",
     "name": "Ru(DMBD)(CO)3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "(eta4-2,3-Dimethyl-1,3-butadiene)tricarbonylruthenium(0)",
+    "formula": "C9H10O3Ru",
     "center_element": "Ru",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Electrode / Barrier Ru Carbonyl",
+    "smiles": "C=C(C)C(C)=C->[Ru](<-[C-]#[O+])(<-[C-]#[O+])<-[C-]#[O+]",
+    "cas_number": "52649-53-3",
+    "molecular_weight": 267.25,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 52649-53-3 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "Ru(DMBD)(CO)3",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 9,
@@ -5153,19 +5153,19 @@
   {
     "id": "EXT-ALD-109",
     "name": "InCl3",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Indium(III) chloride",
+    "formula": "Cl3In",
     "center_element": "In",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Group III Halide",
+    "smiles": "Cl[In](Cl)Cl",
+    "cas_number": "10025-82-8",
+    "molecular_weight": 221.18,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 10025-82-8 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "InCl3",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 8,
@@ -5372,19 +5372,19 @@
   {
     "id": "EXT-ALD-114",
     "name": "Ru(CO)2(mhdk)2",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Dicarbonylbis(5-methyl-2,4-hexanedionato)ruthenium(II)",
+    "formula": "C16H22O6Ru",
     "center_element": "Ru",
-    "category": null,
-    "smiles": null,
+    "category": "Electrode / Barrier Ru Beta-Diketonate",
+    "smiles": "CC(C)C(=O)/C=C(\\C)/O[Ru](<-[C-]#[O+])(<-[C-]#[O+])O/C(C)=C\\C(=O)C(C)C",
     "cas_number": null,
-    "molecular_weight": null,
+    "molecular_weight": 411.42,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature mhdk complex + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "Ru(CO)2(mhdk)2",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 8,
@@ -5413,19 +5413,19 @@
   {
     "id": "EXT-ALD-115",
     "name": "RuO4",
-    "chemical_name": null,
-    "formula": null,
+    "chemical_name": "Ruthenium(VIII) tetroxide",
+    "formula": "O4Ru",
     "center_element": "Ru",
-    "category": null,
-    "smiles": null,
-    "cas_number": null,
-    "molecular_weight": null,
+    "category": "Electrode / Barrier Ru Oxide",
+    "smiles": "O=[Ru](=O)(=O)=O",
+    "cas_number": "20427-56-9",
+    "molecular_weight": 165.07,
     "vapor_pressure": null,
     "thermal_decomposition_temp_c": null,
     "commercial_vendors": [],
     "origin": "AtomicLimits ALD database",
-    "property_source": null,
-    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "property_source": "Literature CAS 20427-56-9 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
     "atomiclimits_name": "RuO4",
     "atomiclimits_aliases": [],
     "atomiclimits_process_count": 8,
@@ -5657,6 +5657,2777 @@
       "10.1016/S0040-6090(03)00502-9",
       "10.1016/j.jcrysgro.2011.07.012",
       "10.1016/j.matchemphys.2006.05.002"
+    ]
+  },
+  {
+    "id": "EXT-ALD-121",
+    "name": "Ga2(NMe2)6",
+    "chemical_name": "Hexakis(dimethylamido)digallium",
+    "formula": "C12H36Ga2N6",
+    "center_element": "Ga",
+    "category": "Group III Amide Dimer",
+    "smiles": "CN(C)[Ga-]1(N(C)C)[N+](C)(C)[Ga-](N(C)C)(N(C)C)[N+]1(C)C",
+    "cas_number": null,
+    "molecular_weight": 403.91,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1002/adfm.201401002 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ga2(NMe2)6",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 7,
+    "atomiclimits_materials": [
+      "CuGaxSy",
+      "ErGaxOy",
+      "Ga2O3",
+      "GaSx",
+      "GaZnxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "H2S",
+      "H2S+Ar plasma",
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 9,
+    "sample_dois": [
+      "10.1002/adfm.201401002",
+      "10.1016/j.mssp.2019.05.028",
+      "10.1016/j.mtchem.2018.08.006",
+      "10.1021/cm0521424",
+      "10.1021/cm4031057"
+    ]
+  },
+  {
+    "id": "EXT-ALD-122",
+    "name": "In(acac)3",
+    "chemical_name": "Tris(acetylacetonato)indium(III)",
+    "formula": "C15H21InO6",
+    "center_element": "In",
+    "category": "Group III Beta-Diketonate",
+    "smiles": "CC(=O)/C=C(\\C)/O[In](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+    "cas_number": "14405-45-9",
+    "molecular_weight": 412.15,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 14405-45-9 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(acac)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 7,
+    "atomiclimits_materials": [
+      "CuInxSy",
+      "In2O3",
+      "In2S3",
+      "InOxSy",
+      "ZnInxSy"
+    ],
+    "atomiclimits_co_reactants": [
+      "Ar/O2 plasma",
+      "H2O",
+      "H2S",
+      "H2S plasma",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 20,
+    "sample_dois": [
+      "10.1002/pip.508",
+      "10.1002/pip.595",
+      "10.1016/S0040-6090(00)01838-1",
+      "10.1016/S0040-6090(03)00151-2",
+      "10.1016/S0040-6090(99)00860-3"
+    ]
+  },
+  {
+    "id": "EXT-ALD-123",
+    "name": "InCp",
+    "chemical_name": "Cyclopentadienylindium(I)",
+    "formula": "C5H5In",
+    "center_element": "In",
+    "category": "Group III Cyclopentadienyl",
+    "smiles": "[In]C1C=CC=C1",
+    "cas_number": "34822-89-4",
+    "molecular_weight": 179.91,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 34822-89-4 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InCp",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 7,
+    "atomiclimits_materials": [
+      "In2O3",
+      "In2O3:H",
+      "InGaxZnyOz",
+      "InSnxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "H2O2",
+      "O2",
+      "O2 plasma",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 15,
+    "sample_dois": [
+      "10.1002/pssa.201532883",
+      "10.1002/pssr.201409426",
+      "10.1016/j.vacuum.2021.110411",
+      "10.1021/acsami.5b04420",
+      "10.1021/acsami.6b13560"
+    ]
+  },
+  {
+    "id": "EXT-ALD-124",
+    "name": "In(iPrAMD)3",
+    "chemical_name": "Tris(N,N'-diisopropylacetamidinato)indium(III)",
+    "formula": "C24H51InN6",
+    "center_element": "In",
+    "category": "Group III Amidinate",
+    "smiles": "CC(=NC(C)C)N(C(C)C)[In](N(C(C)C)C(C)=NC(C)C)N(C(C)C)C(C)=NC(C)C",
+    "cas_number": null,
+    "molecular_weight": 538.53,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1002/chem.201802317 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(iPrAMD)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 5,
+    "atomiclimits_materials": [
+      "In2O3",
+      "In2S3",
+      "InN",
+      "VInxS3y"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "H2S",
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1002/chem.201802317",
+      "10.1021/acs.chemmater.5b04402",
+      "10.1021/acs.jpcc.9b07005",
+      "10.1021/am501331w"
+    ]
+  },
+  {
+    "id": "EXT-ALD-125",
+    "name": "InEt2(N(SiMe3)2)",
+    "chemical_name": "Diethyl[bis(trimethylsilyl)amido]indium(III)",
+    "formula": "C10H28InNSi2",
+    "center_element": "In",
+    "category": "Group III Silylamide",
+    "smiles": "CC[In](CC)N([Si](C)(C)C)[Si](C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 333.33,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.jallcom.2015.07.150 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InEt2(N(SiMe3)2)",
+    "atomiclimits_aliases": [
+      "In(N(SiMe3)2)Et2"
+    ],
+    "atomiclimits_process_count": 5,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InAlxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "H2O2",
+      "O2 plasma",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 5,
+    "sample_dois": [
+      "10.1016/j.jallcom.2015.07.150",
+      "10.1021/acsami.1c11304",
+      "10.1021/acsami.5c00350",
+      "10.1021/am502085c",
+      "10.1039/C6TC00580B"
+    ]
+  },
+  {
+    "id": "EXT-ALD-126",
+    "name": "Ir(CpEt)(CHD)",
+    "chemical_name": "(Ethylcyclopentadienyl)(1,3-cyclohexadiene)iridium(I)",
+    "formula": "C13H17Ir",
+    "center_element": "Ir",
+    "category": "PGM / Ir Organometallic",
+    "smiles": "CCC1=CC=C([Ir]<-C2=CC=CCC2)C1",
+    "cas_number": "721427-58-3",
+    "molecular_weight": 365.5,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 721427-58-3 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ir(CpEt)(CHD)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 5,
+    "atomiclimits_materials": [
+      "Ir",
+      "IrO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 + H2 plasma",
+      "O2 + N2 plasma",
+      "O2 plasma",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 7,
+    "sample_dois": [
+      "10.1002/admi.202102035",
+      "10.1002/celc.201800152",
+      "10.1016/j.ijhydene.2021.09.153",
+      "10.1021/acsaem.9b00402",
+      "10.1088/0022-3727/40/5/017"
+    ]
+  },
+  {
+    "id": "EXT-ALD-127",
+    "name": "Ir(acac)3",
+    "chemical_name": "Tris(acetylacetonato)iridium(III)",
+    "formula": "C15H21IrO6",
+    "center_element": "Ir",
+    "category": "PGM / Ir Beta-Diketonate",
+    "smiles": "CC(=O)/C=C(\\C)/O[Ir](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+    "cas_number": "15635-87-7",
+    "molecular_weight": 489.54,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 15635-87-7 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ir(acac)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 5,
+    "atomiclimits_materials": [
+      "Ir",
+      "IrO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2",
+      "O2",
+      "O3",
+      "air"
+    ],
+    "atomiclimits_unique_doi_count": 21,
+    "sample_dois": [
+      "10.1002/adfm.201000389",
+      "10.1002/cvde.200604219",
+      "10.1002/cvde.200604224",
+      "10.1002/cvde.200800710",
+      "10.1016/j.elecom.2010.08.029"
+    ]
+  },
+  {
+    "id": "EXT-ALD-128",
+    "name": "Ru(IMBCH)",
+    "chemical_name": "(eta6-p-Cymene)(eta4-1,3-cyclohexadiene)ruthenium(0)",
+    "formula": "C16H22Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Arene-Diene",
+    "smiles": "Cc1ccc(C(C)C)cc1->[Ru]<-C1=CC=CCC1",
+    "cas_number": null,
+    "molecular_weight": 315.42,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature Ru(p-cymene)(CHD) + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(IMBCH)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 5,
+    "atomiclimits_materials": [
+      "Ru",
+      "RuAlxOy",
+      "RuSi­xNy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "N2 + H2 plasma",
+      "NH3 plasma",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 6,
+    "sample_dois": [
+      "10.1016/j.jallcom.2013.05.035",
+      "10.1016/j.tsf.2012.05.069",
+      "10.1149/1.3506398",
+      "10.1149/1.3515320",
+      "10.1149/1.3556980"
+    ]
+  },
+  {
+    "id": "EXT-ALD-129",
+    "name": "As(NMe2)3",
+    "chemical_name": "Tris(dimethylamino)arsine",
+    "formula": "C6H18AsN3",
+    "center_element": "As",
+    "category": "Group V Amide",
+    "smiles": "CN(C)[As](N(C)C)N(C)C",
+    "cas_number": "6596-96-9",
+    "molecular_weight": 207.15,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 6596-96-9 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "As(NMe2)3",
+    "atomiclimits_aliases": [
+      "(Me2N)3As"
+    ],
+    "atomiclimits_process_count": 4,
+    "atomiclimits_materials": [
+      "AlAs",
+      "As2S3",
+      "GaAs",
+      "MnAs"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2S"
+    ],
+    "atomiclimits_unique_doi_count": 6,
+    "sample_dois": [
+      "10.1016/0169-4332(94)90211-9",
+      "10.1016/j.jcrysgro.2006.10.120",
+      "10.1063/1.107283",
+      "10.1063/1.108132",
+      "10.1063/1.108698"
+    ]
+  },
+  {
+    "id": "EXT-ALD-130",
+    "name": "Ga(acac)3",
+    "chemical_name": "Tris(acetylacetonato)gallium(III)",
+    "formula": "C15H21GaO6",
+    "center_element": "Ga",
+    "category": "Group III Beta-Diketonate",
+    "smiles": "CC(=O)/C=C(\\C)/O[Ga](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+    "cas_number": "14405-43-7",
+    "molecular_weight": 367.05,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 14405-43-7 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ga(acac)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 4,
+    "atomiclimits_materials": [
+      "ErGaxOy",
+      "Ga2O3",
+      "LaGaxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 5,
+    "sample_dois": [
+      "10.1016/S0040-6090(96)09428-X",
+      "10.1039/B616443A",
+      "10.1039/b105978p",
+      "10.1039/jm9960600027",
+      "https://doi.org/10.1016/j.apcata.2023.119117"
+    ]
+  },
+  {
+    "id": "EXT-ALD-131",
+    "name": "In(EtCp)",
+    "chemical_name": "(Ethylcyclopentadienyl)indium(I)",
+    "formula": "C7H9In",
+    "center_element": "In",
+    "category": "Group III Cyclopentadienyl",
+    "smiles": "CCC1=CC=CC1[In]",
+    "cas_number": null,
+    "molecular_weight": 207.97,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1063/1.5081727 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(EtCp)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 4,
+    "atomiclimits_materials": [
+      "In2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "O2",
+      "O2 plasma",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1063/1.5081727",
+      "10.1149/09203.0003ecst",
+      "10.35848/1347-4065/abde54"
+    ]
+  },
+  {
+    "id": "EXT-ALD-132",
+    "name": "Rh(acac)3",
+    "chemical_name": "Tris(acetylacetonato)rhodium(III)",
+    "formula": "C15H21O6Rh",
+    "center_element": "Rh",
+    "category": "PGM / Rh Beta-Diketonate",
+    "smiles": "CC(=O)/C=C(\\C)/O[Rh](O/C(C)=C\\C(C)=O)O/C(C)=C\\C(C)=O",
+    "cas_number": "14284-92-5",
+    "molecular_weight": 400.23,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 14284-92-5 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Rh(acac)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 4,
+    "atomiclimits_materials": [
+      "Rh",
+      "Rh2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2",
+      "O2",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1016/j.tsf.2013.01.091",
+      "10.1039/D1RA03942C",
+      "10.1149/1.1940507",
+      "10.1149/1.3190157"
+    ]
+  },
+  {
+    "id": "EXT-ALD-133",
+    "name": "[Ga(NMe2)3]2",
+    "chemical_name": "Hexakis(dimethylamido)digallium",
+    "formula": "C12H36Ga2N6",
+    "center_element": "Ga",
+    "category": "Group III Amide Dimer",
+    "smiles": "CN(C)[Ga-]1(N(C)C)[N+](C)(C)[Ga-](N(C)C)(N(C)C)[N+]1(C)C",
+    "cas_number": null,
+    "molecular_weight": 403.91,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.apsusc.2024.161024 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "[Ga(NMe2)3]2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 4,
+    "atomiclimits_materials": [
+      "GaN"
+    ],
+    "atomiclimits_co_reactants": [
+      "Ar plasma",
+      "N2H4",
+      "NH3",
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1016/j.apsusc.2024.161024",
+      "10.1021/acsaelm.5c02124",
+      "10.1039/D0TC02085K"
+    ]
+  },
+  {
+    "id": "EXT-ALD-134",
+    "name": "tBuAsH2",
+    "chemical_name": "tert-Butylarsine",
+    "formula": "C4H11As",
+    "center_element": "As",
+    "category": "Group V Organoarsenic",
+    "smiles": "CC(C)(C)[AsH2]",
+    "cas_number": "4262-43-5",
+    "molecular_weight": 134.05,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 4262-43-5 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "tBuAsH2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 4,
+    "atomiclimits_materials": [
+      "GaAs",
+      "InAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 14,
+    "sample_dois": [
+      "10.1007/BF02659722",
+      "10.1007/BF02669522",
+      "10.1007/BF02676817",
+      "10.1007/s11664-997-0015-x",
+      "10.1016/0040-6090(93)90119-A"
+    ]
+  },
+  {
+    "id": "EXT-ALD-135",
+    "name": "GaCl",
+    "chemical_name": "Gallium(I) chloride",
+    "formula": "ClGa",
+    "center_element": "Ga",
+    "category": "Group III Halide",
+    "smiles": "Cl[Ga]",
+    "cas_number": null,
+    "molecular_weight": 105.18,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/0022-0248(90)90581-5 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaCl",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "GaAs",
+      "GaN",
+      "GaP"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3",
+      "PH3"
+    ],
+    "atomiclimits_unique_doi_count": 18,
+    "sample_dois": [
+      "10.1016/0022-0248(90)90581-5",
+      "10.1016/0022-0248(91)90719-L",
+      "10.1016/0022-0248(94)00559-1",
+      "10.1016/0022-0248(95)01047-5",
+      "10.1016/0040-6090(93)90124-8"
+    ]
+  },
+  {
+    "id": "EXT-ALD-136",
+    "name": "In(thd)3",
+    "chemical_name": "Tris(2,2,6,6-tetramethyl-3,5-heptanedionato)indium(III)",
+    "formula": "C33H57InO6",
+    "center_element": "In",
+    "category": "Group III Beta-Diketonate",
+    "smiles": "CC(C)(C)C(=O)/C=C(\\C(C)(C)C)/O[In](O/C(=C/C(=O)C(C)(C)C)C(C)(C)C)O/C(=C/C(=O)C(C)(C)C)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 664.63,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acs.jpcc.5b03255 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(thd)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InZrxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1021/acs.jpcc.5b03255",
+      "10.1039/B813001A",
+      "10.1149/1.2721495"
+    ]
+  },
+  {
+    "id": "EXT-ALD-137",
+    "name": "In(triaz)3",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "In",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "In(triaz)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InGaxNy",
+      "InN"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1021/acs.chemmater.9b05171",
+      "10.1039/D1DT03748J",
+      "10.1039/D1TC02408F"
+    ]
+  },
+  {
+    "id": "EXT-ALD-138",
+    "name": "InCl",
+    "chemical_name": "Indium(I) chloride",
+    "formula": "ClIn",
+    "center_element": "In",
+    "category": "Group III Halide",
+    "smiles": "Cl[In]",
+    "cas_number": null,
+    "molecular_weight": 150.27,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/0022-0248(90)90581-5 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InCl",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "InAs",
+      "InP"
+    ],
+    "atomiclimits_co_reactants": [
+      "PH3",
+      "tBuPH2"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1016/0022-0248(90)90581-5",
+      "10.1016/0040-6090(93)90124-8",
+      "10.1063/1.102811",
+      "10.1143/JJAP.27.L744"
+    ]
+  },
+  {
+    "id": "EXT-ALD-139",
+    "name": "InMe2(edpa)",
+    "chemical_name": "Dimethyl(N-ethoxy-2,2-dimethylpropanamido)indium(III)",
+    "formula": "C9H20InNO2",
+    "center_element": "In",
+    "category": "Group III Alkoxycarboxamide",
+    "smiles": "CC(C)(C)C(=O)N(OCC)[In](C)C",
+    "cas_number": null,
+    "molecular_weight": 289.08,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature edpa structure + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InMe2(edpa)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InSnxGayOz"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "O2",
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1016/j.apsusc.2017.05.066",
+      "10.1021/acsami.6b07332",
+      "10.1116/6.0003004"
+    ]
+  },
+  {
+    "id": "EXT-ALD-140",
+    "name": "InMe3(NMe2Bu)",
+    "chemical_name": "Trimethylindium N,N-dimethylbutylamine adduct",
+    "formula": "C9H24InN",
+    "center_element": "In",
+    "category": "Group III Lewis Adduct",
+    "smiles": "C[In-](C)(C)[N+](C)(C)CCCC",
+    "cas_number": null,
+    "molecular_weight": 261.12,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1109/LED.2025.3601554 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InMe3(NMe2Bu)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InGaxOy",
+      "InGaxSnyOz"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1109/LED.2025.3601554",
+      "10.1116/6.0000842",
+      "https://doi.org/10.1021/acsami.2c13489",
+      "https://doi.org/10.1063/5.0240110"
+    ]
+  },
+  {
+    "id": "EXT-ALD-141",
+    "name": "Ir(CO)3(tBu3Cyp)",
+    "chemical_name": "Tricarbonyl(1,2,3-tri-tert-butylcyclopropenyl)iridium(I)",
+    "formula": "C18H27IrO3",
+    "center_element": "Ir",
+    "category": "PGM / Ir Carbonyl",
+    "smiles": "[C-]#[O+]->[Ir](<-[C-]#[O+])(<-[C-]#[O+])C1=C(C(C)(C)C)C1(C(C)(C)C)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 483.63,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "DOI 10.1002/smll.202402543 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ir(CO)3(tBu3Cyp)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "Ir",
+      "IrO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1002/smll.202402543",
+      "10.1002/smll.202504724",
+      "10.1021/acs.chemmater.1c03142",
+      "10.1021/acs.jpclett.3c01369"
+    ]
+  },
+  {
+    "id": "EXT-ALD-142",
+    "name": "Ir(CpEt)(cod)",
+    "chemical_name": "(Ethylcyclopentadienyl)(1,5-cyclooctadiene)iridium(I)",
+    "formula": "C15H21Ir",
+    "center_element": "Ir",
+    "category": "PGM / Ir Organometallic",
+    "smiles": "CCC1=CC=C([Ir]<-C2=CCCC=CCC2)C1",
+    "cas_number": null,
+    "molecular_weight": 393.55,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.apsusc.2011.06.093 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ir(CpEt)(cod)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "Ir",
+      "IrO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3 plasma",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1016/j.apsusc.2011.06.093",
+      "10.1063/1.2836965",
+      "10.1149/1.2973336",
+      "10.1149/1.2980005"
+    ]
+  },
+  {
+    "id": "EXT-ALD-143",
+    "name": "Ir(CpMe)(CHD)",
+    "chemical_name": "(Methylcyclopentadienyl)(1,3-cyclohexadiene)iridium(I)",
+    "formula": "C12H15Ir",
+    "center_element": "Ir",
+    "category": "PGM / Ir Organometallic",
+    "smiles": "CC1=CC=C([Ir]<-C2=CC=CCC2)C1",
+    "cas_number": null,
+    "molecular_weight": 351.47,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1039/C1JM12245B + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ir(CpMe)(CHD)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "Ir",
+      "IrO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2",
+      "O2",
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1039/C1JM12245B",
+      "10.1039/c0jm00486c"
+    ]
+  },
+  {
+    "id": "EXT-ALD-144",
+    "name": "Ru(CpEt)(DMOPD)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(CpEt)(DMOPD)",
+    "atomiclimits_aliases": [
+      "Ru(CpEt)(dmopd)"
+    ],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "Ru",
+      "RuO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1039/D0TC01489C",
+      "10.1116/1.4902560"
+    ]
+  },
+  {
+    "id": "EXT-ALD-145",
+    "name": "Ru(EBCHD)",
+    "chemical_name": "(eta6-Ethylbenzene)(eta4-1-ethyl-1,3-cyclohexadiene)ruthenium(0)",
+    "formula": "C16H22Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Arene-Diene",
+    "smiles": "CCc1ccccc1->[Ru]<-C1=C(CC)CCC=C1",
+    "cas_number": null,
+    "molecular_weight": 315.42,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.jallcom.2014.04.186 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(EBCHD)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "Ru",
+      "RuO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1016/j.jallcom.2014.04.186",
+      "10.1016/j.tsf.2013.03.074",
+      "10.1021/acs.chemmater.9b00193",
+      "10.1116/6.0000434"
+    ]
+  },
+  {
+    "id": "EXT-ALD-146",
+    "name": "Ru(TMM)(CO)3",
+    "chemical_name": "Tricarbonyl(trimethylenemethane)ruthenium(0)",
+    "formula": "C7H6O3Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Carbonyl",
+    "smiles": "C=C1C[Ru](<-[C-]#[O+])(<-[C-]#[O+])(<-[C-]#[O+])C1",
+    "cas_number": null,
+    "molecular_weight": 239.19,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1002/adfm.202206667 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(TMM)(CO)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 3,
+    "atomiclimits_materials": [
+      "Ru",
+      "RuO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 4,
+    "sample_dois": [
+      "10.1002/adfm.202206667",
+      "10.1016/j.matlet.2022.133574",
+      "10.1021/acs.chemmater.1c01054",
+      "10.1039/D5TC04500B"
+    ]
+  },
+  {
+    "id": "EXT-ALD-147",
+    "name": "Ga(CpMe5)",
+    "chemical_name": "(Pentamethylcyclopentadienyl)gallium(I)",
+    "formula": "C10H15Ga",
+    "center_element": "Ga",
+    "category": "Group III Cyclopentadienyl",
+    "smiles": "CC1=C(C)C(C)([Ga])C(C)=C1C",
+    "cas_number": null,
+    "molecular_weight": 204.95,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1116/1.5134738 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ga(CpMe5)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1116/1.5134738"
+    ]
+  },
+  {
+    "id": "EXT-ALD-148",
+    "name": "Ga(NMe2)3",
+    "chemical_name": "Tris(dimethylamido)gallium(III)",
+    "formula": "C6H18GaN3",
+    "center_element": "Ga",
+    "category": "Group III Amide",
+    "smiles": "CN(C)[Ga](N(C)C)N(C)C",
+    "cas_number": null,
+    "molecular_weight": 201.95,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1039/C6QM00291A + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ga(NMe2)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "CdZnxGaySz",
+      "SnGaxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "H2S"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1039/C6QM00291A",
+      "10.1116/1.5092877"
+    ]
+  },
+  {
+    "id": "EXT-ALD-149",
+    "name": "Ga(iPr-triaz)3",
+    "chemical_name": "Tris(1,3-diisopropyltriazenido)gallium(III)",
+    "formula": "C18H42GaN9",
+    "center_element": "Ga",
+    "category": "Group III Triazenide",
+    "smiles": "CC(C)/N=N/N(C(C)C)[Ga](N(C(C)C)/N=N/C(C)C)N(C(C)C)/N=N/C(C)C",
+    "cas_number": null,
+    "molecular_weight": 454.32,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "DOI 10.1021/acs.chemmater.1c00244 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ga(iPr-triaz)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ga2O3",
+      "GaN"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1021/acs.chemmater.1c00244",
+      "10.1039/D5MA01213A"
+    ]
+  },
+  {
+    "id": "EXT-ALD-150",
+    "name": "GaEt2Cl",
+    "chemical_name": "Diethylgallium chloride",
+    "formula": "C4H10ClGa",
+    "center_element": "Ga",
+    "category": "Group III Alkyl Halide",
+    "smiles": "CC[Ga](Cl)CC",
+    "cas_number": null,
+    "molecular_weight": 163.3,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1063/1.353328 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaEt2Cl",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "GaAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1063/1.353328",
+      "10.1063/1.99306",
+      "10.1143/JJAP.27.L490"
+    ]
+  },
+  {
+    "id": "EXT-ALD-151",
+    "name": "GaI3",
+    "chemical_name": "Gallium(III) iodide",
+    "formula": "GaI3",
+    "center_element": "Ga",
+    "category": "Group III Halide",
+    "smiles": "I[Ga](I)I",
+    "cas_number": null,
+    "molecular_weight": 450.44,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acs.cgd.3c00502 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaI3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "AgI",
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1021/acs.cgd.3c00502",
+      "10.1021/acsomega.5c06913"
+    ]
+  },
+  {
+    "id": "EXT-ALD-152",
+    "name": "In(dpguan)3",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "In",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "In(dpguan)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InN"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1021/acs.jpcc.9b07005",
+      "10.1039/C3DT52746H"
+    ]
+  },
+  {
+    "id": "EXT-ALD-153",
+    "name": "In(iPrFMD)3",
+    "chemical_name": "Tris(N,N'-diisopropylformamidinato)indium(III)",
+    "formula": "C21H45InN6",
+    "center_element": "In",
+    "category": "Group III Formamidinate",
+    "smiles": "CC(C)N=CN(C(C)C)[In](N(C(C)C)C=NC(C)C)N(C(C)C)C=NC(C)C",
+    "cas_number": null,
+    "molecular_weight": 496.45,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1002/chem.201802317 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(iPrFMD)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InN"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1002/chem.201802317",
+      "10.1021/acs.jpcc.9b07005"
+    ]
+  },
+  {
+    "id": "EXT-ALD-154",
+    "name": "InEtMe2",
+    "chemical_name": "Ethyldimethylindium",
+    "formula": "C4H11In",
+    "center_element": "In",
+    "category": "Group III Alkyl",
+    "smiles": "CC[In](C)C",
+    "cas_number": null,
+    "molecular_weight": 173.95,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/S0169-4332(96)00992-0 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InEtMe2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "InGaxNy",
+      "InN"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1016/S0169-4332(96)00992-0",
+      "10.1063/1.114355",
+      "10.1063/1.118181"
+    ]
+  },
+  {
+    "id": "EXT-ALD-155",
+    "name": "InMe3(MeO(CH2)2NHtBu)",
+    "chemical_name": "Trimethylindium N-tert-butyl-2-methoxyethylamine adduct",
+    "formula": "C10H26InNO",
+    "center_element": "In",
+    "category": "Group III Lewis Adduct",
+    "smiles": "C[In-](C)(C)[NH+](CCOC)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 291.14,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acs.chemmater.0c02306 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InMe3(MeO(CH2)2NHtBu)",
+    "atomiclimits_aliases": [
+      "InMe3[MeO(CH2)2NHtBu]"
+    ],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "In2O3",
+      "InGaxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O",
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1021/acs.chemmater.0c02306",
+      "10.1021/acsami.1c06575"
+    ]
+  },
+  {
+    "id": "EXT-ALD-156",
+    "name": "InMe3(THF)",
+    "chemical_name": "Trimethylindium tetrahydrofuran adduct",
+    "formula": "C7H17InO",
+    "center_element": "In",
+    "category": "Group III Lewis Adduct",
+    "smiles": "C[In-](C)(C)[O+]1CCCC1",
+    "cas_number": null,
+    "molecular_weight": 232.03,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.tsf.2025.140714 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InMe3(THF)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "InGaxOy",
+      "InZnxSnyOz"
+    ],
+    "atomiclimits_co_reactants": [
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1016/j.tsf.2025.140714",
+      "10.1021/acsaelm.5c00721"
+    ]
+  },
+  {
+    "id": "EXT-ALD-157",
+    "name": "Ru(CpEt)(pyr)",
+    "chemical_name": "(Ethylcyclopentadienyl)(pyrrolyl)ruthenium(II)",
+    "formula": "C11H13NRu",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Heterocycle",
+    "smiles": "CCC1=CC=C([Ru]N2C=CC=C2)C1",
+    "cas_number": null,
+    "molecular_weight": 260.3,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.mee.2012.08.026 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(CpEt)(pyr)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3 plasma",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 7,
+    "sample_dois": [
+      "10.1016/j.mee.2012.08.026",
+      "10.1016/j.mee.2013.01.031",
+      "10.1016/j.mee.2018.11.006",
+      "10.1088/1361-6528/aa8844",
+      "10.1116/1.3670405"
+    ]
+  },
+  {
+    "id": "EXT-ALD-158",
+    "name": "Ru(CpMe)(pyr)",
+    "chemical_name": "(Methylcyclopentadienyl)(pyrrolyl)ruthenium(II)",
+    "formula": "C10H11NRu",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Heterocycle",
+    "smiles": "CC1=CC=C([Ru]N2C=CC=C2)C1",
+    "cas_number": null,
+    "molecular_weight": 246.28,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1116/1.3625566 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(CpMe)(pyr)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "N2 + H2 plasma",
+      "N2 + NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1116/1.3625566",
+      "10.1149/2.003202ssl"
+    ]
+  },
+  {
+    "id": "EXT-ALD-159",
+    "name": "Ru(DMPD)2",
+    "chemical_name": "Bis(2,4-dimethylpentadienyl)ruthenium(II)",
+    "formula": "C14H22Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Open-Metallocene",
+    "smiles": "CC(=CC=C(C)C)[Ru]C(C)=CC=C(C)C",
+    "cas_number": null,
+    "molecular_weight": 291.4,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1039/C2JM35332F + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(DMPD)2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru",
+      "RuO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1039/C2JM35332F"
+    ]
+  },
+  {
+    "id": "EXT-ALD-160",
+    "name": "Ru(hd)(ipmp)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(hd)(ipmp)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru",
+      "RuO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/cm5035485"
+    ]
+  },
+  {
+    "id": "EXT-ALD-161",
+    "name": "Ru(tBuAMD)2(CO)2",
+    "chemical_name": "Dicarbonylbis(N,N'-di-tert-butylacetamidinato)ruthenium(II)",
+    "formula": "C22H42N4O2Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Amidinate",
+    "smiles": "CC(C)(C)N=C(C)N(C(C)(C)C)[Ru](<-[C-]#[O+])(<-[C-]#[O+])N(C(C)(C)C)C(C)=NC(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 495.67,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1002/cvde.200806737 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(tBuAMD)2(CO)2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1002/cvde.200806737",
+      "10.1063/1.2740351",
+      "10.1149/1.2789294"
+    ]
+  },
+  {
+    "id": "EXT-ALD-162",
+    "name": "Ru(thd)3",
+    "chemical_name": "Tris(2,2,6,6-tetramethyl-3,5-heptanedionato)ruthenium(III)",
+    "formula": "C33H57O6Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Beta-Diketonate",
+    "smiles": "CC(C)(C)C(=O)/C=C(\\C(C)(C)C)/O[Ru](O/C(=C/C(=O)C(C)(C)C)C(C)(C)C)O/C(=C/C(=O)C(C)(C)C)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 650.88,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1002/cvde.200306288 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(thd)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 5,
+    "sample_dois": [
+      "10.1002/cvde.200306288",
+      "10.1016/S0926-860X(02)00424-6",
+      "10.1021/jp9021882",
+      "10.1557/JMR.2004.0426",
+      "10.3938/jkps.55.32"
+    ]
+  },
+  {
+    "id": "EXT-ALD-163",
+    "name": "RuCp(CO)2Et",
+    "chemical_name": "Cyclopentadienyldicarbonylethylruthenium(II)",
+    "formula": "C9H10O2Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Carbonyl",
+    "smiles": "CC[Ru](<-[C-]#[O+])(<-[C-]#[O+])C1C=CC=C1",
+    "cas_number": null,
+    "molecular_weight": 251.25,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/cm903793u + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "RuCp(CO)2Et",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2",
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 5,
+    "sample_dois": [
+      "10.1021/cm903793u",
+      "10.1063/1.4766747",
+      "10.1116/1.3554691",
+      "10.1116/6.0003775",
+      "10.1557/PROC-1156-D04-02"
+    ]
+  },
+  {
+    "id": "EXT-ALD-164",
+    "name": "RuCp2",
+    "chemical_name": "Bis(cyclopentadienyl)ruthenium(II) (Ruthenocene)",
+    "formula": "C10H10Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Metallocene",
+    "smiles": "C1=CC=C([Ru]C2=CC=CC2)C1",
+    "cas_number": "1287-13-4",
+    "molecular_weight": 231.26,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 1287-13-4 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "RuCp2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 2,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3 plasma",
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 14,
+    "sample_dois": [
+      "10.1002/cvde.200290007",
+      "10.1016/j.apsusc.2023.159015",
+      "10.1016/j.mee.2007.01.239",
+      "10.1016/j.tsf.2008.02.011",
+      "10.1021/cm902904u"
+    ]
+  },
+  {
+    "id": "EXT-ALD-165",
+    "name": "(Et3Si)3As",
+    "chemical_name": "Tris(triethylsilyl)arsine",
+    "formula": "C18H45AsSi3",
+    "center_element": "As",
+    "category": "Group V Silylarsine",
+    "smiles": "CC[Si](CC)(CC)[As]([Si](CC)(CC)CC)[Si](CC)(CC)CC",
+    "cas_number": null,
+    "molecular_weight": 420.74,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1039/c5tc03079j + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "(Et3Si)3As",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "GaAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1039/c5tc03079j"
+    ]
+  },
+  {
+    "id": "EXT-ALD-166",
+    "name": "(GaMe2NH2)3",
+    "chemical_name": "Cyclotris(mu-amido-dimethylgallium)",
+    "formula": "C6H24Ga3N3",
+    "center_element": "Ga",
+    "category": "Group III Amido Trimer",
+    "smiles": "C[Ga-]1(C)[NH2+][Ga-](C)(C)[NH2+][Ga-](C)(C)[NH2+]1",
+    "cas_number": null,
+    "molecular_weight": 347.45,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1063/1.1980535 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "(GaMe2NH2)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 3,
+    "sample_dois": [
+      "10.1063/1.1980535",
+      "10.1080/10584580500414200",
+      "10.1080/10584580701755716"
+    ]
+  },
+  {
+    "id": "EXT-ALD-167",
+    "name": "EtAsH2",
+    "chemical_name": "Ethylarsine",
+    "formula": "C2H7As",
+    "center_element": "As",
+    "category": "Group V Organoarsenic",
+    "smiles": "CC[AsH2]",
+    "cas_number": null,
+    "molecular_weight": 106.0,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1063/1.105083 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "EtAsH2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "GaAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1063/1.105083"
+    ]
+  },
+  {
+    "id": "EXT-ALD-168",
+    "name": "Ga(OiPr)3",
+    "chemical_name": "Gallium(III) triisopropoxide",
+    "formula": "C9H21GaO3",
+    "center_element": "Ga",
+    "category": "Group III Alkoxide",
+    "smiles": "CC(C)O[Ga](OC(C)C)OC(C)C",
+    "cas_number": null,
+    "molecular_weight": 246.99,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.tsf.2013.03.066 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ga(OiPr)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.tsf.2013.03.066"
+    ]
+  },
+  {
+    "id": "EXT-ALD-169",
+    "name": "Ga(thd)3",
+    "chemical_name": "Tris(2,2,6,6-tetramethyl-3,5-heptanedionato)gallium(III)",
+    "formula": "C33H57GaO6",
+    "center_element": "Ga",
+    "category": "Group III Beta-Diketonate",
+    "smiles": "CC(C)(C)C(=O)/C=C(\\C(C)(C)C)/O[Ga](O/C(=C/C(=O)C(C)(C)C)C(C)(C)C)O/C(=C/C(=O)C(C)(C)C)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 619.54,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.snb.2019.02.046 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ga(thd)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1016/j.snb.2019.02.046",
+      "10.1039/C4TA05007J"
+    ]
+  },
+  {
+    "id": "EXT-ALD-170",
+    "name": "Ga(triaz)3",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ga",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ga(triaz)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "InGaxNy"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1039/D1TC02408F"
+    ]
+  },
+  {
+    "id": "EXT-ALD-171",
+    "name": "GaBr",
+    "chemical_name": "Gallium(I) bromide",
+    "formula": "BrGa",
+    "center_element": "Ga",
+    "category": "Group III Halide",
+    "smiles": "Br[Ga]",
+    "cas_number": null,
+    "molecular_weight": 149.63,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/S0169-4332(96)01025-2 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaBr",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "GaAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/S0169-4332(96)01025-2"
+    ]
+  },
+  {
+    "id": "EXT-ALD-172",
+    "name": "GaBr3",
+    "chemical_name": "Gallium(III) bromide",
+    "formula": "Br3Ga",
+    "center_element": "Ga",
+    "category": "Group III Halide",
+    "smiles": "Br[Ga](Br)Br",
+    "cas_number": null,
+    "molecular_weight": 309.44,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acsomega.5c06913 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaBr3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "AgBr"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/acsomega.5c06913"
+    ]
+  },
+  {
+    "id": "EXT-ALD-173",
+    "name": "GaEt2Me",
+    "chemical_name": "Diethylmethylgallium",
+    "formula": "C5H13Ga",
+    "center_element": "Ga",
+    "category": "Group III Alkyl",
+    "smiles": "CC[Ga](C)CC",
+    "cas_number": null,
+    "molecular_weight": 142.88,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1063/1.346980 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaEt2Me",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "GaAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1063/1.346980"
+    ]
+  },
+  {
+    "id": "EXT-ALD-174",
+    "name": "GaI",
+    "chemical_name": "Gallium(I) iodide",
+    "formula": "GaI",
+    "center_element": "Ga",
+    "category": "Group III Halide",
+    "smiles": "I[Ga]",
+    "cas_number": null,
+    "molecular_weight": 196.63,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/S0169-4332(96)01025-2 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaI",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "GaAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/S0169-4332(96)01025-2"
+    ]
+  },
+  {
+    "id": "EXT-ALD-175",
+    "name": "GaMe2(NtBu(CH2)2NMe2)",
+    "chemical_name": "Dimethyl[N-tert-butyl-N',N'-dimethylethylenediaminato]gallium(III)",
+    "formula": "C10H25GaN2",
+    "center_element": "Ga",
+    "category": "Group III Alkylamide",
+    "smiles": "C[Ga](C)N(CCN(C)C)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 243.05,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acsami.5c24086 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaMe2(NtBu(CH2)2NMe2)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "InGaxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/acsami.5c24086"
+    ]
+  },
+  {
+    "id": "EXT-ALD-176",
+    "name": "GaMe2(OiPr)",
+    "chemical_name": "Dimethyl(isopropoxy)gallium(III)",
+    "formula": "C5H13GaO",
+    "center_element": "Ga",
+    "category": "Group III Alkylalkoxide",
+    "smiles": "C[Ga](C)OC(C)C",
+    "cas_number": null,
+    "molecular_weight": 158.88,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1002/cvde.201106879 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaMe2(OiPr)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1002/cvde.201106879"
+    ]
+  },
+  {
+    "id": "EXT-ALD-177",
+    "name": "GaMe2NH2",
+    "chemical_name": "Dimethylgallium amide",
+    "formula": "C2H8GaN",
+    "center_element": "Ga",
+    "category": "Group III Alkylamide",
+    "smiles": "C[Ga](C)N",
+    "cas_number": null,
+    "molecular_weight": 115.82,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1063/1.2034100 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaMe2NH2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1063/1.2034100"
+    ]
+  },
+  {
+    "id": "EXT-ALD-178",
+    "name": "GaMe3(CH3OCH2CH2NHtBu)",
+    "chemical_name": "Trimethylgallium N-tert-butyl-2-methoxyethylamine adduct",
+    "formula": "C10H26GaNO",
+    "center_element": "Ga",
+    "category": "Group III Lewis Adduct",
+    "smiles": "C[Ga-](C)(C)[NH+](CCOC)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 246.05,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.ceramint.2020.08.272 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaMe3(CH3OCH2CH2NHtBu)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ga2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.ceramint.2020.08.272"
+    ]
+  },
+  {
+    "id": "EXT-ALD-179",
+    "name": "GaMe3[MeO(CH2)2NHtBu]",
+    "chemical_name": "Trimethylgallium N-tert-butyl-2-methoxyethylamine adduct",
+    "formula": "C10H26GaNO",
+    "center_element": "Ga",
+    "category": "Group III Lewis Adduct",
+    "smiles": "C[Ga-](C)(C)[NH+](CCOC)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 246.05,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acsami.1c06575 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "GaMe3[MeO(CH2)2NHtBu]",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "InGaxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/acsami.1c06575"
+    ]
+  },
+  {
+    "id": "EXT-ALD-180",
+    "name": "GaNp3",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ga",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "GaNp3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "GaAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1007/s11664-997-0015-x",
+      "10.1063/1.367137"
+    ]
+  },
+  {
+    "id": "EXT-ALD-181",
+    "name": "In(NMe2)Me2",
+    "chemical_name": "(Dimethylamido)dimethylindium(III)",
+    "formula": "C4H12InN",
+    "center_element": "In",
+    "category": "Group III Alkylamide",
+    "smiles": "C[In](C)N(C)C",
+    "cas_number": null,
+    "molecular_weight": 188.97,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.tsf.2015.01.027 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(NMe2)Me2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "InZnxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.tsf.2015.01.027"
+    ]
+  },
+  {
+    "id": "EXT-ALD-182",
+    "name": "In(dmamp)2(OiPr)",
+    "chemical_name": "Bis(1-dimethylamino-2-methyl-2-propoxy)(isopropoxy)indium(III)",
+    "formula": "C15H35InN2O3",
+    "center_element": "In",
+    "category": "Group III Aminoalkoxide",
+    "smiles": "CC(C)O[In](OC(C)(C)CN(C)C)OC(C)(C)CN(C)C",
+    "cas_number": null,
+    "molecular_weight": 406.27,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.ceramint.2019.10.018 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(dmamp)2(OiPr)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "In2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.ceramint.2019.10.018"
+    ]
+  },
+  {
+    "id": "EXT-ALD-183",
+    "name": "In(dmamp)3",
+    "chemical_name": "Tris(1-dimethylamino-2-methyl-2-propoxy)indium(III)",
+    "formula": "C18H42InN3O3",
+    "center_element": "In",
+    "category": "Group III Aminoalkoxide",
+    "smiles": "CC(C)(CN(C)C)O[In](OC(C)(C)CN(C)C)OC(C)(C)CN(C)C",
+    "cas_number": null,
+    "molecular_weight": 463.37,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.apsusc.2016.04.120 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "In(dmamp)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "In2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.apsusc.2016.04.120"
+    ]
+  },
+  {
+    "id": "EXT-ALD-184",
+    "name": "InClMe2",
+    "chemical_name": "Chlorodimethylindium(III)",
+    "formula": "C2H6ClIn",
+    "center_element": "In",
+    "category": "Group III Alkyl Halide",
+    "smiles": "C[In](C)Cl",
+    "cas_number": null,
+    "molecular_weight": 180.34,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1063/1.107480 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InClMe2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "InAs"
+    ],
+    "atomiclimits_co_reactants": [],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1063/1.107480"
+    ]
+  },
+  {
+    "id": "EXT-ALD-185",
+    "name": "InMe2(NtBu(CH2)2(CH3)2OMe)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "In",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "InMe2(NtBu(CH2)2(CH3)2OMe)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "In2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.ceramint.2022.06.083"
+    ]
+  },
+  {
+    "id": "EXT-ALD-186",
+    "name": "InMe2(NtBu(CH2)2NMe2)",
+    "chemical_name": "Dimethyl[N-tert-butyl-N',N'-dimethylethylenediaminato]indium(III)",
+    "formula": "C10H25InN2",
+    "center_element": "In",
+    "category": "Group III Alkylamide",
+    "smiles": "C[In](C)N(CCN(C)C)C(C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 288.14,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acsami.5c24086 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InMe2(NtBu(CH2)2NMe2)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "InGaxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/acsami.5c24086"
+    ]
+  },
+  {
+    "id": "EXT-ALD-187",
+    "name": "InMe2(tBuAMD)",
+    "chemical_name": "Dimethyl(N,N'-di-tert-butylacetamidinato)indium(III)",
+    "formula": "C12H27InN2",
+    "center_element": "In",
+    "category": "Group III Amidinate",
+    "smiles": "CC(=NC(C)(C)C)N(C(C)(C)C)[In](C)C",
+    "cas_number": null,
+    "molecular_weight": 314.18,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1088/1361-6528/ad5848 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InMe2(tBuAMD)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "In2O3"
+    ],
+    "atomiclimits_co_reactants": [
+      "O3"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1088/1361-6528/ad5848"
+    ]
+  },
+  {
+    "id": "EXT-ALD-188",
+    "name": "InN(SiMe3)2",
+    "chemical_name": "[Bis(trimethylsilyl)amido]indium(I)",
+    "formula": "C6H18InNSi2",
+    "center_element": "In",
+    "category": "Group III Silylamide",
+    "smiles": "C[Si](C)(C)N([In])[Si](C)(C)C",
+    "cas_number": null,
+    "molecular_weight": 275.21,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/acsami.7b04985 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "InN(SiMe3)2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "InGaxOy"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/acsami.7b04985"
+    ]
+  },
+  {
+    "id": "EXT-ALD-189",
+    "name": "Ir(CpMe)(COD)",
+    "chemical_name": "(Methylcyclopentadienyl)(1,5-cyclooctadiene)iridium(I)",
+    "formula": "C14H19Ir",
+    "center_element": "Ir",
+    "category": "PGM / Ir Organometallic",
+    "smiles": "CC1=CC=C([Ir]<-C2=CCCC=CCC2)C1",
+    "cas_number": "32948-43-1",
+    "molecular_weight": 379.52,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "Literature CAS 32948-43-1 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ir(CpMe)(COD)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "IrO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 2,
+    "sample_dois": [
+      "10.1016/S1003-6326(11)61067-4",
+      "10.1515/cdbme-2021-2137"
+    ]
+  },
+  {
+    "id": "EXT-ALD-190",
+    "name": "Ru(CpEt)(CpMe)",
+    "chemical_name": "1-Ethyl-1'-methylruthenocene",
+    "formula": "C13H16Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Metallocene",
+    "smiles": "CCC1=CC=C([Ru]C2=CC=C(C)C2)C1",
+    "cas_number": null,
+    "molecular_weight": 273.34,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1016/j.jcrysgro.2010.03.033 + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(CpEt)(CpMe)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.jcrysgro.2010.03.033"
+    ]
+  },
+  {
+    "id": "EXT-ALD-191",
+    "name": "Ru(CpEt)(DMPD)",
+    "chemical_name": "(Ethylcyclopentadienyl)(2,4-dimethylpentadienyl)ruthenium(II)",
+    "formula": "C14H20Ru",
+    "center_element": "Ru",
+    "category": "Electrode / Barrier Ru Half-Open-Metallocene",
+    "smiles": "CCC1=CC=C([Ru]C(C)=CC=C(C)C)C1",
+    "cas_number": null,
+    "molecular_weight": 289.38,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": "AtomicLimits DOI 10.1021/cm100057y + RDKit formula & 3D ETKDGv3",
+    "identifier_status": "verified: CAS/literature + RDKit formula & 3D conformer validated",
+    "atomiclimits_name": "Ru(CpEt)(DMPD)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 7,
+    "sample_dois": [
+      "10.1021/cm100057y",
+      "10.1021/cm901032q",
+      "10.1021/nl101567m",
+      "10.1088/0957-4484/19/04/045302",
+      "10.1149/1.2403081"
+    ]
+  },
+  {
+    "id": "EXT-ALD-192",
+    "name": "Ru(CpEtMe)2",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(CpEtMe)2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "RuTaxNy"
+    ],
+    "atomiclimits_co_reactants": [
+      "NH3 plasma"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1149/1.2356290"
+    ]
+  },
+  {
+    "id": "EXT-ALD-193",
+    "name": "Ru(DMPD)(iPrMeBen)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(DMPD)(iPrMeBen)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1039/D5TC03685B"
+    ]
+  },
+  {
+    "id": "EXT-ALD-194",
+    "name": "Ru(EBBD)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(EBBD)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.mee.2015.02.026"
+    ]
+  },
+  {
+    "id": "EXT-ALD-195",
+    "name": "Ru(EBECH)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(EBECH)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 11,
+    "sample_dois": [
+      "10.1002/admi.201900896",
+      "10.1021/acs.chemmater.6b05437",
+      "10.1021/acs.nanolett.2c00811",
+      "10.1021/acsami.6b07181",
+      "10.1021/acsami.7b07811"
+    ]
+  },
+  {
+    "id": "EXT-ALD-196",
+    "name": "Ru(Me2pyr)2",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(Me2pyr)2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.tsf.2011.11.088"
+    ]
+  },
+  {
+    "id": "EXT-ALD-197",
+    "name": "Ru(TMM)(iPrMeBen)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(TMM)(iPrMeBen)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1002/advs.202519209"
+    ]
+  },
+  {
+    "id": "EXT-ALD-198",
+    "name": "Ru(chd)(ipmp)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(chd)(ipmp)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1149/1.3207867"
+    ]
+  },
+  {
+    "id": "EXT-ALD-199",
+    "name": "Ru(chd)2",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(chd)2",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1039/D0TC05682K"
+    ]
+  },
+  {
+    "id": "EXT-ALD-200",
+    "name": "Ru(od)3",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(od)3",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1002/adma.200304452"
+    ]
+  },
+  {
+    "id": "EXT-ALD-201",
+    "name": "Ru(thd)2(cod)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(thd)2(cod)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "RuO2"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1016/j.tsf.2009.12.063"
+    ]
+  },
+  {
+    "id": "EXT-ALD-202",
+    "name": "Ru(η5-C7H7O)(η5-C7H9)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru(η5-C7H7O)(η5-C7H9)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1002/admi.202202445"
+    ]
+  },
+  {
+    "id": "EXT-ALD-203",
+    "name": "Ru2{μ2-η3-N(tBu)–C(H)–C(iPr)}(CO)6",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "Ru2{μ2-η3-N(tBu)–C(H)–C(iPr)}(CO)6",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "H2O"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/acs.chemmater.0c04496"
+    ]
+  },
+  {
+    "id": "EXT-ALD-204",
+    "name": "RuCp(CO)2((CH2)3N(CH3)2)",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "RuCp(CO)2((CH2)3N(CH3)2)",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1021/acs.chemmater.6c01148"
+    ]
+  },
+  {
+    "id": "EXT-ALD-205",
+    "name": "RuCp(CpCH(Me)(NMe2))",
+    "chemical_name": null,
+    "formula": null,
+    "center_element": "Ru",
+    "category": null,
+    "smiles": null,
+    "cas_number": null,
+    "molecular_weight": null,
+    "vapor_pressure": null,
+    "thermal_decomposition_temp_c": null,
+    "commercial_vendors": [],
+    "origin": "AtomicLimits ALD database (focus-element expansion)",
+    "property_source": null,
+    "identifier_status": "unverified: needs PubChem/datasheet lookup",
+    "atomiclimits_name": "RuCp(CpCH(Me)(NMe2))",
+    "atomiclimits_aliases": [],
+    "atomiclimits_process_count": 1,
+    "atomiclimits_materials": [
+      "Ru"
+    ],
+    "atomiclimits_co_reactants": [
+      "O2"
+    ],
+    "atomiclimits_unique_doi_count": 1,
+    "sample_dois": [
+      "10.1149/1.3251285"
     ]
   }
 ]

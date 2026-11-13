@@ -123,7 +123,9 @@ synth_acc/
 │   │   ├── atomiclimits_snapshot.json  # Snapshot record: date, endpoint, SHA-256, counts (2,447 processes, 4,177 unique DOIs)
 │   │   ├── atomiclimits_aliases.json   # Hand-checked spelling-variant -> canonical name map
 │   │   ├── atomiclimits_precursors_extracted.json # 814 precursors after alias merge (all reactant fields A-D)
-│   │   ├── expanded_semiconductor_precursors_master.json # 120 entries: 27 baseline + 93 top AtomicLimits (no invented properties)
+│   │   ├── curated_target_element_identifiers.json # 75 RDKit-validated SMILES/formula/CAS entries (Ir, Rh, As, Ga, In, Ru)
+│   │   ├── expanded_semiconductor_precursors_master.json # 205 entries: 27 baseline + 93 top AtomicLimits + 85 Ir/Rh/As/Ga/In/Ru
+│   │   ├── expanded_elements_sevenn_features.json # SevenNet-0 LBFGS physical features for expanded focus-element precursors
 │   │   └── (atomiclimits_raw.json)     # Raw dump, local only / gitignored (redistribution terms unconfirmed); get with --fetch
 │   └── br_sascore_inputs/              # Formatted inputs ready for BR-SAScore dictionary generator
 │       ├── semi_bb.csv                 # Commercial semiconductor building block SMILES for BFrag (score = 0.0)

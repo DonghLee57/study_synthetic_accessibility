@@ -1,0 +1,75 @@
+{
+  "items_1_and_4": {
+    "cohort_55_v2": {
+      "precursor_pass": "25/27",
+      "precursor_tpr_pct": 92.6,
+      "inhibitor_pass": "11/18",
+      "inhibitor_tpr_pct": 61.1,
+      "neg_control_pass": "0/10",
+      "neg_control_tnr_pct": 100.0
+    },
+    "newly_rescued_precursors": [
+      {
+        "id": "PREC_SI_01",
+        "name": "DIPAS",
+        "old_sa": 4.97,
+        "new_sa": 2.26,
+        "v_min": 34.0
+      },
+      {
+        "id": "PREC_SI_05",
+        "name": "TSA",
+        "old_sa": 5.9,
+        "new_sa": 3.475,
+        "v_min": 34.0
+      },
+      {
+        "id": "PREC_MET_03",
+        "name": "Ru(EtCp)2",
+        "old_sa": 6.03,
+        "new_sa": 3.705,
+        "v_min": 34.0
+      }
+    ],
+    "expanded_75_topology": {
+      "total": 75,
+      "pi_haptic_complexes": 17,
+      "chelate_complexes": 3,
+      "coord_flagged_count": 0,
+      "unflagged_count": 75,
+      "coord_flagged_names": []
+    }
+  },
+  "item_2_reaction_energy_check": {
+    "mace_status": "MACE-MP0 load failed: too many values to unpack (expected 2)",
+    "reactions": [
+      {
+        "id": "SYN_TEOS",
+        "name": "SiCl4 + 4 EtOH -> Si(OEt)4 + 4 HCl",
+        "delta_e_kcal_mol": {
+          "SevenNet-0": -4.26
+        }
+      },
+      {
+        "id": "SYN_TDMAT",
+        "name": "TiCl4 + 4 LiNMe2 -> Ti(NMe2)4 + 4 LiCl(gas)",
+        "delta_e_kcal_mol": {
+          "SevenNet-0": 3.05
+        },
+        "delta_e_with_solid_licl_kcal_mol": {
+          "SevenNet-0": -232.24
+        }
+      },
+      {
+        "id": "SYN_TEMAH",
+        "name": "HfCl4 + 4 LiNMeEt -> Hf(NMeEt)4 + 4 LiCl(gas)",
+        "delta_e_kcal_mol": {
+          "SevenNet-0": 46.59
+        },
+        "delta_e_with_solid_licl_kcal_mol": {
+          "SevenNet-0": -188.7
+        }
+      }
+    ]
+  }
+}

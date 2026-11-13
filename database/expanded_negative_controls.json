@@ -1,0 +1,338 @@
+{
+  "metadata": {
+    "description": "Failure-mechanism-stratified expanded Negative Control database (10 audited + 30 newly curated = 40 negative controls across 6 distinct chemical/process failure mechanisms).",
+    "total_count": 40,
+    "audited_baseline_count": 10,
+    "expanded_count": 30,
+    "failure_mechanisms": [
+      "unstable_homoleptic_tm_alkyl",
+      "nonvolatile_poly_aryl",
+      "polyhydroxide_solgel_condensation",
+      "corrosive_carboxylic_acid",
+      "inert_nonfunctional_alkane",
+      "strained_or_pyrophoric_hydride_halide"
+    ]
+  },
+  "records": [
+    {
+      "id": "NEG-001",
+      "name": "Ti(Et)4 (Tetraethyltitanium)",
+      "smiles": "CC[Ti](CC)(CC)CC",
+      "failure_mechanism": "unstable_homoleptic_tm_alkyl",
+      "origin": "audited_baseline_10",
+      "rationale": "Thermally unstable homoleptic sp3 Ti alkyl undergoing rapid beta-hydride elimination."
+    },
+    {
+      "id": "NEG-002",
+      "name": "ZrMe4 (Tetramethylzirconium)",
+      "smiles": "C[Zr](C)(C)C",
+      "failure_mechanism": "unstable_homoleptic_tm_alkyl",
+      "origin": "audited_baseline_10",
+      "rationale": "Pyrophoric, thermally unstable homoleptic sp3 Zr methyl complex."
+    },
+    {
+      "id": "NEG-008",
+      "name": "CoEt4 (Tetraethylcobalt)",
+      "smiles": "CC[Co](CC)(CC)CC",
+      "failure_mechanism": "unstable_homoleptic_tm_alkyl",
+      "origin": "audited_baseline_10",
+      "rationale": "Unstable homoleptic d-block alkyl prone to reductive/beta-H decomposition."
+    },
+    {
+      "id": "NEG-011",
+      "name": "Hf(Et)4 (Tetraethylhafnium)",
+      "smiles": "CC[Hf](CC)(CC)CC",
+      "failure_mechanism": "unstable_homoleptic_tm_alkyl",
+      "origin": "expanded_proposal5",
+      "rationale": "Homoleptic sp3 Hf alkyl undergoing facile beta-hydride elimination below vaporization temperature."
+    },
+    {
+      "id": "NEG-012",
+      "name": "Ta(Me)5 (Pentamethyltantalum)",
+      "smiles": "C[Ta](C)(C)(C)C",
+      "failure_mechanism": "unstable_homoleptic_tm_alkyl",
+      "origin": "expanded_proposal5",
+      "rationale": "Explosive/thermally unstable homoleptic sp3 Ta(V) alkyl decomposing rapidly above -20 C."
+    },
+    {
+      "id": "NEG-013",
+      "name": "Ti(iPr)4 (Tetraisopropyltitanium)",
+      "smiles": "CC(C)[Ti](C(C)C)(C(C)C)C(C)C",
+      "failure_mechanism": "unstable_homoleptic_tm_alkyl",
+      "origin": "expanded_proposal5",
+      "rationale": "Homoleptic branched sp3 Ti alkyl with 12 beta-hydrogens causing immediate beta-H elimination."
+    },
+    {
+      "id": "NEG-014",
+      "name": "Ru(Me)4 (Tetramethylruthenium)",
+      "smiles": "C[Ru](C)(C)C",
+      "failure_mechanism": "unstable_homoleptic_tm_alkyl",
+      "origin": "expanded_proposal5",
+      "rationale": "Unstable homoleptic late-transition-metal sp3 alkyl prone to reductive ethane elimination."
+    },
+    {
+      "id": "NEG-004",
+      "name": "WPh5 (Pentaphenyltungsten)",
+      "smiles": "c1ccccc1[W](c2ccccc2)(c3ccccc3)(c4ccccc4)c5ccccc5",
+      "failure_mechanism": "nonvolatile_poly_aryl",
+      "origin": "audited_baseline_10",
+      "rationale": "Overcrowded poly-aryl tungsten complex; non-volatile and decomposes prior to sublimation."
+    },
+    {
+      "id": "NEG-015",
+      "name": "TiPh4 (Tetraphenyltitanium)",
+      "smiles": "c1ccccc1[Ti](c2ccccc2)(c3ccccc3)c4ccccc4",
+      "failure_mechanism": "nonvolatile_poly_aryl",
+      "origin": "expanded_proposal5",
+      "rationale": "Overcrowded poly-aryl Ti(IV) species; thermally decomposes via biphenyl elimination."
+    },
+    {
+      "id": "NEG-016",
+      "name": "ZrPh4 (Tetraphenylzirconium)",
+      "smiles": "c1ccccc1[Zr](c2ccccc2)(c3ccccc3)c4ccccc4",
+      "failure_mechanism": "nonvolatile_poly_aryl",
+      "origin": "expanded_proposal5",
+      "rationale": "Non-volatile poly-aryl Zr(IV) complex unsuitable for vapor-phase delivery."
+    },
+    {
+      "id": "NEG-017",
+      "name": "HfPh4 (Tetraphenylhafnium)",
+      "smiles": "c1ccccc1[Hf](c2ccccc2)(c3ccccc3)c4ccccc4",
+      "failure_mechanism": "nonvolatile_poly_aryl",
+      "origin": "expanded_proposal5",
+      "rationale": "High-MW non-volatile poly-aryl Hf(IV) complex decomposing before vaporization."
+    },
+    {
+      "id": "NEG-018",
+      "name": "TaPh5 (Pentaphenyltantalum)",
+      "smiles": "c1ccccc1[Ta](c2ccccc2)(c3ccccc3)(c4ccccc4)c5ccccc5",
+      "failure_mechanism": "nonvolatile_poly_aryl",
+      "origin": "expanded_proposal5",
+      "rationale": "Sterically congested pentaphenyl Ta(V) complex with negligible vapor pressure."
+    },
+    {
+      "id": "NEG-019",
+      "name": "CrPh3 (Triphenylchromium)",
+      "smiles": "c1ccccc1[Cr](c2ccccc2)c3ccccc3",
+      "failure_mechanism": "nonvolatile_poly_aryl",
+      "origin": "expanded_proposal5",
+      "rationale": "Air-sensitive poly-aryl Cr(III) species prone to aryl coupling and non-volatile decomposition."
+    },
+    {
+      "id": "NEG-007",
+      "name": "Ti(OH)4 (Titanium tetrahydroxide sol)",
+      "smiles": "O[Ti](O)(O)O",
+      "failure_mechanism": "polyhydroxide_solgel_condensation",
+      "origin": "audited_baseline_10",
+      "rationale": "Instantaneous olation/oxolation condensation into polymeric TiO2 gel."
+    },
+    {
+      "id": "NEG-020",
+      "name": "Zr(OH)4 (Zirconium tetrahydroxide)",
+      "smiles": "O[Zr](O)(O)O",
+      "failure_mechanism": "polyhydroxide_solgel_condensation",
+      "origin": "expanded_proposal5",
+      "rationale": "Non-volatile hydroxide network undergoing rapid dehydration to ZrO2."
+    },
+    {
+      "id": "NEG-021",
+      "name": "Hf(OH)4 (Hafnium tetrahydroxide)",
+      "smiles": "O[Hf](O)(O)O",
+      "failure_mechanism": "polyhydroxide_solgel_condensation",
+      "origin": "expanded_proposal5",
+      "rationale": "Non-volatile hafnium hydroxide sol undergoing irreversible condensation."
+    },
+    {
+      "id": "NEG-022",
+      "name": "Si(OH)4 (Orthosilicic acid)",
+      "smiles": "O[Si](O)(O)O",
+      "failure_mechanism": "polyhydroxide_solgel_condensation",
+      "origin": "expanded_proposal5",
+      "rationale": "Polymerizes spontaneously into amorphous silica gel; non-isolable as a volatile monomer."
+    },
+    {
+      "id": "NEG-023",
+      "name": "Al(OH)3 (Aluminum trihydroxide)",
+      "smiles": "O[Al](O)O",
+      "failure_mechanism": "polyhydroxide_solgel_condensation",
+      "origin": "expanded_proposal5",
+      "rationale": "Insoluble polymeric hydroxide solid with zero ALD/CVD volatility."
+    },
+    {
+      "id": "NEG-024",
+      "name": "Ta(OH)5 (Tantalum pentahydroxide)",
+      "smiles": "O[Ta](O)(O)(O)O",
+      "failure_mechanism": "polyhydroxide_solgel_condensation",
+      "origin": "expanded_proposal5",
+      "rationale": "Hydrated tantalic acid gel undergoing rapid polycondensation."
+    },
+    {
+      "id": "NEG-025",
+      "name": "Sn(OH)4 (Tin tetrahydroxide)",
+      "smiles": "O[Sn](O)(O)O",
+      "failure_mechanism": "polyhydroxide_solgel_condensation",
+      "origin": "expanded_proposal5",
+      "rationale": "Unstable stannic hydroxide spontaneously dehydrating to SnO2 networks."
+    },
+    {
+      "id": "NEG-006",
+      "name": "Trichloroacetic acid",
+      "smiles": "O=C(O)C(Cl)(Cl)Cl",
+      "failure_mechanism": "corrosive_carboxylic_acid",
+      "origin": "audited_baseline_10",
+      "rationale": "Strong corrosive carboxylic acid incompatible with precursor delivery and metal surfaces."
+    },
+    {
+      "id": "NEG-026",
+      "name": "Trifluoroacetic acid",
+      "smiles": "O=C(O)C(F)(F)F",
+      "failure_mechanism": "corrosive_carboxylic_acid",
+      "origin": "expanded_proposal5",
+      "rationale": "Strong corrosive fluorinated carboxylic acid causing uncontrolled etching/protonation."
+    },
+    {
+      "id": "NEG-027",
+      "name": "Acetic acid",
+      "smiles": "CC(=O)O",
+      "failure_mechanism": "corrosive_carboxylic_acid",
+      "origin": "expanded_proposal5",
+      "rationale": "Protic carboxylic acid inducing premature hydrolysis/ligand protonolysis rather than clean AS-ALD inhibition."
+    },
+    {
+      "id": "NEG-028",
+      "name": "Formic acid",
+      "smiles": "O=CO",
+      "failure_mechanism": "corrosive_carboxylic_acid",
+      "origin": "expanded_proposal5",
+      "rationale": "Corrosive protic reducing acid incompatible with ALD precursor/inhibitor chemistry."
+    },
+    {
+      "id": "NEG-029",
+      "name": "Benzoic acid",
+      "smiles": "O=C(O)c1ccccc1",
+      "failure_mechanism": "corrosive_carboxylic_acid",
+      "origin": "expanded_proposal5",
+      "rationale": "Solid carboxylic acid lacking selective silanol/metal-oxide ALD passivation stability."
+    },
+    {
+      "id": "NEG-030",
+      "name": "Oxalic acid",
+      "smiles": "O=C(O)C(=O)O",
+      "failure_mechanism": "corrosive_carboxylic_acid",
+      "origin": "expanded_proposal5",
+      "rationale": "Non-volatile dicarboxylic acid causing corrosive etching and decomposition."
+    },
+    {
+      "id": "NEG-031",
+      "name": "Pivalic acid",
+      "smiles": "CC(C)(C)C(=O)O",
+      "failure_mechanism": "corrosive_carboxylic_acid",
+      "origin": "expanded_proposal5",
+      "rationale": "Protic carboxylic acid triggering uncontrolled precursor protonolysis."
+    },
+    {
+      "id": "NEG-005",
+      "name": "Decane (Non-functionalized alkane)",
+      "smiles": "CCCCCCCCCC",
+      "failure_mechanism": "inert_nonfunctional_alkane",
+      "origin": "audited_baseline_10",
+      "rationale": "Zero surface chemisorption or anchoring functional group."
+    },
+    {
+      "id": "NEG-032",
+      "name": "Hexane",
+      "smiles": "CCCCCC",
+      "failure_mechanism": "inert_nonfunctional_alkane",
+      "origin": "expanded_proposal5",
+      "rationale": "Inert hydrocarbon solvent with no surface-reactive or metal-coordinating center."
+    },
+    {
+      "id": "NEG-033",
+      "name": "Octane",
+      "smiles": "CCCCCCCC",
+      "failure_mechanism": "inert_nonfunctional_alkane",
+      "origin": "expanded_proposal5",
+      "rationale": "Inert linear alkane incapable of chemisorption or ALD growth/inhibition."
+    },
+    {
+      "id": "NEG-034",
+      "name": "Dodecane",
+      "smiles": "CCCCCCCCCCCC",
+      "failure_mechanism": "inert_nonfunctional_alkane",
+      "origin": "expanded_proposal5",
+      "rationale": "Inert long-chain alkane lacking any reactive headgroup."
+    },
+    {
+      "id": "NEG-035",
+      "name": "Cyclohexane",
+      "smiles": "C1CCCCC1",
+      "failure_mechanism": "inert_nonfunctional_alkane",
+      "origin": "expanded_proposal5",
+      "rationale": "Inert saturated cycloalkane with zero surface anchoring affinity."
+    },
+    {
+      "id": "NEG-036",
+      "name": "Adamantane",
+      "smiles": "C1C2CC3CC1CC(C2)C3",
+      "failure_mechanism": "inert_nonfunctional_alkane",
+      "origin": "expanded_proposal5",
+      "rationale": "Inert cage hydrocarbon without functional groups for chemisorption."
+    },
+    {
+      "id": "NEG-037",
+      "name": "Isooctane (2,2,4-Trimethylpentane)",
+      "smiles": "CC(C)CC(C)(C)C",
+      "failure_mechanism": "inert_nonfunctional_alkane",
+      "origin": "expanded_proposal5",
+      "rationale": "Branched inert alkane lacking any surface-reactive moiety."
+    },
+    {
+      "id": "NEG-003",
+      "name": "Silacyclobutadiene",
+      "smiles": "C1=C[SiH2]C=1",
+      "failure_mechanism": "strained_or_pyrophoric_hydride_halide",
+      "origin": "audited_baseline_10",
+      "rationale": "Highly strained anti-aromatic silacycle prone to instantaneous polymerization."
+    },
+    {
+      "id": "NEG-009",
+      "name": "1,2-Dichlorodisilane",
+      "smiles": "Cl[SiH2][SiH2]Cl",
+      "failure_mechanism": "strained_or_pyrophoric_hydride_halide",
+      "origin": "audited_baseline_10",
+      "rationale": "Pyrophoric chlorodisilane undergoing rapid Si-Si disproportionation."
+    },
+    {
+      "id": "NEG-010",
+      "name": "Cp2AlH (Bis(cyclopentadienyl)aluminium hydride)",
+      "smiles": "C1=CC=CC1[AlH]C1C=CC=C1",
+      "failure_mechanism": "strained_or_pyrophoric_hydride_halide",
+      "origin": "audited_baseline_10",
+      "rationale": "Pyrophoric, oligomerizing organoaluminum hydride."
+    },
+    {
+      "id": "NEG-038",
+      "name": "Silacyclopropene",
+      "smiles": "C1=C[SiH2]1",
+      "failure_mechanism": "strained_or_pyrophoric_hydride_halide",
+      "origin": "expanded_proposal5",
+      "rationale": "Strained 3-membered silirene ring unstable to ring-opening polymerization."
+    },
+    {
+      "id": "NEG-039",
+      "name": "1,1,2,2-Tetrachlorodisilane",
+      "smiles": "Cl[SiH](Cl)[SiH](Cl)Cl",
+      "failure_mechanism": "strained_or_pyrophoric_hydride_halide",
+      "origin": "expanded_proposal5",
+      "rationale": "Unstable chlorodisilane prone to Si-Si disproportionation and HCl evolution."
+    },
+    {
+      "id": "NEG-040",
+      "name": "Cp2GaH (Bis(cyclopentadienyl)gallium hydride)",
+      "smiles": "C1=CC=CC1[GaH]C1C=CC=C1",
+      "failure_mechanism": "strained_or_pyrophoric_hydride_halide",
+      "origin": "expanded_proposal5",
+      "rationale": "Thermally labile organogallium hydride prone to H2 loss and polymerization."
+    }
+  ]
+}

@@ -453,6 +453,138 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(ml_live["all_sample_phys_importance_sum_pct"], stored["machine_learning_comparison"]["all_sample_phys_importance_sum_pct"])
         self.assertNotIn("delta_e_complex_kcal_mol", ml_live["all_sample_rf_feature_importances"])
 
+    def test_13_expanded_target_elements_coverage_and_sevenn_readiness(self):
+        """Verify Ir/Rh/As/Ga/In/Ru identifier curation, expanded master DB, SevenNet atom constants, and computed features."""
+        focus_elements = {"Ir", "Rh", "As", "Ga", "In", "Ru"}
+        sevenn_mod = self._load_script_module(
+            os.path.join("scripts", "benchmark", "run_phase2_sevenn_features.py"),
+            "repo_run_phase2_sevenn_features",
+        )
+        for el in focus_elements:
+            self.assertIn(el, sevenn_mod.ISOLATED_ATOM_ENERGIES)
+            self.assertIn(el, sevenn_mod.BONDI_RADII)
+            self.assertIn(el, sevenn_mod.METAL_SET)
+
+        curated_path = os.path.join(PROJECT_ROOT, "database", "external", "curated_target_element_identifiers.json")
+        with open(curated_path, "r", encoding="utf-8") as f:
+            curated = json.load(f)["identifiers"]
+        self.assertGreaterEqual(len(curated), 75)
+        curated_els = set()
+        for name, item in curated.items():
+            curated_els.add(item["center_element"])
+            mol = Chem.MolFromSmiles(item["smiles"])
+            self.assertIsNotNone(mol, f"Invalid curated SMILES for {name}")
+            self.assertEqual(rdMolDescriptors.CalcMolFormula(mol), item["formula"], f"Formula mismatch for {name}")
+        self.assertEqual(curated_els, focus_elements)
+
+        master_path = os.path.join(PROJECT_ROOT, "database", "external", "expanded_semiconductor_precursors_master.json")
+        with open(master_path, "r", encoding="utf-8") as f:
+            master = json.load(f)
+        self.assertGreaterEqual(len(master), 205)
+        master_focus_with_smi = {r["center_element"] for r in master if r.get("center_element") in focus_elements and r.get("smiles")}
+        self.assertEqual(master_focus_with_smi, focus_elements)
+
+        exp_sevenn_path = os.path.join(PROJECT_ROOT, "database", "external", "expanded_elements_sevenn_features.json")
+        if os.path.exists(exp_sevenn_path):
+            with open(exp_sevenn_path, "r", encoding="utf-8") as f:
+                exp_sevenn = json.load(f)
+            feats = exp_sevenn["features"]
+            self.assertGreaterEqual(len(feats), 1)
+            self.assertEqual(exp_sevenn["metadata"].get("fallback_count", -1), 0)
+            for feat in feats:
+                self.assertFalse(feat.get("is_fallback", True), f"Fallback triggered for {feat['id']}")
+                self.assertGreaterEqual(feat.get("dimer_init_gap_ang", 0.0), 2.8)
+                self.assertGreater(feat["e_coh_ev_per_atom"], 0.0)
+                for key in ("e_pot_ev", "e_coh_ev_per_atom", "bde_min_kcal_mol", "vbur_percent", "delta_e_dimer_kcal_mol"):
+                    self.assertTrue(math.isfinite(float(feat[key])), f"Non-finite {key} for {feat['id']}")
+
+    def test_14_expanded_18_model_semiconductor_db_evaluation(self):
+        """Verify 18-model evaluation across 102 SMILES precursors, 18 inhibitors, and 29 reagents."""
+        eval_path = os.path.join(PROJECT_ROOT, "database", "benchmark_expanded_models_db.json")
+        self.assertTrue(os.path.exists(eval_path), "Missing database/benchmark_expanded_models_db.json")
+        with open(eval_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        meta = data["metadata"]
+        self.assertEqual(meta["total_models"], 18)
+        self.assertEqual(meta["precursors_smiles_verified"], 102)
+        self.assertEqual(meta["inhibitors_smiles_verified"], 18)
+        self.assertEqual(meta["reagents_smiles_verified"], 29)
+        self.assertEqual(meta["total_smiles_evaluated"], 149)
+
+        p_counts = data["precursors_102"]["counts"]
+        self.assertEqual(p_counts["total"], 102)
+        self.assertEqual(p_counts["rdkit_valid"], 102)
+        self.assertEqual(p_counts["sascore_pass"], 2)
+        self.assertEqual(p_counts["gasa_supported"] + p_counts["gasa_silent_misencoded"], 102)
+        self.assertEqual(p_counts["dfrscore_else_collapsed"], 102)
+        self.assertEqual(p_counts["synnet_hb_core"], 0)
+        self.assertEqual(p_counts["synformer_core"], 0)
+        self.assertEqual(p_counts["rxnflow_core"], 0)
+        self.assertEqual(len(data["precursors_102"]["records"]), 102)
+
+    def test_15_neg_control_descriptor_and_model_search(self):
+        """Verify expanded descriptors, OneClassSVM_RBF, and physics coordination gate results."""
+        path = os.path.join(PROJECT_ROOT, "database", "benchmark_neg_control_model_search.json")
+        self.assertTrue(os.path.exists(path), "Missing database/benchmark_neg_control_model_search.json")
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        self.assertIn("is_homoleptic_tm_sp3", data["new_descriptors_added"])
+        gate = data["physics_coord_gate_eval"]
+        self.assertEqual(gate["cohort_55"]["precursor_27"]["with_coord_gate_pass"], 22)
+        self.assertEqual(gate["cohort_55"]["inhibitor_18"]["with_coord_gate_pass"], 16)
+        self.assertEqual(gate["cohort_55"]["negative_control_10"]["with_coord_gate_pass"], 0)
+        self.assertEqual(gate["negative_control_tnr_specificity"], 1.0)
+        self.assertEqual(data["cohort_130_chem_coord"]["best_model_by_cv5_bal_acc"], "OneClassSVM_RBF")
+
+    def test_16_refinement_and_rxn_check(self):
+        """Verify Item 1 adaptive V_min, Item 4 pi-hapticity/chelate gate, and Item 2 SevenNet-0 reaction energies."""
+        path = os.path.join(PROJECT_ROOT, "database", "benchmark_refinement_and_rxn_check.json")
+        self.assertTrue(os.path.exists(path), "Missing database/benchmark_refinement_and_rxn_check.json")
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        v2 = data["items_1_and_4"]["cohort_55_v2"]
+        self.assertEqual(v2["precursor_pass"], "25/27")
+        self.assertEqual(v2["neg_control_pass"], "0/10")
+        self.assertEqual(v2["neg_control_tnr_pct"], 100.0)
+
+        exp75 = data["items_1_and_4"]["expanded_75_topology"]
+        self.assertEqual(exp75["total"], 75)
+        self.assertEqual(exp75["coord_flagged_count"], 0)
+        self.assertEqual(exp75["unflagged_count"], 75)
+
+        rxns = {r["id"]: r for r in data["item_2_reaction_energy_check"]["reactions"]}
+        self.assertLess(rxns["SYN_TEOS"]["delta_e_kcal_mol"]["SevenNet-0"], 0.0)
+        self.assertLess(rxns["SYN_TDMAT"]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"], -100.0)
+        self.assertLess(rxns["SYN_TEMAH"]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"], -100.0)
+
+    def test_17_expanded_neg_control_validation(self):
+        """Verify Proposal 5 failure-mechanism-stratified 40 Negative Control & 160-cohort validation."""
+        db_path = os.path.join(PROJECT_ROOT, "database", "expanded_negative_controls.json")
+        res_path = os.path.join(PROJECT_ROOT, "database", "benchmark_expanded_neg_control_validation.json")
+        self.assertTrue(os.path.exists(db_path), "Missing database/expanded_negative_controls.json")
+        self.assertTrue(os.path.exists(res_path), "Missing database/benchmark_expanded_neg_control_validation.json")
+        with open(res_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        cs = data["cohort_summary"]
+        self.assertEqual(cs["total_molecules"], 160)
+        self.assertEqual(cs["positive_total"], 120)
+        self.assertEqual(cs["negative_controls_total"], 40)
+
+        base = data["negative_control_40_baselines"]
+        self.assertEqual(base["sascore_rejected"], "18/40")
+        self.assertEqual(base["syba_rejected"], "4/40")
+        self.assertEqual(base["coord_chem_gate_rejected"], "39/40")
+        self.assertEqual(base["coord_chem_gate_tnr_pct"], 97.5)
+
+        self.assertEqual(len(data["by_failure_mechanism"]), 6)
+        ml = data["ml_cv5_cohort_160"]
+        self.assertGreaterEqual(ml["SVC_RBF"]["cv5_balanced_acc"], 0.90)
+        self.assertGreaterEqual(ml["LogisticRegression"]["cv5_tnr_specificity"], 0.90)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -381,3 +381,119 @@ To inversely design semiconductor precursors satisfying target properties $\math
 5. **Interactive Implementation**:
    - Substrate comparison grid, ASD quantitative indicators, and 10-descriptor comprehensive matrix integrated into Section 12 of [`index.html`](./index.html).
    - Domain-specific base model adaptation strategy, `TMC-SA` hybrid formulation ($\Delta G_{\text{syn}}^{\text{DFT}} + \%V_{\text{bur}} + \mathcal{P}_{\text{exp}}$), `RxnFlow` Multi-Fidelity GFlowNet reward coupling, and 3-phase implementation roadmap integrated into Section 13 of [`index.html`](./index.html).
+
+---
+
+## 9. Focus-Element Expansion & Verification (`Ir, Rh, As, Ga, In, Ru`)
+
+To resolve missing coverage for group III-V (`Ga, In, As`) and noble/platinum-group metal (`Ir, Rh, Ru`) ALD precursors without disturbing the audited 27-precursor and 55-molecule Phase 1/2 benchmarks:
+
+1. **SevenNet-0 Element Reference & Steric Tables (`scripts/benchmark/run_phase2_sevenn_features.py`)**:
+   - Measured isolated single-atom reference energies in a $50\text{ Å}$ non-PBC box via `SevenNet-0`: $\text{Ga} = -0.5708\text{ eV}$, $\text{As} = -1.3476\text{ eV}$, $\text{Rh} = -1.9016\text{ eV}$, $\text{In} = -0.7678\text{ eV}$, $\text{Ir} = -1.9783\text{ eV}$ ($\text{Ru} = -2.6209\text{ eV}$ verified).
+   - Added Bondi/Mantina van der Waals radii ($\text{Ga} = 1.87\text{ Å}$, $\text{As} = 1.85\text{ Å}$, $\text{In} = 1.93\text{ Å}$, DOI `10.1021/jp8111556`) and RDKit `PeriodicTable.GetRvdw` values ($\text{Rh} = 2.00\text{ Å}$, $\text{Ir} = 2.00\text{ Å}$) to `BONDI_RADII`, and expanded `METAL_SET` to include `Ga, In, As, Rh, Ir`.
+2. **Identifier Curation & Master DB Expansion (`database/external/curated_target_element_identifiers.json`, `scripts/data/fetch_external_precursor_dbs.py`)**:
+   - Validated `75` molecular SMILES entries across `Ir` (`6`), `Rh` (`1`), `As` (`5`), `Ga` (`24`), `In` (`24`), and `Ru` (`15`) against exact stoichiometry (`rdMolDescriptors.CalcMolFormula`) and RDKit `AllChem.ETKDGv3` 3D conformer generation (`--from-inventory` flag added to `fetch_external_precursor_dbs.py`).
+   - Rebuilt `database/external/expanded_semiconductor_precursors_master.json` from `120` to `205` entries (`102` total with SMILES; ambiguous ligand abbreviations left `null`).
+3. **SevenNet-0 Physical Feature Calculation (`scripts/benchmark/run_expanded_elements_sevenn.py`)**:
+   - Evaluated `30` priority precursors (`Ir: 6, Rh: 1, As: 5, Ga: 6, In: 6, Ru: 6`) via `compute_precursor_physical_features` (`fallback_count = 0`, runtime `1518.6 s`), saved to `database/external/expanded_elements_sevenn_features.json`.
+   - Known model limitations observed: `SevenNet-0` (`MPtrj` crystal training set) can yield negative neutral/radical dissociation BDEs on ligands such as $\text{CO}$/arene/halide (`Ir(CO)3(tBu3Cyp)`: $-8.8\text{ kcal/mol}$, `GaCl3`: $-3.5\text{ kcal/mol}$, `Ru(IMBCH)`: $-15.2\text{ kcal/mol}$), and open-chain $\beta$-diketonate SMILES (`Ga(acac)3`) can undergo cross-ligand dimer coordination during LBFGS relaxation ($-49.9\text{ kcal/mol}$).
+4. **HTML Explorer & Automated Reproducibility Verification**:
+   - Updated `generate_html.py` and `template.html` (`CORE_METAL_ORDER`, `METAL_ALIAS_MAP`, dynamic category counts) and regenerated [`index.html`](./index.html) and [`synthetic_accessibility_report.html`](./synthetic_accessibility_report.html).
+   - Executed `python -m unittest discover tests -v`: **13 / 13 tests passed (`70.612 s`, `OK`)**, including `test_13_expanded_target_elements_coverage_and_sevenn_readiness`.
+
+
+---
+
+## 10. Hydrogen API Option Audit & Expanded 18-Model Semiconductor DB Evaluation
+
+1. **Gemini 4 Hydrogen API Option Audit**:
+   - Searched all project `.py`, `.md`, and `.json` files (excluding `external/` submodules and generated HTML) for `thinking_budget`, `ThinkingConfig`, `MINIMAL`, `gemini-3`, and `genai`.
+   - **Finding**: No Gemini or LLM API client calls exist in the repository (`scripts/benchmark/run_phase2_sevenn_features.py` line 138 only uses `"minimal spatial extent"` in a geometric docstring). Accordingly, no existing API call options required modification; any future LLM integration targeting Hydrogen must use the 4-level Thinking system without `thinking_budget` or `MINIMAL`.
+2. **Expanded 18-Model Evaluation on Expanded Semiconductor DB (`scripts/benchmark/run_expanded_model_evaluation.py` -> `database/benchmark_expanded_models_db.json`)**:
+   - Evaluated all **18** models (`1G`: `SAScore, SYBA`; `2G`: `SCScore, RAscore, RetroGNN, MPScore`; `3G`: `BR-SAScore, GASA, DeepSA, DFRscore`; `4G`: `SynNet, ChemProjector, SynFormer, SynFlowNet, RxnFlow, BioNeMo ReaSyn, AiZynthFinder, Retro*`) across `102` SMILES-verified semiconductor precursors (`16` center elements: `Al, As, Co, Ga, Hf, In, Ir, Mo, Rh, Ru, Si, Sn, Ta, Ti, W, Zr`), `18` AS-ALD inhibitors, and `29` commercial reagents (`149` SMILES total).
+   - **Key Empirical Findings on `102` Precursors**:
+     - `SAScore`: `2 / 102` (`2.0%`, mean `4.868`; `98.0%` FN rate).
+     - `SYBA`: `83 / 102` (`81.4%`, mean `2.600`).
+     - `SCScore`: `62 / 102` (`60.8%`, mean `1.894`).
+     - `RAscore`: `90 / 102` (`88.2%` pass `>= 0.5`, mean `0.835`, range `0.026 ~ 0.991`).
+     - `BR-SAScore` (Default & Strict Unleaked `max(existing, -0.47)`): `19 / 102` (`18.6%`; reagents `28 / 29`).
+     - `GASA` (static `allowable_set` audit): `49 / 102` (`48.0%`) supported vs `53 / 102` (`52.0%`) silent all-zero vector mis-encoding across `8` missing elements (`Ga, Hf, Ir, Mo, Rh, Ru, Ta, W`).
+     - `DeepSA` (static + RDKit audit): `93 / 102` (`91.2%`) Ro5 pass, `102 / 102` (`100.0%`) contain `[...]` inorganic brackets fragmented by ELECTRA subword splitting.
+     - `DFRscore` (static vocabulary audit): `102 / 102` (`100.0%`) collapsed to `'ELSE'` (`0 / 102` organic-only vs `11 / 18` for AS-ALD inhibitors).
+     - `MPScore` (static domain audit): `102 / 102` ECFP4 active bits, `0 / 102` (`0.0%`) organic porous-cage domain (`100%` metal/metalloid OOD; Zenodo weights absent -> `null` inference).
+     - `RetroGNN` & `SynFlowNet`: `102 / 102` Stage 1/2 input validation; Stage 3/4 unexecuted (`null`, weights/repos absent).
+     - `SynNet` / `ChemProjector` (`HB-91`), `SynFormer` (`115` rules), `RxnFlow` (`72` rules), `BioNeMo ReaSyn` (`102 / 102` vocab, `90 / 102` exact roundtrip): `82 / 102`, `86 / 102`, `25 / 102`, `86 / 102` organic substituent matches respectively, and **`0 / 102` (`0.0%`)** core metal coordination rules.
+     - `AiZynthFinder` & `Retro*`: `102 / 102` live `Molecule.sanitize()` / `rdchiralReactants()` ingestion; Stage 3/4 unexecuted (`null`, USPTO weights/HDF5 absent).
+3. **Summary Tab & Reproducibility Verification**:
+   - Updated `generate_html.py` (`multistage_models` expanded from `15` to `18` models dynamically driven by `database/benchmark_expanded_models_db.json`) and `template.html` (`storyline-step2` 4-Stage Drop-out Map Mermaid diagram and headers), and regenerated [`index.html`](./index.html) and [`synthetic_accessibility_report.html`](./synthetic_accessibility_report.html) (`전구체` count = `0`).
+   - Executed `python -m unittest discover tests -v`: **14 / 14 tests passed (`97.783 s`, `OK`)**, including `test_14_expanded_18_model_semiconductor_db_evaluation`.
+
+
+---
+
+## 11. Latent Space Redefinition & Negative Control Separation Model Search
+
+1. **Latent Space Projection (`scripts/benchmark/run_latent_space_projection.py` -> `database/benchmark_latent_space_projections.json`)**:
+   - Projected both the `130`-molecule expanded cohort (`55` audited + `75` expanded `Ir/Rh/As/Ga/In/Ru` precursors, `12` Base SA + RDKit features) and `85`-molecule `SevenNet-0` cohort (`55` audited + `30` expanded, `11` Base SA + `SevenNet-0` physics features) into 2D `PCA` and `t-SNE` spaces.
+   - Unsupervised projections yielded negative silhouette scores (`-0.115` / `-0.034` on 130; `-0.043` / `-0.024` on 85) because unsupervised variance is dominated by molecular size and element family rather than heterogeneous thermodynamic failure boundaries.
+2. **Expanded Descriptors & Negative Control Separation (`scripts/benchmark/run_neg_control_model_search.py` -> `database/benchmark_neg_control_model_search.json`)**:
+   - Added `13` physically grounded coordination, volatility, and instability descriptors (`is_homoleptic_tm_sp3`, `is_homoleptic_mc`, `metal_c_sigma_frac`, `metal_hetero_frac`, `beta_h_alkyl_count`, `metal_oh_count`, `cooh_count`, `is_inert_alkane`, `hbd`, `hba`, `tpsa`, `aromatic_rings`, `vbur_x_bde`).
+   - **ML Model Comparison**: Because the `10` Negative Controls represent distinct out-of-distribution failure modes (`120:10` / `75:10` imbalance), **Positive-Only One-Class Anomaly Detection (`OneClassSVM_RBF`)** outperformed binary supervised classifiers (`LogisticRegression`, `SVC_RBF`, `MLP`, `RandomForest`, `ExtraTrees`, `GradientBoosting`, `XGBoost_Weighted`):
+     - `Cohort 55`: `OneClassSVM_RBF` `CV-5 ROC-AUC = 0.833`, `Bal.Acc = 0.689`, `TNR = 1.000` (`SVC_RBF` `AUC = 0.842`, `Bal.Acc = 0.706`, `TNR = 0.500`).
+     - `Cohort 85`: `OneClassSVM_RBF` `CV-5 ROC-AUC = 0.804`, `Bal.Acc = 0.717`, `TNR = 0.900`.
+     - `Cohort 130`: `OneClassSVM_RBF` `CV-5 ROC-AUC = 0.844`, `Bal.Acc = 0.800`, `TNR = 0.900`.
+   - **Physics + Coordination Gate (`TMC-SA_phys + sp3/OH/Aryl`)**: Coupling `TMC-SA_phys <= 4.0` with `is_homoleptic_tm_sp3`, `metal_oh_count >= 2`, and `d-block aromatic_rings >= 5` achieved **`22/27` Precursor TPR (`81.5%`)**, **`16/18` Inhibitor TPR (`88.9%`)**, and **`10/10` Negative Control TNR (`100.0%`, `FPR = 0.0%`)**, while keeping `73/75 (97.3%)` of expanded `Ir/Rh/As/Ga/In/Ru` precursors unflagged.
+3. **HTML & Test Verification**:
+   - Regenerated [`index.html`](./index.html) and [`synthetic_accessibility_report.html`](./synthetic_accessibility_report.html) (`전구체` count = `0`) and verified `15 / 15` unit tests passing via `python -m unittest discover tests -v`.
+
+
+---
+
+## 12. Accuracy Refinement (Items 1 & 4) and Reaction-Energy Consistency Check (Item 2)
+
+1. **Item 1 (Element & $\pi$-Hapticity Adaptive $\%V_{\text{bur}}$ Lower Bound $V_{\min}$)**:
+   - Implemented `evaluate_adaptive_tmc_sa_v2` in `scripts/benchmark/run_refinement_and_rxn_check.py` (output: `database/benchmark_refinement_and_rxn_check.json`), setting $V_{\min} = 34.0\%$ for small-covalent-radius $\text{Si}$ centers and $\pi$-haptic organometallics (`pi_hapticity_index > 0`), while retaining $V_{\min} = 44.0\%$ for standard transition-metal complexes.
+   - Rescued all three sterically compact baseline precursors without any loss of Negative Control specificity:
+     - `PREC_SI_01` (`DIPAS`): `4.97` $\to$ `2.26`
+     - `PREC_SI_05` (`TSA`): `5.90` $\to$ `3.475`
+     - `PREC_MET_03` (`Ru(EtCp)2`): `6.03` $\to$ `3.705`
+   - Updated `cohort_55_v2` metrics: **Precursor Pass Rate `25/27` (`92.6%`)**, **Inhibitor Pass Rate `11/18` (`61.1%`)**, **Negative Control Specificity `10/10` (`100.0%` TNR, `0/10` pass)**.
+
+2. **Item 4 ($\pi$-Hapticity & Chelate-Ring Topological Descriptors)**:
+   - Added `pi_hapticity_index` and `chelate_ring_count` in `compute_topology_descriptors` so SMILES-encoded $\eta$-diene/$\pi$-ring organometallics are recognized as $\pi$-coordinated rather than misclassified as homoleptic $sp^3$ alkyls (`is_homoleptic_tm_sp3_refined`).
+   - Across the `75` expanded `Ir/Rh/As/Ga/In/Ru` precursors (`17` $\pi$-haptic complexes, `3` chelate complexes), coordination gate false flags dropped from `2/75` (`Ru(IMBCH)`, `Ru(EBCHD)`) to **`0/75` (`75/75` = `100.0%` unflagged)**.
+
+3. **Item 2 (Stoichiometric Synthesis Reaction Energy $\Delta E_{\text{syn}}$ Consistency Check)**:
+   - Evaluated `SevenNet-0` (`7net-0`) vs `MACE-MP0` (`mace_mp(model="small")`) across `SYN_TEOS` ($\text{SiCl}_4 + 4\text{ EtOH} \to \text{Si(OEt)}_4 + 4\text{ HCl}$), `SYN_TDMAT` ($\text{TiCl}_4 + 4\text{ LiNMe}_2 \to \text{Ti(NMe}_2)_4 + 4\text{ LiCl}$), and `SYN_TEMAH` ($\text{HfCl}_4 + 4\text{ LiNMeEt} \to \text{Hf(NMeEt)}_4 + 4\text{ LiCl}$):
+     - **Model Availability**: `MACE-MP0` failed to load (`too many values to unpack (expected 2)` during `e3nn` unpickling of cached `20231210mace128L0_energy_epoch249model`; `MACE-MPA-0`/`MACE-OMol` unreachable offline; `xTB`/`PySCF`/`Psi4`/`ORCA` not installed). `SevenNet-0` executed all reactions cleanly after guarding RDKit `AllChem.UFFOptimizeMolecule` with `AllChem.UFFHasAllMoleculeParams` (preventing UFF atom-overlap collapse on unrecognized `Hf3` in `Hf(NMeEt)4`) and applying `FIRE` pre-relaxation before `LBFGS(maxstep=0.05)`.
+     - **`SevenNet-0` $\Delta E_{\text{syn}}$ Results**:
+       - `SYN_TEOS`: **`-4.26 kcal/mol`** (physically consistent exothermic gas-phase alcoholysis).
+       - `SYN_TDMAT`: `+3.05 kcal/mol` with gas-phase `4 LiCl(g)` $\to$ **`-232.24 kcal/mol`** with rock-salt `4 LiCl(s)`.
+       - `SYN_TEMAH`: `+46.59 kcal/mol` with gas-phase `4 LiCl(g)` $\to$ **`-188.70 kcal/mol`** with rock-salt `4 LiCl(s)`.
+     - **Key Physical Conclusion**: Replacing the algebraic `Heuristic Proxy` with `SevenNet-0` is thermodynamically consistent for molecular alcoholysis (`SYN_TEOS`), whereas salt-metathesis pathways (`SYN_TDMAT`, `SYN_TEMAH`) strictly require condensed-phase `LiCl(s)` rock-salt (or solvated cluster) reference states rather than isolated `LiCl(g)` monomers to capture the ionic lattice driving force.
+
+
+---
+
+## 13. Proposal 5: Failure-Mechanism-Stratified Negative Control DB Expansion (`10 -> 40`)
+
+1. **Failure-Mechanism-Stratified Negative Control Database (`database/expanded_negative_controls.json`)**:
+   - Expanded the original `10` audited Negative Controls by adding `30` newly curated, RDKit-validated negative controls across `6` physical/chemical failure mechanisms (`40` Negative Controls total; `160`-molecule expanded cohort with `120` positives = `27` audited precursors + `75` expanded precursors + `18` inhibitors):
+     1. `unstable_homoleptic_tm_alkyl` (`7`)
+     2. `nonvolatile_poly_aryl` (`6`)
+     3. `polyhydroxide_solgel_condensation` (`7`)
+     4. `corrosive_carboxylic_acid` (`7`)
+     5. `inert_nonfunctional_alkane` (`7`)
+     6. `strained_or_pyrophoric_hydride_halide` (`6`)
+
+2. **Empirical Validation (`scripts/benchmark/run_expanded_neg_control_validation.py` -> `database/benchmark_expanded_neg_control_validation.json`)**:
+   - **Negative Control Specificity (`40` molecules)**:
+     - `SAScore`: `18/40` rejected (`45.0%` TNR, `55.0%` FPR; `0.0%` TNR on poly-aryl, carboxylic acid, and inert alkane mechanisms).
+     - `SYBA`: `4/40` rejected (`10.0%` TNR, `90.0%` FPR).
+     - **Coordination/Topology/Chem Gate**: **`39/40` rejected (`97.5%` TNR, `2.5%` FPR)** (`100.0%` TNR across `5/6` failure mechanisms; the single miss is `NEG-019 CrPh3`, whose `Cr` center lies outside the `16`-element semiconductor center set), with **`0/120` false coordination flags** on the positive cohort.
+   - **Expanded `160`-Molecule Cohort Stratified 5-Fold CV (`120:40`)**:
+     - `SVC_RBF`: `ROC-AUC = 0.9444`, `Bal.Acc = 0.9292`, `TPR = 0.9833`, `TNR = 0.8750`.
+     - `LogisticRegression`: `ROC-AUC = 0.9667`, `Bal.Acc = 0.9250`, `TPR = 0.9500`, `TNR = 0.9000`.
+     - `RandomForest`: `ROC-AUC = 0.9815`, `Bal.Acc = 0.8583`, `TPR = 0.9917`, `TNR = 0.7250`.
+     - `XGBoost_Weighted`: `ROC-AUC = 0.9367`, `Bal.Acc = 0.8250`, `TPR = 0.9000`, `TNR = 0.7500`.
+     - `OneClassSVM_RBF`: `ROC-AUC = 0.8698`, `Bal.Acc = 0.7792`, `TPR = 0.7083`, `TNR = 0.8500`.

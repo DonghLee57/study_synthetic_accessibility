@@ -43,12 +43,12 @@ All technical terminology belonging to **statistics, evaluation metrics, machine
 - **Features, Embeddings & Optimization**: `Baseline`, `Base Model`, `Feature`, `Feature Set`, `Feature Importance`, `Gini Importance`, `Descriptor`, `Circular Fingerprint` (`Morgan Fingerprint`, `ECFP4`, `ECFP6`), `Fragment Frequency`, `One-Hot Encoding`, `Node Embedding`, `Latent Space`, `Tokenizer`, `Tokenization`, `Vocabulary`, `Out-of-Vocabulary (OOV)`, `Subword Splitting`, `Loss Function`, `Objective Function`, `Reward Function`, `Reward Hacking`, `Log-Odds Ratio`, `Regularization`, `Hyperparameter Tuning`, `Active Learning`, `Multi-Fidelity Gating`, `Fermi-Dirac Sigmoid`, `Smooth Penalty`, `Continuous Penalty`, `Proxy`, `Single-Point`, `Fallback` *(never `피처`, `피처 중요도`, `베이스라인`, `단편 빈도`, `지문`, `잠재 공간`, `토크나이저`, `토큰화`, `임베딩`, `손실 함수`, `목적함수`, `보상함수`, `승산비/로그공산비`, `능동 학습`, `다중정밀도`, `연속 페널티`, `시그모이드`, `과소평가/과대평가`)*.
 
 ### 3.3 Permitted Korean Context
-- Natural Korean grammar particles, verbs, and semiconductor/chemistry domain prose remain in Korean (e.g., `반도체 전구체`, `결합 해리에너지`, `입체 차폐`, `이합체화`, `올리고머화`, `표면 흡착`, `양자화학 계산`, `유기 프로-리간드`, `판정 기준`).
+- Natural Korean grammar particles, verbs, and semiconductor/chemistry domain prose remain in Korean (e.g., `반도체 프리커서`, `결합 해리에너지`, `입체 차폐`, `이합체화`, `올리고머화`, `표면 흡착`, `양자화학 계산`, `유기 프로-리간드`, `판정 기준`).
 - Do **not** wrap Korean chemistry nouns with redundant English synonyms when the term is purely domain-chemical rather than a statistical/model term, unless introducing a specific chemical property acronym once (e.g., `$\%V_{\text{bur}}$`, `$\text{BDE}_{\min}$`).
 
-### 3.4 Semiconductor Process Terminology
-- Do **not** use `파운드리`, `팹`, or `Fab` (case-insensitive) in headings, tables, body prose, or diagrams.
-- Standardize uniformly onto **`반도체 공정`** in Korean prose/labels and **`semiconductor process`** in English technical reports.
+### 3.4 Semiconductor Process & Precursor Terminology
+- Do **not** use `파운드리`, `팹`, or `Fab` (case-insensitive) in headings, tables, body prose, or diagrams. Standardize uniformly onto **`반도체 공정`** in Korean prose/labels and **`semiconductor process`** in English technical reports.
+- Standardize uniformly onto **`프리커서`** (never `전구체`) across all Korean report prose, headings, tables, and UI labels, and avoid unidiomatic coined compounds such as `마스터 프리커서`.
 
 ---
 

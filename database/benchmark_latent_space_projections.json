@@ -1,0 +1,2629 @@
+{
+  "cohort_130_sa_rdkit": {
+    "total": 130,
+    "features": [
+      "sascore",
+      "syba",
+      "scscore",
+      "rascore",
+      "br_sascore",
+      "mw",
+      "logp",
+      "tpsa",
+      "heavy_atoms",
+      "ring_count",
+      "rot_bonds"
+    ],
+    "pca_explained_variance_ratio": [
+      0.4009,
+      0.1782
+    ],
+    "pca_top_loadings": {
+      "PC1": [
+        [
+          "heavy_atoms",
+          0.461
+        ],
+        [
+          "mw",
+          0.425
+        ],
+        [
+          "logp",
+          0.361
+        ],
+        [
+          "rot_bonds",
+          0.36
+        ]
+      ],
+      "PC2": [
+        [
+          "syba",
+          0.581
+        ],
+        [
+          "ring_count",
+          -0.554
+        ],
+        [
+          "scscore",
+          -0.419
+        ],
+        [
+          "rot_bonds",
+          0.277
+        ]
+      ]
+    },
+    "separability": {
+      "single_descriptors": {
+        "sascore": {
+          "cv5_roc_auc": 0.183,
+          "cv5_balanced_acc": 0.263
+        },
+        "syba": {
+          "cv5_roc_auc": 0.388,
+          "cv5_balanced_acc": 0.487
+        },
+        "scscore": {
+          "cv5_roc_auc": 0.575,
+          "cv5_balanced_acc": 0.592
+        },
+        "rascore": {
+          "cv5_roc_auc": 0.51,
+          "cv5_balanced_acc": 0.554
+        },
+        "br_sascore": {
+          "cv5_roc_auc": 0.363,
+          "cv5_balanced_acc": 0.412
+        },
+        "mw": {
+          "cv5_roc_auc": 0.701,
+          "cv5_balanced_acc": 0.742
+        },
+        "logp": {
+          "cv5_roc_auc": 0.26,
+          "cv5_balanced_acc": 0.35
+        },
+        "tpsa": {
+          "cv5_roc_auc": 0.61,
+          "cv5_balanced_acc": 0.579
+        },
+        "heavy_atoms": {
+          "cv5_roc_auc": 0.652,
+          "cv5_balanced_acc": 0.725
+        },
+        "ring_count": {
+          "cv5_roc_auc": 0.395,
+          "cv5_balanced_acc": 0.467
+        },
+        "rot_bonds": {
+          "cv5_roc_auc": 0.518,
+          "cv5_balanced_acc": 0.525
+        }
+      },
+      "best_single_descriptor": {
+        "name": "mw",
+        "cv5_roc_auc": 0.701,
+        "cv5_balanced_acc": 0.742
+      },
+      "pca_2d": {
+        "lr_cv5_roc_auc": 0.562,
+        "lr_cv5_balanced_acc": 0.554,
+        "knn5_cv5_roc_auc": 0.561,
+        "knn5_cv5_balanced_acc": 0.5,
+        "silhouette_score": -0.115
+      },
+      "tsne_2d": {
+        "lr_cv5_roc_auc": 0.604,
+        "lr_cv5_balanced_acc": 0.637,
+        "knn5_cv5_roc_auc": 0.508,
+        "knn5_cv5_balanced_acc": 0.5,
+        "silhouette_score": -0.034
+      },
+      "full_scaled_space": {
+        "lr_cv5_roc_auc": 0.455,
+        "lr_cv5_balanced_acc": 0.475
+      }
+    },
+    "points": [
+      {
+        "id": "PREC_SI_01",
+        "name": "DIPAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.1821,
+        "pc2": 0.5834,
+        "tsne1": 1.249,
+        "tsne2": -2.0869
+      },
+      {
+        "id": "PREC_SI_02",
+        "name": "BTBAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.8076,
+        "pc2": 0.8964,
+        "tsne1": 0.3617,
+        "tsne2": -1.8352
+      },
+      {
+        "id": "PREC_SI_03",
+        "name": "3DMAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.2033,
+        "pc2": 0.7496,
+        "tsne1": -0.2649,
+        "tsne2": -1.365
+      },
+      {
+        "id": "PREC_SI_04",
+        "name": "4DMAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.5748,
+        "pc2": 0.8867,
+        "tsne1": -0.1981,
+        "tsne2": -0.1963
+      },
+      {
+        "id": "PREC_SI_05",
+        "name": "TSA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -3.535,
+        "pc2": 0.1366,
+        "tsne1": -10.8795,
+        "tsne2": -11.7589
+      },
+      {
+        "id": "PREC_SI_06",
+        "name": "HCDS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.8043,
+        "pc2": 0.6369,
+        "tsne1": 2.1684,
+        "tsne2": -3.8184
+      },
+      {
+        "id": "PREC_SI_07",
+        "name": "TEOS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.0822,
+        "pc2": 1.8686,
+        "tsne1": 1.7894,
+        "tsne2": 2.1167
+      },
+      {
+        "id": "PREC_SI_08",
+        "name": "SAM.24",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.9382,
+        "pc2": 0.6823,
+        "tsne1": 1.6406,
+        "tsne2": -1.5419
+      },
+      {
+        "id": "PREC_HK_01",
+        "name": "TEMAH",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.9745,
+        "pc2": 1.0729,
+        "tsne1": 4.7203,
+        "tsne2": 3.5774
+      },
+      {
+        "id": "PREC_HK_02",
+        "name": "TDMAH",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.0286,
+        "pc2": 0.532,
+        "tsne1": 0.406,
+        "tsne2": 1.4073
+      },
+      {
+        "id": "PREC_HK_03",
+        "name": "Hf(OtBu)4",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.781,
+        "pc2": 1.1124,
+        "tsne1": 4.3912,
+        "tsne2": 5.2298
+      },
+      {
+        "id": "PREC_HK_04",
+        "name": "TEMAZ",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.6484,
+        "pc2": 1.0785,
+        "tsne1": 4.322,
+        "tsne2": 3.2687
+      },
+      {
+        "id": "PREC_HK_05",
+        "name": "TDMAZ",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.3209,
+        "pc2": 0.5831,
+        "tsne1": 0.5345,
+        "tsne2": 0.719
+      },
+      {
+        "id": "PREC_HK_06",
+        "name": "ZMA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.0314,
+        "pc2": -3.0178,
+        "tsne1": 12.4159,
+        "tsne2": -4.8712
+      },
+      {
+        "id": "PREC_HK_07",
+        "name": "Cp(NMe2)3Zr",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.1776,
+        "pc2": -2.1227,
+        "tsne1": 11.2447,
+        "tsne2": -6.907
+      },
+      {
+        "id": "PREC_TI_01",
+        "name": "TDMAT",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.5587,
+        "pc2": 0.8937,
+        "tsne1": 0.5092,
+        "tsne2": -0.1728
+      },
+      {
+        "id": "PREC_TI_02",
+        "name": "TTIP",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.9597,
+        "pc2": 1.3711,
+        "tsne1": 3.6525,
+        "tsne2": 3.4463
+      },
+      {
+        "id": "PREC_TI_03",
+        "name": "CpTi(NMe2)3",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.0686,
+        "pc2": -2.0378,
+        "tsne1": 11.0751,
+        "tsne2": -6.8989
+      },
+      {
+        "id": "PREC_AL_01",
+        "name": "TMA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.6853,
+        "pc2": 0.7238,
+        "tsne1": -7.1863,
+        "tsne2": -10.3398
+      },
+      {
+        "id": "PREC_AL_02",
+        "name": "DMAH",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -3.2102,
+        "pc2": 0.5805,
+        "tsne1": -9.0353,
+        "tsne2": -11.0422
+      },
+      {
+        "id": "PREC_MET_01",
+        "name": "BTBMW",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.1016,
+        "pc2": 0.6072,
+        "tsne1": 3.4441,
+        "tsne2": 5.8797
+      },
+      {
+        "id": "PREC_MET_02",
+        "name": "BTBMMo",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.0981,
+        "pc2": 0.4751,
+        "tsne1": 3.2012,
+        "tsne2": 6.3112
+      },
+      {
+        "id": "PREC_MET_03",
+        "name": "Ru(EtCp)2",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.6708,
+        "pc2": -2.5392,
+        "tsne1": 11.8455,
+        "tsne2": -5.4103
+      },
+      {
+        "id": "PREC_MET_04",
+        "name": "Co(AMD)2",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 2.1035,
+        "pc2": 0.126,
+        "tsne1": 4.3893,
+        "tsne2": 7.0356
+      },
+      {
+        "id": "PREC_MET_05",
+        "name": "CCTBA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 2.3313,
+        "pc2": -2.9386,
+        "tsne1": 2.2798,
+        "tsne2": 10.9018
+      },
+      {
+        "id": "PREC_MET_06",
+        "name": "TBTDET",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 2.1954,
+        "pc2": 0.9193,
+        "tsne1": 5.6671,
+        "tsne2": 5.0906
+      },
+      {
+        "id": "PREC_EUV_01",
+        "name": "tBuSn(OiPr)3",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.3517,
+        "pc2": 0.8597,
+        "tsne1": 4.4043,
+        "tsne2": 4.5551
+      },
+      {
+        "id": "INHIB-001",
+        "name": "DMADMS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.1763,
+        "pc2": 0.8268,
+        "tsne1": 0.2363,
+        "tsne2": -2.6127
+      },
+      {
+        "id": "INHIB-002",
+        "name": "DMATMS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.3963,
+        "pc2": 0.9984,
+        "tsne1": -0.2654,
+        "tsne2": -3.4715
+      },
+      {
+        "id": "INHIB-003",
+        "name": "BEMS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.5119,
+        "pc2": 0.7852,
+        "tsne1": 1.6547,
+        "tsne2": -0.7914
+      },
+      {
+        "id": "INHIB-004",
+        "name": "HMDS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.0661,
+        "pc2": 1.1825,
+        "tsne1": -0.7698,
+        "tsne2": -3.1909
+      },
+      {
+        "id": "INHIB-005",
+        "name": "TMSCl",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.2509,
+        "pc2": 1.2147,
+        "tsne1": -6.1076,
+        "tsne2": -8.8793
+      },
+      {
+        "id": "INHIB-006",
+        "name": "PA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.024,
+        "pc2": 0.6354,
+        "tsne1": -0.8002,
+        "tsne2": -5.1766
+      },
+      {
+        "id": "INHIB-007",
+        "name": "AA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.8333,
+        "pc2": 0.2086,
+        "tsne1": -0.3822,
+        "tsne2": -5.3769
+      },
+      {
+        "id": "INHIB-008",
+        "name": "ODTS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 2.8729,
+        "pc2": 2.5066,
+        "tsne1": 8.1645,
+        "tsne2": 4.6948
+      },
+      {
+        "id": "INHIB-009",
+        "name": "FDTS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 3.0686,
+        "pc2": 1.5247,
+        "tsne1": 7.4388,
+        "tsne2": 4.2099
+      },
+      {
+        "id": "INHIB-010",
+        "name": "1-DDT",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.421,
+        "pc2": 1.7128,
+        "tsne1": -4.063,
+        "tsne2": 0.5786
+      },
+      {
+        "id": "INHIB-011",
+        "name": "OT",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.6461,
+        "pc2": 1.4168,
+        "tsne1": -4.1175,
+        "tsne2": 0.3683
+      },
+      {
+        "id": "INHIB-012",
+        "name": "EtSH",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.6247,
+        "pc2": 0.8615,
+        "tsne1": -6.0788,
+        "tsne2": -8.8477
+      },
+      {
+        "id": "INHIB-013",
+        "name": "BTA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.3249,
+        "pc2": 0.8735,
+        "tsne1": -4.4237,
+        "tsne2": -4.6596
+      },
+      {
+        "id": "INHIB-014",
+        "name": "TTA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.7877,
+        "pc2": 0.3884,
+        "tsne1": -4.4827,
+        "tsne2": -4.6166
+      },
+      {
+        "id": "INHIB-015",
+        "name": "IMID",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.0803,
+        "pc2": 0.2966,
+        "tsne1": -2.3687,
+        "tsne2": -5.6063
+      },
+      {
+        "id": "INHIB-016",
+        "name": "PYR",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.6253,
+        "pc2": -0.1799,
+        "tsne1": -1.4731,
+        "tsne2": -5.5811
+      },
+      {
+        "id": "INHIB-017",
+        "name": "ODPA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 3.2617,
+        "pc2": 2.6542,
+        "tsne1": 8.3731,
+        "tsne2": 5.3222
+      },
+      {
+        "id": "INHIB-018",
+        "name": "Hacac",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.3482,
+        "pc2": 1.6293,
+        "tsne1": -2.1085,
+        "tsne2": -3.8394
+      },
+      {
+        "id": "NEG-001",
+        "name": "Ti(Et)4 (Tetraethyltitanium)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -0.503,
+        "pc2": 0.3647,
+        "tsne1": 4.7221,
+        "tsne2": -0.7961
+      },
+      {
+        "id": "NEG-002",
+        "name": "ZrMe4 (Tetramethylzirconium)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -2.1766,
+        "pc2": 0.2444,
+        "tsne1": -7.193,
+        "tsne2": -11.7525
+      },
+      {
+        "id": "NEG-003",
+        "name": "Silacyclobutadiene",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -2.6123,
+        "pc2": -1.3228,
+        "tsne1": 6.6148,
+        "tsne2": -5.0631
+      },
+      {
+        "id": "NEG-004",
+        "name": "WPh5 (Pentaphenyltungsten)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": 2.802,
+        "pc2": -2.0795,
+        "tsne1": 12.178,
+        "tsne2": -1.905
+      },
+      {
+        "id": "NEG-005",
+        "name": "Decane (Non-functionalized alkane)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -0.1124,
+        "pc2": 1.7086,
+        "tsne1": -4.3572,
+        "tsne2": 0.4787
+      },
+      {
+        "id": "NEG-006",
+        "name": "Trichloroacetic acid",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -1.013,
+        "pc2": 0.8646,
+        "tsne1": -0.9786,
+        "tsne2": -4.3594
+      },
+      {
+        "id": "NEG-007",
+        "name": "Ti(OH)4 (Titanium tetrahydroxide sol)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -2.005,
+        "pc2": 0.3178,
+        "tsne1": -10.7171,
+        "tsne2": -9.0563
+      },
+      {
+        "id": "NEG-008",
+        "name": "CoEt4 (Tetraethylcobalt)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -0.5878,
+        "pc2": 0.5716,
+        "tsne1": 4.4124,
+        "tsne2": -0.6825
+      },
+      {
+        "id": "NEG-009",
+        "name": "1,2-Dichlorodisilane",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -1.9342,
+        "pc2": -0.3945,
+        "tsne1": 4.6441,
+        "tsne2": -3.8649
+      },
+      {
+        "id": "NEG-010",
+        "name": "Cp2AlH (Bis(cyclopentadienyl)aluminium hydride)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -0.2913,
+        "pc2": -1.484,
+        "tsne1": 8.4752,
+        "tsne2": -5.9611
+      },
+      {
+        "id": "EXT-ALD-030",
+        "name": "GaMe3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -2.651,
+        "pc2": 0.4353,
+        "tsne1": -8.1405,
+        "tsne2": -11.0433
+      },
+      {
+        "id": "EXT-ALD-034",
+        "name": "InMe3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -2.5067,
+        "pc2": 0.3828,
+        "tsne1": -8.0095,
+        "tsne2": -11.5189
+      },
+      {
+        "id": "EXT-ALD-035",
+        "name": "GaEt3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -1.1314,
+        "pc2": 0.5018,
+        "tsne1": 4.0338,
+        "tsne2": -1.732
+      },
+      {
+        "id": "EXT-ALD-040",
+        "name": "AsH3",
+        "group": "Expanded Precursor (75)",
+        "element": "As",
+        "label": 1,
+        "pc1": -3.697,
+        "pc2": -0.2397,
+        "tsne1": -10.605,
+        "tsne2": -12.7295
+      },
+      {
+        "id": "EXT-ALD-053",
+        "name": "In(PrNMe2)Me2",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -0.5045,
+        "pc2": 0.3569,
+        "tsne1": 0.1107,
+        "tsne2": 4.2799
+      },
+      {
+        "id": "EXT-ALD-074",
+        "name": "GaCl3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -2.4722,
+        "pc2": 0.3494,
+        "tsne1": -8.2492,
+        "tsne2": -12.1605
+      },
+      {
+        "id": "EXT-ALD-094",
+        "name": "InEt3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -0.9412,
+        "pc2": 0.3983,
+        "tsne1": 3.7716,
+        "tsne2": -1.4273
+      },
+      {
+        "id": "EXT-ALD-100",
+        "name": "Ru(DMBD)(CO)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": -0.0696,
+        "pc2": -0.6482,
+        "tsne1": -0.4201,
+        "tsne2": 10.2548
+      },
+      {
+        "id": "EXT-ALD-109",
+        "name": "InCl3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -2.3193,
+        "pc2": 0.2637,
+        "tsne1": -8.1726,
+        "tsne2": -12.7407
+      },
+      {
+        "id": "EXT-ALD-114",
+        "name": "Ru(CO)2(mhdk)2",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 3.8924,
+        "pc2": 0.1276,
+        "tsne1": 8.5654,
+        "tsne2": 10.6385
+      },
+      {
+        "id": "EXT-ALD-115",
+        "name": "RuO4",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": -1.8635,
+        "pc2": 0.5735,
+        "tsne1": -10.6215,
+        "tsne2": -9.1263
+      },
+      {
+        "id": "EXT-ALD-121",
+        "name": "Ga2(NMe2)6",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 0.5015,
+        "pc2": -0.3869,
+        "tsne1": -1.028,
+        "tsne2": 2.4897
+      },
+      {
+        "id": "EXT-ALD-122",
+        "name": "In(acac)3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 3.6448,
+        "pc2": 0.6401,
+        "tsne1": 8.7247,
+        "tsne2": 10.0916
+      },
+      {
+        "id": "EXT-ALD-123",
+        "name": "InCp",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -1.6074,
+        "pc2": -1.1022,
+        "tsne1": 7.7882,
+        "tsne2": -5.1312
+      },
+      {
+        "id": "EXT-ALD-124",
+        "name": "In(iPrAMD)3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 4.3696,
+        "pc2": 0.3606,
+        "tsne1": 6.7766,
+        "tsne2": 9.8218
+      },
+      {
+        "id": "EXT-ALD-125",
+        "name": "InEt2(N(SiMe3)2)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 0.5096,
+        "pc2": 0.5398,
+        "tsne1": 4.6356,
+        "tsne2": 2.221
+      },
+      {
+        "id": "EXT-ALD-126",
+        "name": "Ir(CpEt)(CHD)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 0.8577,
+        "pc2": -4.0019,
+        "tsne1": 13.1699,
+        "tsne2": -6.0044
+      },
+      {
+        "id": "EXT-ALD-127",
+        "name": "Ir(acac)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 3.9923,
+        "pc2": 0.4421,
+        "tsne1": 8.1525,
+        "tsne2": 10.1937
+      },
+      {
+        "id": "EXT-ALD-128",
+        "name": "Ru(IMBCH)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 1.3404,
+        "pc2": -2.3504,
+        "tsne1": 12.653,
+        "tsne2": -3.1436
+      },
+      {
+        "id": "EXT-ALD-129",
+        "name": "As(NMe2)3",
+        "group": "Expanded Precursor (75)",
+        "element": "As",
+        "label": 1,
+        "pc1": -1.0728,
+        "pc2": 0.7763,
+        "tsne1": 0.1174,
+        "tsne2": -0.9883
+      },
+      {
+        "id": "EXT-ALD-130",
+        "name": "Ga(acac)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 3.3251,
+        "pc2": 0.8998,
+        "tsne1": 8.8433,
+        "tsne2": 9.7162
+      },
+      {
+        "id": "EXT-ALD-131",
+        "name": "In(EtCp)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -1.0509,
+        "pc2": -2.4003,
+        "tsne1": 10.3246,
+        "tsne2": -6.6255
+      },
+      {
+        "id": "EXT-ALD-132",
+        "name": "Rh(acac)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Rh",
+        "label": 1,
+        "pc1": 3.483,
+        "pc2": 0.7594,
+        "tsne1": 8.4425,
+        "tsne2": 9.7046
+      },
+      {
+        "id": "EXT-ALD-133",
+        "name": "[Ga(NMe2)3]2",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 0.5015,
+        "pc2": -0.3869,
+        "tsne1": -1.028,
+        "tsne2": 2.4897
+      },
+      {
+        "id": "EXT-ALD-134",
+        "name": "tBuAsH2",
+        "group": "Expanded Precursor (75)",
+        "element": "As",
+        "label": 1,
+        "pc1": -2.2576,
+        "pc2": 0.8,
+        "tsne1": -6.6975,
+        "tsne2": -9.5523
+      },
+      {
+        "id": "EXT-ALD-135",
+        "name": "GaCl",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -3.1815,
+        "pc2": 0.3139,
+        "tsne1": -9.6093,
+        "tsne2": -11.7079
+      },
+      {
+        "id": "EXT-ALD-136",
+        "name": "In(thd)3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 6.3233,
+        "pc2": 1.4648,
+        "tsne1": 7.0367,
+        "tsne2": 11.9126
+      },
+      {
+        "id": "EXT-ALD-138",
+        "name": "InCl",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -2.7702,
+        "pc2": 0.104,
+        "tsne1": -8.9056,
+        "tsne2": -11.8288
+      },
+      {
+        "id": "EXT-ALD-139",
+        "name": "InMe2(edpa)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 0.2387,
+        "pc2": 0.6234,
+        "tsne1": 0.8199,
+        "tsne2": 5.1671
+      },
+      {
+        "id": "EXT-ALD-140",
+        "name": "InMe3(NMe2Bu)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 0.7081,
+        "pc2": 1.4528,
+        "tsne1": 2.6907,
+        "tsne2": 7.7599
+      },
+      {
+        "id": "EXT-ALD-141",
+        "name": "Ir(CO)3(tBu3Cyp)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 2.2294,
+        "pc2": -1.5485,
+        "tsne1": 4.124,
+        "tsne2": 9.8995
+      },
+      {
+        "id": "EXT-ALD-142",
+        "name": "Ir(CpEt)(cod)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 1.3927,
+        "pc2": -3.6502,
+        "tsne1": 13.4819,
+        "tsne2": -4.9441
+      },
+      {
+        "id": "EXT-ALD-143",
+        "name": "Ir(CpMe)(CHD)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 0.7398,
+        "pc2": -4.3653,
+        "tsne1": 13.7292,
+        "tsne2": -5.9971
+      },
+      {
+        "id": "EXT-ALD-145",
+        "name": "Ru(EBCHD)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 1.4592,
+        "pc2": -2.3468,
+        "tsne1": 12.6066,
+        "tsne2": -3.2011
+      },
+      {
+        "id": "EXT-ALD-146",
+        "name": "Ru(TMM)(CO)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": -0.2572,
+        "pc2": -2.3335,
+        "tsne1": -0.3218,
+        "tsne2": 10.46
+      },
+      {
+        "id": "EXT-ALD-147",
+        "name": "Ga(CpMe5)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -0.4333,
+        "pc2": -1.3668,
+        "tsne1": 9.1323,
+        "tsne2": -4.8221
+      },
+      {
+        "id": "EXT-ALD-148",
+        "name": "Ga(NMe2)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -1.0785,
+        "pc2": 0.748,
+        "tsne1": 0.4411,
+        "tsne2": -1.0121
+      },
+      {
+        "id": "EXT-ALD-149",
+        "name": "Ga(iPr-triaz)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 3.9664,
+        "pc2": 1.0416,
+        "tsne1": 7.0056,
+        "tsne2": 8.7595
+      },
+      {
+        "id": "EXT-ALD-150",
+        "name": "GaEt2Cl",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -1.2325,
+        "pc2": 0.1395,
+        "tsne1": 4.4502,
+        "tsne2": -2.3248
+      },
+      {
+        "id": "EXT-ALD-151",
+        "name": "GaI3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -1.5576,
+        "pc2": 0.1712,
+        "tsne1": -7.7498,
+        "tsne2": -14.0525
+      },
+      {
+        "id": "EXT-ALD-153",
+        "name": "In(iPrFMD)3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 4.2583,
+        "pc2": 0.3011,
+        "tsne1": 7.1467,
+        "tsne2": 9.6493
+      },
+      {
+        "id": "EXT-ALD-154",
+        "name": "InEtMe2",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -1.457,
+        "pc2": 0.1296,
+        "tsne1": 4.0441,
+        "tsne2": -2.9464
+      },
+      {
+        "id": "EXT-ALD-155",
+        "name": "InMe3(MeO(CH2)2NHtBu)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 0.071,
+        "pc2": 0.4182,
+        "tsne1": -0.7818,
+        "tsne2": 5.7428
+      },
+      {
+        "id": "EXT-ALD-156",
+        "name": "InMe3(THF)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -0.6304,
+        "pc2": -1.1347,
+        "tsne1": 5.8506,
+        "tsne2": -2.6492
+      },
+      {
+        "id": "EXT-ALD-157",
+        "name": "Ru(CpEt)(pyr)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 0.4184,
+        "pc2": -2.5655,
+        "tsne1": 11.6228,
+        "tsne2": -4.6807
+      },
+      {
+        "id": "EXT-ALD-158",
+        "name": "Ru(CpMe)(pyr)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 0.2495,
+        "pc2": -2.8093,
+        "tsne1": 11.4284,
+        "tsne2": -4.8682
+      },
+      {
+        "id": "EXT-ALD-159",
+        "name": "Ru(DMPD)2",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 1.3192,
+        "pc2": -0.1879,
+        "tsne1": 2.9821,
+        "tsne2": 7.7136
+      },
+      {
+        "id": "EXT-ALD-161",
+        "name": "Ru(tBuAMD)2(CO)2",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 3.2746,
+        "pc2": -0.1272,
+        "tsne1": 4.902,
+        "tsne2": 9.7831
+      },
+      {
+        "id": "EXT-ALD-162",
+        "name": "Ru(thd)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 6.5331,
+        "pc2": 1.178,
+        "tsne1": 6.8084,
+        "tsne2": 11.7469
+      },
+      {
+        "id": "EXT-ALD-163",
+        "name": "RuCp(CO)2Et",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": -0.1332,
+        "pc2": -1.4574,
+        "tsne1": -0.0855,
+        "tsne2": 10.1521
+      },
+      {
+        "id": "EXT-ALD-164",
+        "name": "RuCp2",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": -0.337,
+        "pc2": -2.9834,
+        "tsne1": 10.9973,
+        "tsne2": -5.9871
+      },
+      {
+        "id": "EXT-ALD-165",
+        "name": "(Et3Si)3As",
+        "group": "Expanded Precursor (75)",
+        "element": "As",
+        "label": 1,
+        "pc1": 2.3346,
+        "pc2": 1.2344,
+        "tsne1": 6.8123,
+        "tsne2": 4.123
+      },
+      {
+        "id": "EXT-ALD-166",
+        "name": "(GaMe2NH2)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -0.9773,
+        "pc2": -1.0111,
+        "tsne1": -1.1945,
+        "tsne2": 10.3802
+      },
+      {
+        "id": "EXT-ALD-167",
+        "name": "EtAsH2",
+        "group": "Expanded Precursor (75)",
+        "element": "As",
+        "label": 1,
+        "pc1": -2.9358,
+        "pc2": 0.773,
+        "tsne1": -7.8944,
+        "tsne2": -10.1799
+      },
+      {
+        "id": "EXT-ALD-168",
+        "name": "Ga(OiPr)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 0.173,
+        "pc2": 1.0715,
+        "tsne1": 3.2788,
+        "tsne2": 2.6706
+      },
+      {
+        "id": "EXT-ALD-169",
+        "name": "Ga(thd)3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 6.4632,
+        "pc2": 1.0766,
+        "tsne1": 6.8822,
+        "tsne2": 11.5225
+      },
+      {
+        "id": "EXT-ALD-171",
+        "name": "GaBr",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -3.0073,
+        "pc2": 0.18,
+        "tsne1": -9.3767,
+        "tsne2": -12.3703
+      },
+      {
+        "id": "EXT-ALD-172",
+        "name": "GaBr3",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -2.0176,
+        "pc2": 0.2189,
+        "tsne1": -7.7999,
+        "tsne2": -13.3562
+      },
+      {
+        "id": "EXT-ALD-173",
+        "name": "GaEt2Me",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -1.4403,
+        "pc2": 0.4064,
+        "tsne1": 3.8214,
+        "tsne2": -2.4863
+      },
+      {
+        "id": "EXT-ALD-174",
+        "name": "GaI",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -2.6934,
+        "pc2": -0.1526,
+        "tsne1": -9.3703,
+        "tsne2": -13.0779
+      },
+      {
+        "id": "EXT-ALD-175",
+        "name": "GaMe2(NtBu(CH2)2NMe2)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 0.1861,
+        "pc2": 0.2513,
+        "tsne1": 0.0251,
+        "tsne2": 4.9188
+      },
+      {
+        "id": "EXT-ALD-176",
+        "name": "GaMe2(OiPr)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -1.0835,
+        "pc2": 0.3285,
+        "tsne1": 3.1226,
+        "tsne2": -2.0495
+      },
+      {
+        "id": "EXT-ALD-177",
+        "name": "GaMe2NH2",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -2.5168,
+        "pc2": 0.3578,
+        "tsne1": -9.4468,
+        "tsne2": -10.417
+      },
+      {
+        "id": "EXT-ALD-178",
+        "name": "GaMe3(CH3OCH2CH2NHtBu)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 0.0121,
+        "pc2": 0.3038,
+        "tsne1": -0.9468,
+        "tsne2": 5.5336
+      },
+      {
+        "id": "EXT-ALD-179",
+        "name": "GaMe3[MeO(CH2)2NHtBu]",
+        "group": "Expanded Precursor (75)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 0.0121,
+        "pc2": 0.3038,
+        "tsne1": -0.9468,
+        "tsne2": 5.5336
+      },
+      {
+        "id": "EXT-ALD-181",
+        "name": "In(NMe2)Me2",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -1.4883,
+        "pc2": 0.3955,
+        "tsne1": 2.8256,
+        "tsne2": -2.7729
+      },
+      {
+        "id": "EXT-ALD-182",
+        "name": "In(dmamp)2(OiPr)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 2.1297,
+        "pc2": 1.0551,
+        "tsne1": 6.0219,
+        "tsne2": 6.0973
+      },
+      {
+        "id": "EXT-ALD-183",
+        "name": "In(dmamp)3",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 2.4747,
+        "pc2": 1.4307,
+        "tsne1": 6.3284,
+        "tsne2": 5.9947
+      },
+      {
+        "id": "EXT-ALD-184",
+        "name": "InClMe2",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -2.4048,
+        "pc2": 0.2543,
+        "tsne1": -7.6953,
+        "tsne2": -12.1365
+      },
+      {
+        "id": "EXT-ALD-186",
+        "name": "InMe2(NtBu(CH2)2NMe2)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 0.2371,
+        "pc2": 0.3489,
+        "tsne1": 0.2294,
+        "tsne2": 4.9267
+      },
+      {
+        "id": "EXT-ALD-187",
+        "name": "InMe2(tBuAMD)",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": 0.7894,
+        "pc2": -0.2937,
+        "tsne1": 1.757,
+        "tsne2": 5.9452
+      },
+      {
+        "id": "EXT-ALD-188",
+        "name": "InN(SiMe3)2",
+        "group": "Expanded Precursor (75)",
+        "element": "In",
+        "label": 1,
+        "pc1": -0.4597,
+        "pc2": 0.3322,
+        "tsne1": 2.8118,
+        "tsne2": -0.638
+      },
+      {
+        "id": "EXT-ALD-189",
+        "name": "Ir(CpMe)(COD)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 0.9944,
+        "pc2": -3.6226,
+        "tsne1": 13.0608,
+        "tsne2": -5.3122
+      },
+      {
+        "id": "EXT-ALD-190",
+        "name": "Ru(CpEt)(CpMe)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 0.5342,
+        "pc2": -3.608,
+        "tsne1": 12.3657,
+        "tsne2": -6.1591
+      },
+      {
+        "id": "EXT-ALD-191",
+        "name": "Ru(CpEt)(DMPD)",
+        "group": "Expanded Precursor (75)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 1.1837,
+        "pc2": -2.9818,
+        "tsne1": 12.9332,
+        "tsne2": -6.8415
+      }
+    ]
+  },
+  "cohort_85_sa_sevenn_physics": {
+    "total": 85,
+    "features": [
+      "sascore",
+      "syba",
+      "scscore",
+      "rascore",
+      "br_sascore",
+      "e_coh_ev_per_atom",
+      "bde_min_kcal_mol",
+      "vbur_percent",
+      "delta_e_dimer_kcal_mol",
+      "radius_of_gyration_ang",
+      "mol_volume_ang3"
+    ],
+    "pca_explained_variance_ratio": [
+      0.2774,
+      0.1909
+    ],
+    "pca_top_loadings": {
+      "PC1": [
+        [
+          "radius_of_gyration_ang",
+          0.462
+        ],
+        [
+          "scscore",
+          0.385
+        ],
+        [
+          "mol_volume_ang3",
+          0.378
+        ],
+        [
+          "e_coh_ev_per_atom",
+          0.362
+        ]
+      ],
+      "PC2": [
+        [
+          "sascore",
+          0.504
+        ],
+        [
+          "syba",
+          -0.415
+        ],
+        [
+          "mol_volume_ang3",
+          -0.383
+        ],
+        [
+          "bde_min_kcal_mol",
+          -0.346
+        ]
+      ]
+    },
+    "separability": {
+      "single_descriptors": {
+        "sascore": {
+          "cv5_roc_auc": 0.587,
+          "cv5_balanced_acc": 0.657
+        },
+        "syba": {
+          "cv5_roc_auc": 0.323,
+          "cv5_balanced_acc": 0.35
+        },
+        "scscore": {
+          "cv5_roc_auc": 0.508,
+          "cv5_balanced_acc": 0.457
+        },
+        "rascore": {
+          "cv5_roc_auc": 0.459,
+          "cv5_balanced_acc": 0.497
+        },
+        "br_sascore": {
+          "cv5_roc_auc": 0.362,
+          "cv5_balanced_acc": 0.377
+        },
+        "e_coh_ev_per_atom": {
+          "cv5_roc_auc": 0.448,
+          "cv5_balanced_acc": 0.47
+        },
+        "bde_min_kcal_mol": {
+          "cv5_roc_auc": 0.321,
+          "cv5_balanced_acc": 0.423
+        },
+        "vbur_percent": {
+          "cv5_roc_auc": 0.363,
+          "cv5_balanced_acc": 0.45
+        },
+        "delta_e_dimer_kcal_mol": {
+          "cv5_roc_auc": 0.507,
+          "cv5_balanced_acc": 0.5
+        },
+        "radius_of_gyration_ang": {
+          "cv5_roc_auc": 0.631,
+          "cv5_balanced_acc": 0.68
+        },
+        "mol_volume_ang3": {
+          "cv5_roc_auc": 0.635,
+          "cv5_balanced_acc": 0.653
+        }
+      },
+      "best_single_descriptor": {
+        "name": "mol_volume_ang3",
+        "cv5_roc_auc": 0.635,
+        "cv5_balanced_acc": 0.653
+      },
+      "pca_2d": {
+        "lr_cv5_roc_auc": 0.525,
+        "lr_cv5_balanced_acc": 0.537,
+        "knn5_cv5_roc_auc": 0.594,
+        "knn5_cv5_balanced_acc": 0.55,
+        "silhouette_score": -0.043
+      },
+      "tsne_2d": {
+        "lr_cv5_roc_auc": 0.532,
+        "lr_cv5_balanced_acc": 0.537,
+        "knn5_cv5_roc_auc": 0.587,
+        "knn5_cv5_balanced_acc": 0.487,
+        "silhouette_score": -0.024
+      },
+      "full_scaled_space": {
+        "lr_cv5_roc_auc": 0.401,
+        "lr_cv5_balanced_acc": 0.48
+      }
+    },
+    "points": [
+      {
+        "id": "PREC_SI_01",
+        "name": "DIPAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.4146,
+        "pc2": 0.0185,
+        "tsne1": -0.3959,
+        "tsne2": -1.085
+      },
+      {
+        "id": "PREC_SI_02",
+        "name": "BTBAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.0656,
+        "pc2": -1.0217,
+        "tsne1": -2.084,
+        "tsne2": -0.2449
+      },
+      {
+        "id": "PREC_SI_03",
+        "name": "3DMAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.292,
+        "pc2": -0.4555,
+        "tsne1": -1.3252,
+        "tsne2": 1.4663
+      },
+      {
+        "id": "PREC_SI_04",
+        "name": "4DMAS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.2913,
+        "pc2": -0.6001,
+        "tsne1": -1.8599,
+        "tsne2": 3.2093
+      },
+      {
+        "id": "PREC_SI_05",
+        "name": "TSA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.7282,
+        "pc2": 0.59,
+        "tsne1": 9.773,
+        "tsne2": -2.1533
+      },
+      {
+        "id": "PREC_SI_06",
+        "name": "HCDS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.8731,
+        "pc2": -0.202,
+        "tsne1": 1.2196,
+        "tsne2": 0.5504
+      },
+      {
+        "id": "PREC_SI_07",
+        "name": "TEOS",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.5531,
+        "pc2": -1.9365,
+        "tsne1": 1.4948,
+        "tsne2": 4.0862
+      },
+      {
+        "id": "PREC_SI_08",
+        "name": "SAM.24",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.3627,
+        "pc2": -0.3276,
+        "tsne1": -0.7128,
+        "tsne2": -0.1807
+      },
+      {
+        "id": "PREC_HK_01",
+        "name": "TEMAH",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.1963,
+        "pc2": -0.3654,
+        "tsne1": -2.9569,
+        "tsne2": 1.9278
+      },
+      {
+        "id": "PREC_HK_02",
+        "name": "TDMAH",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.0432,
+        "pc2": -0.0608,
+        "tsne1": -2.0107,
+        "tsne2": 1.7528
+      },
+      {
+        "id": "PREC_HK_03",
+        "name": "Hf(OtBu)4",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.1681,
+        "pc2": -1.0607,
+        "tsne1": -2.6611,
+        "tsne2": 0.1715
+      },
+      {
+        "id": "PREC_HK_04",
+        "name": "TEMAZ",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.3619,
+        "pc2": -0.6133,
+        "tsne1": -3.113,
+        "tsne2": 1.3254
+      },
+      {
+        "id": "PREC_HK_05",
+        "name": "TDMAZ",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.0451,
+        "pc2": -0.3412,
+        "tsne1": -2.2035,
+        "tsne2": 1.2951
+      },
+      {
+        "id": "PREC_HK_06",
+        "name": "ZMA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.5145,
+        "pc2": 1.0024,
+        "tsne1": -7.4825,
+        "tsne2": -4.5466
+      },
+      {
+        "id": "PREC_HK_07",
+        "name": "Cp(NMe2)3Zr",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.6978,
+        "pc2": 1.1466,
+        "tsne1": -7.1654,
+        "tsne2": -5.5626
+      },
+      {
+        "id": "PREC_TI_01",
+        "name": "TDMAT",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.1339,
+        "pc2": -0.2891,
+        "tsne1": -2.0248,
+        "tsne2": 2.6295
+      },
+      {
+        "id": "PREC_TI_02",
+        "name": "TTIP",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.1461,
+        "pc2": -1.1527,
+        "tsne1": -2.7826,
+        "tsne2": -0.4034
+      },
+      {
+        "id": "PREC_TI_03",
+        "name": "CpTi(NMe2)3",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.9203,
+        "pc2": 1.1468,
+        "tsne1": -7.0796,
+        "tsne2": -5.7082
+      },
+      {
+        "id": "PREC_AL_01",
+        "name": "TMA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.2462,
+        "pc2": -0.36,
+        "tsne1": 8.3946,
+        "tsne2": -0.4239
+      },
+      {
+        "id": "PREC_AL_02",
+        "name": "DMAH",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": -3.0328,
+        "pc2": 0.1146,
+        "tsne1": 9.4956,
+        "tsne2": -1.4639
+      },
+      {
+        "id": "PREC_MET_01",
+        "name": "BTBMW",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.4496,
+        "pc2": -0.1144,
+        "tsne1": -4.2908,
+        "tsne2": 0.8579
+      },
+      {
+        "id": "PREC_MET_02",
+        "name": "BTBMMo",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.996,
+        "pc2": 0.0214,
+        "tsne1": -5.3753,
+        "tsne2": 0.8403
+      },
+      {
+        "id": "PREC_MET_03",
+        "name": "Ru(EtCp)2",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.8468,
+        "pc2": 0.1504,
+        "tsne1": -6.9047,
+        "tsne2": -4.2222
+      },
+      {
+        "id": "PREC_MET_04",
+        "name": "Co(AMD)2",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.963,
+        "pc2": -0.077,
+        "tsne1": -6.6482,
+        "tsne2": 0.6952
+      },
+      {
+        "id": "PREC_MET_05",
+        "name": "CCTBA",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 2.4341,
+        "pc2": 1.722,
+        "tsne1": -9.0729,
+        "tsne2": 3.3521
+      },
+      {
+        "id": "PREC_MET_06",
+        "name": "TBTDET",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.7387,
+        "pc2": -0.3573,
+        "tsne1": -4.1126,
+        "tsne2": 1.7609
+      },
+      {
+        "id": "PREC_EUV_01",
+        "name": "tBuSn(OiPr)3",
+        "group": "Baseline Precursor (27)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.9503,
+        "pc2": 0.2775,
+        "tsne1": -5.58,
+        "tsne2": 5.3342
+      },
+      {
+        "id": "INHIB-001",
+        "name": "DMADMS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.2639,
+        "pc2": -0.4625,
+        "tsne1": -0.9798,
+        "tsne2": 2.2564
+      },
+      {
+        "id": "INHIB-002",
+        "name": "DMATMS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.549,
+        "pc2": -0.7346,
+        "tsne1": 0.0685,
+        "tsne2": 2.0547
+      },
+      {
+        "id": "INHIB-003",
+        "name": "BEMS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.2361,
+        "pc2": -0.5053,
+        "tsne1": -2.7496,
+        "tsne2": 2.246
+      },
+      {
+        "id": "INHIB-004",
+        "name": "HMDS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.5623,
+        "pc2": -1.0057,
+        "tsne1": 0.1358,
+        "tsne2": 2.8277
+      },
+      {
+        "id": "INHIB-005",
+        "name": "TMSCl",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.7102,
+        "pc2": -1.2199,
+        "tsne1": 7.4822,
+        "tsne2": 1.075
+      },
+      {
+        "id": "INHIB-006",
+        "name": "PA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.418,
+        "pc2": -0.2727,
+        "tsne1": 3.8703,
+        "tsne2": 0.8402
+      },
+      {
+        "id": "INHIB-007",
+        "name": "AA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.2389,
+        "pc2": 0.2994,
+        "tsne1": 3.5637,
+        "tsne2": 0.3624
+      },
+      {
+        "id": "INHIB-008",
+        "name": "ODTS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 3.3043,
+        "pc2": -4.8862,
+        "tsne1": 0.8682,
+        "tsne2": 8.34
+      },
+      {
+        "id": "INHIB-009",
+        "name": "FDTS",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 1.2257,
+        "pc2": -2.6535,
+        "tsne1": 1.4833,
+        "tsne2": 7.0446
+      },
+      {
+        "id": "INHIB-010",
+        "name": "1-DDT",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 0.8216,
+        "pc2": -3.4986,
+        "tsne1": 2.0091,
+        "tsne2": 6.8992
+      },
+      {
+        "id": "INHIB-011",
+        "name": "OT",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.3175,
+        "pc2": -2.5997,
+        "tsne1": 2.6318,
+        "tsne2": 6.3244
+      },
+      {
+        "id": "INHIB-012",
+        "name": "EtSH",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -2.3953,
+        "pc2": -1.0921,
+        "tsne1": 7.3515,
+        "tsne2": 0.4575
+      },
+      {
+        "id": "INHIB-013",
+        "name": "BTA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.81,
+        "pc2": -1.3367,
+        "tsne1": 5.208,
+        "tsne2": 3.675
+      },
+      {
+        "id": "INHIB-014",
+        "name": "TTA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -0.2519,
+        "pc2": -1.33,
+        "tsne1": 5.1955,
+        "tsne2": 3.8618
+      },
+      {
+        "id": "INHIB-015",
+        "name": "IMID",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.8562,
+        "pc2": -0.4354,
+        "tsne1": 5.2988,
+        "tsne2": 1.1898
+      },
+      {
+        "id": "INHIB-016",
+        "name": "PYR",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.0255,
+        "pc2": 0.5626,
+        "tsne1": 4.4264,
+        "tsne2": 0.7027
+      },
+      {
+        "id": "INHIB-017",
+        "name": "ODPA",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": 3.3154,
+        "pc2": -5.529,
+        "tsne1": 0.8686,
+        "tsne2": 8.4044
+      },
+      {
+        "id": "INHIB-018",
+        "name": "Hacac",
+        "group": "AS-ALD Inhibitor (18)",
+        "element": "",
+        "label": 1,
+        "pc1": -1.0902,
+        "pc2": -1.3333,
+        "tsne1": 4.8679,
+        "tsne2": 2.2984
+      },
+      {
+        "id": "NEG-001",
+        "name": "Ti(Et)4 (Tetraethyltitanium)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": 0.0289,
+        "pc2": 0.3415,
+        "tsne1": -3.2422,
+        "tsne2": 3.4612
+      },
+      {
+        "id": "NEG-002",
+        "name": "ZrMe4 (Tetramethylzirconium)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -1.9971,
+        "pc2": 0.2651,
+        "tsne1": 9.1837,
+        "tsne2": -0.5429
+      },
+      {
+        "id": "NEG-003",
+        "name": "Silacyclobutadiene",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -1.6669,
+        "pc2": 2.2155,
+        "tsne1": 3.1092,
+        "tsne2": -1.7466
+      },
+      {
+        "id": "NEG-004",
+        "name": "WPh5 (Pentaphenyltungsten)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": 1.7957,
+        "pc2": -1.3162,
+        "tsne1": -4.8027,
+        "tsne2": 2.7715
+      },
+      {
+        "id": "NEG-005",
+        "name": "Decane (Non-functionalized alkane)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -0.1161,
+        "pc2": -2.9554,
+        "tsne1": 2.9156,
+        "tsne2": 6.2645
+      },
+      {
+        "id": "NEG-006",
+        "name": "Trichloroacetic acid",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -0.698,
+        "pc2": -0.4414,
+        "tsne1": 1.1989,
+        "tsne2": 1.6301
+      },
+      {
+        "id": "NEG-007",
+        "name": "Ti(OH)4 (Titanium tetrahydroxide sol)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -1.8673,
+        "pc2": 0.2814,
+        "tsne1": 10.1805,
+        "tsne2": 0.0633
+      },
+      {
+        "id": "NEG-008",
+        "name": "CoEt4 (Tetraethylcobalt)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -0.1216,
+        "pc2": 0.5709,
+        "tsne1": -3.3819,
+        "tsne2": 4.2987
+      },
+      {
+        "id": "NEG-009",
+        "name": "1,2-Dichlorodisilane",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": -1.2458,
+        "pc2": 1.0965,
+        "tsne1": 1.3893,
+        "tsne2": -2.2871
+      },
+      {
+        "id": "NEG-010",
+        "name": "Cp2AlH (Bis(cyclopentadienyl)aluminium hydride)",
+        "group": "Negative Control (10)",
+        "element": "",
+        "label": 0,
+        "pc1": 1.0771,
+        "pc2": 1.9526,
+        "tsne1": -10.4148,
+        "tsne2": 3.7881
+      },
+      {
+        "id": "EXT-ALD-126",
+        "name": "Ir(CpEt)(CHD)",
+        "group": "Expanded Precursor (30)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 1.2737,
+        "pc2": 1.9793,
+        "tsne1": -8.1849,
+        "tsne2": -5.3535
+      },
+      {
+        "id": "EXT-ALD-127",
+        "name": "Ir(acac)3",
+        "group": "Expanded Precursor (30)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 2.935,
+        "pc2": 1.162,
+        "tsne1": -9.3437,
+        "tsne2": 0.0468
+      },
+      {
+        "id": "EXT-ALD-141",
+        "name": "Ir(CO)3(tBu3Cyp)",
+        "group": "Expanded Precursor (30)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 2.0554,
+        "pc2": 1.6107,
+        "tsne1": -8.5517,
+        "tsne2": 3.1327
+      },
+      {
+        "id": "EXT-ALD-142",
+        "name": "Ir(CpEt)(cod)",
+        "group": "Expanded Precursor (30)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 1.3496,
+        "pc2": 1.2363,
+        "tsne1": -7.793,
+        "tsne2": -4.9809
+      },
+      {
+        "id": "EXT-ALD-143",
+        "name": "Ir(CpMe)(CHD)",
+        "group": "Expanded Precursor (30)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 1.2463,
+        "pc2": 2.4448,
+        "tsne1": -8.5797,
+        "tsne2": -5.3659
+      },
+      {
+        "id": "EXT-ALD-189",
+        "name": "Ir(CpMe)(COD)",
+        "group": "Expanded Precursor (30)",
+        "element": "Ir",
+        "label": 1,
+        "pc1": 1.2945,
+        "pc2": 1.8191,
+        "tsne1": -8.5322,
+        "tsne2": -4.4147
+      },
+      {
+        "id": "EXT-ALD-132",
+        "name": "Rh(acac)3",
+        "group": "Expanded Precursor (30)",
+        "element": "Rh",
+        "label": 1,
+        "pc1": 2.9363,
+        "pc2": 0.6673,
+        "tsne1": -9.4751,
+        "tsne2": -0.0417
+      },
+      {
+        "id": "EXT-ALD-040",
+        "name": "AsH3",
+        "group": "Expanded Precursor (30)",
+        "element": "As",
+        "label": 1,
+        "pc1": -4.5491,
+        "pc2": 1.6831,
+        "tsne1": 9.9215,
+        "tsne2": -3.3911
+      },
+      {
+        "id": "EXT-ALD-129",
+        "name": "As(NMe2)3",
+        "group": "Expanded Precursor (30)",
+        "element": "As",
+        "label": 1,
+        "pc1": -0.5474,
+        "pc2": -0.0552,
+        "tsne1": 0.1193,
+        "tsne2": 0.2931
+      },
+      {
+        "id": "EXT-ALD-134",
+        "name": "tBuAsH2",
+        "group": "Expanded Precursor (30)",
+        "element": "As",
+        "label": 1,
+        "pc1": -1.6494,
+        "pc2": -0.0757,
+        "tsne1": 7.1494,
+        "tsne2": -1.4152
+      },
+      {
+        "id": "EXT-ALD-165",
+        "name": "(Et3Si)3As",
+        "group": "Expanded Precursor (30)",
+        "element": "As",
+        "label": 1,
+        "pc1": 1.057,
+        "pc2": -0.4549,
+        "tsne1": -4.594,
+        "tsne2": 5.4835
+      },
+      {
+        "id": "EXT-ALD-167",
+        "name": "EtAsH2",
+        "group": "Expanded Precursor (30)",
+        "element": "As",
+        "label": 1,
+        "pc1": -2.6584,
+        "pc2": -0.216,
+        "tsne1": 7.9365,
+        "tsne2": -1.3851
+      },
+      {
+        "id": "EXT-ALD-030",
+        "name": "GaMe3",
+        "group": "Expanded Precursor (30)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -2.5002,
+        "pc2": 0.3975,
+        "tsne1": 8.7992,
+        "tsne2": -1.1719
+      },
+      {
+        "id": "EXT-ALD-035",
+        "name": "GaEt3",
+        "group": "Expanded Precursor (30)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -0.7496,
+        "pc2": 0.4262,
+        "tsne1": 0.7573,
+        "tsne2": -0.6714
+      },
+      {
+        "id": "EXT-ALD-074",
+        "name": "GaCl3",
+        "group": "Expanded Precursor (30)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": -3.6652,
+        "pc2": 1.0109,
+        "tsne1": 8.7528,
+        "tsne2": -4.1232
+      },
+      {
+        "id": "EXT-ALD-121",
+        "name": "Ga2(NMe2)6",
+        "group": "Expanded Precursor (30)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 1.0312,
+        "pc2": 0.4357,
+        "tsne1": -5.105,
+        "tsne2": 4.8379
+      },
+      {
+        "id": "EXT-ALD-130",
+        "name": "Ga(acac)3",
+        "group": "Expanded Precursor (30)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 3.4079,
+        "pc2": 2.4498,
+        "tsne1": -11.2749,
+        "tsne2": 2.8804
+      },
+      {
+        "id": "EXT-ALD-133",
+        "name": "[Ga(NMe2)3]2",
+        "group": "Expanded Precursor (30)",
+        "element": "Ga",
+        "label": 1,
+        "pc1": 1.0312,
+        "pc2": 0.4357,
+        "tsne1": -5.1052,
+        "tsne2": 4.838
+      },
+      {
+        "id": "EXT-ALD-034",
+        "name": "InMe3",
+        "group": "Expanded Precursor (30)",
+        "element": "In",
+        "label": 1,
+        "pc1": -2.5562,
+        "pc2": 0.7859,
+        "tsne1": 8.672,
+        "tsne2": -1.7974
+      },
+      {
+        "id": "EXT-ALD-053",
+        "name": "In(PrNMe2)Me2",
+        "group": "Expanded Precursor (30)",
+        "element": "In",
+        "label": 1,
+        "pc1": 0.225,
+        "pc2": -0.1598,
+        "tsne1": -1.0172,
+        "tsne2": -2.397
+      },
+      {
+        "id": "EXT-ALD-094",
+        "name": "InEt3",
+        "group": "Expanded Precursor (30)",
+        "element": "In",
+        "label": 1,
+        "pc1": -0.7877,
+        "pc2": 0.6967,
+        "tsne1": 1.0528,
+        "tsne2": -1.1912
+      },
+      {
+        "id": "EXT-ALD-109",
+        "name": "InCl3",
+        "group": "Expanded Precursor (30)",
+        "element": "In",
+        "label": 1,
+        "pc1": -3.4469,
+        "pc2": 0.2161,
+        "tsne1": 9.174,
+        "tsne2": -3.0644
+      },
+      {
+        "id": "EXT-ALD-122",
+        "name": "In(acac)3",
+        "group": "Expanded Precursor (30)",
+        "element": "In",
+        "label": 1,
+        "pc1": 2.9991,
+        "pc2": 0.9134,
+        "tsne1": -9.9683,
+        "tsne2": 0.0048
+      },
+      {
+        "id": "EXT-ALD-123",
+        "name": "InCp",
+        "group": "Expanded Precursor (30)",
+        "element": "In",
+        "label": 1,
+        "pc1": -0.854,
+        "pc2": 0.8132,
+        "tsne1": 3.8121,
+        "tsne2": -0.6318
+      },
+      {
+        "id": "EXT-ALD-100",
+        "name": "Ru(DMBD)(CO)3",
+        "group": "Expanded Precursor (30)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 0.8481,
+        "pc2": 1.7671,
+        "tsne1": -8.1354,
+        "tsne2": 4.6846
+      },
+      {
+        "id": "EXT-ALD-114",
+        "name": "Ru(CO)2(mhdk)2",
+        "group": "Expanded Precursor (30)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 3.7311,
+        "pc2": 1.1796,
+        "tsne1": -9.4969,
+        "tsne2": 0.5332
+      },
+      {
+        "id": "EXT-ALD-115",
+        "name": "RuO4",
+        "group": "Expanded Precursor (30)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": -2.5448,
+        "pc2": 0.2089,
+        "tsne1": 10.1357,
+        "tsne2": -0.2106
+      },
+      {
+        "id": "EXT-ALD-128",
+        "name": "Ru(IMBCH)",
+        "group": "Expanded Precursor (30)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 2.4653,
+        "pc2": 2.2043,
+        "tsne1": -10.0559,
+        "tsne2": 2.5793
+      },
+      {
+        "id": "EXT-ALD-145",
+        "name": "Ru(EBCHD)",
+        "group": "Expanded Precursor (30)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 2.8117,
+        "pc2": 0.8954,
+        "tsne1": -8.7255,
+        "tsne2": 2.3697
+      },
+      {
+        "id": "EXT-ALD-146",
+        "name": "Ru(TMM)(CO)3",
+        "group": "Expanded Precursor (30)",
+        "element": "Ru",
+        "label": 1,
+        "pc1": 0.9648,
+        "pc2": 2.6903,
+        "tsne1": -8.1754,
+        "tsne2": 4.8064
+      }
+    ]
+  }
+}

@@ -12,7 +12,17 @@
   "materials": 662,
   "unique_precursors_after_alias_merge": 814,
   "unique_reactantA_strings_raw": 780,
-  "master_entries": 120,
+  "master_entries": 205,
+  "master_top_frequency_cutoff": 120,
+  "master_focus_elements": [
+    "Ir",
+    "Rh",
+    "As",
+    "Ga",
+    "In",
+    "Ru"
+  ],
   "master_baseline_entries": 27,
-  "master_baseline_matched_in_atomiclimits": 24
+  "master_baseline_matched_in_atomiclimits": 24,
+  "master_curated_smiles_entries": 102
 }

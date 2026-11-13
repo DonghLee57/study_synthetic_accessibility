@@ -48,10 +48,12 @@ SNAPSHOT_PATH = os.path.join(EXT, "atomiclimits_snapshot.json")
 ALIAS_PATH = os.path.join(EXT, "atomiclimits_aliases.json")
 INVENTORY_PATH = os.path.join(EXT, "atomiclimits_precursors_extracted.json")
 MASTER_PATH = os.path.join(EXT, "expanded_semiconductor_precursors_master.json")
+CURATED_ID_PATH = os.path.join(EXT, "curated_target_element_identifiers.json")
 BASELINE_PATH = os.path.join(ROOT, "database", "precursors.json")
 
 API_URL = "https://www.atomiclimits.com/alddatabase/api/processes.php"
 MASTER_SIZE = 120
+FOCUS_ELEMENTS = ("Ir", "Rh", "As", "Ga", "In", "Ru")
 
 ELEMENTS = (
     "H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn "
@@ -243,7 +245,51 @@ def build_inventory(raw, aliases, overrides):
     return out, stats
 
 
-def build_master(inventory, baseline):
+def load_curated_identifiers():
+    if not os.path.exists(CURATED_ID_PATH):
+        return {}
+    with open(CURATED_ID_PATH, encoding="utf-8") as f:
+        data = json.load(f)
+    return data.get("identifiers", data) if isinstance(data, dict) else {}
+
+
+def _build_external_master_record(entry_id: str, inv_item: dict, origin: str, curated_ids: dict) -> dict:
+    """Construct a master record from an AtomicLimits inventory item and optional curated identifiers."""
+    cur = curated_ids.get(inv_item["precursor"], {})
+    has_smi = bool(cur.get("smiles"))
+    return {
+        "id": entry_id,
+        "name": inv_item["precursor"],
+        "chemical_name": cur.get("chemical_name"),
+        "formula": cur.get("formula"),
+        "center_element": inv_item["center_element"],
+        "category": cur.get("category"),
+        "smiles": cur.get("smiles"),
+        "cas_number": cur.get("cas_number"),
+        "molecular_weight": cur.get("molecular_weight"),
+        "vapor_pressure": None,
+        "thermal_decomposition_temp_c": None,
+        "commercial_vendors": [],
+        "origin": origin,
+        "property_source": cur.get("identifier_source") if has_smi else None,
+        "identifier_status": (
+            "verified: CAS/literature + RDKit formula & 3D conformer validated"
+            if has_smi
+            else "unverified: needs PubChem/datasheet lookup"
+        ),
+        "atomiclimits_name": inv_item["precursor"],
+        "atomiclimits_aliases": inv_item["aliases_in_source"],
+        "atomiclimits_process_count": inv_item["process_count"],
+        "atomiclimits_materials": inv_item["materials"],
+        "atomiclimits_co_reactants": inv_item["co_reactants"],
+        "atomiclimits_unique_doi_count": inv_item["unique_doi_count"],
+        "sample_dois": inv_item["dois"][:5],
+    }
+
+
+def build_master(inventory, baseline, curated_ids=None):
+    if curated_ids is None:
+        curated_ids = load_curated_identifiers()
     by_name = {e["precursor"]: e for e in inventory}
     master, used = [], set()
     for b in baseline:
@@ -283,30 +329,31 @@ def build_master(inventory, baseline):
             break
         if e["precursor"] in used or e["is_elemental"]:
             continue
-        master.append({
-            "id": f"EXT-ALD-{len(master) + 1:03d}",
-            "name": e["precursor"],
-            "chemical_name": None,
-            "formula": None,
-            "center_element": e["center_element"],
-            "category": None,
-            "smiles": None,
-            "cas_number": None,
-            "molecular_weight": None,
-            "vapor_pressure": None,
-            "thermal_decomposition_temp_c": None,
-            "commercial_vendors": [],
-            "origin": "AtomicLimits ALD database",
-            "property_source": None,
-            "identifier_status": "unverified: needs PubChem/datasheet lookup",
-            "atomiclimits_name": e["precursor"],
-            "atomiclimits_aliases": e["aliases_in_source"],
-            "atomiclimits_process_count": e["process_count"],
-            "atomiclimits_materials": e["materials"],
-            "atomiclimits_co_reactants": e["co_reactants"],
-            "atomiclimits_unique_doi_count": e["unique_doi_count"],
-            "sample_dois": e["dois"][:5],
-        })
+        master.append(
+            _build_external_master_record(
+                f"EXT-ALD-{len(master) + 1:03d}",
+                e,
+                "AtomicLimits ALD database",
+                curated_ids,
+            )
+        )
+        used.add(e["precursor"])
+
+    # Append remaining non-elemental entries for priority elements (Ir, Rh, As, Ga, In, Ru)
+    focus_set = set(FOCUS_ELEMENTS)
+    for e in inventory:
+        if e["precursor"] in used or e["is_elemental"]:
+            continue
+        if e["center_element"] not in focus_set:
+            continue
+        master.append(
+            _build_external_master_record(
+                f"EXT-ALD-{len(master) + 1:03d}",
+                e,
+                "AtomicLimits ALD database (focus-element expansion)",
+                curated_ids,
+            )
+        )
         used.add(e["precursor"])
     return master
 
@@ -314,29 +361,57 @@ def build_master(inventory, baseline):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--fetch", action="store_true", help="download a fresh AtomicLimits snapshot first")
+    ap.add_argument(
+        "--from-inventory",
+        action="store_true",
+        help="rebuild master DB from tracked extracted inventory when atomiclimits_raw.json is absent",
+    )
     args = ap.parse_args()
-
-    fetched_at = None
-    if args.fetch:
-        fetched_at = fetch_snapshot()
-    elif not os.path.exists(RAW_PATH):
-        raise SystemExit(f"{RAW_PATH} not found; run with --fetch (raw dump is not tracked in git)")
-
-    with open(RAW_PATH, encoding="utf-8") as f:
-        raw = json.load(f)
-    aliases, overrides = load_aliases()
-    inventory, stats = build_inventory(raw, aliases, overrides)
-    with open(BASELINE_PATH, encoding="utf-8") as f:
-        baseline = json.load(f)
-    master = build_master(inventory, baseline)
 
     prev = {}
     if os.path.exists(SNAPSHOT_PATH):
         with open(SNAPSHOT_PATH, encoding="utf-8") as f:
             prev = json.load(f)
-    digest = sha256_of(RAW_PATH)
-    if fetched_at is None:
-        fetched_at = prev.get("fetched_at") if prev.get("raw_sha256") == digest else "unknown"
+
+    fetched_at = None
+    if args.fetch:
+        fetched_at = fetch_snapshot()
+
+    use_inventory_only = args.from_inventory or (not args.fetch and not os.path.exists(RAW_PATH))
+    if use_inventory_only:
+        if not os.path.exists(INVENTORY_PATH):
+            raise SystemExit(f"{INVENTORY_PATH} and {RAW_PATH} not found; run with --fetch")
+        with open(INVENTORY_PATH, encoding="utf-8") as f:
+            inventory = json.load(f)
+        stats = {
+            k: prev[k]
+            for k in (
+                "processes",
+                "reference_records",
+                "unique_dois",
+                "orphan_reference_records",
+                "materials",
+                "unique_precursors_after_alias_merge",
+                "unique_reactantA_strings_raw",
+            )
+            if k in prev
+        }
+        digest = prev.get("raw_sha256", "unknown")
+        fetched_at = prev.get("fetched_at", "unknown")
+    else:
+        with open(RAW_PATH, encoding="utf-8") as f:
+            raw = json.load(f)
+        aliases, overrides = load_aliases()
+        inventory, stats = build_inventory(raw, aliases, overrides)
+        digest = sha256_of(RAW_PATH)
+        if fetched_at is None:
+            fetched_at = prev.get("fetched_at") if prev.get("raw_sha256") == digest else "unknown"
+
+    with open(BASELINE_PATH, encoding="utf-8") as f:
+        baseline = json.load(f)
+    curated_ids = load_curated_identifiers()
+    master = build_master(inventory, baseline, curated_ids=curated_ids)
+
     snapshot = {
         "source": "AtomicLimits ALD database, https://www.atomiclimits.com/alddatabase (DOI 10.6100/alddatabase)",
         "endpoint": API_URL,
@@ -346,11 +421,17 @@ def main():
         "redistribution_terms": "not confirmed; raw dump kept local only",
         **stats,
         "master_entries": len(master),
+        "master_top_frequency_cutoff": MASTER_SIZE,
+        "master_focus_elements": list(FOCUS_ELEMENTS),
         "master_baseline_entries": sum(1 for m in master if m["origin"].startswith("project")),
         "master_baseline_matched_in_atomiclimits": sum(1 for m in master if m["origin"].startswith("project") and m["atomiclimits_name"]),
+        "master_curated_smiles_entries": sum(1 for m in master if m.get("smiles")),
     }
 
-    for path, obj in ((INVENTORY_PATH, inventory), (MASTER_PATH, master), (SNAPSHOT_PATH, snapshot)):
+    outputs = [(MASTER_PATH, master), (SNAPSHOT_PATH, snapshot)]
+    if not use_inventory_only:
+        outputs.insert(0, (INVENTORY_PATH, inventory))
+    for path, obj in outputs:
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             json.dump(obj, f, indent=2, ensure_ascii=False)
             f.write("\n")
