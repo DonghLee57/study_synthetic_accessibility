@@ -1039,14 +1039,24 @@
 
     /* Responsive adjustments for smaller screens */
     @media (max-width: 1080px) {
+      html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden !important;
+        overscroll-behavior-x: none;
+        touch-action: pan-y pinch-zoom;
+      }
       .page-wrapper {
         flex-direction: column;
         align-items: stretch;
         width: 100%;
         max-width: 100%;
+        min-width: 0;
       }
       .toc-sidebar {
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
         position: static;
         max-height: none;
       }
@@ -1060,6 +1070,7 @@
 
     /* Mobile Optimization (<= 768px & <= 480px) */
     html, body {
+      width: 100%;
       max-width: 100%;
       overflow-x: clip;
     }
@@ -1067,45 +1078,59 @@
     .mobile-table-scroll {
       width: 100%;
       max-width: 100%;
+      min-width: 0;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       margin: 8px 0;
     }
 
     @media (max-width: 768px) {
+      html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        overscroll-behavior-x: none;
+        touch-action: pan-y pinch-zoom;
+      }
       header {
-        width: 100%;
-        padding: 18px 12px 16px;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 16px 10px 14px !important;
       }
       .header-inner {
-        width: 100%;
-        max-width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 0 !important;
       }
       .hero-title {
-        font-size: 1.38rem;
+        font-size: 1.32rem;
         line-height: 1.35;
         word-break: keep-all;
         overflow-wrap: break-word;
       }
       .hero-desc {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        margin-bottom: 14px;
+        font-size: 0.88rem;
+        line-height: 1.58;
+        margin-bottom: 10px;
         overflow-wrap: break-word;
       }
       .view-mode-bar {
-        width: 100%;
-        padding: 8px 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 8px 10px !important;
       }
       .view-mode-inner {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 12px;
-        gap: 6px;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        gap: 6px !important;
+        flex-wrap: wrap !important;
       }
       .view-mode-inner > div[style*="margin-left:auto"] {
         margin-left: 0 !important;
-        width: 100%;
+        width: 100% !important;
         font-size: 0.74rem !important;
       }
       .view-mode-btn {
@@ -1118,8 +1143,15 @@
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
-        padding: 12px 12px !important;
+        padding: 12px 10px !important;
         gap: 12px !important;
+      }
+      .toc-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        padding: 14px 12px !important;
+        margin: 0 !important;
       }
       main.main-content {
         width: 100% !important;
@@ -1130,17 +1162,37 @@
       #tab-content-storyline,
       #tab-content-technical,
       #tab-content-database {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
       }
+      /* Uniform width framing: eliminate double box indentation on Storyline steps */
       section {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
-        padding: 16px 12px !important;
-        margin-bottom: 14px;
+        padding: 14px 10px !important;
+        margin: 0 0 14px 0 !important;
         overflow-wrap: break-word;
+      }
+      section.storyline-step {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 0 18px 0 !important;
+      }
+      .storyline-step-header {
+        padding: 0 2px;
+        margin-bottom: 10px;
+      }
+      .storyline-step-title {
+        font-size: 1.15rem;
+        line-height: 1.35;
+      }
+      .section-title {
+        font-size: 1.3rem;
+        line-height: 1.35;
       }
       .card,
       .card-subtle,
@@ -1148,13 +1200,95 @@
       .versus-card,
       .timeline-content,
       .mermaid-card,
+      .mermaid-box,
       .table-toggle-bar,
-      .db-controls-card {
+      .db-controls-card,
+      .db-card,
+      .stat-card {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
         padding: 14px 12px !important;
         overflow-wrap: break-word;
+        box-sizing: border-box !important;
+      }
+      .mermaid-card,
+      .mermaid-box {
+        padding: 0 !important;
+        overflow: hidden !important;
+      }
+      .mermaid-toolbar {
+        padding: 10px 12px !important;
+        gap: 8px;
+        flex-wrap: wrap !important;
+      }
+      /* Prevent any flex row or inline grid from blowing out viewport width */
+      [style*="display:flex"],
+      [style*="display: flex"] {
+        flex-wrap: wrap !important;
+        max-width: 100% !important;
+      }
+      [style*="display:flex"] > *,
+      [style*="display: flex"] > * {
+        min-width: 0 !important;
+        max-width: 100% !important;
+      }
+      [style*="grid-template-columns"],
+      .versus-grid,
+      .db-card-grid,
+      .hero-stats {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+      [style*="grid-template-columns"] > *,
+      .versus-grid > *,
+      .db-card-grid > *,
+      .hero-stats > * {
+        min-width: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        grid-column: span 1 !important;
+        box-sizing: border-box !important;
+      }
+      .filter-bar {
+        padding: 10px !important;
+        gap: 8px !important;
+        flex-wrap: wrap !important;
+      }
+      .search-input,
+      #benchmarkSearch,
+      .db-search-input,
+      .db-select {
+        min-width: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .db-subfilter-row > div[style*="margin-left:auto"] {
+        margin-left: 0 !important;
+        width: 100% !important;
+      }
+      .db-svg-stage,
+      .db-rxn-stage {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+      }
+      .db-svg-stage svg {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 142px;
+      }
+      .db-rxn-mol {
+        width: 118px;
+        height: 92px;
+        max-width: 100%;
       }
       .badge,
       .click-to-expand-badge,
@@ -1167,51 +1301,81 @@
         line-height: 1.35;
         overflow-wrap: anywhere;
       }
+      p, li, h1, h2, h3, h4, h5, blockquote, div, span {
+        overflow-wrap: break-word;
+      }
       p, li, h1, h2, h3, h4, h5, blockquote {
         max-width: 100%;
-        overflow-wrap: break-word;
         word-break: keep-all;
       }
       code {
         overflow-wrap: anywhere;
         word-break: break-word;
       }
-      pre {
-        max-width: 100%;
-        overflow-x: auto;
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
-      [style*="grid-template-columns"],
-      .versus-grid,
-      .db-card-grid {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
-      }
-      .db-search-input {
+      pre,
+      .code-box {
+        width: 100% !important;
+        max-width: 100% !important;
         min-width: 0 !important;
-        width: 100%;
+        overflow-x: auto !important;
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        padding: 12px !important;
+      }
+      .timeline {
+        padding-left: 18px !important;
+      }
+      .timeline::before {
+        left: 4px !important;
+      }
+      .timeline-dot {
+        left: -19px !important;
+        width: 12px !important;
+        height: 12px !important;
       }
       .mermaid-viewport {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         padding: 12px 8px !important;
         justify-content: flex-start !important;
-        max-width: 100%;
         overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        contain: layout;
       }
       .mermaid-svg-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         justify-content: flex-start !important;
-        max-width: 100%;
         overflow-x: auto !important;
+        overflow-y: hidden !important;
       }
-      div[style*="overflow-x:auto"],
-      .table-responsive,
-      .mobile-table-scroll {
-        display: block;
+      .mermaid {
+        display: block !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
+      }
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+      div[style*="overflow-x:auto"],
+      div[style*="overflow-x: auto"],
+      .table-responsive,
+      .mobile-table-scroll,
+      #dbTableWrap {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        contain: layout;
       }
       table,
       .report-table,
@@ -1222,7 +1386,8 @@
       table.table-compact-72,
       table.table-compact-73,
       table.table-compact-74,
-      table.table-compact-16 {
+      table.table-compact-16,
+      table.table-compact-db {
         min-width: 680px !important;
       }
       th[style*="min-width"],
@@ -1232,23 +1397,49 @@
       th, td {
         padding: 8px 8px;
       }
-      .mermaid {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        max-width: 100%;
-      }
-      svg {
-        max-width: 100%;
-        height: auto;
-      }
-      p .katex,
-      li .katex,
-      td .katex {
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
+      .katex {
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
         display: inline-block;
         vertical-align: middle;
+        font-size: 0.92em;
+      }
+      .katex-display {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        contain: layout;
+      }
+      .katex-mathml {
+        max-width: 1px !important;
+        max-height: 1px !important;
+        overflow: hidden !important;
+      }
+      .modal-overlay {
+        padding: 8px !important;
+      }
+      .modal-window,
+      .db-detail-window {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 92vh !important;
+      }
+      .modal-header {
+        padding: 10px 12px !important;
+        flex-wrap: wrap !important;
+        gap: 8px;
+      }
+      .modal-controls {
+        flex-wrap: wrap !important;
+        gap: 6px;
+      }
+      .modal-body,
+      .db-detail-body {
+        padding: 12px !important;
       }
       #step4-plot-tooltip {
         max-width: calc(100vw - 24px);
@@ -1263,11 +1454,14 @@
 
     @media (max-width: 480px) {
       .hero-title {
-        font-size: 1.24rem;
+        font-size: 1.2rem;
       }
       .hero-badge {
         font-size: 0.7rem;
         padding: 4px 8px;
+      }
+      .storyline-step-title {
+        font-size: 1.06rem;
       }
     }
 
@@ -6190,7 +6384,7 @@ flowchart TD
 
         <div id="dbCardGrid" class="db-card-grid"></div>
 
-        <div id="dbTableWrap" class="table-responsive" style="display:none; overflow-x:visible;">
+        <div id="dbTableWrap" class="table-responsive" style="display:none;">
           <table class="table-compact-db">
             <colgroup>
               <col style="width:12%;">

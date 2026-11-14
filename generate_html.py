@@ -1498,7 +1498,7 @@ phase1_phase2_tuning_joined = f"""
 
         <!-- 15.2 Module 1: Phase 1 Baseline Failure Analysis -->
         <div class="card" style="margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
             <h3 class="card-title" style="margin-bottom:0;">1. [Phase 1 Benchmark] Data-Driven Base Model의 Dual Misclassification 분석</h3>
             <span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5;">Baseline Error Analysis</span>
           </div>
@@ -1525,7 +1525,7 @@ phase1_phase2_tuning_joined = f"""
 
         <!-- 15.3 Module 2: SevenNet Physical Feature Pipeline (Upgraded Protocol) -->
         <div class="card" style="margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
             <h3 class="card-title" style="margin-bottom:0;">2. [Phase 2 Physical Features] SevenNet-0 LBFGS 이완 및 비중첩 이합체·분리 단편 BDE</h3>
             <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet-0 LBFGS + SambVca (Fallback {fallback_cnt}/55)</span>
           </div>
@@ -1575,7 +1575,7 @@ phase1_phase2_tuning_joined = f"""
 
         <!-- 15.4 Module 3: Analytical & ML Cross-Validation Audit -->
         <div class="card" style="margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
             <h3 class="card-title" style="margin-bottom:0;">3. [Audit &amp; Re-evaluation] Uniform Analytical Screening 및 ML Cross-Validation (All-Sample vs Stratified 5-Fold CV vs LOOCV)</h3>
             <span class="badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;">Audited Un-Hardcoded Evaluation</span>
           </div>
@@ -1586,6 +1586,7 @@ phase1_phase2_tuning_joined = f"""
           <div style="display:grid; grid-template-columns: 3fr 2fr; gap:18px; margin-bottom:20px;">
             <div>
               <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">표 15-1. Label/ID-Free Uniform Analytical Screening ($\\text{{TMC-SA}}_{{\\text{{phys}}}} \\le 4.0$) 성능</div>
+              <div style="overflow-x:auto;">
               <table class="report-table" style="font-size:0.82rem;">
                 <thead>
                   <tr style="background:#f8fafc;">
@@ -1634,6 +1635,7 @@ phase1_phase2_tuning_joined = f"""
                   </tr>
                 </tbody>
               </table>
+              </div>
             </div>
 
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
@@ -1685,12 +1687,12 @@ phase1_phase2_tuning_joined = f"""
                 양산 프리커서 27종, AS-ALD 인히비터 18종, Negative Control 10종에 대한 Phase 1(정정 SMILES &amp; BR-SAScore 포함) vs Phase 2(Relaxed LBFGS Physics + SMARTS Screening) 결과입니다.
               </p>
             </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-              <input type="text" id="benchmarkSearch" onkeyup="searchBenchmark()" placeholder="분자명, 화학식, SMILES 검색..." style="padding:6px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.8rem; width:220px;">
+            <div style="display:flex; gap:8px; align-items:center; width:100%; max-width:260px;">
+              <input type="text" id="benchmarkSearch" onkeyup="searchBenchmark()" placeholder="분자명, 화학식, SMILES 검색..." style="padding:6px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.8rem; width:100%;">
             </div>
           </div>
 
-          <div class="filter-bar" style="margin-bottom:14px; display:flex; gap:8px;">
+          <div class="filter-bar" style="margin-bottom:14px; display:flex; flex-wrap:wrap; gap:8px;">
             <button type="button" class="filter-btn active" onclick="filterBenchmark('all', event)">전체 55종 보기</button>
             <button type="button" class="filter-btn" onclick="filterBenchmark('prec', event)">Precursor (27종)</button>
             <button type="button" class="filter-btn" onclick="filterBenchmark('inhib', event)">Inhibitor (18종)</button>
