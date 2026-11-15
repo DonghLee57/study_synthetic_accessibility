@@ -5,7 +5,11 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts", "benchmark"))
 
-from neb_html_section import build_neb_storyline_html, build_neb_technical_html
+from neb_html_section import (
+    build_neb_storyline_html,
+    build_neb_technical_html,
+    build_neb_trajectory_payload_json,
+)
 from rdkit import Chem
 from rdkit.Chem import Descriptors, rdDepictor
 from rdkit.Chem.Draw import rdMolDraw2D
@@ -2358,6 +2362,7 @@ neb_bench_path = os.path.join("database", "external", "sevenn_decomp_neb_benchma
 unified_bench_path = os.path.join("database", "benchmark_unified_latest_160.json")
 neb_decomp_storyline_html = build_neb_storyline_html(neb_bench_path, unified_bench_path)
 neb_decomp_technical_html = build_neb_technical_html(neb_bench_path, unified_bench_path)
+neb_trajectory_json = build_neb_trajectory_payload_json(neb_bench_path, unified_bench_path)
 
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
@@ -2366,6 +2371,7 @@ with open(template_path, "r", encoding="utf-8") as f:
 final_html = template.replace("<!-- DATASET_SANKEY_PLACEHOLDER -->", dataset_sankey_html)
 final_html = final_html.replace("<!-- NEB_DECOMP_STORYLINE_PLACEHOLDER -->", neb_decomp_storyline_html)
 final_html = final_html.replace("<!-- NEB_DECOMP_TECHNICAL_PLACEHOLDER -->", neb_decomp_technical_html)
+final_html = final_html.replace("__NEB_TRAJECTORY_JSON_PLACEHOLDER__", neb_trajectory_json)
 final_html = final_html.replace("<!-- LIT_ROWS_PLACEHOLDER -->", lit_rows_joined)
 final_html = final_html.replace("<!-- EMPIRICAL_BENCHMARK_ROWS_PLACEHOLDER -->", empirical_db_joined)
 final_html = final_html.replace("<!-- MULTISTAGE_BENCHMARK_ROWS_PLACEHOLDER -->", multistage_joined)

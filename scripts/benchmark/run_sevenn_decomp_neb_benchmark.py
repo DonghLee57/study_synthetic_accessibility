@@ -1174,6 +1174,32 @@ def run_single_ci_neb(
             "FS_A": round(float(np.linalg.norm(pair["pos_fs"][a_i] - pair["pos_fs"][b_j])), 3),
         }
 
+    # Extract full 7-image reaction-coordinate profile and 3D coordinates
+    pos0_centroid = np.mean(images[0].get_positions(), axis=0)
+    raw_positions = [im.get_positions() - pos0_centroid for im in images]
+    cum_arc_A: List[float] = [0.0]
+    for img_i in range(1, len(raw_positions)):
+        step_dist = float(np.linalg.norm(raw_positions[img_i] - raw_positions[img_i - 1]))
+        cum_arc_A.append(cum_arc_A[-1] + step_dist)
+    total_arc_A = cum_arc_A[-1] if cum_arc_A[-1] > 1e-8 else 1.0
+
+    band_images_payload: List[Dict[str, Any]] = []
+    for img_i, pos_i in enumerate(raw_positions):
+        step_bonds = {
+            label: round(float(np.linalg.norm(pos_i[a_i] - pos_i[b_j])), 3)
+            for label, a_i, b_j in pair["bond_probe"]
+        }
+        band_images_payload.append(
+            {
+                "index": img_i,
+                "reaction_coord_A": round(cum_arc_A[img_i], 4),
+                "reaction_coord_norm": round(cum_arc_A[img_i] / total_arc_A, 4),
+                "energy_rel_kcal_mol": rel_kcal[img_i],
+                "bond_lengths_A": step_bonds,
+                "positions_A": np.round(pos_i, 4).tolist(),
+            }
+        )
+
     # Check true saddle-point vibrational signature on internal TS image
     if 0 < ts_idx < len(images) - 1:
         vib_diag = compute_core_vibrations(
@@ -1220,6 +1246,16 @@ def run_single_ci_neb(
         "ts_diagnostics": {
             "bond_lengths_A": bond_lengths,
             "core_vibrations": vib_diag,
+        },
+        "band_trajectory": {
+            "symbols": symbols,
+            "reactive_indices": [int(idx) for idx in pair["reactive_indices"]],
+            "bond_probe_pairs": [
+                {"label": label, "i": int(a_i), "j": int(b_j)}
+                for label, a_i, b_j in pair["bond_probe"]
+            ],
+            "total_arc_length_A": round(total_arc_A, 4),
+            "images": band_images_payload,
         },
     }
 

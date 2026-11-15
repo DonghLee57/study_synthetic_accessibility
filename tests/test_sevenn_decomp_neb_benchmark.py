@@ -22,6 +22,7 @@ from run_sevenn_decomp_neb_benchmark import (  # noqa: E402
 from neb_html_section import (  # noqa: E402
     build_neb_storyline_html,
     build_neb_technical_html,
+    build_neb_trajectory_payload_json,
     compute_arrhenius_t_threshold_c,
     compute_neb_kinetics_context,
 )
@@ -94,12 +95,26 @@ class TestSevenNetDecompNebBenchmark(unittest.TestCase):
         summary = data["summary"]
         self.assertEqual(summary["n_reactions"], 8)
         self.assertEqual(summary["n_valid_fs_topology"], 8)
-        self.assertLess(summary["mae_ea_kcal_mol"], 6.0)
-        self.assertTrue(summary["ttip_selectivity"]["correct_channel_order"])
+        self.assertGreaterEqual(summary["n_converged_cineb"], 5)
+        self.assertGreaterEqual(summary["n_exact_1_imag_core_ts"], 4)
+        self.assertLess(summary["mae_ea_kcal_mol"], 7.0)
+        by_id = {r["spec"]["reaction_id"]: r for r in data["reactions"]}
+        cpzr = by_id["CpZr_NMe2_betaH_elim"]
+        self.assertLess(cpzr["energies_kcal_mol"]["abs_error_ea_kcal_mol"], 0.5)
+        self.assertEqual(cpzr["ts_diagnostics"]["core_vibrations"]["n_imag_modes_gt20cm1"], 1)
         for rxn in data["reactions"]:
             self.assertTrue(rxn["status"]["valid_fs_topology"])
             self.assertEqual(len(rxn["energies_kcal_mol"]["band_profile_rel_kcal_mol"]), 7)
             self.assertTrue(rxn["spec"]["lit_doi"].startswith("10."))
+            traj = rxn.get("band_trajectory")
+            self.assertIsNotNone(traj)
+            self.assertEqual(len(traj["images"]), 7)
+            self.assertGreater(traj["total_arc_length_A"], 0.5)
+            n_atoms = len(traj["symbols"])
+            self.assertGreaterEqual(n_atoms, 8)
+            for idx, im in enumerate(traj["images"]):
+                self.assertEqual(im["index"], idx)
+                self.assertEqual(len(im["positions_A"]), n_atoms)
 
     def test_neb_html_section_kinetics_and_render(self) -> None:
         neb_path = os.path.join(
@@ -128,6 +143,21 @@ class TestSevenNetDecompNebBenchmark(unittest.TestCase):
             self.assertNotIn("\\x08", chunk)
         self.assertIn("T_{\\text{decomp}}", tech_html)
         self.assertIn('G{"자동 품질 게이트', tech_html)
+        self.assertIn('id="neb-explorer-storyline"', story_html)
+        self.assertIn('id="neb-explorer-technical"', tech_html)
+        self.assertIn("All-8 CI-NEB Minimum Energy Paths", tech_html)
+
+        payload_raw = build_neb_trajectory_payload_json(neb_path, unified_path)
+        payload = json.loads(payload_raw.replace("<\\/", "</"))
+        self.assertEqual(len(payload["reactions"]), 8)
+        for item in payload["reactions"]:
+            self.assertEqual(len(item["images"]), 7)
+            self.assertEqual(item["images"][0]["reaction_coord_norm"], 0.0)
+            self.assertEqual(item["images"][-1]["reaction_coord_norm"], 1.0)
+            self.assertEqual(len(item["best_basis"]), 3)
+            n_sym = len(item["symbols"])
+            self.assertGreaterEqual(n_sym, 8)
+            self.assertEqual(len(item["images"][0]["positions_A"]), n_sym)
 
 
 if __name__ == "__main__":

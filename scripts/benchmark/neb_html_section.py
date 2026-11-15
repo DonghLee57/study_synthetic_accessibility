@@ -13,6 +13,8 @@ import json
 import math
 from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
+
 R_KCAL_MOL_K: float = 1.98720425864083e-3  # units: kcal/(mol*K)
 
 # Literature experimental decomposition & ALD window metadata keyed by reaction_id.
@@ -169,11 +171,13 @@ def compute_neb_kinetics_context(
                 "de_sep": float(en["sevenn_delta_e_sep_kcal_mol"]),
                 "fmax": float(st["final_neb_fmax_ev_A"]),
                 "converged": bool(st["converged_cineb"]),
+                "ts_image_index": int(st["ts_image_index"]),
                 "n_imag": int(vb["n_imag_modes_gt20cm1"]),
                 "imag_freqs": vb["imag_freqs_cm1"],
                 "wall_time_s": float(st["wall_time_s"]),
                 "bond_lengths_A": rxn["ts_diagnostics"]["bond_lengths_A"],
                 "band_profile": en["band_profile_rel_kcal_mol"],
+                "band_trajectory": rxn.get("band_trajectory"),
                 "regime": meta.get("regime", "other"),
                 "t_range_c": meta.get("t_range_c", "-"),
                 "t_mid_c": meta.get("t_mid_c"),
@@ -348,24 +352,328 @@ def _build_neb_kinetics_svg(ctx: Dict[str, Any]) -> str:
           </svg>"""
 
 
+def _compute_reaction_camera_basis(
+    band_traj: Optional[Dict[str, Any]],
+) -> Tuple[List[List[float]], float]:
+    """Compute SVD reaction-plane viewing basis and bounding radius for 3D projection.
+
+    Physics/Algorithm: Stacks IS, TS, and FS coordinates of reactive core atoms
+    and applies SVD so the dominant bond-breaking/forming plane lies parallel to
+    the SVG camera plane (+X, +Y), followed by a subtle 14 deg perspective tilt.
+    """
+    if not band_traj or not band_traj.get("images"):
+        return [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], 4.0
+
+    imgs = band_traj["images"]
+    n_atoms = len(band_traj.get("symbols", []))
+    core_idx = band_traj.get("reactive_indices") or list(range(n_atoms))
+    valid_core = [idx for idx in core_idx if 0 <= idx < n_atoms]
+    if len(valid_core) < 3:
+        valid_core = list(range(n_atoms))
+
+    key_imgs = [imgs[0], imgs[len(imgs) // 2], imgs[-1]]
+    pts = np.vstack([np.asarray(im["positions_A"], dtype=float)[valid_core] for im in key_imgs])
+    pts_centered = pts - np.mean(pts, axis=0)
+    _, _, vt = np.linalg.svd(pts_centered, full_matrices=False)
+    basis = vt.copy()
+    if np.linalg.det(basis) < 0.0:
+        basis[2] *= -1.0
+
+    # Apply gentle 14 deg X-pitch and 10 deg Y-yaw so coplanar atoms keep 3D depth
+    ax, ay = math.radians(14.0), math.radians(10.0)
+    rx = np.array(
+        [[1.0, 0.0, 0.0], [0.0, math.cos(ax), -math.sin(ax)], [0.0, math.sin(ax), math.cos(ax)]]
+    )
+    ry = np.array(
+        [[math.cos(ay), 0.0, math.sin(ay)], [0.0, 1.0, 0.0], [-math.sin(ay), 0.0, math.cos(ay)]]
+    )
+    basis = (ry @ rx) @ basis
+
+    all_pos = np.vstack([np.asarray(im["positions_A"], dtype=float) for im in imgs])
+    center_ts = np.mean(np.asarray(imgs[len(imgs) // 2]["positions_A"], dtype=float), axis=0)
+    max_r = float(np.max(np.linalg.norm(all_pos - center_ts, axis=1)))
+    return np.round(basis, 5).tolist(), round(max(2.5, max_r), 3)
+
+
+def _catmull_rom_svg_path(pts: List[Tuple[float, float]], samples_per_seg: int = 12) -> str:
+    """Build smooth tensioned Catmull-Rom SVG path constrained cleanly through all nodes."""
+    if len(pts) < 2:
+        return ""
+    if len(pts) == 2:
+        return f"M {pts[0][0]:.2f},{pts[0][1]:.2f} L {pts[1][0]:.2f},{pts[1][1]:.2f}"
+    y_min = min(p[1] for p in pts) - 6.0
+    y_max = max(p[1] for p in pts) + 6.0
+    out_pts: List[Tuple[float, float]] = [pts[0]]
+    n = len(pts)
+    for i in range(n - 1):
+        p0 = pts[max(0, i - 1)]
+        p1 = pts[i]
+        p2 = pts[i + 1]
+        p3 = pts[min(n - 1, i + 2)]
+        for s in range(1, samples_per_seg + 1):
+            t = s / samples_per_seg
+            t2, t3 = t * t, t * t * t
+            x = 0.5 * (
+                (2.0 * p1[0])
+                + (-p0[0] + p2[0]) * t
+                + (2.0 * p0[0] - 5.0 * p1[0] + 4.0 * p2[0] - p3[0]) * t2
+                + (-p0[0] + 3.0 * p1[0] - 3.0 * p2[0] + p3[0]) * t3
+            )
+            y = 0.5 * (
+                (2.0 * p1[1])
+                + (-p0[1] + p2[1]) * t
+                + (2.0 * p0[1] - 5.0 * p1[1] + 4.0 * p2[1] - p3[1]) * t2
+                + (-p0[1] + 3.0 * p1[1] - 3.0 * p2[1] + p3[1]) * t3
+            )
+            y = max(y_min, min(y_max, y))
+            out_pts.append((x, y))
+    return "M " + " L ".join(f"{x:.2f},{y:.2f}" for x, y in out_pts)
+
+
+def _build_multi_neb_mep_overlay_svg(ctx: Dict[str, Any]) -> str:
+    """Build 8-channel normalized CI-NEB reaction-coordinate MEP overlay SVG."""
+    x0, x1, y0, y1 = 62.0, 675.0, 28.0, 268.0
+    e_min, e_max = -8.0, 76.0
+
+    def _px(xi: float) -> float:
+        return x0 + max(0.0, min(1.0, xi)) * (x1 - x0)
+
+    def _py(kcal: float) -> float:
+        clamped = max(e_min, min(e_max, kcal))
+        return y1 - ((clamped - e_min) / (e_max - e_min)) * (y1 - y0)
+
+    palette = {
+        "CpZr_NMe2_betaH_elim": ("#7c3aed", "CpZr(NMe2)3 beta-H", "2.8", ""),
+        "GaEt3_betaH_elim": ("#0284c7", "GaEt3 beta-H", "2.1", ""),
+        "HCDS_SiCl2_elim": ("#0d9488", "HCDS 1,2-Cl", "2.0", ""),
+        "DCDS_SiHCl_elim": ("#2563eb", "DCDS 1,2-H", "2.0", "5,3"),
+        "TEOS_C2H4_elim": ("#ea580c", "TEOS C2H4", "2.1", ""),
+        "TTIP_acetone_elim": ("#d97706", "TTIP Acetone", "2.1", ""),
+        "TTIP_propene_elim": ("#dc2626", "TTIP Propene", "2.0", "6,3"),
+        "TDMAT_NH3_transam": ("#059669", "TDMAT + NH3", "2.1", ""),
+    }
+
+    grid_svg: List[str] = []
+    for tick_y in [0, 15, 30, 45, 60, 75]:
+        yy = _py(float(tick_y))
+        g_stroke = "#94a3b8" if tick_y == 0 else "#e2e8f0"
+        g_width = "1.2" if tick_y == 0 else "0.9"
+        g_dash = 'stroke-dasharray="4,3"' if tick_y != 0 else ""
+        grid_svg.append(
+            f'<line x1="{x0:.1f}" y1="{yy:.1f}" x2="{x1:.1f}" y2="{yy:.1f}" '
+            f'stroke="{g_stroke}" stroke-width="{g_width}" {g_dash} />'
+            f'<text x="{x0 - 8:.1f}" y="{yy + 3.5:.1f}" text-anchor="end" font-size="9.5" fill="#475569">{tick_y}</text>'
+        )
+    for step_x in [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]:
+        xx = _px(step_x)
+        grid_svg.append(
+            f'<line x1="{xx:.1f}" y1="{y0:.1f}" x2="{xx:.1f}" y2="{y1:.1f}" stroke="#f1f5f9" stroke-width="1" />'
+            f'<text x="{xx:.1f}" y="{y1 + 15:.1f}" text-anchor="middle" font-size="9.5" fill="#475569">{step_x:.1f}</text>'
+        )
+
+    curves_svg: List[str] = []
+    legend_svg: List[str] = []
+    leg_y = 40.0
+    for r in ctx["rows"]:
+        rid = r["reaction_id"]
+        col, label, sw, dash = palette.get(rid, ("#475569", r["short"], "1.8", ""))
+        traj = r.get("band_trajectory")
+        if traj and traj.get("images"):
+            coords = [
+                (_px(float(im["reaction_coord_norm"])), _py(float(im["energy_rel_kcal_mol"])))
+                for im in traj["images"]
+            ]
+        else:
+            prof = r["band_profile"]
+            n_pts = max(2, len(prof))
+            coords = [(_px(idx / (n_pts - 1)), _py(float(ev))) for idx, ev in enumerate(prof)]
+
+        path_d = _catmull_rom_svg_path(coords)
+        dash_attr = f'stroke-dasharray="{dash}"' if dash else ""
+        curves_svg.append(
+            f'<path d="{path_d}" fill="none" stroke="{col}" stroke-width="{sw}" {dash_attr} stroke-linecap="round" opacity="0.92" />'
+        )
+        ts_idx = min(len(coords) - 1, max(0, r["ts_image_index"]))
+        for idx, (cx, cy) in enumerate(coords):
+            rad = 4.6 if idx == ts_idx else 2.6
+            stroke_w = "1.6" if idx == ts_idx else "0.9"
+            curves_svg.append(
+                f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{rad}" fill="{"#ffffff" if idx != ts_idx else col}" '
+                f'stroke="{col}" stroke-width="{stroke_w}"><title>{label} Img {idx}: {r["band_profile"][idx]:.2f} kcal/mol</title></circle>'
+            )
+        tx, ty = coords[ts_idx]
+        curves_svg.append(
+            f'<text x="{tx:.1f}" y="{ty - 8:.1f}" text-anchor="middle" font-size="8.4" font-weight="700" fill="{col}">{r["ea_7n"]:.1f}</text>'
+        )
+        legend_svg.append(
+            f'<line x1="690" y1="{leg_y:.1f}" x2="712" y2="{leg_y:.1f}" stroke="{col}" stroke-width="{sw}" {dash_attr} />'
+            f'<circle cx="701" cy="{leg_y:.1f}" r="3.2" fill="{col}" />'
+            f'<text x="718" y="{leg_y + 3.5:.1f}" font-size="9.5" font-weight="700" fill="#1e293b">{label}</text>'
+            f'<text x="718" y="{leg_y + 14.0:.1f}" font-size="8.3" fill="#64748b">Ea={r["ea_7n"]:.2f} kcal/mol</text>'
+        )
+        leg_y += 28.5
+
+    return f"""
+          <svg viewBox="0 0 855 298" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+            <rect x="{x0:.1f}" y="{y0:.1f}" width="{x1 - x0:.1f}" height="{y1 - y0:.1f}" fill="#ffffff" stroke="#cbd5e1" />
+            {''.join(grid_svg)}
+            {''.join(curves_svg)}
+            {''.join(legend_svg)}
+            <text x="{(x0 + x1) / 2:.1f}" y="17" text-anchor="middle" font-size="11.2" font-weight="800" fill="#0f172a">All-8 CI-NEB Minimum Energy Paths vs Normalized Reaction Coordinate (&xi; = s / s_total)</text>
+            <text x="{(x0 + x1) / 2:.1f}" y="290" text-anchor="middle" font-size="10" font-weight="700" fill="#334155">Normalized Reaction Coordinate &xi; (0 = IS &rarr; 1 = Adduct FS)</text>
+            <text x="18" y="{(y0 + y1) / 2:.1f}" text-anchor="middle" font-size="10" font-weight="700" fill="#334155" transform="rotate(-90 18 {(y0 + y1) / 2:.1f})">Relative Energy &Delta;E (kcal/mol)</text>
+          </svg>"""
+
+
+def _build_neb_explorer_shell(explorer_id: str, default_rxn: str = "CpZr_NMe2_betaH_elim") -> str:
+    """Render mount container hydrated by client-side interactive CI-NEB visualizer."""
+    return f"""
+            <div class="neb-explorer-widget" id="neb-explorer-{explorer_id}" data-explorer-id="{explorer_id}" data-default-rxn="{default_rxn}" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:10px; padding:16px; margin-bottom:20px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                <div>
+                  <div style="font-weight:800; font-size:1.02rem; color:#0f172a;">
+                    [CI-NEB 인터랙티브 탐색기] 반응좌표(&xi;) 에너지 프로파일 &amp; 단계별 3D 전이상태 구조
+                  </div>
+                  <div style="font-size:0.8rem; color:#64748b;">
+                    반응 채널을 선택한 뒤 에너지 곡선 노드, 슬라이더 또는 자동 재생 버튼을 통해 Image 0(IS) &rarr; TS &rarr; Image 6(FS) 기하 변화를 탐색합니다.
+                  </div>
+                </div>
+                <span class="badge badge-3g" id="neb-badge-{explorer_id}" style="font-size:0.75rem;">7 Images &bull; SevenNet CI-NEB</span>
+              </div>
+              <div class="neb-rxn-tabs" id="neb-tabs-{explorer_id}" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;"></div>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap:16px; align-items:start;">
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-weight:700; font-size:0.86rem; color:#1e293b;">반응좌표 에너지 프로파일 (&Delta;E vs &xi; / s)</span>
+                    <span id="neb-curve-meta-{explorer_id}" style="font-size:0.74rem; font-family:'JetBrains Mono'; color:#475569;"></span>
+                  </div>
+                  <div id="neb-energy-svg-host-{explorer_id}"></div>
+                  <div id="neb-bond-table-host-{explorer_id}" style="margin-top:10px;"></div>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                    <span style="font-weight:700; font-size:0.86rem; color:#1e293b;">단계별 3D 분자 구조 (드래그 회전 가능)</span>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <button type="button" class="neb-ctrl-btn" data-act="zoom-in" style="padding:2px 8px; font-size:0.74rem; border:1px solid #cbd5e1; background:#fff; border-radius:4px; cursor:pointer;">+</button>
+                      <button type="button" class="neb-ctrl-btn" data-act="zoom-out" style="padding:2px 8px; font-size:0.74rem; border:1px solid #cbd5e1; background:#fff; border-radius:4px; cursor:pointer;">-</button>
+                      <button type="button" class="neb-ctrl-btn" data-act="reset-view" style="padding:2px 8px; font-size:0.74rem; border:1px solid #cbd5e1; background:#fff; border-radius:4px; cursor:pointer;">반응면 정렬</button>
+                      <button type="button" class="neb-ctrl-btn" data-act="toggle-labels" style="padding:2px 8px; font-size:0.74rem; border:1px solid #cbd5e1; background:#eef2ff; color:#3730a3; border-radius:4px; cursor:pointer;">원자 라벨</button>
+                    </div>
+                  </div>
+                  <div id="neb-struct-svg-host-{explorer_id}" style="touch-action:none; cursor:grab; user-select:none;"></div>
+                  <div style="margin-top:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <button type="button" class="neb-ctrl-btn" data-act="prev" style="padding:4px 10px; font-size:0.78rem; font-weight:700; border:1px solid #cbd5e1; background:#fff; border-radius:5px; cursor:pointer;">&lsaquo; 이전</button>
+                    <button type="button" class="neb-ctrl-btn" data-act="play" id="neb-play-btn-{explorer_id}" style="padding:4px 12px; font-size:0.78rem; font-weight:700; border:1px solid #0284c7; background:#0284c7; color:#fff; border-radius:5px; cursor:pointer;">자동 재생</button>
+                    <button type="button" class="neb-ctrl-btn" data-act="next" style="padding:4px 10px; font-size:0.78rem; font-weight:700; border:1px solid #cbd5e1; background:#fff; border-radius:5px; cursor:pointer;">다음 &rsaquo;</button>
+                    <input type="range" min="0" max="6" value="0" id="neb-slider-{explorer_id}" style="flex:1; min-width:110px; accent-color:#7c3aed; cursor:pointer;" />
+                    <button type="button" class="neb-ctrl-btn" data-act="jump-ts" style="padding:4px 9px; font-size:0.75rem; font-weight:700; border:1px solid #7c3aed; background:#f5f3ff; color:#6d28d9; border-radius:5px; cursor:pointer;">TS 이동</button>
+                  </div>
+                  <div id="neb-step-strip-{explorer_id}" style="display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:4px; margin-top:10px;"></div>
+                </div>
+              </div>
+            </div>"""
+
+
+def build_neb_trajectory_payload_json(
+    neb_bench_path: str,
+    unified_db_path: str,
+) -> str:
+    """Serialize 8-channel CI-NEB reaction-coordinate profiles & 3D coordinates for HTML."""
+    ctx = compute_neb_kinetics_context(neb_bench_path, unified_db_path)
+    ordered_ids = [
+        "CpZr_NMe2_betaH_elim",
+        "GaEt3_betaH_elim",
+        "HCDS_SiCl2_elim",
+        "DCDS_SiHCl_elim",
+        "TEOS_C2H4_elim",
+        "TTIP_acetone_elim",
+        "TTIP_propene_elim",
+        "TDMAT_NH3_transam",
+    ]
+    rows_out: List[Dict[str, Any]] = []
+    for rid in ordered_ids:
+        r = ctx["by_id"].get(rid)
+        if not r:
+            continue
+        traj = r.get("band_trajectory")
+        basis, view_radius = _compute_reaction_camera_basis(traj)
+        if traj and traj.get("images"):
+            images_payload = traj["images"]
+            symbols = traj["symbols"]
+            reactive_indices = traj["reactive_indices"]
+            bond_pairs = traj["bond_probe_pairs"]
+            total_arc = traj["total_arc_length_A"]
+        else:
+            prof = r["band_profile"]
+            n_pts = max(2, len(prof))
+            images_payload = [
+                {
+                    "index": idx,
+                    "reaction_coord_A": round(idx * 1.0, 4),
+                    "reaction_coord_norm": round(idx / (n_pts - 1), 4),
+                    "energy_rel_kcal_mol": float(ev),
+                    "bond_lengths_A": {},
+                    "positions_A": [],
+                }
+                for idx, ev in enumerate(prof)
+            ]
+            symbols, reactive_indices, bond_pairs, total_arc = [], [], [], float(n_pts - 1)
+
+        rows_out.append(
+            {
+                "reaction_id": rid,
+                "short": r["short"],
+                "precursor_id": r["precursor_id"],
+                "precursor_name": r["precursor_name"],
+                "equation": r["equation"],
+                "mechanism": r["mechanism"],
+                "lit_doi": r["lit_doi"],
+                "ea_lit": r["ea_lit"],
+                "ea_7n": r["ea_7n"],
+                "de_adduct": r["de_adduct"],
+                "de_sep": r["de_sep"],
+                "ts_image_index": r["ts_image_index"],
+                "converged": r["converged"],
+                "fmax": r["fmax"],
+                "n_imag": r["n_imag"],
+                "imag_freqs": r["imag_freqs"],
+                "t_range_c": r["t_range_c"],
+                "t1_7n_1e13": round(r["t1_7n_1e13"], 1),
+                "symbols": symbols,
+                "reactive_indices": reactive_indices,
+                "bond_probe_pairs": bond_pairs,
+                "bond_summary_A": r["bond_lengths_A"],
+                "best_basis": basis,
+                "view_radius_A": view_radius,
+                "total_arc_length_A": total_arc,
+                "images": images_payload,
+            }
+        )
+    raw = json.dumps({"reactions": rows_out}, separators=(",", ":"))
+    return raw.replace("</", "<\\/")
+
+
 def build_neb_storyline_html(
     neb_bench_path: str,
     unified_db_path: str,
 ) -> str:
-    """Build concise Storyline Step 5 summary cards, SVG figure, and jump link."""
+    """Build concise Storyline Step 5 summary cards, interactive MEP/3D explorer, and plot."""
     ctx = compute_neb_kinetics_context(neb_bench_path, unified_db_path)
     s = ctx["summary"]
     cg = ctx["corr_gas"]
     cpzr = ctx["by_id"]["CpZr_NMe2_betaH_elim"]
     sel = s["ttip_selectivity"]
+    ex_prop = [abs(r["signed_err"]) for r in ctx["rows"] if r["reaction_id"] != "TTIP_propene_elim"]
+    mae_ex_propene = sum(ex_prop) / len(ex_prop)
     svg_html = _build_neb_kinetics_svg(ctx)
+    explorer_html = _build_neb_explorer_shell("storyline", "CpZr_NMe2_betaH_elim")
 
     return rf"""
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">8대 반응경로 장벽 정합성 (CI-NEB)</div>
                 <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">MAE {s['mae_ea_kcal_mol']:.2f} kcal/mol</div>
-                <div style="font-size:0.8rem; color:#475569;">RMSE <strong>{s['rmse_ea_kcal_mol']:.2f}</strong>, Bias <strong>{s['bias_mean_signed_err_kcal_mol']:+.2f}</strong> kcal/mol; TTIP 채널 선택성 &Delta;E<sub>a</sub> <strong>+{sel['sevenn_delta_ea_propene_minus_acetone_kcal_mol']:.2f}</strong> (문헌 +{sel['lit_delta_ea_propene_minus_acetone_kcal_mol']:.1f})</div>
+                <div style="font-size:0.8rem; color:#475569;">RMSE <strong>{s['rmse_ea_kcal_mol']:.2f}</strong>, Bias <strong>{s['bias_mean_signed_err_kcal_mol']:+.2f}</strong> kcal/mol; <code>TTIP(pro)</code> 단계적 C&ndash;O 신장 제외 7종 MAE <strong>{mae_ex_propene:.2f}</strong></div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #7c3aed; border-radius:6px; padding:16px;">
@@ -387,6 +695,8 @@ def build_neb_storyline_html(
               </div>
             </div>
 
+            {explorer_html}
+
             <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:18px;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
                 <div style="font-weight:700; font-size:1.0rem; color:#0f172a;">
@@ -397,7 +707,7 @@ def build_neb_storyline_html(
               {svg_html}
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:12px; padding:12px 14px; background:#f0f9ff; border:1px solid #bae6fd; border-left:4px solid #0284c7; border-radius:6px;">
                 <div style="font-size:0.83rem; color:#1e3a8a; line-height:1.55; max-width:740px;">
-                  <strong>핵심 결론:</strong> 정적 균일 해리 지표(<code>BDE_min</code>)는 <code>CpZr(NMe2)3</code>(69.96 kcal/mol) &gt; <code>HCDS</code>(42.16 kcal/mol)로 내열성을 오판하지만, SevenNet CI-NEB는 리간드 간 협동 &beta;-H 제거(41.55 kcal/mol)를 포착하여 실제 $T_{{\text{{decomp}}}}$ 서열을 복원합니다. 단, <code>TTIP</code>의 산화물 표면 자가촉매 하강과 <code>TDMAT</code>/<code>CpZr</code>의 공반응 교환 대비 자가분해 차이로 인해, ALD 공정창 판정은 이중 장벽($E_a^{{\text{{self-decomp}}}} - E_a^{{\text{{surface/ALD}}}}$) 체계로 해석해야 합니다.
+                  <strong>핵심 결론:</strong> 정적 균일 해리 지표(<code>BDE_min</code>)는 <code>CpZr(NMe2)3</code>(69.96 kcal/mol) &gt; <code>HCDS</code>(42.16 kcal/mol)로 내열성을 오판하지만, SevenNet CI-NEB는 리간드 간 협동 &beta;-H 제거({cpzr['ea_7n']:.2f} kcal/mol)를 포착하여 실제 $T_{{\text{{decomp}}}}$ 서열을 복원합니다. 단, <code>TTIP</code>의 산화물 표면 자가촉매 하강과 <code>TDMAT</code>/<code>CpZr</code>의 공반응 교환 대비 자가분해 차이로 인해, ALD 공정창 판정은 이중 장벽($E_a^{{\text{{self-decomp}}}} - E_a^{{\text{{surface/ALD}}}}$) 체계로 해석해야 합니다.
                 </div>
                 <button type="button" onclick="jumpToTechnicalSection('neb-decomp-kinetics')" class="btn-pdf" style="background:#0369a1; color:#fff; border-color:#0369a1; cursor:pointer;">
                   Section 17 상세 분석 보기 &rarr;
@@ -418,6 +728,8 @@ def build_neb_technical_html(
     cpzr = ctx["by_id"]["CpZr_NMe2_betaH_elim"]
     cpzr_bonds = cpzr["bond_lengths_A"]
     svg_html = _build_neb_kinetics_svg(ctx)
+    mep_overlay_svg = _build_multi_neb_mep_overlay_svg(ctx)
+    explorer_tech_html = _build_neb_explorer_shell("technical", "CpZr_NMe2_betaH_elim")
 
     # Build Table 17-1 rows (all 8 benchmarked reactions)
     bench_rows_html: List[str] = []
@@ -499,7 +811,7 @@ def build_neb_technical_html(
             <span class="badge badge-2g">MAE {s['mae_ea_kcal_mol']:.2f} &middot; RMSE {s['rmse_ea_kcal_mol']:.2f} kcal/mol &bull; FS {s['n_valid_fs_topology']}/{s['n_reactions']} &bull; Core TS 1-Imag {s['n_exact_1_imag_core_ts']}/{s['n_reactions']}</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.65; margin-bottom:14px;">
-            <code>database/benchmark_unified_latest_160.json</code> 내 실존 반도체 프리커서 및 대조군 7종(총 8개 반응 채널)을 대상으로 ASE <code>improvedtangent</code> NEB + CI-NEB(중간 이미지 5개/총 7개, <code>neb_steps=75</code>, <code>cineb_steps=130</code>, <code>k_spring=0.10 eV/&Aring;&sup2;</code>, <code>FIRE maxstep=0.05 &Aring;</code>, CPU 4스레드)를 일관 적용한 결과입니다. 모든 계산에서 최종 상태(FS) 위상 검증 <strong>{s['n_valid_fs_topology']}/{s['n_reactions']}</strong>을 통과하였으며, 전체 활성화 장벽 오차는 <strong>MAE {s['mae_ea_kcal_mol']:.2f} kcal/mol</strong>, 평균 부호 편향 <strong>{s['bias_mean_signed_err_kcal_mol']:+.2f} kcal/mol</strong>입니다.
+            <code>database/benchmark_unified_latest_160.json</code> 내 실존 반도체 프리커서 및 대조군 7종(총 8개 반응 채널)을 대상으로 ASE <code>improvedtangent</code> NEB + CI-NEB(총 7개 이미지, <code>k_spring=0.10 eV/&Aring;&sup2;</code>, 조기 CI 점화 <code>neb_steps=15&ndash;75</code>, <code>FIRE maxstep=0.035&ndash;0.05 &Aring;</code>)를 일관 적용한 결과입니다. 모든 계산에서 최종 상태(FS) 위상 검증 <strong>{s['n_valid_fs_topology']}/{s['n_reactions']}</strong>을 통과하였으며, 전체 활성화 장벽 오차는 <strong>MAE {s['mae_ea_kcal_mol']:.2f} kcal/mol</strong>(<code>TTIP propene</code> C&ndash;O 우회 편차 제외 7종 <strong>{sum(abs(r['signed_err']) for r in ctx['rows'] if r['reaction_id'] != 'TTIP_propene_elim') / 7.0:.2f} kcal/mol</strong>), 평균 부호 편향 <strong>{s['bias_mean_signed_err_kcal_mol']:+.2f} kcal/mol</strong>입니다.
           </p>
 
           <div style="margin-bottom:16px;">
@@ -530,6 +842,21 @@ def build_neb_technical_html(
           </div>
         </div>
 
+        <!-- Card 1-B: Normalized Reaction-Coordinate Profiles & Step-by-Step 3D Structure Explorer -->
+        <div class="card" id="neb-mep-explorer-card" style="margin-bottom:24px; border-top:3px solid #6366f1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">1-B. [반응좌표 에너지 프로파일 및 단계별 3D 구조 시각화] 8대 CI-NEB 최소에너지경로(MEP) 탐색기</h3>
+            <span class="badge" style="background:#e0e7ff; color:#3730a3; border:1px solid #c7d2fe;">Reaction Coordinate &xi; = s / s_total &bull; 7-Image Structural Stepping</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.65; margin-bottom:14px;">
+            각 CI-NEB 밴드의 전체 7개 이미지(&Delta;s<sub>k</sub> = &#8214;<b>R</b><sub>k</sub> &minus; <b>R</b><sub>k&minus;1</sub>&#8214;<sub>F</sub> 누적 데카르트 경로 길이 기준 정규화 반응좌표 &xi; &isin; [0, 1])에 따른 상대 에너지 프로파일을 비교하고, 하단 인터랙티브 탐색기에서 반응별 &Delta;E(&xi;) 곡선과 각 이미지 단계(IS &rarr; TS &rarr; FS)의 3D 배위 구조 및 활성 결합 길이 변화를 직접 확인할 수 있습니다.
+          </p>
+          <div style="margin-bottom:18px;">
+            {mep_overlay_svg}
+          </div>
+          {explorer_tech_html}
+        </div>
+
         <!-- Card 2: Deep Dive on CpZr(NMe2)3 (ZAC, PREC_HK_07) -->
         <div class="card" style="margin-bottom:24px; border-top:3px solid #7c3aed;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
@@ -558,7 +885,7 @@ def build_neb_technical_html(
               <div style="font-size:0.83rem; color:#334155; line-height:1.6;">
                 $$\text{{CpZr(NMe}}_2)_3 \longrightarrow \text{{Zr(NMe}}_2)_2(\eta^2\text{{-N(Me)CH}}_2) + \text{{C}}_5\text{{H}}_6$$
                 <ul style="margin:6px 0 0 18px; padding:0;">
-                  <li><strong>Cp 이탈 열역학 장벽:</strong> SevenNet 분리 생성물 에너지차 &Delta;E<sub>sep</sub> = <strong>+56.57 kcal/mol</strong>로, Channel A 전체 전이상태 장벽(41.55 kcal/mol)을 +15.02 kcal/mol 상회하여 초기 열분해에서 Cp 탈리가 억제됨을 재현합니다.</li>
+                  <li><strong>Cp 이탈 열역학 장벽:</strong> SevenNet 분리 생성물 에너지차 &Delta;E<sub>sep</sub> = <strong>+56.57 kcal/mol</strong>로, Channel A 전체 전이상태 장벽({cpzr['ea_7n']:.2f} kcal/mol)을 +{56.57 - cpzr['ea_7n']:.2f} kcal/mol 상회하여 초기 열분해에서 Cp 탈리가 억제됨을 재현합니다.</li>
                   <li><strong>TDMAZ 대비 ALD 창 확장 원리:</strong> <code>Zr(NMe2)4</code>(TDMAZ)은 &minus;NMe<sub>2</sub> 4개가 순차 탈리되며 반응성 높은 Zr 표면을 노출하는 반면, <code>CpZr(NMe2)3</code>는 처음 2개의 &minus;NMe<sub>2</sub>만 표면 &minus;OH와 저에너지(0.22/0.16 eV) 교환 후 난분해성 <code>O<sub>2</sub>ZrCp(NMe<sub>2</sub>)<sup>*</sup></code> 표면을 유지(Cp 탈리 장벽 1.66&ndash;2.26 eV)하여 305&ndash;350&deg;C 영역까지 자기제한적 성장을 보존합니다.</li>
                 </ul>
               </div>
@@ -609,7 +936,7 @@ def build_neb_technical_html(
             <div style="background:#fffbeb; border:1px solid #fde68a; border-left:4px solid #d97706; border-radius:6px; padding:12px;">
               <div style="font-weight:700; color:#92400e; font-size:0.88rem; margin-bottom:4px;">(2) 표면 자가촉매(TTIP) 및 공반응 교환(TDMAT) 구분</div>
               <p style="font-size:0.81rem; color:#78350f; line-height:1.55; margin:0;">
-                표면 촉매 효과가 강한 <code>TTIP</code>를 포함하면 6종 Pearson Correlation은 $r_{{\text{{lit}}}}={ca['r_lit']:.3f}$, $r_{{\text{{7net}}}}={ca['r_7n']:.3f}$로 하락합니다. 이는 <code>TTIP</code> 기상 장벽(50.87 kcal/mol &rarr; $T_{{1\%}}$ {ctx['by_id']['TTIP_acetone_elim']['t1_7n_1e13']:.1f}&deg;C)이 성장 중인 TiO<sub>2</sub> 표면에서 $E_{{a,\text{{app}}}}\sim 20\text{{--}}40\text{{ kcal/mol}}$로 낮아지기 때문입니다(<a href="https://doi.org/10.1021/acs.jpca.7b09904" target="_blank">10.1021/acs.jpca.7b09904</a>). 또한 <code>TDMAT+NH3</code>(16.22 kcal/mol)는 목적 ALD 교환 장벽이므로, 실제 열분해 상한(200&ndash;220&deg;C)은 단분자 &beta;-H 자가분해 장벽(39.3 kcal/mol)과의 이중 장벽 차이로 판정해야 합니다.
+                표면 촉매 효과가 강한 <code>TTIP</code>를 포함하면 6종 Pearson Correlation은 $r_{{\text{{lit}}}}={ca['r_lit']:.3f}$, $r_{{\text{{7net}}}}={ca['r_7n']:.3f}$로 하락합니다. 이는 <code>TTIP</code> 기상 장벽({ctx['by_id']['TTIP_acetone_elim']['ea_7n']:.2f} kcal/mol &rarr; $T_{{1\%}}$ {ctx['by_id']['TTIP_acetone_elim']['t1_7n_1e13']:.1f}&deg;C)이 성장 중인 TiO<sub>2</sub> 표면에서 $E_{{a,\text{{app}}}}\sim 20\text{{--}}40\text{{ kcal/mol}}$로 낮아지기 때문입니다(<a href="https://doi.org/10.1021/acs.jpca.7b09904" target="_blank">10.1021/acs.jpca.7b09904</a>). 또한 <code>TDMAT+NH3</code>({ctx['by_id']['TDMAT_NH3_transam']['ea_7n']:.2f} kcal/mol)는 목적 ALD 교환 장벽이므로, 실제 열분해 상한(200&ndash;220&deg;C)은 단분자 &beta;-H 자가분해 장벽(39.3 kcal/mol)과의 이중 장벽 차이로 판정해야 합니다.
               </p>
             </div>
           </div>
@@ -632,7 +959,7 @@ def build_neb_technical_html(
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:13px;">
               <div style="font-weight:700; color:#0f172a; font-size:0.86rem; margin-bottom:4px;">CPU 연산 비용 및 GPU 가속 요구사항</div>
               <div style="font-size:0.8rem; color:#475569; line-height:1.5;">
-                CPU 4스레드 기준 소형 실란(8원자)은 <code>283.8&ndash;296.9 s</code>로 신속하나, 중대형 알콕사이드&middot;아마이드(22&ndash;45원자)는 밴드당 <code>782.7&ndash;1818.7 s</code>(약 13&ndash;30분)가 소요됩니다. 대량 자동화에는 <strong>Stage 1&ndash;2 통과 후보 한정 실행</strong> 및 GPU/cuEquivariance 가속이 필수입니다.
+                CPU(1&ndash;4스레드) 기준 소형 실란(8원자)은 <code>{min(r['wall_time_s'] for r in ctx['rows'] if 'Si' in r['reaction_id'] and r['reaction_id'] != 'TEOS_C2H4_elim'):.1f}&ndash;{max(r['wall_time_s'] for r in ctx['rows'] if 'Si' in r['reaction_id'] and r['reaction_id'] != 'TEOS_C2H4_elim'):.1f} s</code>로 신속하나, 중대형 알콕사이드&middot;아마이드(22&ndash;45원자)는 밴드당 <code>{min(r['wall_time_s'] for r in ctx['rows'] if r['reaction_id'] not in {'HCDS_SiCl2_elim', 'DCDS_SiHCl_elim'}):.1f}&ndash;{max(r['wall_time_s'] for r in ctx['rows'] if r['reaction_id'] not in {'HCDS_SiCl2_elim', 'DCDS_SiHCl_elim'}):.1f} s</code>가 소요됩니다. 대량 자동화에는 <strong>Stage 1&ndash;2 통과 후보 한정 실행</strong> 및 GPU/cuEquivariance 가속이 필수입니다.
               </div>
             </div>
             <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:13px;">
