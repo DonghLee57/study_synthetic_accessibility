@@ -489,7 +489,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             with open(exp_sevenn_path, "r", encoding="utf-8") as f:
                 exp_sevenn = json.load(f)
             feats = exp_sevenn["features"]
-            self.assertGreaterEqual(len(feats), 1)
+            self.assertEqual(len(feats), 75)
             self.assertEqual(exp_sevenn["metadata"].get("fallback_count", -1), 0)
             for feat in feats:
                 self.assertFalse(feat.get("is_fallback", True), f"Fallback triggered for {feat['id']}")
@@ -497,6 +497,17 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                 self.assertGreater(feat["e_coh_ev_per_atom"], 0.0)
                 for key in ("e_pot_ev", "e_coh_ev_per_atom", "bde_min_kcal_mol", "vbur_percent", "delta_e_dimer_kcal_mol"):
                     self.assertTrue(math.isfinite(float(feat[key])), f"Non-finite {key} for {feat['id']}")
+
+        exp_neg_sevenn_path = os.path.join(PROJECT_ROOT, "database", "external", "expanded_neg_sevenn_features.json")
+        if os.path.exists(exp_neg_sevenn_path):
+            with open(exp_neg_sevenn_path, "r", encoding="utf-8") as f:
+                exp_neg_sevenn = json.load(f)
+            neg_feats = exp_neg_sevenn["features"]
+            self.assertEqual(len(neg_feats), 30)
+            self.assertEqual(exp_neg_sevenn["metadata"].get("fallback_count", -1), 0)
+            for feat in neg_feats:
+                self.assertFalse(feat.get("is_fallback", True), f"Fallback triggered for {feat['id']}")
+                self.assertGreater(feat["e_coh_ev_per_atom"], 0.0)
 
     def test_14_expanded_18_model_semiconductor_db_evaluation(self):
         """Verify 18-model evaluation across 102 SMILES precursors, 18 inhibitors, and 29 reagents."""
@@ -603,21 +614,46 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(ds["precursors_total"], 102)
         self.assertEqual(ds["inhibitors_total"], 18)
         self.assertEqual(ds["negative_controls_total"], 40)
+        self.assertEqual(ds["sevenn_relaxed_count"], 160)
+        self.assertEqual(ds["etkdg_3d_count"], 0)
         self.assertEqual(ds["sevenn_relaxed_count"] + ds["etkdg_3d_count"], 160)
+        self.assertEqual(ds["feature_count"], 38)
+        for req_feat in (
+            "vbur_percent",
+            "vbur_d2_percent",
+            "void_cone_deg",
+            "r_cov_ang",
+            "r_probe_ang",
+            "r_eff_ang",
+            "r_probe_d2_ang",
+            "n_val",
+            "chi_pauling",
+            "chi_eff",
+            "cn_eff",
+            "n_ve",
+            "ve_deficit",
+            "coord_propensity",
+        ):
+            self.assertIn(req_feat, ds["feature_names"])
+        self.assertNotIn("v_min_adaptive", ds["feature_names"])
         self.assertEqual(len(data["records"]), 160)
 
         v2 = data["unified_v2_summary"]
-        self.assertEqual(v2["precursors_all_tp"], "94/102")
-        self.assertAlmostEqual(v2["precursors_all_tpr_pct"], 92.2, places=1)
+        self.assertEqual(v2["precursors_all_tp"], "95/102")
+        self.assertAlmostEqual(v2["precursors_all_tpr_pct"], 93.1, places=1)
         self.assertEqual(v2["audited_precursors_tp"], "25/27")
-        self.assertEqual(v2["expanded_precursors_tp"], "69/75")
-        self.assertEqual(v2["negative_all_tn"], "37/40")
-        self.assertAlmostEqual(v2["negative_all_tnr_pct"], 92.5, places=1)
+        self.assertEqual(v2["expanded_precursors_tp"], "70/75")
+        self.assertEqual(v2["negative_all_tn"], "40/40")
+        self.assertAlmostEqual(v2["negative_all_tnr_pct"], 100.0, places=1)
+        self.assertEqual(v2["negative_fp_ids"], [])
+        self.assertNotIn("NEG-019", v2["negative_fp_ids"])
+        self.assertNotIn("NEG-039", v2["negative_fp_ids"])
+        self.assertNotIn("NEG-040", v2["negative_fp_ids"])
 
         lofmo = data["lofmo_extrapolation_160"]
         self.assertLess(lofmo["LogisticRegression"]["mean_unseen_tnr"], 0.10)
         self.assertGreaterEqual(lofmo["OneClassSVM_RBF"]["mean_unseen_tnr"], 0.85)
-        self.assertGreaterEqual(lofmo["Unified_TMC_SA_v2_Gate"]["mean_unseen_tnr"], 0.90)
+        self.assertEqual(lofmo["Unified_TMC_SA_v2_Gate"]["mean_unseen_tnr"], 1.0)
 
         html_path = os.path.join(PROJECT_ROOT, "index.html")
         with open(html_path, "r", encoding="utf-8") as f:
@@ -625,8 +661,96 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertNotIn("전구체", html_txt)
         self.assertNotIn("코호트", html_txt)
         self.assertNotIn("cohort", html_txt.lower())
+        self.assertNotIn("24 Features", html_txt)
+        self.assertNotIn("27 Features", html_txt)
+        self.assertIn("38 Features", html_txt)
+        self.assertIn("40/40", html_txt)
+        self.assertIn("[Descriptor 4 Physical Validation]", html_txt)
+        self.assertIn("전이금속 다중상태 배위 인식 원리", html_txt)
         self.assertIn("[Unified Plot 1]", html_txt)
         self.assertIn("[Unified Plot 2]", html_txt)
+        for idx, toc_step in enumerate((
+            "반도체 프리커서 SA 모델 평가 기준 (Confusion Matrix)",
+            "4세대 AI Model 체계와 반도체 프리커서 적합성 판정",
+            "기존 모델 오분류 분석 및 SevenNet-0 물리 Descriptor 체계",
+            "통합 160종 물리-배위 모델(TMC-SA) 평가 결과",
+        ), start=1):
+            self.assertEqual(html_txt.count(f">{idx}. {toc_step}<"), 1, f"Storyline TOC missing: {toc_step}")
+            self.assertEqual(html_txt.count(f'<h3 class="storyline-step-title">{toc_step}</h3>'), 1, f"Storyline body heading mismatch: {toc_step}")
+
+    def test_19_design1_element_physics_and_descriptor4_replacement(self):
+        """Verify Design 1+2 multi-state TM coordination physics and Descriptor 4 orthogonality."""
+        bench_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        from element_physics import (
+            DELTA_R_SHELL_ANG,
+            compute_intrinsic_topology,
+            get_element_properties,
+            universal_vbur_lower_bound,
+        )
+
+        self.assertEqual(universal_vbur_lower_bound(0), 44.0)
+        self.assertEqual(universal_vbur_lower_bound(1), 39.0)
+        self.assertEqual(universal_vbur_lower_bound(2), 34.0)
+        self.assertEqual(universal_vbur_lower_bound(5), 34.0)
+
+        # Element-property center detection on CrPh3 without METAL_SET whitelist
+        topo_cr = compute_intrinsic_topology("[Cr](c1ccccc1)(c1ccccc1)c1ccccc1")
+        self.assertEqual(topo_cr["center_atom"], "Cr")
+        self.assertTrue(topo_cr["is_coord_center"])
+        self.assertTrue(topo_cr["is_d_block"])
+        self.assertTrue(topo_cr["coord_flagged"])
+
+        # Design 2 intrinsic hydride disproportionation & pi-conjugated hydride gates
+        topo_si2cl4h2 = compute_intrinsic_topology("Cl[SiH](Cl)[SiH](Cl)Cl")
+        self.assertTrue(topo_si2cl4h2["catenated_main_group_hydride"])
+        topo_cp2gah = compute_intrinsic_topology("[GaH](C1C=CC=C1)C1C=CC=C1")
+        self.assertTrue(topo_cp2gah["pi_conjugated_main_group_hydride"])
+
+        # Continuous covalent-radius scaling: Si < Ti < Zr
+        p_si = get_element_properties("Si", 14)
+        p_ti = get_element_properties("Ti", 22)
+        p_zr = get_element_properties("Zr", 40)
+        self.assertLess(p_si["r_cov_ang"], p_ti["r_cov_ang"])
+        self.assertLess(p_ti["r_cov_ang"], p_zr["r_cov_ang"])
+        self.assertAlmostEqual(DELTA_R_SHELL_ANG, 1.85, places=2)
+
+        # Verify Design 1+2 specs & Descriptor 4 replacement in unified 160 JSON
+        res_path = os.path.join(PROJECT_ROOT, "database", "benchmark_unified_latest_160.json")
+        with open(res_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        spec = data["design1_model_spec"]
+        self.assertIn("No Element-Symbol Branching", spec["mode"])
+        self.assertIn("design2_model_spec", data)
+        self.assertIn("tm_coordination_vector", data["design2_model_spec"])
+
+        d4_85 = data["descriptor4_audit_85"]["full_85"]
+        d4_89 = data["descriptor4_audit_85"]["full_89"]
+        loocv_160 = data["descriptor4_audit_85"]["loocv_89_marginal_contribution"]
+        self.assertEqual(d4_89["n_total"], 160)
+        self.assertGreater(d4_85["delta_e_form_per_bond"]["auroc"], 0.70)
+        self.assertGreater(d4_85["delta_e_form_per_bond"]["auroc"], d4_85["legacy_proxy"]["auroc"] + 0.20)
+        self.assertGreater(d4_89["delta_e_form_per_bond"]["auroc"], d4_89["legacy_proxy"]["auroc"] + 0.25)
+        self.assertLess(abs(d4_89["delta_e_form_per_bond"]["corr_bde_vbur_ddim"][0]), 0.25)
+        self.assertGreater(loocv_160["D1_D3_plus_dEform_plus_dGdimer"]["auroc"], loocv_160["D1_D3_only"]["auroc"])
+
+        by_id = {r["id"]: r for r in data["records"]}
+        self.assertTrue(by_id["PREC_SI_01"]["unified_pass"])
+        self.assertEqual(by_id["PREC_SI_01"]["cn_eff"], 4.0)
+        self.assertEqual(by_id["PREC_SI_01"]["n_ve"], 8.0)
+        self.assertTrue(by_id["PREC_MET_03"]["unified_pass"])
+        self.assertTrue(by_id["EXT-ALD-115"]["unified_pass"])
+
+        # State-dependent TM adaptation: high-ox RuO4 contracts R_eff and raises chi_eff vs Ru(EtCp)2
+        self.assertLess(by_id["EXT-ALD-115"]["r_eff_ang"], by_id["PREC_MET_03"]["r_eff_ang"])
+        self.assertGreater(by_id["EXT-ALD-115"]["chi_eff"], by_id["PREC_MET_03"]["chi_eff"])
+
+        # All 40 Negative Controls blocked including CrPh3, Cl2SiH-SiHCl2, and Cp2GaH
+        self.assertFalse(by_id["NEG-019"]["unified_pass"])
+        self.assertFalse(by_id["NEG-039"]["unified_pass"])
+        self.assertFalse(by_id["NEG-040"]["unified_pass"])
 
 
 if __name__ == "__main__":

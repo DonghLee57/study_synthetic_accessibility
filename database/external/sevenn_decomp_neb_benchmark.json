@@ -1,0 +1,693 @@
+{
+  "model": "SevenNet-0 (7net-0)",
+  "method": "ASE improvedtangent NEB + CI-NEB (IDPP initial path, FIRE optimizer)",
+  "summary": {
+    "n_reactions": 8,
+    "n_valid_fs_topology": 8,
+    "n_converged_cineb": 4,
+    "n_exact_1_imag_core_ts": 4,
+    "mae_ea_kcal_mol": 5.48,
+    "rmse_ea_kcal_mol": 6.13,
+    "bias_mean_signed_err_kcal_mol": 1.19,
+    "ttip_selectivity": {
+      "lit_delta_ea_propene_minus_acetone_kcal_mol": 13.0,
+      "sevenn_delta_ea_propene_minus_acetone_kcal_mol": 19.05,
+      "correct_channel_order": true
+    }
+  },
+  "reactions": [
+    {
+      "spec": {
+        "reaction_id": "HCDS_SiCl2_elim",
+        "precursor_id": "PREC_SI_06",
+        "precursor_name": "HCDS",
+        "precursor_smiles": "Cl[Si](Cl)(Cl)[Si](Cl)(Cl)Cl",
+        "reaction_equation": "Si2Cl6 -> SiCl4 + SiCl2",
+        "mechanism_class": "Disilane 1,2-Cl shift / alpha-elimination",
+        "lit_authors": "Swihart & Carr; Noda et al.",
+        "lit_year": 1997,
+        "lit_journal": "J. Phys. Chem. A 101, 7434 / J. Phys. Chem. A 126",
+        "lit_doi": "10.1021/jp971651t",
+        "lit_method": "BAC-MP4 / CCSD(T)//B3LYP (cf. 10.1021/acs.jpca.2c06195)",
+        "lit_ea_kcal_mol": 49.0,
+        "lit_ea_note": "48.3-49.5 kcal/mol ab initio / experimental high-P limit",
+        "lit_delta_e_rxn_kcal_mol": null
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_si0_shift_A": 2.038,
+          "d_si0_si1_A": 6.547,
+          "si0_coord": 4,
+          "si1_coord": 2
+        },
+        "fmax_is_ev_A": 0.0169,
+        "fmax_fs_ev_A": 0.0265,
+        "nsteps_neb": 75,
+        "nsteps_cineb": 32,
+        "final_neb_fmax_ev_A": 0.0668,
+        "converged_cineb": true,
+        "ts_image_index": 4,
+        "n_images_total": 7,
+        "wall_time_s": 283.79
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 49.0,
+        "sevenn_ea_cineb_kcal_mol": 42.73,
+        "sevenn_ea_vs_sep_react_kcal_mol": 42.73,
+        "signed_error_ea_kcal_mol": -6.27,
+        "abs_error_ea_kcal_mol": 6.27,
+        "sevenn_delta_e_adduct_kcal_mol": 30.17,
+        "sevenn_delta_e_sep_kcal_mol": 31.07,
+        "lit_delta_e_rxn_kcal_mol": null,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          2.695,
+          32.475,
+          42.282,
+          42.729,
+          29.171,
+          30.17
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Si1_X": {
+            "IS_A": 2.047,
+            "TS_A": 2.023,
+            "FS_A": 4.51
+          },
+          "forming_Si0_X": {
+            "IS_A": 3.627,
+            "TS_A": 3.808,
+            "FS_A": 2.038
+          },
+          "cleaving_Si0_Si1": {
+            "IS_A": 2.363,
+            "TS_A": 5.51,
+            "FS_A": 6.547
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 0,
+          "imag_freqs_cm1": [],
+          "min_real_freq_cm1": 46.4,
+          "max_real_freq_cm1": 640.8
+        }
+      }
+    },
+    {
+      "spec": {
+        "reaction_id": "DCDS_SiHCl_elim",
+        "precursor_id": "NEG-009",
+        "precursor_name": "1,2-Dichlorodisilane",
+        "precursor_smiles": "Cl[SiH2][SiH2]Cl",
+        "reaction_equation": "ClH2Si-SiH2Cl -> SiH3Cl + SiHCl",
+        "mechanism_class": "Disilane 1,2-H shift / alpha-elimination",
+        "lit_authors": "Swihart & Carr",
+        "lit_year": 1997,
+        "lit_journal": "J. Phys. Chem. A 101, 7434-7445",
+        "lit_doi": "10.1021/jp971651t",
+        "lit_method": "BAC-MP4 / G2//MP2",
+        "lit_ea_kcal_mol": 45.0,
+        "lit_ea_note": "Predicted ~45 kcal/mol for SiHCl extrusion",
+        "lit_delta_e_rxn_kcal_mol": null
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_si0_shift_A": 1.494,
+          "d_si0_si1_A": 4.637,
+          "si0_coord": 4,
+          "si1_coord": 2
+        },
+        "fmax_is_ev_A": 0.0258,
+        "fmax_fs_ev_A": 0.0231,
+        "nsteps_neb": 75,
+        "nsteps_cineb": 34,
+        "final_neb_fmax_ev_A": 0.0671,
+        "converged_cineb": true,
+        "ts_image_index": 6,
+        "n_images_total": 7,
+        "wall_time_s": 296.89
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 45.0,
+        "sevenn_ea_cineb_kcal_mol": 41.41,
+        "sevenn_ea_vs_sep_react_kcal_mol": 41.41,
+        "signed_error_ea_kcal_mol": -3.59,
+        "abs_error_ea_kcal_mol": 3.59,
+        "sevenn_delta_e_adduct_kcal_mol": 41.41,
+        "sevenn_delta_e_sep_kcal_mol": 43.42,
+        "lit_delta_e_rxn_kcal_mol": null,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          0.241,
+          13.625,
+          26.357,
+          26.906,
+          40.992,
+          41.412
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Si1_X": {
+            "IS_A": 1.483,
+            "TS_A": 3.165,
+            "FS_A": 3.165
+          },
+          "forming_Si0_X": {
+            "IS_A": 3.206,
+            "TS_A": 1.494,
+            "FS_A": 1.494
+          },
+          "cleaving_Si0_Si1": {
+            "IS_A": 2.345,
+            "TS_A": 4.637,
+            "FS_A": 4.637
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 0,
+          "imag_freqs_cm1": [],
+          "min_real_freq_cm1": null,
+          "max_real_freq_cm1": null,
+          "note": "Maximum occurred at endpoint rather than internal image"
+        }
+      }
+    },
+    {
+      "spec": {
+        "reaction_id": "GaEt3_betaH_elim",
+        "precursor_id": "EXT-ALD-035",
+        "precursor_name": "GaEt3",
+        "precursor_smiles": "CC[Ga](CC)CC",
+        "reaction_equation": "Ga(C2H5)3 -> HGa(C2H5)2 + C2H4",
+        "mechanism_class": "Group-13 organometallic beta-H elimination",
+        "lit_authors": "Lee, Kim, & Anderson",
+        "lit_year": 2009,
+        "lit_journal": "ECS Trans. 25(8), 107",
+        "lit_doi": "10.1149/1.3207574",
+        "lit_method": "B3LYP DFT",
+        "lit_ea_kcal_mol": 40.3,
+        "lit_ea_note": "beta-H elimination 40.3 kcal/mol vs Ga-C homolysis 65.0 kcal/mol",
+        "lit_delta_e_rxn_kcal_mol": null
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_Ga_H_A": 1.596,
+          "d_CC_A": 1.333,
+          "d_Ga_Ca_A": 4.513
+        },
+        "fmax_is_ev_A": 0.0272,
+        "fmax_fs_ev_A": 0.0228,
+        "nsteps_neb": 15,
+        "nsteps_cineb": 121,
+        "final_neb_fmax_ev_A": 0.0693,
+        "converged_cineb": true,
+        "ts_image_index": 3,
+        "n_images_total": 7,
+        "wall_time_s": 1089.46
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 40.3,
+        "sevenn_ea_cineb_kcal_mol": 41.35,
+        "sevenn_ea_vs_sep_react_kcal_mol": 41.35,
+        "signed_error_ea_kcal_mol": 1.05,
+        "abs_error_ea_kcal_mol": 1.05,
+        "sevenn_delta_e_adduct_kcal_mol": 38.52,
+        "sevenn_delta_e_sep_kcal_mol": 40.31,
+        "lit_delta_e_rxn_kcal_mol": null,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          1.166,
+          40.845,
+          41.346,
+          40.91,
+          38.158,
+          38.522
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Cb_H": {
+            "IS_A": 1.103,
+            "TS_A": 2.147,
+            "FS_A": 3.935
+          },
+          "forming_Ga_H": {
+            "IS_A": 2.956,
+            "TS_A": 2.423,
+            "FS_A": 1.596
+          },
+          "cleaving_Ga_Ca": {
+            "IS_A": 1.987,
+            "TS_A": 3.009,
+            "FS_A": 4.513
+          },
+          "forming_C_C": {
+            "IS_A": 1.53,
+            "TS_A": 1.465,
+            "FS_A": 1.333
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 0,
+          "imag_freqs_cm1": [],
+          "min_real_freq_cm1": 109.9,
+          "max_real_freq_cm1": 2745.3
+        }
+      }
+    },
+    {
+      "spec": {
+        "reaction_id": "TEOS_C2H4_elim",
+        "precursor_id": "PREC_SI_07",
+        "precursor_name": "TEOS",
+        "precursor_smiles": "CCO[Si](OCC)(OCC)OCC",
+        "reaction_equation": "Si(OEt)4 -> Si(OH)(OEt)3 + C2H4",
+        "mechanism_class": "Main-group alkoxide 4-centered beta-H-to-O elimination",
+        "lit_authors": "Nurkowski, Buerger, Akroyd, & Kraft",
+        "lit_year": 2015,
+        "lit_journal": "Proc. Combust. Inst. 35, 229-236",
+        "lit_doi": "10.1016/j.proci.2014.06.093",
+        "lit_method": "B97-1/6-311+G(d,p) (0 K enthalpy)",
+        "lit_ea_kcal_mol": 59.35,
+        "lit_ea_note": "248.32 kJ/mol zero-point-corrected barrier",
+        "lit_delta_e_rxn_kcal_mol": 12.2
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_O_H_A": 0.977,
+          "d_CC_A": 1.336,
+          "d_O_Ca_A": 3.282
+        },
+        "fmax_is_ev_A": 0.0285,
+        "fmax_fs_ev_A": 0.029,
+        "nsteps_neb": 15,
+        "nsteps_cineb": 150,
+        "final_neb_fmax_ev_A": 0.2782,
+        "converged_cineb": false,
+        "ts_image_index": 3,
+        "n_images_total": 7,
+        "wall_time_s": 1222.42
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 59.35,
+        "sevenn_ea_cineb_kcal_mol": 52.05,
+        "sevenn_ea_vs_sep_react_kcal_mol": 52.05,
+        "signed_error_ea_kcal_mol": -7.3,
+        "abs_error_ea_kcal_mol": 7.3,
+        "sevenn_delta_e_adduct_kcal_mol": 19.07,
+        "sevenn_delta_e_sep_kcal_mol": 23.56,
+        "lit_delta_e_rxn_kcal_mol": 12.2,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          0.269,
+          4.34,
+          52.05,
+          22.996,
+          19.673,
+          19.073
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Cb_H": {
+            "IS_A": 1.097,
+            "TS_A": 1.32,
+            "FS_A": 2.337
+          },
+          "forming_O_H": {
+            "IS_A": 2.681,
+            "TS_A": 1.246,
+            "FS_A": 0.977
+          },
+          "cleaving_O_Ca": {
+            "IS_A": 1.432,
+            "TS_A": 1.966,
+            "FS_A": 3.282
+          },
+          "forming_C_C": {
+            "IS_A": 1.522,
+            "TS_A": 1.417,
+            "FS_A": 1.336
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 1,
+          "imag_freqs_cm1": [
+            1232.5
+          ],
+          "min_real_freq_cm1": 194.0,
+          "max_real_freq_cm1": 1805.0
+        }
+      }
+    },
+    {
+      "spec": {
+        "reaction_id": "TTIP_acetone_elim",
+        "precursor_id": "PREC_TI_02",
+        "precursor_name": "TTIP",
+        "precursor_smiles": "CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C",
+        "reaction_equation": "Ti(OiPr)4 -> HTi(OiPr)3 + (CH3)2CO",
+        "mechanism_class": "TM alkoxide 4-centered alpha-H-to-Ti ketone elimination",
+        "lit_authors": "Ershov, Kochubei, Kiselev, & Baklanov",
+        "lit_year": 2018,
+        "lit_journal": "J. Phys. Chem. A 122, 1064-1070",
+        "lit_doi": "10.1021/acs.jpca.7b10396",
+        "lit_method": "DFT + DLPNO-CCSD(T)",
+        "lit_ea_kcal_mol": 49.0,
+        "lit_ea_note": "Preferred unimolecular decomposition channel (~49 kcal/mol)",
+        "lit_delta_e_rxn_kcal_mol": null
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_Ti_H_A": 1.661,
+          "d_CO_A": 1.231,
+          "d_Ti_O_A": 3.968
+        },
+        "fmax_is_ev_A": 0.0277,
+        "fmax_fs_ev_A": 0.0889,
+        "nsteps_neb": 15,
+        "nsteps_cineb": 150,
+        "final_neb_fmax_ev_A": 0.8427,
+        "converged_cineb": false,
+        "ts_image_index": 3,
+        "n_images_total": 7,
+        "wall_time_s": 1818.67
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 49.0,
+        "sevenn_ea_cineb_kcal_mol": 50.87,
+        "sevenn_ea_vs_sep_react_kcal_mol": 50.87,
+        "signed_error_ea_kcal_mol": 1.87,
+        "abs_error_ea_kcal_mol": 1.87,
+        "sevenn_delta_e_adduct_kcal_mol": 40.12,
+        "sevenn_delta_e_sep_kcal_mol": 46.46,
+        "lit_delta_e_rxn_kcal_mol": null,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          0.348,
+          8.338,
+          50.87,
+          40.682,
+          41.166,
+          40.125
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Ca_H": {
+            "IS_A": 1.108,
+            "TS_A": 1.897,
+            "FS_A": 3.929
+          },
+          "forming_Ti_H": {
+            "IS_A": 3.311,
+            "TS_A": 2.474,
+            "FS_A": 1.661
+          },
+          "cleaving_Ti_O": {
+            "IS_A": 1.797,
+            "TS_A": 2.223,
+            "FS_A": 3.968
+          },
+          "forming_C_O": {
+            "IS_A": 1.423,
+            "TS_A": 1.434,
+            "FS_A": 1.231
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 1,
+          "imag_freqs_cm1": [
+            238.5
+          ],
+          "min_real_freq_cm1": 178.3,
+          "max_real_freq_cm1": 3678.6
+        }
+      }
+    },
+    {
+      "spec": {
+        "reaction_id": "TTIP_propene_elim",
+        "precursor_id": "PREC_TI_02",
+        "precursor_name": "TTIP",
+        "precursor_smiles": "CC(C)O[Ti](OC(C)C)(OC(C)C)OC(C)C",
+        "reaction_equation": "Ti(OiPr)4 -> HO-Ti(OiPr)3 + C3H6",
+        "mechanism_class": "TM alkoxide 4-centered beta-H-to-O propene elimination",
+        "lit_authors": "Ershov, Kochubei, Kiselev, & Baklanov",
+        "lit_year": 2018,
+        "lit_journal": "J. Phys. Chem. A 122, 1064-1070",
+        "lit_doi": "10.1021/acs.jpca.7b10396",
+        "lit_method": "DFT + DLPNO-CCSD(T)",
+        "lit_ea_kcal_mol": 62.0,
+        "lit_ea_note": "Disfavored competing channel (~13 kcal/mol above acetone channel)",
+        "lit_delta_e_rxn_kcal_mol": null
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_O_H_A": 0.975,
+          "d_CC_A": 1.338,
+          "d_O_Ca_A": 3.445
+        },
+        "fmax_is_ev_A": 0.0287,
+        "fmax_fs_ev_A": 0.0294,
+        "nsteps_neb": 61,
+        "nsteps_cineb": 130,
+        "final_neb_fmax_ev_A": 1.7212,
+        "converged_cineb": false,
+        "ts_image_index": 3,
+        "n_images_total": 7,
+        "wall_time_s": 1513.8
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 62.0,
+        "sevenn_ea_cineb_kcal_mol": 69.92,
+        "sevenn_ea_vs_sep_react_kcal_mol": 69.92,
+        "signed_error_ea_kcal_mol": 7.92,
+        "abs_error_ea_kcal_mol": 7.92,
+        "sevenn_delta_e_adduct_kcal_mol": 17.6,
+        "sevenn_delta_e_sep_kcal_mol": 19.37,
+        "lit_delta_e_rxn_kcal_mol": null,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          -0.02,
+          3.54,
+          69.924,
+          18.328,
+          17.172,
+          17.601
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Cb_H": {
+            "IS_A": 1.097,
+            "TS_A": 1.072,
+            "FS_A": 2.224
+          },
+          "forming_O_H": {
+            "IS_A": 2.707,
+            "TS_A": 1.671,
+            "FS_A": 0.975
+          },
+          "cleaving_O_Ca": {
+            "IS_A": 1.42,
+            "TS_A": 1.897,
+            "FS_A": 3.445
+          },
+          "forming_C_C": {
+            "IS_A": 1.531,
+            "TS_A": 1.483,
+            "FS_A": 1.338
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 1,
+          "imag_freqs_cm1": [
+            263.5
+          ],
+          "min_real_freq_cm1": 110.9,
+          "max_real_freq_cm1": 3060.7
+        }
+      }
+    },
+    {
+      "spec": {
+        "reaction_id": "TDMAT_NH3_transam",
+        "precursor_id": "PREC_TI_01",
+        "precursor_name": "TDMAT",
+        "precursor_smiles": "CN(C)[Ti](N(C)C)(N(C)C)N(C)C",
+        "reaction_equation": "Ti(NMe2)4 + NH3 -> Ti(NMe2)3(NH2) + HNMe2",
+        "mechanism_class": "Bimolecular ALD/CVD transamination proton transfer",
+        "lit_authors": "Sen, Banu, Debnath, Ghosh, & Das",
+        "lit_year": 2014,
+        "lit_journal": "Dalton Trans. 43, 8877-8887",
+        "lit_doi": "10.1039/c4dt00690a",
+        "lit_method": "B3LYP DFT (adduct-referenced initial barrier)",
+        "lit_ea_kcal_mol": 7.3,
+        "lit_ea_note": "Initial transamination barrier from adduct (cf. Cross & Schlegel 2000: 8.4)",
+        "lit_delta_e_rxn_kcal_mol": null
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_Nleave_H_A": 1.031,
+          "d_Ti_Nnh2_A": 2.005,
+          "d_Ti_Nleave_A": 4.127
+        },
+        "fmax_is_ev_A": 0.0286,
+        "fmax_fs_ev_A": 0.0244,
+        "nsteps_neb": 62,
+        "nsteps_cineb": 16,
+        "final_neb_fmax_ev_A": 0.0676,
+        "converged_cineb": true,
+        "ts_image_index": 4,
+        "n_images_total": 7,
+        "wall_time_s": 782.73
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 7.3,
+        "sevenn_ea_cineb_kcal_mol": 16.22,
+        "sevenn_ea_vs_sep_react_kcal_mol": 10.59,
+        "signed_error_ea_kcal_mol": 8.92,
+        "abs_error_ea_kcal_mol": 8.92,
+        "sevenn_delta_e_adduct_kcal_mol": 11.49,
+        "sevenn_delta_e_sep_kcal_mol": 11.53,
+        "lit_delta_e_rxn_kcal_mol": null,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          0.112,
+          3.873,
+          16.033,
+          16.221,
+          13.523,
+          11.489
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Nnh3_H": {
+            "IS_A": 1.024,
+            "TS_A": 1.821,
+            "FS_A": 2.005
+          },
+          "forming_Nleave_H": {
+            "IS_A": 2.619,
+            "TS_A": 1.044,
+            "FS_A": 1.031
+          },
+          "forming_Ti_Nnh2": {
+            "IS_A": 2.491,
+            "TS_A": 2.021,
+            "FS_A": 2.005
+          },
+          "cleaving_Ti_Nleave": {
+            "IS_A": 1.95,
+            "TS_A": 3.087,
+            "FS_A": 4.127
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 0,
+          "imag_freqs_cm1": [],
+          "min_real_freq_cm1": 166.0,
+          "max_real_freq_cm1": 3933.5
+        }
+      }
+    },
+    {
+      "spec": {
+        "reaction_id": "CpZr_NMe2_betaH_elim",
+        "precursor_id": "PREC_HK_07",
+        "precursor_name": "Cp(NMe2)3Zr (ZAC)",
+        "precursor_smiles": "CN(C)[Zr](N(C)C)(N(C)C)C1=CC=CC1",
+        "reaction_equation": "CpZr(NMe2)3 -> CpZr(NMe2)(eta2-NMeCH2) + HNMe2",
+        "mechanism_class": "Inter-ligand beta-H transfer / dimethylamine elimination",
+        "lit_authors": "Van, Jang, Jung, Noh, Moon, Kil, Chung, & Shong",
+        "lit_year": 2022,
+        "lit_journal": "J. Phys. Chem. C 126(42), 18090-18099",
+        "lit_doi": "10.1021/acs.jpcc.2c04425",
+        "lit_method": "M06L DFT (gas-phase beta-H elimination to HNMe2)",
+        "lit_ea_kcal_mol": 34.63,
+        "lit_ea_note": "144.9 kJ/mol beta-H transfer between two -NMe2 ligands",
+        "lit_delta_e_rxn_kcal_mol": 20.8
+      },
+      "status": {
+        "valid_fs_topology": true,
+        "fs_check": {
+          "d_Nleave_H_A": 1.029,
+          "d_Zr_Ca_A": 2.322,
+          "d_Zr_Nleave_A": 2.375
+        },
+        "fmax_is_ev_A": 0.0237,
+        "fmax_fs_ev_A": 0.0775,
+        "nsteps_neb": 75,
+        "nsteps_cineb": 130,
+        "final_neb_fmax_ev_A": 0.5905,
+        "converged_cineb": false,
+        "ts_image_index": 4,
+        "n_images_total": 7,
+        "wall_time_s": 1551.39
+      },
+      "energies_kcal_mol": {
+        "lit_ea_kcal_mol": 34.63,
+        "sevenn_ea_cineb_kcal_mol": 41.55,
+        "sevenn_ea_vs_sep_react_kcal_mol": 41.55,
+        "signed_error_ea_kcal_mol": 6.92,
+        "abs_error_ea_kcal_mol": 6.92,
+        "sevenn_delta_e_adduct_kcal_mol": 12.71,
+        "sevenn_delta_e_sep_kcal_mol": 34.39,
+        "lit_delta_e_rxn_kcal_mol": 20.8,
+        "band_profile_rel_kcal_mol": [
+          0.0,
+          0.102,
+          0.629,
+          2.838,
+          41.548,
+          12.861,
+          12.705
+        ]
+      },
+      "ts_diagnostics": {
+        "bond_lengths_A": {
+          "breaking_Ca_H": {
+            "IS_A": 1.1,
+            "TS_A": 1.632,
+            "FS_A": 3.561
+          },
+          "forming_Nleave_H": {
+            "IS_A": 3.586,
+            "TS_A": 1.419,
+            "FS_A": 1.029
+          },
+          "forming_Zr_Ca": {
+            "IS_A": 3.133,
+            "TS_A": 2.33,
+            "FS_A": 2.322
+          },
+          "cleaving_Zr_Nleave": {
+            "IS_A": 2.07,
+            "TS_A": 2.195,
+            "FS_A": 2.375
+          }
+        },
+        "core_vibrations": {
+          "n_imag_modes_gt20cm1": 1,
+          "imag_freqs_cm1": [
+            1604.4
+          ],
+          "min_real_freq_cm1": 158.0,
+          "max_real_freq_cm1": 1446.8
+        }
+      }
+    }
+  ]
+}

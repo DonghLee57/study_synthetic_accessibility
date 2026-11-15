@@ -12,6 +12,11 @@
 2. **Evidence Grounding**:
    - All quantitative claims in prose, summary cards, and diagrams must match the latest JSON artifacts in [`database/`](../../database) dynamically rendered by [`generate_html.py`](../../generate_html.py).
    - Never inject target-label branching, molecule-ID hardcoding, or circular product memorization into scoring or comparison tables.
+3. **Present-State Technical Narration (No Changelog or Revision-History Framing)**:
+   - Describe the **current architecture, physical rationale, descriptor definitions, and validated dataset scope directly in present-state technical prose**.
+   - Avoid changelog / revision-history narration such as `기존 N종에서 ...를 추가해 확장했다`, `X 방식을 폐기하고 Y로 대체했다`, `설계안 1/2에서 무엇을 고쳤다`, or `오류를 정정하여 재실행했다` inside user-facing methodology, guide, or summary cards.
+   - Frame dataset construction around its **functional domain purpose** (e.g., collecting precursor elements used in semiconductor thin-film/interconnect/III-V/barrier processes alongside inhibitors, reagents, synthesis reactions, and Negative Controls) rather than chronological version deltas, and explain models by **what each physical descriptor measures and why it governs synthesizability/volatility/stability**.
+   - Avoid duplicate summary/flow boxes that repeat an adjacent table row-for-row unless the visual adds genuinely distinct non-tabular information.
 
 ---
 
@@ -31,7 +36,7 @@
 
 ## 3. Terminology Policy: English-Only Statistical & Modeling Terms
 
-All technical terminology belonging to **statistics, evaluation metrics, machine learning, and computational model architectures** must be written strictly in **English**. Do **not** translate them into Korean and do **not** attach Korean parenthetical glosses alongside the English terms.
+All technical terminology belonging to **statistics, evaluation metrics, machine learning, and computational model architectures** must be written strictly in **English**. Do **not** attach redundant bilingual parenthetical glosses in either direction (`교차 검증(Cross-Validation)`, `탈락(False Negative)`, `특이도(Specificity)`) for standard single concepts, and do **not** attach software-like version suffixes (`TMC-SA_v2`) to established canonical model names—define each model acronym in full (e.g., `Transition-Metal Complex Synthetic Accessibility (TMC-SA)`) at first mention and refer to interatomic potentials accurately as `범용 MLIAP인 SevenNet` (without unnecessary bold formatting).
 
 ### 3.1 Statistical & Evaluation Metrics (Use English Only)
 - **Confusion Matrix & Outcomes**: `Confusion Matrix`, `True Positive (TP)`, `False Positive (FP)`, `False Negative (FN)`, `True Negative (TN)` *(never `혼동 행렬`, `진양성`, `위양성`, `위음성`, `진음성`)*.
@@ -67,6 +72,6 @@ All technical terminology belonging to **statistics, evaluation metrics, machine
 
 Every report update must pass all automated checks after the final edit:
 1. `python generate_html.py` compiles [`index.html`](../../index.html) and [`synthetic_accessibility_report.html`](../../synthetic_accessibility_report.html) with 0 unresolved placeholders and 0 ASCII control characters in `$...$`.
-2. Automated style scan confirms 0 interrogative prose lines (`?`), 0 prohibited hyperbolic phrases, and 0 Korean statistical/modeling glosses across [`template.html`](../../template.html) and [`generate_html.py`](../../generate_html.py).
+2. Automated style scan confirms 0 interrogative prose lines (`?`), 0 prohibited hyperbolic phrases, 0 revision-history/changelog framing in methodology/guide sections, and 0 Korean statistical/modeling glosses across [`template.html`](../../template.html) and [`generate_html.py`](../../generate_html.py).
 3. Headless Edge Mermaid verification confirms `9/9` rendered SVGs with 0 syntax errors.
 4. `python -m unittest discover tests` and `python scripts/benchmark/audit_reproduce_all.py` pass without error.

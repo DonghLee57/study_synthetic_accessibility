@@ -44,14 +44,9 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts", "benchmark"))
 
-
-def sigmoid(x: float) -> float:
-    """Numerically stable logistic sigmoid."""
-    if x >= 0:
-        return 1.0 / (1.0 + math.exp(-x))
-    z = math.exp(x)
-    return z / (1.0 + z)
+from tmc_sa_scorer import sigmoid
 
 
 def load_merged_data():

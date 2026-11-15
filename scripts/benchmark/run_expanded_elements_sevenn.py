@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""SevenNet-0 Physical Feature Evaluation for Expanded Focus-Element Precursors.
+"""SevenNet Physical Feature Evaluation for All Curated Expanded Precursors.
 
 Reads ``database/external/expanded_semiconductor_precursors_master.json``, selects
-curated precursors carrying validated ``SMILES`` for target elements
-(``Ir, Rh, As, Ga, In, Ru``) that are not already in ``sevenn_physical_features.json``,
-and computes the relaxed SevenNet-0 physical descriptors by reusing
-``compute_precursor_physical_features`` from ``run_phase2_sevenn_features.py``.
+every curated precursor carrying validated ``SMILES`` outside the baseline 55 set
+(``sevenn_physical_features.json``), and computes the relaxed SevenNet physical
+descriptors by reusing ``compute_precursor_physical_features`` from
+``run_phase2_sevenn_features.py``.
 """
 
 import argparse
@@ -25,7 +25,6 @@ if SCRIPT_DIR not in sys.path:
 
 from run_phase2_sevenn_features import compute_precursor_physical_features  # noqa: E402
 
-FOCUS_ELEMENTS: tuple = ("Ir", "Rh", "As", "Ga", "In", "Ru")
 MASTER_PATH = os.path.join(PROJECT_ROOT, "database", "external", "expanded_semiconductor_precursors_master.json")
 BASE_SEVENN_PATH = os.path.join(PROJECT_ROOT, "database", "external", "sevenn_physical_features.json")
 OUT_PATH = os.path.join(PROJECT_ROOT, "database", "external", "expanded_elements_sevenn_features.json")
@@ -34,47 +33,40 @@ OUT_PATH = os.path.join(PROJECT_ROOT, "database", "external", "expanded_elements
 def select_target_precursors(
     master_records: List[dict],
     existing_ids: Set[str],
-    max_per_element: int = 0,
 ) -> List[dict]:
-    """Select curated focus-element precursors with valid SMILES sorted by ALD frequency.
+    """Select all curated expanded precursors with valid SMILES outside the core 55 set.
 
     Physics/Algorithm:
-        Prioritizes non-baseline focus-element records (``Ir, Rh, As, Ga, In, Ru``)
-        ordered by descending ``atomiclimits_process_count`` so high-relevance ALD
-        precursors are evaluated first under a deterministic budget.
+        Deterministically collects every SMILES-verified expanded precursor record
+        not already evaluated in ``sevenn_physical_features.json``, ordered by
+        center element, descending ``atomiclimits_process_count``, and name.
     """
-    by_el: Dict[str, List[dict]] = {el: [] for el in FOCUS_ELEMENTS}
+    selected: List[dict] = []
     for rec in master_records:
-        el = rec.get("center_element")
-        if el not in by_el:
-            continue
-        if rec.get("id") in existing_ids:
+        if rec.get("id") in existing_ids or rec.get("is_master_precursor"):
             continue
         if not rec.get("smiles"):
             continue
-        by_el[el].append(rec)
+        selected.append(rec)
 
-    selected: List[dict] = []
-    for el in FOCUS_ELEMENTS:
-        rows = sorted(
-            by_el[el],
-            key=lambda r: (-int(r.get("atomiclimits_process_count") or 0), r.get("name", "")),
-        )
-        if max_per_element > 0:
-            rows = rows[:max_per_element]
-        selected.extend(rows)
-    return selected
+    return sorted(
+        selected,
+        key=lambda r: (
+            str(r.get("center_element") or ""),
+            -int(r.get("atomiclimits_process_count") or 0),
+            str(r.get("name") or ""),
+        ),
+    )
 
 
-def run_expanded_calculation(max_per_element: int = 6, num_threads: int = 4, resume: bool = True) -> None:
-    """Compute SevenNet-0 LBFGS physical features for curated focus-element precursors.
+def run_expanded_calculation(num_threads: int = 6, resume: bool = True) -> None:
+    """Compute SevenNet-0 LBFGS physical features for all curated expanded precursors.
 
     Physics/Algorithm:
         Evaluates cohesive energy (``e_coh_ev_per_atom``, units: eV/atom), relaxed
         fragment/stretch dissociation energy (``bde_min_kcal_mol``, units: kcal/mol),
-        Cavallo buried volume (``vbur_percent``, units: %), non-overlapping dimerization
-        energy (``delta_e_dimer_kcal_mol``, units: kcal/mol), and algebraic complexation
-        proxy (``delta_e_complex_kcal_mol``, units: kcal/mol) via ``SevenNet-0``.
+        Cavallo buried volume (``vbur_percent``, units: %), and non-overlapping dimerization
+        energy (``delta_e_dimer_kcal_mol``, units: kcal/mol) via ``SevenNet-0``.
     """
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(line_buffering=True)
@@ -97,11 +89,12 @@ def run_expanded_calculation(max_per_element: int = 6, num_threads: int = 4, res
             if rec.get("id") and not rec.get("is_fallback"):
                 cached_by_id[rec["id"]] = rec
 
-    targets = select_target_precursors(master_records, existing_ids, max_per_element=max_per_element)
-    print(f"Selected {len(targets)} focus-element precursors (max_per_element={max_per_element}, cached={len(cached_by_id)}).")
+    targets = select_target_precursors(master_records, existing_ids)
+    print(f"Selected {len(targets)} expanded precursors (cached={len(cached_by_id)}, to_compute={len(targets) - len(cached_by_id)}).", flush=True)
 
     calc = SevenNetCalculator(model="7net-0", device="cpu")
     frag_cache: dict = {}
+    results_by_id = dict(cached_by_id)
     results: List[dict] = []
     t_start = time.time()
 
@@ -144,6 +137,7 @@ def run_expanded_calculation(max_per_element: int = 6, num_threads: int = 4, res
             "is_thermally_labile": is_thermally_labile,
         }
         results.append(rec)
+        results_by_id[pid] = rec
         print(
             f"[{idx:02d}/{len(targets):02d}] {pid:11s} | {item['name']:20s} | "
             f"%Vbur:{p_data['vbur_percent']:5.1f}% | BDE:{p_data['bde_min']:6.1f} | "
@@ -152,13 +146,14 @@ def run_expanded_calculation(max_per_element: int = 6, num_threads: int = 4, res
             flush=True,
         )
 
-        _write_payload(results, time.time() - t_start, max_per_element)
+        ordered = [results_by_id[t["id"]] for t in targets if t["id"] in results_by_id]
+        _write_payload(ordered, time.time() - t_start)
 
-    _write_payload(results, time.time() - t_start, max_per_element)
-    print(f"Completed {len(results)} focus-element calculations -> {OUT_PATH}")
+    _write_payload(results, time.time() - t_start)
+    print(f"Completed {len(results)} expanded precursor calculations -> {OUT_PATH}")
 
 
-def _write_payload(results: List[dict], elapsed_s: float, max_per_element: int) -> None:
+def _write_payload(results: List[dict], elapsed_s: float) -> None:
     by_el: Dict[str, int] = {}
     for r in results:
         el = r.get("center_element_expected") or r.get("center_atom") or "-"
@@ -166,8 +161,7 @@ def _write_payload(results: List[dict], elapsed_s: float, max_per_element: int) 
     payload = {
         "metadata": {
             "framework": "SevenNet (7net-0 LBFGS Relaxed) + Cavallo SambVca Sphere",
-            "focus_elements": list(FOCUS_ELEMENTS),
-            "max_per_element": max_per_element,
+            "selection_mode": "all_verified_expanded_precursors",
             "total_molecules_computed": len(results),
             "counts_by_element": by_el,
             "fallback_count": sum(1 for r in results if r.get("is_fallback")),
@@ -182,12 +176,10 @@ def _write_payload(results: List[dict], elapsed_s: float, max_per_element: int) 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--max-per-element", type=int, default=6, help="Max curated entries per element (0 = all)")
-    parser.add_argument("--threads", type=int, default=4, help="PyTorch CPU threads")
+    parser.add_argument("--threads", type=int, default=6, help="PyTorch CPU threads")
     parser.add_argument("--no-resume", action="store_true", help="Recompute all entries without cache")
     args = parser.parse_args()
     run_expanded_calculation(
-        max_per_element=args.max_per_element,
         num_threads=args.threads,
         resume=not args.no_resume,
     )

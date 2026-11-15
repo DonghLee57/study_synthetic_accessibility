@@ -40,81 +40,11 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts", "benchmark"))
 
 import sascorer  # type: ignore
 from syba.syba import SybaClassifier  # type: ignore
-from run_neg_control_model_search import compute_new_chem_coord_descriptors
 from run_refinement_and_rxn_check import compute_topology_descriptors
-
-EXTENDED_TM_NUMS = {22, 24, 27, 40, 42, 44, 45, 72, 73, 74, 77}
-EXTENDED_CENTER_NUMS = {13, 14, 22, 24, 27, 31, 33, 40, 42, 44, 45, 49, 50, 72, 73, 74, 77}
-PATT_BETA_H_EXT = Chem.MolFromSmarts("[#22,#24,#27,#40,#42,#44,#45,#72,#73,#74,#77]-[CH2,CH1]-[CH3,CH2,CH1]")
-PATT_METAL_OH_EXT = Chem.MolFromSmarts("[#13,#14,#22,#24,#27,#31,#33,#40,#42,#44,#45,#49,#50,#72,#73,#74,#77]-[OX2H1]")
-PATT_CARBOXYLIC_ACID = Chem.MolFromSmarts("[CX3](=O)[OX2H1]")
-
-
-def compute_expanded_descriptors(smiles: str) -> Dict[str, float]:
-    """Compute base chem/coord descriptors + saturated cyclic alkane & Cr support."""
-    desc = compute_new_chem_coord_descriptors(smiles)
-    mol = Chem.MolFromSmiles(smiles)
-    assert mol is not None, f"Invalid SMILES: {smiles}"
-
-    atom_syms = {a.GetSymbol() for a in mol.GetAtoms()}
-    all_single = all(b.GetBondType() == Chem.BondType.SINGLE for b in mol.GetBonds())
-    is_saturated_alkane = 1.0 if (atom_syms <= {"C", "H"} and all_single and mol.GetNumBonds() > 0) else 0.0
-    desc["is_inert_alkane"] = max(desc["is_inert_alkane"], is_saturated_alkane)
-
-    # Extend TM/center checks for Cr (Z=24)
-    tm_atoms = [a for a in mol.GetAtoms() if a.GetAtomicNum() in EXTENDED_TM_NUMS]
-    is_homoleptic_tm_sp3 = 1.0 if any(
-        len(a.GetNeighbors()) > 0
-        and all(nb.GetAtomicNum() == 6 and nb.GetHybridization() == Chem.HybridizationType.SP3 for nb in a.GetNeighbors())
-        for a in tm_atoms
-    ) else 0.0
-    desc["is_homoleptic_tm_sp3"] = max(desc["is_homoleptic_tm_sp3"], is_homoleptic_tm_sp3)
-
-    if PATT_BETA_H_EXT:
-        desc["beta_h_alkyl_count"] = float(len(mol.GetSubstructMatches(PATT_BETA_H_EXT)))
-    if PATT_METAL_OH_EXT:
-        desc["metal_oh_count"] = float(len(mol.GetSubstructMatches(PATT_METAL_OH_EXT)))
-
-    # Strained 3- or 4-membered unsaturated metallacycle (e.g. silacyclopropene, silacyclobutadiene)
-    ri = mol.GetRingInfo()
-    strained_si_ring = 0.0
-    for ring in ri.AtomRings():
-        if len(ring) <= 4:
-            syms_in_ring = {mol.GetAtomWithIdx(idx).GetSymbol() for idx in ring}
-            if "Si" in syms_in_ring and any(
-                b.GetBondType() != Chem.BondType.SINGLE
-                for b in mol.GetBonds()
-                if b.GetBeginAtomIdx() in ring and b.GetEndAtomIdx() in ring
-            ):
-                strained_si_ring = 1.0
-    desc["strained_si_ring"] = strained_si_ring
-    return desc
-
-
-def evaluate_coord_chem_gate(smiles: str, sa_score: float, desc: Dict[str, float], topo: Dict[str, Any]) -> Dict[str, Any]:
-    """Evaluate combined SA <= 4.0 + Coordination/Topology/Chem Gate (non-target-ID)."""
-    mol = Chem.MolFromSmiles(smiles)
-    assert mol is not None
-    has_tm = any(a.GetAtomicNum() in EXTENDED_TM_NUMS for a in mol.GetAtoms())
-
-    reasons: List[str] = []
-    if sa_score > 4.0:
-        reasons.append("sa_gt_4")
-    if desc["cooh_count"] > 0:
-        reasons.append("carboxylic_acid")
-    if desc["is_inert_alkane"] > 0:
-        reasons.append("inert_alkane")
-    if topo["is_homoleptic_tm_sp3_refined"] or (desc["is_homoleptic_tm_sp3"] > 0 and topo["pi_hapticity_index"] == 0):
-        reasons.append("homoleptic_tm_sp3")
-    if desc["metal_oh_count"] >= 2:
-        reasons.append("poly_hydroxide")
-    if has_tm and desc["aromatic_rings"] >= 3 and desc["metal_c_sigma_frac"] >= 0.9:
-        reasons.append("overcrowded_poly_aryl_tm")
-    if desc["strained_si_ring"] > 0:
-        reasons.append("strained_si_ring")
-
-    passed = len(reasons) == 0
-    return {"passed": passed, "rejected": not passed, "reasons": reasons}
+from tmc_sa_scorer import (
+    compute_chemical_coord_descriptors as compute_expanded_descriptors,
+    evaluate_coord_chem_gate,
+)
 
 
 def main() -> None:

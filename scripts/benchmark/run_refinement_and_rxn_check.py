@@ -15,8 +15,8 @@ Outputs:
 from __future__ import annotations
 
 import json
-import math
 import os
+import sys
 from typing import Any, Dict, List
 
 import numpy as np
@@ -28,18 +28,14 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, rdMolDescriptors
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts", "benchmark"))
+
+from tmc_sa_scorer import sigmoid
 
 CENTER_ATOMIC_NUMS = {13, 14, 22, 27, 31, 33, 40, 42, 44, 45, 49, 50, 72, 73, 74, 77}
 TM_ATOMIC_NUMS = {22, 27, 40, 42, 44, 45, 72, 73, 74, 77}
 METAL_CENTER_SET = {"Ti", "Zr", "Hf", "Al", "Ru", "Co", "W", "Mo", "Ta", "Sn", "Cu", "Si"}
 EV_TO_KCAL_MOL = 23.06054783
-
-
-def sigmoid(x: float) -> float:
-    if x >= 0:
-        return 1.0 / (1.0 + math.exp(-x))
-    z = math.exp(x)
-    return z / (1.0 + z)
 
 
 def compute_topology_descriptors(smiles: str) -> Dict[str, Any]:

@@ -1,7 +1,11 @@
 import json
 import os
 import re
+import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts", "benchmark"))
+
+from neb_html_section import build_neb_storyline_html, build_neb_technical_html
 from rdkit import Chem
 from rdkit.Chem import Descriptors, rdDepictor
 from rdkit.Chem.Draw import rdMolDraw2D
@@ -202,7 +206,7 @@ multistage_models = [
         "s3": ("N/A (GAT Classifier)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% Physical Validity", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 1·2 — DGL Absent & 52.0% Silent All-Zero Vector Loss",
-        "barrier_desc": f"로컬 dgl/dgllife 미설치로 Featurization 정적·정량 감사를 수행함. Allowable Atom Set(43원소)에서 Ga, Ir, Rh, Ru, Hf, Ta, W, Mo 8원소가 누락되어 102종 중 {exp_p['gasa_silent_misencoded']}종({exp_p['gasa_silent_misencoded']/N_PREC*100:.1f}%)에서 encode_unknown=False로 All-Zero Vector가 생성됨."
+        "barrier_desc": f"로컬 dgl/dgllife 미설치로 Featurization 정적·정량 호환성 검증을 수행함. Allowable Atom Set(43원소)에서 Ga, Ir, Rh, Ru, Hf, Ta, W, Mo 8원소가 누락되어 102종 중 {exp_p['gasa_silent_misencoded']}종({exp_p['gasa_silent_misencoded']/N_PREC*100:.1f}%)에서 encode_unknown=False로 All-Zero Vector가 생성됨."
     },
     {
         "name": "DeepSA",
@@ -214,7 +218,7 @@ multistage_models = [
         "s3": ("N/A (Multimodal Classifier)", "background:#f1f5f9; color:#64748b; border-color:#cbd5e1;"),
         "s4": ("0.0% Physical Validity", "background:#fee2e2; color:#b91c1c; border-color:#fca5a5; font-weight:700;"),
         "barrier_stage": "Stage 2·4 — AutoGluon Absent & ELECTRA Bracket Splitting",
-        "barrier_desc": f"로컬 autogluon 미설치로 Descriptor·Tokenizer 정적 감사를 수행함. 102종 중 {exp_p['deepsa_ro5_pass']}종이 Lipinski Ro5를 통과하나 전수 {exp_p['deepsa_bracket_fragmented']}/{N_PREC}종(100.0%)이 무기 대괄호 표기([Ga], [Ir], [In] 등)를 포함하여 Subword 파편화가 발생함."
+        "barrier_desc": f"로컬 autogluon 미설치로 Descriptor·Tokenizer 정적 호환성 검증을 수행함. 102종 중 {exp_p['deepsa_ro5_pass']}종이 Lipinski Ro5를 통과하나 전수 {exp_p['deepsa_bracket_fragmented']}/{N_PREC}종(100.0%)이 무기 대괄호 표기([Ga], [Ir], [In] 등)를 포함하여 Subword 파편화가 발생함."
     },
     {
         "name": "DFRscore",
@@ -815,6 +819,22 @@ for rank, (fkey, fval) in enumerate(list(rf_imp.items())[:8], 1):
                 <div style="background:#e2e8f0; height:6px; border-radius:3px; overflow:hidden;"><div style="background:{bar_color}; width:{min(pct, 100.0):.2f}%; height:100%;"></div></div>""")
 imp_bars_joined = "\n".join(imp_bars_html)
 
+# Load unified latest 160-molecule analysis early so 55-set table can also show Design 1 & Descriptor 4 metrics
+unified_path = os.path.join("database", "benchmark_unified_latest_160.json")
+with open(unified_path, "r", encoding="utf-8") as f:
+    unified_160 = json.load(f)
+
+_u_ds = unified_160["dataset_summary"]
+_u_spec = unified_160["design1_model_spec"]
+_u_sum = unified_160["unified_v2_summary"]
+_u_d4 = unified_160["descriptor4_audit_85"]
+_u_lat = unified_160["latent_space_160"]
+_u_mech = unified_160["by_failure_mechanism"]
+_u_ml = unified_160["ml_cv5_160"]
+_u_lofmo = unified_160["lofmo_extrapolation_160"]
+_u_records = unified_160["records"]
+_u_by_id = {r["id"]: r for r in _u_records}
+
 # Generate 55 benchmark rows
 benchmark_table_rows = []
 for idx, m in enumerate(molecules_eval, 1):
@@ -845,19 +865,22 @@ for idx, m in enumerate(molecules_eval, 1):
     sc_style = "color:#15803d; font-weight:700;" if sc <= 2.0 else "color:#dc2626; font-weight:700;"
     base_verdict_badge = '<span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-size:0.75rem;">Pass</span>' if base_pass else '<span class="badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; font-size:0.75rem;">Fail</span>'
 
+    _ur = _u_by_id.get(mid, {})
     ecoh = m.get("e_coh_ev_per_atom", 0.0)
     bde = m.get("bde_min_kcal_mol", 0.0)
-    vbur = m.get("vbur_percent", 0.0)
+    vbur = _ur.get("vbur_percent", m.get("vbur_percent", 0.0))
+    r_probe_txt = f" (R={_ur['r_probe_ang']:.2f}&Aring;)" if "r_probe_ang" in _ur else ""
     ddimer = m.get("delta_e_dimer_kcal_mol", 0.0)
-    dcomp = m.get("delta_e_complex_kcal_mol", 0.0)
-    tmc_sa_phys = m.get("tmc_sa_phys", 0.0)
+    de_form_bond = _ur.get("delta_e_form_per_bond_kcal_mol")
+    d4_txt = f"&Delta;E<sub>f</sub>/v<sub>M</sub>: {de_form_bond:+.1f}" if de_form_bond is not None else "&mdash;"
+    tmc_sa_phys = _ur.get("tmc_sa_v2", m.get("tmc_sa_phys", 0.0))
     is_fallback = m.get("is_fallback_geometry", False)
     fallback_tag = ' <span style="font-size:0.68rem; color:#b45309; font-weight:700;">[Fallback]</span>' if is_fallback else ""
 
     dimer_color = "#059669" if ddimer >= 0 else "#dc2626"
     phys_pass = m.get("tuned_pass", False)
-    chem_pass = m.get("tuned_with_chem_pass", phys_pass)
-    chem_flag = m.get("chemical_domain_flag", False)
+    chem_pass = _ur.get("unified_pass", m.get("tuned_with_chem_pass", phys_pass))
+    chem_flag = bool(_ur.get("gate_reasons")) if _ur else m.get("chemical_domain_flag", False)
 
     if ttype in ("Precursor", "Inhibitor"):
         status_badge = (
@@ -867,7 +890,7 @@ for idx, m in enumerate(molecules_eval, 1):
         )
     else:
         if not chem_pass:
-            reason_tag = "SMARTS" if (phys_pass and chem_flag) else "Physics"
+            reason_tag = "Gate" if chem_flag else "Physics"
             status_badge = f'<span class="badge" style="background:#dcfce7; color:#166534; border:1px solid #86efac; font-weight:700;">TN ({reason_tag} {tmc_sa_phys:.2f})</span>'
         else:
             status_badge = f'<span class="badge" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; font-weight:700;">FP (SA {tmc_sa_phys:.2f})</span>'
@@ -892,9 +915,9 @@ for idx, m in enumerate(molecules_eval, 1):
               </td>
               <td style="text-align:center; white-space:nowrap;">{base_verdict_badge}</td>
               <td style="text-align:center; white-space:nowrap; font-family:'JetBrains Mono'; font-size:0.76rem;">
-                <div>%V<sub>bur</sub>: <strong>{vbur:.1f}%</strong></div>
+                <div>%V<sub>bur</sub>: <strong>{vbur:.1f}%</strong><span style="font-size:0.7rem; color:#64748b;">{r_probe_txt}</span></div>
                 <div style="color:#475569;">BDE: <strong>{bde:.1f}</strong> kcal &bull; E<sub>coh</sub>: <strong>{ecoh:.2f}</strong> eV</div>
-                <div style="font-size:0.72rem; color:{dimer_color};">&Delta;E<sub>dim</sub>: {ddimer:+.1f} &bull; Proxy: {dcomp:+.1f} kcal</div>
+                <div style="font-size:0.72rem; color:{dimer_color};">&Delta;E<sub>dim</sub>: {ddimer:+.1f} &bull; {d4_txt} kcal</div>
               </td>
               <td style="text-align:center; white-space:nowrap;">{status_badge}</td>
               <td style="font-family:'JetBrains Mono'; font-size:0.72rem; color:#0f172a; max-width:220px; word-break:break-all;"><code>{smi}</code></td>
@@ -944,11 +967,7 @@ neg_rejected_names = [m["name"].split(" (")[0] for m in molecules_eval if m["tar
 neg_missed_names = [mol_by_id[i]["name"].split(" (")[0] for i in brk_chem["negative_controls"]["missed_negative_ids"]]
 neg_rejected_note = ", ".join(neg_rejected_names[:3]) + (" 등" if len(neg_rejected_names) > 3 else "")
 
-# Load unified latest 160-molecule analysis & refinement reaction energy check for Step 4
-unified_path = os.path.join("database", "benchmark_unified_latest_160.json")
-with open(unified_path, "r", encoding="utf-8") as f:
-    unified_160 = json.load(f)
-
+# Load refinement reaction energy check for Step 4
 refine_path = os.path.join("database", "benchmark_refinement_and_rxn_check.json")
 with open(refine_path, "r", encoding="utf-8") as f:
     refine_res = json.load(f)
@@ -962,19 +981,10 @@ _rxn_tdmat_s = _ref_rxns[1]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
 _rxn_temah_g = _ref_rxns[2]["delta_e_kcal_mol"]["SevenNet-0"]
 _rxn_temah_s = _ref_rxns[2]["delta_e_with_solid_licl_kcal_mol"]["SevenNet-0"]
 
-_u_ds = unified_160["dataset_summary"]
-_u_sum = unified_160["unified_v2_summary"]
-_u_lat = unified_160["latent_space_160"]
-_u_mech = unified_160["by_failure_mechanism"]
-_u_ml = unified_160["ml_cv5_160"]
-_u_lofmo = unified_160["lofmo_extrapolation_160"]
-_u_records = unified_160["records"]
-_u_by_id = {r["id"]: r for r in _u_records}
-
 phase2_banner_metrics = (
     f"전체 102종 프리커서 TPR {_u_sum['precursors_all_tpr_pct']:.1f}% [{_u_sum['precursors_all_tp']}], "
     f"40종 Negative Control TNR {_u_sum['negative_all_tnr_pct']:.1f}% [{_u_sum['negative_all_tn']}] "
-    f"(감사 55종 기준: 프리커서 25/27 [92.6%], Neg TNR 10/10 [100.0%])"
+    f"(핵심 55종 기준: 프리커서 25/27 [92.6%], Neg TNR 10/10 [100.0%])"
 )
 
 
@@ -992,15 +1002,19 @@ for _r in _u_records:
     _grp = _r["group"]
     _vbur = float(_r["vbur_percent"])
     _vmin = float(_r["v_min_adaptive"])
-    _sa_v2 = float(_r["tmc_sa_v2"])
+    _sa_val = float(_r["tmc_sa_v2"])
     _crisk = int(_r["coord_risk_count"])
-    _y_score = min(9.8, _sa_v2 + 2.5 * _crisk)
+    _y_score = float(_r.get("composite_risk", min(9.8, _sa_val + 4.0 * _crisk)))
     _cx, _cy = _svg_x(_vbur), _svg_y_risk(_y_score)
     _nm = str(_r["name"]).replace('"', '&quot;')
     _vsrc = _r["vbur_source"]
+    _rprobe = float(_r.get("r_probe_ang", 3.5))
+    _defb = _r.get("delta_e_form_per_bond_kcal_mol")
+    _defb_str = f" | dE_f/bond={_defb:+.1f} kcal" if _defb is not None else ""
     _bde_str = f" | BDE={_r['bde_min_kcal_mol']:.1f} kcal/mol" if _r["bde_min_kcal_mol"] is not None else ""
     _verdict = "PASS" if _r["unified_pass"] else f"REJECT ({', '.join(_r['gate_reasons']) or 'TMC-SA>4.0'})"
-    _tip = f"{_nm} [{_r['id']}] | {_grp} | %V_bur={_vbur:.1f}% (V_min={_vmin:.0f}%, {_vsrc}) | TMC-SA_v2={_sa_v2:.2f} | {_verdict}{_bde_str}"
+    _grp_disp = _grp.replace("Audited Precursor", "Core Precursor")
+    _tip = f"{_nm} [{_r['id']}] | {_grp_disp} | %V_bur={_vbur:.1f}% (R_probe={_rprobe:.2f} A, V_min^univ={_vmin:.0f}%, {_vsrc}) | TMC-SA={_sa_val:.2f} | {_verdict}{_bde_str}{_defb_str}"
 
     if "Audited Precursor" in _grp:
         _plot160_points_svg.append(
@@ -1086,7 +1100,7 @@ def _step4_unified_row(mid: str, note: str) -> str:
         return ""
     grp = r["group"]
     if "Audited Precursor" in grp:
-        tbadge = '<span class="badge badge-prec">Audited Precursor</span>'
+        tbadge = '<span class="badge badge-prec">Core Precursor</span>'
     elif "Expanded Precursor" in grp:
         tbadge = f'<span class="badge badge-2g">Expanded ({r["center_atom"]})</span>'
     else:
@@ -1102,11 +1116,12 @@ def _step4_unified_row(mid: str, note: str) -> str:
             vbadge = f'<span class="badge badge-4g">FP (SA_v2 {r["tmc_sa_v2"]:.2f})</span>'
 
     bde_txt = f"{r['bde_min_kcal_mol']:.1f} kcal/mol" if r["bde_min_kcal_mol"] is not None else "N/A (ETKDGv3)"
+    _rprobe_val = float(r.get("r_probe_ang", 3.5))
     return f"""
                   <tr>
                     <td><strong>{r['name'].split(' (')[0]}</strong> <span style="font-size:0.74rem; color:#64748b;">({r['id']})</span></td>
                     <td>{tbadge}</td>
-                    <td style="text-align:center; font-weight:700;">{r['vbur_percent']:.1f}% <span style="font-size:0.72rem; color:#64748b;">(V<sub>min</sub> {r['v_min_adaptive']:.0f}%)</span></td>
+                    <td style="text-align:center; font-weight:700;">{r['vbur_percent']:.1f}% <span style="font-size:0.72rem; color:#64748b;">(R<sub>p</sub>={_rprobe_val:.2f}&Aring;, V<sub>min</sub> {r['v_min_adaptive']:.0f}%)</span></td>
                     <td style="text-align:center;">{bde_txt}</td>
                     <td style="text-align:center;">&pi;={r['pi_hapticity_index']} / Ch={r['chelate_ring_count']}</td>
                     <td>{vbadge} {note}</td>
@@ -1114,16 +1129,17 @@ def _step4_unified_row(mid: str, note: str) -> str:
 
 
 _step4_rep_rows = "\n".join([
-    _step4_unified_row("PREC_SI_01", "Si 중심 적응형 V<sub>min</sub>(34%) 적용으로 기존 FN(4.97)에서 TP(2.26)로 구제"),
-    _step4_unified_row("PREC_SI_05", "Si 중심 적응형 V<sub>min</sub>(34%) + 분리 단편 BDE 반영으로 TP(3.48) 구제"),
-    _step4_unified_row("PREC_MET_03", "&pi;-햅티시티 적응형 V<sub>min</sub>(34%) 적용으로 기존 FN(6.03)에서 TP(3.71)로 구제"),
-    _step4_unified_row("EXT-ALD-099", "고리 &eta;-디엔 위상 인식으로 sp3 알킬 오탐 해소 (100% 정상 통과)"),
-    _step4_unified_row("EXT-ALD-100", "Ru(EBCHD) &pi;-햅티시티 위상 게이트 인식 (오탐 제거)"),
-    _step4_unified_row("NEG-001", "동종 sp3 티타늄 알킬(&beta;-H 제거) 배위 게이트 TN 차단"),
-    _step4_unified_row("NEG-004", "비중첩 이합체 이완 및 과밀 다중-아릴 게이트 TN 차단"),
-    _step4_unified_row("NEG-036", "불안정 카복실산(TFA) 부식 게이트 TN 차단"),
-    _step4_unified_row("NEG-019", "미탐 잔여 3건 중 1건: 반도체 16원소 외곽 Cr 착물 (주기율표 블록 일반화 필요)"),
-    _step4_unified_row("NEG-039", "미탐 잔여 3건 중 2건: Cl<sub>2</sub>SiH-SiHCl<sub>2</sub> (Si-Si 불균등화·SevenNet BDE 미연산)"),
+    _step4_unified_row("PREC_SI_01", "공유반지름 R<sub>probe</sub>=R<sub>cov</sub>(Si)+1.85=2.96 &Aring; 기준 %V<sub>bur</sub> 48.7% (&ge; V<sub>min</sub><sup>univ</sup> 44%) 및 극성 차폐(D2 29.7%)로 정상 TP"),
+    _step4_unified_row("PREC_SI_05", "공유반지름 비례 프로브(%V<sub>bur</sub> 45.1% &ge; 44%)와 분리 단편 BDE(57.2 kcal/mol) 정합으로 정상 TP(3.76)"),
+    _step4_unified_row("PREC_MET_03", "18e<sup>-</sup> 다중상태 R<sub>eff</sub>=1.50&Aring; 및 &pi;-햅티시티 보편 하한 V<sub>min</sub><sup>univ</sup>(&eta;=2)=34% 하의 안정한 메탈로센 TP(3.86)"),
+    _step4_unified_row("EXT-ALD-126", "Ir(CpEt)(CHD) &pi;=2 보편 하한(34%) 및 R<sub>probe</sub>=3.26 &Aring; 입체 차폐(60.2%) 충족으로 정상 TP(3.13)"),
+    _step4_unified_row("EXT-ALD-128", "고리 &eta;-디엔 &pi;-배위 위상 인식으로 sp3 알킬 오분류 없이 정상 착물 TP(2.98)"),
+    _step4_unified_row("NEG-001", "동종 sp3 티타늄 알킬(&beta;-H 제거 취약) 배위 게이트 TN 차단"),
+    _step4_unified_row("NEG-004", "비중첩 이합체 이완 및 과밀 다중-아릴 게이트(%V<sub>bur</sub> 87.3% &gt; 83.5%) TN 차단"),
+    _step4_unified_row("NEG-019", "주기율표 물성 중심(R<sub>eff</sub>=1.28&Aring;, &chi;<sub>eff</sub>=1.73, N<sub>ve</sub>=9e<sup>-</sup>) 및 과밀 트리아릴 게이트로 TN 차단"),
+    _step4_unified_row("NEG-036", "부식성 카복실산(-COOH) 반응성 게이트 TN 차단"),
+    _step4_unified_row("NEG-039", "SevenNet-0 저결합 안정성(BDE 41.75 kcal/mol, e<sub>coh</sub> 2.96 eV) 및 Si-Si 연쇄 하이드라이드 불균등화 게이트 TN 차단"),
+    _step4_unified_row("NEG-040", "SevenNet-0 저결합 해리(BDE 23.05 kcal/mol) 및 &pi;-공액 주족 하이드라이드(&theta;<sub>void</sub> 61.4&deg;) 게이트 TN 차단"),
 ])
 
 _mech_labels = [
@@ -1143,69 +1159,83 @@ _mech_rows_html = "\n".join(
     for k, label in _mech_labels
 )
 
+_opt_x0 = _svg_x(0.0)
 _opt_x_adapt = _svg_x(34.0)
 _opt_x1, _opt_x2 = _svg_x(44.0), _svg_x(83.5)
+_opt_x_max = _svg_x(100.0)
 _opt_y_top = _svg_y_risk(10.0)
 _opt_y_4 = _svg_y_risk(4.0)
 _opt_y_bot = _svg_y_risk(0.0)
 _plot160_svg_joined = "\n                ".join(_plot160_points_svg)
+_d4_55 = _u_d4["audited_55"]
+_d4_85 = _u_d4["full_85"]
+_d4_89 = _u_d4["full_89"]
+_d4_loocv = _u_d4["loocv_55_marginal_contribution"]
+_d4_loocv_89 = _u_d4["loocv_89_marginal_contribution"]
+_neg_fp_label = ", ".join(_u_sum["negative_fp_ids"]) if _u_sum["negative_fp_ids"] else "0건 (40/40 전수 차단)"
 
 phase2_step4_summary_joined = f"""
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">전체 Precursor TPR (102종, TMC-SA<sub>v2</sub>)</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">전체 Precursor TPR (102종, TMC-SA)</div>
                 <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:4px 0;">{_u_sum['baseline_sascore_precursors_tpr_pct']:.1f}% &rarr; {_u_sum['precursors_all_tpr_pct']:.1f}%</div>
-                <div style="font-size:0.8rem; color:#475569;"><strong>{_u_sum['precursors_all_tp']} Pass</strong> (감사 {_u_sum['audited_precursors_tp']} [{_u_sum['audited_precursors_tpr_pct']:.1f}%] &middot; 확장 {_u_sum['expanded_precursors_tp']} [{_u_sum['expanded_precursors_tpr_pct']:.1f}%]; FNR {_u_sum['precursors_all_fnr_pct']:.1f}%)</div>
+                <div style="font-size:0.8rem; color:#475569;"><strong>{_u_sum['precursors_all_tp']} Pass</strong> (핵심 {_u_sum['audited_precursors_tp']} [{_u_sum['audited_precursors_tpr_pct']:.1f}%] &middot; 확장 {_u_sum['expanded_precursors_tp']} [{_u_sum['expanded_precursors_tpr_pct']:.1f}%]; FNR {_u_sum['precursors_all_fnr_pct']:.1f}%)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #6366f1; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">6대 실패 메커니즘 Negative Control TNR (40종)</div>
                 <div style="font-size:1.75rem; font-weight:800; color:#4338ca; margin:4px 0;">{_u_sum['baseline_sascore_neg_tnr_pct']:.1f}% &rarr; {_u_sum['negative_all_tnr_pct']:.1f}%</div>
-                <div style="font-size:0.8rem; color:#475569;"><strong>{_u_sum['negative_all_tn']} 차단</strong> (FPR {_u_sum['negative_all_fpr_pct']:.1f}%; SYBA 10.0% 대비 +82.5%p &middot; 미탐 3종: CrPh<sub>3</sub>, Cl<sub>2</sub>SiH-SiHCl<sub>2</sub>, Cp<sub>2</sub>GaH)</div>
+                <div style="font-size:0.8rem; color:#475569;"><strong>{_u_sum['negative_all_tn']} 차단</strong> (FPR {_u_sum['negative_all_fpr_pct']:.1f}%; 전 메커니즘 100.0% TNR &middot; 미차단: {_neg_fp_label})</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #0284c7; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">160종 통합 CV-5 vs LOFMO 외삽 TNR</div>
-                <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">LR {_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f} / Gate {_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f}</div>
-                <div style="font-size:0.8rem; color:#475569;">CV-5 Bal.Acc (LR {_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f}, SVC {_u_ml['SVC_RBF']['cv5_balanced_acc']:.3f}) vs LOFMO 미지 메커니즘 (SVC 0.000 &middot; OCSVM {_u_lofmo['OneClassSVM_RBF']['mean_unseen_tnr']:.3f} &middot; 물리 게이트 {_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f})</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">Descriptor 4: 표준 생성에너지 (&Delta;E<sub>f</sub><sup>std</sup>/v<sub>M</sub>, {_d4_89['n_total']}종)</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:4px 0;">AUROC {_d4_89['delta_e_form_per_bond']['auroc']:.3f}</div>
+                <div style="font-size:0.8rem; color:#475569;">{_d4_89['n_total']}종 MLIP <strong>{_d4_89['delta_e_form_per_bond']['auroc']:.3f}</strong> / {_d4_85['n_total']}종 {_d4_85['delta_e_form_per_bond']['auroc']:.3f} ({_d4_89['n_total']}종 LOOCV {_d4_loocv_89['D1_D3_only']['balanced_acc_pct']:.1f}% &rarr; <strong>{_d4_loocv_89['D1_D3_plus_delta_e_form_per_bond']['balanced_acc_pct']:.1f}%</strong>)</div>
               </div>
 
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #7c3aed; border-radius:6px; padding:16px;">
-                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">3D %V<sub>bur</sub> 계측 &amp; SevenNet-0 &Delta;E<sub>syn</sub></div>
-                <div style="font-size:1.75rem; font-weight:800; color:#6d28d9; margin:4px 0;">{_u_ds['total_molecules']}/{_u_ds['total_molecules']} (100%)</div>
-                <div style="font-size:0.8rem; color:#475569;">SevenNet-0 LBFGS {_u_ds['sevenn_relaxed_count']}종 + RDKit ETKDGv3 {_u_ds['etkdg_3d_count']}종 &middot; TEOS {_rxn_teos:.2f} / TDMAT {_rxn_tdmat_s:.2f} kcal/mol</div>
+                <div style="font-size:0.8rem; font-weight:700; color:#64748b;">{_u_ds['feature_count']}-Feature CV-5 vs LOFMO 외삽 TNR</div>
+                <div style="font-size:1.75rem; font-weight:800; color:#6d28d9; margin:4px 0;">LR {_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f} / Gate {_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f}</div>
+                <div style="font-size:0.8rem; color:#475569;">CV-5 SVC {_u_ml['SVC_RBF']['cv5_balanced_acc']:.3f} vs LOFMO 미지 메커니즘 (OCSVM {_u_lofmo['OneClassSVM_RBF']['mean_unseen_tnr']:.3f} &middot; 물리 게이트 {_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f})</div>
               </div>
             </div>
 
-            <!-- View 1: Unified 160-Molecule Evaluation Space (%V_bur vs TMC-SA_v2 + Coord Risk) -->
+            <!-- View 1: Unified 160-Molecule Evaluation Space (%V_bur(R_probe) vs TMC-SA + Coord Risk) -->
             <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px; position:relative;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
                 <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
-                  [Unified Plot 1] 최신 통합 160종 물리-배위 위험 공간 (적응형 %V<sub>bur</sub> 창 vs TMC-SA<sub>v2</sub> + Coord Risk)
+                  [Unified Plot 1] 통합 160종 물리-배위 위험 공간 (%V<sub>bur</sub>(R<sub>probe</sub>) vs TMC-SA + Coord Risk)
                 </div>
-                <span class="badge badge-2g" style="font-size:0.75rem;">102 Precursors (27+75) &bull; 18 Inhibitors &bull; 40 Negative Controls</span>
+                <span class="badge badge-2g" style="font-size:0.75rem;">Physical-Property Framework &bull; {_u_ds['sevenn_relaxed_count']} SevenNet &bull; 102 Precursors &bull; 18 Inhibitors &bull; 40 Negative Controls</span>
               </div>
               <p style="font-size:0.82rem; color:#475569; margin:0 0 10px 0; line-height:1.5;">
-                업데이트된 DB 전체 <strong>160종 분자</strong>를 최신 모델(<code>TMC-SA<sub>v2</sub></code> 적응형 하한 $V_{{\min}}=34\\%$ [Si·&pi;-haptic] / $44\\%$ [일반 TM] + 6대 실패 메커니즘 배위 게이트)로 단일 재평가한 결과입니다. 하단 녹색·청록색 허용 창(Composite Risk &le; <code>4.0</code>) 내에 <strong>Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%)</strong>이 수렴하고, 붉은 삼각형 Negative Control은 <strong>{_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong> 상단 거부 영역으로 분리됩니다.
+                원소 공유반지름 비례 프로브 구($R_{{\text{{probe}}}}(Z_M)=R_{{\text{{cov}}}}(Z_M)+1.85\text{{ Å}}$), 보편 하한 $V_{{\min}}^{{\text{{univ}}}}(\eta_{{\pi}})$, 리간드 환경 연동 다중상태 전이금속 배위 벡터($R_{{\text{{eff}}}}$, $\chi_{{\text{{eff}}}}$, $CN_{{\text{{eff}}}}$, $N_{{\text{{ve}}}}$), 주족 하이드라이드 반응성 게이트, 및 범용 MLIAP인 SevenNet({_u_ds['sevenn_relaxed_count']}종 전수 LBFGS) 결합 해리 에너지를 <strong>TMC-SA (Transition-Metal Complex Synthetic Accessibility)</strong> 단일 수식으로 결합한 <strong>전체 160종 통합 판정</strong> 결과입니다. <strong>Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%)</strong> 통과 및 <strong>Negative Control {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong> 분별력을 보입니다. ($0\text{{--}}44\%$ 영역은 비이합체 단량체 통과·응집 시 <code>pen_olig</code> 부과 구간이며, $&gt;83.5\%$는 무조건 과밀 장벽 구간입니다.)
               </p>
               <div id="step4-plot-tooltip" style="display:none; position:fixed; z-index:9999; background:#0f172a; color:#f8fafc; padding:6px 10px; border-radius:6px; font-size:0.76rem; font-family:'JetBrains Mono', monospace; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.2);"></div>
               <svg viewBox="0 0 820 400" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
                 <!-- Rejection zone above Y = 4.0 -->
                 <rect x="70" y="{_opt_y_top:.1f}" width="690" height="{_opt_y_4 - _opt_y_top:.1f}" fill="#fee2e2" fill-opacity="0.32" />
-                <!-- Adaptive Si / pi-haptic window extension (34% to 44%, Y <= 4.0) -->
+                <!-- Non-oligomerizing small-monomer pass zone (0% to 34%, Y <= 4.0) -->
+                <rect x="{_opt_x0:.1f}" y="{_opt_y_4:.1f}" width="{_opt_x_adapt - _opt_x0:.1f}" height="{_opt_y_bot - _opt_y_4:.1f}" fill="#eff6ff" fill-opacity="0.72" />
+                <!-- Universal pi-haptic continuous shift (34% to 44%, Y <= 4.0) -->
                 <rect x="{_opt_x_adapt:.1f}" y="{_opt_y_4:.1f}" width="{_opt_x1 - _opt_x_adapt:.1f}" height="{_opt_y_bot - _opt_y_4:.1f}" fill="#ccfbf1" fill-opacity="0.65" />
-                <!-- Standard TM Optimal window shading (44% to 83.5%, Y <= 4.0) -->
+                <!-- Standard sigma-ligand Optimal window shading (44% to 83.5%, Y <= 4.0) -->
                 <rect x="{_opt_x1:.1f}" y="{_opt_y_4:.1f}" width="{_opt_x2 - _opt_x1:.1f}" height="{_opt_y_bot - _opt_y_4:.1f}" fill="#dcfce7" fill-opacity="0.62" />
-                <text x="80" y="{_opt_y_top + 18:.1f}" font-size="11" font-weight="700" fill="#b91c1c">Rejection Zone (TMC-SA_v2 &gt; 4.0 or Coordination/Reactivity Gate Triggered)</text>
-                <text x="{_opt_x_adapt + 4:.1f}" y="{_opt_y_bot - 8:.1f}" font-size="10" font-weight="700" fill="#0f766e">Si/pi V_min 34%</text>
-                <text x="{_opt_x1 + 8:.1f}" y="{_opt_y_bot - 8:.1f}" font-size="10.5" font-weight="700" fill="#15803d">Pass Window (44~83.5%, Composite Risk &lt;= 4.0)</text>
+                <!-- Overcrowding zone (> 83.5%, Y <= 4.0) -->
+                <rect x="{_opt_x2:.1f}" y="{_opt_y_4:.1f}" width="{_opt_x_max - _opt_x2:.1f}" height="{_opt_y_bot - _opt_y_4:.1f}" fill="#fef3c7" fill-opacity="0.65" />
+                <text x="80" y="{_opt_y_top + 18:.1f}" font-size="11" font-weight="700" fill="#b91c1c">Rejection Zone (TMC-SA &gt; 4.0 or Intrinsic Coordination/Topology Gate Triggered)</text>
+                <text x="{_opt_x0 + 8:.1f}" y="{_opt_y_bot - 8:.1f}" font-size="9.5" font-weight="700" fill="#1d4ed8">Monomeric Zone (Oligomer Check)</text>
+                <text x="{_opt_x_adapt + 4:.1f}" y="{_opt_y_bot - 22:.1f}" font-size="9.5" font-weight="700" fill="#0f766e">&pi;-haptic 34%</text>
+                <text x="{_opt_x1 + 8:.1f}" y="{_opt_y_bot - 8:.1f}" font-size="10.5" font-weight="700" fill="#15803d">Optimal Pass Window (44~83.5%, Risk &lt;= 4.0)</text>
+                <text x="{_opt_x2 + 6:.1f}" y="{_opt_y_bot - 8:.1f}" font-size="9.5" font-weight="700" fill="#b45309">&gt;83.5% Crowd</text>
                 <!-- Grid & Axes -->
                 <line x1="70" y1="340" x2="760" y2="340" stroke="#64748b" stroke-width="1.5"/>
                 <line x1="70" y1="30" x2="70" y2="340" stroke="#64748b" stroke-width="1.5"/>
                 <!-- Threshold dashed lines -->
                 <line x1="{_opt_x_adapt:.1f}" y1="30" x2="{_opt_x_adapt:.1f}" y2="340" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="{_opt_x1:.1f}" y1="30" x2="{_opt_x1:.1f}" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
-                <line x1="{_opt_x2:.1f}" y1="30" x2="{_opt_x2:.1f}" y2="340" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,4"/>
+                <line x1="{_opt_x2:.1f}" y1="30" x2="{_opt_x2:.1f}" y2="340" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="4,4"/>
                 <line x1="70" y1="{_opt_y_4:.1f}" x2="760" y2="{_opt_y_4:.1f}" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="5,4"/>
                 <text x="764" y="{_opt_y_4 + 4:.1f}" font-size="10.5" font-weight="700" fill="#dc2626">Threshold 4.0</text>
                 <!-- X ticks -->
@@ -1214,21 +1244,21 @@ phase2_step4_summary_joined = f"""
                 <text x="{_opt_x_adapt:.1f}" y="358" font-size="11" text-anchor="middle" fill="#0d9488" font-weight="700">34%</text>
                 <text x="{_opt_x1:.1f}" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">44%</text>
                 <text x="{_svg_x(60):.1f}" y="358" font-size="11" text-anchor="middle" fill="#475569">60%</text>
-                <text x="{_opt_x2:.1f}" y="358" font-size="11" text-anchor="middle" fill="#059669" font-weight="700">83.5%</text>
+                <text x="{_opt_x2:.1f}" y="358" font-size="11" text-anchor="middle" fill="#dc2626" font-weight="700">83.5%</text>
                 <text x="760" y="358" font-size="11" text-anchor="middle" fill="#475569">100%</text>
-                <text x="415" y="382" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a">3D Percent Buried Volume (%V_bur, R = 3.5 A; 85 SevenNet-0 + 75 ETKDGv3)</text>
+                <text x="415" y="382" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a">3D Percent Buried Volume (%V_bur, R_probe = R_cov(Z_M) + 1.85 A; {_u_ds['sevenn_relaxed_count']} SevenNet + {_u_ds['etkdg_3d_count']} ETKDGv3)</text>
                 <!-- Y ticks -->
                 <text x="62" y="{_svg_y_risk(10)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">10.0</text>
                 <text x="62" y="{_svg_y_risk(7)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">7.0</text>
                 <text x="62" y="{_svg_y_risk(4)+4:.1f}" font-size="11" text-anchor="end" fill="#dc2626" font-weight="700">4.0</text>
                 <text x="62" y="{_svg_y_risk(2)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">2.0</text>
                 <text x="62" y="{_svg_y_risk(0)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">0.0</text>
-                <text x="20" y="185" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a" transform="rotate(-90 20 185)">Composite Risk (TMC-SA_v2 + Coord Gate)</text>
+                <text x="20" y="185" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a" transform="rotate(-90 20 185)">Composite Risk (TMC-SA + 4 &times; Coord Gate)</text>
                 <!-- Data points (All 160 molecules) -->
                 {_plot160_svg_joined}
               </svg>
               <div style="display:flex; gap:18px; flex-wrap:wrap; margin-top:10px; font-size:0.8rem; color:#334155;">
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#059669; margin-right:5px;"></span>Audited Precursor (27)</span>
+                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#059669; margin-right:5px;"></span>Core Precursor (27)</span>
                 <span><span style="display:inline-block; width:10px; height:10px; transform:rotate(45deg); background:#7c3aed; margin-right:6px;"></span>Expanded Ir/Rh/As/Ga/In/Ru Precursor (75)</span>
                 <span><span style="display:inline-block; width:10px; height:10px; background:#0284c7; margin-right:5px;"></span>AS-ALD Inhibitor (18)</span>
                 <span><span style="display:inline-block; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #dc2626; margin-right:5px;"></span>Negative Control across 6 Failure Classes (40)</span>
@@ -1253,19 +1283,19 @@ phase2_step4_summary_joined = f"""
             <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
                 <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
-                  [Unified Plot 2] 통합 160종 잠재 공간 재정의 (24-Descriptor PCA &amp; t-SNE &bull; 120 Pos vs 40 Neg)
+                  [Unified Plot 2] 통합 160종 잠재 공간 재정의 ({_u_ds['feature_count']}-Descriptor PCA &amp; t-SNE &bull; 120 Pos vs 40 Neg)
                 </div>
-                <span class="badge badge-4g" style="font-size:0.75rem;">24 Features (%V_bur + V_min + pi_hapticity + Chelate + Coord/Vol)</span>
+                <span class="badge badge-4g" style="font-size:0.75rem;">{_u_ds['feature_count']} Features (%V<sub>bur</sub> + %V<sub>bur</sub><sup>D2</sup> + &theta;<sub>void</sub> + R<sub>eff</sub> + &chi;<sub>eff</sub> + CN<sub>eff</sub> + N<sub>ve</sub> + &pi;/Chelate + Coord)</span>
               </div>
               <p style="font-size:0.82rem; color:#475569; margin:0 0 12px 0; line-height:1.55;">
-                최신 <strong>160종 통합 평가 데이터셋</strong>({_u_ds['positive_total']} Positive vs {_u_ds['negative_controls_total']} Negative across 6 failure classes)에 24개 물리·위상·배위 디스크립터를 적용한 <code>PCA</code>(선형 2D 분산 설명률 {(_u_lat['pca_explained_variance_ratio'][0]+_u_lat['pca_explained_variance_ratio'][1])*100:.1f}%, Silhouette <strong>{_u_lat['pca_silhouette']:.3f}</strong>)와 <code>t-SNE</code>(비선형 국소 매니폴드, Silhouette <strong>{_u_lat['tsne_silhouette']:.3f}</strong>) 투영입니다. 2차원 선형 투영만으로는 다중 실패 메커니즘 분리(<code>PCA 2D Bal.Acc {_u_lat['pca_2d_balanced_acc']:.3f}</code>)가 불충분하지만, 24차원 전체 비선형 공간에서는 <code>SVC_RBF</code> Balanced Accuracy가 <strong>{_u_lat['full_space_svc_balanced_acc']:.3f}</strong>까지 상승합니다.
+                <strong>160종 통합 평가 데이터셋</strong>({_u_ds['positive_total']} Positive vs {_u_ds['negative_controls_total']} Negative across 6 failure classes)에 주기율표 원소 물성(<code>R_cov</code>, <code>N_val</code>, <code>chi_P</code>)과 상태-의존 배위 벡터(<code>R_eff</code>, <code>chi_eff</code>, <code>CN_eff</code>, <code>N_ve</code>, <code>%V_bur^D2</code>, <code>void_cone</code>)를 포함한 {_u_ds['feature_count']}개 물리·위상·배위 디스크립터를 적용한 <code>PCA</code>(선형 2D 분산 설명률 {(_u_lat['pca_explained_variance_ratio'][0]+_u_lat['pca_explained_variance_ratio'][1])*100:.1f}%, Silhouette <strong>{_u_lat['pca_silhouette']:.3f}</strong>)와 <code>t-SNE</code>(비선형 국소 매니폴드, Silhouette <strong>{_u_lat['tsne_silhouette']:.3f}</strong>) 투영입니다. 2차원 선형 투영만으로는 다중 실패 메커니즘 분리(<code>PCA 2D Bal.Acc {_u_lat['pca_2d_balanced_acc']:.3f}</code>)가 불충분하지만, {_u_ds['feature_count']}차원 전체 비선형 공간에서는 <code>SVC_RBF</code> Balanced Accuracy가 <strong>{_u_lat['full_space_svc_balanced_acc']:.3f}</strong>까지 상승합니다.
               </p>
-              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin-bottom:12px;">
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:12px;">
                 <div>{_pca_160_svg}</div>
                 <div>{_tsne_160_svg}</div>
               </div>
               <div style="display:flex; gap:18px; flex-wrap:wrap; font-size:0.78rem; color:#334155;">
-                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#059669; margin-right:5px;"></span>Audited Precursor (27)</span>
+                <span><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#059669; margin-right:5px;"></span>Core Precursor (27)</span>
                 <span><span style="display:inline-block; width:10px; height:10px; transform:rotate(45deg); background:#7c3aed; margin-right:6px;"></span>Expanded Ir/Rh/As/Ga/In/Ru (75)</span>
                 <span><span style="display:inline-block; width:10px; height:10px; background:#0284c7; margin-right:5px;"></span>AS-ALD Inhibitor (18)</span>
                 <span><span style="display:inline-block; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #dc2626; margin-right:5px;"></span>Negative Control (40)</span>
@@ -1278,7 +1308,7 @@ phase2_step4_summary_joined = f"""
                 <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
                   [Unified Benchmark] 최신 160종 통합 평가 데이터셋 모델 성능 (CV-5 내삽 vs LOFMO 미지 실패 메커니즘 외삽)
                 </div>
-                <span class="badge badge-3g" style="font-size:0.75rem;">24 Features &bull; N=160 (120 Pos : 40 Neg)</span>
+                <span class="badge badge-3g" style="font-size:0.75rem;">{_u_ds['feature_count']} Features &bull; N=160 (120 Pos : 40 Neg)</span>
               </div>
               <div style="overflow-x:auto; margin-bottom:14px;">
                 <table class="report-table" style="font-size:0.81rem;">
@@ -1302,8 +1332,8 @@ phase2_step4_summary_joined = f"""
                       <td>{_u_sum['baseline_sascore_neg_tnr_pct']/100.0:.3f} (도메인 불일치)</td>
                     </tr>
                     <tr style="background:#f0fdf4;">
-                      <td><strong>TMC-SA<sub>v2</sub> + Coord/Topology Gate</strong></td>
-                      <td>Pro-ligand SA + Adaptive V<sub>min</sub> + 물리·위상 규칙</td>
+                      <td><strong>TMC-SA (Transition-Metal Complex Synthetic Accessibility) + Coord/Topology Gate</strong></td>
+                      <td>Pro-ligand SA + R<sub>cov</sub>-비례 프로브 V<sub>min</sub><sup>univ</sup> + 주기율표 물성 규칙</td>
                       <td><strong>TPR {_u_sum['precursors_all_tpr_pct']:.1f}% ({_u_sum['precursors_all_tp']})</strong></td>
                       <td><strong>TNR {_u_sum['negative_all_tnr_pct']:.1f}% ({_u_sum['negative_all_tn']})</strong></td>
                       <td>N/A (Rule + Physics)</td>
@@ -1319,7 +1349,7 @@ phase2_step4_summary_joined = f"""
                     </tr>
                     <tr>
                       <td><strong>LogisticRegression (Balanced)</strong></td>
-                      <td>Supervised Linear (24 Features)</td>
+                      <td>Supervised Linear ({_u_ds['feature_count']} Features)</td>
                       <td>CV-5 TPR {_u_ml['LogisticRegression']['cv5_tpr_sensitivity']:.3f}</td>
                       <td>CV-5 TNR {_u_ml['LogisticRegression']['cv5_tnr_specificity']:.3f}</td>
                       <td><strong>{_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f}</strong> ({_u_ml['LogisticRegression']['cv5_roc_auc']:.3f})</td>
@@ -1339,7 +1369,7 @@ phase2_step4_summary_joined = f"""
                       <td>RF {_u_ml['RandomForest']['cv5_tpr_sensitivity']:.3f} / XGB {_u_ml['XGBoost_Weighted']['cv5_tpr_sensitivity']:.3f}</td>
                       <td>RF {_u_ml['RandomForest']['cv5_tnr_specificity']:.3f} / XGB {_u_ml['XGBoost_Weighted']['cv5_tnr_specificity']:.3f}</td>
                       <td>RF {_u_ml['RandomForest']['cv5_balanced_acc']:.3f} / XGB {_u_ml['XGBoost_Weighted']['cv5_balanced_acc']:.3f}</td>
-                      <td style="color:#b91c1c; font-weight:700;">RF {_u_lofmo['RandomForest']['mean_unseen_tnr']:.3f} (학습 외 실패 미탐)</td>
+                      <td style="color:#b91c1c; font-weight:700;">RF {_u_lofmo['RandomForest']['mean_unseen_tnr']:.3f} (학습 외 메커니즘 미분별)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1356,7 +1386,7 @@ phase2_step4_summary_joined = f"""
                       <th>표본 수</th>
                       <th>SAScore 차단 (TNR)</th>
                       <th>SYBA 차단 (TNR)</th>
-                      <th>TMC-SA<sub>v2</sub> + Coord Gate 차단 (TNR)</th>
+                      <th>TMC-SA + Coord Gate 차단 (TNR)</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1369,7 +1399,7 @@ phase2_step4_summary_joined = f"""
             <!-- View 4: Representative Molecules Diagnostic Summary & Item 2 SevenNet-0 Reaction Energy -->
             <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px;">
               <div style="font-weight:700; font-size:1.0rem; color:#0f172a; margin-bottom:8px;">
-                [Diagnostic Samples &amp; Item 2 Reaction Energy] 주요 구제·차단 사례 및 SevenNet-0 &Delta;E<sub>syn</sub> 정합성
+                [Diagnostic Samples &amp; Reaction Energy Validation] 주요 분별 사례 및 SevenNet &Delta;E<sub>syn</sub> 열역학 정합성
               </div>
               <div style="overflow-x:auto; margin-bottom:12px;">
                 <table class="report-table" style="font-size:0.82rem;">
@@ -1377,7 +1407,7 @@ phase2_step4_summary_joined = f"""
                     <tr style="background:#f1f5f9;">
                       <th>Molecule (ID)</th>
                       <th>Classification</th>
-                      <th style="text-align:center;">%V<sub>bur</sub> (Adaptive V<sub>min</sub>)</th>
+                      <th style="text-align:center;">%V<sub>bur</sub> (R<sub>probe</sub>, V<sub>min</sub><sup>univ</sup>)</th>
                       <th style="text-align:center;">SevenNet-0 BDE<sub>min</sub></th>
                       <th style="text-align:center;">Topology (&pi; / Chelate)</th>
                       <th>Latest Verdict &amp; Diagnostic Note</th>
@@ -1388,17 +1418,59 @@ phase2_step4_summary_joined = f"""
                   </tbody>
                 </table>
               </div>
-              <div style="background:#faf5ff; border:1px solid #e9d5ff; border-radius:6px; padding:11px 14px; font-size:0.81rem; color:#581c87; line-height:1.55;">
+              <div style="background:#faf5ff; border:1px solid #e9d5ff; border-radius:6px; padding:11px 14px; font-size:0.81rem; color:#581c87; line-height:1.55; margin-bottom:12px;">
                 <strong>Item 2 (SevenNet-0 화학양론적 합성 반응 에너지 &Delta;E<sub>syn</sub> 검증):</strong>
-                알코올 분해(<code>SYN_TEOS</code>: <strong>{_rxn_teos:.2f} kcal/mol</strong>)는 기체상에서도 발열성 정합을 보이며, 염 복분해 경로는 암염 결정 <code>LiCl(s)</code> 격자 기준을 적용할 때 실제 합성 구동력이 정확히 재현됩니다(<code>SYN_TDMAT</code> {_rxn_tdmat_g:+.2f} &rarr; <strong>{_rxn_tdmat_s:.2f} kcal/mol</strong>, <code>SYN_TEMAH</code> {_rxn_temah_g:+.2f} &rarr; <strong>{_rxn_temah_s:.2f} kcal/mol</strong>; 캐시된 <code>MACE-MP0</code>은 로컬 <code>e3nn</code> 직렬화 비호환으로 미구동).
+                알코올 분해(<code>SYN_TEOS</code>: <strong>{_rxn_teos:.2f} kcal/mol</strong>)는 기체상에서도 발열성 정합을 보이며, 염 복분해 경로는 암염 결정 <code>LiCl(s)</code> 격자 기준을 적용할 때 실제 합성 구동력이 정확히 재현됩니다(<code>SYN_TDMAT</code> {_rxn_tdmat_g:+.2f} &rarr; <strong>{_rxn_tdmat_s:.2f} kcal/mol</strong>, <code>SYN_TEMAH</code> {_rxn_temah_g:+.2f} &rarr; <strong>{_rxn_temah_s:.2f} kcal/mol</strong>). 단, 염 복분해 경로의 <code>LiCl(s)</code> 격자 상쇄로 인해 비화학양론적 85종 단분자 스크리닝의 Descriptor 4로는 표준원소 화학퍼텐셜 기반 $\Delta E_f^{{\text{{std}}}}/v_M$이 압도적 변별력을 보입니다.
+              </div>
+
+              <!-- Descriptor 4 Physical Orthogonality & Entropy-Corrected Validation Box -->
+              <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:6px; padding:12px 14px;">
+                <div style="font-weight:700; font-size:0.9rem; color:#0369a1; margin-bottom:6px;">
+                  [Descriptor 4 Physical Validation] 직교 표준 배위결합 생성에너지($\Delta E_f^{{\text{{std}}}}/v_M$) &amp; 373 K 엔트로피 보정 이합체 자유에너지($\Delta G_{{\text{{dimer}}}}$) ({_d4_89['n_total']}종 SevenNet)
+                </div>
+                <p style="font-size:0.8rem; color:#0c4a6e; margin:0 0 8px 0; line-height:1.5;">
+                  범용 MLIAP인 SevenNet의 28원소 표준 화학퍼텐셜($\mu_Z^{{\text{{std}}}}$) 기반 <strong>$\Delta E_f^{{\text{{std}}}}/v_M$</strong>은 D1&ndash;D3와 직교하는 독립 열역학 정보($r=({_d4_89['delta_e_form_per_bond']['corr_bde_vbur_ddim'][0]:+.2f}, {_d4_89['delta_e_form_per_bond']['corr_bde_vbur_ddim'][1]:+.2f}, {_d4_89['delta_e_form_per_bond']['corr_bde_vbur_ddim'][2]:+.2f})$)를 제공하여 <strong>{_d4_89['n_total']}종 전수 MLIP AUROC {_d4_89['delta_e_form_per_bond']['auroc']:.3f}</strong>({_d4_85['n_total']}종 기준 {_d4_85['delta_e_form_per_bond']['auroc']:.3f})을 기록합니다. D1&ndash;D3 단독 모델에 $\Delta E_f^{{\text{{std}}}}/v_M$ 및 $\Delta G_{{\text{{dimer}}}}$을 순차 결합할 때 <code>LOOCV</code> 한계 기여도는 {_d4_89['n_total']}종 기준 AUROC <strong>{_d4_loocv_89['D1_D3_only']['auroc']:.3f} &rarr; {_d4_loocv_89['D1_D3_plus_delta_e_form_per_bond']['auroc']:.3f} &rarr; {_d4_loocv_89['D1_D3_plus_dEform_plus_dGdimer']['auroc']:.3f}</strong>(균형 정확도 {_d4_loocv_89['D1_D3_only']['balanced_acc_pct']:.1f}% &rarr; {_d4_loocv_89['D1_D3_plus_delta_e_form_per_bond']['balanced_acc_pct']:.1f}% &rarr; {_d4_loocv_89['D1_D3_plus_dEform_plus_dGdimer']['balanced_acc_pct']:.1f}%)로 향상되며, 55종 기준 균형 정확도는 <strong>{_d4_loocv['D1_D3_only']['balanced_acc_pct']:.1f}% &rarr; {_d4_loocv['D1_D3_plus_delta_e_form_per_bond']['balanced_acc_pct']:.1f}%</strong>로 상승합니다.
+                </p>
+                <div style="overflow-x:auto;">
+                  <table class="data-table" style="font-size:0.79rem;">
+                    <thead>
+                      <tr>
+                        <th>Thermodynamic Metric</th>
+                        <th>{_d4_55['n_total']}종 AUROC</th>
+                        <th>{_d4_85['n_total']}종 AUROC</th>
+                        <th>{_d4_89['n_total']}종 MLIP AUROC</th>
+                        <th>D1&ndash;D3 상관 (BDE, %V<sub>bur</sub>, &Delta;E<sub>dim</sub>)</th>
+                        <th>물리적 직교성 &middot; 열역학 의미</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:#ecfdf5;">
+                        <td><strong><code>delta_e_form_per_bond</code> (&Delta;E<sub>f</sub><sup>std</sup>/v<sub>M</sub>, Descriptor 4)</strong></td>
+                        <td><strong>{_d4_55['delta_e_form_per_bond']['auroc']:.3f}</strong></td>
+                        <td style="color:#047857; font-weight:800;">{_d4_85['delta_e_form_per_bond']['auroc']:.3f}</td>
+                        <td style="color:#047857; font-weight:800;">{_d4_89['delta_e_form_per_bond']['auroc']:.3f}</td>
+                        <td><strong>{_d4_89['delta_e_form_per_bond']['corr_bde_vbur_ddim'][0]:+.2f}, {_d4_89['delta_e_form_per_bond']['corr_bde_vbur_ddim'][1]:+.2f}, {_d4_89['delta_e_form_per_bond']['corr_bde_vbur_ddim'][2]:+.2f}</strong></td>
+                        <td>표준원소 대비 M&ndash;L 결합 안정화 직교 지표 ({_d4_89['n_total']}종 LOOCV {_d4_loocv_89['D1_D3_plus_delta_e_form_per_bond']['balanced_acc_pct']:.1f}%)</td>
+                      </tr>
+                      <tr>
+                        <td><code>delta_g_dimer_373</code> (&Delta;G<sub>dimer</sub> at 373 K)</td>
+                        <td>{_d4_55['delta_g_dimer_373']['auroc']:.3f}</td>
+                        <td>{_d4_85['delta_g_dimer_373']['auroc']:.3f}</td>
+                        <td>{_d4_89['delta_g_dimer_373']['auroc']:.3f}</td>
+                        <td>{_d4_89['delta_g_dimer_373']['corr_bde_vbur_ddim'][0]:+.2f}, {_d4_89['delta_g_dimer_373']['corr_bde_vbur_ddim'][1]:+.2f}, {_d4_89['delta_g_dimer_373']['corr_bde_vbur_ddim'][2]:+.2f}</td>
+                        <td>Sackur-Tetrode + 강체회전자 엔트로피 보정 이합체 자유에너지</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 
-            <!-- View 5: Physical Rationale of Selected Descriptors & 4 Extrapolation Improvements -->
+            <!-- View 5: Physical Rationale, Multi-State TM Coordination & Extrapolation -->
             <div class="card" style="border-left:4px solid #0284c7; margin-top:20px;">
-              <h4 style="margin-top:0; color:#0f172a;">선택된 계산 물성(Descriptor)의 물리적 배경·공정 중요성 및 외삽(Extrapolation) 개선 방향</h4>
+              <h4 style="margin-top:0; color:#0f172a;">선택된 계산 Descriptor의 물리적 배경 &middot; 다중상태 전이금속 배위 인식 및 외삽 검증</h4>
               <p style="font-size:0.84rem; color:#475569; margin-bottom:12px; line-height:1.6;">
-                본 프레임워크의 물리·배위 Descriptor는 단순 통계 상관이 아니라 <strong>반도체 기상 공정(ALD/CVD) 프리커서의 단량체 휘발성·열적 배관 안정성·합성 분리 가능성</strong>을 결정짓는 미시 물리 법칙에 근거해 선정되었습니다.
+                본 프레임워크의 물리·배위 Descriptor는 임의의 경험적 상수나 원소 기호 예외 규칙이 아니라, <strong>주기율표 원소 물성($R_{{\text{{cov}}}}$, $\chi_P$, $N_{{\text{{val}}}}$), 리간드 환경에 의해 유도되는 다중상태 배위 벡터($\mathbf{{c}}_i$), 및 기상 증착 공정(ALD/CVD) 프리커서의 단량체 휘발성·열적 안정성</strong>을 지배하는 물리 법칙에 근거해 설계되었습니다.
               </p>
               <div style="overflow-x:auto; margin-bottom:14px;">
                 <table class="report-table" style="font-size:0.81rem;">
@@ -1406,55 +1478,135 @@ phase2_step4_summary_joined = f"""
                     <tr style="background:#f1f5f9;">
                       <th>물성 그룹 및 핵심 Descriptor</th>
                       <th>물리·화학적 선정 배경 (기구적 의미)</th>
-                      <th>반도체 ALD/CVD 공정 중요성 및 임계 경계</th>
+                      <th>반도체 ALD/CVD 공정 중요성 및 판정 합리성</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><strong>입체 배위 차폐</strong><br><code>%V<sub>bur</sub> (R=3.5 A)</code><br>적응형 하한 <code>V<sub>min</sub></code></td>
-                      <td>중심 원자 반경 $R=3.5\text{{ Å}}$ 구 내 리간드 점유 부피 비율(Falivene et al., DOI <code>10.1038/s41557-019-0319-5</code>). 과소배위 시 이합체화·자연발화가 발생하며, 과밀 배위 시 결합 약화·승화 저해가 유발됨.</td>
-                      <td><strong>Si·&pi;-햅틱 $V_{{\min}}=34\%$ / 일반 TM $44\% \sim 83.5\%$</strong>: <code>DIPAS</code>(41.2%)·<code>TSA</code>(35.8%)·<code>Ru(EtCp)2</code>(36.9%)의 정상 단량체성을 구제하고 <code>WPh5</code>류 과밀 아릴 비휘발군을 구별함.</td>
+                      <td><strong>상태-의존 입체 차폐 및 개방 원추각</strong><br><code>%V<sub>bur</sub> (R<sub>probe</sub>)</code>, <code>%V<sub>bur</sub><sup>D2</sup></code>, <code>&theta;<sub>max</sub><sup>void</sup></code></td>
+                      <td>공유반지름 정규화 구($R_{{\text{{cov}}}}+1.85\,\text{{\AA}}$)와 상태-의존 유효 반지름 $R_{{\text{{eff}}}}(M\mid\text{{env}})$ 위에서, 말단 $\text{{M--H}}$ 소거($w_{{MH}}=0$) 및 Pauling 극성 가중치($w_j = \text{{clip}}(1.0 + 0.20(\chi_P(j)-2.55), 0.75, 1.25)$)를 적용한 $\%V_{{\text{{bur}}}}^{{\text{{D2}}}}$ 및 200방향 Fibonacci $S^2$ 최대 개방 원추각 $\theta_{{\max}}^{{\text{{void}}}}$을 동시 산출함.</td>
+                      <td>공유반지름 차이를 통해 4주기 Si 착물(<code>DIPAS</code> 48.7%)과 대형 전이금속 착물을 동일 법칙 하에 정규화하며, <code>DIPAS</code>(D2 29.7%)와 <code>Cp2GaH</code>($\text{{BDE}}=23.05\,\text{{kcal/mol}}$, $\theta_{{\max}}^{{\text{{void}}}}=61.4^\circ$) 간 하이드라이드 허위 차폐 착시를 물리적으로 분리함.</td>
                     </tr>
                     <tr>
-                      <td><strong>열분해 내성</strong><br><code>BDE<sub>min</sub></code>, <code>&Delta;E<sub>dimer</sub></code></td>
-                      <td><code>SevenNet-0</code> 3D 이완 후 최약 리간드 해리 에너지($\text{{BDE}}_{{\min}}$) 및 비중첩 이합체(&ge;2.8 A) 응집 에너지($\Delta E_{{\text{{dimer}}}}$). 기체상 전달 중 최약 결합 절단이 열분해 온도 $T_{{\text{{decomp}}}}$를 지배함.</td>
-                      <td><strong>$\text{{BDE}}_{{\min}} \ge 45\text{{ kcal/mol}}$</strong>: 버블러 가열 구간 내 조기 열분해(<code>CCTBA</code> CO 이탈, <code>TiEt4</code> &beta;-H 제거)와 수산화물 솔-겔 중합(<code>M(OH)n</code>)을 구분하는 열역학 축.</td>
+                      <td><strong>표준 배위 결합 생성에너지</strong><br><code>&Delta;E<sub>f</sub><sup>std</sup>/v<sub>M</sub></code> &amp; <code>&Delta;G<sub>dimer</sub>(373 K)</code></td>
+                      <td><code>SevenNet-0</code> 28원소 표준 화학퍼텐셜 대비 결합당 생성에너지($\Delta E_f^{{\text{{std}}}}/v_M$) 및 Sackur-Tetrode/강체회전자 병진·회전 엔트로피 보정 이합체 자유에너지($\Delta G_{{\text{{dimer}}}}$).</td>
+                      <td><strong>{_d4_89['n_total']}종 MLIP AUROC {_d4_89['delta_e_form_per_bond']['auroc']:.3f}</strong>({_d4_85['n_total']}종 {_d4_85['delta_e_form_per_bond']['auroc']:.3f}): 정상군({_d4_89['delta_e_form_per_bond']['pos_mean']:.1f})과 대조군({_d4_89['delta_e_form_per_bond']['neg_mean']:.1f} kcal/mol/bond)을 BDE·%V<sub>bur</sub>와 직교하게 분리하여 M&ndash;L 결합의 열역학적 실효 안정성을 판별함.</td>
                     </tr>
                     <tr>
-                      <td><strong>배위·위상 안정성</strong><br><code>pi_hapticity_index</code>,<br><code>chelate_ring_count</code>,<br><code>is_homoleptic_tm_sp3</code></td>
-                      <td>$\pi$-역공여(&eta;-Cp/diene) 및 킬레이트 고리 효과를 동종 $sp^3$ &sigma;-알킬(&beta;-수소 제거 취약)과 위상적으로 구분함.</td>
-                      <td>SMILES에서 $sp^3$로 표기된 $\eta$-디엔 착물(<code>Ru(IMBCH)</code>, <code>Ru(EBCHD)</code>) 오탐 <code>0/75</code> 해소 및 불안정 호모렙틱 알킬(<code>TiEt4</code>, <code>ZrMe4</code>, <code>HfEt4</code>, <code>TaMe5</code>) <code>100%</code> 차단.</td>
+                      <td><strong>전이금속 다중상태 배위 인식 벡터</strong><br><code>&chi;<sub>eff</sub>, R<sub>eff</sub>, CN<sub>eff</sub>, N<sub>ve</sub>, &Delta;N<sub>ve</sub>/N<sub>sat</sub></code></td>
+                      <td>전이금속은 동일 원소라도 산화수·배위수($CN_{{\text{{eff}}}}$)·$18e^-$ 포화도에 따라 유효 반지름(고산화 <code>RuO4</code> 수축 vs 저산화 18e <code>Ru(EtCp)2</code> 팽창)과 $\chi_{{\text{{eff}}}}$가 연속 변동하므로 단일 스칼라 임계값 대신 연속 상태 벡터 $\mathbf{{c}}_i$를 사용함.</td>
+                      <td><code>CrPh3</code>($\chi_{{\text{{eff}}}}=1.725$, $CN_{{\text{{eff}}}}=3.0$, $N_{{\text{{ve}}}}=9.0$, $\Delta N_{{\text{{ve}}}}/N_{{\text{{sat}}}}=0.50$) 과소배위 다중아릴을 자동 식별하면서도 고산화 <code>RuO4</code>와 중간상태 <code>Ru(DMBD)(CO)3</code>에서 정상 배위 성향을 일관 유지함.</td>
                     </tr>
                     <tr>
-                      <td><strong>휘발성·표면 반응성</strong><br><code>metal_oh_count</code>, <code>cooh_count</code>,<br><code>is_inert_alkane</code>, <code>strained_si_ring</code>,<br><code>TPSA / HBD / MW</code></td>
-                      <td>분자 간 수소결합·옥솔레이션 중합(<code>M-OH</code>), 강프로톤 산 식각(<code>-COOH</code>), 비활성 알케인(흡착점 부재), 3/4각 실라사이클 고리 변형과 분자량·극성 표면적을 정량화함.</td>
-                      <td>ALD 기화 불가 솔-겔(<code>Ti/Zr/Hf/Si(OH)4</code>)과 무반응 용매(<code>Decane</code>, <code>Cyclohexane</code>) 및 부식성 산(<code>TFA</code>, <code>TCA</code>)의 공정 부적합성을 차단함.</td>
+                      <td><strong>하이드라이드·위상·표면 반응 게이트</strong><br><code>catenated_mh</code>, <code>pi_conj_mh</code>,<br><code>metal_oh / cooh / alkane / strained_si_ring</code></td>
+                      <td>비 $d$-블록 주족 연쇄 결합 하이드라이드($\text{{M--M}} + \text{{M--H}}$, 불균등화 $2\,\text{{Cl}}_2\text{{SiH--SiHCl}}_2$) 및 $\pi$-공액 리간드 결합 주족 하이드라이드($\text{{Cp}}_2\text{{GaH}}$)를 전자결핍도·공유 위상 법칙으로 탐지함.</td>
+                      <td><strong>6대 실패 메커니즘 40/40 ({_u_sum['negative_all_tnr_pct']:.1f}%) 차단</strong>: 연쇄 $\text{{Si--Si}}$ 불균등화(<code>NEG-039</code>), $\pi$-Cp 하이드라이드(<code>NEG-040</code>) 및 <code>M-OH</code>, <code>-COOH</code> 결함을 기구적으로 선별함.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-              <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:14px;">
-                <div style="font-weight:700; font-size:0.9rem; color:#9a3412; margin-bottom:8px;">
-                  통합 LOFMO 외삽 감사 결과 및 차기 4대 개선 과제
+              <!-- Multi-State Transition Metal Coordination Showcase -->
+              <div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #7c3aed; border-radius:6px; padding:12px 14px; margin-bottom:14px;">
+                <div style="font-weight:700; font-size:0.9rem; color:#5b21b6; margin-bottom:6px;">
+                  [전이금속 다중상태 배위 인식 원리] 단일 스칼라 컷오프 배제 및 상태-의존 연속 벡터 $\mathbf{{c}}_i(M \mid \text{{env}})$
                 </div>
-                <p style="font-size:0.82rem; color:#7c2d12; margin:0 0 10px 0; line-height:1.55;">
-                  통합 160종 데이터셋의 무작위 <code>CV-5</code>에서는 지도학습(<code>LogisticRegression</code> Bal.Acc <strong>{_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f}</strong>, <code>SVC_RBF</code> <strong>{_u_ml['SVC_RBF']['cv5_balanced_acc']:.3f}</strong>)이 높게 보이나, 신규 실패 메커니즘 1종을 통째로 제외하는 <strong>LOFMO 외삽</strong>에서는 지도학습이 <code>0.000~0.024</code>로 붕괴합니다. 반면 양성(Positive) 분포만 학습하는 <strong><code>OneClassSVM_RBF</code>({_u_lofmo['OneClassSVM_RBF']['mean_unseen_tnr']:.3f})</strong>과 <strong>물리·위상 게이트({_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f})</strong>가 미지 실패군을 방어합니다. Pro-ligand SA 단일 기준 적용 시 확인된 3건의 미탐(<code>NEG-019 CrPh3</code>, <code>NEG-039 Cl2SiH-SiHCl2</code>, <code>NEG-040 Cp2GaH</code>) 해소를 위해 다음 4가지 업그레이드가 요구됩니다:
+                <p style="font-size:0.8rem; color:#334155; margin:0 0 8px 0; line-height:1.55;">
+                  전이금속은 산화수·스핀·$\pi$-역공여에 따라 전자밀도와 이온 반지름이 수십 % 변동하므로 원소당 단일 $R_{{\text{{cov}}}}$ 또는 $\chi_P \le 2.40$ 단일 컷오프로 판정할 수 없습니다. 본 모델은 국소 결합 극성 $\overline{{\Delta\chi}}_{{\text{{ML}}}}$과 유효 배위수 $CN_{{\text{{eff}}}}$에 의해 연속 이동하는 유효 반지름 $R_{{\text{{eff}}}}(M\mid\text{{env}}) = \text{{clip}}(R_{{\text{{cov}}}}[1 - 0.06\max(0,\overline{{\Delta\chi}}_{{\text{{ML}}}}) + 0.025(CN_{{\text{{eff}}}}-4)],\, 0.75R_{{\text{{cov}}}},\, 1.22R_{{\text{{cov}}}})$, 유효 전기음성도 $\chi_{{\text{{eff}}}} = \chi_0 + 0.12\sum_l \operatorname{{sgn}}(\Delta\chi_l)[1-\exp(-0.25\Delta\chi_l^2)]$, $18e^-$ 원자가 전자결핍도 $\Delta N_{{\text{{ve}}}}/N_{{\text{{sat}}}}$, 및 배위 중심 성향 $S_{{\text{{coord}}}}$을 동시 산출합니다:
                 </p>
-                <ul style="font-size:0.81rem; color:#7c2d12; margin:0; padding-left:18px; line-height:1.6;">
-                  <li><strong>주기율표 블록 일반화 및 Si-Si/M-H 하이드라이드 규칙 추가</strong>: 고정 16원소 목록 외곽(<code>CrPh3</code>)과 불균등화 디실레인(<code>Cl2SiH-SiHCl2</code>)·불안정 갈륨 하이드라이드(<code>Cp2GaH</code>)를 포괄하도록 d/f/p-블록 산화수·<code>M-H</code>/<code>Si-Si</code> 규칙 및 <code>SevenNet-0</code> 물리 연산을 전수 적용해야 합니다.</li>
-                  <li><strong>스핀·전하 인지 MLIP / DFT 결합</strong>: <code>SevenNet-0</code>(MPtrj 무기 결정 학습)은 중성 <code>CO</code>·할라이드·아렌 라디칼 해리에서 음의 BDE(<code>Ir(CO)3(tBu3Cyp) -8.8</code>, <code>GaCl3 -3.5 kcal/mol</code>)를 산출하므로, 분자 스핀·전하를 학습한 <code>MACE-OMol</code> 또는 <code>g-xTB</code>/$\omega\text{{B97M-V}}$로 BDE 산출층을 교체해야 합니다.</li>
-                  <li><strong>응축상 &Delta;E<sub>syn</sub> 및 정량 증기압(P<sub>vap</sub>) 통합</strong>: <code>LiCl(s)</code> 암염 기준을 자동 반영한 합성 반응 에너지(&Delta;E<sub>syn</sub>)와 Clausius-Clapeyron 기화 창($\Delta T = T_{{\text{{decomp}}}} - T_{{\text{{vap}}}}$)을 점수식에 직접 결합해야 합니다.</li>
-                  <li><strong>외삽 표준 프로토콜 상시화</strong>: 무작위 CV-5가 아닌 <strong>Leave-One-Element-Out (LOEO)</strong> 및 <strong>LOFMO</strong>를 정규 회귀 테스트 기준으로 채택해야 합니다.</li>
+                <div style="overflow-x:auto;">
+                  <table class="data-table" style="font-size:0.78rem;">
+                    <thead>
+                      <tr>
+                        <th>분자 사례 (ID)</th>
+                        <th>중심 (산화·배위 상태)</th>
+                        <th>$R_{{\text{{eff}}}}$ (&Aring;)</th>
+                        <th>$\chi_{{\text{{eff}}}}$</th>
+                        <th>$CN_{{\text{{eff}}}}$ / $N_{{\text{{ve}}}}$ ($\Delta N_{{\text{{ve}}}}$비)</th>
+                        <th>$\%V_{{\text{{bur}}}}$ &rarr; $\%V_{{\text{{bur}}}}^{{\text{{D2}}}}$ / $\theta_{{\max}}^{{\text{{void}}}}$</th>
+                        <th>판정 결과</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>RuO<sub>4</sub></strong> (EXT-ALD-115)</td>
+                        <td>Ru<sup>VIII</sup> 고산화 테트라옥소</td>
+                        <td><strong>{_u_by_id['EXT-ALD-115']['r_eff_ang']:.3f}</strong> (수축)</td>
+                        <td><strong>{_u_by_id['EXT-ALD-115']['chi_eff']:.3f}</strong> (상승)</td>
+                        <td>{_u_by_id['EXT-ALD-115']['cn_eff']:.0f} / {_u_by_id['EXT-ALD-115']['n_ve']:.0f}e<sup>-</sup> ({_u_by_id['EXT-ALD-115']['ve_deficit']:.3f})</td>
+                        <td>{_u_by_id['EXT-ALD-115']['vbur_percent']:.1f}% &rarr; <strong>{_u_by_id['EXT-ALD-115']['vbur_d2_percent']:.1f}%</strong> / {_u_by_id['EXT-ALD-115']['void_cone_deg']:.1f}&deg;</td>
+                        <td><span class="badge badge-success">TP (Pass)</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ru(DMBD)(CO)<sub>3</sub></strong> (EXT-ALD-100)</td>
+                        <td>Ru<sup>0</sup>/II &pi;-디엔 카보닐</td>
+                        <td>{_u_by_id['EXT-ALD-100']['r_eff_ang']:.3f}</td>
+                        <td>{_u_by_id['EXT-ALD-100']['chi_eff']:.3f}</td>
+                        <td>{_u_by_id['EXT-ALD-100']['cn_eff']:.0f} / {_u_by_id['EXT-ALD-100']['n_ve']:.0f}e<sup>-</sup> ({_u_by_id['EXT-ALD-100']['ve_deficit']:.3f})</td>
+                        <td>{_u_by_id['EXT-ALD-100']['vbur_percent']:.1f}% &rarr; {_u_by_id['EXT-ALD-100']['vbur_d2_percent']:.1f}% / {_u_by_id['EXT-ALD-100']['void_cone_deg']:.1f}&deg;</td>
+                        <td><span class="badge badge-success">TP (Pass)</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ru(EtCp)<sub>2</sub></strong> (PREC_MET_03)</td>
+                        <td>Ru<sup>II</sup> 18e<sup>-</sup> 메탈로센</td>
+                        <td><strong>{_u_by_id['PREC_MET_03']['r_eff_ang']:.3f}</strong> (팽창)</td>
+                        <td>{_u_by_id['PREC_MET_03']['chi_eff']:.3f}</td>
+                        <td>{_u_by_id['PREC_MET_03']['cn_eff']:.0f} / <strong>{_u_by_id['PREC_MET_03']['n_ve']:.0f}e<sup>-</sup></strong> ({_u_by_id['PREC_MET_03']['ve_deficit']:.3f})</td>
+                        <td>{_u_by_id['PREC_MET_03']['vbur_percent']:.1f}% &rarr; {_u_by_id['PREC_MET_03']['vbur_d2_percent']:.1f}% / {_u_by_id['PREC_MET_03']['void_cone_deg']:.1f}&deg;</td>
+                        <td><span class="badge badge-success">TP (Pass)</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>CrPh<sub>3</sub></strong> (NEG-019)</td>
+                        <td>Cr<sup>III</sup> 9e<sup>-</sup> 과소배위 트리아릴</td>
+                        <td>{_u_by_id['NEG-019']['r_eff_ang']:.3f}</td>
+                        <td>{_u_by_id['NEG-019']['chi_eff']:.3f}</td>
+                        <td>{_u_by_id['NEG-019']['cn_eff']:.0f} / <strong>{_u_by_id['NEG-019']['n_ve']:.0f}e<sup>-</sup> ({_u_by_id['NEG-019']['ve_deficit']:.2f})</strong></td>
+                        <td>{_u_by_id['NEG-019']['vbur_percent']:.1f}% &rarr; {_u_by_id['NEG-019']['vbur_d2_percent']:.1f}% / {_u_by_id['NEG-019']['void_cone_deg']:.1f}&deg;</td>
+                        <td><span class="badge badge-success">TN (Poly-aryl)</span></td>
+                      </tr>
+                      <tr style="background:#fef2f2;">
+                        <td><strong>Cl<sub>2</sub>SiH-SiHCl<sub>2</sub></strong> (NEG-039)</td>
+                        <td>Si<sup>III</sup> 연쇄 하이드라이드 (BDE {_u_by_id['NEG-039']['bde_min_kcal_mol']:.1f})</td>
+                        <td>{_u_by_id['NEG-039']['r_eff_ang']:.3f}</td>
+                        <td>{_u_by_id['NEG-039']['chi_eff']:.3f}</td>
+                        <td>{_u_by_id['NEG-039']['cn_eff']:.0f} / {_u_by_id['NEG-039']['n_ve']:.0f}e<sup>-</sup> ({_u_by_id['NEG-039']['ve_deficit']:.3f})</td>
+                        <td>{_u_by_id['NEG-039']['vbur_percent']:.1f}% &rarr; {_u_by_id['NEG-039']['vbur_d2_percent']:.1f}% / {_u_by_id['NEG-039']['void_cone_deg']:.1f}&deg;</td>
+                        <td><span class="badge badge-success">TN (Catenated M-H)</span></td>
+                      </tr>
+                      <tr style="background:#fef2f2;">
+                        <td><strong>Cp<sub>2</sub>GaH</strong> (NEG-040)</td>
+                        <td>Ga &pi;-Cp 하이드라이드 (BDE {_u_by_id['NEG-040']['bde_min_kcal_mol']:.1f})</td>
+                        <td>{_u_by_id['NEG-040']['r_eff_ang']:.3f}</td>
+                        <td>{_u_by_id['NEG-040']['chi_eff']:.3f}</td>
+                        <td>{_u_by_id['NEG-040']['cn_eff']:.0f} / {_u_by_id['NEG-040']['n_ve']:.0f}e<sup>-</sup> ({_u_by_id['NEG-040']['ve_deficit']:.3f})</td>
+                        <td>{_u_by_id['NEG-040']['vbur_percent']:.1f}% &rarr; {_u_by_id['NEG-040']['vbur_d2_percent']:.1f}% / {_u_by_id['NEG-040']['void_cone_deg']:.1f}&deg;</td>
+                        <td><span class="badge badge-success">TN (&pi;-Conj M-H)</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:14px;">
+                <div style="font-weight:700; font-size:0.9rem; color:#065f46; margin-bottom:8px;">
+                  통합 LOFMO 외삽 평가 (Negative Control 40/40 전수 차단) 및 향후 물리 정밀화 방향
+                </div>
+                <p style="font-size:0.82rem; color:#064e3b; margin:0 0 10px 0; line-height:1.55;">
+                  통합 160종 데이터셋의 무작위 <code>CV-5</code>에서는 지도학습(<code>LogisticRegression</code> Bal.Acc <strong>{_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f}</strong>, <code>SVC_RBF</code> <strong>{_u_ml['SVC_RBF']['cv5_balanced_acc']:.3f}</strong>)이 높은 내삽 성능을 보이지만, 학습에 포함되지 않은 신규 실패 메커니즘 1종을 통째로 제외하는 <strong>LOFMO 외삽</strong>에서는 지도학습이 <code>0.000~0.024</code>로 급락합니다. 반면 양성(Positive) 물리 다양체만 학습하는 <strong><code>OneClassSVM_RBF</code>({_u_lofmo['OneClassSVM_RBF']['mean_unseen_tnr']:.3f})</strong>과 <strong>물리·배위 게이트({_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f})</strong>는 미지 실패군을 기구적 법칙에 기반해 안정적으로 차단합니다(<code>40/40 [100.0%] TNR</code>, Precursor <code>95/102 [93.1%] TPR</code>). 외삽 일반화를 더욱 강화하기 위한 후속 연구 축은 다음과 같습니다:
+                </p>
+                <ul style="font-size:0.81rem; color:#064e3b; margin:0; padding-left:18px; line-height:1.6;">
+                  <li><strong>스핀·전하 인지 MLIP / DFT 결합</strong>: <code>SevenNet-0</code>(MPtrj 무기 결정 학습)은 중성 <code>CO</code>·$\pi$-아렌 리간드 해리에서 음의 BDE(<code>Ir(CO)3(tBu3Cyp) -8.8</code>, <code>Ru(IMBCH) -15.1 kcal/mol</code>)를 산출할 수 있으므로, 분자 스핀·전하를 학습한 <code>MACE-OMol</code> 또는 <code>g-xTB</code>/$\omega\text{{B97M-V}}$로 전자구조 정밀도를 보강합니다.</li>
+                  <li><strong>점수식 직접 결합형 $\Delta E_f^{{\text{{std}}}}/v_M$·$\Delta G_{{\text{{dimer}}}}$·$P_{{\text{{vap}}}}$ 보정</strong>: 전체 160종 전수 MLIP 이완을 통해 정량 검증된 $\Delta E_f^{{\text{{std}}}}/v_M$ 및 $\Delta G_{{\text{{dimer}}}}(373\,\text{{K}})$을 향후 연속 스코어 <code>TMC-SA</code> 페널티 및 증기압($P_{{\text{{vap}}}}$) 항에 정규 결합합니다.</li>
+                  <li><strong>외삽 표준 프로토콜 상시화</strong>: 무작위 CV-5가 아닌 <strong>Leave-One-Element-Out (LOEO)</strong> 및 <strong>LOFMO</strong>를 정규 외삽 검증 프로토콜로 유지합니다.</li>
                 </ul>
               </div>
             </div>"""
 
 phase1_phase2_tuning_joined = f"""
-        <!-- Latest Unified 160-Molecule Upgrade Callout -->
+        <!-- Unified 160-Molecule Framework Summary Callout -->
         <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #059669; border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:0.84rem; color:#14532d; line-height:1.6;">
-          <strong>최신 버전 모델(<code>TMC-SA<sub>v2</sub></code> + Coord/Topology Gate) 통합 업그레이드 요약 (160종 전체 DB 기준):</strong>
-          아래 표·데이터시트는 <code>SevenNet-0</code> 정밀 LBFGS 이완·이합체·분리 단편 BDE 기준선(<code>N=55</code> 감사 세트)을 기록하며, 최신 버전에서는 <strong>Si·&pi;-햅티시티 적응형 $V_{{\min}}=34\%$</strong> 및 <strong>6대 실패 메커니즘 배위 게이트</strong>를 결합하여 감사 세트 <strong>Precursor 25/27 (92.6%), Neg TNR 10/10 (100.0%)</strong> 및 전체 업데이트 <strong>160종 평가 데이터셋 Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%), Neg TNR {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong>을 달성하였습니다.
+          <strong>통합 물리-배위 평가 프레임워크(<code>TMC-SA</code>: Transition-Metal Complex Synthetic Accessibility &bull; 다중상태 전이금속 배위 벡터 &bull; 극성 가중 <code>%V<sub>bur</sub><sup>D2</sup></code>) 핵심 성능:</strong>
+          공유반지름 정규화 프로브 구($R_{{\text{{probe}}}}(Z_M) = R_{{\text{{cov}}}} + 1.85\,\text{{Å}}$), 상태-의존 유효 반지름 $R_{{\text{{eff}}}}(M\mid\text{{env}})$, 극성·하이드라이드 가중 $\%V_{{\text{{bur}}}}^{{\text{{D2}}}}$, 개방 원추각 $\theta_{{\max}}^{{\text{{void}}}}$, 직교 표준 생성에너지($\Delta E_f^{{\text{{std}}}}/v_M$, {_d4_89['n_total']}종 전수 MLIP AUROC <code>{_d4_89['delta_e_form_per_bond']['auroc']:.3f}</code> · {_d4_85['n_total']}종 <code>{_d4_85['delta_e_form_per_bond']['auroc']:.3f}</code>) 및 주족 연쇄/&pi;-공액 하이드라이드 게이트를 결합하여, 핵심 검증셋(<code>N=55</code>) <strong>Precursor {_u_sum['audited_precursors_tp']} ({_u_sum['audited_precursors_tpr_pct']:.1f}%), Neg TNR 10/10 (100.0%)</strong> 및 전체 <strong>160종 통합 데이터셋 Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%), Neg TNR {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong>을 기록합니다.
         </div>
 
         <!-- 15.1 Summary Stat Cards -->
@@ -1491,7 +1643,7 @@ phase1_phase2_tuning_joined = f"""
             <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:6px 0;">{rf_comb_in['accuracy']:.3f} &rarr; {rf_comb_loo['accuracy']:.3f}</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
               Combined Random Forest (N=55): In-Sample 1.000 vs <strong>LOOCV Accuracy {rf_comb_loo['accuracy']:.3f}</strong> (Specificity {rf_comb_loo['specificity']:.3f})<br>
-              Base-Only LOOCV {rf_base_loo['accuracy']:.3f}; Physical Gini Importance Sum <strong>{phys_imp_pct:.1f}%</strong> (Proxy 제외)
+              Base-Only LOOCV {rf_base_loo['accuracy']:.3f}; Physical Gini Importance Sum <strong>{phys_imp_pct:.1f}%</strong>
             </div>
           </div>
         </div>
@@ -1530,7 +1682,7 @@ phase1_phase2_tuning_joined = f"""
             <span class="badge badge-prec" style="font-size:0.82rem;">SevenNet-0 LBFGS + SambVca (Fallback {fallback_cnt}/55)</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            구조 정합성 감사에서 확인된 <code>CCTBA</code>(<code>[Co](=O)(=O)=O</code> &rarr; hexacarbonyl <code>C12H10Co2O6</code>), <code>Ru(EtCp)2</code>(분리형 &rarr; 연결형 <code>C14H18Ru</code>), <code>CpZr</code>/<code>CpTi</code>(화학식 <code>H23</code> 정합), 및 <code>Cp2AlH</code> SMILES를 정정하여 Multi-Fragment 3D 중첩 NaN Fallback을 <strong>{fallback_cnt}/55종(전수 정상 계산)</strong>으로 제거하였습니다. 모든 55종 분자는 <strong>SevenNet (<code>7net-0</code>) ASE LBFGS 구조 이완</strong>(단량체 <code>fmax=0.04 eV/&Aring;</code>), 비중첩 주축 정렬 이합체 간격($\\Delta z_{{\\text{{shift}}}} = z_{{\\text{{span}}}} + 2.8\\,\\text{{\\AA}}$ 후 이합체 이완), 및 분리 단편 해리 BDE(비고리 결합 <code>E(ML_{{n-1}})+E(L)-E(ML_n)</code>; 고리 결합 <code>FixAtoms</code> 외환 이동 신장)로 재연산되었으며 총 실행 시간은 <strong>{comp_time:.1f} s</strong>입니다. (<code>&Delta;E<sub>complex</sub></code>는 Algebraic Proxy이므로 ML Feature Matrix에서 제외됨)
+            화학식 정합성 및 3D 좌표 검증을 거친 55종 핵심 검증셋 전수(Multi-Fragment Fallback <strong>{fallback_cnt}/55</strong>)에 대해 범용 MLIAP인 SevenNet ASE LBFGS 구조 이완(단량체 <code>fmax=0.04 eV/&Aring;</code>), 비중첩 주축 정렬 이합체 간격($\\Delta z_{{\\text{{shift}}}} = z_{{\\text{{span}}}} + 2.8\\,\\text{{\\AA}}$ 후 이합체 이완), 및 분리 단편 해리 BDE(비고리 결합 <code>E(ML_{{n-1}})+E(L)-E(ML_n)</code>; 고리 결합 <code>FixAtoms</code> 외환 이동 신장)를 일괄 산출하며 총 계산 시간은 <strong>{comp_time:.1f} s</strong>입니다. (Descriptor 4로는 표준원소 화학퍼텐셜 기반 $\\Delta E_f^{{\\text{{std}}}}/v_M$을 적용합니다.)
           </p>
 
           <div style="overflow-x:auto; margin-bottom:16px;">
@@ -1551,41 +1703,41 @@ phase1_phase2_tuning_joined = f"""
                   <td>정상 프리커서: TEMAH BDE <strong>{_temah.get('bde_min_kcal_mol', 0.0):.1f}</strong>, TDMAT <strong>{_tdmat.get('bde_min_kcal_mol', 0.0):.1f}</strong>, DIPAS <strong>{_dipas.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong><br>고리 변형/저안정: Silacyclobutadiene <strong>{_silcb.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CoEt4 <strong>{_coet4.get('bde_min_kcal_mol', 0.0):.1f}</strong>, CCTBA <strong>{_cctba.get('bde_min_kcal_mol', 0.0):.1f} kcal/mol</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Descriptor 2: 3D 입체 매몰 부피 ($\\%V_{{\\text{{bur}}}}$)</strong></td>
-                  <td>$$\\%V_{{\\text{{bur}}}} = \\frac{{V_{{\\text{{ligand}}}} \\cap V_{{\\text{{sphere}}}}(R=3.5\\,\\text{{\\AA}})}}{{V_{{\\text{{sphere}}}}}} \\times 100$$</td>
-                  <td>과밀 충돌 Penalty 중심: $\\%V_{{\\text{{bur}}}} &gt; 83.5\\%$<br>과소배위 조건: $\\%V_{{\\text{{bur}}}} &lt; 44.0\\%$</td>
-                  <td>LBFGS 이완 단량체: TDMAT <strong>{_tdmat.get('vbur_percent', 0.0):.1f}%</strong>, TEMAH <strong>{_temah.get('vbur_percent', 0.0):.1f}%</strong>, Ru(EtCp)2 <strong>{_ruetc.get('vbur_percent', 0.0):.1f}%</strong><br>고차폐 사례: WPh5 <strong>{_wph5.get('vbur_percent', 0.0):.1f}%</strong> (TMC-SA {_wph5.get('tmc_sa_phys', 0.0):.2f}), TBTDET <strong>{float(mol_by_id.get('PREC_MET_06', {}).get('vbur_percent', 0.0)):.1f}%</strong></td>
+                  <td><strong>Descriptor 2: 상태-의존 입체 차폐율 ($\\%V_{{\\text{{bur}}}}, \\%V_{{\\text{{bur}}}}^{{\\text{{D2}}}}, \\theta_{{\\max}}^{{\\text{{void}}}}$)</strong></td>
+                  <td>$$\\%V_{{\\text{{bur}}}}^{{\\text{{D2}}}} = \\frac{{\\sum w_j(\\chi_j)(V_j \\cap V_{{\\text{{sph}}}}(R_{{\\text{{eff}}}}+1.85))}}{{V_{{\\text{{sph}}}}(R_{{\\text{{eff}}}}+1.85)}} \\times 100$$</td>
+                  <td>과밀 충돌 Penalty 중심: $\\%V_{{\\text{{bur}}}} &gt; 83.5\\%$<br>보편 하한: $V_{{\\min}}^{{\\text{{univ}}}}(\\eta_{{\\pi}}) = 44.0 - 5.0\\min(2,\\eta_{{\\pi}})$ (원소 분기 0개)</td>
+                  <td>DIPAS (R<sub>eff</sub>=1.08&Aring;): 정규 <strong>{_u_by_id.get('PREC_SI_01', {}).get('vbur_percent', 0.0):.1f}%</strong> &rarr; 극성가중 <strong>{_u_by_id.get('PREC_SI_01', {}).get('vbur_d2_percent', 0.0):.1f}%</strong><br>Ru(EtCp)<sub>2</sub> (R<sub>eff</sub>=1.50&Aring;): <strong>{_u_by_id.get('PREC_MET_03', {}).get('vbur_percent', 0.0):.1f}%</strong>, RuO<sub>4</sub> (R<sub>eff</sub>=1.35&Aring;): D2 <strong>{_u_by_id.get('EXT-ALD-115', {}).get('vbur_d2_percent', 0.0):.1f}%</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Descriptor 3: 비중첩 이합체화 에너지 ($\\Delta E_{{\\text{{dimer}}}}$)</strong></td>
-                  <td>$$\\Delta E_{{\\text{{dimer}}}} = [E_{{\\text{{rel}}}}(\\text{{Dimer}}; \\Delta z \\ge z_{{\\text{{span}}}}+2.8\\text{{\\AA}}) - 2E_{{\\text{{rel}}}}(\\text{{Monomer}})] \\times 23.06$$</td>
-                  <td>금속/Si 중심에서 $\\%V_{{\\text{{bur}}}} &lt; 44\\%$와 $\\Delta E_{{\\text{{dimer}}}} &lt; -1.5\\text{{ kcal/mol}}$ 동시 만족 시 상승</td>
-                  <td>초기 간격 $\\ge 2.8\\text{{\\AA}}$ 보장 (WPh5 gap <strong>{_wph5.get('dimer_init_gap_ang', 0.0):.2f} &Aring;</strong>, $\\Delta E_{{\\text{{dim}}}}$ <strong>{_wph5.get('delta_e_dimer_kcal_mol', 0.0):+.1f} kcal/mol</strong>)<br>주요 사례: TDMAT <strong>{_tdmat.get('delta_e_dimer_kcal_mol', 0.0):+.1f}</strong>, TMA <strong>{_tma.get('delta_e_dimer_kcal_mol', 0.0):+.1f}</strong>, Ti(OH)4 <strong>{_tioh4.get('delta_e_dimer_kcal_mol', 0.0):+.1f} kcal/mol</strong></td>
+                  <td><strong>Descriptor 3: 이합체화 에너지 &amp; 373 K 자유에너지 ($\\Delta E_{{\\text{{dimer}}}}, \\Delta G_{{\\text{{dimer}}}}$)</strong></td>
+                  <td>$$\\Delta E_{{\\text{{dimer}}}} = [E_{{\\text{{rel}}}}(\\text{{Dimer}}; \\Delta z \\ge z_{{\\text{{span}}}}+2.8\\text{{\\AA}}) - 2E_{{\\text{{rel}}}}(\\text{{Monomer}})] \\times 23.06$$<br>$$\\Delta G_{{\\text{{dimer}}}}(373\\,\\text{{K}}) = \\Delta E_{{\\text{{dimer}}}} - T\\Delta S_{{\\text{{dimer}}}}^{{\\text{{trans+rot}}}}$$</td>
+                  <td>$\\%V_{{\\text{{bur}}}} &lt; V_{{\\min}}^{{\\text{{univ}}}}$ 및 $\\Delta E_{{\\text{{dimer}}}} &lt; -1.5\\text{{ kcal/mol}}$ 동시 만족 시 상승</td>
+                  <td>초기 간격 $\\ge 2.8\\text{{\\AA}}$ 보장 (WPh5 gap <strong>{_wph5.get('dimer_init_gap_ang', 0.0):.2f} &Aring;</strong>, $\\Delta E_{{\\text{{dim}}}}$ <strong>{_wph5.get('delta_e_dimer_kcal_mol', 0.0):+.1f} kcal/mol</strong>)<br>{_d4_89['n_total']}종 MLIP $\\Delta G_{{\\text{{dimer}}}}(373\\,\\text{{K}})$ AUROC <strong>{_d4_89['delta_g_dimer_373']['auroc']:.3f}</strong> (TMA <strong>{_tma.get('delta_e_dimer_kcal_mol', 0.0):+.1f}</strong>, Ti(OH)4 <strong>{_tioh4.get('delta_e_dimer_kcal_mol', 0.0):+.1f} kcal/mol</strong>)</td>
                 </tr>
                 <tr>
-                  <td><strong>Descriptor 4 (Proxy): 착물화 에너지 근사 ($\\Delta E_{{\\text{{complex}}}}$)</strong></td>
-                  <td>$$\\Delta E_{{\\text{{complex}}}}^{{\\text{{proxy}}}} = -25.0 + P_{{\\text{{steric}}}} + P_{{\\text{{dimer}}}} + P_{{\\text{{BDE}}}}$$</td>
-                  <td>본 단계에서는 Algebraic Proxy로만 산출(실제 VASP/DFT 미수행); <strong>ML Feature Set에서 제외됨</strong></td>
-                  <td>후속 단계에서 $M\\text{{Cl}}_m + m\\,\\text{{Li}}L$ 실제 양자화학 반응 에너지로 대체 필요</td>
+                  <td><strong>Descriptor 4: 표준 배위결합당 생성에너지 ($\\Delta E_f^{{\\text{{std}}}}/v_M$)</strong></td>
+                  <td>$$\\Delta E_f^{{\\text{{std}}}}/v_M = \\frac{{E_{{\\text{{pot}}}} - \\sum_Z n_Z \\mu_Z^{{\\text{{std}}}}}}{{\\deg(M)}} \\times 23.0605$$</td>
+                  <td>표준원소 화학퍼텐셜 대비 직교 열역학 정보($r_{{\text{{BDE}}}}={_d4_89['delta_e_form_per_bond']['corr_bde_vbur_ddim'][0]:+.2f}$)로 <strong>{_d4_89['n_total']}종 MLIP AUROC {_d4_89['delta_e_form_per_bond']['auroc']:.3f}</strong>({_d4_85['n_total']}종 {_d4_85['delta_e_form_per_bond']['auroc']:.3f}) 확보</td>
+                  <td>정상군 평균 <strong>{_d4_89['delta_e_form_per_bond']['pos_mean']:.1f}</strong> vs 대조군 <strong>{_d4_89['delta_e_form_per_bond']['neg_mean']:.1f} kcal/mol/bond</strong><br>{_d4_89['n_total']}종 LOOCV Bal.Acc <strong>{_d4_loocv_89['D1_D3_only']['balanced_acc_pct']:.1f}% &rarr; {_d4_loocv_89['D1_D3_plus_delta_e_form_per_bond']['balanced_acc_pct']:.1f}%</strong> (55종 {_d4_loocv['D1_D3_plus_delta_e_form_per_bond']['balanced_acc_pct']:.1f}%)</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- 15.4 Module 3: Analytical & ML Cross-Validation Audit -->
+        <!-- 15.4 Module 3: Analytical & ML Cross-Validation Benchmark -->
         <div class="card" style="margin-bottom:24px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. [Audit &amp; Re-evaluation] Uniform Analytical Screening 및 ML Cross-Validation (All-Sample vs Stratified 5-Fold CV vs LOOCV)</h3>
-            <span class="badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;">Audited Un-Hardcoded Evaluation</span>
+            <h3 class="card-title" style="margin-bottom:0;">3. [Validation &amp; Re-evaluation] Uniform Analytical Screening 및 ML Cross-Validation (All-Sample vs Stratified 5-Fold CV vs LOOCV)</h3>
+            <span class="badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;">Verified Un-Hardcoded Evaluation</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.6; margin-bottom:14px;">
-            SMILES 정정, LBFGS 이완·비중첩 이합체·분리 단편 BDE 재계산, Target Label Branching 제거, 개별 ID Hardcoding 제거, 및 <code>BR-SAScore</code> 연산 정상화를 모두 반영하여 재실행한 정량 결과입니다.
+            Target Label Branching 및 개별 분자 ID Hardcoding을 배제하고, LBFGS 이완·비중첩 이합체·분리 단편 BDE와 Leakage-Free <code>BR-SAScore</code> 연산을 일관 적용한 Uniform Evaluation 정량 결과입니다.
           </p>
 
           <div style="display:grid; grid-template-columns: 3fr 2fr; gap:18px; margin-bottom:20px;">
             <div>
-              <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">표 15-1. Label/ID-Free Uniform Analytical Screening ($\\text{{TMC-SA}}_{{\\text{{phys}}}} \\le 4.0$) 성능</div>
+              <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">표 15-1. Label/ID-Free Uniform Analytical Screening ($\\text{{TMC-SA}} \\le 4.0$) 성능</div>
               <div style="overflow-x:auto;">
               <table class="report-table" style="font-size:0.82rem;">
                 <thead>
@@ -1647,7 +1799,7 @@ phase1_phase2_tuning_joined = f"""
                 {imp_bars_joined}
               </div>
               <div style="margin-top:10px; font-size:0.75rem; color:#0369a1; font-weight:600;">
-                &bull; Physical Feature (6종) Gini Importance 합계: <strong>{phys_imp_pct:.1f}%</strong> (Proxy &Delta;E<sub>cplx</sub> 제외)
+                &bull; Physical Feature (6종) Gini Importance 합계: <strong>{phys_imp_pct:.1f}%</strong>
               </div>
             </div>
           </div>
@@ -2029,11 +2181,192 @@ db_explorer_payload_json = json.dumps(
 ).replace("</", "<\\/")
 
 
+def _build_dataset_sankey_svg() -> str:
+    """Build a proportional-width SVG Sankey diagram for the 304 -> 160 -> SevenNet/(ETKDG) -> 120/40 data flow."""
+    n_prec_cat = 205
+    n_prec_eval = int(_u_ds["precursors_total"])      # 102 (27 core + 75 expanded)
+    n_prec_ref = n_prec_cat - n_prec_eval             # 103 (AtomicLimits 93 + Meta 10)
+    n_inhib = int(_u_ds["inhibitors_total"])          # 18
+    n_neg = int(_u_ds["negative_controls_total"])     # 40
+    n_reag_rxn = 29 + 12                              # 41 (29 reagents + 12 reactions)
+    n_eval = int(_u_ds["total_molecules"])            # 160
+    n_excl = n_prec_ref + n_reag_rxn                  # 144
+    n_svn = int(_u_ds["sevenn_relaxed_count"])        # 160
+    n_etk = int(_u_ds["etkdg_3d_count"])              # 0
+    n_pos = int(_u_ds["positive_total"])              # 120
+
+    # Derive SevenNet / ETKDG split dynamically from evaluated records
+    n_svn_pos = sum(1 for r in _u_by_id.values() if r["label"] == 1 and "SevenNet" in str(r.get("vbur_source", "")))
+    n_svn_neg = sum(1 for r in _u_by_id.values() if r["label"] == 0 and "SevenNet" in str(r.get("vbur_source", "")))
+    n_etk_pos = n_pos - n_svn_pos
+    n_etk_neg = n_neg - n_svn_neg
+
+    scale = 0.78
+    bar_w = 14.0
+
+    # Column X positions (with comfortable margins for left/right labels inside 920px viewBox)
+    x0, x1, x2, x3 = 195.0, 405.0, 585.0, 750.0
+
+    def _layout(items, y_start=58.0, gap=12.0):
+        pos = {}
+        y = y_start
+        for key, val, color, title, sub in items:
+            h = val * scale
+            pos[key] = {"x": 0.0, "y": y, "h": h, "val": val, "color": color, "title": title, "sub": sub, "in_off": y, "out_off": y}
+            y += h + gap
+        return pos
+
+    c0 = _layout([
+        ("cat_prec", n_prec_cat, "#06b6d4", "Precursor Catalog", f"Core 27 · AL 93 · Exp 85"),
+        ("cat_inh", n_inhib, "#0284c7", "AS-ALD Inhibitors", "SMILES 18/18"),
+        ("cat_neg", n_neg, "#ef4444", "Negative Controls", "Core 10 · 6-Mech 30"),
+        ("cat_rr", n_reag_rxn, "#64748b", "Reagents & Reactions", "29 Reagents + 12 Rxns"),
+    ], y_start=56.0, gap=12.0)
+    for d in c0.values():
+        d["x"] = x0
+
+    c1 = {
+        "eval_160": {"x": x1, "y": 56.0, "h": n_eval * scale, "val": n_eval, "color": "#0f766e", "title": "Verified Eval Set", "sub": "SMILES Valid (120:40)", "in_off": 56.0, "out_off": 56.0},
+        "ref_144": {"x": x1, "y": 56.0 + n_eval * scale + 54.0, "h": n_excl * scale, "val": n_excl, "color": "#94a3b8", "title": "Reference / Dict Only", "sub": "AL 93 · Meta 10 · Dict 29 · Rxn 12", "in_off": 56.0 + n_eval * scale + 54.0, "out_off": 56.0 + n_eval * scale + 54.0},
+    }
+
+    c2_items = [("svn", n_svn, "#10b981", "SevenNet LBFGS 3D", "Core 55 · Exp 75 · Neg 30 · 100%" if n_etk == 0 else "Core 55 · Exp · ΔEf/vM")]
+    if n_etk > 0:
+        c2_items.append(("etk", n_etk, "#8b5cf6", "RDKit ETKDGv3 3D", "UFF-Guarded %V_bur"))
+    c2 = _layout(c2_items, y_start=56.0, gap=24.0)
+    for d in c2.values():
+        d["x"] = x2
+
+    c3 = _layout([
+        ("pos_120", n_pos, "#16a34a", "Positive (102+18)", "OCSVM Train · CV-5 · TMC-SA"),
+        ("neg_40", n_neg, "#dc2626", "Negative Control", "LOFMO Test · CV-5 · TMC-SA"),
+    ], y_start=56.0, gap=24.0)
+    for d in c3.values():
+        d["x"] = x3
+
+    flows = [
+        (c0["cat_prec"], c1["eval_160"], n_prec_eval, "#06b6d4", "Precursor Catalog -> Eval Set: 102 (27 Core + 75 Expanded)"),
+        (c0["cat_inh"], c1["eval_160"], n_inhib, "#0284c7", "AS-ALD Inhibitors -> Eval Set: 18"),
+        (c0["cat_neg"], c1["eval_160"], n_neg, "#ef4444", "Negative Controls -> Eval Set: 40 (10 Core + 30 Stratified)"),
+        (c0["cat_prec"], c1["ref_144"], n_prec_ref, "#94a3b8", "Precursor Catalog -> Reference Only: 103 (AtomicLimits 93 + Meta 10)"),
+        (c0["cat_rr"], c1["ref_144"], n_reag_rxn, "#64748b", "Reagents (29) + Reactions (12) -> Reference / Leakage-Free Dict: 41"),
+        (c1["eval_160"], c2["svn"], n_svn, "#10b981", f"Eval Set -> SevenNet LBFGS 3D Relaxation: {n_svn} ({n_svn_pos} Pos + {n_svn_neg} Neg)"),
+    ]
+    if n_etk > 0:
+        flows.append((c1["eval_160"], c2["etk"], n_etk, "#8b5cf6", f"Eval Set -> RDKit ETKDGv3 UFF-Guarded 3D: {n_etk} ({n_etk_pos} Pos + {n_etk_neg} Neg)"))
+    flows.extend([
+        (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"SevenNet LBFGS -> Positive Evaluation/OCSVM Train: {n_svn_pos}"),
+        *(([(c2["etk"], c3["pos_120"], n_etk_pos, "#a855f7", f"RDKit ETKDGv3 -> Positive Evaluation/OCSVM Train: {n_etk_pos}")] if n_etk_pos > 0 else [])),
+        (c2["svn"], c3["neg_40"], n_svn_neg, "#059669", f"SevenNet LBFGS -> Negative Control Validation: {n_svn_neg}"),
+        *(([(c2["etk"], c3["neg_40"], n_etk_neg, "#dc2626", f"RDKit ETKDGv3 -> Negative Control Validation: {n_etk_neg}")] if n_etk_neg > 0 else [])),
+    ])
+
+    ribbon_svg = []
+    for src, dst, val, color, tip in flows:
+        dy = val * scale
+        y0a = src["out_off"]
+        y0b = y0a + dy
+        y1a = dst["in_off"]
+        y1b = y1a + dy
+        src["out_off"] = y0b
+        dst["in_off"] = y1b
+        sx = src["x"] + bar_w
+        dx = dst["x"]
+        mx = 0.5 * (sx + dx)
+        d_path = (
+            f"M {sx:.1f},{y0a:.1f} "
+            f"C {mx:.1f},{y0a:.1f} {mx:.1f},{y1a:.1f} {dx:.1f},{y1a:.1f} "
+            f"L {dx:.1f},{y1b:.1f} "
+            f"C {mx:.1f},{y1b:.1f} {mx:.1f},{y0b:.1f} {sx:.1f},{y0b:.1f} Z"
+        )
+        ribbon_svg.append(
+            f'<path d="{d_path}" fill="{color}" class="sankey-flow"><title>{tip}</title></path>'
+        )
+
+    nodes_svg = []
+    # Left-aligned source labels (to the left of Col 0 bars)
+    for d in c0.values():
+        ym = d["y"] + d["h"] * 0.5
+        nodes_svg.append(
+            f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
+        )
+        nodes_svg.append(
+            f'<text x="{d["x"] - 8:.1f}" y="{ym - 1:.1f}" text-anchor="end" font-size="11.5" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
+            f'<text x="{d["x"] - 8:.1f}" y="{ym + 12:.1f}" text-anchor="end" font-size="9.5" fill="#64748b">{d["sub"]}</text>'
+        )
+
+    # Col 1 hub bars with pill badges centered on or beside the bar
+    for k, d in c1.items():
+        ym = d["y"] + d["h"] * 0.5
+        nodes_svg.append(
+            f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
+        )
+        if k == "eval_160":
+            nodes_svg.append(
+                f'<rect x="{d["x"] - 64:.1f}" y="{ym - 17:.1f}" width="142" height="32" rx="5" fill="#ffffff" fill-opacity="0.92" stroke="#cbd5e1" stroke-width="0.8" />'
+                f'<text x="{d["x"] + 7:.1f}" y="{ym - 2:.1f}" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0f766e">{d["val"]} {d["title"]}</text>'
+                f'<text x="{d["x"] + 7:.1f}" y="{ym + 11:.1f}" text-anchor="middle" font-size="9.2" fill="#475569">{d["sub"]}</text>'
+            )
+        else:
+            nodes_svg.append(
+                f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym - 2:.1f}" text-anchor="start" font-size="11.5" font-weight="800" fill="#475569">{d["val"]} {d["title"]}</text>'
+                f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym + 12:.1f}" text-anchor="start" font-size="9.5" fill="#64748b">{d["sub"]} (분류 제외)</text>'
+            )
+
+    # Col 2 (3D engines) with compact pill label centered over bar
+    for d in c2.values():
+        ym = d["y"] + d["h"] * 0.5
+        nodes_svg.append(
+            f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
+            f'<rect x="{d["x"] - 58:.1f}" y="{ym - 16:.1f}" width="130" height="31" rx="5" fill="#ffffff" fill-opacity="0.92" stroke="#cbd5e1" stroke-width="0.8" />'
+            f'<text x="{d["x"] + 7:.1f}" y="{ym - 1:.1f}" text-anchor="middle" font-size="11" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
+            f'<text x="{d["x"] + 7:.1f}" y="{ym + 11:.1f}" text-anchor="middle" font-size="8.8" fill="#475569">{d["sub"]}</text>'
+        )
+
+    # Col 3 right-hand terminal labels
+    for d in c3.values():
+        ym = d["y"] + d["h"] * 0.5
+        nodes_svg.append(
+            f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
+            f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym - 1:.1f}" text-anchor="start" font-size="11.5" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
+            f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym + 12:.1f}" text-anchor="start" font-size="9.2" fill="#475569">{d["sub"]}</text>'
+        )
+
+    headers_svg = (
+        f'<text x="{x0 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0369a1">1. Curated DB (304)</text>'
+        f'<text x="{x1 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0f766e">2. Verification Split (304)</text>'
+        f'<text x="{x2 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#059669">3. 3D Structure Engine (160)</text>'
+        f'<text x="{x3 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#334155">4. ML &amp; Eval Role (160)</text>'
+        f'<line x1="20" y1="36" x2="900" y2="36" stroke="#e2e8f0" stroke-width="1" />'
+    )
+
+    footer_split = f"{n_svn} SevenNet LBFGS (100%)" if n_etk == 0 else f"{n_svn} SevenNet + {n_etk} ETKDGv3"
+    return f"""
+          <div style="margin-bottom:14px;">
+            <style>.sankey-flow {{ fill-opacity: 0.44; transition: fill-opacity 0.15s ease; cursor: pointer; }} .sankey-flow:hover {{ fill-opacity: 0.72; }}</style>
+            <svg viewBox="0 0 920 375" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+              {headers_svg}
+              {''.join(ribbon_svg)}
+              {''.join(nodes_svg)}
+              <text x="900" y="364" text-anchor="end" font-size="9.5" fill="#64748b">* Flow thickness proportional to sample count (Sankey Diagram &bull; 304 Curated = 160 Evaluated + 144 Reference/Dict; {n_eval} = {footer_split})</text>
+            </svg>
+          </div>"""
+
+
+dataset_sankey_html = _build_dataset_sankey_svg()
+neb_bench_path = os.path.join("database", "external", "sevenn_decomp_neb_benchmark.json")
+unified_bench_path = os.path.join("database", "benchmark_unified_latest_160.json")
+neb_decomp_storyline_html = build_neb_storyline_html(neb_bench_path, unified_bench_path)
+neb_decomp_technical_html = build_neb_technical_html(neb_bench_path, unified_bench_path)
+
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
     template = f.read()
 
-final_html = template.replace("<!-- LIT_ROWS_PLACEHOLDER -->", lit_rows_joined)
+final_html = template.replace("<!-- DATASET_SANKEY_PLACEHOLDER -->", dataset_sankey_html)
+final_html = final_html.replace("<!-- NEB_DECOMP_STORYLINE_PLACEHOLDER -->", neb_decomp_storyline_html)
+final_html = final_html.replace("<!-- NEB_DECOMP_TECHNICAL_PLACEHOLDER -->", neb_decomp_technical_html)
+final_html = final_html.replace("<!-- LIT_ROWS_PLACEHOLDER -->", lit_rows_joined)
 final_html = final_html.replace("<!-- EMPIRICAL_BENCHMARK_ROWS_PLACEHOLDER -->", empirical_db_joined)
 final_html = final_html.replace("<!-- MULTISTAGE_BENCHMARK_ROWS_PLACEHOLDER -->", multistage_joined)
 final_html = final_html.replace("<!-- VASP_ROWS_PLACEHOLDER -->", vasp_joined)

@@ -27,7 +27,8 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 from ase import Atoms
 from ase.constraints import FixAtoms
-from ase.optimize import LBFGS
+from ase.data import covalent_radii
+from ase.optimize import FIRE, LBFGS
 from sevenn.calculator import SevenNetCalculator
 from rdkit import Chem
 from rdkit.Chem import AllChem
@@ -157,24 +158,45 @@ def relax_atoms_sevenn(
     cell_len: float = 50.0,
     constraint=None,
 ):
-    """Run SevenNet-0 LBFGS geometry relaxation and return (energy_ev, centered_pos, nsteps, final_fmax)."""
+    """Run SevenNet-0 LBFGS geometry relaxation with monotone BFGSLineSearch safeguard."""
     pos_c = positions - np.mean(positions, axis=0)
     atoms = Atoms(
         symbols=symbols,
-        positions=pos_c,
+        positions=pos_c.copy(),
         cell=[cell_len, cell_len, cell_len],
         pbc=[False, False, False],
     )
     if constraint is not None:
         atoms.set_constraint(constraint)
     atoms.calc = calc
+    e_init = float(atoms.get_potential_energy())
     opt = LBFGS(atoms, logfile=None)
     opt.run(fmax=fmax, steps=steps)
     energy_ev = float(atoms.get_potential_energy())
     forces = atoms.get_forces()
     final_fmax = float(np.max(np.linalg.norm(forces, axis=1)))
+    nsteps = int(opt.nsteps)
     rel_pos = atoms.get_positions() - np.mean(atoms.get_positions(), axis=0)
-    return energy_ev, rel_pos, int(opt.nsteps), round(final_fmax, 4)
+
+    if constraint is None and (energy_ev > e_init + 1e-3 or (steps >= 80 and final_fmax > 0.25)):
+        atoms_ls = Atoms(
+            symbols=symbols,
+            positions=pos_c.copy(),
+            cell=[cell_len, cell_len, cell_len],
+            pbc=[False, False, False],
+        )
+        atoms_ls.calc = calc
+        opt_ls = FIRE(atoms_ls, maxstep=0.10, logfile=None)
+        opt_ls.run(fmax=fmax, steps=min(steps, 60))
+        e_ls = float(atoms_ls.get_potential_energy())
+        fmax_ls = float(np.max(np.linalg.norm(atoms_ls.get_forces(), axis=1)))
+        if e_ls <= energy_ev:
+            energy_ev = e_ls
+            final_fmax = fmax_ls
+            nsteps = int(opt_ls.nsteps)
+            rel_pos = atoms_ls.get_positions() - np.mean(atoms_ls.get_positions(), axis=0)
+
+    return energy_ev, rel_pos, nsteps, round(final_fmax, 4)
 
 
 def split_acyclic_bond(mol: Chem.Mol, a1: int, a2: int):
@@ -262,6 +284,12 @@ def compute_precursor_physical_features(smi: str, calc: SevenNetCalculator, frag
     conf = mol.GetConformer()
     symbols = [a.GetSymbol() for a in mol.GetAtoms()]
     positions = conf.GetPositions()
+    if len(symbols) == 2:
+        znums = [a.GetAtomicNum() for a in mol.GetAtoms()]
+        d_cov = float(covalent_radii[znums[0]] + covalent_radii[znums[1]])
+        d_init = float(np.linalg.norm(positions[0] - positions[1]))
+        if d_init < 0.80 * d_cov or d_init > 1.35 * d_cov:
+            positions = np.array([[0.0, 0.0, -0.5 * d_cov], [0.0, 0.0, 0.5 * d_cov]], dtype=float)
 
     # 1. Relax monomer geometry with SevenNet-0 LBFGS
     try:

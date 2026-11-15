@@ -161,7 +161,14 @@ synth_acc/
 ├── build_semiconductor_db.py           # Semiconductor database generation and RDKit validation engine
 ├── scripts/
 │   ├── data/                           # Database builders, downloaders & VASP/inhibitor verifiers
-│   └── benchmark/                      # Phase 1, Phase 2 (SevenNet-0), CV audit & HTML harnesses
+│   └── benchmark/                      # Modular SA, physical-coordination & ML evaluation stack
+│       ├── element_physics.py          # Periodic-property coordination states, ETKDGv3/UFF-guarded 3D, %V_bur^D2, dE_f^std/v_M
+│       ├── tmc_sa_scorer.py            # Shared 2D/SMARTS descriptors, coord gates, pro-ligand separation & TMC-SA scorer
+│       ├── ml_evaluation.py            # Class-weighted ML CV-5, LOFMO extrapolation, Descriptor 4 audit & PCA/t-SNE
+│       ├── run_unified_latest_160_analysis.py # Orchestrator generating database/benchmark_unified_latest_160.json (N=160)
+│       ├── run_phase1_baseline.py      # Phase 1 pure data-driven SA baseline benchmark (N=55)
+│       ├── run_phase2_sevenn_features.py # SevenNet LBFGS monomer, non-overlapping dimer & BDE_min relaxation
+│       └── run_model_tuning_comparison.py # Analytical vs CV/LOOCV comparison harness
 ├── download_all.py                     # Core literature DOI verification & PDF fetcher
 ├── verify_github_and_precursors.py     # GitHub API & semiconductor precursor verifier
 ├── generate_html.py                    # HTML compilation harness
@@ -169,13 +176,22 @@ synth_acc/
 └── README.md                           # Project specification and documentation
 ```
 
-### 3.2 Multi-Fidelity Precursor Design Workflow
+### 3.2 Multi-Fidelity Precursor Design & Modular Benchmark Architecture
 ```mermaid
 flowchart LR
-    A["Stage 0: 2D Ligand SA & Generation<br>(BR-SAScore / RxnFlow, ~1 ms)"] --> B["Stage 1: 3D Steric Screening<br>(GFN2-xTB %V_bur 58-82%, ~1 s)"]
-    B --> C["Stage 2: Complexation & Dimer DFT<br>(&Delta;G_syn &lt; 0, &Delta;G_dimer &gt; +5 kcal/mol)"]
-    C --> D["Stage 3: Thermal & Volatility DFT<br>(BDE_min &gt; 35 kcal/mol, COSMO-RS P_vap)"]
-    D --> E["Stage 4: Wafer Surface Slab DFT / MLIP<br>(&Delta;G_ALD &lt; -15 kcal/mol)"]
+    DB["Semiconductor Domain DB<br>(205 Catalog / 160 Eval: 102 Prec + 18 Inhib + 40 Neg)"] --> EP["element_physics.py<br>(Multi-State Coord + Design 1-2 Geometry)"]
+    EP --> TS["tmc_sa_scorer.py<br>(SMARTS/Topo Gates + TMC-SA Scorer)"]
+    TS --> MLE["ml_evaluation.py<br>(38-Feat CV-5 + LOFMO + D4 Audit + PCA/t-SNE)"]
+    MLE --> ORCH["run_unified_latest_160_analysis.py<br>(benchmark_unified_latest_160.json)"]
+    ORCH --> HTML["generate_html.py -> index.html"]
+```
+
+```mermaid
+flowchart LR
+    A["Stage 0: 2D Ligand SA & Generation<br>(BR-SAScore / RxnFlow, ~1 ms)"] --> B["Stage 1: 3D Steric Screening<br>(GFN2-xTB %V_bur 58-82 percent, ~1 s)"]
+    B --> C["Stage 2: Complexation & Dimer DFT<br>(DeltaG_syn < 0, DeltaG_dimer > +5 kcal/mol)"]
+    C --> D["Stage 3: Thermal & Volatility DFT<br>(BDE_min > 35 kcal/mol, COSMO-RS P_vap)"]
+    D --> E["Stage 4: Wafer Surface Slab DFT / MLIP<br>(DeltaG_ALD < -15 kcal/mol)"]
     E -.->|"Active Learning Update"| A
 ```
 
