@@ -173,6 +173,7 @@ synth_acc/
 │       ├── run_patent_lit_expansion.py # 38-candidate KR/JP/CN/US/TW patent & metal-literature TMC-SA screening runner
 │       ├── run_patent_expansion_sevenn.py # SevenNet-0 LBFGS relaxation, BDE, Dimer & dEf/vM enrichment for 38 expansion candidates
 │       ├── history_and_expansion_html_section.py # Section 21 analysis history & Section 22 / Step 4-5 patent-lit expansion builder
+│       ├── br_sascore_theory_section.py # Background Theory tab (Sec 1 2009 SAScore issues + Sec 2 unified BR-SAScore)
 │       ├── run_unified_latest_160_analysis.py # Orchestrator generating database/benchmark_unified_latest_160.json (N=160)
 │       ├── run_phase1_baseline.py      # Phase 1 pure data-driven SA baseline benchmark (N=55)
 │       ├── run_phase2_sevenn_features.py # SevenNet LBFGS monomer, non-overlapping dimer & BDE_min relaxation
@@ -203,6 +204,7 @@ flowchart LR
     EXP --> EXP7N["run_patent_expansion_sevenn.py<br>(38/38 SevenNet-0 LBFGS + dEf/vM)"]
     EXP7N --> HIST["history_and_expansion_html_section.py<br>(Sec 21 History + Sec 22 Patent/Lit)"]
     HIST --> HTML
+    BRT["br_sascore_theory_section.py<br>(BRSAScore 331k Dicts + Eq 1-13 Tab)"] --> HTML
     ORCH --> HTML
 ```
 

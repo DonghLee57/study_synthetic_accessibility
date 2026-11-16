@@ -1019,6 +1019,70 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertIn("EXP_02", mocl5_hits[0].get("secondary_ids", []))
         self.assertTrue(mocl5_hits[0]["has_2d"])
 
+    def test_24_br_sascore_theory_tab(self):
+        """Verify Background Theory tab builder (Section 1 2009 SAScore issues + Section 2 BR-SAScore) and HTML wiring."""
+        br_mod = self._load_script_module(
+            os.path.join("scripts", "benchmark", "br_sascore_theory_section.py"),
+            "repo_br_sascore_theory_section",
+        )
+        vanilla = br_mod.compute_vanilla_sascore_issues()
+        c_map = {(r["complex"], r["rep"]): r["sa_2009"] for r in vanilla["complex_rows"]}
+        self.assertAlmostEqual(c_map[("Hf(OMe)3(acac)", "6원 킬레이트 배위형 (Chelate ->)")], 5.2957, places=3)
+        self.assertAlmostEqual(c_map[("Hf(acac)4", "8배위 4중 킬레이트 (Chelate ->)")], 5.4854, places=3)
+        self.assertAlmostEqual(c_map[("HfCp(OMe)(acac)2", "2중 킬레이트 + eta5 다중배위 Cp")], 6.4305, places=3)
+        l_map = {r["pro_name"]: r["sa_2009"] for r in vanilla["ligand_rows"]}
+        self.assertAlmostEqual(l_map["MeOH (메탄올)"], 2.7010, places=3)
+        self.assertAlmostEqual(l_map["Hacac (keto형)"], 2.1725, places=3)
+        self.assertAlmostEqual(l_map["HCp (시클로펜타디엔)"], 3.3069, places=3)
+
+        stats = br_mod.compute_br_pickle_statistics()
+        self.assertEqual(stats["B"]["count"], 244572)
+        self.assertEqual(stats["R"]["count"], 175186)
+        self.assertEqual(stats["BR"]["count"], 331332)
+        self.assertEqual(
+            stats["overlap"]["b_only"] + stats["overlap"]["r_only"] + stats["overlap"]["both"],
+            stats["overlap"]["union"],
+        )
+
+        examples = br_mod.compute_br_worked_examples()
+        by_name = {ex["name"]: ex for ex in examples}
+        self.assertAlmostEqual(by_name["Aspirin"]["br_sascore"], 2.09, places=2)
+        self.assertGreater(by_name["TDMAH (Hf(NMe2)4)"]["br_sascore"], 8.0)
+        self.assertGreater(by_name["Hf(acac)4"]["br_sascore"], 8.5)
+        self.assertAlmostEqual(by_name["MeOH (Methanol)"]["br_sascore"], 1.01, places=2)
+
+        theory_html = br_mod.build_br_sascore_theory_html()
+        for ctrl in ("\x07", "\x08", "\x0c", "{{", "\t"):
+            self.assertNotIn(ctrl, theory_html)
+        self.assertNotIn("전구체", theory_html)
+        self.assertNotIn("코호트", theory_html)
+        self.assertNotIn("cohort", theory_html.lower())
+        self.assertIn('id="brt-sec1"', theory_html)
+        self.assertIn('id="brt-sec2"', theory_html)
+        self.assertNotIn('id="brt-sec3"', theory_html)
+        self.assertIn("5.179 / 5.491 / 6.74", theory_html)
+        self.assertIn("331,332", theory_html)
+        self.assertIn('id="brTheorySimWidget"', theory_html)
+        self.assertIn("BR-SAScore 베이스 선정 5대 결정적 근거", theory_html)
+        self.assertIn("Strict 28/29 (96.6%)", theory_html)
+        self.assertIn("0/102 M-L 규칙", theory_html)
+
+        for fname in ("index.html", "synthetic_accessibility_report.html"):
+            fpath = os.path.join(PROJECT_ROOT, fname)
+            with open(fpath, "r", encoding="utf-8") as fh:
+                html_txt = fh.read()
+            self.assertIn('id="btn-tab-brtheory"', html_txt)
+            self.assertIn("배경이론", html_txt)
+            self.assertIn('id="toc-brtheory"', html_txt)
+            self.assertIn('id="tab-content-brtheory"', html_txt)
+            self.assertIn("반도체 SA 배경이론: 2009 SAScore 재구성 이슈부터 BR-SAScore까지", html_txt)
+            self.assertIn("renderMermaidInBrtheoryTab", html_txt)
+            self.assertIn("updateBrSimulator", html_txt)
+            self.assertNotIn("<!-- BR_SASCORE_THEORY_PLACEHOLDER -->", html_txt)
+            self.assertIn('id="brt-sec1"', html_txt)
+            self.assertIn('id="brt-sec2"', html_txt)
+            self.assertNotIn('id="brt-sec3"', html_txt)
+
 
 if __name__ == "__main__":
     unittest.main()

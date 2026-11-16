@@ -296,7 +296,8 @@
 
     /* Defer layout/paint of off-screen report sections for instant tab switches */
     #tab-content-technical > section,
-    #tab-content-storyline > section {
+    #tab-content-storyline > section,
+    #tab-content-brtheory > section {
       content-visibility: auto;
       contain-intrinsic-size: auto 900px;
     }
@@ -1166,7 +1167,8 @@
       }
       #tab-content-storyline,
       #tab-content-technical,
-      #tab-content-database {
+      #tab-content-database,
+      #tab-content-brtheory {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
@@ -2020,8 +2022,11 @@
       <button type="button" class="view-mode-btn" id="btn-tab-database" onclick="switchViewTab('database')">
         DB 탐색 (2D 구조)
       </button>
+      <button type="button" class="view-mode-btn" id="btn-tab-brtheory" onclick="switchViewTab('brtheory')">
+        배경이론
+      </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 요약, 리포트, DB 탐색 뷰를 전환할 수 있습니다.
+        열람 목적에 따라 요약, 리포트, DB 탐색, 배경이론 뷰를 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -2112,6 +2117,31 @@
           <strong>2D 구조 렌더링 현황:</strong><br>
           &bull; RDKit <code>MolDraw2DSVG</code> 기반 Vector 2D 구조 내장.<br>
           &bull; <span id="dbSideSvgCount">고유 <code>SMILES</code> 및 반응식 12종 실시간 시각화 지원.</span>
+        </div>
+        <div class="toc-sub-actions">
+          <button type="button" class="btn-toc-utility" onclick="switchViewTab('storyline')">요약 탭으로 이동</button>
+          <button type="button" class="btn-toc-utility" onclick="switchViewTab('technical')">리포트 탭으로 이동</button>
+        </div>
+      </div>
+
+      <!-- Background Theory Sidebar -->
+      <div id="toc-brtheory" style="display:none;">
+        <div class="toc-header">
+          <span>배경이론 목차</span>
+          <span class="toc-progress" id="brtTocProgress">Sec 1/2</span>
+        </div>
+        <ul class="toc-list">
+          <li><a href="#brt-sec1" class="toc-link active" data-target="brt-sec1">1. 2009 SAScore 원리 및 SMILES 재구성 이슈</a></li>
+          <li><a href="#brt-sec2" class="toc-link" data-target="brt-sec2">2. BR-SAScore: 원리 &middot; 학습 DB &middot; 반도체 확장</a></li>
+        </ul>
+        <div style="margin-top:10px; padding:10px 12px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; font-size:0.75rem; line-height:1.7;">
+          <strong style="color:#334155;">Sec 2 (BR-SAScore) 바로가기</strong><br>
+          <a href="#brt-sub21" style="color:#0369a1; text-decoration:none;">2.1 B/R 파이프라인 구조도</a><br>
+          <a href="#brt-sub22" style="color:#0369a1; text-decoration:none;">2.2 Eq. 8~13 &amp; 수식 시뮬레이터</a><br>
+          <a href="#brt-sub23" style="color:#0369a1; text-decoration:none;">2.3 eMolecules &middot; USPTO (331k)</a><br>
+          <a href="#brt-sub24" style="color:#0369a1; text-decoration:none;">2.4 코드 해부 &amp; 2D 기여도 맵</a><br>
+          <a href="#brt-sub25" style="color:#0369a1; text-decoration:none;">2.5 TS1~TS3 벤치마크 비교</a><br>
+          <a href="#brt-sub26" style="color:#0369a1; text-decoration:none;">2.6 타 모델 대비 베이스 선정 근거 &amp; TMC-SA</a>
         </div>
         <div class="toc-sub-actions">
           <button type="button" class="btn-toc-utility" onclick="switchViewTab('storyline')">요약 탭으로 이동</button>
@@ -19738,6 +19768,1766 @@ flowchart LR
         </div>
         <div id="dbLoadMoreSentinel" style="height:1px;"></div>
       </div> <!-- end #tab-content-database -->
+
+      <!-- ===================================================================== -->
+      <!-- TAB 4: BR-SASCORE FOUNDATIONAL THEORY & DATASET STUDY GUIDE           -->
+      <!-- ===================================================================== -->
+      <div id="tab-content-brtheory" style="display:none;">
+        
+      <div class="card" style="margin-bottom:22px; background:linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 100%); border:1px solid #c7d2fe; padding:22px 26px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+          <span class="badge badge-3g" style="font-size:0.78rem;">Background Theory &bull; Base SA Model Foundations</span>
+          <span style="font-size:0.8rem; color:#4338ca; font-weight:700;">
+            Ertl &amp; Schuffenhauer (2009, DOI: 10.1186/1758-2946-1-8) &rarr; Chen &amp; Jung (2024, DOI: 10.1186/s13321-024-00879-0)
+          </span>
+        </div>
+        <h2 style="font-size:1.58rem; font-weight:800; color:#0f172a; margin:0 0 8px 0;">
+          반도체 SA 배경이론: 2009 SAScore 재구성 이슈부터 BR-SAScore까지
+        </h2>
+        <p style="font-size:0.92rem; color:#334155; line-height:1.65; margin:0;">
+          본 탭은 반도체 소재 합성 용이성(SA) 평가 체계를 이해하기 위한 기초 이론 가이드입니다. <strong>섹션 1</strong>에서 2009 <code>SAScore</code> 바닐라 모델의 원리와 동일 착물에서도 <code>SMILES</code> 그래프 재구성에 따라 점수가 달라지는(예: <code>5.179 / 5.491 / 6.74</code> 수준 변동) 이슈를 정리하고, <strong>섹션 2</strong>에서 현재 베이스 모델인 <code>BR-SAScore</code>의 수식(Eq. 8~13), 학습 데이터셋(<code>331,332</code> 조각), 소스코드 및 반도체 확장 논리를 한 섹션으로 통합 해설합니다.
+        </p>
+      </div>
+
+      <!-- SECTION 1: 2009 SASCORE VANILLA ISSUES -->
+      <section id="brt-sec1">
+        <div class="section-header">
+          <div class="section-tag">Background Section 01</div>
+          <h2 class="section-title">1. 2009 SAScore 바닐라 원리, 착물-리간드 괴리 및 SMILES 재구성 이슈 (5.179 / 5.491 / 6.74)</h2>
+        </div>
+
+        <p style="line-height:1.72; color:#334155;">
+          Ertl &amp; Schuffenhauer(2009)의 <code>SAScore</code>는 PubChem 대표 1% 샘플(<strong>934,046종</strong>)에서 추출한 Morgan Fingerprint(Radius 0~2) 출현 빈도 <code>fpscores.pkl.gz</code>를 기반으로 합니다. 하지만 이를 반도체용 전이금속 착물(예: $\text{Hf}$ 계열 ALD 프리커서)에 그대로 적용하면 두 가지 근본 이슈가 드러납니다.
+        </p>
+
+        <div class="grid-2" style="margin:12px 0;">
+          <div class="card">
+            <h4 style="margin:0 0 8px 0; color:#1e3a8a;">1.1 2009 SAScore 수식과 정규화 규격 (Eq. 1~7)</h4>
+            <div style="font-size:0.85rem; line-height:1.68; color:#334155;">
+              <p>$$\text{SAScore}_{\text{raw}} = \text{fragmentScore} - \text{complexityPenalty} + \text{score}_3 \tag{1}$$</p>
+              <p>$$\text{complexityPenalty} = (n_{\text{At}}^{1.005} - n_{\text{At}}) + \log_{10}(n_{\text{Chiral}}+1) + \log_{10}(n_{\text{Bridge}}+1) + \log_{10}(n_{\text{Spiro}}+1) + \log_{10}(n_{\text{Macro}}+1)$$</p>
+              <p>$$\text{SAScore}_{\text{full}} = 10 - 9 \cdot \operatorname{clip}_{[0,1]}\!\left(\frac{\text{SAScore}_{\text{raw}} - (-4.0)}{2.5 - (-4.0)}\right) \in [1, 10]$$</p>
+              <p style="font-size:0.79rem; color:#64748b; margin-bottom:0;">
+                * <code>fpscores.pkl.gz</code>에 없는 희귀/금속 비트는 바닥값 <code>-4.0</code>을 받으며, 대칭 분자에서는 <code>score3 = log(nAtoms / len(fps)) * 0.5</code>가 가산됩니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="background:#fffbeb; border-color:#fde68a;">
+            <h4 style="margin:0 0 8px 0; color:#92400e;">1.2 핵심 이슈: 왜 같은 SMILES 벡터여도 5.179 / 5.491 / 6.74처럼 차이가 나는가?</h4>
+            <ol style="font-size:0.84rem; color:#334155; line-height:1.65; padding-left:18px; margin:0;">
+              <li><strong>킬레이트(&rarr;)·$\eta^5$-Cp 토폴로지 재구성:</strong> <code>acac</code>를 단좌 개방형으로 두는지 6원 킬레이트 고리로 닫는지(<code>Hf(acac)4</code>: <code>4.1933</code> &rarr; <strong><code>5.4854</code></strong>), 또 <code>Cp</code>를 $\eta^1$-단일결합(<code>5.4320</code>)으로 둘지 $\eta^5$ 5중 배위(<strong><code>6.4305</code></strong>)로 잇는지에 따라 <code>Hf</code> 중심의 브리지/다중고리 환경과 <code>fragmentScore</code>가 급변합니다. 외부 발표 순위(<code>5.179 &lt; 5.491 &lt; 6.74</code>)는 <code>Hf(OMe)3(acac) &lt; Hf(acac)4 &lt; HfCp(OMe)(acac)2</code>를 킬레이트+$\eta^5$ 고배위로 재구성한 방향과 일치합니다.</li>
+              <li><strong>명시적 수소(<code>AddHs</code>) 미제거:</strong> 3D 좌표 복원·양자화 과정에서 <code>AddHs</code> 상태로 계산하면 수소가 <code>nAtoms</code>와 비트에 들어가 점수가 <strong><code>+1.6~1.8점</code></strong> 급등합니다(<code>5.2957 &rarr; 6.9182</code>).</li>
+              <li><strong>입체·키랄성 및 형식 전하 표현:</strong> 3D 재구성 후 <code>FindMolChiralCenters</code>가 팔면체/금속 중심 키랄성(<code>@</code>/<code>@@</code>)을 잡으면 <code>stereoPenalty</code>가 추가되며, 이온 해리형(<code>3.9056</code>) vs 화살표 배위형(<code>5.2957</code>) vs 양쪽성이온(<code>5.9539</code>)에 따라 사전 룩업 비트가 바뀝니다.</li>
+            </ol>
+          </div>
+        </div>
+
+        <h4 style="margin:14px 0 8px 0; font-size:0.96rem; color:#0f172a;">
+          1.3 Hf 착물 3종 SMILES 재구성별 Vanilla 2009 <code>SAScore</code> 실측 비교 vs 무료 프로리간드($HL_i$) 점수
+        </h4>
+        <div class="table-wrap" style="margin-bottom:14px;">
+          <table>
+            <thead>
+              <tr>
+                <th>착물</th>
+                <th>SMILES 그래프 재구성 방식</th>
+                <th>원자 수 ($N_{\text{at}}$)</th>
+                <th>Size Penalty</th>
+                <th>2009 SAScore</th>
+                <th>재구성 편차 원인 (RDKit 2023.09.6 실측)</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            <tr>
+              <td><strong>Hf(OMe)3(acac)</strong></td>
+              <td>이온 해리형 (Ionic)</td>
+              <td style="text-align:center;">14</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.186</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">3.9056</td>
+              <td style="font-size:0.8rem; color:#475569;">금속-리간드 공유/배위 결합이 끊어져 유기 이온 빈도만 반영</td>
+            </tr>
+
+            <tr>
+              <td><strong>Hf(OMe)3(acac)</strong></td>
+              <td>개방형 단좌 에놀레이트 (Open)</td>
+              <td style="text-align:center;">14</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.186</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">4.6201</td>
+              <td style="font-size:0.8rem; color:#475569;">acac를 비고리형 단좌(Hf-O 1개)로 표기; 킬레이트 고리 미반영</td>
+            </tr>
+
+            <tr style="background:#f0fdf4;">
+              <td><strong>Hf(OMe)3(acac)</strong></td>
+              <td>6원 킬레이트 배위형 (Chelate -&gt;)</td>
+              <td style="text-align:center;">14</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.186</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">5.2957</td>
+              <td style="font-size:0.8rem; color:#475569;">카보닐 O-&gt;Hf 배위 닫힘으로 6원 금속고리 희귀 조각(+감점) 반영</td>
+            </tr>
+
+            <tr style="background:#fef2f2;">
+              <td><strong>Hf(OMe)3(acac)</strong></td>
+              <td>킬레이트 + AddHs 미제거 상태</td>
+              <td style="text-align:center;">30</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.515</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">6.9182</td>
+              <td style="font-size:0.8rem; color:#475569;">명시적 H가 nAtoms 및 Morgan 비트에 합산되어 점수 급등 (+1.62)</td>
+            </tr>
+
+            <tr>
+              <td><strong>Hf(acac)4</strong></td>
+              <td>개방형 4-단좌 (Open)</td>
+              <td style="text-align:center;">29</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.492</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">4.1933</td>
+              <td style="font-size:0.8rem; color:#475569;">비킬레이트 표기로 acac 유기 조각 비중이 커져 금속 패널티 희석</td>
+            </tr>
+
+            <tr style="background:#f0fdf4;">
+              <td><strong>Hf(acac)4</strong></td>
+              <td>8배위 4중 킬레이트 (Chelate -&gt;)</td>
+              <td style="text-align:center;">29</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.492</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">5.4854</td>
+              <td style="font-size:0.8rem; color:#475569;">4개 6원 킬레이트 고리 형성 (외부 발표치 5.491과 근사한 5.4854)</td>
+            </tr>
+
+            <tr>
+              <td><strong>Hf(acac)4</strong></td>
+              <td>4중 킬레이트 양쪽성이온 ([Hf-4]/[O+])</td>
+              <td style="text-align:center;">29</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.492</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">5.9539</td>
+              <td style="font-size:0.8rem; color:#475569;">화살표(-&gt;) 대신 형식전하([O+]/[Hf-4]) 재구성 시 추가 감점</td>
+            </tr>
+
+            <tr>
+              <td><strong>HfCp(OMe)(acac)2</strong></td>
+              <td>개방형 + 시그마(eta1)-Cp</td>
+              <td style="text-align:center;">22</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.343</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">4.6047</td>
+              <td style="font-size:0.8rem; color:#475569;">Cp가 1개의 Hf-C 단일결합으로만 연결되고 acac 킬레이트 미닫힘</td>
+            </tr>
+
+            <tr>
+              <td><strong>HfCp(OMe)(acac)2</strong></td>
+              <td>2중 킬레이트 + eta1-Cp</td>
+              <td style="text-align:center;">22</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.343</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">5.4320</td>
+              <td style="font-size:0.8rem; color:#475569;">acac 2개는 6원 킬레이트로 닫고 Cp는 eta1 단일결합으로 연결</td>
+            </tr>
+
+            <tr style="background:#f0fdf4;">
+              <td><strong>HfCp(OMe)(acac)2</strong></td>
+              <td>2중 킬레이트 + eta5 다중배위 Cp</td>
+              <td style="text-align:center;">22</td>
+              <td style="text-align:right; font-family:'JetBrains Mono', monospace;">0.343</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">6.4305</td>
+              <td style="font-size:0.8rem; color:#475569;">Cp 5탄소 eta5 결합 재구성 시 브리지/다중고리 조각 증가로 6점대 진입</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h4 style="margin:0 0 8px 0; color:#0f766e;">중성 프로리간드($HL_i$) 기준 2009 SAScore</h4>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>리간드 음이온</th><th>프로리간드</th><th>SMILES</th><th>원자 수</th><th>2009 SA</th><th>해설</th></tr>
+                </thead>
+                <tbody>
+                  
+            <tr>
+              <td><strong>OMe- (Methoxide)</strong></td>
+              <td>MeOH (메탄올)</td>
+              <td><code>CO</code></td>
+              <td style="text-align:center;">2</td>
+              <td style="text-align:right; font-weight:800; color:#0f766e;">2.7010</td>
+              <td style="font-size:0.8rem; color:#475569;">알콕사이드 출발물질; 원자 2개 소분자</td>
+            </tr>
+
+            <tr>
+              <td><strong>acac- (Acetylacetonate)</strong></td>
+              <td>Hacac (keto형)</td>
+              <td><code>CC(=O)CC(C)=O</code></td>
+              <td style="text-align:center;">7</td>
+              <td style="text-align:right; font-weight:800; color:#0f766e;">2.1725</td>
+              <td style="font-size:0.8rem; color:#475569;">베타-디케톤 케토 토토머</td>
+            </tr>
+
+            <tr>
+              <td><strong>acac- (Acetylacetonate)</strong></td>
+              <td>Hacac (enol형)</td>
+              <td><code>CC(=O)/C=C(/C)O</code></td>
+              <td style="text-align:center;">7</td>
+              <td style="text-align:right; font-weight:800; color:#0f766e;">2.6758</td>
+              <td style="font-size:0.8rem; color:#475569;">배위 직전 시스-에놀형 구조</td>
+            </tr>
+
+            <tr>
+              <td><strong>Cp- (Cyclopentadienyl)</strong></td>
+              <td>HCp (시클로펜타디엔)</td>
+              <td><code>C1=CCC=C1</code></td>
+              <td style="text-align:center;">5</td>
+              <td style="text-align:right; font-weight:800; color:#0f766e;">3.3069</td>
+              <td style="font-size:0.8rem; color:#475569;">공액 5원 고리 리간드 전구 프로톤화물</td>
+            </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card" style="background:#f8fafc;">
+            <h4 style="margin:0 0 8px 0; color:#0f172a;">1.4 SAScore 이슈가 반도체 SA 설계에 주는 시사점</h4>
+            <ul style="font-size:0.84rem; color:#334155; line-height:1.68; margin:0; padding-left:18px;">
+              <li><strong>리간드-착물 점수 괴리:</strong> <code>MeOH (2.70)</code>, <code>Hacac (2.17~2.68)</code>, <code>HCp (3.31)</code>는 모두 합성이 쉬운 범용 시약임에도, <code>Hf</code> 중심과 결합한 전체 착물 SMILES에서는 배위 표기법만으로 <code>3.91 ~ 6.92</code>까지 요동칩니다.</li>
+              <li><strong>단일 그래프 의존성의 한계:</strong> 따라서 전체 SMILES 1개만 보고 SA를 판정하면 <em>실제 합성 난이도</em>가 아니라 <strong>SMILES 인코딩 관습(dative vs ionic vs hapticity)</strong>을 평가하게 됩니다.</li>
+              <li><strong>개선 방향:</strong> 섹션 2의 <code>BR-SAScore</code>로 유기 조각 기반을 eMolecules+USPTO로 고도화하는 동시에, 금속 착물에서는 Section 2.6의 <strong>Pro-ligand 분리 + 물리 Descriptor(<code>TMC-SA</code>)</strong> 결합이 필수적입니다.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: BR-SASCORE UNIFIED SINGLE SECTION -->
+      <section id="brt-sec2">
+        <div class="section-header">
+          <div class="section-tag">Background Section 02</div>
+          <h2 class="section-title">2. BR-SAScore: 수학적 원리 &middot; 학습 데이터셋(331k) &middot; 코드 해부 및 반도체 확장</h2>
+        </div>
+
+        <p style="line-height:1.72; color:#334155;">
+          <strong><code>BR-SAScore</code></strong>(Building-block &amp; Reaction-driven SAScore; Chen &amp; Jung, 2024)는 2009 <code>SAScore</code>가 PubChem 단일 출현 빈도에만 의존하고 CASP 역합성(<code>Retro*</code>, <code>AiZynthFinder</code>)이 분자당 수 초~수십 초로 느린 공백을 메우기 위해, 역합성의 두 핵심 축인 <strong>① 상용 출발물질($B$, eMolecules)과 ② 반응 형성 결합($R$, USPTO)</strong>을 분리해 <code>0.42 ms/mol</code>(CPU) 속도로 평가하는 3세대 하이브리드 모델입니다.
+        </p>
+
+        <!-- 2.1 Architecture Flowchart -->
+        <h3 id="brt-sub21" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:18px 0 8px 0;">
+          2.1 B/R 분리 아키텍처 파이프라인
+        </h3>
+        <div class="mermaid">
+flowchart LR
+  M["Target Molecule m"] --> ECFP["ECFP4 radius=2, useChirality=True Atom Environments"]
+  ECFP --> B["BScore Dict<br/>eMolecules 231M<br/>244,572 keys"]
+  ECFP --> R["RScore Dict<br/>USPTO ~1M, 2^-d<br/>175,186 keys"]
+  B --> MAX["Eq.11 Env Fusion<br/>max B_i, R_i else -6"]
+  R --> MAX
+  MAX --> NEG["Eq.12 Negative Mean<br/>avg over Score_i &lt; 0"]
+  M --> COMP["ComplexityPenalty<br/>Size, Stereo, Ring, Macro"]
+  NEG --> RAW["Eq.8 BR_frag - Comp"]
+  COMP --> RAW
+  RAW --> NORM["Eq.13 Scale 1..10<br/>Buffer=1.0, Div=7"]
+        </div>
+
+        <!-- 2.2 Equations & Simulator -->
+        <h3 id="brt-sub22" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:20px 0 8px 0;">
+          2.2 핵심 수식 체계 (Eq. 8~13) 및 실시간 수식 시뮬레이터
+        </h3>
+        <div class="grid-2" style="margin-top:8px;">
+          <div class="card" style="border-color:#93c5fd; background:#f8fbff;">
+            <h4 style="margin:0 0 8px 0; color:#0369a1;">BR-SAScore 지배 방정식 (Eq. 8~13)</h4>
+            <div style="font-size:0.85rem; line-height:1.68; color:#334155;">
+              <p>$$\text{BR-SAScore} = \text{BR-fragmentScore} - \text{complexityPenalty} \tag{8}$$</p>
+              <p>$$\text{BScore}_i = \text{Scale}_{[-3,3]}\!\left(\log_{10} \frac{\text{count}_i^{(B)}}{0.001 \cdot N_B}\right) \tag{9}$$</p>
+              <p>$$\text{RScore}_i = \text{Scale}_{[-3,3]}\!\left(\log_{10} \frac{\text{count}_i^{(R)}}{0.001 \cdot N_R}\right), \quad w(d) = 2^{-d} \tag{10}$$</p>
+              <p>$$\text{Score}_i = \begin{cases} \max(\text{BScore}_i, \text{RScore}_i) & \text{if } i \in B \cup R \\ -6 & \text{otherwise (Unseen)} \end{cases} \tag{11}$$</p>
+              <p>$$\text{BR-fragmentScore} = \frac{1}{|\{k : \text{Score}_k &lt; 0\}|} \sum_{\text{Score}_k &lt; 0} \text{Score}_k \tag{12}$$</p>
+              <p>$$\text{BR-SAScore}_{\text{norm}} = 10 - 9 \cdot \frac{\text{BR-SAScore} - (-6 - \text{PenaltyBuffer})}{0 - (-6 - \text{PenaltyBuffer})} \tag{13}$$</p>
+            </div>
+          </div>
+
+          <div class="callout-info" style="margin:0;">
+            <strong>수식 설계의 3가지 핵심 논리</strong>
+            <ul style="margin:8px 0 0 18px; line-height:1.68; font-size:0.84rem;">
+              <li><strong>OR 논리 ($\max(\text{BScore}_i, \text{RScore}_i)$):</strong> 어떤 부분 구조가 시약으로 팔리거나(<code>BScore</code>) 혹은 특허 반응(<code>RScore</code>)으로 쉽게 이어지는 결합이라면 둘 중 더 유리한 쪽을 채택합니다.</li>
+              <li><strong>병목 중심 음수 평균 (Eq. 12):</strong> 상위 $0.1\%$ 초빈출 조각($\text{Score}_i \ge 0$)을 평균에 포함하면 희귀 병목 조각 1~2개의 난이도가 희석되므로, <strong>0 미만 조각만 평균</strong>내어 병목 민감도를 극대화합니다. (전부 $\ge 0$이면 $0$ 처리)</li>
+              <li><strong>미등재 패널티 <code>-6</code> &amp; <code>PenaltyBuffer = 1</code> (Eq. 13):</strong> 사전 외 조각은 최소점(-3)의 2배인 <code>-6</code>을 부여하고, 복잡도 패널티가 겹칠 때 하한이 $-7.0$까지 확보되도록 <code>PenaltyBuffer = 1</code>(분모 $7$)로 $[1, 10]$에 정규화합니다.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div id="brTheorySimWidget" style="background:linear-gradient(135deg,#f8fafc 0%,#eff6ff 100%); border:1px solid #bfdbfe; border-radius:12px; padding:18px 20px; margin-top:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+            <div>
+              <span style="font-size:0.74rem; font-weight:800; color:#0284c7; text-transform:uppercase; letter-spacing:0.06em;">Interactive Equation Sandbox</span>
+              <h4 style="margin:2px 0 0 0; font-size:1.02rem; font-weight:800; color:#0f172a;">Eq. (8)~(13) BR-SAScore 실시간 수식 시뮬레이터</h4>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;" id="brSimPresetBtns">
+              <button type="button" class="db-pill active" onclick="applyBrPreset('aspirin', this)">Aspirin (2.09)</button>
+              <button type="button" class="db-pill" onclick="applyBrPreset('gao', this)">AI 분자 [Gao et al.] (8.84)</button>
+              <button type="button" class="db-pill" onclick="applyBrPreset('hacac', this)">Hacac (5.20)</button>
+              <button type="button" class="db-pill" onclick="applyBrPreset('tdmah', this)">TDMAH Hf(NMe2)4 (8.62)</button>
+              <button type="button" class="db-pill" onclick="applyBrPreset('meoh', this)">MeOH (1.01)</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:14px;">
+            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+              <label for="brSimBScore" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#0369a1;">
+                <span>Building Block Score (BScore_i)</span>
+                <span id="brSimBScoreVal">-1.20</span>
+              </label>
+              <input id="brSimBScore" type="range" min="-3.0" max="3.0" step="0.05" value="-1.20" style="width:100%;" oninput="updateBrSimulator()">
+              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">eMolecules 231M 기반 [-3, +3]</div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+              <label for="brSimRScore" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#b45309;">
+                <span>Reaction Score (RScore_i, d=0~2)</span>
+                <span id="brSimRScoreVal">-0.68</span>
+              </label>
+              <input id="brSimRScore" type="range" min="-3.0" max="3.0" step="0.05" value="-0.68" style="width:100%;" oninput="updateBrSimulator()">
+              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">USPTO ~1M 반응 중심 2^-d 가중</div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+              <label for="brSimUnseen" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#b91c1c;">
+                <span>미등재 조각 비율 (Unseen Fraction)</span>
+                <span id="brSimUnseenVal">0%</span>
+              </label>
+              <input id="brSimUnseen" type="range" min="0" max="100" step="5" value="0" style="width:100%;" oninput="updateBrSimulator()">
+              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">미등재 시 Score_i = frag_penalty (-6.0)</div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+              <label for="brSimComp" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#475569;">
+                <span>ComplexityPenalty (Size/Ring/Stereo)</span>
+                <span id="brSimCompVal">0.17</span>
+              </label>
+              <input id="brSimComp" type="range" min="0.0" max="1.5" step="0.01" value="0.17" style="width:100%;" oninput="updateBrSimulator()">
+              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">BR-SAScore에서 차감 (0에 가까울수록 단순)</div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+              <label for="brSimBuffer" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#0f766e;">
+                <span>PenaltyBuffer (Eq. 13, 기본값 1.0)</span>
+                <span id="brSimBufferVal">1.00</span>
+              </label>
+              <input id="brSimBuffer" type="range" min="0.0" max="3.0" step="0.1" value="1.0" style="width:100%;" oninput="updateBrSimulator()">
+              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">S_min = -6 - PenaltyBuffer (최대 Complexity 흡수 폭)</div>
+            </div>
+          </div>
+
+          <div style="background:#0f172a; color:#f8fafc; border-radius:10px; padding:14px 16px; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; align-items:center;">
+            <div>
+              <div style="font-size:0.72rem; color:#94a3b8;">Eq. (11) 사전 최대값</div>
+              <div style="font-size:1.05rem; font-weight:800; color:#38bdf8;" id="brOutMaxScore">-0.68</div>
+              <div style="font-size:0.71rem; color:#cbd5e1;" id="brOutWinner">RScore 우세</div>
+            </div>
+            <div>
+              <div style="font-size:0.72rem; color:#94a3b8;">Eq. (12) BR-fragmentScore</div>
+              <div style="font-size:1.05rem; font-weight:800; color:#fbbf24;" id="brOutFragMean">-0.68</div>
+              <div style="font-size:0.71rem; color:#cbd5e1;">음수 항 평균 (0 &le; 기준)</div>
+            </div>
+            <div>
+              <div style="font-size:0.72rem; color:#94a3b8;">Eq. (8) Raw BR-SAScore</div>
+              <div style="font-size:1.05rem; font-weight:800; color:#f87171;" id="brOutRaw">-0.85</div>
+              <div style="font-size:0.71rem; color:#cbd5e1;" id="brOutRange">정규화 범위 [-7.00, 0.00]</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); border-radius:8px; padding:8px 12px; text-align:center;">
+              <div style="font-size:0.73rem; color:#94a3b8;">Eq. (13) 최종 정규화 (1~10)</div>
+              <div style="font-size:1.45rem; font-weight:900; color:#34d399;" id="brOutFinal">2.09</div>
+              <div style="font-size:0.72rem; font-weight:700; color:#a7f3d0;" id="brOutVerdict">합성 용이 (Easy, &le; 3.5)</div>
+            </div>
+          </div>
+          <div id="brSimPresetNote" style="font-size:0.78rem; color:#334155; margin-top:10px; line-height:1.5;">
+            * Aspirin 실측 예: (-0.82 - 0.98 - 0.23)/3 = -0.68, ComplexityPenalty = 0.17, 최종 10 - 9 * ((-0.85 + 7)/7) = 2.09 (논문 Fig. 2 및 본 저장소 실측 2.09와 일치).
+          </div>
+        </div>
+
+        <!-- 2.3 Training Corpora & Pickle Audit -->
+        <h3 id="brt-sub23" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
+          2.3 학습&middot;구축 데이터셋 해부: eMolecules (231M) &middot; USPTO (~1M) &middot; 331,332 조각 사전
+        </h3>
+        <div class="table-wrap" style="margin:10px 0;">
+          <table>
+            <thead>
+              <tr>
+                <th>구축 코퍼스 / 파일</th>
+                <th>원천 데이터 규모</th>
+                <th>조각 추출 &amp; 가중 규칙</th>
+                <th>최종 사전 키 수</th>
+                <th>점수 범위 / 음수 비율</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>B-Dataset</strong><br><code>BScores_emolecules.pkl.gz</code></td>
+                <td><strong>2.31억 종 (231M)</strong><br>eMolecules 무료 카탈로그</td>
+                <td>분자 내 총 $k$개 R=2 조각에 $1/k$ 정규화<br>단일 출현($\le 1$) 제거</td>
+                <td style="text-align:right; font-weight:800; color:#0369a1;">244,572</td>
+                <td>[-3.0, 3.0]<br>평균 -2.416 (음수 99.97%)</td>
+              </tr>
+              <tr>
+                <td><strong>R-Dataset</strong><br><code>RScores_uspto.pkl.gz</code></td>
+                <td><strong>약 100만 건 (~1M)</strong><br>Lowe USPTO 특허 반응</td>
+                <td>반응 중심($d=0$)~2홉($d \in \{0,1,2\}$)에 $w = 2^{-d}$ 가중<br>단일 출현($\le 1$) 제거</td>
+                <td style="text-align:right; font-weight:800; color:#b45309;">175,186</td>
+                <td>[-2.899, 3.0]<br>평균 -2.311 (음수 99.81%)</td>
+              </tr>
+              <tr style="background:#f0fdf4;">
+                <td><strong>통합 BR 사전</strong><br><code>BRScores_uspto_emolecules.pkl.gz</code></td>
+                <td><strong>eMolecules + USPTO 융합</strong><br>(논문 보고값 <code>331,332</code> 일치)</td>
+                <td>$\text{BR}[i] = \max(B[i], R[i])$<br>겹침 88,426개 중 B 우세 42,138 vs R 우세 46,288</td>
+                <td style="text-align:right; font-weight:900; color:#0f766e;">331,332</td>
+                <td>[-3.0, 3.0]<br>평균 -2.382 (음수 99.9%)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="background:#fff; padding:14px 16px;">
+          <p style="font-size:0.84rem; color:#475569; margin:0 0 6px 0;">
+            전체 <strong>331,332개</strong> 조각 중 <strong>330,987개(99.9%)가 0 미만</strong>이며, 전체 키의 <strong>26.2%(86,760개)</strong>는 상용 빌딩블록($B$) 없이 화학 반응($R$)을 통해서만 공급되는 환경입니다.
+          </p>
+          
+      <svg viewBox="0 0 650 306" style="width:100%; max-width:680px; height:auto; display:block; margin:12px auto 4px auto; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px;">
+        <text x="66" y="22" font-size="11.5" font-weight="800" fill="#0f172a">BRSAScore==0.1.1 내장 조각 사전 점수 분포 (실측 키 개수 기준)</text>
+        <circle cx="410" cy="18" r="5" fill="#0284c7"/><text x="419" y="21.5" font-size="9.5" font-weight="700" fill="#0369a1">BScore (244,572)</text>
+        <circle cx="495" cy="18" r="5" fill="#d97706"/><text x="504" y="21.5" font-size="9.5" font-weight="700" fill="#b45309">RScore (175,186)</text>
+        <circle cx="576" cy="18" r="5" fill="#0f766e"/><text x="585" y="21.5" font-size="9.5" font-weight="700" fill="#0f766e">BR (331,332)</text>
+        <line x1="60" y1="40" x2="60" y2="195" stroke="#94a3b8" stroke-width="1"/>
+        <line x1="60" y1="195" x2="625" y2="195" stroke="#64748b" stroke-width="1.2"/>
+        <text x="54" y="45" text-anchor="end" font-size="9" fill="#64748b">266k</text>
+        <text x="54" y="120" text-anchor="end" font-size="9" fill="#64748b">133k</text>
+        <text x="54" y="198" text-anchor="end" font-size="9" fill="#64748b">0</text>
+        <rect x="66.0" y="79.6" width="18" height="115.4" rx="2" fill="#0284c7" opacity="0.88"><title>[-3, -2): 198,662</title></rect><text x="75.0" y="75.6" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">199k</text><rect x="88.0" y="115.7" width="18" height="79.3" rx="2" fill="#d97706" opacity="0.88"><title>[-3, -2): 136,387</title></rect><text x="97.0" y="111.7" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">136k</text><rect x="110.0" y="40.0" width="18" height="155.0" rx="2" fill="#0f766e" opacity="0.88"><title>[-3, -2): 266,723</title></rect><text x="119.0" y="36.0" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">267k</text><text x="95.0" y="213" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">[-3, -2)</text><rect x="160.0" y="170.1" width="18" height="24.9" rx="2" fill="#0284c7" opacity="0.88"><title>[-2, -1): 42,859</title></rect><text x="169.0" y="166.1" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">43k</text><rect x="182.0" y="175.4" width="18" height="19.6" rx="2" fill="#d97706" opacity="0.88"><title>[-2, -1): 33,784</title></rect><text x="191.0" y="171.4" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">34k</text><rect x="204.0" y="161.0" width="18" height="34.0" rx="2" fill="#0f766e" opacity="0.88"><title>[-2, -1): 58,522</title></rect><text x="213.0" y="157.0" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">59k</text><text x="189.0" y="213" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">[-2, -1)</text><rect x="254.0" y="193.3" width="18" height="1.7" rx="2" fill="#0284c7" opacity="0.88"><title>[-1, 0): 2,986</title></rect><text x="263.0" y="189.3" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">3k</text><rect x="276.0" y="192.3" width="18" height="2.7" rx="2" fill="#d97706" opacity="0.88"><title>[-1, 0): 4,682</title></rect><text x="285.0" y="188.3" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">5k</text><rect x="298.0" y="191.7" width="18" height="3.3" rx="2" fill="#0f766e" opacity="0.88"><title>[-1, 0): 5,742</title></rect><text x="307.0" y="187.7" text-anchor="middle" font-size="8.5" font-weight="700" fill="#334155">6k</text><text x="283.0" y="213" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">[-1, 0)</text><rect x="348.0" y="195.0" width="18" height="1.5" rx="2" fill="#0284c7" opacity="0.88"><title>[0, 1): 51</title></rect><rect x="370.0" y="194.9" width="18" height="1.5" rx="2" fill="#d97706" opacity="0.88"><title>[0, 1): 238</title></rect><rect x="392.0" y="194.9" width="18" height="1.5" rx="2" fill="#0f766e" opacity="0.88"><title>[0, 1): 248</title></rect><text x="377.0" y="213" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">[0, 1)</text><rect x="442.0" y="195.0" width="18" height="1.5" rx="2" fill="#0284c7" opacity="0.88"><title>[1, 2): 13</title></rect><rect x="464.0" y="195.0" width="18" height="1.5" rx="2" fill="#d97706" opacity="0.88"><title>[1, 2): 79</title></rect><rect x="486.0" y="195.0" width="18" height="1.5" rx="2" fill="#0f766e" opacity="0.88"><title>[1, 2): 81</title></rect><text x="471.0" y="213" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">[1, 2)</text><rect x="536.0" y="195.0" width="18" height="1.5" rx="2" fill="#0284c7" opacity="0.88"><title>[2, 3]: 1</title></rect><rect x="558.0" y="195.0" width="18" height="1.5" rx="2" fill="#d97706" opacity="0.88"><title>[2, 3]: 16</title></rect><rect x="580.0" y="195.0" width="18" height="1.5" rx="2" fill="#0f766e" opacity="0.88"><title>[2, 3]: 16</title></rect><text x="565.0" y="213" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">[2, 3]</text>
+        <text x="66.0" y="248.0" font-size="10.5" font-weight="700" fill="#0f172a">ECFP4 (Radius=2) 사전 집합 분할: 총 331,332개 고유 조각 = B 전용 + B∩R + R 전용</text><rect x="66.0" y="258.0" width="254.5" height="24" fill="#0284c7" /><rect x="320.5" y="258.0" width="144.1" height="24" fill="#7c3aed" /><rect x="464.6" y="258.0" width="141.4" height="24" fill="#d97706" /><text x="193.2" y="273.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fff">B 전용 156,146 (47.1%)</text><text x="392.5" y="273.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fff">B∩R 88,426 (26.7%)</text><text x="535.3" y="273.5" text-anchor="middle" font-size="9.5" font-weight="700" fill="#fff">R 전용 86,760 (26.2%)</text>
+      </svg>
+        </div>
+
+        <!-- 2.4 Code Audit & Worked Examples -->
+        <h3 id="brt-sub24" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
+          2.4 소스코드 구현 해부 (<code>BRSAScore.py</code>) 및 2D 원자 기여도 Worked Examples
+        </h3>
+        <div class="grid-2" style="margin:10px 0;">
+          <div class="card">
+            <h4 style="margin:0 0 8px 0; color:#0f172a;">BRSAScore.py 핵심 4대 디테일 (Lines 30~139)</h4>
+            <ol style="font-size:0.83rem; color:#334155; line-height:1.65; padding-left:18px; margin:0;">
+              <li><strong>Radius-2 엄격 필터 (<code>if vs[0][1] != 2: continue</code>):</strong> 반경 $0, 1$을 배제하므로 <code>MeOH (CO)</code>처럼 반경 2 환경이 0개인 소분자는 <code>BR-fragmentScore = 0</code>이 되어 <code>1.01</code>로 산출됩니다.</li>
+              <li><strong>원자 기여도 맵 (<code>contribution_to_svg</code>):</strong> 중심 원자별 <code>fscore</code>를 기록해 <code>-contribution/6</code> 비율로 <code>OrRd</code> 컬러맵 음영을 씌워 희귀(-6.0) 병목 원자를 즉시 시각화합니다.</li>
+              <li><strong><code>multicyclePenalty</code> &amp; 거대고리:</strong> 2개 이상 고리 공유 원자 <code>log10(nMultiRingAtoms + 1)</code>과 <code>len(ring) &gt; 6</code> 항이 <code>complexityPenalty</code>에 합산됩니다.</li>
+              <li><strong>대칭 보정 <code>score3</code>:</strong> <code>nAtoms &gt; len(fps)</code>일 때 <code>0.5 * log(nAtoms / len(fps))</code>를 더해 대칭 분자(<code>TEOS</code>, <code>TDMAH</code>)의 반복 조각 중복 부담을 일부 완화합니다.</li>
+            </ol>
+          </div>
+          <div class="card" style="background:#f8fafc;">
+            <h4 style="margin:0 0 8px 0; color:#0f172a;">논문 Fig. 2 기준 검증: Aspirin vs AI 분자 [Gao et al.]</h4>
+            <ul style="font-size:0.83rem; color:#334155; line-height:1.66; margin:0; padding-left:18px;">
+              <li><strong>Aspirin:</strong> 유효 반경-2 원자 3개 $(-0.82 - 0.98 - 0.23)/3 = -0.68$, 복잡도 $0.17$ &rarr; Raw $-0.85$ &rarr; <strong>정규화 2.09</strong> (논문 = 본 저장소 실측 2.09 정확 일치).</li>
+              <li><strong>AI-proposed 분자 [Gao et al., 5]:</strong> 평가 조각 전부 $B \cup R$ 미등재(<code>-6.0</code>), 복잡도 $0.10$ &rarr; Raw $-6.10$ &rarr; <strong>8.84 (Hard)</strong>.</li>
+              <li><strong>케토-에놀 민감도 실측:</strong> <code>Hacac(keto)</code>는 2009 SA에서 <code>2.17</code>이지만 <code>BR-SAScore</code>에선 중앙 <code>-CH2-</code> 1개가 사전 미등재(<code>-6.0</code>)에 걸려 <code>5.20</code>으로 과대 패널티가 발생합니다.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:12px; margin-top:10px;">
+          
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div>
+                  <div style="font-weight:800; font-size:0.94rem; color:#0f172a;">Aspirin</div>
+                  <div style="font-size:0.74rem; color:#0369a1; font-weight:600;">Paper Fig. 2 기준 예시</div>
+                </div>
+                <span style="padding:3px 8px; border-radius:999px; font-size:0.74rem; font-weight:800; #dcfce7; color:#166534;">
+                  BR: 2.09
+                </span>
+              </div>
+              <div style="display:flex; justify-content:center; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; min-height:152px; overflow:hidden;">
+                <svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+style='width:210px; height:155px; max-width:100%; display:block;' viewBox='0 0 400 370'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='400.0' height='370.0' x='0.0' y='0.0'> </rect>
+<ellipse cx='34.6' cy='248.6' rx='14.6' ry='14.6' class='atom-0'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='88.6' cy='199.9' rx='14.6' ry='14.6' class='atom-1'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='73.4' cy='128.9' rx='14.6' ry='15.0' class='atom-2'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='157.8' cy='222.4' rx='14.6' ry='15.0' class='atom-3'  style='fill:#FEF2E1;fill-rule:evenodd;stroke:#FEF2E1;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='211.8' cy='173.5' rx='14.6' ry='14.6' class='atom-4'  style='fill:#FDE2BB;fill-rule:evenodd;stroke:#FDE2BB;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='196.6' cy='102.4' rx='14.6' ry='14.6' class='atom-5'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='250.6' cy='53.6' rx='14.6' ry='14.6' class='atom-6'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='319.8' cy='76.0' rx='14.6' ry='14.6' class='atom-7'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='335.0' cy='147.2' rx='14.6' ry='14.6' class='atom-8'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='281.0' cy='195.9' rx='14.6' ry='14.6' class='atom-9'  style='fill:#FDE6C3;fill-rule:evenodd;stroke:#FDE6C3;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='296.2' cy='267.1' rx='14.6' ry='14.6' class='atom-10'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='365.4' cy='289.6' rx='14.6' ry='15.0' class='atom-11'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='232.0' cy='316.0' rx='27.8' ry='15.0' class='atom-12'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 34.6,248.6 L 88.6,199.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 94.6,201.8 L 88.0,171.2' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 88.0,171.2 L 81.5,140.7' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 83.9,204.1 L 77.4,173.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 77.4,173.5 L 70.8,143.0' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-1 atom-3' d='M 88.6,199.9 L 117.2,209.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-1 atom-3' d='M 117.2,209.1 L 145.9,218.4' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 169.6,211.6 L 190.7,192.5' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 190.7,192.5 L 211.8,173.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 211.8,173.5 L 196.6,102.4' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 221.2,165.1 L 208.6,106.2' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-5 atom-6' d='M 196.6,102.4 L 250.6,53.6' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-6 atom-6 atom-7' d='M 250.6,53.6 L 319.8,76.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-6 atom-6 atom-7' d='M 253.2,65.9 L 310.5,84.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-7 atom-7 atom-8' d='M 319.8,76.0 L 335.0,147.2' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-8 atom-8 atom-9' d='M 335.0,147.2 L 281.0,195.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-8 atom-8 atom-9' d='M 323.0,143.3 L 278.4,183.6' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-9 atom-9 atom-10' d='M 281.0,195.9 L 296.2,267.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 291.6,271.3 L 321.7,281.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 321.7,281.1 L 351.9,290.8' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 294.9,260.9 L 325.1,270.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 325.1,270.7 L 355.3,280.4' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-11 atom-10 atom-12' d='M 296.2,267.1 L 275.2,286.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-11 atom-10 atom-12' d='M 275.2,286.1 L 254.1,305.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-12 atom-9 atom-4' d='M 281.0,195.9 L 211.8,173.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path d='M 85.9,202.3 L 88.6,199.9 L 90.0,200.3' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 197.4,105.9 L 196.6,102.4 L 199.3,99.9' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 247.9,56.1 L 250.6,53.6 L 254.1,54.7' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 316.4,74.9 L 319.8,76.0 L 320.6,79.6' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 334.3,143.6 L 335.0,147.2 L 332.3,149.6' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 295.5,263.5 L 296.2,267.1 L 295.2,268.0' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-2' d='M 63.9 128.8
+Q 63.9 123.8, 66.3 121.0
+Q 68.8 118.3, 73.4 118.3
+Q 77.9 118.3, 80.4 121.0
+Q 82.8 123.8, 82.8 128.8
+Q 82.8 133.8, 80.3 136.6
+Q 77.9 139.4, 73.4 139.4
+Q 68.8 139.4, 66.3 136.6
+Q 63.9 133.8, 63.9 128.8
+M 73.4 137.1
+Q 76.5 137.1, 78.2 135.0
+Q 79.9 132.9, 79.9 128.8
+Q 79.9 124.7, 78.2 122.7
+Q 76.5 120.6, 73.4 120.6
+Q 70.2 120.6, 68.5 122.7
+Q 66.8 124.7, 66.8 128.8
+Q 66.8 132.9, 68.5 135.0
+Q 70.2 137.1, 73.4 137.1
+' fill='#FF0000'/>
+<path class='atom-3' d='M 148.3 222.3
+Q 148.3 217.4, 150.8 214.6
+Q 153.2 211.8, 157.8 211.8
+Q 162.4 211.8, 164.8 214.6
+Q 167.2 217.4, 167.2 222.3
+Q 167.2 227.3, 164.8 230.2
+Q 162.3 233.0, 157.8 233.0
+Q 153.2 233.0, 150.8 230.2
+Q 148.3 227.4, 148.3 222.3
+M 157.8 230.7
+Q 160.9 230.7, 162.6 228.6
+Q 164.3 226.4, 164.3 222.3
+Q 164.3 218.3, 162.6 216.2
+Q 160.9 214.2, 157.8 214.2
+Q 154.6 214.2, 152.9 216.2
+Q 151.2 218.2, 151.2 222.3
+Q 151.2 226.5, 152.9 228.6
+Q 154.6 230.7, 157.8 230.7
+' fill='#FF0000'/>
+<path class='atom-11' d='M 356.0 289.5
+Q 356.0 284.6, 358.4 281.8
+Q 360.9 279.1, 365.4 279.1
+Q 370.0 279.1, 372.5 281.8
+Q 374.9 284.6, 374.9 289.5
+Q 374.9 294.5, 372.4 297.4
+Q 370.0 300.2, 365.4 300.2
+Q 360.9 300.2, 358.4 297.4
+Q 356.0 294.6, 356.0 289.5
+M 365.4 297.9
+Q 368.6 297.9, 370.3 295.8
+Q 372.0 293.7, 372.0 289.5
+Q 372.0 285.5, 370.3 283.4
+Q 368.6 281.4, 365.4 281.4
+Q 362.3 281.4, 360.6 283.4
+Q 358.9 285.5, 358.9 289.5
+Q 358.9 293.7, 360.6 295.8
+Q 362.3 297.9, 365.4 297.9
+' fill='#FF0000'/>
+<path class='atom-12' d='M 212.4 305.6
+L 215.2 305.6
+L 215.2 314.4
+L 225.7 314.4
+L 225.7 305.6
+L 228.5 305.6
+L 228.5 326.2
+L 225.7 326.2
+L 225.7 316.7
+L 215.2 316.7
+L 215.2 326.2
+L 212.4 326.2
+L 212.4 305.6
+' fill='#FF0000'/>
+<path class='atom-12' d='M 232.8 315.9
+Q 232.8 310.9, 235.2 308.2
+Q 237.6 305.4, 242.2 305.4
+Q 246.8 305.4, 249.2 308.2
+Q 251.7 310.9, 251.7 315.9
+Q 251.7 320.9, 249.2 323.7
+Q 246.7 326.6, 242.2 326.6
+Q 237.7 326.6, 235.2 323.7
+Q 232.8 320.9, 232.8 315.9
+M 242.2 324.2
+Q 245.4 324.2, 247.0 322.1
+Q 248.8 320.0, 248.8 315.9
+Q 248.8 311.8, 247.0 309.8
+Q 245.4 307.7, 242.2 307.7
+Q 239.1 307.7, 237.4 309.8
+Q 235.7 311.8, 235.7 315.9
+Q 235.7 320.0, 237.4 322.1
+Q 239.1 324.2, 242.2 324.2
+' fill='#FF0000'/>
+</svg>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
+                <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
+                  <div style="color:#64748b;">2009 SA</div>
+                  <strong style="color:#0f172a;">1.58</strong>
+                </div>
+                <div style="background:#eff6ff; padding:5px; border-radius:6px;">
+                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <strong style="color:#1e40af;">+0.51</strong>
+                </div>
+                <div style="background:#fef2f2; padding:5px; border-radius:6px;">
+                  <div style="color:#b91c1c;">Unseen (-6)</div>
+                  <strong style="color:#991b1b;">0/3</strong>
+                </div>
+              </div>
+              <div style="font-size:0.74rem; color:#475569; line-height:1.45;">
+                방향족 치환 3개 환경만 R=2로 평가되며 모두 상용·반응 사전에 존재해 2.09 산출.
+              </div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.71rem; color:#64748b; background:#f8fafc; padding:5px 7px; border-radius:5px; word-break:break-all;">
+                CC(=O)Oc1ccccc1C(=O)O
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div>
+                  <div style="font-weight:800; font-size:0.94rem; color:#0f172a;">MeOH (Methanol)</div>
+                  <div style="font-size:0.74rem; color:#0369a1; font-weight:600;">단순 알콕사이드 출발물질</div>
+                </div>
+                <span style="padding:3px 8px; border-radius:999px; font-size:0.74rem; font-weight:800; #dcfce7; color:#166534;">
+                  BR: 1.01
+                </span>
+              </div>
+              <div style="display:flex; justify-content:center; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; min-height:152px; overflow:hidden;">
+                <svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+style='width:210px; height:155px; max-width:100%; display:block;' viewBox='0 0 400 370'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='400.0' height='370.0' x='0.0' y='0.0'> </rect>
+<ellipse cx='87.8' cy='184.9' rx='42.2' ry='42.2' class='atom-0'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='312.2' cy='185.1' rx='42.2' ry='42.2' class='atom-1'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 87.8,184.9 L 183.4,184.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 183.4,184.9 L 279.0,184.9' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='atom-1' d='M 286.0 185.0
+Q 286.0 178.2, 289.3 174.4
+Q 292.7 170.6, 299.0 170.6
+Q 305.2 170.6, 308.6 174.4
+Q 312.0 178.2, 312.0 185.0
+Q 312.0 191.8, 308.6 195.8
+Q 305.2 199.6, 299.0 199.6
+Q 292.7 199.6, 289.3 195.8
+Q 286.0 191.9, 286.0 185.0
+M 299.0 196.4
+Q 303.3 196.4, 305.6 193.6
+Q 308.0 190.6, 308.0 185.0
+Q 308.0 179.4, 305.6 176.6
+Q 303.3 173.8, 299.0 173.8
+Q 294.6 173.8, 292.3 176.6
+Q 290.0 179.4, 290.0 185.0
+Q 290.0 190.7, 292.3 193.6
+Q 294.6 196.4, 299.0 196.4
+' fill='#FF0000'/>
+<path class='atom-1' d='M 316.4 170.9
+L 320.2 170.9
+L 320.2 182.9
+L 334.7 182.9
+L 334.7 170.9
+L 338.5 170.9
+L 338.5 199.2
+L 334.7 199.2
+L 334.7 186.1
+L 320.2 186.1
+L 320.2 199.2
+L 316.4 199.2
+L 316.4 170.9
+' fill='#FF0000'/>
+</svg>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
+                <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
+                  <div style="color:#64748b;">2009 SA</div>
+                  <strong style="color:#0f172a;">2.70</strong>
+                </div>
+                <div style="background:#eff6ff; padding:5px; border-radius:6px;">
+                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <strong style="color:#1e40af;">-1.69</strong>
+                </div>
+                <div style="background:#fef2f2; padding:5px; border-radius:6px;">
+                  <div style="color:#b91c1c;">Unseen (-6)</div>
+                  <strong style="color:#991b1b;">0/0</strong>
+                </div>
+              </div>
+              <div style="font-size:0.74rem; color:#475569; line-height:1.45;">
+                원자 2개 소형 분자로 Radius-2 환경이 0개이므로 BR-fragmentScore=0 -&gt; 1.01.
+              </div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.71rem; color:#64748b; background:#f8fafc; padding:5px 7px; border-radius:5px; word-break:break-all;">
+                CO
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div>
+                  <div style="font-weight:800; font-size:0.94rem; color:#0f172a;">Hacac (keto)</div>
+                  <div style="font-size:0.74rem; color:#0369a1; font-weight:600;">베타-디케톤 프로리간드 (케토)</div>
+                </div>
+                <span style="padding:3px 8px; border-radius:999px; font-size:0.74rem; font-weight:800; #fef3c7; color:#92400e;">
+                  BR: 5.20
+                </span>
+              </div>
+              <div style="display:flex; justify-content:center; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; min-height:152px; overflow:hidden;">
+                <svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+style='width:210px; height:155px; max-width:100%; display:block;' viewBox='0 0 400 370'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='400.0' height='370.0' x='0.0' y='0.0'> </rect>
+<ellipse cx='38.6' cy='255.0' rx='18.6' ry='18.6' class='atom-0'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='119.3' cy='208.5' rx='18.6' ry='18.6' class='atom-1'  style='fill:#FEEFD8;fill-rule:evenodd;stroke:#FEEFD8;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='119.3' cy='115.5' rx='18.6' ry='19.2' class='atom-2'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='200.0' cy='255.0' rx='18.6' ry='18.6' class='atom-3'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='280.7' cy='208.5' rx='18.6' ry='18.6' class='atom-4'  style='fill:#FEEFD8;fill-rule:evenodd;stroke:#FEEFD8;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='280.7' cy='115.5' rx='18.6' ry='19.2' class='atom-5'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='361.4' cy='255.0' rx='18.6' ry='18.6' class='atom-6'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 38.6,255.0 L 119.3,208.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 126.3,212.5 L 126.3,172.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 126.3,172.3 L 126.3,132.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 112.3,212.5 L 112.3,172.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 112.3,172.3 L 112.3,132.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-1 atom-3' d='M 119.3,208.5 L 200.0,255.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 200.0,255.0 L 280.7,208.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 287.7,212.5 L 287.7,172.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 287.7,172.3 L 287.7,132.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 273.7,212.5 L 273.7,172.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 273.7,172.3 L 273.7,132.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-4 atom-6' d='M 280.7,208.5 L 361.4,255.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path d='M 115.3,210.8 L 119.3,208.5 L 123.4,210.8' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 196.0,252.7 L 200.0,255.0 L 204.0,252.7' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 276.6,210.8 L 280.7,208.5 L 284.7,210.8' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-2' d='M 107.2 115.4
+Q 107.2 109.0, 110.3 105.5
+Q 113.5 101.9, 119.3 101.9
+Q 125.2 101.9, 128.3 105.5
+Q 131.4 109.0, 131.4 115.4
+Q 131.4 121.8, 128.3 125.4
+Q 125.1 129.0, 119.3 129.0
+Q 113.5 129.0, 110.3 125.4
+Q 107.2 121.8, 107.2 115.4
+M 119.3 126.1
+Q 123.3 126.1, 125.5 123.4
+Q 127.7 120.7, 127.7 115.4
+Q 127.7 110.2, 125.5 107.6
+Q 123.3 104.9, 119.3 104.9
+Q 115.3 104.9, 113.1 107.5
+Q 110.9 110.1, 110.9 115.4
+Q 110.9 120.7, 113.1 123.4
+Q 115.3 126.1, 119.3 126.1
+' fill='#FF0000'/>
+<path class='atom-5' d='M 268.6 115.4
+Q 268.6 109.0, 271.7 105.5
+Q 274.8 101.9, 280.7 101.9
+Q 286.5 101.9, 289.7 105.5
+Q 292.8 109.0, 292.8 115.4
+Q 292.8 121.8, 289.6 125.4
+Q 286.5 129.0, 280.7 129.0
+Q 274.9 129.0, 271.7 125.4
+Q 268.6 121.8, 268.6 115.4
+M 280.7 126.1
+Q 284.7 126.1, 286.9 123.4
+Q 289.1 120.7, 289.1 115.4
+Q 289.1 110.2, 286.9 107.6
+Q 284.7 104.9, 280.7 104.9
+Q 276.7 104.9, 274.5 107.5
+Q 272.3 110.1, 272.3 115.4
+Q 272.3 120.7, 274.5 123.4
+Q 276.7 126.1, 280.7 126.1
+' fill='#FF0000'/>
+</svg>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
+                <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
+                  <div style="color:#64748b;">2009 SA</div>
+                  <strong style="color:#0f172a;">2.17</strong>
+                </div>
+                <div style="background:#eff6ff; padding:5px; border-radius:6px;">
+                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <strong style="color:#1e40af;">+3.03</strong>
+                </div>
+                <div style="background:#fef2f2; padding:5px; border-radius:6px;">
+                  <div style="color:#b91c1c;">Unseen (-6)</div>
+                  <strong style="color:#991b1b;">1/3</strong>
+                </div>
+              </div>
+              <div style="font-size:0.74rem; color:#475569; line-height:1.45;">
+                중앙 메틸렌(C3)의 R=2 패턴이 사전 미등재(-6.0)로 판정되어 5.20으로 과대 패널티.
+              </div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.71rem; color:#64748b; background:#f8fafc; padding:5px 7px; border-radius:5px; word-break:break-all;">
+                CC(=O)CC(=O)C
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div>
+                  <div style="font-weight:800; font-size:0.94rem; color:#0f172a;">HCp (Cyclopentadiene)</div>
+                  <div style="font-size:0.74rem; color:#0369a1; font-weight:600;">시클로펜타디엔 프로리간드</div>
+                </div>
+                <span style="padding:3px 8px; border-radius:999px; font-size:0.74rem; font-weight:800; #dcfce7; color:#166534;">
+                  BR: 3.33
+                </span>
+              </div>
+              <div style="display:flex; justify-content:center; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; min-height:152px; overflow:hidden;">
+                <svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+style='width:210px; height:155px; max-width:100%; display:block;' viewBox='0 0 400 370'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='400.0' height='370.0' x='0.0' y='0.0'> </rect>
+<ellipse cx='327.0' cy='185.0' rx='33.0' ry='33.0' class='atom-0'  style='fill:#FCAC76;fill-rule:evenodd;stroke:#FCAC76;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='230.0' cy='51.5' rx='33.0' ry='33.0' class='atom-1'  style='fill:#FDE3BE;fill-rule:evenodd;stroke:#FDE3BE;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='73.0' cy='102.5' rx='33.0' ry='33.0' class='atom-2'  style='fill:#FDE3BE;fill-rule:evenodd;stroke:#FDE3BE;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='73.0' cy='267.5' rx='33.0' ry='33.0' class='atom-3'  style='fill:#FCAC76;fill-rule:evenodd;stroke:#FCAC76;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='230.0' cy='318.5' rx='33.0' ry='33.0' class='atom-4'  style='fill:#FDC790;fill-rule:evenodd;stroke:#FDC790;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 327.0,185.0 L 230.0,51.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 296.4,185.0 L 220.5,80.6' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 230.0,51.5 L 73.0,102.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-2 atom-3' d='M 73.0,102.5 L 73.0,267.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-2 atom-3' d='M 97.8,120.5 L 97.8,249.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 73.0,267.5 L 230.0,318.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-0' d='M 230.0,318.5 L 327.0,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path d='M 322.1,178.3 L 327.0,185.0 L 322.1,191.7' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 234.8,58.2 L 230.0,51.5 L 222.1,54.1' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 80.9,99.9 L 73.0,102.5 L 73.0,110.7' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 73.0,259.3 L 73.0,267.5 L 80.9,270.1' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 222.1,315.9 L 230.0,318.5 L 234.8,311.8' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+</svg>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
+                <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
+                  <div style="color:#64748b;">2009 SA</div>
+                  <strong style="color:#0f172a;">3.31</strong>
+                </div>
+                <div style="background:#eff6ff; padding:5px; border-radius:6px;">
+                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <strong style="color:#1e40af;">+0.02</strong>
+                </div>
+                <div style="background:#fef2f2; padding:5px; border-radius:6px;">
+                  <div style="color:#b91c1c;">Unseen (-6)</div>
+                  <strong style="color:#991b1b;">0/5</strong>
+                </div>
+              </div>
+              <div style="font-size:0.74rem; color:#475569; line-height:1.45;">
+                공액 디엔 고리 R=2 환경 5개(-0.93 ~ -2.50) 평균 + 고리 복잡도 합산 -&gt; 3.33.
+              </div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.71rem; color:#64748b; background:#f8fafc; padding:5px 7px; border-radius:5px; word-break:break-all;">
+                C1=CC=CC1
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div>
+                  <div style="font-weight:800; font-size:0.94rem; color:#0f172a;">TEOS (Si(OEt)4)</div>
+                  <div style="font-size:0.74rem; color:#0369a1; font-weight:600;">공유결합형 SiO2 프리커서</div>
+                </div>
+                <span style="padding:3px 8px; border-radius:999px; font-size:0.74rem; font-weight:800; #fef3c7; color:#92400e;">
+                  BR: 3.82
+                </span>
+              </div>
+              <div style="display:flex; justify-content:center; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; min-height:152px; overflow:hidden;">
+                <svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+style='width:210px; height:155px; max-width:100%; display:block;' viewBox='0 0 400 370'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='400.0' height='370.0' x='0.0' y='0.0'> </rect>
+<ellipse cx='366.0' cy='61.7' rx='14.0' ry='14.0' class='atom-0'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='316.7' cy='111.0' rx='14.0' ry='14.0' class='atom-1'  style='fill:#FDD09A;fill-rule:evenodd;stroke:#FDD09A;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='249.3' cy='93.1' rx='14.0' ry='14.3' class='atom-2'  style='fill:#FCB47E;fill-rule:evenodd;stroke:#FCB47E;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='200.0' cy='142.5' rx='14.0' ry='14.3' class='atom-3'  style='fill:#FCB37C;fill-rule:evenodd;stroke:#FCB37C;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='150.7' cy='191.8' rx='14.0' ry='14.3' class='atom-4'  style='fill:#FCB47E;fill-rule:evenodd;stroke:#FCB47E;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='168.7' cy='259.0' rx='14.0' ry='14.0' class='atom-5'  style='fill:#FDD09A;fill-rule:evenodd;stroke:#FDD09A;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='119.4' cy='308.3' rx='14.0' ry='14.0' class='atom-6'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='150.7' cy='93.1' rx='14.0' ry='14.3' class='atom-7'  style='fill:#FCB47E;fill-rule:evenodd;stroke:#FCB47E;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='83.3' cy='111.0' rx='14.0' ry='14.0' class='atom-8'  style='fill:#FDD09A;fill-rule:evenodd;stroke:#FDD09A;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='34.0' cy='61.7' rx='14.0' ry='14.0' class='atom-9'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='249.3' cy='191.8' rx='14.0' ry='14.3' class='atom-10'  style='fill:#FCB47E;fill-rule:evenodd;stroke:#FCB47E;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='231.3' cy='259.0' rx='14.0' ry='14.0' class='atom-11'  style='fill:#FDD09A;fill-rule:evenodd;stroke:#FDD09A;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='280.6' cy='308.3' rx='14.0' ry='14.0' class='atom-12'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 366.0,61.7 L 316.7,111.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 316.7,111.0 L 288.7,103.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 288.7,103.5 L 260.7,96.0' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-2 atom-3' d='M 238.0,104.3 L 224.5,117.8' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-2 atom-3' d='M 224.5,117.8 L 211.0,131.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 189.0,153.2 L 175.5,166.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 175.5,166.7 L 162.0,180.2' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 154.0,204.2 L 161.4,231.6' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 161.4,231.6 L 168.7,259.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-5 atom-6' d='M 168.7,259.0 L 119.4,308.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-6 atom-3 atom-7' d='M 189.0,131.3 L 175.5,117.8' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-6 atom-3 atom-7' d='M 175.5,117.8 L 162.0,104.3' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-7 atom-7 atom-8' d='M 139.3,96.0 L 111.3,103.5' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-7 atom-7 atom-8' d='M 111.3,103.5 L 83.3,111.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-8 atom-8 atom-9' d='M 83.3,111.0 L 34.0,61.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-9 atom-3 atom-10' d='M 211.0,153.2 L 224.5,166.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-9 atom-3 atom-10' d='M 224.5,166.7 L 238.0,180.2' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 246.0,204.2 L 238.6,231.6' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 238.6,231.6 L 231.3,259.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-11 atom-11 atom-12' d='M 231.3,259.0 L 280.6,308.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path d='M 319.2,108.5 L 316.7,111.0 L 315.3,110.6' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 168.4,257.6 L 168.7,259.0 L 166.3,261.5' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 84.7,110.6 L 83.3,111.0 L 80.8,108.5' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 231.6,257.6 L 231.3,259.0 L 233.7,261.5' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-2' d='M 240.3 93.0
+Q 240.3 88.3, 242.6 85.6
+Q 244.9 83.0, 249.3 83.0
+Q 253.7 83.0, 256.1 85.6
+Q 258.4 88.3, 258.4 93.0
+Q 258.4 97.8, 256.0 100.5
+Q 253.7 103.2, 249.3 103.2
+Q 245.0 103.2, 242.6 100.5
+Q 240.3 97.8, 240.3 93.0
+M 249.3 101.0
+Q 252.3 101.0, 254.0 99.0
+Q 255.6 97.0, 255.6 93.0
+Q 255.6 89.1, 254.0 87.2
+Q 252.3 85.2, 249.3 85.2
+Q 246.3 85.2, 244.7 87.1
+Q 243.1 89.1, 243.1 93.0
+Q 243.1 97.0, 244.7 99.0
+Q 246.3 101.0, 249.3 101.0
+' fill='#FF0000'/>
+<path class='atom-3' d='M 192.1 149.1
+Q 192.3 149.2, 193.2 149.6
+Q 194.2 150.0, 195.2 150.2
+Q 196.2 150.4, 197.2 150.4
+Q 199.1 150.4, 200.2 149.5
+Q 201.3 148.6, 201.3 147.0
+Q 201.3 145.9, 200.7 145.3
+Q 200.2 144.6, 199.3 144.2
+Q 198.5 143.9, 197.1 143.5
+Q 195.3 142.9, 194.3 142.4
+Q 193.2 141.9, 192.5 140.9
+Q 191.8 139.8, 191.8 138.0
+Q 191.8 135.5, 193.4 134.0
+Q 195.1 132.5, 198.5 132.5
+Q 200.8 132.5, 203.4 133.5
+L 202.7 135.7
+Q 200.4 134.7, 198.6 134.7
+Q 196.6 134.7, 195.6 135.5
+Q 194.5 136.3, 194.6 137.7
+Q 194.6 138.7, 195.1 139.4
+Q 195.6 140.0, 196.4 140.4
+Q 197.2 140.7, 198.6 141.2
+Q 200.4 141.7, 201.4 142.3
+Q 202.5 142.8, 203.2 144.0
+Q 204.0 145.1, 204.0 147.0
+Q 204.0 149.8, 202.2 151.2
+Q 200.4 152.7, 197.3 152.7
+Q 195.6 152.7, 194.2 152.3
+Q 192.9 151.9, 191.3 151.3
+L 192.1 149.1
+' fill='#000000'/>
+<path class='atom-3' d='M 206.1 132.4
+L 208.7 132.4
+L 208.7 134.8
+L 206.1 134.8
+L 206.1 132.4
+M 206.1 137.8
+L 208.7 137.8
+L 208.7 152.2
+L 206.1 152.2
+L 206.1 137.8
+' fill='#000000'/>
+<path class='atom-4' d='M 141.6 191.7
+Q 141.6 186.9, 143.9 184.3
+Q 146.3 181.6, 150.7 181.6
+Q 155.1 181.6, 157.4 184.3
+Q 159.7 186.9, 159.7 191.7
+Q 159.7 196.5, 157.4 199.2
+Q 155.0 201.9, 150.7 201.9
+Q 146.3 201.9, 143.9 199.2
+Q 141.6 196.5, 141.6 191.7
+M 150.7 199.7
+Q 153.7 199.7, 155.3 197.7
+Q 156.9 195.6, 156.9 191.7
+Q 156.9 187.8, 155.3 185.8
+Q 153.7 183.9, 150.7 183.9
+Q 147.7 183.9, 146.0 185.8
+Q 144.4 187.8, 144.4 191.7
+Q 144.4 195.7, 146.0 197.7
+Q 147.7 199.7, 150.7 199.7
+' fill='#FF0000'/>
+<path class='atom-7' d='M 141.6 93.0
+Q 141.6 88.3, 143.9 85.6
+Q 146.3 83.0, 150.7 83.0
+Q 155.1 83.0, 157.4 85.6
+Q 159.7 88.3, 159.7 93.0
+Q 159.7 97.8, 157.4 100.5
+Q 155.0 103.2, 150.7 103.2
+Q 146.3 103.2, 143.9 100.5
+Q 141.6 97.8, 141.6 93.0
+M 150.7 101.0
+Q 153.7 101.0, 155.3 99.0
+Q 156.9 97.0, 156.9 93.0
+Q 156.9 89.1, 155.3 87.2
+Q 153.7 85.2, 150.7 85.2
+Q 147.7 85.2, 146.0 87.1
+Q 144.4 89.1, 144.4 93.0
+Q 144.4 97.0, 146.0 99.0
+Q 147.7 101.0, 150.7 101.0
+' fill='#FF0000'/>
+<path class='atom-10' d='M 240.3 191.7
+Q 240.3 186.9, 242.6 184.3
+Q 244.9 181.6, 249.3 181.6
+Q 253.7 181.6, 256.1 184.3
+Q 258.4 186.9, 258.4 191.7
+Q 258.4 196.5, 256.0 199.2
+Q 253.7 201.9, 249.3 201.9
+Q 245.0 201.9, 242.6 199.2
+Q 240.3 196.5, 240.3 191.7
+M 249.3 199.7
+Q 252.3 199.7, 254.0 197.7
+Q 255.6 195.6, 255.6 191.7
+Q 255.6 187.8, 254.0 185.8
+Q 252.3 183.9, 249.3 183.9
+Q 246.3 183.9, 244.7 185.8
+Q 243.1 187.8, 243.1 191.7
+Q 243.1 195.7, 244.7 197.7
+Q 246.3 199.7, 249.3 199.7
+' fill='#FF0000'/>
+</svg>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
+                <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
+                  <div style="color:#64748b;">2009 SA</div>
+                  <strong style="color:#0f172a;">2.84</strong>
+                </div>
+                <div style="background:#eff6ff; padding:5px; border-radius:6px;">
+                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <strong style="color:#1e40af;">+0.98</strong>
+                </div>
+                <div style="background:#fef2f2; padding:5px; border-radius:6px;">
+                  <div style="color:#b91c1c;">Unseen (-6)</div>
+                  <strong style="color:#991b1b;">0/9</strong>
+                </div>
+              </div>
+              <div style="font-size:0.74rem; color:#475569; line-height:1.45;">
+                Si-O-Et 9개 환경이 USPTO/eMolecules에 일부 등재(-1.60 ~ -2.37) -&gt; 3.82.
+              </div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.71rem; color:#64748b; background:#f8fafc; padding:5px 7px; border-radius:5px; word-break:break-all;">
+                CCO[Si](OCC)(OCC)OCC
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div>
+                  <div style="font-weight:800; font-size:0.94rem; color:#0f172a;">TDMAH (Hf(NMe2)4)</div>
+                  <div style="font-size:0.74rem; color:#0369a1; font-weight:600;">대표 Hf-아미드 ALD 프리커서</div>
+                </div>
+                <span style="padding:3px 8px; border-radius:999px; font-size:0.74rem; font-weight:800; #fee2e2; color:#991b1b;">
+                  BR: 8.62
+                </span>
+              </div>
+              <div style="display:flex; justify-content:center; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; min-height:152px; overflow:hidden;">
+                <svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+style='width:210px; height:155px; max-width:100%; display:block;' viewBox='0 0 400 370'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='400.0' height='370.0' x='0.0' y='0.0'> </rect>
+<ellipse cx='115.2' cy='331.9' rx='19.6' ry='19.6' class='atom-0'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='200.0' cy='282.9' rx='19.6' ry='19.6' class='atom-1'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='284.8' cy='331.9' rx='19.6' ry='19.6' class='atom-2'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='200.0' cy='188.1' rx='29.4' ry='25.4' class='atom-3'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='200.0' cy='87.1' rx='19.6' ry='19.6' class='atom-4'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='115.2' cy='38.1' rx='19.6' ry='19.6' class='atom-5'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='284.8' cy='38.1' rx='19.6' ry='19.6' class='atom-6'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='297.9' cy='185.0' rx='19.6' ry='19.6' class='atom-7'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='346.9' cy='100.2' rx='19.6' ry='19.6' class='atom-8'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='346.9' cy='269.8' rx='19.6' ry='19.6' class='atom-9'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='102.1' cy='185.0' rx='19.6' ry='19.6' class='atom-10'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='53.1' cy='100.2' rx='19.6' ry='19.6' class='atom-11'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='53.1' cy='269.8' rx='19.6' ry='19.6' class='atom-12'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 115.2,331.9 L 150.7,311.4' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 150.7,311.4 L 186.2,290.9' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 213.8,290.9 L 249.3,311.4' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 249.3,311.4 L 284.8,331.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-1 atom-3' d='M 200.0,265.8 L 200.0,234.5' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-1 atom-3' d='M 200.0,234.5 L 200.0,203.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 200.0,168.9 L 200.0,136.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 200.0,136.5 L 200.0,104.2' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 186.2,79.1 L 150.7,58.6' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-4 atom-5' d='M 150.7,58.6 L 115.2,38.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-4 atom-6' d='M 213.8,79.1 L 249.3,58.6' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-4 atom-6' d='M 249.3,58.6 L 284.8,38.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-6 atom-3 atom-7' d='M 224.0,185.0 L 254.1,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-6 atom-3 atom-7' d='M 254.1,185.0 L 284.2,185.0' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-7 atom-7 atom-8' d='M 307.8,167.9 L 327.4,134.0' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-7 atom-7 atom-8' d='M 327.4,134.0 L 346.9,100.2' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-8 atom-7 atom-9' d='M 307.8,202.1 L 327.4,236.0' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-8 atom-7 atom-9' d='M 327.4,236.0 L 346.9,269.8' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-9 atom-3 atom-10' d='M 176.0,185.0 L 145.9,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-9 atom-3 atom-10' d='M 145.9,185.0 L 115.8,185.0' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 92.2,167.9 L 72.6,134.0' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-10 atom-11' d='M 72.6,134.0 L 53.1,100.2' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-11 atom-10 atom-12' d='M 92.2,202.1 L 72.6,236.0' style='fill:none;fill-rule:evenodd;stroke:#0000FF;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-11 atom-10 atom-12' d='M 72.6,236.0 L 53.1,269.8' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='atom-1' d='M 193.9 269.1
+L 203.0 283.8
+Q 203.9 285.2, 205.3 287.8
+Q 206.8 290.5, 206.8 290.6
+L 206.8 269.1
+L 210.5 269.1
+L 210.5 296.8
+L 206.7 296.8
+L 197.0 280.7
+Q 195.8 278.9, 194.6 276.7
+Q 193.4 274.6, 193.1 273.9
+L 193.1 296.8
+L 189.5 296.8
+L 189.5 269.1
+L 193.9 269.1
+' fill='#0000FF'/>
+<path class='atom-3' d='M 179.2 172.2
+L 182.9 172.2
+L 182.9 183.9
+L 197.1 183.9
+L 197.1 172.2
+L 200.9 172.2
+L 200.9 199.9
+L 197.1 199.9
+L 197.1 187.1
+L 182.9 187.1
+L 182.9 199.9
+L 179.2 199.9
+L 179.2 172.2
+' fill='#000000'/>
+<path class='atom-3' d='M 206.0 182.6
+L 206.0 179.8
+L 209.6 179.8
+L 209.6 176.8
+Q 209.6 173.3, 211.4 171.7
+Q 213.2 170.1, 216.0 170.1
+Q 217.4 170.1, 218.5 170.4
+Q 219.6 170.6, 220.8 171.2
+L 219.7 173.8
+Q 217.9 173.1, 216.3 173.1
+Q 214.9 173.1, 214.1 174.0
+Q 213.3 174.9, 213.3 176.5
+L 213.3 179.8
+L 219.4 179.8
+L 219.4 182.6
+L 213.3 182.6
+L 213.3 206.0
+L 209.6 206.0
+L 209.6 182.6
+L 206.0 182.6
+' fill='#000000'/>
+<path class='atom-4' d='M 193.9 73.2
+L 203.0 87.9
+Q 203.9 89.3, 205.3 92.0
+Q 206.8 94.6, 206.8 94.7
+L 206.8 73.2
+L 210.5 73.2
+L 210.5 100.9
+L 206.7 100.9
+L 197.0 84.9
+Q 195.8 83.0, 194.6 80.8
+Q 193.4 78.7, 193.1 78.0
+L 193.1 100.9
+L 189.5 100.9
+L 189.5 73.2
+L 193.9 73.2
+' fill='#0000FF'/>
+<path class='atom-7' d='M 291.8 171.1
+L 300.9 185.8
+Q 301.8 187.3, 303.2 189.9
+Q 304.7 192.5, 304.8 192.7
+L 304.8 171.1
+L 308.5 171.1
+L 308.5 198.9
+L 304.7 198.9
+L 294.9 182.8
+Q 293.8 180.9, 292.6 178.8
+Q 291.4 176.6, 291.0 176.0
+L 291.0 198.9
+L 287.4 198.9
+L 287.4 171.1
+L 291.8 171.1
+' fill='#0000FF'/>
+<path class='atom-10' d='M 95.9 171.1
+L 105.0 185.8
+Q 105.9 187.3, 107.4 189.9
+Q 108.8 192.5, 108.9 192.7
+L 108.9 171.1
+L 112.6 171.1
+L 112.6 198.9
+L 108.8 198.9
+L 99.0 182.8
+Q 97.9 180.9, 96.7 178.8
+Q 95.5 176.6, 95.1 176.0
+L 95.1 198.9
+L 91.5 198.9
+L 91.5 171.1
+L 95.9 171.1
+' fill='#0000FF'/>
+</svg>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
+                <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
+                  <div style="color:#64748b;">2009 SA</div>
+                  <strong style="color:#0f172a;">3.96</strong>
+                </div>
+                <div style="background:#eff6ff; padding:5px; border-radius:6px;">
+                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <strong style="color:#1e40af;">+4.66</strong>
+                </div>
+                <div style="background:#fef2f2; padding:5px; border-radius:6px;">
+                  <div style="color:#b91c1c;">Unseen (-6)</div>
+                  <strong style="color:#991b1b;">5/5</strong>
+                </div>
+              </div>
+              <div style="font-size:0.74rem; color:#475569; line-height:1.45;">
+                모든 Hf-N 주변 R=2 환경 5개가 사전 미등재(-6.0)에 걸려 8.62로 오분류.
+              </div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.71rem; color:#64748b; background:#f8fafc; padding:5px 7px; border-radius:5px; word-break:break-all;">
+                CN(C)[Hf](N(C)C)(N(C)C)N(C)C
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <div>
+                  <div style="font-weight:800; font-size:0.94rem; color:#0f172a;">Hf(acac)4</div>
+                  <div style="font-size:0.74rem; color:#0369a1; font-weight:600;">8배위 킬레이트 Hf 프리커서</div>
+                </div>
+                <span style="padding:3px 8px; border-radius:999px; font-size:0.74rem; font-weight:800; #fee2e2; color:#991b1b;">
+                  BR: 9.04
+                </span>
+              </div>
+              <div style="display:flex; justify-content:center; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; min-height:152px; overflow:hidden;">
+                <svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+style='width:210px; height:155px; max-width:100%; display:block;' viewBox='0 0 400 370'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='400.0' height='370.0' x='0.0' y='0.0'> </rect>
+<ellipse cx='68.5' cy='328.2' rx='15.7' ry='15.7' class='atom-0'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='90.1' cy='252.9' rx='15.7' ry='15.7' class='atom-1'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='50.9' cy='185.0' rx='15.7' ry='15.7' class='atom-2'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='90.1' cy='117.1' rx='15.7' ry='15.7' class='atom-3'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='68.5' cy='41.8' rx='15.7' ry='15.7' class='atom-4'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='168.5' cy='117.3' rx='15.7' ry='16.1' class='atom-5'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='215.6' cy='187.4' rx='23.5' ry='20.3' class='atom-6'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='168.5' cy='253.0' rx='15.7' ry='16.1' class='atom-7'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='246.8' cy='253.0' rx='15.7' ry='16.1' class='atom-8'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='325.2' cy='252.9' rx='15.7' ry='15.7' class='atom-9'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='364.3' cy='320.7' rx='15.7' ry='15.7' class='atom-10'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='364.3' cy='185.0' rx='15.7' ry='15.7' class='atom-11'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='325.2' cy='117.1' rx='15.7' ry='15.7' class='atom-12'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='364.3' cy='49.3' rx='15.7' ry='15.7' class='atom-13'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='246.8' cy='117.3' rx='15.7' ry='16.1' class='atom-14'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='201.1' cy='185.3' rx='15.7' ry='16.1' class='atom-15'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='162.7' cy='185.4' rx='15.7' ry='15.7' class='atom-16'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='50.9' cy='49.3' rx='15.7' ry='15.7' class='atom-17'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='233.7' cy='185.0' rx='15.7' ry='15.7' class='atom-18'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='162.7' cy='184.6' rx='15.7' ry='15.7' class='atom-19'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='35.7' cy='309.2' rx='15.7' ry='15.7' class='atom-20'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='201.1' cy='185.1' rx='15.7' ry='16.1' class='atom-21'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='168.5' cy='117.3' rx='15.7' ry='16.1' class='atom-22'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='90.1' cy='117.1' rx='15.7' ry='15.7' class='atom-23'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='35.7' cy='60.8' rx='15.7' ry='15.7' class='atom-24'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='50.9' cy='185.0' rx='15.7' ry='15.7' class='atom-25'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='90.1' cy='252.9' rx='15.7' ry='15.7' class='atom-26'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='50.9' cy='320.7' rx='15.7' ry='15.7' class='atom-27'  style='fill:#FFF7EC;fill-rule:evenodd;stroke:#FFF7EC;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<ellipse cx='168.5' cy='253.0' rx='15.7' ry='16.1' class='atom-28'  style='fill:#7F0000;fill-rule:evenodd;stroke:#7F0000;stroke-width:1.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 68.5,328.2 L 90.1,252.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 90.1,252.9 L 50.9,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-1 atom-1 atom-2' d='M 96.8,241.3 L 64.3,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-2 atom-2 atom-3' d='M 50.9,185.0 L 90.1,117.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-3 atom-3 atom-4' d='M 90.1,117.1 L 68.5,41.8' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-3 atom-5' d='M 90.1,117.1 L 122.9,117.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-3 atom-5' d='M 122.9,117.1 L 155.7,117.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-3 atom-5' d='M 96.8,128.7 L 126.2,128.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-4 atom-3 atom-5' d='M 126.2,128.7 L 155.7,128.7' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-5 atom-6' d='M 176.6,131.3 L 188.4,151.7' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-5 atom-6' d='M 188.4,151.7 L 199.0,170.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-5 atom-5 atom-6' d='M 190.6,161.7 L 199.0,170.1 L 195.9,158.6 Z' style='fill:#000000;fill-rule:evenodd;fill-opacity:1;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='bond-6 atom-6 atom-7' d='M 199.3,199.5 L 187.8,219.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-6 atom-6 atom-7' d='M 187.8,219.3 L 176.4,239.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-7 atom-6 atom-8' d='M 218.8,204.3 L 228.8,221.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-7 atom-6 atom-8' d='M 228.8,221.7 L 238.9,239.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-8 atom-8 atom-9' d='M 259.5,252.9 L 292.3,252.9' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-8 atom-8 atom-9' d='M 292.3,252.9 L 325.2,252.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-9 atom-9 atom-10' d='M 325.2,252.9 L 364.3,320.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-9 atom-11' d='M 325.2,252.9 L 364.3,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-10 atom-9 atom-11' d='M 318.5,241.3 L 351.0,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-11 atom-11 atom-12' d='M 364.3,185.0 L 325.2,117.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-12 atom-12 atom-13' d='M 325.2,117.1 L 364.3,49.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-13 atom-12 atom-14' d='M 325.2,117.1 L 292.3,117.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-13 atom-12 atom-14' d='M 292.3,117.1 L 259.5,117.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-13 atom-12 atom-14' d='M 318.5,128.7 L 289.0,128.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-13 atom-12 atom-14' d='M 289.0,128.7 L 259.5,128.7' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-14 atom-6 atom-15' d='M 207.6,185.0 L 204.4,185.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-14 atom-6 atom-15' d='M 204.4,185.1 L 201.1,185.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-15 atom-15 atom-16' d='M 188.4,185.2 L 175.6,185.3' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-15 atom-15 atom-16' d='M 175.6,185.3 L 162.7,185.4' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-16 atom-16 atom-17' d='M 162.7,185.4 L 50.9,49.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-17 atom-16 atom-18' d='M 162.7,185.4 L 233.7,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-17 atom-16 atom-18' d='M 168.2,173.8 L 233.7,173.4' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-18 atom-18 atom-19' d='M 233.7,185.0 L 162.7,184.6' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-19 atom-19 atom-20' d='M 162.7,184.6 L 35.7,309.2' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-20 atom-19 atom-21' d='M 162.9,173.0 L 175.6,178.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-20 atom-19 atom-21' d='M 175.6,178.9 L 188.4,184.8' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-20 atom-19 atom-21' d='M 162.7,184.6 L 175.5,190.4' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-20 atom-19 atom-21' d='M 175.5,190.4 L 188.3,196.3' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-21 atom-6 atom-22' d='M 200.2,172.2 L 188.4,151.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-21 atom-6 atom-22' d='M 188.4,151.7 L 176.6,131.3' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-22 atom-22 atom-23' d='M 155.7,117.1 L 122.9,117.1' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-22 atom-22 atom-23' d='M 122.9,117.1 L 90.1,117.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-23 atom-23 atom-24' d='M 90.1,117.1 L 35.7,60.8' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-24 atom-23 atom-25' d='M 90.1,117.1 L 50.9,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-24 atom-23 atom-25' d='M 96.8,128.7 L 64.3,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-25 atom-25 atom-26' d='M 50.9,185.0 L 90.1,252.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-26 atom-26 atom-27' d='M 90.1,252.9 L 50.9,320.7' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-27 atom-26 atom-28' d='M 90.1,252.9 L 122.9,252.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-27 atom-26 atom-28' d='M 122.9,252.9 L 155.7,252.9' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-27 atom-26 atom-28' d='M 96.8,241.3 L 126.2,241.3' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-27 atom-26 atom-28' d='M 126.2,241.3 L 155.7,241.3' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-28 atom-7 atom-1' d='M 155.7,252.9 L 122.9,252.9' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-28 atom-7 atom-1' d='M 122.9,252.9 L 90.1,252.9' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-29 atom-14 atom-6' d='M 238.7,131.3 L 226.8,151.7' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-29 atom-14 atom-6' d='M 226.8,151.7 L 216.2,170.1' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-29 atom-14 atom-6' d='M 219.3,158.6 L 216.2,170.1 L 224.7,161.7 Z' style='fill:#000000;fill-rule:evenodd;fill-opacity:1;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='bond-30 atom-21 atom-6' d='M 201.1,184.9 L 204.4,184.9' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-30 atom-21 atom-6' d='M 204.4,184.9 L 207.3,185.0' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-30 atom-21 atom-6' d='M 195.7,187.9 L 207.3,185.0 L 195.8,181.7 Z' style='fill:#000000;fill-rule:evenodd;fill-opacity:1;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='bond-31 atom-28 atom-6' d='M 176.4,239.1 L 187.8,219.3' style='fill:none;fill-rule:evenodd;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-31 atom-28 atom-6' d='M 187.8,219.3 L 198.1,201.4' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-31 atom-28 atom-6' d='M 195.0,213.0 L 198.1,201.4 L 189.7,209.9 Z' style='fill:#000000;fill-rule:evenodd;fill-opacity:1;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 52.9,188.4 L 50.9,185.0 L 52.9,181.6' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 121.3,117.1 L 122.9,117.1 L 121.3,117.1' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 177.0,238.1 L 176.4,239.1 L 177.0,238.1' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 362.4,188.4 L 364.3,185.0 L 362.4,181.6' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 230.2,185.0 L 233.7,185.0 L 230.2,185.0' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 52.9,181.6 L 50.9,185.0 L 52.9,188.4' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path d='M 122.1,252.9 L 122.9,252.9 L 123.7,252.9' style='fill:none;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-5' d='M 158.3 117.2
+Q 158.3 111.9, 160.9 108.9
+Q 163.5 105.9, 168.5 105.9
+Q 173.4 105.9, 176.0 108.9
+Q 178.6 111.9, 178.6 117.2
+Q 178.6 122.6, 176.0 125.7
+Q 173.3 128.7, 168.5 128.7
+Q 163.6 128.7, 160.9 125.7
+Q 158.3 122.6, 158.3 117.2
+M 168.5 126.2
+Q 171.8 126.2, 173.7 123.9
+Q 175.5 121.7, 175.5 117.2
+Q 175.5 112.9, 173.7 110.7
+Q 171.8 108.4, 168.5 108.4
+Q 165.1 108.4, 163.2 110.6
+Q 161.4 112.8, 161.4 117.2
+Q 161.4 121.7, 163.2 123.9
+Q 165.1 126.2, 168.5 126.2
+' fill='#FF0000'/>
+<path class='atom-6' d='M 198.9 174.7
+L 202.0 174.7
+L 202.0 184.2
+L 213.3 184.2
+L 213.3 174.7
+L 216.3 174.7
+L 216.3 196.9
+L 213.3 196.9
+L 213.3 186.7
+L 202.0 186.7
+L 202.0 196.9
+L 198.9 196.9
+L 198.9 174.7
+' fill='#000000'/>
+<path class='atom-6' d='M 220.4 183.1
+L 220.4 180.8
+L 223.3 180.8
+L 223.3 178.4
+Q 223.3 175.7, 224.7 174.4
+Q 226.1 173.1, 228.4 173.1
+Q 229.5 173.1, 230.4 173.3
+Q 231.2 173.5, 232.2 173.9
+L 231.4 176.0
+Q 229.9 175.4, 228.7 175.4
+Q 227.5 175.4, 226.9 176.2
+Q 226.2 176.9, 226.2 178.2
+L 226.2 180.8
+L 231.1 180.8
+L 231.1 183.1
+L 226.2 183.1
+L 226.2 201.8
+L 223.3 201.8
+L 223.3 183.1
+L 220.4 183.1
+' fill='#000000'/>
+<path class='atom-7' d='M 158.3 252.9
+Q 158.3 247.6, 160.9 244.6
+Q 163.5 241.6, 168.5 241.6
+Q 173.4 241.6, 176.0 244.6
+Q 178.6 247.6, 178.6 252.9
+Q 178.6 258.3, 176.0 261.4
+Q 173.3 264.4, 168.5 264.4
+Q 163.6 264.4, 160.9 261.4
+Q 158.3 258.3, 158.3 252.9
+M 168.5 261.9
+Q 171.8 261.9, 173.7 259.7
+Q 175.5 257.4, 175.5 252.9
+Q 175.5 248.6, 173.7 246.4
+Q 171.8 244.1, 168.5 244.1
+Q 165.1 244.1, 163.2 246.3
+Q 161.4 248.5, 161.4 252.9
+Q 161.4 257.4, 163.2 259.7
+Q 165.1 261.9, 168.5 261.9
+' fill='#FF0000'/>
+<path class='atom-8' d='M 236.6 252.9
+Q 236.6 247.6, 239.2 244.6
+Q 241.9 241.6, 246.8 241.6
+Q 251.7 241.6, 254.4 244.6
+Q 257.0 247.6, 257.0 252.9
+Q 257.0 258.3, 254.3 261.4
+Q 251.7 264.4, 246.8 264.4
+Q 241.9 264.4, 239.2 261.4
+Q 236.6 258.3, 236.6 252.9
+M 246.8 261.9
+Q 250.2 261.9, 252.0 259.7
+Q 253.9 257.4, 253.9 252.9
+Q 253.9 248.6, 252.0 246.4
+Q 250.2 244.1, 246.8 244.1
+Q 243.4 244.1, 241.6 246.3
+Q 239.8 248.5, 239.8 252.9
+Q 239.8 257.4, 241.6 259.7
+Q 243.4 261.9, 246.8 261.9
+' fill='#FF0000'/>
+<path class='atom-14' d='M 236.6 117.2
+Q 236.6 111.9, 239.2 108.9
+Q 241.9 105.9, 246.8 105.9
+Q 251.7 105.9, 254.4 108.9
+Q 257.0 111.9, 257.0 117.2
+Q 257.0 122.6, 254.3 125.7
+Q 251.7 128.7, 246.8 128.7
+Q 241.9 128.7, 239.2 125.7
+Q 236.6 122.6, 236.6 117.2
+M 246.8 126.2
+Q 250.2 126.2, 252.0 123.9
+Q 253.9 121.7, 253.9 117.2
+Q 253.9 112.9, 252.0 110.7
+Q 250.2 108.4, 246.8 108.4
+Q 243.4 108.4, 241.6 110.6
+Q 239.8 112.8, 239.8 117.2
+Q 239.8 121.7, 241.6 123.9
+Q 243.4 126.2, 246.8 126.2
+' fill='#FF0000'/>
+<path class='atom-15' d='M 191.0 185.2
+Q 191.0 179.8, 193.6 176.9
+Q 196.2 173.9, 201.1 173.9
+Q 206.1 173.9, 208.7 176.9
+Q 211.3 179.8, 211.3 185.2
+Q 211.3 190.6, 208.7 193.6
+Q 206.0 196.7, 201.1 196.7
+Q 196.2 196.7, 193.6 193.6
+Q 191.0 190.6, 191.0 185.2
+M 201.1 194.2
+Q 204.5 194.2, 206.3 191.9
+Q 208.2 189.6, 208.2 185.2
+Q 208.2 180.8, 206.3 178.6
+Q 204.5 176.4, 201.1 176.4
+Q 197.8 176.4, 195.9 178.6
+Q 194.1 180.8, 194.1 185.2
+Q 194.1 189.7, 195.9 191.9
+Q 197.8 194.2, 201.1 194.2
+' fill='#FF0000'/>
+<path class='atom-21' d='M 191.0 185.0
+Q 191.0 179.6, 193.6 176.6
+Q 196.2 173.7, 201.1 173.7
+Q 206.1 173.7, 208.7 176.6
+Q 211.3 179.6, 211.3 185.0
+Q 211.3 190.3, 208.7 193.4
+Q 206.0 196.5, 201.1 196.5
+Q 196.2 196.5, 193.6 193.4
+Q 191.0 190.4, 191.0 185.0
+M 201.1 193.9
+Q 204.5 193.9, 206.3 191.7
+Q 208.2 189.4, 208.2 185.0
+Q 208.2 180.6, 206.3 178.4
+Q 204.5 176.2, 201.1 176.2
+Q 197.8 176.2, 195.9 178.4
+Q 194.1 180.6, 194.1 185.0
+Q 194.1 189.4, 195.9 191.7
+Q 197.8 193.9, 201.1 193.9
+' fill='#FF0000'/>
+<path class='atom-22' d='M 158.3 117.2
+Q 158.3 111.9, 160.9 108.9
+Q 163.5 105.9, 168.5 105.9
+Q 173.4 105.9, 176.0 108.9
+Q 178.6 111.9, 178.6 117.2
+Q 178.6 122.6, 176.0 125.7
+Q 173.3 128.7, 168.5 128.7
+Q 163.6 128.7, 160.9 125.7
+Q 158.3 122.6, 158.3 117.2
+M 168.5 126.2
+Q 171.8 126.2, 173.7 123.9
+Q 175.5 121.7, 175.5 117.2
+Q 175.5 112.9, 173.7 110.7
+Q 171.8 108.4, 168.5 108.4
+Q 165.1 108.4, 163.2 110.6
+Q 161.4 112.8, 161.4 117.2
+Q 161.4 121.7, 163.2 123.9
+Q 165.1 126.2, 168.5 126.2
+' fill='#FF0000'/>
+<path class='atom-28' d='M 158.3 252.9
+Q 158.3 247.6, 160.9 244.6
+Q 163.5 241.6, 168.5 241.6
+Q 173.4 241.6, 176.0 244.6
+Q 178.6 247.6, 178.6 252.9
+Q 178.6 258.3, 176.0 261.4
+Q 173.3 264.4, 168.5 264.4
+Q 163.6 264.4, 160.9 261.4
+Q 158.3 258.3, 158.3 252.9
+M 168.5 261.9
+Q 171.8 261.9, 173.7 259.7
+Q 175.5 257.4, 175.5 252.9
+Q 175.5 248.6, 173.7 246.4
+Q 171.8 244.1, 168.5 244.1
+Q 165.1 244.1, 163.2 246.3
+Q 161.4 248.5, 161.4 252.9
+Q 161.4 257.4, 163.2 259.7
+Q 165.1 261.9, 168.5 261.9
+' fill='#FF0000'/>
+<path class='atom-1' d='M 84.9,247.6 L 84.9,258.1 L 95.3,258.1 L 95.3,247.6 L 84.9,247.6' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-2' d='M 45.7,179.8 L 45.7,190.2 L 56.1,190.2 L 56.1,179.8 L 45.7,179.8' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-3' d='M 84.9,111.9 L 84.9,122.4 L 95.3,122.4 L 95.3,111.9 L 84.9,111.9' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-5' d='M 163.2,111.9 L 163.2,122.4 L 173.7,122.4 L 173.7,111.9 L 163.2,111.9' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-7' d='M 163.2,247.6 L 163.2,258.1 L 173.7,258.1 L 173.7,247.6 L 163.2,247.6' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-15' d='M 195.9,179.9 L 195.9,190.3 L 206.4,190.3 L 206.4,179.9 L 195.9,179.9' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+<path class='atom-16' d='M 157.5,180.2 L 157.5,190.7 L 168.0,190.7 L 168.0,180.2 L 157.5,180.2' style='fill:none;stroke:#FF0000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;' />
+</svg>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
+                <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
+                  <div style="color:#64748b;">2009 SA</div>
+                  <strong style="color:#0f172a;">5.49</strong>
+                </div>
+                <div style="background:#eff6ff; padding:5px; border-radius:6px;">
+                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <strong style="color:#1e40af;">+3.55</strong>
+                </div>
+                <div style="background:#fef2f2; padding:5px; border-radius:6px;">
+                  <div style="color:#b91c1c;">Unseen (-6)</div>
+                  <strong style="color:#991b1b;">21/21</strong>
+                </div>
+              </div>
+              <div style="font-size:0.74rem; color:#475569; line-height:1.45;">
+                배위 R=2 환경 21개 전부가 -6.0 및 다중고리 복잡도 가중 -&gt; 9.04 (Synthesis Hard 오판).
+              </div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:0.71rem; color:#64748b; background:#f8fafc; padding:5px 7px; border-radius:5px; word-break:break-all;">
+                CC1=CC(C)=O[Hf]234(O1)(OC(C)=CC(C)=O2)(OC(C)=CC(C)=O3)OC(C)=CC(C)=O4
+              </div>
+            </div>
+        </div>
+
+        <!-- 2.5 Benchmarks Table 1 & 2 -->
+        <h3 id="brt-sub25" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
+          2.5 벤치마크 성능 검증: TS1&middot;TS2&middot;TS3 (5,400종 Retro* 라벨) 및 6대 모델 비교
+        </h3>
+        <div class="table-wrap" style="margin-top:8px;">
+          <table>
+            <thead>
+              <tr>
+                <th>모델 (세대)</th>
+                <th>TS1 PR-AUC<br>(ZINC/GDB17, 1,800)</th>
+                <th>TS2 PR-AUC<br>(ChEMBL/Med, 1,800)</th>
+                <th>TS3 PR-AUC<br>(Complex Lit, 1,800)</th>
+                <th>TS1 ROC-AUC</th>
+                <th>TS2 ROC-AUC</th>
+                <th>TS3 ROC-AUC</th>
+                <th>계산 속도 (ms/mol)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#ecfdf5; font-weight:700;">
+                <td>BR-SAScore (3G Hybrid)</td>
+                <td>0.990</td><td>0.947</td><td>0.900</td>
+                <td>0.984</td><td>0.942</td><td>0.900</td>
+                <td>0.42 ms (CPU)</td>
+              </tr>
+              <tr>
+                <td>SAScore (1G Heuristic)</td>
+                <td>0.988</td><td>0.942</td><td>0.833</td>
+                <td>0.980</td><td>0.929</td><td>0.818</td>
+                <td>0.39 ms (CPU)</td>
+              </tr>
+              <tr>
+                <td>CLScore (1G ChEMBL Fragment)</td>
+                <td>0.927</td><td>0.912</td><td>0.776</td>
+                <td>0.960</td><td>0.921</td><td>0.808</td>
+                <td>8.97 ms (CPU)</td>
+              </tr>
+              <tr>
+                <td>DeepSA (3G Transformer/ML)</td>
+                <td>0.899</td><td>0.919</td><td>0.832</td>
+                <td>0.951</td><td>0.931</td><td>0.886</td>
+                <td>17.2* ms (*GPU)</td>
+              </tr>
+              <tr>
+                <td>SYBA (1G Naive Bayes)</td>
+                <td>0.939</td><td>0.855</td><td>0.722</td>
+                <td>0.968</td><td>0.872</td><td>0.784</td>
+                <td>0.28 ms (CPU)</td>
+              </tr>
+              <tr>
+                <td>RAscore (2G Retrosynthesis ML)</td>
+                <td>0.905</td><td>0.835</td><td>0.776</td>
+                <td>0.948</td><td>0.860</td><td>0.841</td>
+                <td>123 ms (CPU)</td>
+              </tr>
+              <tr>
+                <td>GASA (3G Graph Attention)</td>
+                <td>0.890</td><td>0.886</td><td>0.801</td>
+                <td>0.951</td><td>0.890</td><td>0.851</td>
+                <td>307 ms (CPU)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 2.6 Why BR-SAScore Beats Competitors & Semiconductor Domain Bridge -->
+        <h3 id="brt-sub26" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
+          2.6 왜 다른 1G~4G 모델을 제치고 BR-SAScore를 베이스로 삼았는가? (경쟁 모델 대비 선정 근거 &amp; 반도체 확장)
+        </h3>
+        <p style="line-height:1.72; color:#334155;">
+          요약 탭(Step 2)에서 제시한 선정 결론의 배경에는 <strong>18종 공개 SA·역합성·생성 모델 전수 평가(확장 프리커서 102종 + 시약 29종 + Phase 1 Negative Control 10종)</strong>에서 확인된 타 모델들의 구조적 붕괴가 있습니다. 다른 모델들이 반도체 착물 또는 Track 1 역할에서 탈락하고 <code>BR-SAScore</code>가 유일하게 최적 베이스 엔진으로 선택된 <strong>5가지 결정적 원인</strong>은 다음과 같습니다.
+        </p>
+
+        <div class="grid-2" style="margin:12px 0;">
+          <div class="card" style="background:#f8fbff; border-color:#bfdbfe;">
+            <h4 style="margin:0 0 8px 0; color:#1e40af;">BR-SAScore 베이스 선정 5대 결정적 근거</h4>
+            <ol style="font-size:0.83rem; color:#334155; line-height:1.68; padding-left:18px; margin:0;">
+              <li><strong>OOV 원소 붕괴·All-Zero 무음 오인코딩 부재 (vs GASA &middot; DFRscore &middot; MPScore &middot; DeepSA):</strong> <code>GASA</code>는 102종 중 <strong>53종(52.0%, Ga&middot;Hf&middot;Ir&middot;Mo&middot;Rh&middot;Ru&middot;Ta&middot;W 8원소)</strong>에서 DGL 원자 벡터가 All-Zero로 무음 붕괴하고, <code>DFRscore</code>는 <strong>102/102(100%)</strong> 중심 금속이 <code>ELSE</code> 노드로 축퇴하며, <code>MPScore</code>는 금속 착물 In-Domain <strong>0/102(0.0%)</strong>에 그칩니다. 반면 <code>BR-SAScore</code>는 RDKit Morgan Radius-2 해시 키 기반이므로 어떤 원소가 들어와도 벡터 소실 없이 결정론적으로 계산됩니다.</li>
+              <li><strong>위험·불안정 대조군 무차별 통과(False Positive 폭주) 억제 (vs RAscore &middot; SCScore &middot; SYBA):</strong> <code>RAscore</code>(XGBoost)와 <code>SCScore</code>(Reaxys DNN)는 단순 치환기 개수만 보고 Phase 1 Negative Control 10종 중 <strong>9종(90.0%, <code>TiEt4</code> 0.972/1.65, <code>ZrMe4</code> 0.956/1.56, <code>WPh5</code> 0.985/1.63 등)</strong>을 Pass로 오판하며, <code>SYBA</code>도 <strong>8/10(80.0%)</strong>을 통과시킵니다. 반면 <code>BR-SAScore</code>는 Eq. (12) <code>&lt; 0</code> 병목 평균과 <code>-6.0</code> 미등재 패널티 덕분에 물리 필터 전에도 10종 중 <strong>7종(70.0%)</strong>을 1차 차단합니다(<code>TiEt4 8.77</code>, <code>Silacyclobutadiene 8.75</code>, <code>WPh5 8.79</code>, <code>CoEt4 8.77</code>).</li>
+              <li><strong>2009 SAScore 소분자·단일빈도 편향 해소 &amp; 4G M-L 0% 한계 보완:</strong> 2009 <code>SAScore</code>는 <code>MeOH (2.70)</code> 같은 2원자 시약까지 과대 패널티를 매겨 102종 프리커서 통과율이 <strong>2.0%(2/102)</strong>에 불과하고, 4G 모델(<code>RxnFlow</code>&middot;<code>SynFormer</code>&middot;<code>ChemProjector</code>)은 <code>M-L</code> 배위 반응 규칙이 <strong>0/102(0.0%)</strong>입니다. <code>BR-SAScore</code>는 <code>MeOH 1.01</code> 정상화 및 <code>19/102(18.6%)</code> 개선을 <code>0.42 ms/mol</code>로 달성하고, 4G 모델은 해리 리간드 경로 보조에만 분리 투입할 수 있습니다.</li>
+              <li><strong>신경망 재학습 없는 무손실 사전(<code>_fscores</code>) 확장성:</strong> <code>DeepSA</code>(Transformer), <code>GASA</code>(GAT), <code>RAscore</code>, <code>SCScore</code>는 도메인 시약 29종을 반영하려면 코퍼스 재구축과 신경망 재학습이 필요해 기존 유기 분포가 왜곡됩니다. <code>BR-SAScore</code>는 딕셔너리에 <code>max(existing, -0.47)</code> 하한만 추가하면 <strong>기존 프리커서 점수 악화 0건(0/27)</strong>을 유지한 채 시약 통과율을 <code>21/29(72.4%) &rarr; 28/29(96.6%)</code>로 즉시 끌어올립니다.</li>
+              <li><strong>대칭 리간드(<code>score3</code>) &middot; 병목 설명성 &amp; Track 2(<code>SevenNet-0</code>) 직교성:</strong> <code>M(NMe2)4</code> 등 다중 대칭 착물에서 <code>score3</code> 대칭 보정이 정합적으로 작동하고, <code>contribution_to_svg()</code>가 <code>-6.0</code> 병목 원자를 즉시 지목하며, Track 2 물리 지표(<code>BDE_min</code>, <code>%V_bur^D2</code>, <code>E_coh</code>)가 금속 열역학을 전담하는 구조에서 가장 가볍고 누설 없는 Track 1 엔진 역할을 수행합니다.</li>
+            </ol>
+          </div>
+
+          <div class="card" style="background:#fff;">
+            <h4 style="margin:0 0 8px 0; color:#0f172a;">1G~4G 후보 모델 vs BR-SAScore 실측 비교 요약</h4>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>모델 (세대)</th>
+                    <th>102종 프리커서 / 29종 시약</th>
+                    <th>Neg 10종 오탐(FPR)</th>
+                    <th>베이스 모델 탈락 사유 vs BR-SAScore 우위</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>SAScore</strong> (1G)</td>
+                    <td>2/102 (2.0%)<br>9/29 (31.0%)</td>
+                    <td>3/10 (30.0%)</td>
+                    <td>PubChem 단일 빈도로 98.0% 기각 및 소분자(<code>MeOH 2.70</code>) 과대 감점. B/R 분리 부재</td>
+                  </tr>
+                  <tr>
+                    <td><strong>SYBA</strong> (1G)</td>
+                    <td>83/102 (81.4%)<br>27/29 (93.1%)</td>
+                    <td><strong>8/10 (80.0%)</strong></td>
+                    <td>ZINC 기반 로그오즈비가 불안정 대조군 80% 통과 및 Cp-고리 극단 편향 유발</td>
+                  </tr>
+                  <tr>
+                    <td><strong>SCScore / RAscore</strong> (2G)</td>
+                    <td>62~90/102<br>29/29 (100%)</td>
+                    <td><strong>9/10 (90.0%)</strong></td>
+                    <td>Reaxys 복잡도/카운트 FP 의존으로 위험 물질 90% 통과; 해시 사전 직접 보정 불가</td>
+                  </tr>
+                  <tr>
+                    <td><strong>MPScore</strong> (2G)</td>
+                    <td><strong>0/102 In-Domain</strong><br>9/29 (31.0%)</td>
+                    <td>N/A (유기 전용)</td>
+                    <td>유기 케이지/고분자 빌딩블록 학습 편향으로 금속·할라이드 도메인 커버리지 0%</td>
+                  </tr>
+                  <tr>
+                    <td><strong>GASA / DFRscore / DeepSA</strong> (3G)</td>
+                    <td>GASA 53/102 OOV<br>DFR 102/102 ELSE</td>
+                    <td>실측 불능/편향</td>
+                    <td>미지원 원소 All-Zero 침묵 붕괴(GASA), 금속 ELSE 축퇴(DFR), Ro5 분절(DeepSA) + 재학습 필요</td>
+                  </tr>
+                  <tr>
+                    <td><strong>RxnFlow / SynFormer / ReaSyn</strong> (4G)</td>
+                    <td><strong>0/102 M-L 규칙</strong><br>(유기 치환기만 매칭)</td>
+                    <td>N/A (0% 경로)</td>
+                    <td>유기 템플릿(72~115종) 한계로 착물 코어 경로 생성 불능; 리간드 경로 생성 보조로만 분업</td>
+                  </tr>
+                  <tr style="background:#ecfdf5; font-weight:700;">
+                    <td><strong>BR-SAScore (3G 베이스 선정)</strong></td>
+                    <td><strong>19/102 (18.6%)<br>Strict 28/29 (96.6%)</strong></td>
+                    <td><strong>3/10 (30.0%)<br>(단독 7/10 차단)</strong></td>
+                    <td><strong>0% 원소 붕괴 &middot; 무재학습 <code>max(existing,-0.47)</code> 확장(악화 0건) &middot; <code>0.42 ms</code> &middot; Pro-ligand + SevenNet-0 완벽 직교</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin:12px 0 4px 0;">
+          <div class="card">
+            <h4 style="margin:0 0 6px 0; color:#b91c1c;">베이스 단독 한계 1: M-L 조각 0% 중첩</h4>
+            <p style="font-size:0.83rem; color:#475569; margin:0; line-height:1.6;">
+              <code>BR-SAScore</code> 역시 유기 말뭉치(eMolecules+USPTO) 기반이라 <code>Hf-N</code>, <code>Hf-O</code>, <code>Zr-O</code>, <code>Mo-Cl</code> 반경-2 환경이 없어 착물 그대로 입력하면 27종 통과율이 <strong>11.1% (3/27)</strong>에 머무릅니다(<code>TDMAH 8.62</code>, <code>Hf(acac)4 9.04</code>).
+            </p>
+          </div>
+          <div class="card">
+            <h4 style="margin:0 0 6px 0; color:#b45309;">주의사항: 0.0 덮어쓰기 누설 함정</h4>
+            <p style="font-size:0.83rem; color:#475569; margin:0; line-height:1.6;">
+              시약 29종을 <code>0.0</code>으로 덮어쓰면 Eq. (12) <code>&lt; 0</code> 필터에서 빠져 Cp/아미디네이트 3종이 악화됩니다(<code>audit_reproduce_all.py</code> Check 5). 비누출 사전 확장은 반드시 <code>max(existing, -0.47)</code> 상향 하한을 사용합니다.
+            </p>
+          </div>
+          <div class="card">
+            <h4 style="margin:0 0 6px 0; color:#0f766e;">최종 결합: Pro-ligand + TMC-SA</h4>
+            <p style="font-size:0.83rem; color:#475569; margin:0; line-height:1.6;">
+              <code>compute_ligand_sa()</code>가 금속 중심을 떼고 리간드 $HL_i$에만 <code>min(BR-SAScore, SAScore)</code>를 적용해 케토-에놀 오판(<code>Hacac 5.20 &rarr; 2.17</code>)까지 복구하며, 배위&middot;열안정성은 <code>SevenNet-0</code> 물리 지표(<code>%V_bur</code>, <code>BDE_min</code>, <code>E_coh</code>)로 보완합니다.
+            </p>
+          </div>
+        </div>
+      </section>
+    
+      </div> <!-- end #tab-content-brtheory -->
     </main>
   </div>
 
@@ -20211,23 +22001,26 @@ flowchart LR
       }
     }
 
-    // Top View Mode Switcher (Summary vs Full Report vs DB Explorer)
+    // Top View Mode Switcher (Summary vs Full Report vs DB Explorer vs BR-SAScore Theory)
     function switchViewTab(tabName, opts) {
       const btnStoryline = document.getElementById('btn-tab-storyline');
       const btnTechnical = document.getElementById('btn-tab-technical');
       const btnDatabase = document.getElementById('btn-tab-database');
+      const btnBrtheory = document.getElementById('btn-tab-brtheory');
       const contentStoryline = document.getElementById('tab-content-storyline');
       const contentTechnical = document.getElementById('tab-content-technical');
       const contentDatabase = document.getElementById('tab-content-database');
+      const contentBrtheory = document.getElementById('tab-content-brtheory');
       const tocStoryline = document.getElementById('toc-storyline');
       const tocTechnical = document.getElementById('toc-technical');
       const tocDatabase = document.getElementById('toc-database');
+      const tocBrtheory = document.getElementById('toc-brtheory');
 
       if (!btnStoryline || !btnTechnical) return;
 
-      [btnStoryline, btnTechnical, btnDatabase].forEach(b => b && b.classList.remove('active'));
-      [contentStoryline, contentTechnical, contentDatabase].forEach(c => { if (c) c.style.display = 'none'; });
-      [tocStoryline, tocTechnical, tocDatabase].forEach(t => { if (t) t.style.display = 'none'; });
+      [btnStoryline, btnTechnical, btnDatabase, btnBrtheory].forEach(b => b && b.classList.remove('active'));
+      [contentStoryline, contentTechnical, contentDatabase, contentBrtheory].forEach(c => { if (c) c.style.display = 'none'; });
+      [tocStoryline, tocTechnical, tocDatabase, tocBrtheory].forEach(t => { if (t) t.style.display = 'none'; });
 
       const skipScrollTop = opts && opts.skipScrollTop;
 
@@ -20247,6 +22040,16 @@ flowchart LR
         if (!skipScrollTop) window.scrollTo(0, 0);
         requestAnimationFrame(() => {
           ensureDbExplorerInitialized();
+        });
+      } else if (tabName === 'brtheory') {
+        if (btnBrtheory) btnBrtheory.classList.add('active');
+        if (contentBrtheory) contentBrtheory.style.display = 'block';
+        if (tocBrtheory) tocBrtheory.style.display = 'block';
+        if (!skipScrollTop) window.scrollTo(0, 0);
+        requestAnimationFrame(() => {
+          renderKatexInContainer('brtheory', contentBrtheory);
+          renderMermaidInBrtheoryTab();
+          if (typeof updateBrSimulator === 'function') updateBrSimulator();
         });
       } else {
         btnTechnical.classList.add('active');
@@ -20995,6 +22798,10 @@ flowchart LR
       renderMermaidInContainer('#tab-content-technical', 'tech');
     }
 
+    function renderMermaidInBrtheoryTab() {
+      renderMermaidInContainer('#tab-content-brtheory', 'brt');
+    }
+
     function jumpToTechnicalSection(sectionId) {
       switchViewTab('technical', { skipScrollTop: true });
       requestAnimationFrame(() => {
@@ -21003,12 +22810,141 @@ flowchart LR
       });
     }
 
-    // ScrollSpy for Left Sticky TOC (Storyline & Technical) - rAF throttled + cached
+    // Interactive Eq. (8)-(13) Simulator for BR-SAScore Theory Tab
+    const BR_SIM_PRESETS = {
+      aspirin: {
+        bScore: -1.20,
+        rScore: -0.68,
+        unseenPct: 0,
+        comp: 0.17,
+        buf: 1.0,
+        note: '* Aspirin 실측 예: (-0.82 - 0.98 - 0.23)/3 = -0.68, ComplexityPenalty = 0.17, 최종 10 - 9 * ((-0.85 + 7)/7) = 2.09 (논문 Fig. 2 및 본 저장소 실측 2.09와 일치).'
+      },
+      gao: {
+        bScore: -2.80,
+        rScore: -2.90,
+        unseenPct: 100,
+        comp: 0.10,
+        buf: 1.0,
+        note: '* AI-proposed 분자 [Gao et al., 5] 논문 Fig. 2 실측 예: 전 조각 미등재(-6.0) -> BR-fragmentScore = -6.0, ComplexityPenalty = 0.10 -> Raw = -6.10 -> 정규화 = 8.84 (Hard).'
+      },
+      hacac: {
+        bScore: -0.40,
+        rScore: -0.40,
+        unseenPct: 35,
+        comp: 0.08,
+        buf: 1.0,
+        note: '* Hacac (케토) 실측 예: 3개 R=2 환경 중 중앙 메틸렌(C3) 1개가 -6.0 미등재로 걸려 avg(-6.0, -0.40, -0.40) = -2.27 -> 5.20. Pro-ligand min(BR, SA)에서 2.17로 복구되는 사례입니다.'
+      },
+      tdmah: {
+        bScore: -3.00,
+        rScore: -3.00,
+        unseenPct: 100,
+        comp: 0.18,
+        buf: 1.0,
+        note: '* TDMAH Hf(NMe2)4 실측 예: Hf-N 주변 5개 R=2 환경 모두 미등재(-6.0) -> BR-fragmentScore = -6.0 -> score3 대칭 보정 적용 후 실측 8.62 (False Negative 오판 대표 사례).'
+      },
+      meoh: {
+        bScore: 1.50,
+        rScore: 1.20,
+        unseenPct: 0,
+        comp: 0.01,
+        buf: 1.0,
+        note: '* MeOH (CO) 실측 예: 원자 2개라 R=2 환경 0개 -> BR-fragmentScore = 0.0 -> SizeComplexity ~0.007 차감 후 1.01 (2009 SAScore 2.70의 소분자 편향을 해소).'
+      }
+    };
+
+    function applyBrPreset(key, btnEl) {
+      const p = BR_SIM_PRESETS[key];
+      if (!p) return;
+      const setVal = (id, v) => {
+        const el = document.getElementById(id);
+        if (el) el.value = String(v);
+      };
+      setVal('brSimBScore', p.bScore);
+      setVal('brSimRScore', p.rScore);
+      setVal('brSimUnseen', p.unseenPct);
+      setVal('brSimComp', p.comp);
+      setVal('brSimBuffer', p.buf);
+      const wrap = document.getElementById('brSimPresetBtns');
+      if (wrap && btnEl) {
+        wrap.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+      const noteEl = document.getElementById('brSimPresetNote');
+      if (noteEl) noteEl.textContent = p.note;
+      updateBrSimulator();
+    }
+
+    function updateBrSimulator() {
+      const elB = document.getElementById('brSimBScore');
+      if (!elB) return;
+      const bVal = parseFloat(elB.value);
+      const rVal = parseFloat(document.getElementById('brSimRScore').value);
+      const unseenFrac = parseFloat(document.getElementById('brSimUnseen').value) / 100.0;
+      const comp = parseFloat(document.getElementById('brSimComp').value);
+      const buf = parseFloat(document.getElementById('brSimBuffer').value);
+
+      document.getElementById('brSimBScoreVal').textContent = bVal.toFixed(2);
+      document.getElementById('brSimRScoreVal').textContent = rVal.toFixed(2);
+      document.getElementById('brSimUnseenVal').textContent = Math.round(unseenFrac * 100) + '%';
+      document.getElementById('brSimCompVal').textContent = comp.toFixed(2);
+      document.getElementById('brSimBufferVal').textContent = buf.toFixed(2);
+
+      const knownScore = Math.max(bVal, rVal);
+      let winnerTxt = bVal > rVal ? 'BScore (eMolecules) 우세' : (rVal > bVal ? 'RScore (USPTO) 우세' : 'BScore = RScore 동일');
+      if (knownScore >= 0) winnerTxt += ' (0 이상 -> Eq.12 제외)';
+
+      const wKnown = 1.0 - unseenFrac;
+      const negTerms = [];
+      if (wKnown > 0 && knownScore < 0) negTerms.push({ w: wKnown, s: knownScore });
+      if (unseenFrac > 0) negTerms.push({ w: unseenFrac, s: -6.0 });
+
+      let fragScore = 0.0;
+      const wSum = negTerms.reduce((acc, x) => acc + x.w, 0);
+      if (wSum > 0) {
+        fragScore = negTerms.reduce((acc, x) => acc + x.w * x.s, 0) / wSum;
+      }
+      const rawScore = fragScore - comp;
+      const minBound = -6.0 - buf;
+      const maxBound = 0.0;
+      let norm01 = (rawScore - minBound) / (maxBound - minBound);
+      if (norm01 > 1.0) norm01 = 1.0;
+      if (norm01 < 0.0) norm01 = 0.0;
+      const finalSa = 10.0 - 9.0 * norm01;
+
+      document.getElementById('brOutMaxScore').textContent = knownScore.toFixed(2);
+      document.getElementById('brOutWinner').textContent = winnerTxt;
+      document.getElementById('brOutFragMean').textContent = fragScore.toFixed(2);
+      document.getElementById('brOutRaw').textContent = rawScore.toFixed(2);
+      document.getElementById('brOutRange').textContent = '정규화 범위 [' + minBound.toFixed(2) + ', 0.00]';
+
+      const finalEl = document.getElementById('brOutFinal');
+      const verdictEl = document.getElementById('brOutVerdict');
+      finalEl.textContent = finalSa.toFixed(2);
+      if (finalSa <= 3.5) {
+        finalEl.style.color = '#34d399';
+        verdictEl.style.color = '#a7f3d0';
+        verdictEl.textContent = '합성 용이 (Easy, <= 3.5)';
+      } else if (finalSa <= 6.0) {
+        finalEl.style.color = '#fbbf24';
+        verdictEl.style.color = '#fde68a';
+        verdictEl.textContent = '중간 난이도 (Moderate, 3.5~6.0)';
+      } else {
+        finalEl.style.color = '#f87171';
+        verdictEl.style.color = '#fecaca';
+        verdictEl.textContent = '합성 난해 (Hard, > 6.0)';
+      }
+    }
+
+    // ScrollSpy for Left Sticky TOC (Storyline, Technical & BR-SAScore Theory) - rAF throttled
     function initScrollSpy() {
       const progressBadge = document.getElementById('tocProgress');
+      const brtProgressBadge = document.getElementById('brtTocProgress');
       let scrollSpyTicking = false;
       let lastActiveId = null;
       let lastBadgeText = '';
+      let lastBrtBadgeText = '';
 
       function updateScrollSpy() {
         scrollSpyTicking = false;
@@ -21017,13 +22953,19 @@ flowchart LR
 
         const scrollPos = window.scrollY + 140;
         const storylineContainer = document.getElementById('tab-content-storyline');
+        const brtheoryContainer = document.getElementById('tab-content-brtheory');
         const isStoryline = storylineContainer && storylineContainer.style.display !== 'none';
+        const isBrtheory = brtheoryContainer && brtheoryContainer.style.display !== 'none';
 
-        const activeContainer = isStoryline ? storylineContainer : document.getElementById('tab-content-technical');
+        const activeContainer = isStoryline
+          ? storylineContainer
+          : (isBrtheory ? brtheoryContainer : document.getElementById('tab-content-technical'));
         if (!activeContainer) return;
 
         const sections = activeContainer.querySelectorAll('section[id]');
-        const activeToc = isStoryline ? document.getElementById('toc-storyline') : document.getElementById('toc-technical');
+        const activeToc = isStoryline
+          ? document.getElementById('toc-storyline')
+          : (isBrtheory ? document.getElementById('toc-brtheory') : document.getElementById('toc-technical'));
         if (!activeToc || sections.length === 0) return;
 
         let currentIndex = 0;
@@ -21046,7 +22988,13 @@ flowchart LR
           }
         }
 
-        if (progressBadge && !isStoryline) {
+        if (isBrtheory && brtProgressBadge) {
+          const nextBrt = 'Sec ' + (currentIndex + 1) + '/' + sections.length;
+          if (nextBrt !== lastBrtBadgeText) {
+            lastBrtBadgeText = nextBrt;
+            brtProgressBadge.textContent = nextBrt;
+          }
+        } else if (progressBadge && !isStoryline && !isBrtheory) {
           const nextBadge = 'Sec ' + (currentIndex + 1) + '/' + sections.length;
           if (nextBadge !== lastBadgeText) {
             lastBadgeText = nextBadge;

@@ -30,6 +30,7 @@ from history_and_expansion_html_section import (
     build_patent_expansion_storyline_html,
     build_patent_expansion_technical_html,
 )
+from br_sascore_theory_section import build_br_sascore_theory_html
 from rdkit import Chem
 from rdkit.Chem import Descriptors, rdDepictor, rdMolDescriptors
 from rdkit.Chem.Draw import rdMolDraw2D
@@ -2681,6 +2682,7 @@ patent_expansion_storyline_html = build_patent_expansion_storyline_html(
 patent_expansion_technical_html = build_patent_expansion_technical_html(
     expansion_cand_path, unified_bench_path
 )
+br_sascore_theory_html = build_br_sascore_theory_html()
 
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
@@ -2698,6 +2700,7 @@ final_html = final_html.replace("<!-- MECHANISTIC_ML_TECHNICAL_PLACEHOLDER -->",
 final_html = final_html.replace("<!-- ANALYSIS_HISTORY_TECHNICAL_PLACEHOLDER -->", analysis_history_technical_html)
 final_html = final_html.replace("<!-- PATENT_EXPANSION_STORYLINE_PLACEHOLDER -->", patent_expansion_storyline_html)
 final_html = final_html.replace("<!-- PATENT_EXPANSION_TECHNICAL_PLACEHOLDER -->", patent_expansion_technical_html)
+final_html = final_html.replace("<!-- BR_SASCORE_THEORY_PLACEHOLDER -->", br_sascore_theory_html)
 final_html = final_html.replace("__NEB_TRAJECTORY_JSON_PLACEHOLDER__", neb_trajectory_json)
 final_html = final_html.replace("<!-- LIT_ROWS_PLACEHOLDER -->", lit_rows_joined)
 final_html = final_html.replace("<!-- EMPIRICAL_BENCHMARK_ROWS_PLACEHOLDER -->", empirical_db_joined)
