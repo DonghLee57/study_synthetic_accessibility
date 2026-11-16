@@ -1125,6 +1125,27 @@ flowchart TD
             </p>
           </div>
         </div>
+
+        <div class="card" style="background:#f8fafc; border-color:#cbd5e1; margin-top:12px;">
+          <h4 style="margin:0 0 8px 0; color:#0f172a;">
+            바닐라 BR-SAScore vs 반도체 DB 확장 외삽 정합성 원리 및 명시적 수치 계산 (<code>CpTi(NMe2)3</code> 실측)
+          </h4>
+          <p style="font-size:0.84rem; color:#334155; line-height:1.68; margin:0 0 10px 0;">
+            바닐라 <code>BR-SAScore</code>에 반도체 상용 시약(29종) 및 Pro-ligand 분리 체계를 확장할 때 <strong>외삽 정합성(미지 프리커서에 대한 순위·판정 일관성)</strong>이 향상되는 핵심 원리는 <strong>Eq. (12)의 음수 집합($\text{Score}_k &lt; 0$) 분모 보존과 해시 사전의 국소 불변성</strong>에 있습니다. 신경망 모델은 새로운 시약 29종을 추가 학습하면 전체 결정 경계가 이동해 기존 유기·무기 점수까지 흔들리지만, <code>BR-SAScore</code>는 미등재 금속-리간드 비트만 <code>-6.0</code>으로 두고 <strong>실제 상용 시약이 공유하는 리간드 조각(<code>max(existing, -0.47)</code>)만 음수 영역 안에 안전하게 상향 보정</strong>합니다. 따라서 <code>&lt; 0</code> 분모($n_{\text{neg}}$)가 유지되면서 점수가 단조롭게 개선되며, 여기에 Pro-ligand 분리를 결합하면 금속 중심의 미등재 <code>-6.0</code> 붕괴까지 해소되어 신규 원소 프리커서로도 일관되게 외삽됩니다.
+          </p>
+          <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:11px 14px; font-size:0.8rem; color:#334155; line-height:1.65;">
+            <strong style="color:#0369a1;">실측 대입 비교: <code>CpTi(NMe2)3</code> (<code>CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1</code>, $n_{\text{At}}=15,\; |\text{FP}|=21 \implies s_3=0.000,\; \text{comp}=0.2045$)</strong>
+            <ul style="margin:5px 0 0 18px; padding:0;">
+              <li><strong>① 바닐라 BR-SAScore (Default):</strong> 고유 반경-2 비트 7개 중 금속 인접 5개는 <code>-6.0</code>, Cp 고리 2개는 <code>-1.016, -1.324</code> ($n_{\text{neg}}=7$).<br>
+                $\text{BR-frag} = \frac{5(-6.0) - 1.016 - 1.324}{7} = -4.6200 \implies \text{raw} = -4.6200 - 0.2045 = -4.8245 \implies 10 - 9\frac{-4.8245+7.0}{7.0} = \mathbf{7.2029}$</li>
+              <li><strong>② 반도체 시약 DB 확장 (<code>Strict Unleaked</code>, <code>max(existing, -0.47)</code>):</strong> 시약 사전의 Cp 조각 2개가 <code>-0.47</code>로 보정되나 여전히 <code>&lt; 0</code>이므로 분모 $n_{\text{neg}}=7$이 보존됨.<br>
+                $\text{BR-frag} = \frac{5(-6.0) + 2(-0.47)}{7} = -4.4200 \implies \text{raw} = -4.6245 \implies 10 - 9\frac{-4.6245+7.0}{7.0} = \mathbf{6.9458}$ (<code>-0.2571</code> 개선, 기존 27종 악화 0건)</li>
+              <li><strong>③ (오류 대조) <code>0.0</code> 덮어쓰기 함정:</strong> Cp 2개 비트를 <code>0.0</code>으로 덮어쓰면 Eq. (12) <code>&lt; 0</code> 필터에서 탈락해 분모가 $n_{\text{neg}}=5$로 축소됨.<br>
+                $\text{BR-frag} = \frac{5(-6.0)}{5} = -6.0000 \implies \text{raw} = -6.2045 \implies \mathbf{8.9772}$ (<code>+1.7743</code> 역전 악화)</li>
+              <li><strong>④ 완전 외삽 (Pro-ligand 분리 + <code>TMC-SA</code>):</strong> <code>Ti</code> 중심을 분리한 <code>Me2NH</code>(<code>BR=1.02</code>)와 <code>HCp</code>(<code>BR=3.33</code>)는 모두 사전 내에 등재되어 <code>ligand_sa = 3.31</code>($\le 3.5$ 통과)을 산출하고, <code>SevenNet-0</code> 물리 지표가 금속-리간드 안정성을 결합해 미지 프리커서에서도 높은 외삽 정합성을 달성함.</li>
+            </ul>
+          </div>
+        </div>
       </section>
     """
 
