@@ -2131,8 +2131,8 @@
           <span class="toc-progress" id="brtTocProgress">Sec 1/2</span>
         </div>
         <ul class="toc-list">
-          <li><a href="#brt-sec1" class="toc-link active" data-target="brt-sec1">1. 2009 SAScore 원리 및 SMILES 재구성 이슈</a></li>
-          <li><a href="#brt-sec2" class="toc-link" data-target="brt-sec2">2. BR-SAScore: 원리 &middot; 학습 DB &middot; 반도체 확장</a></li>
+          <li><a href="#brt-sec1" class="toc-link active" data-target="brt-sec1">1. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈</a></li>
+          <li><a href="#brt-sec2" class="toc-link" data-target="brt-sec2">2. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거</a></li>
         </ul>
         <div style="margin-top:10px; padding:10px 12px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; font-size:0.75rem; line-height:1.7;">
           <strong style="color:#334155;">Sec 2 (BR-SAScore) 바로가기</strong><br>
@@ -2141,7 +2141,7 @@
           <a href="#brt-sub23" style="color:#0369a1; text-decoration:none;">2.3 eMolecules &middot; USPTO (331k)</a><br>
           <a href="#brt-sub24" style="color:#0369a1; text-decoration:none;">2.4 코드 해부 &amp; 2D 기여도 맵</a><br>
           <a href="#brt-sub25" style="color:#0369a1; text-decoration:none;">2.5 TS1~TS3 벤치마크 비교</a><br>
-          <a href="#brt-sub26" style="color:#0369a1; text-decoration:none;">2.6 타 모델 대비 베이스 선정 근거 &amp; TMC-SA</a>
+          <a href="#brt-sub26" style="color:#0369a1; text-decoration:none;">2.6 베이스 모델로 BR-SAScore (2024) 선정 근거</a>
         </div>
         <div class="toc-sub-actions">
           <button type="button" class="btn-toc-utility" onclick="switchViewTab('storyline')">요약 탭으로 이동</button>
@@ -7978,7 +7978,7 @@ flowchart TD
         unseenPct: 0,
         comp: 0.01,
         buf: 1.0,
-        note: '* MeOH (CO) 실측 예: 원자 2개라 R=2 환경 0개 -> BR-fragmentScore = 0.0 -> SizeComplexity ~0.007 차감 후 1.01 (2009 SAScore 2.70의 소분자 편향을 해소).'
+        note: '* MeOH (CO) 실측 예: 원자 2개라 R=2 환경 0개 -> BR-fragmentScore = 0.0 -> SizeComplexity ~0.007 차감 후 1.01 (SAScore (2009) 모델 2.70의 소분자 편향을 해소).'
       }
     };
 

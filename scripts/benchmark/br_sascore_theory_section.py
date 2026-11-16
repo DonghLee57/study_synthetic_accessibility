@@ -26,7 +26,8 @@ from typing import Any, Dict, List, Tuple
 
 import BRSAScore
 from rdkit import Chem
-from rdkit.Chem import RDConfig, rdMolDescriptors
+from rdkit.Chem import RDConfig, rdDepictor, rdMolDescriptors
+from rdkit.Chem.Draw import rdMolDraw2D
 
 sys.path.insert(0, os.path.join(RDConfig.RDContribDir, "SA_Score"))
 import sascorer  # type: ignore
@@ -36,7 +37,7 @@ BR_PAPER_DOI = "10.1186/s13321-024-00879-0"
 SA_2009_DOI = "10.1186/1758-2946-1-8"
 DEFAULT_FRAG_PENALTY = -6.0  # units: dimensionless log-frequency floor
 DEFAULT_PENALTY_BUFFER = 1.0  # units: dimensionless normalization buffer
-RADIUS_ECFP = 2  # units: topological bond hops (ECFP4 diameter = 4)
+RADIUS_MORGAN = 2  # units: topological bond radius (r = 2)
 
 
 def compute_vanilla_sascore_issues() -> Dict[str, Any]:
@@ -326,8 +327,8 @@ def compute_br_worked_examples() -> List[Dict[str, Any]]:
         br_val = float(br_score)  # units: 1-10 BR-SA scale
 
         bi: Dict[int, List[Tuple[int, int]]] = {}
-        fps = rdMolDescriptors.GetMorganFingerprint(mol, RADIUS_ECFP, useChirality=True, bitInfo=bi)
-        r2_bits = [b for b, vs in bi.items() if vs[0][1] == RADIUS_ECFP]
+        fps = rdMolDescriptors.GetMorganFingerprint(mol, RADIUS_MORGAN, useChirality=True, bitInfo=bi)
+        r2_bits = [b for b, vs in bi.items() if vs[0][1] == RADIUS_MORGAN]
         unseen_cnt = sum(1 for val in contribs.values() if float(val) <= -5.999)
 
         svg_raw = scorer.contribution_to_svg(smi, contribs)
@@ -357,6 +358,68 @@ def compute_br_worked_examples() -> List[Dict[str, Any]]:
             }
         )
     return results
+
+
+def _build_morgan_fingerprint_2d_svg() -> str:
+    """
+    Generate a 2D RDKit structural diagram of ``Hf(OMe)3(acac)`` highlighting
+    Morgan Fingerprint circular shells around the central ``Hf`` atom
+    (``r=0`` center, ``r=1`` 1-bond shell, ``r=2`` 2-bond shell).
+    """
+    smi = "CO[Hf]1(OC)(OC)OC(C)=CC(C)=O->1"
+    mol = Chem.MolFromSmiles(smi)
+    assert mol is not None
+    rdDepictor.Compute2DCoords(mol)
+
+    center_idx = next(a.GetIdx() for a in mol.GetAtoms() if a.GetSymbol() == "Hf")
+    r1_atoms = {nb.GetIdx() for nb in mol.GetAtomWithIdx(center_idx).GetNeighbors()}
+    r2_atoms = {
+        nb2.GetIdx()
+        for n1 in r1_atoms
+        for nb2 in mol.GetAtomWithIdx(n1).GetNeighbors()
+    } - r1_atoms - {center_idx}
+
+    atom_colors: Dict[int, Tuple[float, float, float, float]] = {
+        center_idx: (0.90, 0.22, 0.27, 0.55),
+    }
+    for idx in r1_atoms:
+        atom_colors[idx] = (0.96, 0.62, 0.04, 0.45)
+    for idx in r2_atoms:
+        atom_colors[idx] = (0.01, 0.52, 0.78, 0.30)
+
+    hl_atoms = [center_idx] + sorted(r1_atoms) + sorted(r2_atoms)
+    hl_bonds: List[int] = []
+    bond_colors: Dict[int, Tuple[float, float, float, float]] = {}
+    for b in mol.GetBonds():
+        u, v = b.GetBeginAtomIdx(), b.GetEndAtomIdx()
+        if u == center_idx or v == center_idx:
+            hl_bonds.append(b.GetIdx())
+            bond_colors[b.GetIdx()] = (0.96, 0.62, 0.04, 0.50)
+        elif (u in r1_atoms and v in r2_atoms) or (v in r1_atoms and u in r2_atoms):
+            hl_bonds.append(b.GetIdx())
+            bond_colors[b.GetIdx()] = (0.01, 0.52, 0.78, 0.40)
+
+    drawer = rdMolDraw2D.MolDraw2DSVG(320, 210)
+    opts = drawer.drawOptions()
+    opts.bondLineWidth = 2.5
+    opts.highlightRadius = 0.38
+    prep = rdMolDraw2D.PrepareMolForDrawing(mol)
+    drawer.DrawMolecule(
+        prep,
+        highlightAtoms=hl_atoms,
+        highlightBonds=hl_bonds,
+        highlightAtomColors=atom_colors,
+        highlightBondColors=bond_colors,
+    )
+    drawer.FinishDrawing()
+    svg_raw = drawer.GetDrawingText().replace("svg:", "")
+    svg_start = svg_raw.find("<svg")
+    svg_clean = svg_raw[svg_start:] if svg_start >= 0 else svg_raw
+    return (
+        svg_clean.replace("\t", " ")
+        .replace("width='320px' height='210px'", "style='width:100%; max-width:320px; height:auto; display:block; margin:0 auto;'")
+        .strip()
+    )
 
 
 def _build_vanilla_reconstruction_rows_html(vanilla_data: Dict[str, Any]) -> Tuple[str, str]:
@@ -442,7 +505,7 @@ def _build_fragment_distribution_svg(stats: Dict[str, Any]) -> str:
 
     venn_svg = (
         f'<text x="{x0:.1f}" y="{y_ov - 10:.1f}" font-size="10.5" font-weight="700" fill="#0f172a">'
-        f'ECFP4 (Radius=2) 사전 집합 분할: 총 {ov["union"]:,}개 고유 조각 = B 전용 + B∩R + R 전용</text>'
+        f'Morgan Fingerprint (r=2) 사전 집합 분할: 총 {ov["union"]:,}개 고유 조각 = B 전용 + B∩R + R 전용</text>'
         f'<rect x="{x0:.1f}" y="{y_ov:.1f}" width="{w_bo:.1f}" height="24" fill="#0284c7" />'
         f'<rect x="{x0 + w_bo:.1f}" y="{y_ov:.1f}" width="{w_both:.1f}" height="24" fill="#7c3aed" />'
         f'<rect x="{x0 + w_bo + w_both:.1f}" y="{y_ov:.1f}" width="{w_ro:.1f}" height="24" fill="#d97706" />'
@@ -496,11 +559,11 @@ def _build_worked_example_cards_html(examples: List[Dict[str, Any]]) -> str:
               </div>
               <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:6px; font-size:0.75rem; text-align:center;">
                 <div style="background:#f1f5f9; padding:5px; border-radius:6px;">
-                  <div style="color:#64748b;">2009 SA</div>
+                  <div style="color:#64748b;">SAScore (2009)</div>
                   <strong style="color:#0f172a;">{ex["sa_2009"]:.2f}</strong>
                 </div>
                 <div style="background:#eff6ff; padding:5px; border-radius:6px;">
-                  <div style="color:#1d4ed8;">BR - 2009</div>
+                  <div style="color:#1d4ed8;">BR - (2009)</div>
                   <strong style="color:#1e40af;">{delta_sign}{delta:.2f}</strong>
                 </div>
                 <div style="background:#fef2f2; padding:5px; border-radius:6px;">
@@ -630,6 +693,7 @@ def build_br_sascore_theory_html() -> str:
     """
     vanilla_data = compute_vanilla_sascore_issues()
     vanilla_complex_rows_html, vanilla_ligand_rows_html = _build_vanilla_reconstruction_rows_html(vanilla_data)
+    morgan_2d_svg = _build_morgan_fingerprint_2d_svg()
 
     stats = compute_br_pickle_statistics()
     examples = compute_br_worked_examples()
@@ -643,99 +707,114 @@ def build_br_sascore_theory_html() -> str:
     ov = stats["overlap"]
 
     html_template = r"""
-      <div class="card" style="margin-bottom:22px; background:linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 100%); border:1px solid #c7d2fe; padding:22px 26px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
-          <span class="badge badge-3g" style="font-size:0.78rem;">Background Theory &bull; Base SA Model Foundations</span>
-          <span style="font-size:0.8rem; color:#4338ca; font-weight:700;">
-            Ertl &amp; Schuffenhauer (2009, DOI: __SA_2009_DOI__) &rarr; Chen &amp; Jung (2024, DOI: __BR_PAPER_DOI__)
-          </span>
-        </div>
-        <h2 style="font-size:1.58rem; font-weight:800; color:#0f172a; margin:0 0 8px 0;">
-          반도체 SA 배경이론: 2009 SAScore 재구성 이슈부터 BR-SAScore까지
-        </h2>
-        <p style="font-size:0.92rem; color:#334155; line-height:1.65; margin:0;">
-          본 탭은 반도체 소재 합성 용이성(SA) 평가 체계를 이해하기 위한 기초 이론 가이드입니다. <strong>섹션 1</strong>에서 2009 <code>SAScore</code> 바닐라 모델의 원리와 동일 착물에서도 <code>SMILES</code> 그래프 재구성에 따라 점수가 달라지는(예: <code>5.179 / 5.491 / 6.74</code> 수준 변동) 이슈를 정리하고, <strong>섹션 2</strong>에서 현재 베이스 모델인 <code>BR-SAScore</code>의 수식(Eq. 8~13), 학습 데이터셋(<code>331,332</code> 조각), 소스코드 및 반도체 확장 논리를 한 섹션으로 통합 해설합니다.
+      <div class="card" style="margin-bottom:22px; background:linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 100%); border:1px solid #c7d2fe; padding:20px 24px;">
+        <p style="font-size:0.92rem; color:#334155; line-height:1.68; margin:0;">
+          반도체 SA 모델을 이해하기 위한 기초 이론 가이드입니다. 섹션 1에서 SAScore (2009) 바닐라 모델의 원리와 동일 금속 복합체(metal complex)에서도 SMILES 그래프 재구성에 따라 점수가 달라지는 이슈를 정리하고, 섹션 2에서 현재 베이스 모델인 BR-SAScore (2024)의 원리, 학습 데이터셋, 소스코드 및 베이스 모델 선정 근거를 통합적으로 해설합니다.
         </p>
       </div>
 
-      <!-- SECTION 1: 2009 SASCORE VANILLA ISSUES -->
+      <!-- SECTION 1: SASCORE (2009) VANILLA ISSUES -->
       <section id="brt-sec1">
         <div class="section-header">
           <div class="section-tag">Background Section 01</div>
-          <h2 class="section-title">1. 2009 SAScore 바닐라 원리, 착물-리간드 괴리 및 SMILES 재구성 이슈 (5.179 / 5.491 / 6.74)</h2>
+          <h2 class="section-title">1. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈</h2>
         </div>
 
         <p style="line-height:1.72; color:#334155;">
-          Ertl &amp; Schuffenhauer(2009)의 <code>SAScore</code>는 PubChem 대표 1% 샘플(<strong>934,046종</strong>)에서 추출한 Morgan Fingerprint(Radius 0~2) 출현 빈도 <code>fpscores.pkl.gz</code>를 기반으로 합니다. 하지만 이를 반도체용 전이금속 착물(예: $\text{Hf}$ 계열 ALD 프리커서)에 그대로 적용하면 두 가지 근본 이슈가 드러납니다.
+          Ertl &amp; Schuffenhauer가 제안한 <code>SAScore (2009)</code> 모델은 PubChem 대표 1% 샘플(934,046종)에서 추출한 Morgan Fingerprint(r&le;2) 출현 빈도 <code>fpscores.pkl.gz</code>를 기반으로 합니다. 하지만 이를 반도체용 프리커서에 그대로 적용하면 두 가지 근본 이슈가 드러납니다.
         </p>
+
+        <div class="callout-info" style="margin:10px 0 14px 0; background:#f8fafc; border-color:#cbd5e1;">
+          <strong style="font-size:0.94rem; color:#0f172a;">*Morgan Fingerprint</strong>
+          <div style="display:grid; grid-template-columns:minmax(260px, 1.35fr) minmax(240px, 1fr); gap:16px; align-items:center; margin-top:8px;">
+            <ul style="margin:0 0 0 18px; line-height:1.68; font-size:0.84rem; color:#334155;">
+              <li><strong>원형 부분구조 해싱 (Circular Substructure Hashing):</strong> 분자 그래프에서 각 원자를 중심으로 결합 거리 반경 $r = 0, 1, 2$ 이내 이웃 원자들의 원소 종류&middot;원자가&middot;결합 차수&middot;방향족성&middot;고리 포함 여부를 순차적으로 집계해 고유 정수 해시 ID(<code>bitId</code>)로 변환하는 원형 분자 지문입니다.</li>
+              <li><strong>반경별 의미와 재구성 민감도:</strong> <code>Radius 0</code>(적색 중심 원자)은 단일 원자 자체, <code>Radius 1</code>(주황 1차 이웃)은 직접 결합한 원자(예: $\text{Hf--O}$ vs $\text{Hf--C}$), <code>Radius 2</code>(청색 2차 이웃)는 2결합 떨어진 고리&middot;치환기 맥락(예: <code>acac</code> 6원 킬레이트 닫힘, $\eta^5$-<code>Cp</code>, <code>AddHs</code> 명시적 수소)을 포착합니다. 따라서 같은 금속 복합체라도 그래프 연결을 재구성하면 생성되는 <code>Radius 1~2</code> 해시 ID가 달라져 사전 조회 점수가 즉시 바뀝니다.</li>
+            </ul>
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:10px; text-align:center;">
+              __MORGAN_2D_SVG__
+              <div style="font-size:0.74rem; color:#475569; margin-top:6px; line-height:1.45;">
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#e63946; margin-right:3px;"></span><strong>r=0</strong> 중심(Hf) &nbsp;
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#f59e0b; margin-right:3px;"></span><strong>r=1</strong> 1-결합(O) &nbsp;
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#0284c7; margin-right:3px;"></span><strong>r=2</strong> 2-결합(C)
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="grid-2" style="margin:12px 0;">
           <div class="card">
-            <h4 style="margin:0 0 8px 0; color:#1e3a8a;">1.1 2009 SAScore 수식과 정규화 규격 (Eq. 1~7)</h4>
+            <h4 style="margin:0 0 8px 0; color:#1e3a8a;">1.1 SAScore (2009) 모델의 수식과 정규화 규격</h4>
             <div style="font-size:0.85rem; line-height:1.68; color:#334155;">
               <p>$$\text{SAScore}_{\text{raw}} = \text{fragmentScore} - \text{complexityPenalty} + \text{score}_3 \tag{1}$$</p>
               <p>$$\text{complexityPenalty} = (n_{\text{At}}^{1.005} - n_{\text{At}}) + \log_{10}(n_{\text{Chiral}}+1) + \log_{10}(n_{\text{Bridge}}+1) + \log_{10}(n_{\text{Spiro}}+1) + \log_{10}(n_{\text{Macro}}+1)$$</p>
-              <p>$$\text{SAScore}_{\text{full}} = 10 - 9 \cdot \operatorname{clip}_{[0,1]}\!\left(\frac{\text{SAScore}_{\text{raw}} - (-4.0)}{2.5 - (-4.0)}\right) \in [1, 10]$$</p>
+              <p>$$\text{SAScore}_{\text{full}} = 11 - \frac{\text{SAScore}_{\text{raw}} - (-4.0) + 1}{2.5 - (-4.0)} \times 9 = 11 - \frac{\text{SAScore}_{\text{raw}} + 5.0}{6.5} \times 9$$</p>
               <p style="font-size:0.79rem; color:#64748b; margin-bottom:0;">
-                * <code>fpscores.pkl.gz</code>에 없는 희귀/금속 비트는 바닥값 <code>-4.0</code>을 받으며, 대칭 분자에서는 <code>score3 = log(nAtoms / len(fps)) * 0.5</code>가 가산됩니다.
+                * <code>fpscores.pkl.gz</code> 미등재 희귀/금속 비트는 바닥값 <code>-4.0</code>을 받으며, 대칭 분자에서는 <code>score3 = 0.5*ln(nAtoms / len(fps))</code>가 가산되고, 최종값이 $8.0$ 초과 시 <code>8 + ln(SA - 8)</code> 완만 압축을 거쳐 $[1, 10]$ 범위로 클리핑됩니다. <strong>점수가 $1.0$에 가까울수록 합성이 용이(Easy)하고 $10.0$에 가까울수록 합성이 난해(Hard)하며, 일반적으로 $3.5$ 이하를 합성 가능(Pass) 기준으로 해석합니다.</strong>
               </p>
             </div>
           </div>
 
           <div class="card" style="background:#fffbeb; border-color:#fde68a;">
-            <h4 style="margin:0 0 8px 0; color:#92400e;">1.2 핵심 이슈: 왜 같은 SMILES 벡터여도 5.179 / 5.491 / 6.74처럼 차이가 나는가?</h4>
-            <ol style="font-size:0.84rem; color:#334155; line-height:1.65; padding-left:18px; margin:0;">
-              <li><strong>킬레이트(&rarr;)·$\eta^5$-Cp 토폴로지 재구성:</strong> <code>acac</code>를 단좌 개방형으로 두는지 6원 킬레이트 고리로 닫는지(<code>Hf(acac)4</code>: <code>4.1933</code> &rarr; <strong><code>5.4854</code></strong>), 또 <code>Cp</code>를 $\eta^1$-단일결합(<code>5.4320</code>)으로 둘지 $\eta^5$ 5중 배위(<strong><code>6.4305</code></strong>)로 잇는지에 따라 <code>Hf</code> 중심의 브리지/다중고리 환경과 <code>fragmentScore</code>가 급변합니다. 외부 발표 순위(<code>5.179 &lt; 5.491 &lt; 6.74</code>)는 <code>Hf(OMe)3(acac) &lt; Hf(acac)4 &lt; HfCp(OMe)(acac)2</code>를 킬레이트+$\eta^5$ 고배위로 재구성한 방향과 일치합니다.</li>
-              <li><strong>명시적 수소(<code>AddHs</code>) 미제거:</strong> 3D 좌표 복원·양자화 과정에서 <code>AddHs</code> 상태로 계산하면 수소가 <code>nAtoms</code>와 비트에 들어가 점수가 <strong><code>+1.6~1.8점</code></strong> 급등합니다(<code>5.2957 &rarr; 6.9182</code>).</li>
-              <li><strong>입체·키랄성 및 형식 전하 표현:</strong> 3D 재구성 후 <code>FindMolChiralCenters</code>가 팔면체/금속 중심 키랄성(<code>@</code>/<code>@@</code>)을 잡으면 <code>stereoPenalty</code>가 추가되며, 이온 해리형(<code>3.9056</code>) vs 화살표 배위형(<code>5.2957</code>) vs 양쪽성이온(<code>5.9539</code>)에 따라 사전 룩업 비트가 바뀝니다.</li>
+            <h4 style="margin:0 0 8px 0; color:#92400e;">1.2 SMILES 재구성 이슈</h4>
+            <ol style="font-size:0.84rem; color:#334155; line-height:1.62; padding-left:18px; margin:0 0 10px 0;">
+              <li><strong>킬레이트(&rarr;)·$\eta^5$-Cp 토폴로지 재구성:</strong> <code>acac</code>를 단좌 개방형으로 두는지 6원 킬레이트로 닫는지(<code>Hf(acac)4</code>: <code>4.1933 &rarr; 5.4854</code>), <code>Cp</code>를 $\eta^1$(<code>5.4320</code>)에서 $\eta^5$ 5중 배위(<code>6.4305</code>)로 연결하는지에 따라 <code>fragmentScore</code>와 고리 패널티가 급변합니다. 외부 발표 순위(<code>5.179 &lt; 5.491 &lt; 6.74</code>)도 고배위 재구성 방향과 일치합니다.</li>
+              <li><strong>명시적 수소(<code>AddHs</code>) &middot; 입체/전하 처리:</strong> <code>AddHs</code> 미제거 시 수소가 $n_{\text{At}}$와 지문 비트에 합산되어 점수가 급등하고(<code>+1.62</code>), 키랄 중심 인식 및 이온/양쪽성이온 표기에 따라 룩업 비트가 바뀝니다.</li>
             </ol>
-          </div>
-        </div>
-
-        <h4 style="margin:14px 0 8px 0; font-size:0.96rem; color:#0f172a;">
-          1.3 Hf 착물 3종 SMILES 재구성별 Vanilla 2009 <code>SAScore</code> 실측 비교 vs 무료 프로리간드($HL_i$) 점수
-        </h4>
-        <div class="table-wrap" style="margin-bottom:14px;">
-          <table>
-            <thead>
-              <tr>
-                <th>착물</th>
-                <th>SMILES 그래프 재구성 방식</th>
-                <th>원자 수 ($N_{\text{at}}$)</th>
-                <th>Size Penalty</th>
-                <th>2009 SAScore</th>
-                <th>재구성 편차 원인 (RDKit 2023.09.6 실측)</th>
-              </tr>
-            </thead>
-            <tbody>
-              __VANILLA_COMPLEX_ROWS__
-            </tbody>
-          </table>
-        </div>
-
-        <div class="grid-2">
-          <div class="card">
-            <h4 style="margin:0 0 8px 0; color:#0f766e;">중성 프로리간드($HL_i$) 기준 2009 SAScore</h4>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr><th>리간드 음이온</th><th>프로리간드</th><th>SMILES</th><th>원자 수</th><th>2009 SA</th><th>해설</th></tr>
-                </thead>
-                <tbody>
-                  __VANILLA_LIGAND_ROWS__
-                </tbody>
-              </table>
+            <div style="background:#fff; border:1px solid #fcd34d; border-radius:6px; padding:9px 11px; font-size:0.78rem; color:#334155; line-height:1.58;">
+              <strong style="color:#92400e;">재구성 방식별 명시적 계산 비교 (RDKit 실측 항 대입):</strong>
+              <ul style="margin:4px 0 0 16px; padding:0;">
+                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Open]:</strong> $\text{frag}=-0.206,\; \text{comp}=0.186,\; s_3=0.000\; (n_{\text{At}}\le |\text{FP}|) \implies \text{raw}=-0.392 \implies 11 - \frac{-0.392+5.0}{6.5}\times 9 = \mathbf{4.6201}$</li>
+                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Chelate &rarr;]:</strong> 고리 닫힘으로 $\text{frag}=-0.694,\; \text{comp}=0.186,\; s_3=0.000 \implies \text{raw}=-0.880 \implies 11 - \frac{-0.880+5.0}{6.5}\times 9 = \mathbf{5.2957}$</li>
+                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Chelate+AddHs]:</strong> H 16개 포함($n_{\text{At}}=30$) $\text{frag}=-2.616,\; \text{comp}=0.515,\; s_3=0.053 \implies \text{raw}=-3.078 \implies \mathbf{6.9182}$</li>
+                <li><strong>HfCp(OMe)(acac)<sub>2</sub> [&eta;<sup>5</sup>-Cp]:</strong> $\text{frag}=-1.056,\; \text{comp}=0.644\text{ (ring }0.301\text{ 포함)},\; s_3=0.000 \implies \text{raw}=-1.700 \implies \mathbf{6.4305}$</li>
+              </ul>
             </div>
           </div>
+        </div>
 
-          <div class="card" style="background:#f8fafc;">
-            <h4 style="margin:0 0 8px 0; color:#0f172a;">1.4 SAScore 이슈가 반도체 SA 설계에 주는 시사점</h4>
-            <ul style="font-size:0.84rem; color:#334155; line-height:1.68; margin:0; padding-left:18px;">
-              <li><strong>리간드-착물 점수 괴리:</strong> <code>MeOH (2.70)</code>, <code>Hacac (2.17~2.68)</code>, <code>HCp (3.31)</code>는 모두 합성이 쉬운 범용 시약임에도, <code>Hf</code> 중심과 결합한 전체 착물 SMILES에서는 배위 표기법만으로 <code>3.91 ~ 6.92</code>까지 요동칩니다.</li>
-              <li><strong>단일 그래프 의존성의 한계:</strong> 따라서 전체 SMILES 1개만 보고 SA를 판정하면 <em>실제 합성 난이도</em>가 아니라 <strong>SMILES 인코딩 관습(dative vs ionic vs hapticity)</strong>을 평가하게 됩니다.</li>
-              <li><strong>개선 방향:</strong> 섹션 2의 <code>BR-SAScore</code>로 유기 조각 기반을 eMolecules+USPTO로 고도화하는 동시에, 금속 착물에서는 Section 2.6의 <strong>Pro-ligand 분리 + 물리 Descriptor(<code>TMC-SA</code>)</strong> 결합이 필수적입니다.</li>
-            </ul>
+        <div class="card" style="margin:12px 0;">
+          <h4 style="margin:0 0 10px 0; color:#0f172a;">
+            1.3 Hf 프리커서 3종 SMILES 재구성별 <code>SAScore (2009)</code> 모델 실측 비교 vs 단독(미배위) 프로리간드($HL_i$) 점수
+          </h4>
+          <div class="table-wrap" style="margin-bottom:14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>금속 복합체 (Precursor)</th>
+                  <th>SMILES 그래프 재구성 방식</th>
+                  <th>원자 수 ($N_{\text{at}}$)</th>
+                  <th>Size Penalty</th>
+                  <th>SAScore (2009)</th>
+                  <th>재구성 편차 원인 (RDKit 2023.09.6 실측)</th>
+                </tr>
+              </thead>
+              <tbody>
+                __VANILLA_COMPLEX_ROWS__
+              </tbody>
+            </table>
           </div>
+
+          <h4 style="margin:10px 0 8px 0; color:#0f766e; font-size:0.94rem;">
+            단독(미배위) 프로리간드($HL_i$) 기준 SAScore (2009) 모델 실측
+          </h4>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>리간드 음이온</th><th>프로리간드</th><th>SMILES</th><th>원자 수</th><th>SAScore (2009)</th><th>해설</th></tr>
+              </thead>
+              <tbody>
+                __VANILLA_LIGAND_ROWS__
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="background:#f8fafc; margin-top:12px;">
+          <h4 style="margin:0 0 8px 0; color:#0f172a;">1.4 Summary</h4>
+          <p style="font-size:0.86rem; color:#334155; line-height:1.74; margin:0;">
+            <code>MeOH (2.7010)</code>, <code>Hacac (2.1725~2.6758)</code>, <code>HCp (3.3069)</code>는 모두 실험실 및 공정에서 널리 활용되는 합성 용이 리간드임에도 불구하고, 이를 <code>Hf</code> 중심 원자와 결합한 전체 금속 복합체(metal complex) <code>SMILES</code>로 인코딩해 <code>SAScore (2009)</code> 모델에 입력하면 킬레이트 고리 닫힘, $\eta^5$ 배위 표기, 이온 해리, 명시적 수소(<code>AddHs</code>) 처리 등 그래프 재구성 방식에 따라 동일 화합물의 점수가 <code>3.9056</code>에서 <code>6.9182</code>까지 크게 요동칩니다. 이는 단일 분자 그래프 기반의 기존 모델이 실제 화학적 합성 난이도보다 <code>SMILES</code> 표기 관습과 PubChem 유기 조각 결손을 반영함을 시사하며, 따라서 섹션 2의 <code>BR-SAScore (2024)</code> 모델 도입과 함께 금속-리간드 분리 기반의 <strong>Pro-ligand + 물리 Descriptor(<code>TMC-SA</code>)</strong> 결합 체계로의 전환이 필수적입니다.
+          </p>
         </div>
       </section>
 
@@ -743,29 +822,39 @@ def build_br_sascore_theory_html() -> str:
       <section id="brt-sec2">
         <div class="section-header">
           <div class="section-tag">Background Section 02</div>
-          <h2 class="section-title">2. BR-SAScore: 수학적 원리 &middot; 학습 데이터셋(331k) &middot; 코드 해부 및 반도체 확장</h2>
+          <h2 class="section-title">2. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거</h2>
         </div>
 
         <p style="line-height:1.72; color:#334155;">
-          <strong><code>BR-SAScore</code></strong>(Building-block &amp; Reaction-driven SAScore; Chen &amp; Jung, 2024)는 2009 <code>SAScore</code>가 PubChem 단일 출현 빈도에만 의존하고 CASP 역합성(<code>Retro*</code>, <code>AiZynthFinder</code>)이 분자당 수 초~수십 초로 느린 공백을 메우기 위해, 역합성의 두 핵심 축인 <strong>① 상용 출발물질($B$, eMolecules)과 ② 반응 형성 결합($R$, USPTO)</strong>을 분리해 <code>0.42 ms/mol</code>(CPU) 속도로 평가하는 3세대 하이브리드 모델입니다.
+          <code>BR-SAScore (2024)</code> 모델은 역합성의 두 핵심 축인 ① 상용 출발물질($B$, eMolecules)과 ② 반응 형성 결합($R$, USPTO)을 분리해 평가하는 3세대 하이브리드 모델입니다. 다른 1G~4G 모델과 달리 원소 결손(OOV)&middot;All-Zero 침묵 붕괴 없이 결정론적으로 동작하고, 위험 대조군 오탐(False Positive)을 1차 차단하며, 신경망 재학습 없이 <code>_fscores</code> 해시 사전에 도메인 시약만 누설 없이 확장(<code>max(existing, -0.47)</code>)할 수 있어 본 연구의 베이스 모델로 선정되었습니다.
         </p>
 
         <!-- 2.1 Architecture Flowchart -->
         <h3 id="brt-sub21" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:18px 0 8px 0;">
           2.1 B/R 분리 아키텍처 파이프라인
         </h3>
-        <div class="mermaid">
-flowchart LR
-  M["Target Molecule m"] --> ECFP["ECFP4 radius=2, useChirality=True Atom Environments"]
-  ECFP --> B["BScore Dict<br/>eMolecules 231M<br/>244,572 keys"]
-  ECFP --> R["RScore Dict<br/>USPTO ~1M, 2^-d<br/>175,186 keys"]
-  B --> MAX["Eq.11 Env Fusion<br/>max B_i, R_i else -6"]
+        <div class="mermaid-card clickable-card" id="card-brt-pipeline" onclick="openDiagramModal('brt-pipeline-container', 'BR-SAScore (2024) B/R 분리 아키텍처 파이프라인')" title="클릭하여 팝업 확대 보기">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-title">다이어그램: BR-SAScore (2024) B/R 분리 아키텍처 파이프라인 (클릭 시 확대)</span>
+            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
+          </div>
+          <div class="mermaid-viewport" id="viewport-brt-pipeline">
+            <div class="mermaid-svg-container" id="brt-pipeline-container" style="width:100%;">
+              <div class="mermaid" id="brt-pipeline-svg">
+flowchart TD
+  M["Target Molecule m"] --> MFP["Morgan Fingerprint (r=2, useChirality=True)"]
+  M --> COMP["ComplexityPenalty (Size, Stereo, Ring, Macro)"]
+  MFP --> B["BScore Dict: eMolecules 231M (244,572 keys)"]
+  MFP --> R["RScore Dict: USPTO ~1M, 2^-d (175,186 keys)"]
+  B --> MAX["Eq.11 Fusion: max(B_i, R_i) else -6"]
   R --> MAX
-  MAX --> NEG["Eq.12 Negative Mean<br/>avg over Score_i &lt; 0"]
-  M --> COMP["ComplexityPenalty<br/>Size, Stereo, Ring, Macro"]
-  NEG --> RAW["Eq.8 BR_frag - Comp"]
+  MAX --> NEG["Eq.12 Negative Mean: avg over Score_i &lt; 0"]
+  NEG --> RAW["Eq.8 Raw = BR_frag - Comp"]
   COMP --> RAW
-  RAW --> NORM["Eq.13 Scale 1..10<br/>Buffer=1.0, Div=7"]
+  RAW --> NORM["Eq.13 Scale [1, 10] (Buffer=1.0, Div=7)"]
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 2.2 Equations & Simulator -->
@@ -796,15 +885,15 @@ flowchart LR
         </div>
         __SIM_HTML__
 
-        <!-- 2.3 Training Corpora & Pickle Audit -->
+        <!-- 2.3 Training Datasets & Pickle Audit -->
         <h3 id="brt-sub23" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
-          2.3 학습&middot;구축 데이터셋 해부: eMolecules (231M) &middot; USPTO (~1M) &middot; __BR_COUNT__ 조각 사전
+          2.3 학습&middot;구축 데이터셋 해부
         </h3>
         <div class="table-wrap" style="margin:10px 0;">
           <table>
             <thead>
               <tr>
-                <th>구축 코퍼스 / 파일</th>
+                <th>데이터셋 / 파일</th>
                 <th>원천 데이터 규모</th>
                 <th>조각 추출 &amp; 가중 규칙</th>
                 <th>최종 사전 키 수</th>
@@ -822,7 +911,7 @@ flowchart LR
               <tr>
                 <td><strong>R-Dataset</strong><br><code>RScores_uspto.pkl.gz</code></td>
                 <td><strong>약 100만 건 (~1M)</strong><br>Lowe USPTO 특허 반응</td>
-                <td>반응 중심($d=0$)~2홉($d \in \{0,1,2\}$)에 $w = 2^{-d}$ 가중<br>단일 출현($\le 1$) 제거</td>
+                <td>반응 중심($d=0$)~2결합 거리($d \in \{0,1,2\}$)에 $w = 2^{-d}$ 가중<br>단일 출현($\le 1$) 제거</td>
                 <td style="text-align:right; font-weight:800; color:#b45309;">__R_COUNT__</td>
                 <td>[__R_MIN__, __R_MAX__]<br>평균 __R_MEAN__ (음수 __R_NEG_PCT__%)</td>
               </tr>
@@ -862,7 +951,7 @@ flowchart LR
             <ul style="font-size:0.83rem; color:#334155; line-height:1.66; margin:0; padding-left:18px;">
               <li><strong>Aspirin:</strong> 유효 반경-2 원자 3개 $(-0.82 - 0.98 - 0.23)/3 = -0.68$, 복잡도 $0.17$ &rarr; Raw $-0.85$ &rarr; <strong>정규화 2.09</strong> (논문 = 본 저장소 실측 2.09 정확 일치).</li>
               <li><strong>AI-proposed 분자 [Gao et al., 5]:</strong> 평가 조각 전부 $B \cup R$ 미등재(<code>-6.0</code>), 복잡도 $0.10$ &rarr; Raw $-6.10$ &rarr; <strong>8.84 (Hard)</strong>.</li>
-              <li><strong>케토-에놀 민감도 실측:</strong> <code>Hacac(keto)</code>는 2009 SA에서 <code>2.17</code>이지만 <code>BR-SAScore</code>에선 중앙 <code>-CH2-</code> 1개가 사전 미등재(<code>-6.0</code>)에 걸려 <code>5.20</code>으로 과대 패널티가 발생합니다.</li>
+              <li><strong>케토-에놀 민감도 실측:</strong> <code>Hacac(keto)</code>는 <code>SAScore (2009)</code> 모델에서 <code>2.17</code>이지만 <code>BR-SAScore</code>에선 중앙 <code>-CH2-</code> 1개가 사전 미등재(<code>-6.0</code>)에 걸려 <code>5.20</code>으로 과대 패널티가 발생합니다.</li>
             </ul>
           </div>
         </div>
@@ -937,21 +1026,21 @@ flowchart LR
 
         <!-- 2.6 Why BR-SAScore Beats Competitors & Semiconductor Domain Bridge -->
         <h3 id="brt-sub26" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
-          2.6 왜 다른 1G~4G 모델을 제치고 BR-SAScore를 베이스로 삼았는가? (경쟁 모델 대비 선정 근거 &amp; 반도체 확장)
+          2.6 베이스 모델로 BR-SAScore (2024) 선정 근거
         </h3>
         <p style="line-height:1.72; color:#334155;">
-          요약 탭(Step 2)에서 제시한 선정 결론의 배경에는 <strong>18종 공개 SA·역합성·생성 모델 전수 평가(확장 프리커서 102종 + 시약 29종 + Phase 1 Negative Control 10종)</strong>에서 확인된 타 모델들의 구조적 붕괴가 있습니다. 다른 모델들이 반도체 착물 또는 Track 1 역할에서 탈락하고 <code>BR-SAScore</code>가 유일하게 최적 베이스 엔진으로 선택된 <strong>5가지 결정적 원인</strong>은 다음과 같습니다.
+          요약 탭(Step 2)에서 제시한 선정 결론의 배경에는 <strong>18종 공개 SA·역합성·생성 모델 전수 평가(확장 프리커서 102종 + 시약 29종 + Phase 1 Negative Control 10종)</strong>에서 확인된 타 모델들의 구조적 붕괴가 있습니다. 다른 모델들이 반도체 금속 복합체(metal complex) 또는 Track 1 역할에서 탈락하고 <code>BR-SAScore</code>가 유일하게 최적 베이스 엔진으로 선택된 <strong>5가지 결정적 원인</strong>은 다음과 같습니다.
         </p>
 
         <div class="grid-2" style="margin:12px 0;">
           <div class="card" style="background:#f8fbff; border-color:#bfdbfe;">
             <h4 style="margin:0 0 8px 0; color:#1e40af;">BR-SAScore 베이스 선정 5대 결정적 근거</h4>
             <ol style="font-size:0.83rem; color:#334155; line-height:1.68; padding-left:18px; margin:0;">
-              <li><strong>OOV 원소 붕괴·All-Zero 무음 오인코딩 부재 (vs GASA &middot; DFRscore &middot; MPScore &middot; DeepSA):</strong> <code>GASA</code>는 102종 중 <strong>53종(52.0%, Ga&middot;Hf&middot;Ir&middot;Mo&middot;Rh&middot;Ru&middot;Ta&middot;W 8원소)</strong>에서 DGL 원자 벡터가 All-Zero로 무음 붕괴하고, <code>DFRscore</code>는 <strong>102/102(100%)</strong> 중심 금속이 <code>ELSE</code> 노드로 축퇴하며, <code>MPScore</code>는 금속 착물 In-Domain <strong>0/102(0.0%)</strong>에 그칩니다. 반면 <code>BR-SAScore</code>는 RDKit Morgan Radius-2 해시 키 기반이므로 어떤 원소가 들어와도 벡터 소실 없이 결정론적으로 계산됩니다.</li>
+              <li><strong>OOV 원소 붕괴·All-Zero 무음 오인코딩 부재 (vs GASA &middot; DFRscore &middot; MPScore &middot; DeepSA):</strong> <code>GASA</code>는 102종 중 <strong>53종(52.0%, Ga&middot;Hf&middot;Ir&middot;Mo&middot;Rh&middot;Ru&middot;Ta&middot;W 8원소)</strong>에서 DGL 원자 벡터가 All-Zero로 무음 붕괴하고, <code>DFRscore</code>는 <strong>102/102(100%)</strong> 중심 금속이 <code>ELSE</code> 노드로 축퇴하며, <code>MPScore</code>는 금속 복합체 In-Domain <strong>0/102(0.0%)</strong>에 그칩니다. 반면 <code>BR-SAScore</code>는 RDKit Morgan Radius-2 해시 키 기반이므로 어떤 원소가 들어와도 벡터 소실 없이 결정론적으로 계산됩니다.</li>
               <li><strong>위험·불안정 대조군 무차별 통과(False Positive 폭주) 억제 (vs RAscore &middot; SCScore &middot; SYBA):</strong> <code>RAscore</code>(XGBoost)와 <code>SCScore</code>(Reaxys DNN)는 단순 치환기 개수만 보고 Phase 1 Negative Control 10종 중 <strong>9종(90.0%, <code>TiEt4</code> 0.972/1.65, <code>ZrMe4</code> 0.956/1.56, <code>WPh5</code> 0.985/1.63 등)</strong>을 Pass로 오판하며, <code>SYBA</code>도 <strong>8/10(80.0%)</strong>을 통과시킵니다. 반면 <code>BR-SAScore</code>는 Eq. (12) <code>&lt; 0</code> 병목 평균과 <code>-6.0</code> 미등재 패널티 덕분에 물리 필터 전에도 10종 중 <strong>7종(70.0%)</strong>을 1차 차단합니다(<code>TiEt4 8.77</code>, <code>Silacyclobutadiene 8.75</code>, <code>WPh5 8.79</code>, <code>CoEt4 8.77</code>).</li>
-              <li><strong>2009 SAScore 소분자·단일빈도 편향 해소 &amp; 4G M-L 0% 한계 보완:</strong> 2009 <code>SAScore</code>는 <code>MeOH (2.70)</code> 같은 2원자 시약까지 과대 패널티를 매겨 102종 프리커서 통과율이 <strong>2.0%(2/102)</strong>에 불과하고, 4G 모델(<code>RxnFlow</code>&middot;<code>SynFormer</code>&middot;<code>ChemProjector</code>)은 <code>M-L</code> 배위 반응 규칙이 <strong>0/102(0.0%)</strong>입니다. <code>BR-SAScore</code>는 <code>MeOH 1.01</code> 정상화 및 <code>19/102(18.6%)</code> 개선을 <code>0.42 ms/mol</code>로 달성하고, 4G 모델은 해리 리간드 경로 보조에만 분리 투입할 수 있습니다.</li>
-              <li><strong>신경망 재학습 없는 무손실 사전(<code>_fscores</code>) 확장성:</strong> <code>DeepSA</code>(Transformer), <code>GASA</code>(GAT), <code>RAscore</code>, <code>SCScore</code>는 도메인 시약 29종을 반영하려면 코퍼스 재구축과 신경망 재학습이 필요해 기존 유기 분포가 왜곡됩니다. <code>BR-SAScore</code>는 딕셔너리에 <code>max(existing, -0.47)</code> 하한만 추가하면 <strong>기존 프리커서 점수 악화 0건(0/27)</strong>을 유지한 채 시약 통과율을 <code>21/29(72.4%) &rarr; 28/29(96.6%)</code>로 즉시 끌어올립니다.</li>
-              <li><strong>대칭 리간드(<code>score3</code>) &middot; 병목 설명성 &amp; Track 2(<code>SevenNet-0</code>) 직교성:</strong> <code>M(NMe2)4</code> 등 다중 대칭 착물에서 <code>score3</code> 대칭 보정이 정합적으로 작동하고, <code>contribution_to_svg()</code>가 <code>-6.0</code> 병목 원자를 즉시 지목하며, Track 2 물리 지표(<code>BDE_min</code>, <code>%V_bur^D2</code>, <code>E_coh</code>)가 금속 열역학을 전담하는 구조에서 가장 가볍고 누설 없는 Track 1 엔진 역할을 수행합니다.</li>
+              <li><strong>SAScore (2009) 모델 소분자·단일빈도 편향 해소 &amp; 4G M-L 0% 한계 보완:</strong> <code>SAScore (2009)</code> 모델은 <code>MeOH (2.70)</code> 같은 2원자 시약까지 과대 패널티를 매겨 102종 프리커서 통과율이 <strong>2.0%(2/102)</strong>에 불과하고, 4G 모델(<code>RxnFlow</code>&middot;<code>SynFormer</code>&middot;<code>ChemProjector</code>)은 <code>M-L</code> 배위 반응 규칙이 <strong>0/102(0.0%)</strong>입니다. <code>BR-SAScore</code>는 <code>MeOH 1.01</code> 정상화 및 <code>19/102(18.6%)</code> 개선을 <code>0.42 ms/mol</code>로 달성하고, 4G 모델은 해리 리간드 경로 보조에만 분리 투입할 수 있습니다.</li>
+              <li><strong>신경망 재학습 없는 무손실 사전(<code>_fscores</code>) 확장성:</strong> <code>DeepSA</code>(Transformer), <code>GASA</code>(GAT), <code>RAscore</code>, <code>SCScore</code>는 도메인 시약 29종을 반영하려면 데이터셋 재구축과 신경망 재학습이 필요해 기존 유기 분포가 왜곡됩니다. <code>BR-SAScore</code>는 딕셔너리에 <code>max(existing, -0.47)</code> 하한만 추가하면 <strong>기존 프리커서 점수 악화 0건(0/27)</strong>을 유지한 채 시약 통과율을 <code>21/29(72.4%) &rarr; 28/29(96.6%)</code>로 즉시 끌어올립니다.</li>
+              <li><strong>대칭 리간드(<code>score3</code>) &middot; 병목 설명성 &amp; Track 2(<code>SevenNet-0</code>) 직교성:</strong> <code>M(NMe2)4</code> 등 다중 대칭 프리커서에서 <code>score3</code> 대칭 보정이 정합적으로 작동하고, <code>contribution_to_svg()</code>가 <code>-6.0</code> 병목 원자를 즉시 지목하며, Track 2 물리 지표(<code>BDE_min</code>, <code>%V_bur^D2</code>, <code>E_coh</code>)가 금속 열역학을 전담하는 구조에서 가장 가볍고 누설 없는 Track 1 엔진 역할을 수행합니다.</li>
             </ol>
           </div>
 
@@ -969,7 +1058,7 @@ flowchart LR
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>SAScore</strong> (1G)</td>
+                    <td><strong>SAScore (2009)</strong> (1G)</td>
                     <td>2/102 (2.0%)<br>9/29 (31.0%)</td>
                     <td>3/10 (30.0%)</td>
                     <td>PubChem 단일 빈도로 98.0% 기각 및 소분자(<code>MeOH 2.70</code>) 과대 감점. B/R 분리 부재</td>
@@ -1002,7 +1091,7 @@ flowchart LR
                     <td><strong>RxnFlow / SynFormer / ReaSyn</strong> (4G)</td>
                     <td><strong>0/102 M-L 규칙</strong><br>(유기 치환기만 매칭)</td>
                     <td>N/A (0% 경로)</td>
-                    <td>유기 템플릿(72~115종) 한계로 착물 코어 경로 생성 불능; 리간드 경로 생성 보조로만 분업</td>
+                    <td>유기 템플릿(72~115종) 한계로 금속-리간드 코어 경로 생성 불능; 리간드 경로 생성 보조로만 분업</td>
                   </tr>
                   <tr style="background:#ecfdf5; font-weight:700;">
                     <td><strong>BR-SAScore (3G 베이스 선정)</strong></td>
@@ -1020,7 +1109,7 @@ flowchart LR
           <div class="card">
             <h4 style="margin:0 0 6px 0; color:#b91c1c;">베이스 단독 한계 1: M-L 조각 0% 중첩</h4>
             <p style="font-size:0.83rem; color:#475569; margin:0; line-height:1.6;">
-              <code>BR-SAScore</code> 역시 유기 말뭉치(eMolecules+USPTO) 기반이라 <code>Hf-N</code>, <code>Hf-O</code>, <code>Zr-O</code>, <code>Mo-Cl</code> 반경-2 환경이 없어 착물 그대로 입력하면 27종 통과율이 <strong>11.1% (3/27)</strong>에 머무릅니다(<code>TDMAH 8.62</code>, <code>Hf(acac)4 9.04</code>).
+              <code>BR-SAScore</code> 역시 유기 데이터셋(eMolecules+USPTO) 기반이라 <code>Hf-N</code>, <code>Hf-O</code>, <code>Zr-O</code>, <code>Mo-Cl</code> 반경-2 환경이 없어 프리커서 분자 그대로 입력하면 27종 통과율이 <strong>11.1% (3/27)</strong>에 머무릅니다(<code>TDMAH 8.62</code>, <code>Hf(acac)4 9.04</code>).
             </p>
           </div>
           <div class="card">
@@ -1044,6 +1133,7 @@ flowchart LR
         "__BR_PAPER_DOI__": BR_PAPER_DOI,
         "__VANILLA_COMPLEX_ROWS__": vanilla_complex_rows_html,
         "__VANILLA_LIGAND_ROWS__": vanilla_ligand_rows_html,
+        "__MORGAN_2D_SVG__": morgan_2d_svg,
         "__SIM_HTML__": sim_html,
         "__DIST_SVG__": dist_svg,
         "__CARDS_HTML__": cards_html,
