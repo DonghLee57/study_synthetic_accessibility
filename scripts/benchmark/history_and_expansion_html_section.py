@@ -156,10 +156,10 @@ def build_analysis_history_technical_html(
         ),
         (
             "Stage 8",
-            "한·중·일·미·대만 특허 및 중심금속 문헌 확장",
+            "특허·문헌 DB 확장 + 38종 SevenNet-0 전수 계산",
             "+28 신규 프리커서 (8 신규 원소) + 10 인히비터",
-            "run_patent_lit_expansion.py / history_and_expansion_html_section.py",
-            "Mo/W/Nb/Ni/Cu/La/Y/Ge/Sn/Pt 공백 해소 및 ASD 인히비터(TMSDEA·2-MBI·PFDT 등) TMC-SA 38종 실측 검증 (Zn d10·소형핵 입체 한계 도출).",
+            "run_patent_lit_expansion.py / run_patent_expansion_sevenn.py",
+            "Mo/W/Nb/Ni/Cu/La/Y/Ge/Sn/Pt 공백 해소 및 38종 전수 7net-0 LBFGS 완료 (0 Fallback); PDMAT(93.5%->79.2%)·Ge(NMe2)4(90.5%->77.0%) 이완 구제 및 286 정준 DB 통합.",
             "Sec 21~22 / Step 4-5",
         ),
     ]
@@ -293,24 +293,24 @@ def build_patent_expansion_storyline_html(
               </span>
             </div>
             <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin-bottom:12px;">
-              현행 <code>102</code>종 프리커서는 <code>Ga(24)</code>&middot;<code>In(24)</code>&middot;<code>Ru(16)</code>에 편중되어 있고 <code>Nb&middot;Ni&middot;Cu&middot;Ge&middot;La&middot;Y&middot;Zn&middot;Pt</code>가 전무(<code>0</code>종)하며 <code>Mo&middot;W&middot;Ta&middot;Sn</code>은 각 <code>1</code>종에 불과합니다. 한&middot;중&middot;일&middot;미&middot;대만 5극 특허(<code>ADEKA</code>, <code>SK트리켐/TCLC</code>, <code>Merck</code>, <code>Air Liquide</code>, <code>Applied Materials</code>, <code>TEL</code>, <code>TSMC</code> 등) 및 금속별 문헌 리뷰를 전수 대조해 <strong>중복 없는 신규 프리커서 __N_PREC__종</strong>(신규 <strong>__N_NEW_EL__개 원소</strong> 포함, 총 <strong>__N_MERGED_EL__원소</strong>)과 <strong>신규 ASD 인히비터 __N_INH__종</strong>을 도출하고 <code>TMC-SA</code> 체계로 실측 검증했습니다.
+              현행 <code>102</code>종 프리커서는 <code>Ga(24)</code>&middot;<code>In(24)</code>&middot;<code>Ru(16)</code>에 편중되어 있고 <code>Nb&middot;Ni&middot;Cu&middot;Ge&middot;La&middot;Y&middot;Zn&middot;Pt</code>가 전무(<code>0</code>종)하며 <code>Mo&middot;W&middot;Ta&middot;Sn</code>은 각 <code>1</code>종에 불과합니다. 한&middot;중&middot;일&middot;미&middot;대만 5극 특허(<code>ADEKA</code>, <code>SK트리켐/TCLC</code>, <code>Merck</code>, <code>Air Liquide</code>, <code>Applied Materials</code>, <code>TEL</code>, <code>TSMC</code> 등) 및 금속별 문헌 리뷰를 전수 대조해 <strong>신규 프리커서 __N_PREC__종</strong>(신규 <strong>__N_NEW_EL__개 원소</strong> 포함, 총 <strong>__N_MERGED_EL__원소</strong>)과 <strong>ASD 인히비터 __N_INH__종</strong>을 도출하고, <strong>전수 __N_SEVENN__종(Fallback <code>0</code>건)에 <code>SevenNet-0</code> LBFGS 3D 이완&middot;BDE&middot;E<sub>coh</sub>&middot;&Delta;E<sub>dimer</sub>&middot;&Delta;E<sub>f</sub><sup>std</sup>/v<sub>M</sub></strong> 계산을 완료했습니다.
             </p>
             <div class="stat-grid" style="margin-bottom:12px;">
               <div class="stat-box" style="border-top:3px solid #be123c;">
                 <div class="stat-num" style="color:#be123c;">+__N_PREC__ (+__N_NEW_EL__ 원소)</div>
-                <div class="stat-label">신규 프리커서 통과 __N_PREC_PASS__/__N_PREC__ (Mo&middot;W&middot;Nb&middot;Ni&middot;Cu&middot;La&middot;Ge 등)</div>
+                <div class="stat-label">ETKDG 통과 __N_PREC_PASS__/__N_PREC__ &bull; 7net 엄격 통과 __N_PREC_PASS_7N__/__N_PREC__</div>
               </div>
               <div class="stat-box" style="border-top:3px solid #0284c7;">
-                <div class="stat-num" style="color:#0369a1;">+__N_INH__종 (__N_INH_PASS__/__N_INH__ 통과)</div>
-                <div class="stat-label">신규 특허 ASD 인히비터 (TMSDEA&middot;MSTFA&middot;2-MBI&middot;PFDT 등)</div>
+                <div class="stat-num" style="color:#0369a1;">+__N_INH__종 (7net __N_INH_PASS_7N__/__N_INH__)</div>
+                <div class="stat-label">신규 특허 ASD 인히비터 (ETKDG __N_INH_PASS__/__N_INH__ 통과)</div>
               </div>
               <div class="stat-box" style="border-top:3px solid #7c3aed;">
-                <div class="stat-num" style="color:#6d28d9;">4건 물리 경계 발견</div>
-                <div class="stat-label">Zn(d10) 폐각 게이트 &amp; 소형핵 PDMAT/Ge %Vbur &gt; 83.5% 포착</div>
+                <div class="stat-num" style="color:#6d28d9;">__N_SEVENN__/38 SevenNet-0 완비</div>
+                <div class="stat-label">PDMAT(93.5&rarr;79.2%)&middot;Ge(NMe2)4(90.5&rarr;77.0%) 이완 구제</div>
               </div>
             </div>
             <div style="font-size:0.83rem; color:#475569; line-height:1.55;">
-              * <strong>자세한 5개국 특허 목록, 원소별 문헌 DOI, 전체 38종 실측 데이터시트 및 연구 분석 이력 계보</strong>는 리포트 탭 <strong>Section 21~22</strong>에서 확인할 수 있습니다.
+              * <strong>자세한 5개국 특허 목록, 원소별 문헌 DOI, 전체 38종 SevenNet-0 실측 디스크립터 및 교차 DB 중복 제거 내역</strong>은 리포트 탭 <strong>Section 21~22</strong>와 DB 탐색 탭에서 확인할 수 있습니다.
             </div>
           </div>"""
 
@@ -322,6 +322,9 @@ def build_patent_expansion_storyline_html(
             "__N_PREC_PASS__": s["n_precursors_pass"],
             "__N_INH__": s["n_inhibitors"],
             "__N_INH_PASS__": s["n_inhibitors_pass"],
+            "__N_PREC_PASS_7N__": s.get("n_precursors_pass_7net", s["n_precursors_pass"]),
+            "__N_INH_PASS_7N__": s.get("n_inhibitors_pass_7net", s["n_inhibitors_pass"]),
+            "__N_SEVENN__": s.get("n_sevenn_computed", 0),
             "__N_NEW_EL__": s["n_new_elements_added"],
             "__N_MERGED_EL__": s["n_merged_elements"],
         },
@@ -382,24 +385,57 @@ def build_patent_expansion_technical_html(
         for reg, comp, pids, focus in patent_landscape
     )
 
-    cand_rows_html = "".join(
-        f"""
+    def _fmt_cand_row(r: Dict[str, Any]) -> str:
+        has_7n = r.get("tmc_sa_7net") is not None
+        v_str = (
+            f"{r['vbur_d2_percent']:.1f}% &rarr; <strong>{r['vbur_rprobe_7net']:.1f}%</strong>"
+            f"<br><span style=\"font-size:0.68rem; color:#64748b;\">D2 {r['vbur_d2_7net']:.1f}%</span>"
+            if has_7n
+            else f"{r['vbur_d2_percent']:.1f}%"
+        )
+        phys_str = (
+            f"BDE <strong>{r['bde_min_kcal_mol']:.1f}</strong><br>"
+            f"<span style=\"font-size:0.68rem; color:#475569;\">e<sub>coh</sub> {r['e_coh_ev_per_atom']:.2f} &bull; dE<sub>dim</sub> {r['delta_e_dimer_kcal_mol']:.1f}</span><br>"
+            f"<span style=\"font-size:0.68rem; color:#0369a1;\">&Delta;E<sub>f</sub>/v<sub>M</sub> {r['delta_e_form_per_bond_kcal_mol']:.1f}</span>"
+            if has_7n
+            else "-"
+        )
+        tmc_str = (
+            f"{r['tmc_sa_no3d']:.2f} &rarr; <strong>{r['tmc_sa_7net']:.2f}</strong>"
+            if has_7n
+            else f"{r['ligand_sa']:.2f} &rarr; <strong>{r['tmc_sa_no3d']:.2f}</strong>"
+        )
+        p_7n = bool(r["pass_7net"]) if has_7n else bool(r["unified_pass"])
+        p_no3d = bool(r["unified_pass"])
+        if p_7n:
+            badge_html = '<span class="badge badge-pass" style="font-size:0.71rem;">7net PASS</span>'
+        elif p_no3d:
+            badge_html = '<span class="badge badge-fail" style="font-size:0.69rem; background:#fef3c7; color:#92400e; border-color:#fcd34d;">7net BOUND</span>'
+        else:
+            badge_html = '<span class="badge badge-fail" style="font-size:0.71rem;">BOUNDARY</span>'
+        if p_7n and not p_no3d:
+            badge_html += '<div style="font-size:0.66rem; color:#047857; font-weight:700; margin-top:2px;">3D 구제</div>'
+        elif p_no3d and has_7n and not p_7n:
+            badge_html += '<div style="font-size:0.66rem; color:#92400e; margin-top:2px;">ETKDG Pass</div>'
+
+        return f"""
         <tr>
           <td><code>{html.escape(r['id'])}</code></td>
           <td><strong>{html.escape(r['name'])}</strong><br><span style="font-size:0.7rem; color:#64748b;">{html.escape(r['family_class'])} ({html.escape(r['element_group'])})</span></td>
           <td style="text-align:center;"><strong>{html.escape(r['center_atom'])}</strong></td>
-          <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem;">{r['cn_eff']:.1f} / {r['n_ve']:.0f}</td>
-          <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem;">{r['vbur_d2_percent']:.1f}%</td>
-          <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.75rem;">{r['ligand_sa']:.2f} &rarr; <strong>{r['tmc_sa_no3d']:.2f}</strong></td>
-          <td style="text-align:center;"><span class="badge {'badge-pass' if r['unified_pass'] else 'badge-fail'}" style="font-size:0.72rem;">{'PASS' if r['unified_pass'] else 'BOUNDARY'}</span></td>
+          <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem;">{r['cn_eff']:.1f} / {r['n_ve']:.0f}</td>
+          <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.73rem;">{v_str}</td>
+          <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.72rem; line-height:1.35;">{phys_str}</td>
+          <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.74rem;">{tmc_str}</td>
+          <td style="text-align:center;">{badge_html}</td>
           <td style="font-size:0.73rem; line-height:1.45;">
             <div style="color:#0369a1; font-weight:700;">[{html.escape(r['jurisdictions'])}] {html.escape(r['references'])}</div>
             <div style="color:#475569;">{html.escape(r['application'])} &mdash; {html.escape(r['mechanism_note'])}</div>
-            {f'<div style="color:#be123c; font-weight:700;">경계 진단: {html.escape(r["boundary_flag"])}</div>' if r['boundary_flag'] else ''}
+            {f'<div style="color:#be123c; font-weight:700;">물리/경계 진단: {html.escape(r["boundary_flag"])}</div>' if r['boundary_flag'] else ''}
           </td>
         </tr>"""
-        for r in recs
-    )
+
+    cand_rows_html = "".join(_fmt_cand_row(r) for r in recs)
 
     tpl = r"""
         <!-- Card 22.1: Central-Metal Coverage Gap Audit -->
@@ -455,27 +491,28 @@ def build_patent_expansion_technical_html(
         <!-- Card 22.3: Screened 38 Non-Overlapping Expansion Candidates -->
         <div class="card" style="border-top:4px solid #059669;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. 중복 제거된 신규 확장 후보 __N_TOT__종(프리커서 __N_PREC__ + 인히비터 __N_INH__)의 <code>TMC-SA</code> 실측 스크리닝 및 경계 진단</h3>
-            <span class="badge badge-pass" style="font-size:0.78rem;">Precursor __N_PREC_PASS__/__N_PREC__ &bull; Inhibitor __N_INH_PASS__/__N_INH__ PASS</span>
+            <h3 class="card-title" style="margin-bottom:0;">3. 특허&middot;문헌 확장 후보 __N_TOT__종 전수 <code>SevenNet-0</code> 물리 디스크립터 보강 및 <code>TMC-SA</code> 검증</h3>
+            <span class="badge badge-pass" style="font-size:0.78rem;">7net __N_SEVENN__/__N_TOT__ (0 FB) &bull; Strict Prec __N_PREC_PASS_7N__/__N_PREC__ &bull; Inh __N_INH_PASS_7N__/__N_INH__</span>
           </div>
           <p style="font-size:0.87rem; color:#334155; line-height:1.65; margin-bottom:10px;">
-            기존 <code>160</code>종 평가셋과 SMILES 정준화 대조 결과 중복 <code>0</code>건을 확인한 신규 후보 <strong>__N_TOT__종</strong>을 본 연구의 <code>element_physics</code> + <code>BR-SAScore</code> + <code>TMC-SA</code> 파이프라인으로 직접 평가했습니다(전 후보 RDKit/ETKDGv3 3D 임베딩 성공률 <code>100%</code>). 신규 원소 다수가 즉시 통과하는 가운데, <strong>차기 모델 고도화 과제 2건</strong>(<code>ZnEt2</code>의 $d^{10}$ 폐각 전자배치 예외 분리, <code>PDMAT 93.5%</code>&middot;<code>Ge(NMe2)4 90.5%</code> 등 소형 중심핵 4~5배위체의 적응형 $\%V_{\text{bur}}$ 상한 보정)이 명확히 관측되었습니다.
+            신규 확장 후보 <strong>__N_TOT__종</strong>(프리커서 __N_PREC__ + 인히비터 __N_INH__) 전수에 대해 신규 7개 원소(<code>Nb, Ni, Pt, La, Y, Zn, Ge</code>)의 <code>SevenNet-0</code> 고립원자&middot;표준결정 화학퍼텐셜($\mu_Z^{\text{std}}$)을 산출한 뒤 <strong>LBFGS 단량체 이완&middot;이합체 회합(&Delta;E<sub>dimer</sub>)&middot;단편 BDE<sub>min</sub>&middot;응집에너지(E<sub>coh</sub>)&middot;표준 생성에너지(&Delta;E<sub>f</sub><sup>std</sup>/v<sub>M</sub>)를 전수 계산 완료(Fallback <code>0</code>건)</strong>했습니다. 그 결과 (1) 초기 ETKDGv3에서 입체과밀로 오기각되던 <strong><code>PDMAT</code>(<code>93.5% &rarr; 79.2%</code>, <code>TMC 4.52 &rarr; 1.24</code>)과 <code>Ge(NMe2)4</code>(<code>90.5% &rarr; 77.0%</code>, <code>TMC 4.52 &rarr; 1.79</code>)가 <code>SevenNet-0</code> 3D 이완으로 정확히 구제</strong>되었으며, (2) <code>Mo(CO)6/W(CO)6/Cu(hfac)(vtms)</code> 중성 CO&middot;올레핀 해리 과소결합 편차, <code>MoCl5</code> 고체 이합체 격자응집($E_{\text{coh}}=2.625$), <code>La(iPrAMD)3/Sn(NMe2)4/MeCpHf(NMe2)3</code> 저온 ALD 고반응성 창($\text{BDE}=29\text{--}40\text{ kcal/mol}$)까지 정량적으로 분해되었습니다.
           </p>
           <div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #0284c7; border-radius:6px; padding:11px 13px; margin-bottom:12px; font-size:0.81rem; color:#334155; line-height:1.6;">
-            <strong style="color:#0f172a;">교차 DB 정준 중복 제거 및 엔티티 병합 감사 (Canonical Entity Resolution):</strong> 전체 <code>205</code>종 마스터&middot;<code>29</code>종 시약 사전과의 교차 감사 결과, (1) <code>MoCl5</code>&middot;<code>TaCl5</code>&middot;<code>HfCl4</code>&middot;<code>TiCl4</code>&middot;<code>HCDS</code>&middot;<code>TMA</code>&middot;<code>SiCl4</code>&middot;<code>SiH2Cl2</code>&middot;<code>ZrCl4</code>&middot;<code>AlCl3</code> 등 <strong>프리커서&ndash;출발시약 겸용 이중역할 <code>10</code>종</strong>, (2) <code>Ga2(NMe2)6 / [Ga(NMe2)3]2</code> 및 <code>GaMe3</code> 착물 표기 이형 <strong><code>2</code>쌍</strong>, (3) <code>AtomicLimits</code> 무-SMILES 문헌 엔트리와 일치하는 특허 확장 <strong><code>14</code>종</strong>(<code>MoCl5</code>, <code>Mo(CO)6</code>, <code>Nb(OEt)5</code>, <code>TBTDEN</code>, <code>PDMAT</code>, <code>TaCl5</code>, <code>HfCl4</code>, <code>TiCl4</code>, <code>Cu(dmap)2</code>, <code>MeCpPtMe3</code>, <code>Y(MeCp)3</code>, <code>ZnEt2</code>, <code>Ge(NMe2)4</code>, <code>Sn(NMe2)4</code>)이 식별되었습니다. 통합 DB 탐색기에서는 <strong>별도 중복 카드를 생성하지 않고 정준 엔티티로 병합&middot;SMILES 역충전(Backfill)하고 순신규 <code>24</code>종만 신규 추가</strong>하여, 총 <strong><code>286</code>개 유일 정준 엔티티(검색 중복 <code>0</code>건)</strong> 및 <strong>Sankey <code>342</code>건 통합 흐름도</strong>를 구축했습니다.
+            <strong style="color:#0f172a;">교차 DB 정준 중복 제거 및 엔티티 병합 감사 (Canonical Entity Resolution):</strong> 전체 <code>205</code>종 마스터&middot;<code>29</code>종 시약 사전과의 교차 감사 결과, (1) <code>MoCl5</code>&middot;<code>TaCl5</code>&middot;<code>HfCl4</code>&middot;<code>TiCl4</code>&middot;<code>HCDS</code>&middot;<code>TMA</code>&middot;<code>SiCl4</code>&middot;<code>SiH2Cl2</code>&middot;<code>ZrCl4</code>&middot;<code>AlCl3</code> 등 <strong>프리커서&ndash;출발시약 겸용 이중역할 <code>10</code>종</strong>, (2) <code>Ga2(NMe2)6 / [Ga(NMe2)3]2</code> 및 <code>GaMe3</code> 착물 표기 이형 <strong><code>2</code>쌍</strong>, (3) <code>AtomicLimits</code> 무-SMILES 문헌 엔트리와 일치하는 특허 확장 <strong><code>14</code>종</strong>(<code>MoCl5</code>, <code>Mo(CO)6</code>, <code>Nb(OEt)5</code>, <code>TBTDEN</code>, <code>PDMAT</code>, <code>TaCl5</code>, <code>HfCl4</code>, <code>TiCl4</code>, <code>Cu(dmap)2</code>, <code>MeCpPtMe3</code>, <code>Y(MeCp)3</code>, <code>ZnEt2</code>, <code>Ge(NMe2)4</code>, <code>Sn(NMe2)4</code>)이 식별되었습니다. 통합 DB 탐색기에서는 <strong>정준 엔티티로 병합&middot;SMILES 및 <code>SevenNet-0</code> 디스크립터 역충전(Backfill)하고 순신규 <code>24</code>종만 신규 추가</strong>하여, 총 <strong><code>286</code>개 유일 정준 엔티티(검색 중복 <code>0</code>건)</strong> 및 <strong>Sankey <code>342</code>건 통합 흐름도</strong>를 구축했습니다.
           </div>
           <div class="table-responsive">
-            <table class="data-table" style="font-size:0.76rem;">
+            <table class="data-table" style="font-size:0.75rem;">
               <thead>
                 <tr>
-                  <th style="width:58px;">ID</th>
-                  <th style="width:165px;">후보명 / 리간드 계통</th>
-                  <th style="width:45px; text-align:center;">중심</th>
-                  <th style="width:68px; text-align:center;">CN / N<sub>ve</sub></th>
-                  <th style="width:65px; text-align:center;">%V<sub>bur</sub><sup>D2</sup></th>
-                  <th style="width:92px; text-align:center;">LigSA&rarr;TMC</th>
-                  <th style="width:74px; text-align:center;">판정</th>
-                  <th>특허·문헌 출처 및 공정 메커니즘 / 경계 진단</th>
+                  <th style="width:54px;">ID</th>
+                  <th style="width:148px;">후보명 / 리간드 계통</th>
+                  <th style="width:42px; text-align:center;">중심</th>
+                  <th style="width:62px; text-align:center;">CN / N<sub>ve</sub></th>
+                  <th style="width:94px; text-align:center;">%V<sub>bur</sub><br>(ETKDG&rarr;7net)</th>
+                  <th style="width:128px; text-align:center;">SevenNet-0 물리 지표<br>(BDE &middot; E<sub>coh</sub> &middot; &Delta;E<sub>f</sub>/v<sub>M</sub>)</th>
+                  <th style="width:86px; text-align:center;">TMC-SA<br>(No3D&rarr;7net)</th>
+                  <th style="width:82px; text-align:center;">판정</th>
+                  <th>특허·문헌 출처 및 공정 메커니즘 / 물리·경계 진단</th>
                 </tr>
               </thead>
               <tbody>
@@ -494,8 +531,11 @@ def build_patent_expansion_technical_html(
             "__N_TOT__": s["n_total"],
             "__N_PREC__": s["n_precursors"],
             "__N_INH__": s["n_inhibitors"],
+            "__N_SEVENN__": s.get("n_sevenn_computed", 0),
             "__N_PREC_PASS__": s["n_precursors_pass"],
             "__N_INH_PASS__": s["n_inhibitors_pass"],
+            "__N_PREC_PASS_7N__": s.get("n_precursors_pass_7net", s["n_precursors_pass"]),
+            "__N_INH_PASS_7N__": s.get("n_inhibitors_pass_7net", s["n_inhibitors_pass"]),
             "__CAND_ROWS__": cand_rows_html,
         },
     )

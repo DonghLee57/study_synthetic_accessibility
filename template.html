@@ -2203,9 +2203,9 @@
                 </tr>
                 <tr style="background:#fffbeb;">
                   <td><strong>5. 특허·문헌 확장 스크리닝 DB</strong><br><span style="font-size:0.75rem; color:#92400e;">(KR/JP/CN/US/TW + 8 신규 원소)</span></td>
-                  <td style="text-align:center;"><strong>+38건</strong><br><span style="font-size:0.74rem; color:#b45309;">(14 BF + 24 신규)</span></td>
-                  <td><strong>프리커서 28종 + AS-ALD 인히비터 10종</strong>(원소 <code>16 &rarr; 24</code>종 확장). AtomicLimits 무-SMILES <code>14</code>종 역충전 + 순신규 <code>24</code>종 등록(총 통과 <code>34/38</code>, 경계 진단 <code>4</code>건)</td>
-                  <td>DB 탐색기 정준 중복 제거(이중역할 시약 <code>10</code>종 &middot; <code>Ga</code> 이형 <code>2</code>쌍 &middot; AtomicLimits <code>14</code>종 병합 &rarr; <strong>총 <code>286</code>개 유일 엔티티</strong>) 및 차기 SevenNet 이완 대기열</td>
+                  <td style="text-align:center;"><strong>+38건</strong><br><span style="font-size:0.74rem; color:#059669;">(7net 38/38 · 0 FB)</span></td>
+                  <td><strong>프리커서 28종 + AS-ALD 인히비터 10종</strong>(원소 <code>16 &rarr; 24</code>종 확장). AtomicLimits 무-SMILES <code>14</code>종 역충전 + 순신규 <code>24</code>종 등록, <strong>전수 <code>SevenNet-0</code> LBFGS 3D 이완&middot;BDE&middot;E<sub>coh</sub>&middot;&Delta;E<sub>dimer</sub>&middot;&Delta;E<sub>f</sub>/v<sub>M</sub> 완비</strong></td>
+                  <td>DB 탐색기 정준 중복 제거(이중역할 시약 <code>10</code>종 &middot; <code>Ga</code> 이형 <code>2</code>쌍 &middot; AtomicLimits <code>14</code>종 병합 &rarr; <strong>총 <code>286</code>개 유일 엔티티</strong>) 및 7net <code>PDMAT/Ge</code> 입체 구제 실측</td>
                 </tr>
               </tbody>
             </table>
@@ -7600,6 +7600,7 @@ flowchart TD
             if (r.br_sascore != null) pills.push(`<span class="db-mini-pill">BR ${r.br_sascore}</span>`);
             if (r.bde_min != null) pills.push(`<span class="db-mini-pill">BDE ${r.bde_min}</span>`);
             if (r.vbur != null) pills.push(`<span class="db-mini-pill">Vbur ${r.vbur}%</span>`);
+            if (r.de_form_bond != null) pills.push(`<span class="db-mini-pill">dEf/vM ${r.de_form_bond}</span>`);
             if (r.dg_kcal_mol != null) pills.push(`<span class="db-mini-pill">dG ${r.dg_kcal_mol} kcal/mol</span>`);
             if (r.atomiclimits_process_count) pills.push(`<span class="db-mini-pill">ALD ${r.atomiclimits_process_count}건</span>`);
             if (r.jurisdictions) pills.push(`<span class="db-mini-pill" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">${escapeHtmlStr(r.jurisdictions)}</span>`);
@@ -7771,8 +7772,8 @@ flowchart TD
       if (r.solvent) addRow('Reaction Conditions', `Solvent: ${escapeHtmlStr(r.solvent)} | Conditions: ${escapeHtmlStr(r.conditions)} | Byproduct: ${escapeHtmlStr(r.byproduct)} | dG: ${r.dg_kcal_mol} kcal/mol`);
       if (r.atomiclimits_process_count) addRow('AtomicLimits ALD Data', `Processes: ${r.atomiclimits_process_count} | Materials: ${escapeHtmlStr((r.atomiclimits_materials || []).join(', '))} | Co-reactants: ${escapeHtmlStr((r.atomiclimits_co_reactants || []).join(', '))} | DOIs: ${r.atomiclimits_doi_count}`);
       if (r.sascore != null) addRow('Phase 1 SA Scores', `SAScore: <strong>${r.sascore}</strong> | SCScore: <strong>${r.scscore}</strong> | SYBA: <strong>${r.syba}</strong> | BR-SAScore: <strong>${r.br_sascore}</strong> | RAscore: <strong>${r.rascore}</strong> | Ligand SA: <strong>${r.ligand_sa}</strong>`);
-      if (r.bde_min != null) addRow('SevenNet-0 Physics (LBFGS)', `BDE_min: <strong>${r.bde_min} kcal/mol</strong> | %V_bur: <strong>${r.vbur}%</strong> | dE_dimer: <strong>${r.de_dimer} kcal/mol</strong> | e_coh: <strong>${r.e_coh} eV/atom</strong>`);
-      if (r.tmc_sa_phys != null) addRow('Phase 2 Analytical Verdict', `TMC-SA: <strong>${r.tmc_sa_phys}</strong> | Flag: <code>${escapeHtmlStr(r.domain_flag)}</code> | Pass: <strong>${r.phase2_pass}</strong>`);
+      if (r.bde_min != null) addRow('SevenNet-0 Physics (LBFGS)', `BDE_min: <strong>${r.bde_min} kcal/mol</strong> | %V_bur: <strong>${r.vbur}%</strong>${r.vbur_d2_7net != null ? ' (D2 ' + r.vbur_d2_7net + '%, ETKDG ' + r.vbur_etkdg + '%)' : ''} | dE_dimer: <strong>${r.de_dimer} kcal/mol</strong>${r.dg_dimer_373 != null ? ' (dG373 ' + r.dg_dimer_373 + ')' : ''} | e_coh: <strong>${r.e_coh} eV/atom</strong>${r.de_form_bond != null ? ' | dEf/vM: <strong>' + r.de_form_bond + ' kcal/mol</strong>' : ''}`);
+      if (r.tmc_sa_phys != null) addRow('Phase 2 Analytical Verdict', `TMC-SA (7net): <strong>${r.tmc_sa_phys}</strong>${r.tmc_sa_no3d != null ? ' (ETKDG No-3D: ' + r.tmc_sa_no3d + ')' : ''} | Flag: <code>${escapeHtmlStr(r.domain_flag)}</code> | Pass: <strong>${r.phase2_pass}</strong>`);
       if (r.doi) addRow('Reference DOI', `<a href="https://doi.org/${escapeHtmlStr(r.doi)}" target="_blank">${escapeHtmlStr(r.doi)}</a>`);
 
       const smiBlock = r.smiles

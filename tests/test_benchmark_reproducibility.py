@@ -919,6 +919,13 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         neb_path = os.path.join(PROJECT_ROOT, "database", "external", "sevenn_decomp_neb_benchmark.json")
         exp_path = os.path.join(PROJECT_ROOT, "database", "external", "patent_lit_expansion_candidates.json")
 
+        exp_7n_path = os.path.join(PROJECT_ROOT, "database", "external", "patent_expansion_sevenn_features.json")
+        with open(exp_7n_path, "r", encoding="utf-8") as fh:
+            exp_7n_data = json.load(fh)
+        self.assertEqual(exp_7n_data["metadata"]["total_molecules_computed"], 38)
+        self.assertEqual(exp_7n_data["metadata"]["fallback_count"], 0)
+        self.assertEqual(len(exp_7n_data["features"]), 38)
+
         with open(exp_path, "r", encoding="utf-8") as fh:
             exp_data = json.load(fh)
         s = exp_data["summary"]
@@ -929,8 +936,12 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertEqual(s["n_merged_elements"], 24)
         self.assertEqual(s["n_inhibitors_pass"], 10)
         self.assertEqual(s["n_precursors_pass"], 24)
+        self.assertEqual(s["n_sevenn_computed"], 38)
+        self.assertEqual(s["n_sevenn_fallback"], 0)
+        self.assertEqual(s["n_precursors_pass_7net"], 15)
+        self.assertEqual(s["n_inhibitors_pass_7net"], 8)
 
-        # Ensure zero canonical SMILES duplication with existing 160-molecule DB
+        # Ensure zero canonical SMILES duplication with existing 160-molecule DB & verify 7net rescue
         from rdkit import Chem
         with open(unified_path, "r", encoding="utf-8") as fh:
             ex_cans = {
@@ -938,9 +949,16 @@ class TestBenchmarkReproducibility(unittest.TestCase):
                 for r in json.load(fh)["records"]
                 if Chem.MolFromSmiles(r["smiles"]) is not None
             }
+        rec_by_name = {rec["name"]: rec for rec in exp_data["records"]}
         for rec in exp_data["records"]:
             self.assertTrue(rec["embed_ok"])
             self.assertNotIn(rec["canonical_smiles"], ex_cans)
+            self.assertIsNotNone(rec.get("tmc_sa_7net"))
+            self.assertIsNotNone(rec.get("bde_min_kcal_mol"))
+            self.assertIsNotNone(rec.get("delta_e_form_per_bond_kcal_mol"))
+            self.assertFalse(rec.get("sevenn_is_fallback"))
+        self.assertTrue(rec_by_name["PDMAT"]["pass_7net"])
+        self.assertTrue(rec_by_name["Ge(NMe2)4"]["pass_7net"])
 
         hist_html = build_analysis_history_technical_html(unified_path, neb_path, exp_path)
         exp_story = build_patent_expansion_storyline_html(exp_path, unified_path)

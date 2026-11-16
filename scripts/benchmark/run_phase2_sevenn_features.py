@@ -65,21 +65,32 @@ ISOLATED_ATOM_ENERGIES = {
     'Rh': -1.9016,
     'In': -0.7678,
     'Ir': -1.9783,
+    # Patent & Literature Expansion elements computed in 50 A non-PBC box via SevenNet-0 (eV)
+    'Nb': -3.3007,
+    'Ni': -0.8649,
+    'Pt': -1.1319,
+    'La': -1.0035,
+    'Y': -2.6029,
+    'Zn': 0.0391,
+    'Ge': -0.9444,
 }
 
 # van der Waals radii (units: A): Bondi (1964, DOI 10.1021/j100785a001),
-# Mantina et al. (2009, DOI 10.1021/jp8111556) for Ga (1.87), As (1.85), In (1.93),
-# and RDKit PeriodicTable Rvdw scale for Rh (2.00) and Ir (2.00).
+# Mantina et al. (2009, DOI 10.1021/jp8111556) for Ga (1.87), Ge (2.11), As (1.85), In (1.93),
+# and RDKit PeriodicTable Rvdw scale for Rh (2.00), Ir (2.00), Nb (2.15), Y (2.40), and La (2.50).
 BONDI_RADII = {
     'H': 1.20, 'C': 1.70, 'N': 1.55, 'O': 1.52, 'F': 1.47,
     'Si': 2.10, 'P': 1.80, 'S': 1.80, 'Cl': 1.75, 'Ti': 2.00,
-    'Al': 2.00, 'Ga': 1.87, 'As': 1.85, 'Zr': 2.15, 'Hf': 2.15,
-    'Ru': 2.05, 'Rh': 2.00, 'In': 1.93, 'Co': 2.00, 'W': 2.10,
-    'Mo': 2.10, 'Ta': 2.15, 'Ir': 2.00, 'Sn': 2.17, 'Cu': 2.00,
-    'Br': 1.85, 'I': 1.98,
+    'Al': 2.00, 'Ga': 1.87, 'Ge': 2.11, 'As': 1.85, 'Zr': 2.15, 'Hf': 2.15,
+    'Ru': 2.05, 'Rh': 2.00, 'In': 1.93, 'Co': 2.00, 'Ni': 1.63, 'Pt': 1.75,
+    'W': 2.10, 'Mo': 2.10, 'Nb': 2.15, 'Ta': 2.15, 'Ir': 2.00, 'Sn': 2.17,
+    'Cu': 2.00, 'Zn': 1.39, 'La': 2.50, 'Y': 2.40, 'Br': 1.85, 'I': 1.98,
 }
 
-METAL_SET = {'Ti', 'Zr', 'Hf', 'Al', 'Ga', 'In', 'As', 'Ru', 'Rh', 'Ir', 'Co', 'W', 'Mo', 'Ta', 'Sn', 'Cu', 'Si'}
+METAL_SET = {
+    'Ti', 'Zr', 'Hf', 'Al', 'Ga', 'Ge', 'In', 'As', 'Ru', 'Rh', 'Ir',
+    'Co', 'Ni', 'Pt', 'W', 'Mo', 'Nb', 'Ta', 'Sn', 'Cu', 'Zn', 'La', 'Y', 'Si',
+}
 
 def find_central_atom_idx(mol):
     """Identify the central metal or metalloid atom in precursor."""
@@ -266,7 +277,7 @@ def compute_dimerization_energy(symbols: list, positions_aligned: np.ndarray, e_
     return round(float(dE_kcal), 2), round(init_gap, 3), dim_steps
 
 
-def compute_precursor_physical_features(smi: str, calc: SevenNetCalculator, frag_cache: dict = None):
+def compute_precursor_physical_features(smi: str, calc: SevenNetCalculator, frag_cache: dict = None, return_coords: bool = False):
     """Evaluate SevenNet-0 BFGS/LBFGS relaxed conformer, fragment BDE, %V_bur, and dimer energy."""
     if frag_cache is None:
         frag_cache = {}
@@ -447,7 +458,7 @@ def compute_precursor_physical_features(smi: str, calc: SevenNetCalculator, frag
     dimer_penalty = max(0.0, -dE_dimer * 2.0) if dE_dimer < 0.0 else 0.0
     e_complex_proxy = round(float(-25.0 + steric_penalty + dimer_penalty + max(0.0, (50.0 - bde_min) * 1.5)), 2)
 
-    return {
+    out = {
         "symbols": symbols,
         "center_atom": center_sym,
         "is_fallback": is_fallback,
@@ -465,6 +476,11 @@ def compute_precursor_physical_features(smi: str, calc: SevenNetCalculator, frag
         "rg": round(rg, 2),
         "vol_mol": round(vol_mol, 1)
     }
+    if return_coords:
+        out["pos_aligned"] = pos_aligned
+        out["mol_relaxed"] = mol
+        out["center_idx"] = center_idx
+    return out
 
 
 def run_recalculation():

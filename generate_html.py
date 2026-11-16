@@ -2329,7 +2329,15 @@ for exp_rec in patent_exp_records:
     formula_str = rdMolDescriptors.CalcMolFormula(m_obj) if m_obj else "-"
     mw_val = round(Descriptors.MolWt(m_obj), 2) if m_obj else None
     elem = _norm_elem(exp_rec.get("center_atom", "-"))
-    diag_note = exp_rec.get("boundary_flag") or ("All TMC-SA physical & chemical gates passed (ETKDGv3)" if exp_rec.get("unified_pass") else "")
+    diag_note = exp_rec.get("boundary_flag") or (
+        f"All SevenNet-0 & TMC-SA physical/chemical gates passed (BDE={exp_rec.get('bde_min_kcal_mol')} kcal/mol, TMC={exp_rec.get('tmc_sa_7net')})"
+        if exp_rec.get("pass_7net")
+        else ("All ETKDG TMC-SA physical & chemical gates passed" if exp_rec.get("unified_pass") else "")
+    )
+    has_7n = exp_rec.get("tmc_sa_7net") is not None
+    vbur_best = exp_rec.get("vbur_rprobe_7net") if has_7n else exp_rec.get("vbur_d2_percent")
+    tmc_best = exp_rec.get("tmc_sa_7net") if has_7n else exp_rec.get("tmc_sa_no3d")
+    pass_best = exp_rec.get("pass_7net") if has_7n else exp_rec.get("unified_pass")
 
     target = rec_by_id.get(PATENT_BACKFILL_TARGET.get(eid, ""))
     if not target and cs:
@@ -2341,6 +2349,8 @@ for exp_rec in patent_exp_records:
             target["alt_db_types"].append("patent_expansion")
         if "Patent/Lit Backfilled" not in target["role_badges"]:
             target["role_badges"].append("Patent/Lit Backfilled")
+        if has_7n and "SevenNet-0 3D" not in target["role_badges"]:
+            target["role_badges"].append("SevenNet-0 3D")
         if eid not in target["secondary_ids"]:
             target["secondary_ids"].append(eid)
         if exp_rec["name"] not in target["aliases"] and exp_rec["name"] != target["name"]:
@@ -2363,9 +2373,17 @@ for exp_rec in patent_exp_records:
         target["sascore"] = target.get("sascore") if target.get("sascore") is not None else exp_rec.get("sascore")
         target["br_sascore"] = target.get("br_sascore") if target.get("br_sascore") is not None else exp_rec.get("br_sascore")
         target["ligand_sa"] = target.get("ligand_sa") if target.get("ligand_sa") is not None else exp_rec.get("ligand_sa")
-        target["vbur"] = target.get("vbur") if target.get("vbur") is not None else exp_rec.get("vbur_d2_percent")
-        target["tmc_sa_phys"] = target.get("tmc_sa_phys") if target.get("tmc_sa_phys") is not None else exp_rec.get("tmc_sa_no3d")
-        target["phase2_pass"] = target.get("phase2_pass") if target.get("phase2_pass") is not None else exp_rec.get("unified_pass")
+        target["vbur"] = vbur_best if vbur_best is not None else target.get("vbur")
+        target["vbur_d2_7net"] = exp_rec.get("vbur_d2_7net")
+        target["vbur_etkdg"] = exp_rec.get("vbur_d2_percent")
+        target["bde_min"] = exp_rec.get("bde_min_kcal_mol") if target.get("bde_min") is None else target.get("bde_min")
+        target["e_coh"] = exp_rec.get("e_coh_ev_per_atom") if target.get("e_coh") is None else target.get("e_coh")
+        target["de_dimer"] = exp_rec.get("delta_e_dimer_kcal_mol") if target.get("de_dimer") is None else target.get("de_dimer")
+        target["dg_dimer_373"] = exp_rec.get("delta_g_dimer_373_kcal_mol")
+        target["de_form_bond"] = exp_rec.get("delta_e_form_per_bond_kcal_mol")
+        target["tmc_sa_no3d"] = exp_rec.get("tmc_sa_no3d")
+        target["tmc_sa_phys"] = tmc_best if tmc_best is not None else target.get("tmc_sa_phys")
+        target["phase2_pass"] = pass_best if pass_best is not None else target.get("phase2_pass")
         target["coord_number"] = exp_rec.get("cn_eff")
         target["valence_electrons"] = exp_rec.get("n_ve")
         target["jurisdictions"] = exp_rec.get("jurisdictions", "")
@@ -2376,13 +2394,16 @@ for exp_rec in patent_exp_records:
 
     n_net_new_patent += 1
     is_inh = exp_rec.get("target_type") == "inhibitor"
+    badges = ["Net-New Expansion"]
+    if has_7n:
+        badges.append("SevenNet-0 3D")
     _register_db_rec({
         "id": eid,
         "db_type": "patent_expansion",
         "db_label": "Patent/Lit Inhibitor" if is_inh else "Patent/Lit Precursor",
         "is_expanded_master": False,
         "alt_db_types": ["inhibitor"] if is_inh else [],
-        "role_badges": ["Net-New Expansion"],
+        "role_badges": badges,
         "name": exp_rec["name"],
         "chemical_name": f"{exp_rec.get('family_class', '-')} ({exp_rec.get('element_group', '-')})",
         "formula": formula_str,
@@ -2404,9 +2425,17 @@ for exp_rec in patent_exp_records:
         "sascore": exp_rec.get("sascore"),
         "br_sascore": exp_rec.get("br_sascore"),
         "ligand_sa": exp_rec.get("ligand_sa"),
-        "vbur": exp_rec.get("vbur_d2_percent"),
-        "tmc_sa_phys": exp_rec.get("tmc_sa_no3d"),
-        "phase2_pass": exp_rec.get("unified_pass"),
+        "vbur": vbur_best,
+        "vbur_d2_7net": exp_rec.get("vbur_d2_7net"),
+        "vbur_etkdg": exp_rec.get("vbur_d2_percent"),
+        "bde_min": exp_rec.get("bde_min_kcal_mol"),
+        "e_coh": exp_rec.get("e_coh_ev_per_atom"),
+        "de_dimer": exp_rec.get("delta_e_dimer_kcal_mol"),
+        "dg_dimer_373": exp_rec.get("delta_g_dimer_373_kcal_mol"),
+        "de_form_bond": exp_rec.get("delta_e_form_per_bond_kcal_mol"),
+        "tmc_sa_no3d": exp_rec.get("tmc_sa_no3d"),
+        "tmc_sa_phys": tmc_best,
+        "phase2_pass": pass_best,
         "domain_flag": "boundary_diagnostic" if exp_rec.get("boundary_flag") else "patent_lit_pass",
     })
 
@@ -2443,7 +2472,10 @@ def _build_dataset_sankey_svg() -> str:
     n_pat_tot = int(pat_s.get("n_total", len(patent_exp_records)))
     n_pat_prec = int(pat_s.get("n_precursors", 0))
     n_pat_inh = int(pat_s.get("n_inhibitors", 0))
-    n_pat_pass = int(pat_s.get("n_precursors_pass", 0)) + int(pat_s.get("n_inhibitors_pass", 0))
+    n_pat_7n = int(pat_s.get("n_sevenn_computed", 0))
+    n_pat_7n_pass = int(pat_s.get("n_precursors_pass_7net", 0)) + int(pat_s.get("n_inhibitors_pass_7net", 0))
+    n_pat_no3d_pass = int(pat_s.get("n_precursors_pass", 0)) + int(pat_s.get("n_inhibitors_pass", 0))
+    n_pat_pass = n_pat_7n_pass if n_pat_7n == n_pat_tot and n_pat_tot > 0 else n_pat_no3d_pass
     n_pat_bnd = n_pat_tot - n_pat_pass
     n_total_curated = n_prec_cat + n_inhib + n_neg + n_reag_rxn + n_pat_tot
 
@@ -2487,15 +2519,23 @@ def _build_dataset_sankey_svg() -> str:
     c2_items = [("svn", n_svn, "#10b981", "SevenNet LBFGS 3D", "Core 55 · Exp 75 · Neg 30 · 100%")]
     if n_etk_base > 0:
         c2_items.append(("etk_base", n_etk_base, "#8b5cf6", "ETKDGv3 Guarded", "Benchmark Subset"))
-    c2_items.append(("etk_pat", n_pat_tot, "#f59e0b", "ETKDGv3 3D + TMC-SA", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 100% Embed"))
+    if n_pat_7n == n_pat_tot and n_pat_tot > 0:
+        c2_items.append(("etk_pat", n_pat_tot, "#059669", "Exp SevenNet LBFGS", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 0 Fallback"))
+    else:
+        c2_items.append(("etk_pat", n_pat_tot, "#f59e0b", "ETKDGv3 3D + TMC-SA", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 100% Embed"))
     c2 = _layout(c2_items, y_start=54.0, gap=22.0)
     for d in c2.values():
         d["x"] = x2
 
+    pat_out_sub = (
+        f"7net {n_pat_pass}/{n_pat_tot} Pass (PDMAT/Ge Rescued) · {n_pat_bnd} Diag"
+        if (n_pat_7n == n_pat_tot and n_pat_tot > 0)
+        else f"{n_pat_pass} Pass ({int(pat_s.get('n_precursors_pass', 0))}+{int(pat_s.get('n_inhibitors_pass', 0))}) · {n_pat_bnd} Boundary Flag"
+    )
     c3 = _layout([
         ("pos_120", n_pos, "#16a34a", "Benchmark Positive", f"{n_prec_eval}+{n_inhib} · OCSVM · CV-5"),
         ("neg_40", n_neg, "#dc2626", "Negative Control", "LOFMO Test · CV-5 · TMC-SA"),
-        ("pat_out", n_pat_tot, "#0284c7", "Expansion Screened", f"{n_pat_pass} Pass ({int(pat_s.get('n_precursors_pass', 0))}+{int(pat_s.get('n_inhibitors_pass', 0))}) · {n_pat_bnd} Boundary Flag"),
+        ("pat_out", n_pat_tot, "#0284c7", "Expansion 7net TMC-SA", pat_out_sub),
     ], y_start=54.0, gap=22.0)
     for d in c3.values():
         d["x"] = x3
@@ -2512,10 +2552,10 @@ def _build_dataset_sankey_svg() -> str:
     if n_etk_base > 0:
         flows.append((c1["eval_160"], c2["etk_base"], n_etk_base, "#8b5cf6", f"Eval -> ETKDGv3: {n_etk_base}"))
     flows.extend([
-        (c1["pat_38"], c2["etk_pat"], n_pat_tot, "#f59e0b", f"Patent Expansion -> RDKit ETKDGv3 3D + TMC-SA: {n_pat_tot}"),
+        (c1["pat_38"], c2["etk_pat"], n_pat_tot, "#059669" if n_pat_7n == n_pat_tot else "#f59e0b", f"Patent Expansion -> SevenNet-0 LBFGS 3D + BDE/Dimer/ΔEf: {n_pat_tot} (0 Fallbacks)"),
         (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"SevenNet LBFGS -> Benchmark Positive: {n_svn_pos}"),
         (c2["svn"], c3["neg_40"], n_svn_neg, "#059669", f"SevenNet LBFGS -> Negative Control Validation: {n_svn_neg}"),
-        (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"Expansion Screened -> {n_pat_pass} Pass ({int(pat_s.get('n_precursors_pass', 0))}/{n_pat_prec} Prec + {int(pat_s.get('n_inhibitors_pass', 0))}/{n_pat_inh} Inh) + {n_pat_bnd} Boundary Flag"),
+        (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"Expansion 7net TMC-SA -> {n_pat_pass}/{n_pat_tot} Strict Pass (ETKDG {n_pat_no3d_pass}/{n_pat_tot}) + {n_pat_bnd} Boundary Diagnostics"),
     ])
 
     ribbon_svg = []

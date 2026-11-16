@@ -476,6 +476,14 @@ def build_expansion_dataset(
                 ex_prec_el[c_el] += 1
 
     br_scorer = BRSAScorer() if BRSAScorer is not None else None
+    sevenn_path = os.path.join(PROJECT_ROOT, "database", "external", "patent_expansion_sevenn_features.json")
+    sevenn_by_id: Dict[str, Dict[str, Any]] = {}
+    if os.path.exists(sevenn_path):
+        with open(sevenn_path, "r", encoding="utf-8") as fh:
+            for srec in json.load(fh).get("features", []):
+                if srec.get("id"):
+                    sevenn_by_id[srec["id"]] = srec
+
     records: List[Dict[str, Any]] = []
 
     for idx, spec in enumerate(EXPANSION_SPECS, start=1):
@@ -485,6 +493,7 @@ def build_expansion_dataset(
         can = Chem.MolToSmiles(mol)
         assert can not in ex_cans and name.lower() not in ex_names, f"Duplicate candidate: {name}"
 
+        eid = f"EXP_{idx:02d}"
         ttype = "inhibitor" if grp_lbl == "AS-ALD Inhibitor" else "precursor"
         sa_val = round(float(sascorer.calculateScore(mol)), 3)
         br_val = round(float(br_scorer.calculateScore(smi)[0]), 3) if br_scorer is not None else sa_val
@@ -510,16 +519,59 @@ def build_expansion_dataset(
         gate = evaluate_coord_chem_gate(smi, lig_sa, desc, topo, include_design2=True)
         unified_pass = bool(gate["passed"] and tmc_sa <= 4.0)
 
-        # Boundary / refinement note for honest diagnosis
+        # Merge SevenNet-0 3D LBFGS physical descriptors when available
+        s7 = sevenn_by_id.get(eid)
+        if s7 is not None:
+            bde_val = float(s7["bde_min_kcal_mol"])
+            ecoh_val = float(s7["e_coh_ev_per_atom"])
+            ddim_val = float(s7["delta_e_dimer_kcal_mol"])
+            dg_dim_val = float(s7["delta_g_dimer_373_kcal_mol"])
+            de_form_atom = float(s7["delta_e_form_ev_per_atom"])
+            de_form_bond = float(s7["delta_e_form_per_bond_kcal_mol"])
+            vbur_35_7n = float(s7["vbur_percent"])
+            vbur_rp_7n = float(s7["vbur_rprobe_7net"])
+            vbur_d2_7n = float(s7["vbur_d2_7net"])
+            void_7n = float(s7["void_cone_deg_7net"])
+            tmc_sa_7net = compute_tmc_sa_score(
+                lig_sa,
+                vbur_rp_7n,
+                v_min,
+                bool(topo["is_coord_center"]),
+                bde_val=bde_val,
+                ecoh_val=ecoh_val,
+                ddim_val=ddim_val,
+            )
+            pass_7net = bool(gate["passed"] and tmc_sa_7net <= 4.0)
+        else:
+            bde_val = ecoh_val = ddim_val = dg_dim_val = de_form_atom = de_form_bond = None
+            vbur_35_7n = vbur_rp_7n = vbur_d2_7n = void_7n = None
+            tmc_sa_7net = None
+            pass_7net = None
+
+        # Boundary / refinement note for honest diagnosis (ETKDGv3 + SevenNet-0 comparison)
         boundary_flag = ""
         if topo["center_atom"] == "Zn" and "homoleptic_tm_sp3" in gate["reasons"]:
-            boundary_flag = "Zn(II) d10 폐각 착물 — 현 SMARTS 게이트 정교화 대상 (DEZ)"
+            boundary_flag = "Zn(II) d10 폐각 착물 — 현 SMARTS 게이트 정교화 대상 (7net 물리 안정)"
         elif vbur_d2 > 83.5 and ttype == "precursor":
-            boundary_flag = f"소형 중심원자 사면체/5배위 입체밀집 (%Vbur={vbur_d2:.1f}% > 83.5%)"
+            if pass_7net is True:
+                boundary_flag = f"ETKDG 입체과밀(%Vbur={vbur_d2:.1f}%) -> 7net LBFGS 이완 후 통과({vbur_rp_7n:.1f}%, TMC={tmc_sa_7net:.2f})"
+            else:
+                boundary_flag = f"소형 중심원자 사면체/5배위 입체밀집 (%Vbur: ETKDG {vbur_d2:.1f}% / 7net D2 {vbur_d2_7n:.1f}%)"
+        elif s7 is not None and not pass_7net:
+            if "[C-]#[O+]" in smi or "C=C[Si]" in smi:
+                boundary_flag = f"중성 CO/올레핀 해리 7net 과소결합 편차 (BDE={bde_val:.1f} kcal/mol)"
+            elif ecoh_val < 3.10:
+                boundary_flag = f"고체 이합체/할로겐화물 격자응집 경계 (ecoh={ecoh_val:.2f} eV/atom, dEdim={ddim_val:.1f})"
+            elif ddim_val < -1.5 and vbur_rp_7n < v_min:
+                boundary_flag = f"저배위 회합 경향 (Vbur={vbur_rp_7n:.1f}%, dEdim={ddim_val:.1f} kcal/mol)"
+            elif bde_val < 45.0:
+                boundary_flag = f"저온 ALD 고반응성 결합 해리창 (BDE={bde_val:.1f} < 45.0 kcal/mol)"
+            elif vbur_rp_7n > 83.5 or vbur_d2_7n > 83.5:
+                boundary_flag = f"소형 중심원자 입체밀집 (7net Rprobe={vbur_rp_7n:.1f}%, D2={vbur_d2_7n:.1f}%)"
 
         records.append(
             {
-                "id": f"EXP_{idx:02d}",
+                "id": eid,
                 "name": name,
                 "smiles": smi,
                 "canonical_smiles": can,
@@ -538,27 +590,43 @@ def build_expansion_dataset(
                 "chelate_rings": int(topo["chelate_ring_count"]),
                 "embed_ok": bool(g["embed_ok"]),
                 "vbur_d2_percent": round(vbur_d2, 2),
+                "vbur_35_7net": vbur_35_7n,
+                "vbur_rprobe_7net": vbur_rp_7n,
+                "vbur_d2_7net": vbur_d2_7n,
+                "void_cone_deg_7net": void_7n,
                 "sascore": sa_val,
                 "br_sascore": br_val,
                 "ligand_sa": lig_sa,
                 "tmc_sa_no3d": tmc_sa,
+                "tmc_sa_7net": tmc_sa_7net,
+                "e_pot_ev": float(s7["e_pot_ev"]) if s7 is not None else None,
+                "e_coh_ev_per_atom": ecoh_val,
+                "bde_min_kcal_mol": bde_val,
+                "bde_mode": s7["bde_mode"] if s7 is not None else None,
+                "delta_e_dimer_kcal_mol": ddim_val,
+                "delta_g_dimer_373_kcal_mol": dg_dim_val,
+                "delta_e_form_ev_per_atom": de_form_atom,
+                "delta_e_form_per_bond_kcal_mol": de_form_bond,
+                "sevenn_is_fallback": bool(s7["is_fallback"]) if s7 is not None else None,
                 "gate_passed": bool(gate["passed"]),
                 "gate_reasons": gate["reasons"],
                 "unified_pass": unified_pass,
+                "pass_7net": pass_7net,
                 "boundary_flag": boundary_flag,
             }
         )
 
+    base_prec_el = Counter(ex_prec_el)
     exp_prec_el = Counter(r["center_atom"] for r in records if r["target_type"] == "precursor")
-    all_els = sorted(set(ex_prec_el.keys()) | set(exp_prec_el.keys()))
+    all_els = sorted(set(base_prec_el.keys()) | set(exp_prec_el.keys()))
     coverage_table = [
         {
             "element": el,
-            "current_102": int(ex_prec_el.get(el, 0)),
+            "current_102": int(base_prec_el.get(el, 0)),
             "added_28": int(exp_prec_el.get(el, 0)),
-            "merged_130": int(ex_prec_el.get(el, 0) + exp_prec_el.get(el, 0)),
+            "merged_130": int(base_prec_el.get(el, 0) + exp_prec_el.get(el, 0)),
         }
-        for el in sorted(all_els, key=lambda e: (-(ex_prec_el.get(e, 0) + exp_prec_el.get(e, 0)), e))
+        for el in sorted(all_els, key=lambda e: (-(base_prec_el.get(e, 0) + exp_prec_el.get(e, 0)), e))
     ]
 
     summary = {
@@ -567,8 +635,12 @@ def build_expansion_dataset(
         "n_inhibitors": sum(1 for r in records if r["target_type"] == "inhibitor"),
         "n_precursors_pass": sum(1 for r in records if r["target_type"] == "precursor" and r["unified_pass"]),
         "n_inhibitors_pass": sum(1 for r in records if r["target_type"] == "inhibitor" and r["unified_pass"]),
-        "n_new_elements_added": sum(1 for el in exp_prec_el if ex_prec_el.get(el, 0) == 0),
-        "new_elements": sorted(el for el in exp_prec_el if ex_prec_el.get(el, 0) == 0),
+        "n_sevenn_computed": sum(1 for r in records if r["tmc_sa_7net"] is not None),
+        "n_sevenn_fallback": sum(1 for r in records if r["sevenn_is_fallback"] is True),
+        "n_precursors_pass_7net": sum(1 for r in records if r["target_type"] == "precursor" and r["pass_7net"] is True),
+        "n_inhibitors_pass_7net": sum(1 for r in records if r["target_type"] == "inhibitor" and r["pass_7net"] is True),
+        "n_new_elements_added": sum(1 for el in exp_prec_el if base_prec_el.get(el, 0) == 0),
+        "new_elements": sorted(el for el in exp_prec_el if base_prec_el.get(el, 0) == 0),
         "n_merged_elements": len(all_els),
         "coverage_table": coverage_table,
     }

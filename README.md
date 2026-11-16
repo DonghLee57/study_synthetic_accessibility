@@ -171,6 +171,7 @@ synth_acc/
 │       ├── inverse_design_model.py     # Section 19 CoOrd-Inv compositional inverse-design enumerator & retro benchmark
 │       ├── mechanistic_ml_model.py     # Section 20 M+L first-principles physics, 4-regime generalization & kinetic motif map
 │       ├── run_patent_lit_expansion.py # 38-candidate KR/JP/CN/US/TW patent & metal-literature TMC-SA screening runner
+│       ├── run_patent_expansion_sevenn.py # SevenNet-0 LBFGS relaxation, BDE, Dimer & dEf/vM enrichment for 38 expansion candidates
 │       ├── history_and_expansion_html_section.py # Section 21 analysis history & Section 22 / Step 4-5 patent-lit expansion builder
 │       ├── run_unified_latest_160_analysis.py # Orchestrator generating database/benchmark_unified_latest_160.json (N=160)
 │       ├── run_phase1_baseline.py      # Phase 1 pure data-driven SA baseline benchmark (N=55)
@@ -199,7 +200,8 @@ flowchart LR
     NEB --> MECH
     MECH --> HTML
     ORCH --> EXP["run_patent_lit_expansion.py<br>(+28 Prec, +10 ASD Inhib, 24 Elements)"]
-    EXP --> HIST["history_and_expansion_html_section.py<br>(Sec 21 History + Sec 22 Patent/Lit)"]
+    EXP --> EXP7N["run_patent_expansion_sevenn.py<br>(38/38 SevenNet-0 LBFGS + dEf/vM)"]
+    EXP7N --> HIST["history_and_expansion_html_section.py<br>(Sec 21 History + Sec 22 Patent/Lit)"]
     HIST --> HTML
     ORCH --> HTML
 ```
