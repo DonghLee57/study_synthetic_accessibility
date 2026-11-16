@@ -752,6 +752,255 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertFalse(by_id["NEG-039"]["unified_pass"])
         self.assertFalse(by_id["NEG-040"]["unified_pass"])
 
+    def test_20_ligand_coord_html_section_and_report_sync(self):
+        """Verify Section 18 multi-coordination & ligand compositional stats module and HTML sync."""
+        bench_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        from ligand_coord_html_section import (
+            analyze_precursor_coordination_and_ligands,
+            build_ligand_coord_storyline_html,
+            build_ligand_coord_technical_html,
+        )
+
+        unified_path = os.path.join(PROJECT_ROOT, "database", "benchmark_unified_latest_160.json")
+        stats = analyze_precursor_coordination_and_ligands(unified_path)
+        self.assertEqual(stats["n_precursors"], 102)
+        self.assertEqual(stats["n_unique_metals"], 16)
+        self.assertEqual(stats["n_unique_ligands"], 51)
+        self.assertEqual(stats["homoleptic_count"] + stats["heteroleptic_count"], 102)
+        self.assertEqual(stats["n_shared_ligands"] + stats["n_singleton_ligands"], 51)
+
+        ab = {r["key"]: r for r in stats["ablation_rows"]}
+        self.assertGreater(ab["vbur_percent"]["coup_cv5_r2"], ab["vbur_percent"]["disc_cv5_r2"] + 0.5)
+        self.assertGreater(ab["delta_e_form_per_bond_kcal_mol"]["cont_lomo_r2"], 0.6)
+
+        story_html = build_ligand_coord_storyline_html(unified_path, stats=stats)
+        tech_html = build_ligand_coord_technical_html(unified_path, stats=stats)
+        for chunk in (story_html, tech_html):
+            for ctrl in ("\x07", "\x08", "\x0c", "{{", "\t"):
+                self.assertNotIn(ctrl, chunk)
+            self.assertNotIn("전구체", chunk)
+            self.assertNotIn("코호트", chunk)
+            self.assertNotIn("cohort", chunk.lower())
+
+        for fname in ("index.html", "synthetic_accessibility_report.html"):
+            fpath = os.path.join(PROJECT_ROOT, fname)
+            with open(fpath, "r", encoding="utf-8") as fh:
+                html_txt = fh.read()
+            self.assertIn("4-2. 전이금속 다중 배위수(", html_txt)
+            self.assertIn('id="tm-coord-ligand-stats"', html_txt)
+            self.assertIn("Sec 1/22", html_txt)
+            self.assertIn("18. 전이금속 다중 배위수 결정 및 리간드 조합 통계", html_txt)
+            self.assertIn("CCTBA", html_txt)
+            self.assertIn("Co(AMD)2", html_txt)
+
+    def test_21_inverse_design_model_section_and_benchmark(self):
+        """Verify Section 19 CoOrd-Inv inverse-design model, out-of-fold recall, and HTML sync."""
+        bench_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        from inverse_design_model import (
+            build_inverse_design_storyline_html,
+            build_inverse_design_technical_html,
+            compute_inverse_design_analysis,
+        )
+
+        unified_path = os.path.join(PROJECT_ROOT, "database", "benchmark_unified_latest_160.json")
+        inv = compute_inverse_design_analysis(unified_path)
+        self.assertEqual(inv["n_metals"], 16)
+        self.assertGreater(inv["n_candidates"], 30000)
+        self.assertGreater(inv["n_hard_pass"], 3000)
+        self.assertGreaterEqual(inv["retro_cv5"]["coupled"]["n"], 50)
+        # CoOrd-Inv coupled surrogate must strictly outperform discrete Bag(L) baseline
+        self.assertLess(inv["retro_cv5"]["coupled"]["median_pct"], inv["retro_cv5"]["discrete"]["median_pct"])
+        self.assertLess(inv["retro_lomo5"]["coupled"]["median_pct"], inv["retro_lomo5"]["discrete"]["median_pct"])
+        self.assertGreater(inv["retro_cv5"]["coupled"]["top5_pct"], inv["retro_cv5"]["discrete"]["top5_pct"])
+        self.assertEqual(len(inv["novel_top"]), 10)
+
+        story_html = build_inverse_design_storyline_html(unified_path, inv_stats=inv)
+        tech_html = build_inverse_design_technical_html(unified_path, inv_stats=inv)
+        for chunk in (story_html, tech_html):
+            for ctrl in ("\x07", "\x08", "\x0c", "{{", "\t"):
+                self.assertNotIn(ctrl, chunk)
+            self.assertNotIn("전구체", chunk)
+            self.assertNotIn("코호트", chunk)
+            self.assertNotIn("cohort", chunk.lower())
+
+        for fname in ("index.html", "synthetic_accessibility_report.html"):
+            fpath = os.path.join(PROJECT_ROOT, fname)
+            with open(fpath, "r", encoding="utf-8") as fh:
+                html_txt = fh.read()
+            self.assertIn("Step 4-3", html_txt)
+            self.assertIn('id="precursor-inverse-model-synthesis"', html_txt)
+            self.assertIn("19. 반도체 프리커서 역설계 모델 통합 (CoOrd-Inv)", html_txt)
+            self.assertNotIn("<!-- INVERSE_DESIGN_STORYLINE_PLACEHOLDER -->", html_txt)
+            self.assertNotIn("<!-- INVERSE_DESIGN_TECHNICAL_PLACEHOLDER -->", html_txt)
+
+    def test_22_mechanistic_ml_model_and_generalization(self):
+        """Verify Section 20 mechanistic M+L models, 4-regime generalization, and HTML sync."""
+        bench_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        from mechanistic_ml_model import (
+            build_mechanistic_storyline_html,
+            build_mechanistic_technical_html,
+            evaluate_mechanistic_ml_models,
+        )
+
+        unified_path = os.path.join(PROJECT_ROOT, "database", "benchmark_unified_latest_160.json")
+        neb_path = os.path.join(PROJECT_ROOT, "database", "external", "sevenn_decomp_neb_benchmark.json")
+        stats = evaluate_mechanistic_ml_models(unified_path, neb_path)
+
+        self.assertEqual(stats["n_precs"], 102)
+        self.assertEqual(stats["n_homo"], 54)
+        self.assertEqual(stats["n_hetero"], 48)
+        self.assertEqual(stats["n_viab"], 142)
+        self.assertGreater(stats["ef_full_r2"], 0.70)
+        self.assertGreater(stats["vb_full_r2"], 0.75)
+
+        reg_map = {r["key"]: r for r in stats["reg_rows"]}
+        # Physics laws must strictly beat RF in Homo->Hetero extrapolation for ΔEf/vM and %V_bur
+        self.assertGreater(
+            reg_map["delta_e_form_per_bond_kcal_mol"]["homo_het_phys_r2"],
+            reg_map["delta_e_form_per_bond_kcal_mol"]["homo_het_rf_r2"],
+        )
+        self.assertGreater(
+            reg_map["vbur_percent"]["homo_het_phys_r2"],
+            reg_map["vbur_percent"]["homo_het_rf_r2"],
+        )
+        # BDE_min must remain negative on Homo->Hetero (honest failure boundary)
+        self.assertLess(reg_map["bde_min_kcal_mol"]["homo_het_rf_r2"], 0.0)
+
+        cls_2d = stats["cls_results"]["only_2d_ml"]
+        cls_full = stats["cls_results"]["full_ml_3d"]
+        self.assertGreater(cls_2d["cv5"]["auroc"], 0.98)
+        self.assertGreater(cls_2d["lomo5"]["auroc"], 0.95)
+        self.assertGreater(cls_2d["lolo5"]["auroc"], 0.90)
+        self.assertGreaterEqual(cls_2d["lolo5"]["auroc"], cls_full["lolo5"]["auroc"])
+        self.assertEqual(len(stats["motif_rows"]), 5)
+        for m in stats["motif_rows"]:
+            self.assertNotEqual(m["neb_anchor"].strip(), "-")
+            self.assertNotIn("-;", m["neb_anchor"])
+            self.assertNotIn("; -", m["neb_anchor"])
+            self.assertRegex(m["neb_anchor"], r"\d+\.\d{2}")
+
+        story_html = build_mechanistic_storyline_html(unified_path, neb_path, mech_stats=stats)
+        tech_html = build_mechanistic_technical_html(unified_path, neb_path, mech_stats=stats)
+        for chunk in (story_html, tech_html):
+            for ctrl in ("\x07", "\x08", "\x0c", "{{", "\t"):
+                self.assertNotIn(ctrl, chunk)
+            self.assertNotIn("전구체", chunk)
+            self.assertNotIn("코호트", chunk)
+            self.assertNotIn("cohort", chunk.lower())
+
+        for fname in ("index.html", "synthetic_accessibility_report.html"):
+            fpath = os.path.join(PROJECT_ROOT, fname)
+            with open(fpath, "r", encoding="utf-8") as fh:
+                html_txt = fh.read()
+            self.assertIn("Step 4-4", html_txt)
+            self.assertIn('id="ml-mechanistic-generalization"', html_txt)
+            self.assertIn("20. 중심원자&ndash;리간드 물리&middot;메커니즘 모델 및 일반화 검증", html_txt)
+            self.assertNotIn("<!-- MECHANISTIC_ML_STORYLINE_PLACEHOLDER -->", html_txt)
+            self.assertNotIn("<!-- MECHANISTIC_ML_TECHNICAL_PLACEHOLDER -->", html_txt)
+
+    def test_23_analysis_history_and_patent_expansion(self):
+        """Verify Section 21 analysis history and Section 22 / Step 4-5 KR/JP/CN/US/TW expansion."""
+        bench_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        from history_and_expansion_html_section import (
+            build_analysis_history_technical_html,
+            build_patent_expansion_storyline_html,
+            build_patent_expansion_technical_html,
+        )
+
+        unified_path = os.path.join(PROJECT_ROOT, "database", "benchmark_unified_latest_160.json")
+        neb_path = os.path.join(PROJECT_ROOT, "database", "external", "sevenn_decomp_neb_benchmark.json")
+        exp_path = os.path.join(PROJECT_ROOT, "database", "external", "patent_lit_expansion_candidates.json")
+
+        with open(exp_path, "r", encoding="utf-8") as fh:
+            exp_data = json.load(fh)
+        s = exp_data["summary"]
+        self.assertEqual(s["n_total"], 38)
+        self.assertEqual(s["n_precursors"], 28)
+        self.assertEqual(s["n_inhibitors"], 10)
+        self.assertEqual(s["n_new_elements_added"], 8)
+        self.assertEqual(s["n_merged_elements"], 24)
+        self.assertEqual(s["n_inhibitors_pass"], 10)
+        self.assertEqual(s["n_precursors_pass"], 24)
+
+        # Ensure zero canonical SMILES duplication with existing 160-molecule DB
+        from rdkit import Chem
+        with open(unified_path, "r", encoding="utf-8") as fh:
+            ex_cans = {
+                Chem.MolToSmiles(Chem.MolFromSmiles(r["smiles"]))
+                for r in json.load(fh)["records"]
+                if Chem.MolFromSmiles(r["smiles"]) is not None
+            }
+        for rec in exp_data["records"]:
+            self.assertTrue(rec["embed_ok"])
+            self.assertNotIn(rec["canonical_smiles"], ex_cans)
+
+        hist_html = build_analysis_history_technical_html(unified_path, neb_path, exp_path)
+        exp_story = build_patent_expansion_storyline_html(exp_path, unified_path)
+        exp_tech = build_patent_expansion_technical_html(exp_path, unified_path)
+        for chunk in (hist_html, exp_story, exp_tech):
+            for ctrl in ("\x07", "\x08", "\x0c", "{{", "\t"):
+                self.assertNotIn(ctrl, chunk)
+            self.assertNotIn("전구체", chunk)
+            self.assertNotIn("코호트", chunk)
+            self.assertNotIn("cohort", chunk.lower())
+
+        for fname in ("index.html", "synthetic_accessibility_report.html"):
+            fpath = os.path.join(PROJECT_ROOT, fname)
+            with open(fpath, "r", encoding="utf-8") as fh:
+                html_txt = fh.read()
+            self.assertIn("4-5. 한&middot;중&middot;일&middot;미&middot;대만 특허", html_txt)
+            self.assertIn('id="analysis-history-roadmap"', html_txt)
+            self.assertIn('id="patent-literature-expansion"', html_txt)
+            self.assertIn("21. 연구&middot;분석 이력 및 단계별 검증 로드맵", html_txt)
+            self.assertIn("22. 한&middot;중&middot;일&middot;미&middot;대만 특허 및 중심금속별 문헌 DB 확장", html_txt)
+            self.assertNotIn("<!-- ANALYSIS_HISTORY_TECHNICAL_PLACEHOLDER -->", html_txt)
+            self.assertNotIn("<!-- PATENT_EXPANSION_STORYLINE_PLACEHOLDER -->", html_txt)
+            self.assertNotIn("<!-- PATENT_EXPANSION_TECHNICAL_PLACEHOLDER -->", html_txt)
+            self.assertIn("38 Patent &amp; Lit Expansion", html_txt) if "38 Patent &amp; Lit Expansion" in html_txt else self.assertIn("38 Patent & Lit Expansion", html_txt)
+            self.assertIn('data-dbcat="patent_expansion"', html_txt)
+
+        # Verify Canonical Deduplicated DB Explorer payload inside index.html
+        import re as _re
+        m_db = _re.search(r'<script[^>]*id="db-explorer-payload"[^>]*>([\s\S]*?)</script>', html_txt)
+        self.assertIsNotNone(m_db)
+        db_payload = json.loads(m_db.group(1).replace("<\\/", "</"))
+        db_recs = db_payload["records"]
+        db_meta = db_payload["meta"]
+        self.assertEqual(db_meta["n_patent_total"], 38)
+        self.assertEqual(db_meta["n_backfilled_atomiclimits"], 14)
+        self.assertEqual(db_meta["n_net_new_patent"], 24)
+        self.assertEqual(db_meta["n_merged_dual_role_reagents"], 10)
+        self.assertEqual(db_meta["n_merged_notation_aliases"], 2)
+        self.assertEqual(len(db_recs), 286)
+
+        # Assert zero canonical SMILES duplicates across all non-reaction molecular DB records
+        non_rxn_cs = []
+        for rec in db_recs:
+            if rec.get("db_type") == "reaction":
+                continue
+            smi = rec.get("smiles") or ""
+            if smi:
+                mol = Chem.MolFromSmiles(smi)
+                if mol is not None:
+                    non_rxn_cs.append(Chem.MolToSmiles(mol, isomericSmiles=False))
+        self.assertEqual(len(non_rxn_cs), len(set(non_rxn_cs)))
+
+        # Verify MoCl5 appears exactly once as unified canonical entity linking EXT-ALD-058, BB_11, and EXP_02
+        mocl5_hits = [rec for rec in db_recs if rec.get("formula") == "Cl5Mo" or "mocl5" in str(rec.get("name", "")).lower()]
+        self.assertEqual(len(mocl5_hits), 1)
+        self.assertEqual(mocl5_hits[0]["id"], "EXT-ALD-058")
+        self.assertIn("BB_11", mocl5_hits[0].get("secondary_ids", []))
+        self.assertIn("EXP_02", mocl5_hits[0].get("secondary_ids", []))
+        self.assertTrue(mocl5_hits[0]["has_2d"])
+
 
 if __name__ == "__main__":
     unittest.main()

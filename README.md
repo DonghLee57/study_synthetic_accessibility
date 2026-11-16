@@ -155,16 +155,23 @@ synth_acc/
 │   ├── manifest.json                   # Complete verification metadata for all 25 papers
 │   ├── repos_and_precursors.json       # Verified GitHub/PyPI repository & precursor audit
 │   └── vasp_frameworks.json            # 10 verified VASP automation frameworks metadata
-├── index.html                          # Primary interactive HTML report (13 Sections, KaTeX + Mermaid)
+├── index.html                          # Primary interactive HTML report (22 Sections, KaTeX + Mermaid)
 ├── synthetic_accessibility_report.html  # Synchronized copy of the HTML report
 ├── template.html                       # Master HTML template
 ├── build_semiconductor_db.py           # Semiconductor database generation and RDKit validation engine
 ├── scripts/
 │   ├── data/                           # Database builders, downloaders & VASP/inhibitor verifiers
-│   └── benchmark/                      # Modular SA, physical-coordination & ML evaluation stack
+│   └── benchmark/                      # Modular SA, physical-coordination, CI-NEB, CoOrd-Inv & M+L physics stack
 │       ├── element_physics.py          # Periodic-property coordination states, ETKDGv3/UFF-guarded 3D, %V_bur^D2, dE_f^std/v_M
 │       ├── tmc_sa_scorer.py            # Shared 2D/SMARTS descriptors, coord gates, pro-ligand separation & TMC-SA scorer
 │       ├── ml_evaluation.py            # Class-weighted ML CV-5, LOFMO extrapolation, Descriptor 4 audit & PCA/t-SNE
+│       ├── run_sevenn_decomp_neb_benchmark.py # 8-channel SevenNet-0 CI-NEB thermal decomposition kinetics benchmark
+│       ├── neb_html_section.py         # Interactive reaction-coordinate MEP + 3D trajectory visualizer HTML builder
+│       ├── ligand_coord_html_section.py # Section 18 CN_eff multi-coordination & 102-precursor ligand statistics builder
+│       ├── inverse_design_model.py     # Section 19 CoOrd-Inv compositional inverse-design enumerator & retro benchmark
+│       ├── mechanistic_ml_model.py     # Section 20 M+L first-principles physics, 4-regime generalization & kinetic motif map
+│       ├── run_patent_lit_expansion.py # 38-candidate KR/JP/CN/US/TW patent & metal-literature TMC-SA screening runner
+│       ├── history_and_expansion_html_section.py # Section 21 analysis history & Section 22 / Step 4-5 patent-lit expansion builder
 │       ├── run_unified_latest_160_analysis.py # Orchestrator generating database/benchmark_unified_latest_160.json (N=160)
 │       ├── run_phase1_baseline.py      # Phase 1 pure data-driven SA baseline benchmark (N=55)
 │       ├── run_phase2_sevenn_features.py # SevenNet LBFGS monomer, non-overlapping dimer & BDE_min relaxation
@@ -183,7 +190,18 @@ flowchart LR
     EP --> TS["tmc_sa_scorer.py<br>(SMARTS/Topo Gates + TMC-SA Scorer)"]
     TS --> MLE["ml_evaluation.py<br>(38-Feat CV-5 + LOFMO + D4 Audit + PCA/t-SNE)"]
     MLE --> ORCH["run_unified_latest_160_analysis.py<br>(benchmark_unified_latest_160.json)"]
-    ORCH --> HTML["generate_html.py -> index.html"]
+    ORCH --> LIG["ligand_coord_html_section.py<br>(CN_eff + 102x51 Compositional Surrogate)"]
+    ORCH --> NEB["neb_html_section.py<br>(8-Channel SevenNet-0 CI-NEB + T_decomp)"]
+    LIG --> INV["inverse_design_model.py<br>(CoOrd-Inv 35k Space + 5-CV/LOMO-5 Retro Recall)"]
+    NEB --> HTML["generate_html.py -> index.html"]
+    INV --> HTML
+    LIG --> MECH["mechanistic_ml_model.py<br>(Pauling-HSAB, Spherical %V_bur, 4-Regime & Motif Map)"]
+    NEB --> MECH
+    MECH --> HTML
+    ORCH --> EXP["run_patent_lit_expansion.py<br>(+28 Prec, +10 ASD Inhib, 24 Elements)"]
+    EXP --> HIST["history_and_expansion_html_section.py<br>(Sec 21 History + Sec 22 Patent/Lit)"]
+    HIST --> HTML
+    ORCH --> HTML
 ```
 
 ```mermaid

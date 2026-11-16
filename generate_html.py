@@ -10,8 +10,28 @@ from neb_html_section import (
     build_neb_technical_html,
     build_neb_trajectory_payload_json,
 )
+from ligand_coord_html_section import (
+    analyze_precursor_coordination_and_ligands,
+    build_ligand_coord_storyline_html,
+    build_ligand_coord_technical_html,
+)
+from inverse_design_model import (
+    build_inverse_design_storyline_html,
+    build_inverse_design_technical_html,
+    compute_inverse_design_analysis,
+)
+from mechanistic_ml_model import (
+    build_mechanistic_storyline_html,
+    build_mechanistic_technical_html,
+    evaluate_mechanistic_ml_models,
+)
+from history_and_expansion_html_section import (
+    build_analysis_history_technical_html,
+    build_patent_expansion_storyline_html,
+    build_patent_expansion_technical_html,
+)
 from rdkit import Chem
-from rdkit.Chem import Descriptors, rdDepictor
+from rdkit.Chem import Descriptors, rdDepictor, rdMolDescriptors
 from rdkit.Chem.Draw import rdMolDraw2D
 
 def load_meta(filename):
@@ -1133,17 +1153,17 @@ def _step4_unified_row(mid: str, note: str) -> str:
 
 
 _step4_rep_rows = "\n".join([
-    _step4_unified_row("PREC_SI_01", "공유반지름 R<sub>probe</sub>=R<sub>cov</sub>(Si)+1.85=2.96 &Aring; 기준 %V<sub>bur</sub> 48.7% (&ge; V<sub>min</sub><sup>univ</sup> 44%) 및 극성 차폐(D2 29.7%)로 정상 TP"),
-    _step4_unified_row("PREC_SI_05", "공유반지름 비례 프로브(%V<sub>bur</sub> 45.1% &ge; 44%)와 분리 단편 BDE(57.2 kcal/mol) 정합으로 정상 TP(3.76)"),
-    _step4_unified_row("PREC_MET_03", "18e<sup>-</sup> 다중상태 R<sub>eff</sub>=1.50&Aring; 및 &pi;-햅티시티 보편 하한 V<sub>min</sub><sup>univ</sup>(&eta;=2)=34% 하의 안정한 메탈로센 TP(3.86)"),
-    _step4_unified_row("EXT-ALD-126", "Ir(CpEt)(CHD) &pi;=2 보편 하한(34%) 및 R<sub>probe</sub>=3.26 &Aring; 입체 차폐(60.2%) 충족으로 정상 TP(3.13)"),
-    _step4_unified_row("EXT-ALD-128", "고리 &eta;-디엔 &pi;-배위 위상 인식으로 sp3 알킬 오분류 없이 정상 착물 TP(2.98)"),
+    _step4_unified_row("PREC_SI_01", f"공유반지름 R<sub>probe</sub>=R<sub>cov</sub>(Si)+1.85={_u_by_id['PREC_SI_01']['r_probe_ang']:.2f} &Aring; 기준 %V<sub>bur</sub> {_u_by_id['PREC_SI_01']['vbur_percent']:.1f}% (&ge; V<sub>min</sub><sup>univ</sup> {_u_by_id['PREC_SI_01']['v_min_adaptive']:.0f}%) 및 극성 차폐(D2 {_u_by_id['PREC_SI_01']['vbur_d2_percent']:.1f}%)로 정상 TP"),
+    _step4_unified_row("PREC_SI_05", f"공유반지름 비례 프로브(%V<sub>bur</sub> {_u_by_id['PREC_SI_05']['vbur_percent']:.1f}% &ge; {_u_by_id['PREC_SI_05']['v_min_adaptive']:.0f}%)와 분리 단편 BDE({_u_by_id['PREC_SI_05']['bde_min_kcal_mol']:.1f} kcal/mol) 정합으로 정상 TP({_u_by_id['PREC_SI_05']['tmc_sa_v2']:.2f})"),
+    _step4_unified_row("PREC_MET_03", f"18e<sup>-</sup> 다중상태 R<sub>eff</sub>={_u_by_id['PREC_MET_03']['r_eff_ang']:.2f}&Aring; 및 &pi;-햅티시티 보편 하한 V<sub>min</sub><sup>univ</sup>(&eta;=2)={_u_by_id['PREC_MET_03']['v_min_adaptive']:.0f}% 하의 안정한 메탈로센 TP({_u_by_id['PREC_MET_03']['tmc_sa_v2']:.2f})"),
+    _step4_unified_row("EXT-ALD-126", f"Ir(CpEt)(CHD) &pi;=2 보편 하한({_u_by_id['EXT-ALD-126']['v_min_adaptive']:.0f}%) 및 R<sub>probe</sub>={_u_by_id['EXT-ALD-126']['r_probe_ang']:.2f} &Aring; 입체 차폐({_u_by_id['EXT-ALD-126']['vbur_percent']:.1f}%) 충족으로 정상 TP({_u_by_id['EXT-ALD-126']['tmc_sa_v2']:.2f})"),
+    _step4_unified_row("EXT-ALD-128", f"고리 &eta;-디엔 &pi;-배위 위상 인식으로 sp3 알킬 오분류 없이 정상 착물 TP({_u_by_id['EXT-ALD-128']['tmc_sa_v2']:.2f})"),
     _step4_unified_row("NEG-001", "동종 sp3 티타늄 알킬(&beta;-H 제거 취약) 배위 게이트 TN 차단"),
-    _step4_unified_row("NEG-004", "비중첩 이합체 이완 및 과밀 다중-아릴 게이트(%V<sub>bur</sub> 87.3% &gt; 83.5%) TN 차단"),
-    _step4_unified_row("NEG-019", "주기율표 물성 중심(R<sub>eff</sub>=1.28&Aring;, &chi;<sub>eff</sub>=1.73, N<sub>ve</sub>=9e<sup>-</sup>) 및 과밀 트리아릴 게이트로 TN 차단"),
-    _step4_unified_row("NEG-036", "부식성 카복실산(-COOH) 반응성 게이트 TN 차단"),
-    _step4_unified_row("NEG-039", "SevenNet-0 저결합 안정성(BDE 41.75 kcal/mol, e<sub>coh</sub> 2.96 eV) 및 Si-Si 연쇄 하이드라이드 불균등화 게이트 TN 차단"),
-    _step4_unified_row("NEG-040", "SevenNet-0 저결합 해리(BDE 23.05 kcal/mol) 및 &pi;-공액 주족 하이드라이드(&theta;<sub>void</sub> 61.4&deg;) 게이트 TN 차단"),
+    _step4_unified_row("NEG-004", f"비중첩 이합체 이완 및 과밀 다중-아릴 게이트(%V<sub>bur</sub> {_u_by_id['NEG-004']['vbur_percent']:.1f}%, overcrowded_poly_aryl_tm) TN 차단"),
+    _step4_unified_row("NEG-019", f"주기율표 물성 중심(R<sub>eff</sub>={_u_by_id['NEG-019']['r_eff_ang']:.2f}&Aring;, &chi;<sub>eff</sub>={_u_by_id['NEG-019']['chi_eff']:.2f}, N<sub>ve</sub>={_u_by_id['NEG-019']['n_ve']:.0f}e<sup>-</sup>) 및 과밀 트리아릴 게이트로 TN 차단"),
+    _step4_unified_row("NEG-036", "비활성 무작용기 알케인(Adamantane, inert_alkane) 게이트 TN 차단"),
+    _step4_unified_row("NEG-039", f"SevenNet-0 저결합 안정성(BDE {_u_by_id['NEG-039']['bde_min_kcal_mol']:.2f} kcal/mol, e<sub>coh</sub> {_u_by_id['NEG-039']['e_coh_ev_per_atom']:.2f} eV) 및 Si-Si 연쇄 하이드라이드 불균등화 게이트 TN 차단"),
+    _step4_unified_row("NEG-040", f"SevenNet-0 저결합 해리(BDE {_u_by_id['NEG-040']['bde_min_kcal_mol']:.2f} kcal/mol) 및 &pi;-공액 주족 하이드라이드(&theta;<sub>void</sub> {_u_by_id['NEG-040']['void_cone_deg']:.1f}&deg;) 게이트 TN 차단"),
 ])
 
 _mech_labels = [
@@ -1596,7 +1616,7 @@ phase2_step4_summary_joined = f"""
                   통합 LOFMO 외삽 평가 (Negative Control 40/40 전수 차단) 및 향후 물리 정밀화 방향
                 </div>
                 <p style="font-size:0.82rem; color:#064e3b; margin:0 0 10px 0; line-height:1.55;">
-                  통합 160종 데이터셋의 무작위 <code>CV-5</code>에서는 지도학습(<code>LogisticRegression</code> Bal.Acc <strong>{_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f}</strong>, <code>SVC_RBF</code> <strong>{_u_ml['SVC_RBF']['cv5_balanced_acc']:.3f}</strong>)이 높은 내삽 성능을 보이지만, 학습에 포함되지 않은 신규 실패 메커니즘 1종을 통째로 제외하는 <strong>LOFMO 외삽</strong>에서는 지도학습이 <code>0.000~0.024</code>로 급락합니다. 반면 양성(Positive) 물리 다양체만 학습하는 <strong><code>OneClassSVM_RBF</code>({_u_lofmo['OneClassSVM_RBF']['mean_unseen_tnr']:.3f})</strong>과 <strong>물리·배위 게이트({_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f})</strong>는 미지 실패군을 기구적 법칙에 기반해 안정적으로 차단합니다(<code>40/40 [100.0%] TNR</code>, Precursor <code>95/102 [93.1%] TPR</code>). 외삽 일반화를 더욱 강화하기 위한 후속 연구 축은 다음과 같습니다:
+                  통합 160종 데이터셋의 무작위 <code>CV-5</code>에서는 지도학습(<code>LogisticRegression</code> Bal.Acc <strong>{_u_ml['LogisticRegression']['cv5_balanced_acc']:.3f}</strong>, <code>SVC_RBF</code> <strong>{_u_ml['SVC_RBF']['cv5_balanced_acc']:.3f}</strong>)이 높은 내삽 성능을 보이지만, 학습에 포함되지 않은 신규 실패 메커니즘 1종을 통째로 제외하는 <strong>LOFMO 외삽</strong>에서는 지도학습이 <code>0.000~0.024</code>로 급락합니다. 반면 양성(Positive) 물리 다양체만 학습하는 <strong><code>OneClassSVM_RBF</code>({_u_lofmo['OneClassSVM_RBF']['mean_unseen_tnr']:.3f})</strong>과 <strong>물리·배위 게이트({_u_lofmo['Unified_TMC_SA_v2_Gate']['mean_unseen_tnr']:.3f})</strong>는 미지 실패군을 기구적 법칙에 기반해 안정적으로 차단합니다(<code>{_u_sum['negative_all_tn']} [{_u_sum['negative_all_tnr_pct']:.1f}%] TNR</code>, Precursor <code>{_u_sum['precursors_all_tp']} [{_u_sum['precursors_all_tpr_pct']:.1f}%] TPR</code>). 외삽 일반화를 더욱 강화하기 위한 후속 연구 축은 다음과 같습니다:
                 </p>
                 <ul style="font-size:0.81rem; color:#064e3b; margin:0; padding-left:18px; line-height:1.6;">
                   <li><strong>스핀·전하 인지 MLIP / DFT 결합</strong>: <code>SevenNet-0</code>(MPtrj 무기 결정 학습)은 중성 <code>CO</code>·$\pi$-아렌 리간드 해리에서 음의 BDE(<code>Ir(CO)3(tBu3Cyp) -8.8</code>, <code>Ru(IMBCH) -15.1 kcal/mol</code>)를 산출할 수 있으므로, 분자 스핀·전하를 학습한 <code>MACE-OMol</code> 또는 <code>g-xTB</code>/$\omega\text{{B97M-V}}$로 전자구조 정밀도를 보강합니다.</li>
@@ -1610,7 +1630,7 @@ phase1_phase2_tuning_joined = f"""
         <!-- Unified 160-Molecule Framework Summary Callout -->
         <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #059669; border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:0.84rem; color:#14532d; line-height:1.6;">
           <strong>통합 물리-배위 평가 프레임워크(<code>TMC-SA</code>: Transition-Metal Complex Synthetic Accessibility &bull; 다중상태 전이금속 배위 벡터 &bull; 극성 가중 <code>%V<sub>bur</sub><sup>D2</sup></code>) 핵심 성능:</strong>
-          공유반지름 정규화 프로브 구($R_{{\text{{probe}}}}(Z_M) = R_{{\text{{cov}}}} + 1.85\,\text{{Å}}$), 상태-의존 유효 반지름 $R_{{\text{{eff}}}}(M\mid\text{{env}})$, 극성·하이드라이드 가중 $\%V_{{\text{{bur}}}}^{{\text{{D2}}}}$, 개방 원추각 $\theta_{{\max}}^{{\text{{void}}}}$, 직교 표준 생성에너지($\Delta E_f^{{\text{{std}}}}/v_M$, {_d4_89['n_total']}종 전수 MLIP AUROC <code>{_d4_89['delta_e_form_per_bond']['auroc']:.3f}</code> · {_d4_85['n_total']}종 <code>{_d4_85['delta_e_form_per_bond']['auroc']:.3f}</code>) 및 주족 연쇄/&pi;-공액 하이드라이드 게이트를 결합하여, 핵심 검증셋(<code>N=55</code>) <strong>Precursor {_u_sum['audited_precursors_tp']} ({_u_sum['audited_precursors_tpr_pct']:.1f}%), Neg TNR 10/10 (100.0%)</strong> 및 전체 <strong>160종 통합 데이터셋 Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%), Neg TNR {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong>을 기록합니다.
+          공유반지름 정규화 프로브 구($R_{{\text{{probe}}}}(Z_M) = R_{{\text{{cov}}}} + 1.85\,\text{{Å}}$), 상태-의존 유효 반지름 $R_{{\text{{eff}}}}(M\mid\text{{env}})$, 극성·하이드라이드 가중 $\%V_{{\text{{bur}}}}^{{\text{{D2}}}}$, 개방 원추각 $\theta_{{\max}}^{{\text{{void}}}}$, 직교 표준 생성에너지($\Delta E_f^{{\text{{std}}}}/v_M$, {_d4_89['n_total']}종 전수 MLIP AUROC <code>{_d4_89['delta_e_form_per_bond']['auroc']:.3f}</code> · {_d4_85['n_total']}종 <code>{_d4_85['delta_e_form_per_bond']['auroc']:.3f}</code>) 및 주족 연쇄/&pi;-공액 하이드라이드 게이트를 결합하여, 핵심 검증셋(<code>N=55</code>) <strong>Precursor {_u_sum['audited_precursors_tp']} ({_u_sum['audited_precursors_tpr_pct']:.1f}%), Neg TNR {neg_tn_chem}/{neg_cnt} ({100.0 - neg_fp_pct_chem:.1f}%)</strong> 및 전체 <strong>160종 통합 데이터셋 Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%), Neg TNR {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong>을 기록합니다.
         </div>
 
         <!-- 15.1 Summary Stat Cards -->
@@ -1646,7 +1666,7 @@ phase1_phase2_tuning_joined = f"""
             <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">ML Cross-Validation: All-Sample vs LOOCV</div>
             <div style="font-size:1.75rem; font-weight:800; color:#0369a1; margin:6px 0;">{rf_comb_in['accuracy']:.3f} &rarr; {rf_comb_loo['accuracy']:.3f}</div>
             <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
-              Combined Random Forest (N=55): In-Sample 1.000 vs <strong>LOOCV Accuracy {rf_comb_loo['accuracy']:.3f}</strong> (Specificity {rf_comb_loo['specificity']:.3f})<br>
+              Combined Random Forest (N=55): In-Sample {rf_comb_in['accuracy']:.3f} vs <strong>LOOCV Accuracy {rf_comb_loo['accuracy']:.3f}</strong> (Specificity {rf_comb_loo['specificity']:.3f})<br>
               Base-Only LOOCV {rf_base_loo['accuracy']:.3f}; Physical Gini Importance Sum <strong>{phys_imp_pct:.1f}%</strong>
             </div>
           </div>
@@ -1710,7 +1730,7 @@ phase1_phase2_tuning_joined = f"""
                   <td><strong>Descriptor 2: 상태-의존 입체 차폐율 ($\\%V_{{\\text{{bur}}}}, \\%V_{{\\text{{bur}}}}^{{\\text{{D2}}}}, \\theta_{{\\max}}^{{\\text{{void}}}}$)</strong></td>
                   <td>$$\\%V_{{\\text{{bur}}}}^{{\\text{{D2}}}} = \\frac{{\\sum w_j(\\chi_j)(V_j \\cap V_{{\\text{{sph}}}}(R_{{\\text{{eff}}}}+1.85))}}{{V_{{\\text{{sph}}}}(R_{{\\text{{eff}}}}+1.85)}} \\times 100$$</td>
                   <td>과밀 충돌 Penalty 중심: $\\%V_{{\\text{{bur}}}} &gt; 83.5\\%$<br>보편 하한: $V_{{\\min}}^{{\\text{{univ}}}}(\\eta_{{\\pi}}) = 44.0 - 5.0\\min(2,\\eta_{{\\pi}})$ (원소 분기 0개)</td>
-                  <td>DIPAS (R<sub>eff</sub>=1.08&Aring;): 정규 <strong>{_u_by_id.get('PREC_SI_01', {}).get('vbur_percent', 0.0):.1f}%</strong> &rarr; 극성가중 <strong>{_u_by_id.get('PREC_SI_01', {}).get('vbur_d2_percent', 0.0):.1f}%</strong><br>Ru(EtCp)<sub>2</sub> (R<sub>eff</sub>=1.50&Aring;): <strong>{_u_by_id.get('PREC_MET_03', {}).get('vbur_percent', 0.0):.1f}%</strong>, RuO<sub>4</sub> (R<sub>eff</sub>=1.35&Aring;): D2 <strong>{_u_by_id.get('EXT-ALD-115', {}).get('vbur_d2_percent', 0.0):.1f}%</strong></td>
+                  <td>DIPAS (R<sub>eff</sub>={_u_by_id.get('PREC_SI_01', {}).get('r_eff_ang', 0.0):.2f}&Aring;): 정규 <strong>{_u_by_id.get('PREC_SI_01', {}).get('vbur_percent', 0.0):.1f}%</strong> &rarr; 극성가중 <strong>{_u_by_id.get('PREC_SI_01', {}).get('vbur_d2_percent', 0.0):.1f}%</strong><br>Ru(EtCp)<sub>2</sub> (R<sub>eff</sub>={_u_by_id.get('PREC_MET_03', {}).get('r_eff_ang', 0.0):.2f}&Aring;): <strong>{_u_by_id.get('PREC_MET_03', {}).get('vbur_percent', 0.0):.1f}%</strong>, RuO<sub>4</sub> (R<sub>eff</sub>={_u_by_id.get('EXT-ALD-115', {}).get('r_eff_ang', 0.0):.2f}&Aring;): D2 <strong>{_u_by_id.get('EXT-ALD-115', {}).get('vbur_d2_percent', 0.0):.1f}%</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Descriptor 3: 이합체화 에너지 &amp; 373 K 자유에너지 ($\\Delta E_{{\\text{{dimer}}}}, \\Delta G_{{\\text{{dimer}}}}$)</strong></td>
@@ -1797,7 +1817,7 @@ phase1_phase2_tuning_joined = f"""
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
               <div style="font-weight:700; color:#0f172a; margin-bottom:4px;">All-Sample Random Forest Gini Feature Importance</div>
               <div style="font-size:0.78rem; color:#b45309; margin-bottom:10px; font-weight:600;">
-                N=55 In-Sample Fit (Accuracy 1.000) 기준이며 Out-of-Fold 일반화 성능 향상과 무관함
+                N={len(molecules_eval)} In-Sample Fit (Accuracy {rf_comb_in['accuracy']:.3f}) 기준이며 Out-of-Fold 일반화 성능 향상과 무관함
               </div>
               <div style="display:flex; flex-direction:column; gap:5px;">
                 {imp_bars_joined}
@@ -1829,7 +1849,7 @@ phase1_phase2_tuning_joined = f"""
               </table>
             </div>
             <div style="margin-top:10px; background:#f8fafc; border-left:4px solid #64748b; padding:10px 14px; font-size:0.82rem; color:#334155; line-height:1.55;">
-              <strong>Validation Analysis:</strong> In-Sample에서 Random Forest는 <code>Accuracy 1.000</code>을 기록하나 Stratified 5-Fold CV 및 LOOCV에서 하락하여($N=55$ Combined LOOCV Accuracy <code>{rf_comb_loo['accuracy']:.3f}</code>, Specificity <code>{rf_comb_loo['specificity']:.3f}</code> vs Base-Only LOOCV Accuracy <code>{rf_base_loo['accuracy']:.3f}</code>, Specificity <code>{rf_base_loo['specificity']:.3f}</code>) 소규모 Sample에서의 Overfitting이 확인됩니다. 다만 LBFGS 이완·비중첩 이합체·분리 단편 BDE 적용 후 Combined LOOCV AUROC는 <strong><code>{rf_comb_loo['auroc']:.3f}</code></strong>로 Base-Only(<code>{rf_base_loo['auroc']:.3f}</code>)를 상회하며, Ground-State <code>7net-0</code> Feature만으로는 <code>Ti(Et)4</code>(&beta;-H 제거)나 <code>ZrMe4</code>(열폭발) 같은 활성화 장벽($\\Delta G^\\ddagger$) 의존 반응 속도론적 결함을 직접 분별할 수 없으므로 원소군별 Guardrail로 병행 운용합니다(<code>tests/test_benchmark_reproducibility.py</code> 12건 단위 테스트로 Phase 1·SevenNet·LOOCV 결정론적 재현성 검증 완료).
+              <strong>Validation Analysis:</strong> In-Sample에서 Random Forest는 <code>Accuracy {rf_comb_in['accuracy']:.3f}</code>을 기록하나 Stratified 5-Fold CV 및 LOOCV에서 하락하여($N={len(molecules_eval)}$ Combined LOOCV Accuracy <code>{rf_comb_loo['accuracy']:.3f}</code>, Specificity <code>{rf_comb_loo['specificity']:.3f}</code> vs Base-Only LOOCV Accuracy <code>{rf_base_loo['accuracy']:.3f}</code>, Specificity <code>{rf_base_loo['specificity']:.3f}</code>) 소규모 Sample에서의 Overfitting이 확인됩니다. 다만 LBFGS 이완·비중첩 이합체·분리 단편 BDE 적용 후 Combined LOOCV AUROC는 <strong><code>{rf_comb_loo['auroc']:.3f}</code></strong>로 Base-Only(<code>{rf_base_loo['auroc']:.3f}</code>)를 상회하며, Ground-State <code>7net-0</code> Feature만으로는 <code>Ti(Et)4</code>(&beta;-H 제거)나 <code>ZrMe4</code>(열폭발) 같은 활성화 장벽($\\Delta G^\\ddagger$) 의존 반응 속도론적 결함을 직접 분별할 수 없으므로 원소군별 Guardrail로 병행 운용합니다(<code>tests/test_benchmark_reproducibility.py</code> 14건 단위 테스트로 Phase 1·SevenNet·LOOCV·확장 18모델 결정론적 재현성 검증 완료).
             </div>
           </div>
         </div>
@@ -1934,7 +1954,46 @@ def _ensure_svg(smi: str) -> bool:
     return smi in svg_dict
 
 
+expansion_cand_path = os.path.join("database", "external", "patent_lit_expansion_candidates.json")
+with open(expansion_cand_path, "r", encoding="utf-8") as f:
+    patent_exp_payload = json.load(f)
+patent_exp_records = patent_exp_payload.get("records", [])
+
 db_records = []
+rec_by_id = {}
+rec_by_csmi = {}
+rec_by_norm_key = {}
+
+
+def _canon_smi(smi: str) -> str:
+    if not smi:
+        return ""
+    mol = Chem.MolFromSmiles(smi)
+    if mol is None:
+        return ""
+    return Chem.MolToSmiles(mol, isomericSmiles=False)
+
+
+def _norm_chem_key(val: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", str(val or "").lower())
+
+
+def _register_db_rec(rec: dict) -> None:
+    rec.setdefault("alt_db_types", [])
+    rec.setdefault("aliases", [])
+    rec.setdefault("secondary_ids", [])
+    rec.setdefault("role_badges", [])
+    db_records.append(rec)
+    rec_by_id[rec["id"]] = rec
+    cs = _canon_smi(rec.get("smiles", ""))
+    if cs and rec.get("db_type") != "reaction" and cs not in rec_by_csmi:
+        rec_by_csmi[cs] = rec
+    if rec.get("db_type") in {"precursor", "expanded"}:
+        for k_raw in (rec.get("name"), rec.get("formula"), rec.get("atomiclimits_name")):
+            nk = _norm_chem_key(k_raw)
+            if nk and nk not in rec_by_norm_key:
+                rec_by_norm_key[nk] = rec
+
 
 # 1. Baseline 27 Precursors (enriched with AtomicLimits, SA, and SevenNet-0 physics)
 for p in prec_db:
@@ -1946,7 +2005,7 @@ for p in prec_db:
     bm = bench_by_id.get(pid, {})
     props = p.get("physical_properties", {})
     synth = p.get("synthesis_info", {})
-    db_records.append({
+    _register_db_rec({
         "id": pid,
         "db_type": "precursor",
         "db_label": "Baseline Precursor",
@@ -1996,15 +2055,24 @@ for p in prec_db:
         "domain_flag": ev.get("chemical_domain_flag", "-"),
     })
 
-# 2. Expanded AtomicLimits Precursors (Top-120 + Ir/Rh/As/Ga/In/Ru expansion)
+# 2. Expanded AtomicLimits Precursors (deduplicating pure notation-alias pairs inside master)
+NOTATION_ALIAS_TARGET = {
+    "EXT-ALD-133": "EXT-ALD-121",  # [Ga(NMe2)3]2 == Ga2(NMe2)6
+    "EXT-ALD-179": "EXT-ALD-178",  # GaMe3[MeO(CH2)2NHtBu] == GaMe3(CH3OCH2CH2NHtBu)
+}
+pending_notation_aliases = []
+
 for idx, exp in enumerate(expanded_prec_db, 1):
     pid = exp.get("id", f"EXP-{idx:03d}")
     if pid in prec_map:
         continue
+    if pid in NOTATION_ALIAS_TARGET:
+        pending_notation_aliases.append((pid, exp))
+        continue
     smi = exp.get("smiles") or ""
     _ensure_svg(smi)
     ev7 = exp_sevenn_by_id.get(pid, {})
-    db_records.append({
+    _register_db_rec({
         "id": pid,
         "db_type": "expanded",
         "db_label": "AtomicLimits ALD",
@@ -2031,6 +2099,19 @@ for idx, exp in enumerate(expanded_prec_db, 1):
         "e_coh": ev7.get("e_coh_ev_per_atom"),
     })
 
+for alias_id, exp in pending_notation_aliases:
+    target = rec_by_id.get(NOTATION_ALIAS_TARGET[alias_id])
+    if target:
+        aname = exp.get("name") or exp.get("atomiclimits_name") or ""
+        if aname and aname not in target["aliases"] and aname != target["name"]:
+            target["aliases"].append(aname)
+        if alias_id not in target["secondary_ids"]:
+            target["secondary_ids"].append(alias_id)
+        for mat in exp.get("atomiclimits_materials", []):
+            if mat not in target["atomiclimits_materials"]:
+                target["atomiclimits_materials"].append(mat)
+        target["atomiclimits_process_count"] = (target.get("atomiclimits_process_count") or 0) + (exp.get("atomiclimits_process_count") or 0)
+
 # 3. AS-ALD Inhibitors (18 entries)
 for inh in inhib_list:
     iid = inh.get("id", "-")
@@ -2040,7 +2121,7 @@ for inh in inhib_list:
     lit = inh.get("literature_reference", {})
     m_obj = Chem.MolFromSmiles(smi) if smi else None
     calc_elem = "Si" if (m_obj and any(a.GetSymbol() == "Si" for a in m_obj.GetAtoms())) else "Organic"
-    db_records.append({
+    _register_db_rec({
         "id": iid,
         "db_type": "inhibitor",
         "db_label": "AS-ALD Inhibitor",
@@ -2079,17 +2160,57 @@ for inh in inhib_list:
         "domain_flag": ev.get("chemical_domain_flag", "-"),
     })
 
-# 4. Building Blocks / Commercial Reagents (29 entries)
+# 4. Building Blocks / Commercial Reagents (29 entries; merge 10 dual-role reagents into canonical precursor records)
+DUAL_ROLE_BB_EXPLICIT = {
+    "BB_02": "EXT-ALD-117",  # Dichlorosilane (SiH2Cl2 == SiCl2H2)
+}
+n_merged_dual_role = 0
 for bb in bb_db:
     smi = bb.get("smiles") or ""
     _ensure_svg(smi)
     m_obj = Chem.MolFromSmiles(smi) if smi else None
     mw_val = round(Descriptors.MolWt(m_obj), 2) if m_obj else None
+    cs = _canon_smi(smi)
+    target = None
+    if bb["id"] in DUAL_ROLE_BB_EXPLICIT:
+        target = rec_by_id.get(DUAL_ROLE_BB_EXPLICIT[bb["id"]])
+    if not target and cs:
+        target = rec_by_csmi.get(cs)
+    if not target:
+        target = rec_by_norm_key.get(_norm_chem_key(bb.get("formula"))) or rec_by_norm_key.get(_norm_chem_key(bb.get("name")))
+
+    if target:
+        n_merged_dual_role += 1
+        if "reagent" not in target["alt_db_types"]:
+            target["alt_db_types"].append("reagent")
+        if "Dual-Role: Reagent" not in target["role_badges"]:
+            target["role_badges"].append("Dual-Role: Reagent")
+        if bb["id"] not in target["secondary_ids"]:
+            target["secondary_ids"].append(bb["id"])
+        if bb["name"] not in target["aliases"] and bb["name"] != target["name"]:
+            target["aliases"].append(bb["name"])
+        if (not target.get("smiles")) and smi:
+            target["smiles"] = smi
+            target["has_2d"] = bool(smi in svg_dict)
+            if cs and cs not in rec_by_csmi:
+                rec_by_csmi[cs] = target
+        if (not target.get("formula") or target.get("formula") == "-") and bb.get("formula"):
+            target["formula"] = bb["formula"]
+        if target.get("mw") is None and mw_val is not None:
+            target["mw"] = mw_val
+        if (not target.get("cas") or target.get("cas") == "-") and bb.get("cas"):
+            target["cas"] = bb["cas"]
+        if not target.get("purity"):
+            target["purity"] = bb.get("purity", "-")
+        if not target.get("handling"):
+            target["handling"] = bb.get("handling", "-")
+        continue
+
     elem = "-"
     if m_obj:
         metals = [a.GetSymbol() for a in m_obj.GetAtoms() if a.GetSymbol() not in {"C", "H", "N", "O", "F", "Cl", "Br", "I", "S", "P", "B"}]
         elem = metals[0] if metals else "Organic"
-    db_records.append({
+    _register_db_rec({
         "id": bb["id"],
         "db_type": "reagent",
         "db_label": "Reagent / BB",
@@ -2121,7 +2242,7 @@ for r in rxn_db:
             if metals:
                 elem = metals[0]
                 break
-    db_records.append({
+    _register_db_rec({
         "id": r["id"],
         "db_type": "reaction",
         "db_label": "Reaction Template",
@@ -2149,7 +2270,7 @@ for ev in molecules_eval:
         continue
     smi = ev.get("smiles") or ""
     _ensure_svg(smi)
-    db_records.append({
+    _register_db_rec({
         "id": ev["id"],
         "db_type": "negative",
         "db_label": "Negative Control",
@@ -2179,39 +2300,163 @@ for ev in molecules_eval:
         "phys_penalty_detail": ev.get("phys_penalty_detail", ""),
     })
 
+# 7. KR/JP/CN/US/TW Patent & Metal-Centered Literature Expansion (38 entries: backfill 14 AtomicLimits stubs + add 24 net-new)
+PATENT_BACKFILL_TARGET = {
+    "EXP_02": "EXT-ALD-058",  # MoCl5
+    "EXP_03": "EXT-ALD-066",  # Mo(CO)6
+    "EXP_07": "EXT-ALD-045",  # Nb(OEt)5
+    "EXP_08": "EXT-ALD-113",  # TBTDEN == Nb(NtBu)(NEt2)3
+    "EXP_10": "EXT-ALD-120",  # PDMAT == Ta(NMe2)5
+    "EXP_11": "EXT-ALD-055",  # TaCl5
+    "EXP_14": "EXT-ALD-041",  # HfCl4
+    "EXP_15": "EXT-ALD-029",  # TiCl4
+    "EXP_20": "EXT-ALD-072",  # Cu(dmap)2
+    "EXP_22": "EXT-ALD-067",  # MeCpPtMe3 == Pt(CpMe)Me3
+    "EXP_24": "EXT-ALD-081",  # Y(MeCp)3 == Y(CpMe)3
+    "EXP_25": "EXT-ALD-028",  # ZnEt2 (DEZ)
+    "EXP_26": "EXT-ALD-085",  # Ge(NMe2)4
+    "EXP_27": "EXT-ALD-031",  # Sn(NMe2)4 (TDMASn)
+}
+n_backfilled_al = 0
+n_net_new_patent = 0
+
+for exp_rec in patent_exp_records:
+    eid = exp_rec["id"]
+    smi = exp_rec.get("smiles") or ""
+    _ensure_svg(smi)
+    cs = _canon_smi(smi)
+    m_obj = Chem.MolFromSmiles(smi) if smi else None
+    formula_str = rdMolDescriptors.CalcMolFormula(m_obj) if m_obj else "-"
+    mw_val = round(Descriptors.MolWt(m_obj), 2) if m_obj else None
+    elem = _norm_elem(exp_rec.get("center_atom", "-"))
+    diag_note = exp_rec.get("boundary_flag") or ("All TMC-SA physical & chemical gates passed (ETKDGv3)" if exp_rec.get("unified_pass") else "")
+
+    target = rec_by_id.get(PATENT_BACKFILL_TARGET.get(eid, ""))
+    if not target and cs:
+        target = rec_by_csmi.get(cs)
+
+    if target:
+        n_backfilled_al += 1
+        if "patent_expansion" not in target["alt_db_types"]:
+            target["alt_db_types"].append("patent_expansion")
+        if "Patent/Lit Backfilled" not in target["role_badges"]:
+            target["role_badges"].append("Patent/Lit Backfilled")
+        if eid not in target["secondary_ids"]:
+            target["secondary_ids"].append(eid)
+        if exp_rec["name"] not in target["aliases"] and exp_rec["name"] != target["name"]:
+            target["aliases"].append(exp_rec["name"])
+        if (not target.get("smiles")) and smi:
+            target["smiles"] = smi
+            target["has_2d"] = bool(smi in svg_dict)
+            if cs and cs not in rec_by_csmi:
+                rec_by_csmi[cs] = target
+        if (not target.get("formula") or target.get("formula") == "-") and formula_str != "-":
+            target["formula"] = formula_str
+        if target.get("mw") is None and mw_val is not None:
+            target["mw"] = mw_val
+        if (not target.get("element") or target.get("element") == "-") and elem:
+            target["element"] = elem
+        if not target.get("target_films") or target.get("target_films") == "-":
+            target["target_films"] = exp_rec.get("application", "-")
+        else:
+            target["target_films"] = f"{target['target_films']} | {exp_rec.get('application', '')}".strip(" |")
+        target["sascore"] = target.get("sascore") if target.get("sascore") is not None else exp_rec.get("sascore")
+        target["br_sascore"] = target.get("br_sascore") if target.get("br_sascore") is not None else exp_rec.get("br_sascore")
+        target["ligand_sa"] = target.get("ligand_sa") if target.get("ligand_sa") is not None else exp_rec.get("ligand_sa")
+        target["vbur"] = target.get("vbur") if target.get("vbur") is not None else exp_rec.get("vbur_d2_percent")
+        target["tmc_sa_phys"] = target.get("tmc_sa_phys") if target.get("tmc_sa_phys") is not None else exp_rec.get("tmc_sa_no3d")
+        target["phase2_pass"] = target.get("phase2_pass") if target.get("phase2_pass") is not None else exp_rec.get("unified_pass")
+        target["coord_number"] = exp_rec.get("cn_eff")
+        target["valence_electrons"] = exp_rec.get("n_ve")
+        target["jurisdictions"] = exp_rec.get("jurisdictions", "")
+        target["patent_references"] = exp_rec.get("references", "")
+        target["mechanism_note"] = exp_rec.get("mechanism_note", "")
+        target["diag_note"] = diag_note
+        continue
+
+    n_net_new_patent += 1
+    is_inh = exp_rec.get("target_type") == "inhibitor"
+    _register_db_rec({
+        "id": eid,
+        "db_type": "patent_expansion",
+        "db_label": "Patent/Lit Inhibitor" if is_inh else "Patent/Lit Precursor",
+        "is_expanded_master": False,
+        "alt_db_types": ["inhibitor"] if is_inh else [],
+        "role_badges": ["Net-New Expansion"],
+        "name": exp_rec["name"],
+        "chemical_name": f"{exp_rec.get('family_class', '-')} ({exp_rec.get('element_group', '-')})",
+        "formula": formula_str,
+        "mw": mw_val,
+        "cas": "-",
+        "element": elem,
+        "category": f"{exp_rec.get('element_group', '-')} | {exp_rec.get('family_class', '-')}",
+        "smiles": smi,
+        "has_2d": bool(smi and smi in svg_dict),
+        "target_films": "-" if is_inh else exp_rec.get("application", "-"),
+        "target_surface": exp_rec.get("application", "-") if is_inh else "",
+        "process_type": "AS-ALD / SAM Passivation" if is_inh else "ALD / CVD (Patent & Lit)",
+        "jurisdictions": exp_rec.get("jurisdictions", ""),
+        "patent_references": exp_rec.get("references", ""),
+        "mechanism_note": exp_rec.get("mechanism_note", ""),
+        "diag_note": diag_note,
+        "coord_number": exp_rec.get("cn_eff"),
+        "valence_electrons": exp_rec.get("n_ve"),
+        "sascore": exp_rec.get("sascore"),
+        "br_sascore": exp_rec.get("br_sascore"),
+        "ligand_sa": exp_rec.get("ligand_sa"),
+        "vbur": exp_rec.get("vbur_d2_percent"),
+        "tmc_sa_phys": exp_rec.get("tmc_sa_no3d"),
+        "phase2_pass": exp_rec.get("unified_pass"),
+        "domain_flag": "boundary_diagnostic" if exp_rec.get("boundary_flag") else "patent_lit_pass",
+    })
+
+db_meta_summary = {
+    "n_unique_entities": len(db_records),
+    "n_merged_dual_role_reagents": n_merged_dual_role,
+    "n_merged_notation_aliases": len(pending_notation_aliases),
+    "n_backfilled_atomiclimits": n_backfilled_al,
+    "n_net_new_patent": n_net_new_patent,
+    "n_patent_total": len(patent_exp_records),
+}
+
 db_explorer_payload_json = json.dumps(
-    {"svgs": svg_dict, "records": db_records},
+    {"svgs": svg_dict, "records": db_records, "meta": db_meta_summary},
     ensure_ascii=False,
 ).replace("</", "<\\/")
 
 
 def _build_dataset_sankey_svg() -> str:
-    """Build a proportional-width SVG Sankey diagram for the 304 -> 160 -> SevenNet/(ETKDG) -> 120/40 data flow."""
-    n_prec_cat = 205
-    n_prec_eval = int(_u_ds["precursors_total"])      # 102 (27 core + 75 expanded)
-    n_prec_ref = n_prec_cat - n_prec_eval             # 103 (AtomicLimits 93 + Meta 10)
-    n_inhib = int(_u_ds["inhibitors_total"])          # 18
-    n_neg = int(_u_ds["negative_controls_total"])     # 40
-    n_reag_rxn = 29 + 12                              # 41 (29 reagents + 12 reactions)
-    n_eval = int(_u_ds["total_molecules"])            # 160
-    n_excl = n_prec_ref + n_reag_rxn                  # 144
-    n_svn = int(_u_ds["sevenn_relaxed_count"])        # 160
-    n_etk = int(_u_ds["etkdg_3d_count"])              # 0
-    n_pos = int(_u_ds["positive_total"])              # 120
+    """Build a proportional-width SVG Sankey diagram integrating 304 Baseline + 38 Patent/Lit Expansion = 342 Curated."""
+    n_prec_cat = len(expanded_prec_db)
+    n_prec_eval = int(_u_ds["precursors_total"])
+    n_prec_ref = n_prec_cat - n_prec_eval
+    n_inhib = int(_u_ds["inhibitors_total"])
+    n_neg = int(_u_ds["negative_controls_total"])
+    n_reag_rxn = len(bb_db) + len(rxn_db)
+    n_eval = int(_u_ds["total_molecules"])
+    n_excl = n_prec_ref + n_reag_rxn
+    n_svn = int(_u_ds["sevenn_relaxed_count"])
+    n_etk_base = int(_u_ds["etkdg_3d_count"])
+    n_pos = int(_u_ds["positive_total"])
 
-    # Derive SevenNet / ETKDG split dynamically from evaluated records
+    pat_s = patent_exp_payload.get("summary", {})
+    n_pat_tot = int(pat_s.get("n_total", len(patent_exp_records)))
+    n_pat_prec = int(pat_s.get("n_precursors", 0))
+    n_pat_inh = int(pat_s.get("n_inhibitors", 0))
+    n_pat_pass = int(pat_s.get("n_precursors_pass", 0)) + int(pat_s.get("n_inhibitors_pass", 0))
+    n_pat_bnd = n_pat_tot - n_pat_pass
+    n_total_curated = n_prec_cat + n_inhib + n_neg + n_reag_rxn + n_pat_tot
+
     n_svn_pos = sum(1 for r in _u_by_id.values() if r["label"] == 1 and "SevenNet" in str(r.get("vbur_source", "")))
     n_svn_neg = sum(1 for r in _u_by_id.values() if r["label"] == 0 and "SevenNet" in str(r.get("vbur_source", "")))
     n_etk_pos = n_pos - n_svn_pos
     n_etk_neg = n_neg - n_svn_neg
 
-    scale = 0.78
+    scale = 0.72
     bar_w = 14.0
+    x0, x1, x2, x3 = 198.0, 412.0, 602.0, 772.0
 
-    # Column X positions (with comfortable margins for left/right labels inside 920px viewBox)
-    x0, x1, x2, x3 = 195.0, 405.0, 585.0, 750.0
-
-    def _layout(items, y_start=58.0, gap=12.0):
+    def _layout(items, y_start=54.0, gap=12.0):
         pos = {}
         y = y_start
         for key, val, color, title, sub in items:
@@ -2221,48 +2466,56 @@ def _build_dataset_sankey_svg() -> str:
         return pos
 
     c0 = _layout([
-        ("cat_prec", n_prec_cat, "#06b6d4", "Precursor Catalog", f"Core 27 · AL 93 · Exp 85"),
-        ("cat_inh", n_inhib, "#0284c7", "AS-ALD Inhibitors", "SMILES 18/18"),
+        ("cat_prec", n_prec_cat, "#06b6d4", "Precursor Catalog", "Core 27 · AL 93 · Exp 85"),
+        ("cat_inh", n_inhib, "#0284c7", "AS-ALD Inhibitors", "Baseline SMILES 18/18"),
+        ("cat_pat", n_pat_tot, "#f59e0b", "Patent & Lit Expansion", f"+{n_pat_prec} Prec · +{n_pat_inh} Inh ({n_backfilled_al} AL-BF + {n_net_new_patent} New)"),
         ("cat_neg", n_neg, "#ef4444", "Negative Controls", "Core 10 · 6-Mech 30"),
-        ("cat_rr", n_reag_rxn, "#64748b", "Reagents & Reactions", "29 Reagents + 12 Rxns"),
-    ], y_start=56.0, gap=12.0)
+        ("cat_rr", n_reag_rxn, "#64748b", "Reagents & Reactions", f"{len(bb_db)} Reagents (10 Dual-Role) + {len(rxn_db)} Rxns"),
+    ], y_start=54.0, gap=11.0)
     for d in c0.values():
         d["x"] = x0
 
+    y_eval = 54.0
+    y_pat1 = y_eval + n_eval * scale + 20.0
+    y_ref1 = y_pat1 + n_pat_tot * scale + 28.0
     c1 = {
-        "eval_160": {"x": x1, "y": 56.0, "h": n_eval * scale, "val": n_eval, "color": "#0f766e", "title": "Verified Eval Set", "sub": "SMILES Valid (120:40)", "in_off": 56.0, "out_off": 56.0},
-        "ref_144": {"x": x1, "y": 56.0 + n_eval * scale + 54.0, "h": n_excl * scale, "val": n_excl, "color": "#94a3b8", "title": "Reference / Dict Only", "sub": "AL 93 · Meta 10 · Dict 29 · Rxn 12", "in_off": 56.0 + n_eval * scale + 54.0, "out_off": 56.0 + n_eval * scale + 54.0},
+        "eval_160": {"x": x1, "y": y_eval, "h": n_eval * scale, "val": n_eval, "color": "#0f766e", "title": "Pinned Benchmark", "sub": f"SMILES Valid ({n_pos}:{n_neg})", "in_off": y_eval, "out_off": y_eval},
+        "pat_38": {"x": x1, "y": y_pat1, "h": n_pat_tot * scale, "val": n_pat_tot, "color": "#d97706", "title": "Patent Screening", "sub": f"+8 Metals (16→{pat_s.get('n_merged_elements', 24)}) · Deduplicated", "in_off": y_pat1, "out_off": y_pat1},
+        "ref_144": {"x": x1, "y": y_ref1, "h": n_excl * scale, "val": n_excl, "color": "#94a3b8", "title": "Reference / Dict Only", "sub": f"AL {n_prec_ref - 10} (incl. {n_backfilled_al} BF) · Meta 10 · Dict {len(bb_db)} · Rxn {len(rxn_db)}", "in_off": y_ref1, "out_off": y_ref1},
     }
 
-    c2_items = [("svn", n_svn, "#10b981", "SevenNet LBFGS 3D", "Core 55 · Exp 75 · Neg 30 · 100%" if n_etk == 0 else "Core 55 · Exp · ΔEf/vM")]
-    if n_etk > 0:
-        c2_items.append(("etk", n_etk, "#8b5cf6", "RDKit ETKDGv3 3D", "UFF-Guarded %V_bur"))
-    c2 = _layout(c2_items, y_start=56.0, gap=24.0)
+    c2_items = [("svn", n_svn, "#10b981", "SevenNet LBFGS 3D", "Core 55 · Exp 75 · Neg 30 · 100%")]
+    if n_etk_base > 0:
+        c2_items.append(("etk_base", n_etk_base, "#8b5cf6", "ETKDGv3 Guarded", "Benchmark Subset"))
+    c2_items.append(("etk_pat", n_pat_tot, "#f59e0b", "ETKDGv3 3D + TMC-SA", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 100% Embed"))
+    c2 = _layout(c2_items, y_start=54.0, gap=22.0)
     for d in c2.values():
         d["x"] = x2
 
     c3 = _layout([
-        ("pos_120", n_pos, "#16a34a", "Positive (102+18)", "OCSVM Train · CV-5 · TMC-SA"),
+        ("pos_120", n_pos, "#16a34a", "Benchmark Positive", f"{n_prec_eval}+{n_inhib} · OCSVM · CV-5"),
         ("neg_40", n_neg, "#dc2626", "Negative Control", "LOFMO Test · CV-5 · TMC-SA"),
-    ], y_start=56.0, gap=24.0)
+        ("pat_out", n_pat_tot, "#0284c7", "Expansion Screened", f"{n_pat_pass} Pass ({int(pat_s.get('n_precursors_pass', 0))}+{int(pat_s.get('n_inhibitors_pass', 0))}) · {n_pat_bnd} Boundary Flag"),
+    ], y_start=54.0, gap=22.0)
     for d in c3.values():
         d["x"] = x3
 
     flows = [
-        (c0["cat_prec"], c1["eval_160"], n_prec_eval, "#06b6d4", "Precursor Catalog -> Eval Set: 102 (27 Core + 75 Expanded)"),
-        (c0["cat_inh"], c1["eval_160"], n_inhib, "#0284c7", "AS-ALD Inhibitors -> Eval Set: 18"),
-        (c0["cat_neg"], c1["eval_160"], n_neg, "#ef4444", "Negative Controls -> Eval Set: 40 (10 Core + 30 Stratified)"),
-        (c0["cat_prec"], c1["ref_144"], n_prec_ref, "#94a3b8", "Precursor Catalog -> Reference Only: 103 (AtomicLimits 93 + Meta 10)"),
-        (c0["cat_rr"], c1["ref_144"], n_reag_rxn, "#64748b", "Reagents (29) + Reactions (12) -> Reference / Leakage-Free Dict: 41"),
-        (c1["eval_160"], c2["svn"], n_svn, "#10b981", f"Eval Set -> SevenNet LBFGS 3D Relaxation: {n_svn} ({n_svn_pos} Pos + {n_svn_neg} Neg)"),
+        (c0["cat_prec"], c1["eval_160"], n_prec_eval, "#06b6d4", f"Precursor Catalog -> Pinned Eval Set: {n_prec_eval} (27 Core + 75 Expanded)"),
+        (c0["cat_inh"], c1["eval_160"], n_inhib, "#0284c7", f"AS-ALD Inhibitors -> Pinned Eval Set: {n_inhib}"),
+        (c0["cat_neg"], c1["eval_160"], n_neg, "#ef4444", f"Negative Controls -> Pinned Eval Set: {n_neg} (10 Core + 30 Stratified)"),
+        (c0["cat_pat"], c1["pat_38"], n_pat_tot, "#f59e0b", f"KR/JP/CN/US/TW Patent & Lit Expansion -> TMC-SA Screen & DB Backfill: {n_pat_tot} ({n_backfilled_al} AL Backfill + {n_net_new_patent} Net-New)"),
+        (c0["cat_prec"], c1["ref_144"], n_prec_ref, "#94a3b8", f"Precursor Catalog -> Reference Only: {n_prec_ref} (AtomicLimits + Meta 10; {n_backfilled_al} stubs SMILES-backfilled in DB Explorer)"),
+        (c0["cat_rr"], c1["ref_144"], n_reag_rxn, "#64748b", f"Reagents ({len(bb_db)}, 10 Dual-Role Merged in DB Search) + Reactions ({len(rxn_db)}) -> Dict / Ref: {n_reag_rxn}"),
+        (c1["eval_160"], c2["svn"], n_svn, "#10b981", f"Pinned Eval Set -> SevenNet LBFGS 3D: {n_svn} ({n_svn_pos} Pos + {n_svn_neg} Neg)"),
     ]
-    if n_etk > 0:
-        flows.append((c1["eval_160"], c2["etk"], n_etk, "#8b5cf6", f"Eval Set -> RDKit ETKDGv3 UFF-Guarded 3D: {n_etk} ({n_etk_pos} Pos + {n_etk_neg} Neg)"))
+    if n_etk_base > 0:
+        flows.append((c1["eval_160"], c2["etk_base"], n_etk_base, "#8b5cf6", f"Eval -> ETKDGv3: {n_etk_base}"))
     flows.extend([
-        (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"SevenNet LBFGS -> Positive Evaluation/OCSVM Train: {n_svn_pos}"),
-        *(([(c2["etk"], c3["pos_120"], n_etk_pos, "#a855f7", f"RDKit ETKDGv3 -> Positive Evaluation/OCSVM Train: {n_etk_pos}")] if n_etk_pos > 0 else [])),
+        (c1["pat_38"], c2["etk_pat"], n_pat_tot, "#f59e0b", f"Patent Expansion -> RDKit ETKDGv3 3D + TMC-SA: {n_pat_tot}"),
+        (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"SevenNet LBFGS -> Benchmark Positive: {n_svn_pos}"),
         (c2["svn"], c3["neg_40"], n_svn_neg, "#059669", f"SevenNet LBFGS -> Negative Control Validation: {n_svn_neg}"),
-        *(([(c2["etk"], c3["neg_40"], n_etk_neg, "#dc2626", f"RDKit ETKDGv3 -> Negative Control Validation: {n_etk_neg}")] if n_etk_neg > 0 else [])),
+        (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"Expansion Screened -> {n_pat_pass} Pass ({int(pat_s.get('n_precursors_pass', 0))}/{n_pat_prec} Prec + {int(pat_s.get('n_inhibitors_pass', 0))}/{n_pat_inh} Inh) + {n_pat_bnd} Boundary Flag"),
     ])
 
     ribbon_svg = []
@@ -2288,71 +2541,69 @@ def _build_dataset_sankey_svg() -> str:
         )
 
     nodes_svg = []
-    # Left-aligned source labels (to the left of Col 0 bars)
     for d in c0.values():
         ym = d["y"] + d["h"] * 0.5
         nodes_svg.append(
             f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
         )
         nodes_svg.append(
-            f'<text x="{d["x"] - 8:.1f}" y="{ym - 1:.1f}" text-anchor="end" font-size="11.5" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
-            f'<text x="{d["x"] - 8:.1f}" y="{ym + 12:.1f}" text-anchor="end" font-size="9.5" fill="#64748b">{d["sub"]}</text>'
+            f'<text x="{d["x"] - 8:.1f}" y="{ym - 1:.1f}" text-anchor="end" font-size="11" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
+            f'<text x="{d["x"] - 8:.1f}" y="{ym + 11:.1f}" text-anchor="end" font-size="9" fill="#64748b">{d["sub"]}</text>'
         )
 
-    # Col 1 hub bars with pill badges centered on or beside the bar
     for k, d in c1.items():
         ym = d["y"] + d["h"] * 0.5
         nodes_svg.append(
             f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
         )
-        if k == "eval_160":
+        if k in {"eval_160", "pat_38"}:
+            bw = 158 if k == "pat_38" else 142
+            bx = d["x"] + 7 - bw * 0.5
+            tcol = "#92400e" if k == "pat_38" else "#0f766e"
             nodes_svg.append(
-                f'<rect x="{d["x"] - 64:.1f}" y="{ym - 17:.1f}" width="142" height="32" rx="5" fill="#ffffff" fill-opacity="0.92" stroke="#cbd5e1" stroke-width="0.8" />'
-                f'<text x="{d["x"] + 7:.1f}" y="{ym - 2:.1f}" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0f766e">{d["val"]} {d["title"]}</text>'
-                f'<text x="{d["x"] + 7:.1f}" y="{ym + 11:.1f}" text-anchor="middle" font-size="9.2" fill="#475569">{d["sub"]}</text>'
+                f'<rect x="{bx:.1f}" y="{ym - 16:.1f}" width="{bw}" height="31" rx="5" fill="#ffffff" fill-opacity="0.93" stroke="#cbd5e1" stroke-width="0.8" />'
+                f'<text x="{d["x"] + 7:.1f}" y="{ym - 2:.1f}" text-anchor="middle" font-size="10.8" font-weight="800" fill="{tcol}">{d["val"]} {d["title"]}</text>'
+                f'<text x="{d["x"] + 7:.1f}" y="{ym + 10:.1f}" text-anchor="middle" font-size="8.6" fill="#475569">{d["sub"]}</text>'
             )
         else:
             nodes_svg.append(
-                f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym - 2:.1f}" text-anchor="start" font-size="11.5" font-weight="800" fill="#475569">{d["val"]} {d["title"]}</text>'
-                f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym + 12:.1f}" text-anchor="start" font-size="9.5" fill="#64748b">{d["sub"]} (분류 제외)</text>'
+                f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym - 2:.1f}" text-anchor="start" font-size="11" font-weight="800" fill="#475569">{d["val"]} {d["title"]}</text>'
+                f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym + 11:.1f}" text-anchor="start" font-size="9" fill="#64748b">{d["sub"]} (분류 제외)</text>'
             )
 
-    # Col 2 (3D engines) with compact pill label centered over bar
     for d in c2.values():
         ym = d["y"] + d["h"] * 0.5
         nodes_svg.append(
             f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
-            f'<rect x="{d["x"] - 58:.1f}" y="{ym - 16:.1f}" width="130" height="31" rx="5" fill="#ffffff" fill-opacity="0.92" stroke="#cbd5e1" stroke-width="0.8" />'
-            f'<text x="{d["x"] + 7:.1f}" y="{ym - 1:.1f}" text-anchor="middle" font-size="11" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
-            f'<text x="{d["x"] + 7:.1f}" y="{ym + 11:.1f}" text-anchor="middle" font-size="8.8" fill="#475569">{d["sub"]}</text>'
+            f'<rect x="{d["x"] - 64:.1f}" y="{ym - 16:.1f}" width="142" height="31" rx="5" fill="#ffffff" fill-opacity="0.93" stroke="#cbd5e1" stroke-width="0.8" />'
+            f'<text x="{d["x"] + 7:.1f}" y="{ym - 2:.1f}" text-anchor="middle" font-size="10.6" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
+            f'<text x="{d["x"] + 7:.1f}" y="{ym + 10:.1f}" text-anchor="middle" font-size="8.6" fill="#475569">{d["sub"]}</text>'
         )
 
-    # Col 3 right-hand terminal labels
     for d in c3.values():
         ym = d["y"] + d["h"] * 0.5
         nodes_svg.append(
             f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
-            f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym - 1:.1f}" text-anchor="start" font-size="11.5" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
-            f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym + 12:.1f}" text-anchor="start" font-size="9.2" fill="#475569">{d["sub"]}</text>'
+            f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym - 1:.1f}" text-anchor="start" font-size="11" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
+            f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym + 11:.1f}" text-anchor="start" font-size="8.8" fill="#475569">{d["sub"]}</text>'
         )
 
     headers_svg = (
-        f'<text x="{x0 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0369a1">1. Curated DB (304)</text>'
-        f'<text x="{x1 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0f766e">2. Verification Split (304)</text>'
-        f'<text x="{x2 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#059669">3. 3D Structure Engine (160)</text>'
-        f'<text x="{x3 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#334155">4. ML &amp; Eval Role (160)</text>'
-        f'<line x1="20" y1="36" x2="900" y2="36" stroke="#e2e8f0" stroke-width="1" />'
+        f'<text x="{x0 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0369a1">1. Curated Sources ({n_total_curated})</text>'
+        f'<text x="{x1 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0f766e">2. Benchmark &amp; Patent Split ({n_total_curated})</text>'
+        f'<text x="{x2 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#059669">3. 3D Structure Engine ({n_eval + n_pat_tot})</text>'
+        f'<text x="{x3 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#334155">4. Eval &amp; Screening ({n_eval + n_pat_tot})</text>'
+        f'<line x1="18" y1="36" x2="942" y2="36" stroke="#e2e8f0" stroke-width="1" />'
     )
 
-    footer_split = f"{n_svn} SevenNet LBFGS (100%)" if n_etk == 0 else f"{n_svn} SevenNet + {n_etk} ETKDGv3"
     return f"""
           <div style="margin-bottom:14px;">
             <style>.sankey-flow {{ fill-opacity: 0.44; transition: fill-opacity 0.15s ease; cursor: pointer; }} .sankey-flow:hover {{ fill-opacity: 0.72; }}</style>
-            <svg viewBox="0 0 920 375" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+            <svg viewBox="0 0 960 392" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
               {headers_svg}
               {''.join(ribbon_svg)}
               {''.join(nodes_svg)}
-              <text x="900" y="364" text-anchor="end" font-size="9.5" fill="#64748b">* Flow thickness proportional to sample count (Sankey Diagram &bull; 304 Curated = 160 Evaluated + 144 Reference/Dict; {n_eval} = {footer_split})</text>
+              <text x="944" y="382" text-anchor="end" font-size="9.3" fill="#64748b">* Raw Curated {n_total_curated} ({n_eval + n_excl} Baseline + {n_pat_tot} Patent/Lit) &bull; DB Explorer Canonical Unique = {len(db_records)} ({n_merged_dual_role} Dual-Role Reagents &amp; {n_backfilled_al} AL Backfills Merged)</text>
             </svg>
           </div>"""
 
@@ -2363,6 +2614,33 @@ unified_bench_path = os.path.join("database", "benchmark_unified_latest_160.json
 neb_decomp_storyline_html = build_neb_storyline_html(neb_bench_path, unified_bench_path)
 neb_decomp_technical_html = build_neb_technical_html(neb_bench_path, unified_bench_path)
 neb_trajectory_json = build_neb_trajectory_payload_json(neb_bench_path, unified_bench_path)
+_ligand_coord_stats = analyze_precursor_coordination_and_ligands(unified_bench_path)
+ligand_coord_storyline_html = build_ligand_coord_storyline_html(unified_bench_path, stats=_ligand_coord_stats)
+ligand_coord_technical_html = build_ligand_coord_technical_html(unified_bench_path, stats=_ligand_coord_stats)
+_inverse_design_stats = compute_inverse_design_analysis(unified_bench_path)
+inverse_design_storyline_html = build_inverse_design_storyline_html(
+    unified_bench_path, inv_stats=_inverse_design_stats
+)
+inverse_design_technical_html = build_inverse_design_technical_html(
+    unified_bench_path, inv_stats=_inverse_design_stats
+)
+_mech_ml_stats = evaluate_mechanistic_ml_models(unified_bench_path, neb_bench_path)
+mechanistic_ml_storyline_html = build_mechanistic_storyline_html(
+    unified_bench_path, neb_bench_path, mech_stats=_mech_ml_stats
+)
+mechanistic_ml_technical_html = build_mechanistic_technical_html(
+    unified_bench_path, neb_bench_path, mech_stats=_mech_ml_stats
+)
+expansion_cand_path = os.path.join("database", "external", "patent_lit_expansion_candidates.json")
+analysis_history_technical_html = build_analysis_history_technical_html(
+    unified_bench_path, neb_bench_path, expansion_cand_path
+)
+patent_expansion_storyline_html = build_patent_expansion_storyline_html(
+    expansion_cand_path, unified_bench_path
+)
+patent_expansion_technical_html = build_patent_expansion_technical_html(
+    expansion_cand_path, unified_bench_path
+)
 
 template_path = "template.html"
 with open(template_path, "r", encoding="utf-8") as f:
@@ -2371,6 +2649,15 @@ with open(template_path, "r", encoding="utf-8") as f:
 final_html = template.replace("<!-- DATASET_SANKEY_PLACEHOLDER -->", dataset_sankey_html)
 final_html = final_html.replace("<!-- NEB_DECOMP_STORYLINE_PLACEHOLDER -->", neb_decomp_storyline_html)
 final_html = final_html.replace("<!-- NEB_DECOMP_TECHNICAL_PLACEHOLDER -->", neb_decomp_technical_html)
+final_html = final_html.replace("<!-- LIGAND_COORD_STORYLINE_PLACEHOLDER -->", ligand_coord_storyline_html)
+final_html = final_html.replace("<!-- LIGAND_COORD_TECHNICAL_PLACEHOLDER -->", ligand_coord_technical_html)
+final_html = final_html.replace("<!-- INVERSE_DESIGN_STORYLINE_PLACEHOLDER -->", inverse_design_storyline_html)
+final_html = final_html.replace("<!-- INVERSE_DESIGN_TECHNICAL_PLACEHOLDER -->", inverse_design_technical_html)
+final_html = final_html.replace("<!-- MECHANISTIC_ML_STORYLINE_PLACEHOLDER -->", mechanistic_ml_storyline_html)
+final_html = final_html.replace("<!-- MECHANISTIC_ML_TECHNICAL_PLACEHOLDER -->", mechanistic_ml_technical_html)
+final_html = final_html.replace("<!-- ANALYSIS_HISTORY_TECHNICAL_PLACEHOLDER -->", analysis_history_technical_html)
+final_html = final_html.replace("<!-- PATENT_EXPANSION_STORYLINE_PLACEHOLDER -->", patent_expansion_storyline_html)
+final_html = final_html.replace("<!-- PATENT_EXPANSION_TECHNICAL_PLACEHOLDER -->", patent_expansion_technical_html)
 final_html = final_html.replace("__NEB_TRAJECTORY_JSON_PLACEHOLDER__", neb_trajectory_json)
 final_html = final_html.replace("<!-- LIT_ROWS_PLACEHOLDER -->", lit_rows_joined)
 final_html = final_html.replace("<!-- EMPIRICAL_BENCHMARK_ROWS_PLACEHOLDER -->", empirical_db_joined)
