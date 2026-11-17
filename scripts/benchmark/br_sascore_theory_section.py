@@ -488,6 +488,80 @@ def _build_cpti_extrapolation_2d_svg() -> str:
     return re.sub(r"\s+", " ", svg_clean).strip()
 
 
+def _render_mini_mol_svg(smi: str, highlight_metal_bonds: bool = False) -> str:
+    """Render a compact RDKit 2D SVG for the Pro-ligand decoupling diagram."""
+    mol = Chem.MolFromSmiles(smi)
+    assert mol is not None, f"Invalid SMILES: {smi}"
+    rdDepictor.Compute2DCoords(mol)
+    hl_atoms: List[int] = []
+    hl_bonds: List[int] = []
+    atom_colors: Dict[int, Tuple[float, float, float, float]] = {}
+    bond_colors: Dict[int, Tuple[float, float, float, float]] = {}
+    if highlight_metal_bonds:
+        ti_idxs = {a.GetIdx() for a in mol.GetAtoms() if a.GetSymbol() == "Ti"}
+        for idx in ti_idxs:
+            hl_atoms.append(idx)
+            atom_colors[idx] = (0.90, 0.22, 0.27, 0.50)
+        for b in mol.GetBonds():
+            if b.GetBeginAtomIdx() in ti_idxs or b.GetEndAtomIdx() in ti_idxs:
+                hl_bonds.append(b.GetIdx())
+                bond_colors[b.GetIdx()] = (0.96, 0.62, 0.04, 0.55)
+
+    drawer = rdMolDraw2D.MolDraw2DSVG(180, 125)
+    opts = drawer.drawOptions()
+    opts.bondLineWidth = 2.2
+    opts.highlightRadius = 0.38
+    prep = rdMolDraw2D.PrepareMolForDrawing(mol)
+    drawer.DrawMolecule(
+        prep,
+        highlightAtoms=hl_atoms,
+        highlightBonds=hl_bonds,
+        highlightAtomColors=atom_colors,
+        highlightBondColors=bond_colors,
+    )
+    drawer.FinishDrawing()
+    svg_raw = drawer.GetDrawingText().replace("svg:", "")
+    svg_start = svg_raw.find("<svg")
+    svg_clean = svg_raw[svg_start:] if svg_start >= 0 else svg_raw
+    svg_clean = (
+        svg_clean.replace("\t", " ")
+        .replace("width='180px' height='125px'", "style='width:100%; max-width:165px; height:auto; display:block; margin:0 auto;'")
+    )
+    svg_clean = re.sub(r"<!--.*?-->", "", svg_clean, flags=re.S)
+    svg_clean = re.sub(r"\s+class=['\"](?:bond|atom)-[^'\"]*['\"]", "", svg_clean)
+    return re.sub(r"\s+", " ", svg_clean).strip()
+
+
+def _build_proligand_decoupling_diagram_html() -> str:
+    """Build the 2D structural cleavage diagram for *Pro-ligand decoupling."""
+    complex_svg = _render_mini_mol_svg("CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1", highlight_metal_bonds=True)
+    me2nh_svg = _render_mini_mol_svg("CNC", highlight_metal_bonds=False)
+    hcp_svg = _render_mini_mol_svg("C1=CC=CC1", highlight_metal_bonds=False)
+    return f"""
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1 1 135px; text-align:center;">
+          {complex_svg}
+          <div style="font-size:0.72rem; font-weight:700; color:#0f172a; margin-top:2px;">CpTi(NMe<sub>2</sub>)<sub>3</sub></div>
+          <div style="font-size:0.68rem; color:#b91c1c;">금속(Ti) &middot; M-L 결합 절단</div>
+        </div>
+        <div style="font-size:1.1rem; font-weight:800; color:#0284c7; padding:0 2px;">&rarr;</div>
+        <div style="flex:1 1 190px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:4px;">
+          <div style="text-align:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:4px;">
+            {me2nh_svg}
+            <div style="font-size:0.71rem; font-weight:700; color:#0f172a;">Me<sub>2</sub>NH</div>
+            <div style="font-size:0.67rem; color:#0f766e;">min(1.02, 2.22) = <strong>1.02</strong></div>
+          </div>
+          <div style="font-size:0.95rem; font-weight:800; color:#64748b;">+</div>
+          <div style="text-align:center; background:#f0fdfa; border:1px solid #5eead4; border-radius:6px; padding:4px;">
+            {hcp_svg}
+            <div style="font-size:0.71rem; font-weight:700; color:#0f172a;">HCp</div>
+            <div style="font-size:0.67rem; color:#0f766e;">min(3.33, 3.31) = <strong>3.31</strong></div>
+          </div>
+        </div>
+      </div>
+    """
+
+
 def _build_vanilla_reconstruction_rows_html(vanilla_data: Dict[str, Any]) -> Tuple[str, str]:
     """Render HTML table rows for Section 1 (Hf complex variants and free pro-ligands)."""
     c_rows: List[str] = []
@@ -761,6 +835,7 @@ def build_br_sascore_theory_html() -> str:
     vanilla_complex_rows_html, vanilla_ligand_rows_html = _build_vanilla_reconstruction_rows_html(vanilla_data)
     morgan_2d_svg = _build_morgan_fingerprint_2d_svg()
     cpti_2d_svg = _build_cpti_extrapolation_2d_svg()
+    proligand_diagram_html = _build_proligand_decoupling_diagram_html()
 
     stats = compute_br_pickle_statistics()
     examples = compute_br_worked_examples()
@@ -1193,6 +1268,25 @@ flowchart TD
           </div>
         </div>
 
+        <div class="callout-info" style="margin:12px 0; background:#f8fafc; border-color:#cbd5e1;">
+          <strong style="font-size:0.94rem; color:#0f172a;">*Pro-ligand 분리 (Pro-ligand Decoupling)</strong>
+          <div style="display:grid; grid-template-columns:minmax(260px, 1.35fr) minmax(260px, 1.1fr); gap:16px; align-items:center; margin-top:8px;">
+            <ul style="margin:0 0 0 18px; line-height:1.68; font-size:0.84rem; color:#334155;">
+              <li><strong>Step 1 &mdash; 배위 중심(금속) 제거:</strong> 분자 그래프에서 중심 금속 원자(적색 강조, 예: <code>Ti</code>, <code>Hf</code>)와 이에 직접 연결된 금속&ndash;리간드 결합(주황 강조)을 절단해 유기 리간드 골격만 분리합니다(<code>compute_ligand_sa()</code>).</li>
+              <li><strong>Step 2 &mdash; 수소 포화 및 중성 프로리간드($HL_i$) 복원:</strong> 끊어진 배위 자리의 라디칼을 제거하고 암묵적 수소(<code>H</code>)로 원자가를 채워, 실제로 구매·합성 가능한 중성 프로리간드 분자(예: <code>-NMe2</code> &rarr; <code>Me2NH</code>, <code>-Cp</code> &rarr; <code>HCp</code>)로 변환합니다. (단순 무기종 <code>[H]</code>, <code>Cl</code>, <code>O</code>는 제외)</li>
+              <li><strong>Step 3 &mdash; 율속 리간드 기준 점수 산출:</strong> 각 프로리간드 $HL_i$에 <code>min(BR-SAScore, SAScore)</code>를 적용해 케토-에놀 등 사전 편향을 상호 보완한 뒤, 가장 합성하기 어려운 <strong>최댓값($\max_i$)</strong>을 <code>ligand_sa</code>로 채택합니다(예: $\max(1.02, 3.31) = \mathbf{3.31}$). 이후 금속&ndash;리간드 결합·열안정성은 <code>SevenNet-0</code> 물리 지표가 전담합니다.</li>
+            </ul>
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:10px; text-align:center;">
+              __PROLIGAND_DIAGRAM_HTML__
+              <div style="font-size:0.73rem; color:#475569; margin-top:6px; line-height:1.45;">
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#e63946; margin-right:3px;"></span><strong>제거 대상</strong> 중심 금속 &nbsp;
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#f59e0b; margin-right:3px;"></span><strong>절단 결합</strong> M&ndash;L &nbsp;
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#0f766e; margin-right:3px;"></span><strong>율속 리간드</strong> max = 3.31
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="card" style="background:#f8fafc; border-color:#cbd5e1; margin-top:12px;">
           <h4 style="margin:0 0 8px 0; color:#0f172a;">
             바닐라 BR-SAScore vs 반도체 DB 확장 외삽 정합성 원리 및 명시적 수치 계산 (<code>CpTi(NMe2)3</code> 실측)
@@ -1221,6 +1315,15 @@ flowchart TD
                 </div>
               </div>
             </div>
+            <div style="margin-top:10px; padding:9px 12px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; font-size:0.78rem; color:#334155; line-height:1.6;">
+              <strong style="color:#0f172a;">BR-SAScore 수치 해석 기준 (1~10 척도, 낮을수록 합성 용이):</strong>
+              <span style="display:inline-block; padding:1px 7px; border-radius:999px; background:#dcfce7; color:#166534; font-weight:700; margin:0 4px;">1.0 &le; 점수 &le; 3.5 : 합성 용이 (Easy / Pass)</span>
+              <span style="display:inline-block; padding:1px 7px; border-radius:999px; background:#fef3c7; color:#92400e; font-weight:700; margin:0 4px;">3.5 &lt; 점수 &le; 6.0 : 중간 난이도 (Moderate)</span>
+              <span style="display:inline-block; padding:1px 7px; border-radius:999px; background:#fee2e2; color:#991b1b; font-weight:700; margin:0 4px;">6.0 &lt; 점수 &le; 10.0 : 합성 난해 (Hard / Fail)</span>
+              <div style="margin-top:4px; color:#475569;">
+                * <strong>판정 기준 적용:</strong> <code>SAScore (2009)</code>와 동일하게 <strong>$3.5$ 이하</strong>를 표준 합성 가능(Pass) 임계치로 사용합니다. 위 예시의 ①(<code>7.2029</code>)과 ②(<code>6.9458</code>)는 시약 DB 확장으로 점수가 개선되더라도 금속-리간드 미등재(<code>-6.0</code>) 때문에 여전히 <code>&gt; 6.0</code>(합성 난해 오판) 영역에 머무르지만, ④ Pro-ligand 분리 후 산출된 <code>ligand_sa = 3.31</code>은 <strong><code>&le; 3.5</code> 기준을 통과</strong>하여 실제 합성 가능성을 정확히 반영합니다.
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1233,6 +1336,7 @@ flowchart TD
         "__VANILLA_LIGAND_ROWS__": vanilla_ligand_rows_html,
         "__MORGAN_2D_SVG__": morgan_2d_svg,
         "__CPTI_2D_SVG__": cpti_2d_svg,
+        "__PROLIGAND_DIAGRAM_HTML__": proligand_diagram_html,
         "__SIM_HTML__": sim_html,
         "__DIST_SVG__": dist_svg,
         "__CARDS_HTML__": cards_html,

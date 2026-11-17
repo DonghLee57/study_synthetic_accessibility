@@ -1082,6 +1082,8 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertIn("7.2029", theory_html)
         self.assertIn("6.9458", theory_html)
         self.assertIn("8.9772", theory_html)
+        self.assertIn("BR-SAScore 수치 해석 기준", theory_html)
+        self.assertIn("*Pro-ligand 분리 (Pro-ligand Decoupling)", theory_html)
         self.assertIn("331,332", theory_html)
         self.assertIn('id="brTheorySimWidget"', theory_html)
         self.assertIn("BR-SAScore 베이스 선정 5대 결정적 근거", theory_html)
