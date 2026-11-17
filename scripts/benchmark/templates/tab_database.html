@@ -1,0 +1,113 @@
+        <div class="card" style="margin-bottom:20px; background:linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%); border:1px solid #bae6fd; padding:22px 24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:8px;">
+            <span class="badge badge-prec" style="font-size:0.78rem;">Semiconductor Synthesis Domain Database Explorer</span>
+            <span style="font-size:0.82rem; color:#0369a1; font-weight:600;" id="dbHeaderStats">189 Unified Records &bull; RDKit 2D SVG Embedded</span>
+          </div>
+          <h2 style="font-size:1.55rem; font-weight:800; color:#0f172a; margin:0 0 8px 0;">
+            확보 DB 통합 검색 및 2D 분자·반응 구조 뷰어
+          </h2>
+          <p style="font-size:0.9rem; color:#334155; line-height:1.6; margin:0;">
+            본 프로젝트에서 구축·검증한 상용 프리커서 Baseline(27종), 확장 ALD 프리커서 DB(203 정준 엔티티), 한·중·일·미·대만 특허·문헌 확장(38종: AtomicLimits SMILES 역충전 14종 + 순신규 24종), AS-ALD 인히비터(28종), 출발 시약(29종 중 순수 시약 19 + 프리커서 겸용 이중역할 10종 병합), 합성 반응(12종), 및 Negative Control(10종)을 <strong>정준 중복 제거(<code>286</code>개 유일 엔티티)</strong> 상태로 즉시 검색·시각화할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="db-controls-card">
+          <div class="db-search-row">
+            <input type="text" id="dbSearchInput" class="db-search-input" placeholder="프리커서명, 메인 금속(Hf, Mo, Nb, Ni, 티타늄, Si 등), 특허번호, 분자식, CAS, SMILES 검색..." oninput="scheduleDbExplorerRender()" oncompositionend="scheduleDbExplorerRender()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderDbExplorer();}">
+            <select id="dbSearchMode" class="db-select" onchange="renderDbExplorer()" title="검색 방식 선택">
+              <option value="smart">스마트 검색 (금속·이름·분자식·SMILES)</option>
+              <option value="metal">메인 금속 전용 (Main Metal)</option>
+              <option value="all">전체 텍스트 (All Fields)</option>
+            </select>
+            <button type="button" class="db-pill active" style="padding:9px 16px;" onclick="renderDbExplorer()">검색</button>
+            <button type="button" class="btn-toc-utility" style="width:auto; padding:9px 14px;" onclick="resetDbFilters()">초기화</button>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="db-pill active" id="btnDbViewCards" onclick="setDbViewMode('cards')">2D 카드 뷰</button>
+              <button type="button" class="db-pill" id="btnDbViewTable" onclick="setDbViewMode('table')">테이블 뷰</button>
+            </div>
+          </div>
+
+          <div class="db-pill-bar" id="dbCategoryPills">
+            <button type="button" class="db-pill active" id="dbCatAllBtn" data-dbcat="all" onclick="setDbCategory('all')">전체 통합 (286)</button>
+            <button type="button" class="db-pill" id="dbCatPrecBtn" data-dbcat="precursor" onclick="setDbCategory('precursor')">반도체 공정 프리커서 Baseline (27)</button>
+            <button type="button" class="db-pill" id="dbCatExpandedBtn" data-dbcat="expanded_master" onclick="setDbCategory('expanded_master')">확장 ALD 프리커서 DB (203)</button>
+            <button type="button" class="db-pill" id="dbCatPatBtn" data-dbcat="patent_expansion" onclick="setDbCategory('patent_expansion')">특허·문헌 확장 DB (38)</button>
+            <button type="button" class="db-pill" id="dbCatInhBtn" data-dbcat="inhibitor" onclick="setDbCategory('inhibitor')">AS-ALD 인히비터 (28)</button>
+            <button type="button" class="db-pill" id="dbCatReagBtn" data-dbcat="reagent" onclick="setDbCategory('reagent')">출발물질·시약 (29)</button>
+            <button type="button" class="db-pill" id="dbCatRxnBtn" data-dbcat="reaction" onclick="setDbCategory('reaction')">공인 합성 반응 (12)</button>
+            <button type="button" class="db-pill" id="dbCatNegBtn" data-dbcat="negative" onclick="setDbCategory('negative')">Negative Controls (10)</button>
+          </div>
+
+          <div style="margin-bottom:10px; padding-top:8px; border-top:1px dashed #e2e8f0;">
+            <div style="font-size:0.75rem; font-weight:700; color:#475569; margin-bottom:6px;">
+              메인 금속 빠른 필터 (Main Metal / Center Element)
+            </div>
+            <div class="db-pill-bar" id="dbMetalPills" style="margin-bottom:0;"></div>
+          </div>
+
+          <div class="db-subfilter-row">
+            <label style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+              상세 원소 선택:
+              <select id="dbElementFilter" class="db-select" onchange="setDbMetalFilter(this.value)">
+                <option value="all">전체 원소</option>
+              </select>
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer; font-weight:600;">
+              <input type="checkbox" id="dbOnly2dCheck" onchange="renderDbExplorer()">
+              <span>2D 구조(<code>SMILES</code>) 보유 항목만 표시</span>
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
+              정렬:
+              <select id="dbSortSelect" class="db-select" onchange="renderDbExplorer()">
+                <option value="default">기본 등록 순 (ID)</option>
+                <option value="mw_asc">분자량 오름차순</option>
+                <option value="mw_desc">분자량 내림차순</option>
+                <option value="bde_desc">SevenNet BDE_min 높은 순</option>
+                <option value="sa_asc">SAScore 낮은 순</option>
+              </select>
+            </label>
+            <span id="dbSearchHint" style="display:none; font-size:0.76rem; color:#0369a1; background:#eff6ff; border:1px solid #bfdbfe; padding:3px 8px; border-radius:4px; font-weight:600;"></span>
+            <div style="margin-left:auto; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;" id="dbResultCountBadge">
+              검색 결과: 0건
+            </div>
+          </div>
+        </div>
+
+        <div id="dbEmptyState" class="card" style="display:none; text-align:center; padding:36px; color:#64748b;">
+          검색 조건에 일치하는 레코드가 없습니다. 검색어 또는 필터 조건을 조정하십시오.
+        </div>
+
+        <div id="dbCardGrid" class="db-card-grid"></div>
+
+        <div id="dbTableWrap" class="table-responsive" style="display:none;">
+          <table class="table-compact-db">
+            <colgroup>
+              <col style="width:12%;">
+              <col style="width:15%;">
+              <col style="width:17%;">
+              <col style="width:7%;">
+              <col style="width:27%;">
+              <col style="width:22%;">
+            </colgroup>
+            <thead>
+              <tr>
+                <th style="text-align:center;">2D Structure</th>
+                <th>Name / ID / DB</th>
+                <th>Chemical / CAS / Formula</th>
+                <th style="text-align:center;">Elem</th>
+                <th>Domain Properties &amp; SA / MLIP Metrics</th>
+                <th>SMILES / SMARTS</th>
+              </tr>
+            </thead>
+            <tbody id="dbTableBody"></tbody>
+          </table>
+        </div>
+
+        <div id="dbLoadMoreBar" class="db-loadmore-bar">
+          <span id="dbLoadMoreStatus" style="font-size:0.83rem; color:#475569; font-weight:600;"></span>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button type="button" class="db-pill active" id="btnDbLoadMore" onclick="appendDbRenderBatch(36)">더 보기 (+36건)</button>
+            <button type="button" class="db-pill" id="btnDbShowAll" onclick="appendDbRenderBatch(10000)">전체 표시</button>
+          </div>
+        </div>
+        <div id="dbLoadMoreSentinel" style="height:1px;"></div>

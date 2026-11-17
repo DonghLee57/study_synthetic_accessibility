@@ -1076,6 +1076,9 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertIn("s_3=0.000", theory_html)
         self.assertIn("합성이 용이(Easy)", theory_html)
         self.assertIn("CpTi(NMe2)3", theory_html)
+        self.assertNotIn("CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1", theory_html)
+        self.assertIn("금속 인접 미등재", theory_html)
+        self.assertIn("Cp 시약 확장", theory_html)
         self.assertIn("7.2029", theory_html)
         self.assertIn("6.9458", theory_html)
         self.assertIn("8.9772", theory_html)
@@ -1110,6 +1113,53 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             self.assertIn('id="brt-sec1"', html_txt)
             self.assertIn('id="brt-sec2"', html_txt)
             self.assertNotIn('id="brt-sec3"', html_txt)
+
+    def test_25_html_modularization_and_compression(self):
+        """Verify Option A modular HTML architecture, shared html_common utilities, and payload compression."""
+        hc_mod = self._load_script_module(
+            os.path.join("scripts", "benchmark", "html_common.py"),
+            "repo_html_common",
+        )
+        svg_tdmah = hc_mod.render_mol2d_svg("CN(C)[Hf](N(C)C)(N(C)C)N(C)C")
+        self.assertIn("<svg class='rdk'", svg_tdmah)
+        self.assertNotIn("xmlns:rdkit", svg_tdmah)
+        self.assertNotIn("class='bond-", svg_tdmah)
+
+        tpl_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark", "templates")
+        for asset in (
+            "report_styles.css",
+            "tab_storyline.html",
+            "tab_technical.html",
+            "tab_database.html",
+            "report_main.js",
+            "report_neb.js",
+        ):
+            self.assertTrue(os.path.exists(os.path.join(tpl_dir, asset)), f"Missing template asset: {asset}")
+
+        with open(os.path.join(PROJECT_ROOT, "template.html"), "r", encoding="utf-8") as fh:
+            tpl_lines = fh.read().splitlines()
+        self.assertLessEqual(len(tpl_lines), 350)
+
+        with open(os.path.join(PROJECT_ROOT, "generate_html.py"), "r", encoding="utf-8") as fh:
+            gen_lines = fh.read().splitlines()
+        self.assertLessEqual(len(gen_lines), 200)
+
+        for fname in ("index.html", "synthetic_accessibility_report.html"):
+            fpath = os.path.join(PROJECT_ROOT, fname)
+            with open(fpath, "r", encoding="utf-8") as fh:
+                html_txt = fh.read()
+            self.assertLess(len(html_txt.encode("utf-8")), 2800000)
+            self.assertIn("svg.rdk path:not([fill])", html_txt)
+            self.assertIn(".u01{", html_txt)
+            for placeholder in (
+                "<!-- REPORT_STYLES_PLACEHOLDER -->",
+                "<!-- TAB_STORYLINE_SHELL_PLACEHOLDER -->",
+                "<!-- TAB_TECHNICAL_SHELL_PLACEHOLDER -->",
+                "<!-- TAB_DATABASE_SHELL_PLACEHOLDER -->",
+                "<!-- REPORT_MAIN_JS_PLACEHOLDER -->",
+                "<!-- REPORT_NEB_JS_PLACEHOLDER -->",
+            ):
+                self.assertNotIn(placeholder, html_txt)
 
 
 if __name__ == "__main__":

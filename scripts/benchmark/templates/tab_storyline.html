@@ -1,0 +1,545 @@
+
+        <!-- Welcome Banner -->
+        <div class="card" style="margin-bottom:28px; background:linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border:1px solid #bae6fd; padding:26px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+            <div style="display:inline-flex; align-items:center; gap:8px; background:#0284c7; color:#fff; padding:5px 14px; border-radius:20px; font-size:0.82rem; font-weight:700;">
+              Executive Summary
+            </div>
+            <span style="font-size:0.84rem; color:#0369a1; font-weight:600;">5-Step Analytical Overview</span>
+          </div>
+          <h2 style="font-size:1.65rem; font-weight:800; color:#0f172a; margin:0 0 10px 0; line-height:1.35;">
+            반도체 프리커서에 대한 SA 모델 평가와 물리 Descriptor 결합 분석 요약
+          </h2>
+          <p style="font-size:0.95rem; color:#334155; line-height:1.65; margin:0 0 16px 0;">
+            신약 개발용으로 학습된 기존 SA Model은 반도체 소재의 특성을 반영하지 못합니다. 그 결과 실제 양산에 쓰이는 반도체 프리커서의 92.6%를 False Negative로 오분류하고, 반대로 공정에 쓸 수 없는 불안정·부적합 대조군의 90.0%(Baseline Consensus 기준)를 False Positive로 통과시키는 이중 오류를 보입니다. 본 리포트는 이러한 오분류 원인을 규명하고, 범용 MLIAP인 SevenNet 기반 3차원 분자 구조 최적화·결합 해리 에너지(BDE)·이합체 응집 안정성 계산과 화학 반응 규칙(SMARTS)을 결합한 물리 기반 평가 결과(<!-- PHASE2_BANNER_METRICS -->), 소규모 데이터셋 Cross-Validation의 일반화 한계, 및 8대 분해 경로 CI-NEB 활성화 장벽과 ALD 공정 열분해 온도($T_{\text{decomp}}$)의 속도론적 연계성을 정리합니다.
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. 반도체 프리커서 SA 모델 평가 기준 &darr;</a>
+            <a href="#storyline-step2" class="btn-pdf" style="text-decoration:none;">Step 2. 4세대 AI Model 체계와 적합성 판정 &darr;</a>
+            <a href="#storyline-step3" class="btn-pdf" style="text-decoration:none;">Step 3. 오분류 분석 및 물리 Descriptor 체계 &darr;</a>
+            <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 통합 160종 물리-배위 모델(TMC-SA) 평가 결과 &darr;</a>
+            <a href="#storyline-step5" class="btn-pdf" style="text-decoration:none;">Step 5. SevenNet 반응경로(CI-NEB) 및 T<sub>decomp</sub> 연계 &darr;</a>
+            <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer; text-decoration:none;">
+              22개 섹션 전체 리포트 열기 &rarr;
+            </button>
+            <button type="button" onclick="switchViewTab('database')" class="btn-pdf" style="background:#0d9488; color:#fff; border-color:#0d9488; cursor:pointer; text-decoration:none;">
+              DB 탐색 (2D 구조) 열기 &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Dataset Composition & Evaluation Split Breakdown -->
+        <div class="card" style="border-top:4px solid #0284c7; padding:20px; margin-bottom:24px;">
+          <div style="font-weight:800; font-size:1.05rem; color:#0f172a; margin-bottom:8px;">
+            데이터셋 구성 및 단계별 분할 명세 (Dataset Composition &amp; Evaluation Split Breakdown)
+          </div>
+          <p style="font-size:0.85rem; color:#475569; line-height:1.6; margin:0 0 12px 0;">
+            본 연구에서 구축·활용하는 기본 문헌 카탈로그(304건)에 한·중·일·미·대만 특허 및 중심금속별 문헌 확장 후보(38종)를 더한 <strong>총 342건 원본 카탈로그</strong>의 검증 분리, 전수 SevenNet/ETKDGv3 3D 구조 처리, 및 교차 DB 정준 중복 제거(Unified DB Explorer: <strong>286개 비중복 정준 엔티티</strong>) 체계는 아래 흐름도(Sankey Diagram)와 명세표로 엄격히 구분됩니다.
+          </p>
+<!-- DATASET_SANKEY_PLACEHOLDER -->
+          <div style="overflow-x:auto;">
+            <table class="report-table" style="font-size:0.81rem;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="width:24%;">계층 및 데이터셋 명칭</th>
+                  <th style="width:12%; text-align:center;">표본 규모</th>
+                  <th style="width:36%;">세부 구성 내역</th>
+                  <th style="width:28%;">용도 및 모델 학습·검증 범위</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. 기본 도메인 카탈로그</strong></td>
+                  <td style="text-align:center;"><strong>304건</strong></td>
+                  <td>프리커서 마스터 카탈로그 <strong>205종</strong>(핵심 검증셋 27 + AtomicLimits 93 + 확장 85), 인히비터 <strong>18종</strong>, 출발 시약 <strong>29종</strong>(이중역할 10종 포함), 합성 반응 <strong>12건</strong>, Negative Control <strong>40종</strong></td>
+                  <td>기본 문헌 데이터베이스. 시약 29종·반응 12건은 Leakage-Free 사전 구축 및 반응 에너지 검증에만 사용(분류 평가셋 제외)</td>
+                </tr>
+                <tr style="background:#f8fafc;">
+                  <td><strong>2. 통합 분류 평가셋 (불변 기준)</strong><br><span style="font-size:0.75rem; color:#64748b;">(SMILES &amp; 화학식 정합성 통과)</span></td>
+                  <td style="text-align:center;"><strong>160종</strong><br><span style="font-size:0.74rem; color:#059669;">(120 Pos : 40 Neg)</span></td>
+                  <td><strong>Positive 120종</strong> = 프리커서 <strong>102종</strong>(핵심 검증셋 27 + 확장 원소 <code>Ir/Rh/As/Ga/In/Ru</code> 75) + AS-ALD 인히비터 <strong>18종</strong><br><strong>Negative Control 40종</strong> = 기본 대조군 10 + 6대 메커니즘 층화 30</td>
+                  <td>TMC-SA + 배위 게이트 전수 추론(160종), 지도학습 CV-5 및 LOFMO(160종), <code>OneClassSVM_RBF</code> 학습(Positive 120종만 사용)</td>
+                </tr>
+                <tr>
+                  <td><strong>3. SevenNet 물리 이완셋</strong><br><span style="font-size:0.75rem; color:#64748b;">(LBFGS 3D &middot; BDE &middot; E<sub>coh</sub> &middot; &Delta;E<sub>dimer</sub>)</span></td>
+                  <td style="text-align:center;"><strong>160종 (100%)</strong><br><span style="font-size:0.74rem; color:#0284c7;">(120 Pos : 40 Neg)</span></td>
+                  <td>통합 평가셋 <strong>160종 전수</strong>(핵심 코어 55종 + 확장 원소 프리커서 75종 + 확장 Negative Control 30종, 단량체·이합체·해리 BDE 완비)</td>
+                  <td>전수 SevenNet LBFGS 양자역학 대리 계산 완비(UFF 보정 ETKDGv3 초기 배위 구조 병용), 입체 차폐(<code>%V<sub>bur</sub></code>, <code>%V<sub>bur</sub><sup>D2</sup></code>, <code>&theta;<sub>max</sub><sup>void</sup></code>) 및 표준 생성에너지(Descriptor 4) AUROC 비교 평가(160종·130종·55종)</td>
+                </tr>
+                <tr style="background:#f8fafc;">
+                  <td><strong>4. 참조·사전 전용 데이터</strong><br><span style="font-size:0.75rem; color:#64748b;">(분류 평가셋 제외)</span></td>
+                  <td style="text-align:center;"><strong>144건</strong></td>
+                  <td>AtomicLimits 참조 목록 <strong>93건</strong>(특허 SMILES 역충전 14건 포함) + Meta 메타정보 <strong>10건</strong> + 상용 시약 사전 <strong>29종</strong> + 합성 반응 검증 <strong>12건</strong></td>
+                  <td><code>BR-SAScore</code> 도메인 빌딩블록 사전 확장 및 문헌 반응 에너지(&Delta;E<sub>rxn</sub>) 참조 전용으로 활용하며 분류 성능 집계에서 엄격히 분리</td>
+                </tr>
+                <tr style="background:#fffbeb;">
+                  <td><strong>5. 특허·문헌 확장 스크리닝 DB</strong><br><span style="font-size:0.75rem; color:#92400e;">(KR/JP/CN/US/TW + 8 신규 원소)</span></td>
+                  <td style="text-align:center;"><strong>+38건</strong><br><span style="font-size:0.74rem; color:#059669;">(7net 38/38 · 0 FB)</span></td>
+                  <td><strong>프리커서 28종 + AS-ALD 인히비터 10종</strong>(원소 <code>16 &rarr; 24</code>종 확장). AtomicLimits 무-SMILES <code>14</code>종 역충전 + 순신규 <code>24</code>종 등록, <strong>전수 <code>SevenNet-0</code> LBFGS 3D 이완&middot;BDE&middot;E<sub>coh</sub>&middot;&Delta;E<sub>dimer</sub>&middot;&Delta;E<sub>f</sub>/v<sub>M</sub> 완비</strong></td>
+                  <td>DB 탐색기 정준 중복 제거(이중역할 시약 <code>10</code>종 &middot; <code>Ga</code> 이형 <code>2</code>쌍 &middot; AtomicLimits <code>14</code>종 병합 &rarr; <strong>총 <code>286</code>개 유일 엔티티</strong>) 및 7net <code>PDMAT/Ge</code> 입체 구제 실측</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Step 1: Evaluation Metrics & Confusion Matrix -->
+        <section id="storyline-step1" class="storyline-step">
+          <div class="storyline-step-header">
+            <span class="step-badge">1</span>
+            <div>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 1 &bull; Evaluation Metrics &amp; Confusion Matrix</div>
+              <h3 class="storyline-step-title">반도체 프리커서 SA 모델 평가 기준 (Confusion Matrix)</h3>
+            </div>
+          </div>
+
+          <div class="card" style="border-top:4px solid #10b981; padding:22px; margin-bottom:20px;">
+            <div style="font-weight:700; font-size:1.1rem; color:#0f172a; margin-bottom:12px;">
+              반도체 프리커서 SA 평가의 Confusion Matrix와 반도체 공정 파급 효과
+            </div>
+            <p style="font-size:0.88rem; color:#475569; line-height:1.65; margin-bottom:14px;">
+              통계학 및 ML 분류 지표(Positive/Negative, True/False)가 <strong>반도체 프리커서 및 억제제 합성 평가에서 지니는 물리적 의미</strong>는 일반 의약학 분류와 구별됩니다. 신약 개발용 DB(PubChem/ChEMBL)로 학습된 기존 모델은 반도체 소재의 특성을 반영하지 못하여, 실제 양산에 쓰이는 정상 프리커서의 92.6%를 합성 불가능으로 False Negative 오분류하고, 반대로 공정에 쓸 수 없는 불안정·부적합 대조군의 90.0%(Baseline Consensus 기준)를 합성 가능으로 False Positive 통과시킵니다. 각 오분류 유형이 실제 공정에 미치는 영향은 다음과 같습니다.
+            </p>
+
+            <div style="overflow-x:auto; margin-bottom:14px;">
+              <table class="report-table" style="font-size:0.84rem; text-align:center;">
+                <thead>
+                  <tr style="background:#f1f5f9;">
+                    <th style="width:20%; text-align:left;">Confusion Matrix Classification</th>
+                    <th style="width:20%; background:#ecfdf5; color:#065f46;">Actual Positive (양산 적합)</th>
+                    <th style="width:20%; background:#fef2f2; color:#991b1b;">Actual Negative (위험·불량)</th>
+                    <th style="width:40%; text-align:left;">반도체 공정 관점의 영향</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left; font-weight:700; background:#f8fafc;">
+                      Predicted Positive<br><span style="font-size:0.75rem; color:#0284c7;">(Model Verdict: Pass)</span>
+                    </td>
+                    <td style="background:#f0fdf4;">
+                      <strong style="color:#15803d; font-size:0.95rem;">True Positive (TP)</strong><br>
+                      <span style="font-size:0.75rem; color:#475569;">실제 양산 적합 물질을 Pass로 판정</span>
+                    </td>
+                    <td style="background:#fef2f2;">
+                      <strong style="color:#b91c1c; font-size:0.95rem;">False Positive (FP)</strong><br>
+                      <span style="font-size:0.75rem; color:#7f1d1d;">폭발성·부식성 분자를 Pass로 Misclassification</span>
+                    </td>
+                    <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
+                      <strong style="color:#b91c1c;">[FP Risk]</strong> 상온 폭발(ZrMe4) 또는 &beta;-수소 탈락(TiEt4) 분자가 통과될 경우 진공 챔버 손상, 웨이퍼 오염, 부식성 부산물 발생 등 공정 안전 및 수율 저하 위험을 초래합니다. (Phase 1 Baseline Consensus: Negative Control <strong>FPR = 90.0%</strong>)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left; font-weight:700; background:#f8fafc;">
+                      Predicted Negative<br><span style="font-size:0.75rem; color:#dc2626;">(Model Verdict: Reject)</span>
+                    </td>
+                    <td style="background:#fffbeb;">
+                      <strong style="color:#b45309; font-size:0.95rem;">False Negative (FN)</strong><br>
+                      <span style="font-size:0.75rem; color:#78350f;">실제 양산 프리커서를 Fail로 기각</span>
+                    </td>
+                    <td style="background:#f8fafc;">
+                      <strong style="color:#475569; font-size:0.95rem;">True Negative (TN)</strong><br>
+                      <span style="font-size:0.75rem; color:#64748b;">위험·불량 분자를 Reject로 차단</span>
+                    </td>
+                    <td style="text-align:left; font-size:0.8rem; line-height:1.5; color:#334155;">
+                      <strong style="color:#b45309;">[FN Risk]</strong> 반도체 공정에서 대량 사용하는 TSA, TMA, TEMAH가 높은 복잡도 점수로 탈락하여 유효한 프리커서 후보가 초기 Screening에서 배제됩니다. (Phase 1 RDKit SAScore: Precursor <strong>FNR = 92.6%</strong>, 25/27 기각)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="background:#f8fafc; border-left:4px solid #10b981; padding:12px 16px; border-radius:0 6px 6px 0; font-size:0.84rem; color:#334155; line-height:1.6;">
+              <strong>핵심 기준:</strong> 반도체용 SA Model은 False Positive (FP)를 줄여 Specificity를 확보하는 동시에, False Negative (FN)를 최소화하여 Recall을 유지하는 균형 잡힌 식별력이 요구됩니다.
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 2: 4-Generation AI Model Taxonomy & Suitability -->
+        <section id="storyline-step2" class="storyline-step">
+          <div class="storyline-step-header">
+            <span class="step-badge">2</span>
+            <div>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 2 &bull; 4-Generation Taxonomy &amp; Suitability</div>
+              <h3 class="storyline-step-title">4세대 AI Model 체계와 반도체 프리커서 적합성 판정</h3>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:20px; padding:22px;">
+            <p style="font-size:0.92rem; color:#334155; line-height:1.65; margin-bottom:16px;">
+              주요 SA·소재 특화·역합성·생성 Model을 <strong>"화학적 추상도와 반응 지식의 심도(Depth of Chemical Knowledge)"</strong> 축에 따라 1~4세대 체계로 분류합니다.
+            </p>
+
+            <!-- Evolution Table (All 1G ~ 4G Models) -->
+            <div style="overflow-x:auto; margin-bottom:22px;">
+              <table class="report-table" style="font-size:0.84rem;">
+                <thead>
+                  <tr style="background:#f1f5f9;">
+                    <th style="width:15%;">Generation</th>
+                    <th style="width:19%;">Model</th>
+                    <th style="width:34%;">Core Mechanism &amp; Architecture</th>
+                    <th style="width:32%;">Semiconductor Complex Limitation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1G (Heuristic)</strong><br><span style="font-size:0.75rem; color:#64748b;">2009 ~ 2020</span></td>
+                    <td><strong style="color:#0284c7;">SAScore, SYBA</strong></td>
+                    <td>분자를 작은 부분 구조 조각으로 나눈 뒤 기존 화학 DB 내 등장 빈도를 조회해 고리·입체 구조 감점을 주거나(SAScore), 합성 가능·불가능 조각의 확률 비율을 계산하는(SYBA) 규칙·통계 기반 방식</td>
+                    <td><strong style="color:#b91c1c;">금속-리간드 결합 인식 한계</strong>: PubChem/ZINC DB 기반으로 Si-N, Al-C, Hf-N, Ti-N 배위를 희귀 구조로 기각 (FNR 92.6%)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2G (Surrogate &amp; Domain ML)</strong><br><span style="font-size:0.75rem; color:#64748b;">2018 ~ 2022</span></td>
+                    <td><strong style="color:#7c3aed;">SCScore, RAscore, RetroGNN, MPScore</strong></td>
+                    <td>화학 반응 전후(출발물&rarr;생성물)의 복잡도 순서를 학습하거나(SCScore), 역합성 탐색 결과를 AI로 빠르게 근사 학습하며(RAscore, RetroGNN), 화학자가 매긴 합성 난이도 점수를 분자 지문으로 예측하는(MPScore) 초기 머신러닝 방식</td>
+                    <td><strong style="color:#b91c1c;">Early-Stage Reactant·유기 소재 편향 &amp; BDE 미반영</strong>: 열역학 BDE를 고려하지 못해 열분해성(TiEt4)·폭발성(ZrMe4) 분자를 통과시키며, MPScore 역시 유기 케이지/고분자 빌딩블록 중심으로 학습되어 무기 할로겐화물·착물 제약을 미반영</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3G (GNN / Decoupled)</strong><br><span style="font-size:0.75rem; color:#64748b;">2022 ~ 2024</span></td>
+                    <td><strong style="color:#059669;">GASA, DeepSA, DFRscore, BR-SAScore</strong></td>
+                    <td>원자-결합 연결망(Graph)이나 SMILES 문자열을 딥러닝(GNN·Transformer)으로 읽어 미묘한 구조 차이까지 파악하거나(GASA, DeepSA, DFRscore), 상용 시약 조각($s_B=0$)과 반응 생성 조각($s_R&lt;0$)을 분리해 점수를 매기는(BR-SAScore) 고도화 방식</td>
+                    <td><strong style="color:#b91c1c;">전이금속 Node Encoding 결손</strong>: GASA(Hf, Ta, Ru, W, Mo 7종 All-Zero Vector 누락), DFRscore(금속 원자의 ELSE Node 축퇴). 단, 해리된 유기 Pro-ligand ($HL_i$) 단독 입력 시 정상 동작</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4G (Retrosynthesis &amp; Pathway Generative)</strong><br><span style="font-size:0.75rem; color:#64748b;">2020 ~ 2026</span></td>
+                    <td><strong style="color:#d97706;">AiZynthFinder, Retro*, SynNet, ChemProjector, SynFormer, SynFlowNet, RxnFlow, BioNeMo ReaSyn</strong></td>
+                    <td>단순 점수 계산을 넘어 실제 합성 경로를 찾아주는 방식. 목표 분자를 거꾸로 쪼개며 상용 시약까지 역추적하거나(AiZynthFinder, Retro*), 구매 가능한 시약과 검증된 화학 반응 규칙만을 조합해 합성 가능한 경로와 분자를 직접 생성(SynNet, ChemProjector, SynFormer, SynFlowNet, RxnFlow, BioNeMo ReaSyn)</td>
+                    <td><strong style="color:#b91c1c;">무기 배위 Template 및 외부 가중치 부재</strong>: 내장 유기 Template(72~115종)과 USPTO 50k 반응망에 전이금속 배위 규칙이 없어 금속 착물 코어 경로 도출 불가(0건). 유기 Pro-ligand ($HL_i$) 경로 생성·탐색에만 유효</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Project-Specific Practical Guide: DB Expansion & Physics-Based Evaluation -->
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:18px; margin-bottom:22px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+                <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
+                  반도체 프리커서 합성 가능성 평가를 위한 도메인 DB 구축 및 물리 계산 응용 가이드
+                </div>
+                <span class="badge badge-prec" style="font-size:0.75rem;">Project Action Guide</span>
+              </div>
+              <p style="font-size:0.86rem; color:#475569; line-height:1.6; margin-bottom:12px;">
+                본 프로젝트의 목적인 반도체 프리커서 합성 가능성 정밀 평가를 달성하기 위해, 도메인 특화 DB 구축 전략과 분자 기반 물리 계산 결과의 단계별 응용 방안을 정리합니다.
+              </p>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #059669; border-radius:6px; padding:14px;">
+                  <div style="font-size:0.78rem; font-weight:700; color:#059669; margin-bottom:4px; text-transform:uppercase;">Guide 1 &bull; Domain DB Curation</div>
+                  <strong style="color:#047857; font-size:0.95rem;">반도체 원소 포괄 DB 구축 및 SMILES 표준화 활용</strong>
+                  <div style="font-size:0.8rem; color:#334155; margin-top:8px; line-height:1.55;">
+                    &bull; <strong>DB 구축 방향</strong>: 반도체 박막·배선·III-V족·배리어 공정에 활용되는 핵심 원소군(Si, Ti, Zr, Hf, Al, Co, W, Ir, Rh, As, Ga, In, Ru 등)을 수집하여 프리커서 205종(RDKit 화학식·SMILES 검증 102종), AS-ALD 인히비터 18종, 출발 시약 29종, 공인 합성 반응 12건, 6대 실패 메커니즘 Negative Control 40종으로 구성된 도메인 전용 DB를 운용하며, 문헌의 리간드 약어는 RDKit 화학식·3D 좌표 검증 기반 SMILES로 표준화함.<br>
+                    &bull; <strong>평가 응용</strong>: 금속 중심과 해리된 유기 Pro-ligand($HL_i$) 및 상용 출발 시약 사전을 분리 구축하여, <code>BR-SAScore</code> 등에서 Data Leakage 없는 리간드 합성 난이도 선별 기준으로 활용함.
+                  </div>
+                </div>
+
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #7c3aed; border-radius:6px; padding:14px;">
+                  <div style="font-size:0.78rem; font-weight:700; color:#7c3aed; margin-bottom:4px; text-transform:uppercase;">Guide 2 &bull; Physics-Based Screening</div>
+                  <strong style="color:#6d28d9; font-size:0.95rem;">분자 기반 물리 계산(SevenNet-0 / DFT) 응용</strong>
+                  <div style="font-size:0.8rem; color:#334155; margin-top:8px; line-height:1.55;">
+                    &bull; <strong>물리 지표 산출</strong>: <code>SevenNet-0</code> 3D 구조 이완으로 최소 결합 해리 에너지($\text{BDE}_{\min}$), 상태-의존 유효 반지름($R_{\text{eff}}(M\mid\text{env})+1.85\,\text{\AA}$) 및 극성 가중 입체 차폐율($\%V_{\text{bur}}, \%V_{\text{bur}}^{\text{D2}}$)과 개방 원추각($\theta_{\max}^{\text{void}}$), 이합체 회합 자유에너지($\Delta E_{\text{dimer}}, \Delta G_{\text{dimer}}$), 표준 배위결합당 생성에너지($\Delta E_f^{\text{std}}/v_M$)를 고속 계산함.<br>
+                    &bull; <strong>공정 연계 응용</strong>: $\text{BDE}_{\min}$ 및 $\Delta E_f^{\text{std}}/v_M$로 열역학·열분해 취약 대조군을 우선 배제하고, 상태-의존 원소 물성 비례 $\%V_{\text{bur}}^{\text{D2}}$·$\theta_{\max}^{\text{void}}$·$\Delta E_{\text{dimer}}$로 ALD 기화성 및 단량체 유지 여부를 1차 판별한 뒤 상위 후보만 정밀 DFT/TS 계산으로 이관함.
+                  </div>
+                </div>
+
+                <div style="background:#fff; border:1px solid #cbd5e1; border-top:3px solid #d97706; border-radius:6px; padding:14px;">
+                  <div style="font-size:0.78rem; font-weight:700; color:#d97706; margin-bottom:4px; text-transform:uppercase;">Guide 3 &bull; 2-Track Synthesis Design</div>
+                  <strong style="color:#b45309; font-size:0.95rem;">유기 리간드 경로 생성 + 금속 배위 결합</strong>
+                  <div style="font-size:0.8rem; color:#334155; margin-top:8px; line-height:1.55;">
+                    &bull; <strong>역할 분리 전략</strong>: 4G 생성 모델(<code>RxnFlow</code>, <code>BioNeMo ReaSyn</code>, <code>SynFormer</code>)은 유기 반응 규칙만 보유해 금속 착물 코어 경로를 직접 만들지 못하므로, 유기 리간드($HL_i$) 합성 경로 생성에만 집중 적용함.<br>
+                    &bull; <strong>최종 합성 검증</strong>: 생성된 리간드 후보와 목표 금속(Hf, Zr, Ru, Ir, Ga, In 등)의 착물 형성 반응 에너지($\Delta G_{\text{syn}}$) 및 물리 Descriptor를 결합해 실제 합성 가능한 신규 프리커서를 도출함.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 7: 4-Stage Breakdown Mermaid Diagram in Summary Tab -->
+            <div style="margin-bottom:22px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
+                  4-Stage Execution Pipeline별 통과 및 실패 원인 (Drop-out Map)
+                </div>
+                <span class="badge badge-4g" style="font-size:0.75rem;">18 Model Evaluation &bull; Expanded Semiconductor DB</span>
+              </div>
+              <p style="font-size:0.86rem; color:#475569; line-height:1.6; margin-bottom:12px;">
+                확장 반도체 프리커서 DB 102종(16개 중심 원소: Si, Al, Ti, Zr, Hf, Co, Mo, W, Ta, Sn, Ru, Ir, Rh, As, Ga, In) 입력 시 18종 SA/역합성/생성 Model이 Stage 1(Syntax)부터 Stage 4(Output)까지 단계별로 이탈하는 인과 구조를 나타냅니다.
+              </p>
+              
+              <!-- Mermaid Flowchart for 4-Stage Breakdown with Interactive Zoom Modal -->
+              <div class="mermaid-card clickable-card" id="card-summary-pipeline-stages" onclick="openDiagramModal('summary-pipeline-stages-container', '4-Stage Execution Pipeline 및 Model별 Drop-out 메커니즘')" title="클릭하여 팝업 확대 보기">
+                <div class="mermaid-toolbar">
+                  <span class="mermaid-title">다이어그램: 4-Stage Execution Pipeline 및 Model별 Drop-out 메커니즘 (클릭 시 확대)</span>
+                  <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
+                </div>
+                <div class="mermaid-viewport" id="viewport-summary-pipeline-stages">
+                  <div class="mermaid-svg-container" id="summary-pipeline-stages-container">
+                    <div class="mermaid" id="summary-pipeline-stages-svg">
+flowchart TD
+    subgraph S_STAGE1 ["Stage 1: Syntax and Ingestion (102 SMILES Precursors)"]
+        S_A1["102 Precursor SMILES Input<br>(16 Center Elements)"] --> S_A2["Tokenization &amp; RDKit Sanitization"]
+        S_A2 -->|"OOV: Ga, Ir, Rh, Ru, Hf, Ta, W, Mo (53/102)"| S_A3["GASA: 52.0 percent All-Zero Silent Mis-encoding<br>(DGL Absent)"]
+        S_A2 -->|"BioNeMo ReaSyn: 102/102 Vocab (90/102 Exact)<br>RDKit Valid: Remaining 17 Models"| S_B1["Proceed to Stage 2 (17 Models)"]
+    end
+
+    subgraph S_STAGE2 ["Stage 2: Representation and Embedding"]
+        S_B1 --> S_B2["GNN / Fingerprint / Fragment Split"]
+        S_B2 -->|"Metal to ELSE / Alkyl Bias / Organic Cage OOD"| S_B3["DFRscore: 100 percent Metal Loss (102/102)<br>RAscore: 88.2 percent (90/102) FP Bias<br>MPScore: 100 percent Metal OOD (0/102 Organic)"]
+        S_B2 -->|"Ro5 Bracket Split (102/102) / No Metal-Cp"| S_B5["DeepSA: Medicinal Domain Bias<br>SYBA: 81.4 percent (83/102) Cp Collapse"]
+        S_B2 -->|"CoR Sequence / Graph / BFrag Split"| S_C1["Proceed to Stage 3"]
+    end
+
+    subgraph S_STAGE3 ["Stage 3: Reaction Policy and Manifold"]
+        S_C1 --> S_C2["Template Matching &amp; Search Policy"]
+        S_C2 -->|"0 Metal Rules (Organic Templates)"| S_C_HUB["<b>4G Manifold Collapse (0.0 percent M-L Rule)</b><br>BioNeMo ReaSyn / SynFormer (115 Rules: 86/102 Org)<br>ChemProjector / SynNet (HB-91: 82/102 Org)<br>RxnFlow (72 Rules: 25/102 Org)"]
+        S_C2 -->|"Weights &amp; Checkpoints Absent"| S_C4["<b>Unexecuted (null)</b><br>AiZynthFinder / Retro-Star / RetroGNN<br>MPScore / SynFlowNet"]
+        S_C2 -->|"Strict Unleaked (-0.47) &amp; Pro-ligand Split"| S_C8["<b>BR-SAScore: 19/102 (18.6 percent)</b><br>SAScore: 2/102 (2.0 percent) FN<br>SCScore: 62/102 (60.8 percent) Hazard Blind"]
+    end
+
+    subgraph S_STAGE4 ["Stage 4: Physical SA Output"]
+        S_C8 -->|"Pro-ligand HL_i + SevenNet Physics"| S_D2["<b>2-Track TMC-SA + SevenNet Physics</b><br>Un-hardcoded Screening<br>(All 18 Models Evaluated on 102 Precursors)"]
+    end
+
+    classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
+    classDef failNode fill:#fee2e2,stroke:#b91c1c,color:#b91c1c;
+    classDef warnNode fill:#fef3c7,stroke:#b45309,color:#b45309;
+
+    class S_D2,S_B1,S_C1 passNode;
+    class S_A3,S_B3,S_C_HUB,S_C4 failNode;
+    class S_B5,S_C8 warnNode;
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-bottom:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                <div style="font-weight:700; font-size:0.98rem; color:#0f172a;">
+                  [18-Model Evaluation] 4-Stage Execution Pipeline 진단 &amp; 확장 반도체 DB(102종) 실측 매트릭스
+                </div>
+                <span class="badge badge-4g" style="font-size:0.74rem;">18 Models &bull; 102 SMILES Precursors</span>
+              </div>
+              <p style="font-size:0.84rem; color:#475569; line-height:1.6; margin-bottom:10px;">
+                1G~4G 전 세대 18종 Model을 확장 반도체 프리커서 DB 102종(AS-ALD 인히비터 18종 및 상용 시약 29종 대조군 포함)에 적용한 4-Stage Pipeline 통과 여부, 정량 결과($N_{\text{pass}}$) 및 Barrier &amp; Failure Mode 분석 전체 매트릭스입니다.
+              </p>
+              <div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #0284c7; border-radius:6px; padding:12px 14px; margin-bottom:12px; font-size:0.8rem; color:#334155; line-height:1.55;">
+                <strong>평가 테이블 핵심 지표 정의 (Evaluation Terminology):</strong><br>
+                &bull; <strong>Substruct (유기 치환기 부분구조 매칭)</strong>: 역합성·생성 모델의 SMARTS 반응 규칙이 중심 금속을 제외한 말단 유기 작용기(알킬·아민·알콕시 등)만 인식하는 비율입니다.<br>
+                &bull; <strong>0% M-L Rule / M-L Route (금속–리간드 배위 반응 규칙 0%)</strong>: 중심 금속 원자($M$)를 포함해 금속–리간드 배위 결합($M\text{–}X$)을 직접 형성·절단하는 반응 규칙의 매칭률입니다. 기존 4G 모델의 반응 템플릿(HB-91, SynFormer-115, RxnFlow-72)에는 금속 포함 규칙이 전무하여 <code>0/102 (0.0%)</code>로 나타납니다.<br>
+                &bull; <strong>Unexecuted (<code>null</code>)</strong>: 로컬 RDKit 객체 수용(Stage 1~2)은 검증되었으나 외부 가중치 또는 템플릿 파일 미설치로 Stage 3~4 추론을 실행하지 못한 상태를 의미합니다.
+              </div>
+              <div class="table-responsive no-scroll-72" style="margin-bottom:12px;">
+                <table class="table-compact-72">
+                  <colgroup>
+                    <col style="width:4%;">
+                    <col style="width:13%;">
+                    <col style="width:12.5%;">
+                    <col style="width:9.5%;">
+                    <col style="width:10.5%;">
+                    <col style="width:10.5%;">
+                    <col style="width:11%;">
+                    <col style="width:29%;">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th style="text-align:center;">No</th>
+                      <th>Model / Gen</th>
+                      <th>Repository</th>
+                      <th style="text-align:center;">Stage 1<br><span style="font-size:0.65rem; font-weight:normal;">(Syntax)</span></th>
+                      <th style="text-align:center;">Stage 2<br><span style="font-size:0.65rem; font-weight:normal;">(Repr)</span></th>
+                      <th style="text-align:center;">Stage 3<br><span style="font-size:0.65rem; font-weight:normal;">(Manifold)</span></th>
+                      <th style="text-align:center;">Stage 4 ($N_{\text{pass}}$)<br><span style="font-size:0.65rem; font-weight:normal;">(Output)</span></th>
+                      <th>Barrier &amp; Failure Mode Analysis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+<!-- MULTISTAGE_BENCHMARK_ROWS_PLACEHOLDER -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #7c3aed; border-radius:6px; padding:11px 14px; font-size:0.82rem; line-height:1.58; color:#334155;">
+                <strong style="color:#5b21b6;">Methodological Sensitivity &amp; Leakage Analysis &mdash; BR-SAScore:</strong><br>
+                &bull; <strong>Strict Reagent Dictionary (<code>max(existing, -0.47)</code>):</strong> <code>BRSAScore</code>의 radius-2 음수 fragment 평균(<code>fscore &lt; 0</code>) 수식에 정합시켜 시약 단편 하한을 $-0.47$로 보정 시, 확장 DB(102종) Pass Rate는 <strong>$18.6\% (19/102)$</strong>(상용 시약 29종 $28/29$), 초기 27종 프리커서 집합 민감도 검증에서는 점수 악화 0종 및 <strong>$11.1\% (3/27)$</strong>를 기록합니다.<br>
+                &bull; <strong>Counterfactual Data Leakage Control (초기 27종 프리커서 집합 검증):</strong> 타깃 프리커서 생성물 자체를 $0.0$으로 사전 등록 시 <strong>$100.0\% (27/27)$</strong> 통과가 산출되나, 이는 Out-of-Sample 일반화가 불가능한 Circular Memorization 결과이므로 본 매트릭스에서 배제하고 Pro-ligand ($HL_i$) 분리형 2-Track 결합 전략을 적용합니다.
+              </div>
+
+              <!-- BR-SAScore Architecture & Rationale for Precursor DB Expansion -->
+              <div style="background:#ffffff; border:1px solid #cbd5e1; border-top:3px solid #059669; border-radius:6px; padding:16px 18px; margin-top:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                  <div style="font-weight:800; font-size:0.98rem; color:#0f172a;">
+                    BR-SAScore 아키텍처, 점수 산출 원리 및 반도체 DB 확장 적합성 분석
+                  </div>
+                  <span class="badge badge-success" style="font-size:0.75rem;">Track 1 Pro-Ligand 엔진 선정 근거</span>
+                </div>
+                <p style="font-size:0.84rem; color:#475569; line-height:1.6; margin:0 0 12px 0;">
+                  18종 오픈소스 모델 평가 결과, 유기 반응 정책 기반 4G/CASP 모델은 무기 배위 반응 규칙 부재로 <code>0.0%</code> 경로 완성률에 그치고, 2G <code>SCScore</code>는 열역학적 불안정 착물까지 무차별 통과시키며, 1G <code>SAScore</code>·3G <code>GASA</code>·<code>SYBA</code>는 비의약 원소(OOV) 및 무기 괄호 표기에서 표현 붕괴가 발생합니다. 반면 <strong>BR-SAScore (Building-block &amp; Reaction Decoupled SAScore)</strong>는 구조적 해시 사전 기반과 단편 분리 특성 덕분에 본 연구의 반도체 프리커서 DB 확장 및 <code>TMC-SA</code> 파이프라인에 가장 적합한 합성성 엔진으로 선정됩니다.
+                </p>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px; margin-bottom:12px;">
+                  <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px 14px; font-size:0.81rem; line-height:1.58; color:#334155;">
+                    <div style="font-weight:700; color:#0f172a; margin-bottom:6px;">1. BR-SAScore 아키텍처 및 수학적 점수 산출 원리</div>
+                    &bull; <strong>단편 사전 분리 구조:</strong> eMolecules 상용 빌딩블록(120만 종)과 USPTO 특허 반응(180만 건)에서 추출한 키랄리티 포함 <strong>Morgan radius-2 원형 단편($f_i$)</strong>의 로그 빈도 점수 사전(<code>_fscores: dict[bitId, float]</code>)을 사용하며, 미등록 단편에는 <code>frag_penalty = -6.0</code>을 부여합니다.<br>
+                    &bull; <strong>음수 단편 평균($\text{score}_1$):</strong> 전체 $r=2$ 단편 중 음수 점수(<code>fscore &lt; 0</code>)만 평균하여 희귀·고난도 결합 단편의 기여를 집중 반영합니다:
+                    $$\text{score}_1 = \frac{1}{N_{f&lt;0}} \sum_{f_i:\, s(f_i)&lt;0} s(f_i)$$
+                    &bull; <strong>위상 복잡도($\text{score}_2$) 및 대칭성 보정($\text{score}_3$):</strong> 원자수($N_{\text{at}}^{1.005}-N_{\text{at}}$), 카이랄 중심·Spiro·Bridgehead·거대고리·다중고리 로그 페널티 합인 $\text{score}_2$와, 대칭 분자(동일 리간드 다중 배위)의 합성 용이성을 보상하는 지문 밀도 보정항 $\text{score}_3 = 0.5\ln(N_{\text{at}}/|\text{FP}|)$을 합산한 뒤 $[-7.0, 0]$ 구간을 <strong>$[1, 10]$ (낮을수록 합성 용이)</strong>으로 정규화합니다:
+                    $$\text{BR-SAScore} = 10 - 9 \cdot \operatorname{clip}\!\left(\frac{\text{score}_1 + \text{score}_2 + \text{score}_3 + 7.0}{7.0},\; 0,\; 1\right)$$
+                  </div>
+
+                  <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:12px 14px; font-size:0.81rem; line-height:1.58; color:#14532d;">
+                    <div style="font-weight:700; color:#15803d; margin-bottom:6px;">2. 반도체 프리커서 DB 확장 및 2-Track 결합에 최적인 이유</div>
+                    &bull; <strong>사전 확장성(Transparent Dictionary Extensibility):</strong> <code>SCScore</code>(DNN)·<code>RAscore</code>(XGBoost)·<code>GASA</code>(GAT)·<code>DeepSA</code>(Transformer)와 달리 신경망 재학습이나 가중치 재배포 없이 <code>_fscores</code> 해시 사전에 반도체 시약 단편(알킬아미드·실란·할라이드·Cp/아미디네이트 등 29종)을 <code>max(existing, -0.47)</code> 규칙으로 즉각 확장할 수 있으며, 기존 유기 단편의 분포 왜곡이나 점수 악화가 발생하지 않습니다(27종 중 악화 0종, 시약 28/29 통과).<br>
+                    &bull; <strong>대칭적 프리커서 리간드 친화성:</strong> $M(\text{NMe}_2)_4$, $M(\text{CpEt})_2$처럼 동일 리간드가 반복 배위된 반도체 프리커서 구조에서 <code>score3</code> 대칭성 보정과 <code>fscore &lt; 0</code> 평균 구조가 정합적으로 작동합니다.<br>
+                    &bull; <strong>Pro-Ligand ($HL_i$) 분리형 Track 1 역할 최적화:</strong> 금속-리간드 결합 안정성과 입체·응집 물리는 Track 2(<code>SevenNet</code> BDE, $\%V_{\text{bur}}^{\text{D2}}$, $\Delta E_{\text{dimer}}$, $\Delta E_f^{\text{std}}/v_M$)가 전담하므로, <code>BR-SAScore</code>는 착물에서 해리한 유기 프로-리간드($HL_i$)의 출발 원료 접근성만 누수 없이 정밀 평가하는 역할에 최적화되어 있습니다.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#eff6ff; border-left:4px solid #0284c7; padding:12px 16px; border-radius:0 6px 6px 0; font-size:0.84rem; color:#1e40af; line-height:1.6; margin-bottom:14px;">
+              <strong>Step 2 결론 및 Step 3 연계:</strong> 순수 케모인포매틱스 Model은 유기 리간드의 합성 난이도(3G BR-SAScore)나 상용 시약 접근성(2G SCScore, 4G RxnFlow) 평가에는 유효하나, 금속-리간드 배위 결합 안정성(BDE), 이합체화($\Delta E_{\text{dimer}}$), 입체 포화도($\%V_{\text{bur}}$) 등 무기 물리화학 제약은 반영하지 못합니다. Step 3에서는 이를 보완하기 위한 양자 물리 Descriptor 결합 방안과 균일 평가 설계를 제시합니다.
+            </div>
+
+            <div style="text-align:right;">
+              <button type="button" onclick="jumpToTechnicalSection('decision-guide')" class="btn-pdf" style="cursor:pointer; background:#f8fafc; border-color:#cbd5e1; color:#0f172a; margin-right:6px;">
+                상세 모델 선정 가이드 보기 &rarr;
+              </button>
+              <button type="button" onclick="jumpToTechnicalSection('opensource-eval')" class="btn-pdf" style="cursor:pointer; background:#f8fafc; border-color:#cbd5e1; color:#0f172a;">
+                18대 모델 전수 실측 데이터 보기 &rarr;
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 3: Base Model Limitations & Physics Descriptor Coupling -->
+        <section id="storyline-step3" class="storyline-step">
+          <div class="storyline-step-header">
+            <span class="step-badge">3</span>
+            <div>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 3 &bull; Baseline Errors &amp; Physics Descriptors</div>
+              <h3 class="storyline-step-title">기존 모델 오분류 분석 및 SevenNet-0 물리 Descriptor 체계</h3>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:20px; padding:20px;">
+            <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:10px;">
+              1. 실측으로 확인된 기존 모델의 양방향 오분류 (High FNR &amp; High FPR)
+            </div>
+            <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:14px;">
+              공개된 케모인포매틱스 Baseline Model들을 물리 Descriptor 없이 55종 핵심 검증셋(프리커서 27종 + AS-ALD 인히비터 18종 + Negative Control 10종)에 직접 실행한 결과 다음 두 가지 도메인 불일치 오류가 동시에 관측되었으며, 확장 102종 프리커서에서도 SAScore FNR 98.0%(2/102 통과)로 동일 패턴이 재확인되었습니다.
+            </p>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:6px; padding:14px;">
+                <div style="font-weight:700; color:#991b1b; font-size:0.95rem; margin-bottom:6px;">
+                  Error 1: Precursor False Negative Rate (FNR 92.6%)
+                </div>
+                <p style="font-size:0.84rem; color:#7f1d1d; line-height:1.55; margin:0;">
+                  주요 반도체 공정 양산 프리커서인 <code>TSA</code>(SA 6.91), <code>DMAH</code>(SA 6.31), <code>TMA</code>(SA 4.81), <code>TEMAH</code>(SA 4.10)가 모두 Threshold(SA &le; 3.5)를 초과하여 Reject 판정을 받았습니다. 27종 프리커서 중 2종(<code>TEOS</code>, <code>4DMAS</code>)만 통과하고 <strong>25종(92.6%)에서 False Negative가 발생</strong>했습니다.
+                </p>
+              </div>
+
+              <div style="background:#fffbeb; border:1px solid #fef3c7; border-left:4px solid #f59e0b; border-radius:6px; padding:14px;">
+                <div style="font-weight:700; color:#92400e; font-size:0.95rem; margin-bottom:6px;">
+                  Error 2: Negative Control False Positive Rate (Consensus FPR 90.0%)
+                </div>
+                <p style="font-size:0.84rem; color:#78350f; line-height:1.55; margin:0;">
+                  열폭발성 <code>ZrMe4</code>(SC 1.56, RA 0.956), 열분해성 <code>Ti(Et)4</code>(SC 1.65, RA 0.972), 부식성 <code>트리클로로아세트산</code>(SC 1.01, RA 0.970) 등 Negative Control 10종 중 SCScore 9종(90.0%) 및 Baseline Consensus <strong>9종(90.0%)이 Pass로 오분류</strong>되었습니다(<code>Cp2AlH</code> 정정 후 1종만 차단).
+                </p>
+              </div>
+            </div>
+
+            <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin:18px 0 10px 0;">
+              2. SevenNet-0 기반 물리 Descriptor 체계 및 판정 지표의 물리적 합리성
+            </div>
+            <p style="font-size:0.88rem; color:#475569; line-height:1.6; margin-bottom:14px;">
+              분자 자체의 열적 안정성, 입체 차폐 구조 및 결합 열역학을 정량화하기 위해 범용 MLIAP인 SevenNet의 LBFGS 구조 최적화를 수행하고, 무기·유기금속 화학의 제1원리에 기반한 4가지 상호 직교적 물리 지표를 결합합니다. 중심 원자의 주기율표 물성(공유반지름 $R_{\text{cov}}$, 전기음성도 $\chi_P$, 원자가 전자수 $N_{\text{val}}$)과 리간드 환경에 의해 연속 산출되는 상태-의존 유효 반지름($R_{\text{eff}}(M\mid\text{env})$)·유효 전기음성도($\chi_{\text{eff}}$)·극성-하이드라이드 가중 매몰부피($\%V_{\text{bur}}^{\text{D2}}$)·개방 원추각($\theta_{\max}^{\text{void}}$)을 통합하여, 원소 기호별 예외 분기 없이 주기율표 전반에서 일관된 물리적 판단 근거를 확보합니다.
+            </p>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:16px;">
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Descriptor 1. Cohesive Energy &amp; Bond Dissociation Energy</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\text{BDE}_{\min},\; e_{\text{coh}}$$</div>
+                <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
+                  <strong>물리적 의미</strong>: <code>BDE_min</code>은 분자 내 최약 금속–리간드 또는 치환기 단일 결합을 절단하는 최소 해리 에너지이며, <code>e_coh</code>는 고립 원자 기준의 원자당 응집 에너지입니다. 기화·수송 온도 구간에서 자발적 열분해가 발생하는 취약 결합을 &lt; 45 kcal/mol 및 &lt; 3.10 eV/atom 경계로 판별합니다.
+                </div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Descriptor 2. State-Dependent %V<sub>bur</sub>, %V<sub>bur</sub><sup>D2</sup> &amp; &theta;<sub>max</sub><sup>void</sup></div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$R_{\text{eff}}(M\mid\text{env}) = R_{\text{cov}}[1 - 0.06\max(0,\overline{\Delta\chi}_{ML}) + 0.025(CN_{\text{eff}}-4)]$$</div>
+                <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
+                  <strong>물리적 의미</strong>: 중심 원자 공유반지름에 반데르발스 껍질($1.85\,\text{\AA}$)을 더한 정규화 프로브 구 $R_{\text{probe}}(Z_M)$와 산화·배위수($CN_{\text{eff}}$)에 따라 수축·팽창하는 유효 반지름 $R_{\text{eff}}(M\mid\text{env})$ 위에서 단량체 입체 보호도를 평가합니다. 말단 $M\text{--}H$ 가중치를 소거($w_{MH}=0$)한 극성-가중 매몰부피 $\%V_{\text{bur}}^{\text{D2}}$와 200방향 Fibonacci $S^2$ 개방 원추각 $\theta_{\max}^{\text{void}}$는 4주기 Si 착물과 대형 전이금속 착물을 동일 법칙으로 정규화하고 하이드라이드의 허위 차폐 착시를 배제합니다.
+                </div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Descriptor 3. Dimerization Energy &amp; 373 K Entropy</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\Delta E_{\text{dimer}},\;\; \Delta G_{\text{dimer}}(373\,\text{K})=\Delta E_{\text{dimer}}-T\Delta S_{\text{dimer}}^{\text{trans+rot}}$$</div>
+                <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
+                  <strong>물리적 의미</strong>: 비중첩 간격($\Delta z_{\text{shift}} = z_{\text{span}} + 2.8\,\text{\AA}$)으로 배치한 이합체의 회합 에너지($\Delta E_{\text{dimer}}$) 및 373.15 K Sackur-Tetrode/강체회전자 병진·회전 엔트로피 보정 자유에너지($\Delta G_{\text{dimer}}$)입니다. 차폐 부족($&lt; V_{\min}^{\text{univ}}$) 상태에서 $\Delta E_{\text{dimer}} &lt; -1.5\text{ kcal/mol}$이면 비휘발성 올리고머화로 판단합니다.
+                </div>
+              </div>
+
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+                <div style="font-weight:700; color:#0284c7; font-size:0.88rem; margin-bottom:4px;">Descriptor 4. Standard Formation Energy per Bond</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.8rem; color:#0f172a; margin-bottom:6px;">$$\Delta E_f^{\text{std}}/v_M = \frac{E_{\text{pot}} - \sum_Z n_Z \mu_Z^{\text{std}}}{\deg(M)} \times 23.0605$$</div>
+                <div style="font-size:0.8rem; color:#64748b; line-height:1.45;">
+                  <strong>물리적 의미</strong>: 범용 MLIAP인 SevenNet의 28원소 표준 화학퍼텐셜($\mu_Z^{\text{std}}$) 기준 배위결합당 표준 생성에너지(kcal/mol/bond)입니다. BDE·$\%V_{\text{bur}}$·$\Delta E_{\text{dimer}}$와 상관계수가 낮은 직교 열역학 지표($r_{\text{BDE}}=+0.22$)로서, 기존 경험식 대비 2배 이상 높은 변별력(핵심 대조군 기준 130종 AUROC <code>0.723</code> · 160종 전수 AUROC <code>0.633</code>, LOOCV <code>0.782</code>)으로 M&ndash;L 결합 안정화도를 분리합니다.
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#f0f9ff; border:1px solid #bae6fd; border-left:4px solid #0284c7; border-radius:6px; padding:14px; margin-top:14px;">
+              <div style="font-weight:700; color:#0369a1; font-size:0.9rem; margin-bottom:4px;">Smooth Sigmoid Penalty 및 Data Leakage-Free 균일 평가 설계:</div>
+              <div style="font-size:0.84rem; color:#334155; line-height:1.5;">
+                계단식 임계값 대신 연속 미분 가능한 로지스틱 시그모이드 페널티 함수(Smooth Sigmoid Barrier)를 적용한 <strong>Transition-Metal Complex Synthetic Accessibility (<code>TMC-SA</code> &le; 4.0)</strong> 체계로 정량화합니다. 착물에서 해리한 유기 프로-리간드($HL_i$)의 합성 복잡도와 무기 배위 물리 페널티를 분리 결합하며, 정답 라벨 분기나 분자 ID 하드코딩을 배제한 Data Leakage-Free 균일 판정과 일반 SMARTS 규칙(-COOH / 불활성 알케인) 병용 결과 및 한계를 함께 검증합니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 4: Unified 160-Molecule Evaluation & Extrapolation Results -->
+        <section id="storyline-step4" class="storyline-step">
+          <div class="storyline-step-header">
+            <span class="step-badge">4</span>
+            <div>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 4 &bull; Unified 160-Molecule Evaluation</div>
+              <h3 class="storyline-step-title">통합 160종 물리-배위 모델(TMC-SA) 평가 결과</h3>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:24px; padding:20px;">
+<!-- PHASE2_STEP4_SUMMARY_PLACEHOLDER -->
+          </div>
+<!-- LIGAND_COORD_STORYLINE_PLACEHOLDER -->
+<!-- INVERSE_DESIGN_STORYLINE_PLACEHOLDER -->
+<!-- MECHANISTIC_ML_STORYLINE_PLACEHOLDER -->
+<!-- PATENT_EXPANSION_STORYLINE_PLACEHOLDER -->
+        </section>
+
+        <!-- Step 5: SevenNet CI-NEB Decomposition Benchmark, Automation Feasibility & ALD T_decomp -->
+        <section id="storyline-step5" class="storyline-step">
+          <div class="storyline-step-header">
+            <span class="step-badge">5</span>
+            <div>
+              <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 5 &bull; Kinetic Decomposition Barrier &amp; ALD Window</div>
+              <h3 class="storyline-step-title">SevenNet 반응경로(CI-NEB) 열분해 벤치마크 및 ALD T<sub>decomp</sub> 연계</h3>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:24px; padding:20px;">
+<!-- NEB_DECOMP_STORYLINE_PLACEHOLDER -->
+
+            <div style="background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border:1px solid #cbd5e1; border-radius:8px; padding:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:4px;">
+                  22개 섹션 전체 Technical Report 및 정량 데이터시트
+                </div>
+                <div style="font-size:0.85rem; color:#475569;">
+                  34편 원문 아카이브, Model 비교 매트릭스, DFT/VASP 자동화 Pipeline, 8대 CI-NEB 열분해 동역학·<code>CpZr</code> 메커니즘, 전이금속 다중 배위수($CN_{\text{eff}}$), 리간드 조합 통계, <code>CoOrd-Inv</code> 역설계 모델, 중심원자&ndash;리간드 물리&middot;메커니즘 모델 일반화 검증, 연구&middot;분석 이력(Sec 21) 및 5극 특허&middot;문헌 확장 스크리닝(Sec 22)을 리포트 탭에서 열람할 수 있습니다.
+                </div>
+              </div>
+              <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; padding:10px 22px; font-size:0.92rem; font-weight:700; cursor:pointer;">
+                22개 섹션 상세 리포트 열기 &rarr;
+              </button>
+            </div>
+          </div>
+        </section>
+

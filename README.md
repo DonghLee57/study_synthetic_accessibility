@@ -157,11 +157,15 @@ synth_acc/
 │   └── vasp_frameworks.json            # 10 verified VASP automation frameworks metadata
 ├── index.html                          # Primary interactive HTML report (22 Sections, KaTeX + Mermaid)
 ├── synthetic_accessibility_report.html  # Synchronized copy of the HTML report
-├── template.html                       # Master HTML template
+├── template.html                       # Compact 300-line master HTML shell template
 ├── build_semiconductor_db.py           # Semiconductor database generation and RDKit validation engine
 ├── scripts/
 │   ├── data/                           # Database builders, downloaders & VASP/inhibitor verifiers
 │   └── benchmark/                      # Modular SA, physical-coordination, CI-NEB, CoOrd-Inv & M+L physics stack
+│       ├── html_common.py              # Shared RDKit 2D SVG minifier, HTML/table compressor & chemical normalizers
+│       ├── main_report_sections.py     # Tab 1 (Steps 1-5) & Tab 2 (Sections 1-16) data-driven section builders
+│       ├── db_explorer_section.py      # Tab 3 286-entity canonical DB Explorer payload & dataset Sankey SVG builder
+│       ├── templates/                  # Modular CSS, JS, and per-tab HTML shells (report_styles.css, tab_*.html, report_*.js)
 │       ├── element_physics.py          # Periodic-property coordination states, ETKDGv3/UFF-guarded 3D, %V_bur^D2, dE_f^std/v_M
 │       ├── tmc_sa_scorer.py            # Shared 2D/SMARTS descriptors, coord gates, pro-ligand separation & TMC-SA scorer
 │       ├── ml_evaluation.py            # Class-weighted ML CV-5, LOFMO extrapolation, Descriptor 4 audit & PCA/t-SNE
@@ -180,7 +184,7 @@ synth_acc/
 │       └── run_model_tuning_comparison.py # Analytical vs CV/LOOCV comparison harness
 ├── download_all.py                     # Core literature DOI verification & PDF fetcher
 ├── verify_github_and_precursors.py     # GitHub API & semiconductor precursor verifier
-├── generate_html.py                    # HTML compilation harness
+├── generate_html.py                    # Modular 165-line HTML compilation & compression orchestrator
 ├── report.md                           # Formal verification and audit report
 └── README.md                           # Project specification and documentation
 ```
@@ -192,20 +196,25 @@ flowchart LR
     EP --> TS["tmc_sa_scorer.py<br>(SMARTS/Topo Gates + TMC-SA Scorer)"]
     TS --> MLE["ml_evaluation.py<br>(38-Feat CV-5 + LOFMO + D4 Audit + PCA/t-SNE)"]
     MLE --> ORCH["run_unified_latest_160_analysis.py<br>(benchmark_unified_latest_160.json)"]
+    ORCH --> MAIN["main_report_sections.py<br>(Steps 1-4 & Sec 1-16 Builders)"]
+    MAIN --> DBEX["db_explorer_section.py<br>(286-Entity Canonical DB + Sankey SVG)"]
     ORCH --> LIG["ligand_coord_html_section.py<br>(CN_eff + 102x51 Compositional Surrogate)"]
     ORCH --> NEB["neb_html_section.py<br>(8-Channel SevenNet-0 CI-NEB + T_decomp)"]
     LIG --> INV["inverse_design_model.py<br>(CoOrd-Inv 35k Space + 5-CV/LOMO-5 Retro Recall)"]
-    NEB --> HTML["generate_html.py -> index.html"]
-    INV --> HTML
     LIG --> MECH["mechanistic_ml_model.py<br>(Pauling-HSAB, Spherical %V_bur, 4-Regime & Motif Map)"]
     NEB --> MECH
-    MECH --> HTML
     ORCH --> EXP["run_patent_lit_expansion.py<br>(+28 Prec, +10 ASD Inhib, 24 Elements)"]
     EXP --> EXP7N["run_patent_expansion_sevenn.py<br>(38/38 SevenNet-0 LBFGS + dEf/vM)"]
     EXP7N --> HIST["history_and_expansion_html_section.py<br>(Sec 21 History + Sec 22 Patent/Lit)"]
-    HIST --> HTML
-    BRT["br_sascore_theory_section.py<br>(BRSAScore 331k Dicts + Eq 1-13 Tab)"] --> HTML
-    ORCH --> HTML
+    BRT["br_sascore_theory_section.py<br>(BRSAScore 331k Dicts + Eq 1-13 Tab)"] --> HC["html_common.py<br>(SVG Minifier + Table Compressor)"]
+    TPL["templates/* + template.html<br>(CSS/JS/Tab Shells)"] --> HC
+    MAIN --> HC
+    DBEX --> HC
+    NEB --> HC
+    INV --> HC
+    MECH --> HC
+    HIST --> HC
+    HC --> HTML["generate_html.py -> index.html (-28.9% Compressed)"]
 ```
 
 ```mermaid
