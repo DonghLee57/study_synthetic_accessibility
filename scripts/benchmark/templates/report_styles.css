@@ -1043,6 +1043,10 @@
     }
 
     @media (max-width: 768px) {
+      .brt-split-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
       html, body {
         width: 100% !important;
         max-width: 100% !important;
@@ -1946,5 +1950,19 @@
     .db-detail-svg-wrap .db-rxn-mol svg {
       max-width: 200px;
       height: 145px;
+    }
+
+    /* Responsive 2-column split grid for Background Theory visual callouts */
+    .brt-split-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .brt-split-grid > * {
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 

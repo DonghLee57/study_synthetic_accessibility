@@ -775,7 +775,7 @@ def build_br_sascore_theory_html() -> str:
 
         <div class="callout-info" style="margin:10px 0 14px 0; background:#f8fafc; border-color:#cbd5e1;">
           <strong style="font-size:0.94rem; color:#0f172a;">*Morgan Fingerprint</strong>
-          <div style="display:grid; grid-template-columns:minmax(260px, 1.35fr) minmax(240px, 1fr); gap:16px; align-items:center; margin-top:8px;">
+          <div class="brt-split-grid">
             <ul style="margin:0 0 0 18px; line-height:1.68; font-size:0.84rem; color:#334155;">
               <li><strong>원형 부분구조 해싱 (Circular Substructure Hashing):</strong> 분자 그래프에서 각 원자를 중심으로 결합 거리 반경 $r = 0, 1, 2$ 이내 이웃 원자들의 원소 종류&middot;원자가&middot;결합 차수&middot;방향족성&middot;고리 포함 여부를 단계적으로 부호화해 고유 정수 해시 ID(<code>bitId</code>)로 변환하는 원형 분자 지문입니다.</li>
               <li><strong>반경별 의미와 재구성 민감도:</strong> <code>Radius 0</code>(적색 중심 원자)은 단일 원자 자체, <code>Radius 1</code>(주황 1차 이웃)은 직접 결합한 원자(예: $\text{Hf--O}$ vs $\text{Hf--C}$), <code>Radius 2</code>(청색 2차 이웃)는 2결합 떨어진 고리&middot;치환기 맥락(예: <code>acac</code> 6원 킬레이트 닫힘, $\eta^5$-<code>Cp</code>, <code>AddHs</code> 처리)을 포착합니다. 따라서 같은 프리커서라도 그래프 연결을 재구성하면 생성되는 <code>Radius 1~2</code> 해시 ID가 달라져 사전 조회 점수가 바뀝니다.</li>
@@ -877,7 +877,7 @@ def build_br_sascore_theory_html() -> str:
         </div>
 
         <p style="line-height:1.72; color:#334155;">
-          <code>BR-SAScore (2024)</code> 모델은 역합성의 두 핵심 축인 ① 상용 출발물질($B$, eMolecules)과 ② 반응 형성 결합($R$, USPTO)을 분리해 평가하는 3세대 하이브리드 모델입니다. 다른 1G~4G 모델과 달리 원소 결손(OOV)&middot;All-Zero 침묵 붕괴 없이 결정론적으로 동작하고, 위험 대조군 오탐(False Positive)을 1차 차단하며, 신경망 재학습 없이 <code>_fscores</code> 해시 사전에 도메인 시약만 누설 없이 확장(<code>max(existing, -0.47)</code>)할 수 있어 본 연구의 베이스 모델로 선정되었습니다.
+          <code>BR-SAScore (2024)</code> 모델은 역합성의 두 핵심 축인 ① 상용 출발물질($B$, eMolecules)과 ② 반응 형성 결합($R$, USPTO)을 분리해 평가하는 3세대 하이브리드 모델입니다. 다른 1G~4G 모델과 달리 미지원 원소 입력 시 Feature Loss(Zero-Vector) 없이 결정론적으로 동작하고, 위험 대조군 오탐(False Positive)을 1차 차단하며, 신경망 재학습 없이 <code>_fscores</code> 해시 사전에 도메인 시약만 누설 없이 확장(<code>max(existing, -0.47)</code>)할 수 있어 본 연구의 베이스 모델로 선정되었습니다.
         </p>
 
         <!-- 2.1 Architecture Flowchart -->
@@ -984,7 +984,7 @@ flowchart TD
 
         <!-- 2.4 Code Audit & Worked Examples -->
         <h3 id="brt-sub24" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
-          2.4 소스코드 구현 해부 (<code>BRSAScore.py</code>) 및 2D 원자 기여도 Worked Examples
+          2.4 소스코드 구현 해부 및 원자기여도 분석
         </h3>
         <div class="grid-2" style="margin:10px 0;">
           <div class="card">
@@ -1009,74 +1009,9 @@ flowchart TD
           __CARDS_HTML__
         </div>
 
-        <!-- 2.5 Benchmarks Table 1 & 2 -->
+        <!-- 2.5 Why BR-SAScore Beats Competitors & Semiconductor Domain Bridge -->
         <h3 id="brt-sub25" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
-          2.5 벤치마크 성능 검증: TS1&middot;TS2&middot;TS3 (5,400종 Retro* 라벨) 및 6대 모델 비교
-        </h3>
-        <div class="table-wrap" style="margin-top:8px;">
-          <table>
-            <thead>
-              <tr>
-                <th>모델 (세대)</th>
-                <th>TS1 PR-AUC<br>(ZINC/GDB17, 1,800)</th>
-                <th>TS2 PR-AUC<br>(ChEMBL/Med, 1,800)</th>
-                <th>TS3 PR-AUC<br>(Complex Lit, 1,800)</th>
-                <th>TS1 ROC-AUC</th>
-                <th>TS2 ROC-AUC</th>
-                <th>TS3 ROC-AUC</th>
-                <th>계산 속도 (ms/mol)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="background:#ecfdf5; font-weight:700;">
-                <td>BR-SAScore (3G Hybrid)</td>
-                <td>0.990</td><td>0.947</td><td>0.900</td>
-                <td>0.984</td><td>0.942</td><td>0.900</td>
-                <td>0.42 ms (CPU)</td>
-              </tr>
-              <tr>
-                <td>SAScore (1G Heuristic)</td>
-                <td>0.988</td><td>0.942</td><td>0.833</td>
-                <td>0.980</td><td>0.929</td><td>0.818</td>
-                <td>0.39 ms (CPU)</td>
-              </tr>
-              <tr>
-                <td>CLScore (1G ChEMBL Fragment)</td>
-                <td>0.927</td><td>0.912</td><td>0.776</td>
-                <td>0.960</td><td>0.921</td><td>0.808</td>
-                <td>8.97 ms (CPU)</td>
-              </tr>
-              <tr>
-                <td>DeepSA (3G Transformer/ML)</td>
-                <td>0.899</td><td>0.919</td><td>0.832</td>
-                <td>0.951</td><td>0.931</td><td>0.886</td>
-                <td>17.2* ms (*GPU)</td>
-              </tr>
-              <tr>
-                <td>SYBA (1G Naive Bayes)</td>
-                <td>0.939</td><td>0.855</td><td>0.722</td>
-                <td>0.968</td><td>0.872</td><td>0.784</td>
-                <td>0.28 ms (CPU)</td>
-              </tr>
-              <tr>
-                <td>RAscore (2G Retrosynthesis ML)</td>
-                <td>0.905</td><td>0.835</td><td>0.776</td>
-                <td>0.948</td><td>0.860</td><td>0.841</td>
-                <td>123 ms (CPU)</td>
-              </tr>
-              <tr>
-                <td>GASA (3G Graph Attention)</td>
-                <td>0.890</td><td>0.886</td><td>0.801</td>
-                <td>0.951</td><td>0.890</td><td>0.851</td>
-                <td>307 ms (CPU)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- 2.6 Why BR-SAScore Beats Competitors & Semiconductor Domain Bridge -->
-        <h3 id="brt-sub26" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
-          2.6 베이스 모델로 BR-SAScore (2024) 선정 근거
+          2.5 베이스 모델로 BR-SAScore (2024) 선정 근거
         </h3>
         <p style="line-height:1.72; color:#334155;">
           요약 탭(Step 2)에서 제시한 선정 결론의 배경에는 <strong>18종 공개 SA·역합성·생성 모델 전수 평가(확장 프리커서 102종 + 시약 29종 + Phase 1 Negative Control 10종)</strong>에서 확인된 타 모델들의 구조적 붕괴가 있습니다. 다른 모델들이 반도체 프리커서 또는 Track 1 역할에서 탈락하고 <code>BR-SAScore</code>가 유일하게 최적 베이스 엔진으로 선택된 <strong>5가지 결정적 원인</strong>은 다음과 같습니다.
@@ -1086,7 +1021,7 @@ flowchart TD
           <div class="card" style="background:#f8fbff; border-color:#bfdbfe;">
             <h4 style="margin:0 0 8px 0; color:#1e40af;">BR-SAScore 베이스 선정 5대 결정적 근거</h4>
             <ol style="font-size:0.83rem; color:#334155; line-height:1.68; padding-left:18px; margin:0;">
-              <li><strong>OOV 원소 붕괴·All-Zero 무음 오인코딩 부재 (vs GASA &middot; DFRscore &middot; MPScore &middot; DeepSA):</strong> <code>GASA</code>는 102종 중 <strong>53종(52.0%, Ga&middot;Hf&middot;Ir&middot;Mo&middot;Rh&middot;Ru&middot;Ta&middot;W 8원소)</strong>에서 DGL 원자 벡터가 All-Zero로 무음 붕괴하고, <code>DFRscore</code>는 <strong>102/102(100%)</strong> 중심 금속이 <code>ELSE</code> 노드로 축퇴하며, <code>MPScore</code>는 반도체 프리커서 In-Domain <strong>0/102(0.0%)</strong>에 그칩니다. 반면 <code>BR-SAScore</code>는 RDKit Morgan Radius-2 해시 키 기반이므로 어떤 원소가 들어와도 벡터 소실 없이 결정론적으로 계산됩니다.</li>
+              <li><strong>미지원 원소 입력 시 Feature Loss(Zero-Vector) 및 <code>ELSE</code> 노드 대체 현상 부재 (vs GASA &middot; DFRscore &middot; MPScore &middot; DeepSA):</strong> <code>GASA</code>는 102종 중 <strong>53종(52.0%, Ga&middot;Hf&middot;Ir&middot;Mo&middot;Rh&middot;Ru&middot;Ta&middot;W 8원소)</strong>에서 미지원 원소의 원자 특성 벡터가 에러 없이 모두 0(Zero-Vector, Silent Feature Loss)으로 처리되고, <code>DFRscore</code>는 <strong>102/102(100%)</strong> 중심 금속 원소가 모두 단일 미지 노드(<code>ELSE</code>)로 일괄 매핑되어 금속 간 구분이 사라지며, <code>MPScore</code>는 반도체 프리커서 In-Domain <strong>0/102(0.0%)</strong>에 그칩니다. 반면 <code>BR-SAScore</code>는 RDKit Morgan Radius-2 해시 키 기반이므로 어떤 원소가 들어와도 벡터 소실 없이 결정론적으로 계산됩니다.</li>
               <li><strong>위험·불안정 대조군 무차별 통과(False Positive 폭주) 억제 (vs RAscore &middot; SCScore &middot; SYBA):</strong> <code>RAscore</code>(XGBoost)와 <code>SCScore</code>(Reaxys DNN)는 단순 치환기 개수만 보고 Phase 1 Negative Control 10종 중 <strong>9종(90.0%, <code>TiEt4</code> 0.972/1.65, <code>ZrMe4</code> 0.956/1.56, <code>WPh5</code> 0.985/1.63 등)</strong>을 Pass로 오판하며, <code>SYBA</code>도 <strong>8/10(80.0%)</strong>을 통과시킵니다. 반면 <code>BR-SAScore</code>는 Eq. (12) <code>&lt; 0</code> 병목 평균과 <code>-6.0</code> 미등재 패널티 덕분에 물리 필터 전에도 10종 중 <strong>7종(70.0%)</strong>을 1차 차단합니다(<code>TiEt4 8.77</code>, <code>Silacyclobutadiene 8.75</code>, <code>WPh5 8.79</code>, <code>CoEt4 8.77</code>).</li>
               <li><strong>SAScore (2009) 모델 소분자·단일빈도 편향 해소 &amp; 4G M-L 0% 한계 보완:</strong> <code>SAScore (2009)</code> 모델은 <code>MeOH (2.70)</code> 같은 2원자 시약까지 과대 패널티를 매겨 102종 프리커서 통과율이 <strong>2.0%(2/102)</strong>에 불과하고, 4G 모델(<code>RxnFlow</code>&middot;<code>SynFormer</code>&middot;<code>ChemProjector</code>)은 <code>M-L</code> 배위 반응 규칙이 <strong>0/102(0.0%)</strong>입니다. <code>BR-SAScore</code>는 <code>MeOH 1.01</code> 정상화 및 <code>19/102(18.6%)</code> 개선을 <code>0.42 ms/mol</code>로 달성하고, 4G 모델은 해리 리간드 경로 보조에만 분리 투입할 수 있습니다.</li>
               <li><strong>신경망 재학습 없는 무손실 사전(<code>_fscores</code>) 확장성:</strong> <code>DeepSA</code>(Transformer), <code>GASA</code>(GAT), <code>RAscore</code>, <code>SCScore</code>는 도메인 시약 29종을 반영하려면 데이터셋 재구축과 신경망 재학습이 필요해 기존 유기 분포가 왜곡됩니다. <code>BR-SAScore</code>는 딕셔너리에 <code>max(existing, -0.47)</code> 하한만 추가하면 <strong>기존 프리커서 점수 악화 0건(0/27)</strong>을 유지한 채 시약 통과율을 <code>21/29(72.4%) &rarr; 28/29(96.6%)</code>로 즉시 끌어올립니다.</li>
@@ -1133,9 +1068,9 @@ flowchart TD
                   </tr>
                   <tr>
                     <td><strong>GASA / DFRscore / DeepSA</strong> (3G)</td>
-                    <td>GASA 53/102 OOV<br>DFR 102/102 ELSE</td>
+                    <td>GASA 53/102 미지원<br>DFR 102/102 ELSE</td>
                     <td>실측 불능/편향</td>
-                    <td>미지원 원소 All-Zero 침묵 붕괴(GASA), 금속 ELSE 축퇴(DFR), Ro5 분절(DeepSA) + 재학습 필요</td>
+                    <td>미지원 원소의 Zero-Vector 처리(GASA), 금속 원소의 단일 ELSE 노드 매핑(DFR), Ro5 분절(DeepSA) + 재학습 필요</td>
                   </tr>
                   <tr>
                     <td><strong>RxnFlow / SynFormer / ReaSyn</strong> (4G)</td>
@@ -1178,7 +1113,7 @@ flowchart TD
 
         <div class="callout-info" style="margin:12px 0; background:#f8fafc; border-color:#cbd5e1;">
           <strong style="font-size:0.94rem; color:#0f172a;">*Pro-ligand 분리 (Pro-ligand Decoupling)</strong>
-          <div style="display:grid; grid-template-columns:minmax(260px, 1.35fr) minmax(260px, 1.1fr); gap:16px; align-items:center; margin-top:8px;">
+          <div class="brt-split-grid">
             <ul style="margin:0 0 0 18px; line-height:1.68; font-size:0.84rem; color:#334155;">
               <li><strong>Step 1 &mdash; 배위 중심(금속) 제거:</strong> 분자 그래프에서 중심 금속 원자(적색 강조, 예: <code>Ti</code>, <code>Hf</code>)와 이에 직접 연결된 금속&ndash;리간드 결합(주황 강조)을 절단해 유기 리간드 골격만 분리합니다(<code>compute_ligand_sa()</code>).</li>
               <li><strong>Step 2 &mdash; 수소 포화 및 중성 프로리간드($HL_i$) 복원:</strong> 끊어진 배위 자리의 라디칼을 제거하고 암묵적 수소(<code>H</code>)로 원자가를 채워, 실제로 구매·합성 가능한 중성 프로리간드 분자(예: <code>-NMe2</code> &rarr; <code>Me2NH</code>, <code>-Cp</code> &rarr; <code>HCp</code>)로 변환합니다. (단순 무기종 <code>[H]</code>, <code>Cl</code>, <code>O</code>는 제외)</li>
@@ -1204,7 +1139,7 @@ flowchart TD
           </p>
           <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:12px 14px; font-size:0.8rem; color:#334155; line-height:1.65;">
             <strong style="color:#0369a1;">실측 대입 비교: <code>CpTi(NMe2)3</code> ($\text{C}_{11}\text{H}_{23}\text{N}_3\text{Ti}$, $n_{\text{At}}=15,\; |\text{FP}|=21 \implies s_3=0.000,\; \text{comp}=0.2045$)</strong>
-            <div style="display:grid; grid-template-columns:minmax(280px, 1.4fr) minmax(240px, 1fr); gap:16px; align-items:center; margin-top:8px;">
+            <div class="brt-split-grid">
               <ul style="margin:0 0 0 18px; padding:0;">
                 <li><strong>① 바닐라 BR-SAScore (Default):</strong> 고유 반경-2 비트 7개 중 금속 인접 5개(적색 영역)는 <code>-6.0</code>, Cp 고리 2개(청색 영역)는 <code>-1.016, -1.324</code> ($n_{\text{neg}}=7$).<br>
                   $\text{BR-frag} = \frac{5(-6.0) - 1.016 - 1.324}{7} = -4.6200 \implies \text{raw} = -4.8245 \implies 10 - 9\frac{-4.8245+7.0}{7.0} = \mathbf{7.2029}$</li>
