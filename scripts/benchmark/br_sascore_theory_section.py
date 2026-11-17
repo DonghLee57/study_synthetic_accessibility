@@ -722,109 +722,13 @@ def _build_worked_example_cards_html(examples: List[Dict[str, Any]]) -> str:
     return "\n".join(cards)
 
 
-def _build_interactive_br_calculator_html() -> str:
-    """
-    Build a self-contained HTML + JS interactive widget to simulate Equations (8)-(13)
-    of ``BR-SAScore``.
-    """
-    return """
-        <div id="brTheorySimWidget" style="background:linear-gradient(135deg,#f8fafc 0%,#eff6ff 100%); border:1px solid #bfdbfe; border-radius:12px; padding:18px 20px; margin-top:16px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-            <div>
-              <span style="font-size:0.74rem; font-weight:800; color:#0284c7; text-transform:uppercase; letter-spacing:0.06em;">Interactive Equation Sandbox</span>
-              <h4 style="margin:2px 0 0 0; font-size:1.02rem; font-weight:800; color:#0f172a;">Eq. (8)~(13) BR-SAScore 실시간 수식 시뮬레이터</h4>
-            </div>
-            <div style="display:flex; flex-wrap:wrap; gap:6px;" id="brSimPresetBtns">
-              <button type="button" class="db-pill active" onclick="applyBrPreset('aspirin', this)">Aspirin (2.09)</button>
-              <button type="button" class="db-pill" onclick="applyBrPreset('gao', this)">AI 분자 [Gao et al.] (8.84)</button>
-              <button type="button" class="db-pill" onclick="applyBrPreset('hacac', this)">Hacac (5.20)</button>
-              <button type="button" class="db-pill" onclick="applyBrPreset('tdmah', this)">TDMAH Hf(NMe2)4 (8.62)</button>
-              <button type="button" class="db-pill" onclick="applyBrPreset('meoh', this)">MeOH (1.01)</button>
-            </div>
-          </div>
-
-          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:14px;">
-            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
-              <label for="brSimBScore" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#0369a1;">
-                <span>Building Block Score (BScore_i)</span>
-                <span id="brSimBScoreVal">-1.20</span>
-              </label>
-              <input id="brSimBScore" type="range" min="-3.0" max="3.0" step="0.05" value="-1.20" style="width:100%;" oninput="updateBrSimulator()">
-              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">eMolecules 231M 기반 [-3, +3]</div>
-            </div>
-
-            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
-              <label for="brSimRScore" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#b45309;">
-                <span>Reaction Score (RScore_i, d=0~2)</span>
-                <span id="brSimRScoreVal">-0.68</span>
-              </label>
-              <input id="brSimRScore" type="range" min="-3.0" max="3.0" step="0.05" value="-0.68" style="width:100%;" oninput="updateBrSimulator()">
-              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">USPTO ~1M 반응 중심 2^-d 가중</div>
-            </div>
-
-            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
-              <label for="brSimUnseen" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#b91c1c;">
-                <span>미등재 조각 비율 (Unseen Fraction)</span>
-                <span id="brSimUnseenVal">0%</span>
-              </label>
-              <input id="brSimUnseen" type="range" min="0" max="100" step="5" value="0" style="width:100%;" oninput="updateBrSimulator()">
-              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">미등재 시 Score_i = frag_penalty (-6.0)</div>
-            </div>
-
-            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
-              <label for="brSimComp" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#475569;">
-                <span>ComplexityPenalty (Size/Ring/Stereo)</span>
-                <span id="brSimCompVal">0.17</span>
-              </label>
-              <input id="brSimComp" type="range" min="0.0" max="1.5" step="0.01" value="0.17" style="width:100%;" oninput="updateBrSimulator()">
-              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">BR-SAScore에서 차감 (0에 가까울수록 단순)</div>
-            </div>
-
-            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
-              <label for="brSimBuffer" style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:#0f766e;">
-                <span>PenaltyBuffer (Eq. 13, 기본값 1.0)</span>
-                <span id="brSimBufferVal">1.00</span>
-              </label>
-              <input id="brSimBuffer" type="range" min="0.0" max="3.0" step="0.1" value="1.0" style="width:100%;" oninput="updateBrSimulator()">
-              <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">S_min = -6 - PenaltyBuffer (최대 Complexity 흡수 폭)</div>
-            </div>
-          </div>
-
-          <div style="background:#0f172a; color:#f8fafc; border-radius:10px; padding:14px 16px; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; align-items:center;">
-            <div>
-              <div style="font-size:0.72rem; color:#94a3b8;">Eq. (11) 사전 최대값</div>
-              <div style="font-size:1.05rem; font-weight:800; color:#38bdf8;" id="brOutMaxScore">-0.68</div>
-              <div style="font-size:0.71rem; color:#cbd5e1;" id="brOutWinner">RScore 우세</div>
-            </div>
-            <div>
-              <div style="font-size:0.72rem; color:#94a3b8;">Eq. (12) BR-fragmentScore</div>
-              <div style="font-size:1.05rem; font-weight:800; color:#fbbf24;" id="brOutFragMean">-0.68</div>
-              <div style="font-size:0.71rem; color:#cbd5e1;">음수 항 평균 (0 &le; 기준)</div>
-            </div>
-            <div>
-              <div style="font-size:0.72rem; color:#94a3b8;">Eq. (8) Raw BR-SAScore</div>
-              <div style="font-size:1.05rem; font-weight:800; color:#f87171;" id="brOutRaw">-0.85</div>
-              <div style="font-size:0.71rem; color:#cbd5e1;" id="brOutRange">정규화 범위 [-7.00, 0.00]</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.08); border-radius:8px; padding:8px 12px; text-align:center;">
-              <div style="font-size:0.73rem; color:#94a3b8;">Eq. (13) 최종 정규화 (1~10)</div>
-              <div style="font-size:1.45rem; font-weight:900; color:#34d399;" id="brOutFinal">2.09</div>
-              <div style="font-size:0.72rem; font-weight:700; color:#a7f3d0;" id="brOutVerdict">합성 용이 (Easy, &le; 3.5)</div>
-            </div>
-          </div>
-          <div id="brSimPresetNote" style="font-size:0.78rem; color:#334155; margin-top:10px; line-height:1.5;">
-            * Aspirin 실측 예: (-0.82 - 0.98 - 0.23)/3 = -0.68, ComplexityPenalty = 0.17, 최종 10 - 9 * ((-0.85 + 7)/7) = 2.09 (논문 Fig. 2 및 본 저장소 실측 2.09와 일치).
-          </div>
-        </div>"""
-
-
 def build_br_sascore_theory_html() -> str:
     """
     Build the complete 2-section ``배경이론`` HTML fragment combining:
       1) Section 1 (``#brt-sec1``): 2009 vanilla SAScore principles, Hf-complex vs.
          pro-ligand evaluation, and SMILES graph reconstruction sensitivity.
       2) Section 2 (``#brt-sec2``): Unified single-section BR-SAScore deep dive
-         (equations, live simulator, dataset pickles, code audit, benchmarks, TMC-SA).
+         (equations, dataset pickles, code audit, benchmarks, TMC-SA).
 
     Physics/Algorithm:
         All reconstruction scores, pickle dictionary counts/bins, and atom
@@ -841,7 +745,6 @@ def build_br_sascore_theory_html() -> str:
     examples = compute_br_worked_examples()
     dist_svg = _build_fragment_distribution_svg(stats)
     cards_html = _build_worked_example_cards_html(examples)
-    sim_html = _build_interactive_br_calculator_html()
 
     b_stat = stats["B"]
     r_stat = stats["R"]
@@ -851,7 +754,7 @@ def build_br_sascore_theory_html() -> str:
     html_template = r"""
       <div class="card" style="margin-bottom:22px; background:linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 100%); border:1px solid #c7d2fe; padding:20px 24px;">
         <p style="font-size:0.92rem; color:#334155; line-height:1.68; margin:0;">
-          반도체 SA 모델을 이해하기 위한 기초 이론 가이드입니다. 섹션 1에서 SAScore (2009) 바닐라 모델의 원리와 동일 금속 복합체(metal complex)에서도 SMILES 그래프 재구성에 따라 점수가 달라지는 이슈를 정리하고, 섹션 2에서 현재 베이스 모델인 BR-SAScore (2024)의 원리, 학습 데이터셋, 소스코드 및 베이스 모델 선정 근거를 통합적으로 해설합니다.
+          반도체 SA 모델을 이해하기 위한 기초 이론 가이드입니다. 섹션 1에서 SAScore (2009) 모델의 원리와 반도체용 프리커서에서도 SMILES 그래프 재구성에 따라 점수가 달라지는 이슈를 정리하고, 섹션 2에서 현재 베이스 모델인 BR-SAScore (2024)의 원리, 학습 데이터셋, 소스코드 및 베이스 모델 선정 근거를 통합적으로 해설합니다.
         </p>
       </div>
 
@@ -865,13 +768,17 @@ def build_br_sascore_theory_html() -> str:
         <p style="line-height:1.72; color:#334155;">
           Ertl &amp; Schuffenhauer가 제안한 <code>SAScore (2009)</code> 모델은 PubChem 대표 1% 샘플(934,046종)에서 추출한 Morgan Fingerprint(r&le;2) 출현 빈도 <code>fpscores.pkl.gz</code>를 기반으로 합니다. 하지만 이를 반도체용 프리커서에 그대로 적용하면 두 가지 근본 이슈가 드러납니다.
         </p>
+        <ul style="margin:6px 0 12px 20px; line-height:1.68; font-size:0.86rem; color:#334155;">
+          <li><strong>① 사전 미등재(OOV) 및 바닥값 붕괴:</strong> 유기물 중심의 PubChem 사전에 금속&middot;배위 결합 조각이 등재되어 있지 않아 다수의 비트가 바닥값(<code>-4.0</code>)을 받으며, 실제보다 합성 난이도가 과대 평가됩니다.</li>
+          <li><strong>② SMILES 그래프 재구성 민감도:</strong> 동일한 프리커서라도 킬레이트 닫힘, $\eta^5$ 배위, <code>AddHs</code> 등 그래프 표현 방식에 따라 Morgan 지문 비트와 고리 패널티가 달라져 산출 점수가 크게 요동칩니다.</li>
+        </ul>
 
         <div class="callout-info" style="margin:10px 0 14px 0; background:#f8fafc; border-color:#cbd5e1;">
           <strong style="font-size:0.94rem; color:#0f172a;">*Morgan Fingerprint</strong>
           <div style="display:grid; grid-template-columns:minmax(260px, 1.35fr) minmax(240px, 1fr); gap:16px; align-items:center; margin-top:8px;">
             <ul style="margin:0 0 0 18px; line-height:1.68; font-size:0.84rem; color:#334155;">
-              <li><strong>원형 부분구조 해싱 (Circular Substructure Hashing):</strong> 분자 그래프에서 각 원자를 중심으로 결합 거리 반경 $r = 0, 1, 2$ 이내 이웃 원자들의 원소 종류&middot;원자가&middot;결합 차수&middot;방향족성&middot;고리 포함 여부를 순차적으로 집계해 고유 정수 해시 ID(<code>bitId</code>)로 변환하는 원형 분자 지문입니다.</li>
-              <li><strong>반경별 의미와 재구성 민감도:</strong> <code>Radius 0</code>(적색 중심 원자)은 단일 원자 자체, <code>Radius 1</code>(주황 1차 이웃)은 직접 결합한 원자(예: $\text{Hf--O}$ vs $\text{Hf--C}$), <code>Radius 2</code>(청색 2차 이웃)는 2결합 떨어진 고리&middot;치환기 맥락(예: <code>acac</code> 6원 킬레이트 닫힘, $\eta^5$-<code>Cp</code>, <code>AddHs</code> 명시적 수소)을 포착합니다. 따라서 같은 금속 복합체라도 그래프 연결을 재구성하면 생성되는 <code>Radius 1~2</code> 해시 ID가 달라져 사전 조회 점수가 즉시 바뀝니다.</li>
+              <li><strong>원형 부분구조 해싱 (Circular Substructure Hashing):</strong> 분자 그래프에서 각 원자를 중심으로 결합 거리 반경 $r = 0, 1, 2$ 이내 이웃 원자들의 원소 종류&middot;원자가&middot;결합 차수&middot;방향족성&middot;고리 포함 여부를 단계적으로 부호화해 고유 정수 해시 ID(<code>bitId</code>)로 변환하는 원형 분자 지문입니다.</li>
+              <li><strong>반경별 의미와 재구성 민감도:</strong> <code>Radius 0</code>(적색 중심 원자)은 단일 원자 자체, <code>Radius 1</code>(주황 1차 이웃)은 직접 결합한 원자(예: $\text{Hf--O}$ vs $\text{Hf--C}$), <code>Radius 2</code>(청색 2차 이웃)는 2결합 떨어진 고리&middot;치환기 맥락(예: <code>acac</code> 6원 킬레이트 닫힘, $\eta^5$-<code>Cp</code>, <code>AddHs</code> 처리)을 포착합니다. 따라서 같은 프리커서라도 그래프 연결을 재구성하면 생성되는 <code>Radius 1~2</code> 해시 ID가 달라져 사전 조회 점수가 바뀝니다.</li>
             </ul>
             <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:10px; text-align:center;">
               __MORGAN_2D_SVG__
@@ -889,10 +796,12 @@ def build_br_sascore_theory_html() -> str:
             <h4 style="margin:0 0 8px 0; color:#1e3a8a;">1.1 SAScore (2009) 모델의 수식과 정규화 규격</h4>
             <div style="font-size:0.85rem; line-height:1.68; color:#334155;">
               <p>$$\text{SAScore}_{\text{raw}} = \text{fragmentScore} - \text{complexityPenalty} + \text{score}_3 \tag{1}$$</p>
-              <p>$$\text{complexityPenalty} = (n_{\text{At}}^{1.005} - n_{\text{At}}) + \log_{10}(n_{\text{Chiral}}+1) + \log_{10}(n_{\text{Bridge}}+1) + \log_{10}(n_{\text{Spiro}}+1) + \log_{10}(n_{\text{Macro}}+1)$$</p>
-              <p>$$\text{SAScore}_{\text{full}} = 11 - \frac{\text{SAScore}_{\text{raw}} - (-4.0) + 1}{2.5 - (-4.0)} \times 9 = 11 - \frac{\text{SAScore}_{\text{raw}} + 5.0}{6.5} \times 9$$</p>
+              <p>$$\text{complexityPenalty} = (n_{\text{At}}^{1.005} - n_{\text{At}}) + \log_{10}(n_{\text{Chiral}}+1) + \log_{10}(n_{\text{Bridge}}+1) + \log_{10}(n_{\text{Spiro}}+1) + \log_{10}(n_{\text{Macro}}+1) \tag{2}$$</p>
+              <p>$$\text{score}_3 = \begin{cases} 0.5 \ln(n_{\text{At}} / |\text{FP}|) & \text{if } n_{\text{At}} > |\text{FP}| \\ 0 & \text{otherwise} \end{cases} \tag{3}$$</p>
+              <p>$$\text{SAScore}_{\text{full}} = 11 - \frac{\text{SAScore}_{\text{raw}} - (-4.0) + 1}{2.5 - (-4.0)} \times 9 = 11 - \frac{\text{SAScore}_{\text{raw}} + 5.0}{6.5} \times 9 \tag{4}$$</p>
+              <p>$$\text{SAScore}_{\text{final}} = \begin{cases} \min(10,\; 8 + \ln(\text{SAScore}_{\text{full}} - 8)) & \text{if } \text{SAScore}_{\text{full}} &gt; 8.0 \\ \max(1,\; \text{SAScore}_{\text{full}}) & \text{otherwise} \end{cases} \tag{5}$$</p>
               <p style="font-size:0.79rem; color:#64748b; margin-bottom:0;">
-                * <code>fpscores.pkl.gz</code> 미등재 희귀/금속 비트는 바닥값 <code>-4.0</code>을 받으며, 대칭 분자에서는 <code>score3 = 0.5*ln(nAtoms / len(fps))</code>가 가산되고, 최종값이 $8.0$ 초과 시 <code>8 + ln(SA - 8)</code> 완만 압축을 거쳐 $[1, 10]$ 범위로 클리핑됩니다. <strong>점수가 $1.0$에 가까울수록 합성이 용이(Easy)하고 $10.0$에 가까울수록 합성이 난해(Hard)하며, 일반적으로 $3.5$ 이하를 합성 가능(Pass) 기준으로 해석합니다.</strong>
+                * <code>fpscores.pkl.gz</code> 미등재 희귀/금속 비트는 바닥값 <code>-4.0</code>을 받으며, 대칭 보정(Eq. 3)과 완만 압축(Eq. 5)을 거쳐 $[1, 10]$ 범위로 클리핑됩니다. <strong>점수가 $1.0$에 가까울수록 합성이 용이(Easy)하고 $10.0$에 가까울수록 합성이 난해(Hard)하며, 일반적으로 $3.5$ 이하를 합성 가능(Pass) 기준으로 해석합니다.</strong>
               </p>
             </div>
           </div>
@@ -901,7 +810,7 @@ def build_br_sascore_theory_html() -> str:
             <h4 style="margin:0 0 8px 0; color:#92400e;">1.2 SMILES 재구성 이슈</h4>
             <ol style="font-size:0.84rem; color:#334155; line-height:1.62; padding-left:18px; margin:0 0 10px 0;">
               <li><strong>킬레이트(&rarr;)·$\eta^5$-Cp 토폴로지 재구성:</strong> <code>acac</code>를 단좌 개방형으로 두는지 6원 킬레이트로 닫는지(<code>Hf(acac)4</code>: <code>4.1933 &rarr; 5.4854</code>), <code>Cp</code>를 $\eta^1$(<code>5.4320</code>)에서 $\eta^5$ 5중 배위(<code>6.4305</code>)로 연결하는지에 따라 <code>fragmentScore</code>와 고리 패널티가 급변합니다. 외부 발표 순위(<code>5.179 &lt; 5.491 &lt; 6.74</code>)도 고배위 재구성 방향과 일치합니다.</li>
-              <li><strong>명시적 수소(<code>AddHs</code>) &middot; 입체/전하 처리:</strong> <code>AddHs</code> 미제거 시 수소가 $n_{\text{At}}$와 지문 비트에 합산되어 점수가 급등하고(<code>+1.62</code>), 키랄 중심 인식 및 이온/양쪽성이온 표기에 따라 룩업 비트가 바뀝니다.</li>
+              <li><strong><code>AddHs</code> &middot; 입체/전하 처리:</strong> <code>AddHs</code> 미제거 시 수소가 $n_{\text{At}}$와 지문 비트에 합산되어 점수가 급등하고(<code>+1.62</code>), 키랄 중심 인식 및 이온/양쪽성이온 표기에 따라 룩업 비트가 바뀝니다.</li>
             </ol>
             <div style="background:#fff; border:1px solid #fcd34d; border-radius:6px; padding:9px 11px; font-size:0.78rem; color:#334155; line-height:1.58;">
               <strong style="color:#92400e;">재구성 방식별 명시적 계산 비교 (RDKit 실측 항 대입):</strong>
@@ -923,7 +832,7 @@ def build_br_sascore_theory_html() -> str:
             <table>
               <thead>
                 <tr>
-                  <th>금속 복합체 (Precursor)</th>
+                  <th>반도체 프리커서 (Precursor)</th>
                   <th>SMILES 그래프 재구성 방식</th>
                   <th>원자 수 ($N_{\text{at}}$)</th>
                   <th>Size Penalty</th>
@@ -955,7 +864,7 @@ def build_br_sascore_theory_html() -> str:
         <div class="card" style="background:#f8fafc; margin-top:12px;">
           <h4 style="margin:0 0 8px 0; color:#0f172a;">1.4 Summary</h4>
           <p style="font-size:0.86rem; color:#334155; line-height:1.74; margin:0;">
-            <code>MeOH (2.7010)</code>, <code>Hacac (2.1725~2.6758)</code>, <code>HCp (3.3069)</code>는 모두 실험실 및 공정에서 널리 활용되는 합성 용이 리간드임에도 불구하고, 이를 <code>Hf</code> 중심 원자와 결합한 전체 금속 복합체(metal complex) <code>SMILES</code>로 인코딩해 <code>SAScore (2009)</code> 모델에 입력하면 킬레이트 고리 닫힘, $\eta^5$ 배위 표기, 이온 해리, 명시적 수소(<code>AddHs</code>) 처리 등 그래프 재구성 방식에 따라 동일 화합물의 점수가 <code>3.9056</code>에서 <code>6.9182</code>까지 크게 요동칩니다. 이는 단일 분자 그래프 기반의 기존 모델이 실제 화학적 합성 난이도보다 <code>SMILES</code> 표기 관습과 PubChem 유기 조각 결손을 반영함을 시사하며, 따라서 섹션 2의 <code>BR-SAScore (2024)</code> 모델 도입과 함께 금속-리간드 분리 기반의 <strong>Pro-ligand + 물리 Descriptor(<code>TMC-SA</code>)</strong> 결합 체계로의 전환이 필수적입니다.
+            <code>MeOH (2.7010)</code>, <code>Hacac (2.1725~2.6758)</code>, <code>HCp (3.3069)</code>는 모두 실험실 및 공정에서 널리 활용되는 합성 용이 리간드임에도 불구하고, 이를 <code>Hf</code> 중심 원자와 결합한 전체 프리커서 <code>SMILES</code>로 인코딩해 <code>SAScore (2009)</code> 모델에 입력하면 킬레이트 고리 닫힘, $\eta^5$ 배위 표기, 이온 해리, <code>AddHs</code> 처리 등 그래프 재구성 방식에 따라 동일 화합물의 점수가 <code>3.9056</code>에서 <code>6.9182</code>까지 크게 요동칩니다. 이는 단일 분자 그래프 기반의 기존 모델이 실제 화학적 합성 난이도보다 <code>SMILES</code> 표기 관습과 PubChem 유기 조각 결손을 반영함을 시사하며, 따라서 섹션 2의 <code>BR-SAScore (2024)</code> 모델 도입과 함께 금속-리간드 분리 기반의 <strong>Pro-ligand + 물리 Descriptor(<code>TMC-SA</code>)</strong> 결합 체계로의 전환이 필수적입니다.
           </p>
         </div>
       </section>
@@ -999,9 +908,9 @@ flowchart TD
           </div>
         </div>
 
-        <!-- 2.2 Equations & Simulator -->
+        <!-- 2.2 Equations (8)-(13) -->
         <h3 id="brt-sub22" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:20px 0 8px 0;">
-          2.2 핵심 수식 체계 (Eq. 8~13) 및 실시간 수식 시뮬레이터
+          2.2 핵심 수식 체계 (Eq. 8~13)
         </h3>
         <div class="grid-2" style="margin-top:8px;">
           <div class="card" style="border-color:#93c5fd; background:#f8fbff;">
@@ -1020,12 +929,11 @@ flowchart TD
             <strong>수식 설계의 3가지 핵심 논리</strong>
             <ul style="margin:8px 0 0 18px; line-height:1.68; font-size:0.84rem;">
               <li><strong>OR 논리 ($\max(\text{BScore}_i, \text{RScore}_i)$):</strong> 어떤 부분 구조가 시약으로 팔리거나(<code>BScore</code>) 혹은 특허 반응(<code>RScore</code>)으로 쉽게 이어지는 결합이라면 둘 중 더 유리한 쪽을 채택합니다.</li>
-              <li><strong>병목 중심 음수 평균 (Eq. 12):</strong> 상위 $0.1\%$ 초빈출 조각($\text{Score}_i \ge 0$)을 평균에 포함하면 희귀 병목 조각 1~2개의 난이도가 희석되므로, <strong>0 미만 조각만 평균</strong>내어 병목 민감도를 극대화합니다. (전부 $\ge 0$이면 $0$ 처리)</li>
+              <li><strong>병목 중심 음수 평균 (Eq. 12):</strong> 상위 $0.1\%$ 초빈출 조각($\text{Score}_i \ge 0$)을 평균에 포함하면 희귀 병목 조각 1~2개의 난이도가 희석되므로, <strong>0 미만 조각만 평균</strong>내어 병목 민감도를 극대화합니다. 단, 모든 조각의 점수가 0 이상인 경우에는 병목 구간이 없는 것으로 간주하여 조각 평균 점수를 0으로 처리합니다.</li>
               <li><strong>미등재 패널티 <code>-6</code> &amp; <code>PenaltyBuffer = 1</code> (Eq. 13):</strong> 사전 외 조각은 최소점(-3)의 2배인 <code>-6</code>을 부여하고, 복잡도 패널티가 겹칠 때 하한이 $-7.0$까지 확보되도록 <code>PenaltyBuffer = 1</code>(분모 $7$)로 $[1, 10]$에 정규화합니다.</li>
             </ul>
           </div>
         </div>
-        __SIM_HTML__
 
         <!-- 2.3 Training Datasets & Pickle Audit -->
         <h3 id="brt-sub23" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:22px 0 8px 0;">
@@ -1171,14 +1079,14 @@ flowchart TD
           2.6 베이스 모델로 BR-SAScore (2024) 선정 근거
         </h3>
         <p style="line-height:1.72; color:#334155;">
-          요약 탭(Step 2)에서 제시한 선정 결론의 배경에는 <strong>18종 공개 SA·역합성·생성 모델 전수 평가(확장 프리커서 102종 + 시약 29종 + Phase 1 Negative Control 10종)</strong>에서 확인된 타 모델들의 구조적 붕괴가 있습니다. 다른 모델들이 반도체 금속 복합체(metal complex) 또는 Track 1 역할에서 탈락하고 <code>BR-SAScore</code>가 유일하게 최적 베이스 엔진으로 선택된 <strong>5가지 결정적 원인</strong>은 다음과 같습니다.
+          요약 탭(Step 2)에서 제시한 선정 결론의 배경에는 <strong>18종 공개 SA·역합성·생성 모델 전수 평가(확장 프리커서 102종 + 시약 29종 + Phase 1 Negative Control 10종)</strong>에서 확인된 타 모델들의 구조적 붕괴가 있습니다. 다른 모델들이 반도체 프리커서 또는 Track 1 역할에서 탈락하고 <code>BR-SAScore</code>가 유일하게 최적 베이스 엔진으로 선택된 <strong>5가지 결정적 원인</strong>은 다음과 같습니다.
         </p>
 
         <div class="grid-2" style="margin:12px 0;">
           <div class="card" style="background:#f8fbff; border-color:#bfdbfe;">
             <h4 style="margin:0 0 8px 0; color:#1e40af;">BR-SAScore 베이스 선정 5대 결정적 근거</h4>
             <ol style="font-size:0.83rem; color:#334155; line-height:1.68; padding-left:18px; margin:0;">
-              <li><strong>OOV 원소 붕괴·All-Zero 무음 오인코딩 부재 (vs GASA &middot; DFRscore &middot; MPScore &middot; DeepSA):</strong> <code>GASA</code>는 102종 중 <strong>53종(52.0%, Ga&middot;Hf&middot;Ir&middot;Mo&middot;Rh&middot;Ru&middot;Ta&middot;W 8원소)</strong>에서 DGL 원자 벡터가 All-Zero로 무음 붕괴하고, <code>DFRscore</code>는 <strong>102/102(100%)</strong> 중심 금속이 <code>ELSE</code> 노드로 축퇴하며, <code>MPScore</code>는 금속 복합체 In-Domain <strong>0/102(0.0%)</strong>에 그칩니다. 반면 <code>BR-SAScore</code>는 RDKit Morgan Radius-2 해시 키 기반이므로 어떤 원소가 들어와도 벡터 소실 없이 결정론적으로 계산됩니다.</li>
+              <li><strong>OOV 원소 붕괴·All-Zero 무음 오인코딩 부재 (vs GASA &middot; DFRscore &middot; MPScore &middot; DeepSA):</strong> <code>GASA</code>는 102종 중 <strong>53종(52.0%, Ga&middot;Hf&middot;Ir&middot;Mo&middot;Rh&middot;Ru&middot;Ta&middot;W 8원소)</strong>에서 DGL 원자 벡터가 All-Zero로 무음 붕괴하고, <code>DFRscore</code>는 <strong>102/102(100%)</strong> 중심 금속이 <code>ELSE</code> 노드로 축퇴하며, <code>MPScore</code>는 반도체 프리커서 In-Domain <strong>0/102(0.0%)</strong>에 그칩니다. 반면 <code>BR-SAScore</code>는 RDKit Morgan Radius-2 해시 키 기반이므로 어떤 원소가 들어와도 벡터 소실 없이 결정론적으로 계산됩니다.</li>
               <li><strong>위험·불안정 대조군 무차별 통과(False Positive 폭주) 억제 (vs RAscore &middot; SCScore &middot; SYBA):</strong> <code>RAscore</code>(XGBoost)와 <code>SCScore</code>(Reaxys DNN)는 단순 치환기 개수만 보고 Phase 1 Negative Control 10종 중 <strong>9종(90.0%, <code>TiEt4</code> 0.972/1.65, <code>ZrMe4</code> 0.956/1.56, <code>WPh5</code> 0.985/1.63 등)</strong>을 Pass로 오판하며, <code>SYBA</code>도 <strong>8/10(80.0%)</strong>을 통과시킵니다. 반면 <code>BR-SAScore</code>는 Eq. (12) <code>&lt; 0</code> 병목 평균과 <code>-6.0</code> 미등재 패널티 덕분에 물리 필터 전에도 10종 중 <strong>7종(70.0%)</strong>을 1차 차단합니다(<code>TiEt4 8.77</code>, <code>Silacyclobutadiene 8.75</code>, <code>WPh5 8.79</code>, <code>CoEt4 8.77</code>).</li>
               <li><strong>SAScore (2009) 모델 소분자·단일빈도 편향 해소 &amp; 4G M-L 0% 한계 보완:</strong> <code>SAScore (2009)</code> 모델은 <code>MeOH (2.70)</code> 같은 2원자 시약까지 과대 패널티를 매겨 102종 프리커서 통과율이 <strong>2.0%(2/102)</strong>에 불과하고, 4G 모델(<code>RxnFlow</code>&middot;<code>SynFormer</code>&middot;<code>ChemProjector</code>)은 <code>M-L</code> 배위 반응 규칙이 <strong>0/102(0.0%)</strong>입니다. <code>BR-SAScore</code>는 <code>MeOH 1.01</code> 정상화 및 <code>19/102(18.6%)</code> 개선을 <code>0.42 ms/mol</code>로 달성하고, 4G 모델은 해리 리간드 경로 보조에만 분리 투입할 수 있습니다.</li>
               <li><strong>신경망 재학습 없는 무손실 사전(<code>_fscores</code>) 확장성:</strong> <code>DeepSA</code>(Transformer), <code>GASA</code>(GAT), <code>RAscore</code>, <code>SCScore</code>는 도메인 시약 29종을 반영하려면 데이터셋 재구축과 신경망 재학습이 필요해 기존 유기 분포가 왜곡됩니다. <code>BR-SAScore</code>는 딕셔너리에 <code>max(existing, -0.47)</code> 하한만 추가하면 <strong>기존 프리커서 점수 악화 0건(0/27)</strong>을 유지한 채 시약 통과율을 <code>21/29(72.4%) &rarr; 28/29(96.6%)</code>로 즉시 끌어올립니다.</li>
@@ -1337,7 +1245,6 @@ flowchart TD
         "__MORGAN_2D_SVG__": morgan_2d_svg,
         "__CPTI_2D_SVG__": cpti_2d_svg,
         "__PROLIGAND_DIAGRAM_HTML__": proligand_diagram_html,
-        "__SIM_HTML__": sim_html,
         "__DIST_SVG__": dist_svg,
         "__CARDS_HTML__": cards_html,
         "__B_COUNT__": f"{b_stat['count']:,}",
