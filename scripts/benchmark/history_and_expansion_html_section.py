@@ -33,7 +33,7 @@ def _build_history_timeline_svg() -> str:
         ("S1", "Phase 1 (55종)", "유기 SA 18종 오분류 규명", "#dc2626"),
         ("S2", "SevenNet-0 71+27", "MLIP 3D·BDE·이합체 ΔG", "#ea580c"),
         ("S3", "음성대조군 40종", "LOFMO=0 vs 물리 1.000", "#d97706"),
-        ("S4", "TMC-SA (160종)", "Design 1+2 AUROC 0.996", "#059669"),
+        ("S4", "SAPIS (160종)", "Design 1+2 AUROC 0.996", "#059669"),
         ("S5", "8대 CI-NEB+CpZr", "Ea-T_decomp r=0.879", "#0284c7"),
         ("S6", "배위·리간드 통계", "16금속 51리간드 CN_eff", "#2563eb"),
         ("S7", "CoOrd-Inv 역설계", "35,661 후보 OOF 4.28%", "#4f46e5"),
@@ -116,10 +116,10 @@ def build_analysis_history_technical_html(
         ),
         (
             "Stage 3",
-            "다중 배위수·TMC-SA 물리 게이트 통합",
+            "다중 배위수·SAPIS 물리 게이트 통합",
             "160종 (102 Prec + 18 Inh + 40 Neg)",
             "element_physics.py / tmc_sa_scorer.py / run_unified_latest_160_analysis.py",
-            "CN_eff·R_eff(M|env)·%V_bur^D2·Design 1+2 정식화; ML LOFMO 0.000 붕괴 구간에서 TMC-SA 물리 게이트 1.000 방어 검증.",
+            "CN_eff·R_eff(M|env)·%V_bur^D2·Design 1+2 정식화; ML LOFMO 0.000 붕괴 구간에서 SAPIS 물리 게이트 1.000 방어 검증.",
             "Sec 15 / Step 4",
         ),
         (
@@ -491,7 +491,7 @@ def build_patent_expansion_technical_html(
         <!-- Card 22.3: Screened 38 Non-Overlapping Expansion Candidates -->
         <div class="card" style="border-top:4px solid #059669;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. 특허&middot;문헌 확장 후보 __N_TOT__종 전수 <code>SevenNet-0</code> 물리 디스크립터 보강 및 <code>TMC-SA</code> 검증</h3>
+            <h3 class="card-title" style="margin-bottom:0;">3. 특허&middot;문헌 확장 후보 __N_TOT__종 전수 <code>SevenNet-0</code> 물리 디스크립터 보강 및 <code>SAPIS</code> 검증</h3>
             <span class="badge badge-pass" style="font-size:0.78rem;">7net __N_SEVENN__/__N_TOT__ (0 FB) &bull; Strict Prec __N_PREC_PASS_7N__/__N_PREC__ &bull; Inh __N_INH_PASS_7N__/__N_INH__</span>
           </div>
           <p style="font-size:0.87rem; color:#334155; line-height:1.65; margin-bottom:10px;">
@@ -510,7 +510,7 @@ def build_patent_expansion_technical_html(
                   <th style="width:62px; text-align:center;">CN / N<sub>ve</sub></th>
                   <th style="width:94px; text-align:center;">%V<sub>bur</sub><br>(ETKDG&rarr;7net)</th>
                   <th style="width:128px; text-align:center;">SevenNet-0 물리 지표<br>(BDE &middot; E<sub>coh</sub> &middot; &Delta;E<sub>f</sub>/v<sub>M</sub>)</th>
-                  <th style="width:86px; text-align:center;">TMC-SA<br>(No3D&rarr;7net)</th>
+                  <th style="width:86px; text-align:center;">SAPIS<br>(No3D&rarr;7net)</th>
                   <th style="width:82px; text-align:center;">판정</th>
                   <th>특허·문헌 출처 및 공정 메커니즘 / 물리·경계 진단</th>
                 </tr>

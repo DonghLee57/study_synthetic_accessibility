@@ -11,7 +11,7 @@ cohesive sections:
   - Section 2 (``#brt-sec2``): Unified BR-SAScore deep dive covering origin,
     Eq. (1)-(13) & interactive simulator, eMolecules (231M) + USPTO (~1M)
     331,332-fragment dictionary audit, BRSAScore.py implementation & 2D atom
-    contribution maps, Retro* TS1-TS3 benchmarks, and TMC-SA domain extension.
+    contribution maps, Retro* TS1-TS3 benchmarks, and SAPIS domain extension.
 """
 
 from __future__ import annotations
@@ -79,7 +79,7 @@ def compute_vanilla_sascore_issues() -> Dict[str, Any]:
             "Hf(OMe)3(acac)",
             "킬레이트 + AddHs 미제거 상태",
             "CO[Hf]1(OC)(OC)OC(C)=CC(C)=O->1",
-            "명시적 H가 nAtoms 및 Morgan 비트에 합산되어 점수 급등 (+1.62)",
+            "명시적 H가 nAtoms 및 Morgan 지문 조각에 합산되어 점수 급등 (+1.62)",
             True,
         ),
         (
@@ -288,10 +288,10 @@ def compute_br_worked_examples() -> List[Dict[str, Any]]:
             "원자 2개 소형 분자로 Radius-2 환경이 0개이므로 BR-fragmentScore=0 -> 1.01.",
         ),
         (
-            "Hacac (keto)",
+            "Hacac (아세틸아세톤, keto)",
             "CC(=O)CC(=O)C",
             "베타-디케톤 프로리간드 (케토)",
-            "중앙 메틸렌(C3)의 R=2 패턴이 사전 미등재(-6.0)로 판정되어 5.20으로 과대 패널티.",
+            "상용 시약임에도 중앙 메틸렌(C3) 1개가 사전 미등재(-6.0)로 판정되어 5.20으로 과대 패널티(SAPIS에서는 min(BR, SA)=2.17로 복구).",
         ),
         (
             "HCp (Cyclopentadiene)",
@@ -575,7 +575,7 @@ def _build_vanilla_reconstruction_rows_html(vanilla_data: Dict[str, Any]) -> Tup
               <td>{html.escape(row["rep"])}</td>
               <td style="text-align:center;">{row["n_atoms"]}</td>
               <td style="text-align:right; font-family:'JetBrains Mono', monospace;">{row["size_pen"]:.3f}</td>
-              <td style="text-align:right; font-weight:800; color:#0f172a;">{row["sa_2009"]:.4f}</td>
+              <td style="text-align:right; font-weight:800; color:#0f172a;">{row["sa_2009"]:.3f}</td>
               <td style="font-size:0.8rem; color:#475569;">{html.escape(row["note"])}</td>
             </tr>"""
         )
@@ -589,7 +589,7 @@ def _build_vanilla_reconstruction_rows_html(vanilla_data: Dict[str, Any]) -> Tup
               <td>{html.escape(row["pro_name"])}</td>
               <td><code>{html.escape(row["smiles"])}</code></td>
               <td style="text-align:center;">{row["n_atoms"]}</td>
-              <td style="text-align:right; font-weight:800; color:#0f766e;">{row["sa_2009"]:.4f}</td>
+              <td style="text-align:right; font-weight:800; color:#0f766e;">{row["sa_2009"]:.3f}</td>
               <td style="font-size:0.8rem; color:#475569;">{html.escape(row["note"])}</td>
             </tr>"""
         )
@@ -728,7 +728,7 @@ def build_br_sascore_theory_html() -> str:
       1) Section 1 (``#brt-sec1``): 2009 vanilla SAScore principles, Hf-complex vs.
          pro-ligand evaluation, and SMILES graph reconstruction sensitivity.
       2) Section 2 (``#brt-sec2``): Unified single-section BR-SAScore deep dive
-         (equations, dataset pickles, code audit, benchmarks, TMC-SA).
+         (equations, dataset pickles, code audit, benchmarks, SAPIS).
 
     Physics/Algorithm:
         All reconstruction scores, pickle dictionary counts/bins, and atom
@@ -769,8 +769,8 @@ def build_br_sascore_theory_html() -> str:
           Ertl &amp; Schuffenhauer가 제안한 <code>SAScore (2009)</code> 모델은 PubChem 대표 1% 샘플(934,046종)에서 추출한 Morgan Fingerprint(r&le;2) 출현 빈도 <code>fpscores.pkl.gz</code>를 기반으로 합니다. 하지만 이를 반도체용 프리커서에 그대로 적용하면 두 가지 근본 이슈가 드러납니다.
         </p>
         <ul style="margin:6px 0 12px 20px; line-height:1.68; font-size:0.86rem; color:#334155;">
-          <li><strong>① 사전 미등재(OOV) 및 바닥값 붕괴:</strong> 유기물 중심의 PubChem 사전에 금속&middot;배위 결합 조각이 등재되어 있지 않아 다수의 비트가 바닥값(<code>-4.0</code>)을 받으며, 실제보다 합성 난이도가 과대 평가됩니다.</li>
-          <li><strong>② SMILES 그래프 재구성 민감도:</strong> 동일한 프리커서라도 킬레이트 닫힘, $\eta^5$ 배위, <code>AddHs</code> 등 그래프 표현 방식에 따라 Morgan 지문 비트와 고리 패널티가 달라져 산출 점수가 크게 요동칩니다.</li>
+          <li><strong>① 사전 미등재(OOV) 및 바닥값 붕괴:</strong> 유기물 중심의 PubChem 사전에 금속&middot;배위 결합 조각이 등재되어 있지 않아 다수의 분자 조각이 바닥값(<code>-4.0</code>)을 받으며, 실제보다 합성 난이도가 과대 평가됩니다.</li>
+          <li><strong>② SMILES 그래프 재구성 민감도:</strong> 동일한 프리커서라도 킬레이트 닫힘, $\eta^5$ 배위, <code>AddHs</code> 등 그래프 표현 방식에 따라 Morgan 지문 조각과 고리 패널티가 달라져 산출 점수가 크게 요동칩니다.</li>
         </ul>
 
         <div class="callout-info" style="margin:10px 0 14px 0; background:#f8fafc; border-color:#cbd5e1;">
@@ -801,7 +801,7 @@ def build_br_sascore_theory_html() -> str:
               <p>$$\text{SAScore}_{\text{full}} = 11 - \frac{\text{SAScore}_{\text{raw}} - (-4.0) + 1}{2.5 - (-4.0)} \times 9 = 11 - \frac{\text{SAScore}_{\text{raw}} + 5.0}{6.5} \times 9 \tag{4}$$</p>
               <p>$$\text{SAScore}_{\text{final}} = \begin{cases} \min(10,\; 8 + \ln(\text{SAScore}_{\text{full}} - 8)) & \text{if } \text{SAScore}_{\text{full}} &gt; 8.0 \\ \max(1,\; \text{SAScore}_{\text{full}}) & \text{otherwise} \end{cases} \tag{5}$$</p>
               <p style="font-size:0.79rem; color:#64748b; margin-bottom:0;">
-                * <code>fpscores.pkl.gz</code> 미등재 희귀/금속 비트는 바닥값 <code>-4.0</code>을 받으며, 대칭 보정(Eq. 3)과 완만 압축(Eq. 5)을 거쳐 $[1, 10]$ 범위로 클리핑됩니다. <strong>점수가 $1.0$에 가까울수록 합성이 용이(Easy)하고 $10.0$에 가까울수록 합성이 난해(Hard)하며, 일반적으로 $3.5$ 이하를 합성 가능(Pass) 기준으로 해석합니다.</strong>
+                * <code>fpscores.pkl.gz</code> 미등재 희귀/금속 조각은 바닥값 <code>-4.0</code>을 받으며, 대칭 보정(Eq. 3)과 완만 압축(Eq. 5)을 거쳐 $[1, 10]$ 범위로 클리핑됩니다. <strong>점수가 $1.0$에 가까울수록 합성이 용이하고 $10.0$에 가까울수록 합성이 난해하며, 일반적으로 $3.5$ 이하를 합성 가능 기준으로 해석합니다.</strong>
               </p>
             </div>
           </div>
@@ -809,16 +809,16 @@ def build_br_sascore_theory_html() -> str:
           <div class="card" style="background:#fffbeb; border-color:#fde68a;">
             <h4 style="margin:0 0 8px 0; color:#92400e;">1.2 SMILES 재구성 이슈</h4>
             <ol style="font-size:0.84rem; color:#334155; line-height:1.62; padding-left:18px; margin:0 0 10px 0;">
-              <li><strong>킬레이트(&rarr;)·$\eta^5$-Cp 토폴로지 재구성:</strong> <code>acac</code>를 단좌 개방형으로 두는지 6원 킬레이트로 닫는지(<code>Hf(acac)4</code>: <code>4.1933 &rarr; 5.4854</code>), <code>Cp</code>를 $\eta^1$(<code>5.4320</code>)에서 $\eta^5$ 5중 배위(<code>6.4305</code>)로 연결하는지에 따라 <code>fragmentScore</code>와 고리 패널티가 급변합니다. 외부 발표 순위(<code>5.179 &lt; 5.491 &lt; 6.74</code>)도 고배위 재구성 방향과 일치합니다.</li>
-              <li><strong><code>AddHs</code> &middot; 입체/전하 처리:</strong> <code>AddHs</code> 미제거 시 수소가 $n_{\text{At}}$와 지문 비트에 합산되어 점수가 급등하고(<code>+1.62</code>), 키랄 중심 인식 및 이온/양쪽성이온 표기에 따라 룩업 비트가 바뀝니다.</li>
+              <li><strong>킬레이트(&rarr;)·$\eta^5$-Cp 토폴로지 재구성:</strong> <code>acac</code>를 단좌 개방형으로 두는지 6원 킬레이트로 닫는지(<code>Hf(acac)4</code>: <code>4.193 &rarr; 5.485</code>), <code>Cp</code>를 $\eta^1$(<code>5.432</code>)에서 $\eta^5$ 5중 배위(<code>6.431</code>)로 연결하는지에 따라 <code>fragmentScore</code>와 고리 패널티가 급변합니다. 외부 발표 순위(<code>5.179 &lt; 5.491 &lt; 6.74</code>)도 고배위 재구성 방향과 일치합니다.</li>
+              <li><strong><code>AddHs</code> &middot; 입체/전하 처리:</strong> <code>AddHs</code> 미제거 시 수소가 $n_{\text{At}}$와 지문 조각에 합산되어 점수가 급등하고(<code>+1.62</code>), 카이랄 중심 인식 및 이온/양쪽성이온 표기에 따라 조회 조각이 바뀝니다.</li>
             </ol>
             <div style="background:#fff; border:1px solid #fcd34d; border-radius:6px; padding:9px 11px; font-size:0.78rem; color:#334155; line-height:1.58;">
               <strong style="color:#92400e;">재구성 방식별 명시적 계산 비교 (RDKit 실측 항 대입):</strong>
               <ul style="margin:4px 0 0 16px; padding:0;">
-                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Open]:</strong> $\text{frag}=-0.206,\; \text{comp}=0.186,\; s_3=0.000\; (n_{\text{At}}\le |\text{FP}|) \implies \text{raw}=-0.392 \implies 11 - \frac{-0.392+5.0}{6.5}\times 9 = \mathbf{4.6201}$</li>
-                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Chelate &rarr;]:</strong> 고리 닫힘으로 $\text{frag}=-0.694,\; \text{comp}=0.186,\; s_3=0.000 \implies \text{raw}=-0.880 \implies 11 - \frac{-0.880+5.0}{6.5}\times 9 = \mathbf{5.2957}$</li>
-                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Chelate+AddHs]:</strong> H 16개 포함($n_{\text{At}}=30$) $\text{frag}=-2.616,\; \text{comp}=0.515,\; s_3=0.053 \implies \text{raw}=-3.078 \implies \mathbf{6.9182}$</li>
-                <li><strong>HfCp(OMe)(acac)<sub>2</sub> [&eta;<sup>5</sup>-Cp]:</strong> $\text{frag}=-1.056,\; \text{comp}=0.644\text{ (ring }0.301\text{ 포함)},\; s_3=0.000 \implies \text{raw}=-1.700 \implies \mathbf{6.4305}$</li>
+                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Open]:</strong> $\text{frag}=-0.206,\; \text{comp}=0.186,\; s_3=0.000\; (n_{\text{At}}\le |\text{FP}|) \implies \text{raw}=-0.392 \implies 11 - \frac{-0.392+5.0}{6.5}\times 9 = \mathbf{4.620}$</li>
+                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Chelate &rarr;]:</strong> 고리 닫힘으로 $\text{frag}=-0.694,\; \text{comp}=0.186,\; s_3=0.000 \implies \text{raw}=-0.880 \implies 11 - \frac{-0.880+5.0}{6.5}\times 9 = \mathbf{5.296}$</li>
+                <li><strong>Hf(OMe)<sub>3</sub>(acac) [Chelate+AddHs]:</strong> H 16개 포함($n_{\text{At}}=30$) $\text{frag}=-2.616,\; \text{comp}=0.515,\; s_3=0.053 \implies \text{raw}=-3.078 \implies \mathbf{6.918}$</li>
+                <li><strong>HfCp(OMe)(acac)<sub>2</sub> [&eta;<sup>5</sup>-Cp]:</strong> $\text{frag}=-1.056,\; \text{comp}=0.644\text{ (ring }0.301\text{ 포함)},\; s_3=0.000 \implies \text{raw}=-1.700 \implies \mathbf{6.431}$</li>
               </ul>
             </div>
           </div>
@@ -834,7 +834,7 @@ def build_br_sascore_theory_html() -> str:
                 <tr>
                   <th>반도체 프리커서 (Precursor)</th>
                   <th>SMILES 그래프 재구성 방식</th>
-                  <th>원자 수 ($N_{\text{at}}$)</th>
+                  <th style="white-space:nowrap; min-width:96px;">원자 수 ($n_{\text{At}}$)</th>
                   <th>Size Penalty</th>
                   <th>SAScore (2009)</th>
                   <th>재구성 편차 원인 (RDKit 2023.09.6 실측)</th>
@@ -852,7 +852,7 @@ def build_br_sascore_theory_html() -> str:
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>리간드 음이온</th><th>프로리간드</th><th>SMILES</th><th>원자 수</th><th>SAScore (2009)</th><th>해설</th></tr>
+                <tr><th>리간드 음이온</th><th>프로리간드</th><th>SMILES</th><th style="white-space:nowrap; min-width:96px;">원자 수 ($n_{\text{At}}$)</th><th style="white-space:nowrap;">SAScore (2009)</th><th>해설</th></tr>
               </thead>
               <tbody>
                 __VANILLA_LIGAND_ROWS__
@@ -864,7 +864,7 @@ def build_br_sascore_theory_html() -> str:
         <div class="card" style="background:#f8fafc; margin-top:12px;">
           <h4 style="margin:0 0 8px 0; color:#0f172a;">1.4 Summary</h4>
           <p style="font-size:0.86rem; color:#334155; line-height:1.74; margin:0;">
-            <code>MeOH (2.7010)</code>, <code>Hacac (2.1725~2.6758)</code>, <code>HCp (3.3069)</code>는 모두 실험실 및 공정에서 널리 활용되는 합성 용이 리간드임에도 불구하고, 이를 <code>Hf</code> 중심 원자와 결합한 전체 프리커서 <code>SMILES</code>로 인코딩해 <code>SAScore (2009)</code> 모델에 입력하면 킬레이트 고리 닫힘, $\eta^5$ 배위 표기, 이온 해리, <code>AddHs</code> 처리 등 그래프 재구성 방식에 따라 동일 화합물의 점수가 <code>3.9056</code>에서 <code>6.9182</code>까지 크게 요동칩니다. 이는 단일 분자 그래프 기반의 기존 모델이 실제 화학적 합성 난이도보다 <code>SMILES</code> 표기 관습과 PubChem 유기 조각 결손을 반영함을 시사하며, 따라서 섹션 2의 <code>BR-SAScore (2024)</code> 모델 도입과 함께 금속-리간드 분리 기반의 <strong>Pro-ligand + 물리 Descriptor(<code>TMC-SA</code>)</strong> 결합 체계로의 전환이 필수적입니다.
+            <code>MeOH (2.701)</code>, <code>Hacac (2.173~2.676)</code>, <code>HCp (3.307)</code>는 모두 실험실 및 공정에서 널리 활용되는 합성 용이 리간드임에도 불구하고, 이를 <code>Hf</code> 중심 원자와 결합한 전체 프리커서 <code>SMILES</code>로 인코딩해 <code>SAScore (2009)</code> 모델에 입력하면 킬레이트 고리 닫힘, $\eta^5$ 배위 표기, 이온 해리, <code>AddHs</code> 처리 등 그래프 재구성 방식에 따라 동일 화합물의 점수가 <code>3.906</code>에서 <code>6.918</code>까지 크게 요동칩니다. 이는 단일 분자 그래프 기반의 기존 모델이 실제 화학적 합성 난이도보다 <code>SMILES</code> 표기 관습과 PubChem 유기 조각 결손을 반영함을 시사하며, 따라서 섹션 2의 <code>BR-SAScore (2024)</code> 모델 도입과 함께 금속-리간드 분리 기반의 <strong>Pro-ligand + 물리 Descriptor(<code>SAPIS</code>)</strong> 결합 체계로의 전환이 필수적입니다.
           </p>
         </div>
       </section>
@@ -877,7 +877,7 @@ def build_br_sascore_theory_html() -> str:
         </div>
 
         <p style="line-height:1.72; color:#334155;">
-          <code>BR-SAScore (2024)</code> 모델은 역합성의 두 핵심 축인 ① 상용 출발물질($B$, eMolecules)과 ② 반응 형성 결합($R$, USPTO)을 분리해 평가하는 3세대 하이브리드 모델입니다. 다른 1G~4G 모델과 달리 미지원 원소 입력 시 Feature Loss(Zero-Vector) 없이 결정론적으로 동작하고, 위험 대조군 오탐(False Positive)을 1차 차단하며, 신경망 재학습 없이 <code>_fscores</code> 해시 사전에 도메인 시약만 누설 없이 확장(<code>max(existing, -0.47)</code>)할 수 있어 본 연구의 베이스 모델로 선정되었습니다.
+          <code>BR-SAScore (2024)</code> 모델은 역합성의 두 핵심 축인 ① 상용 출발물질($B$, eMolecules)과 ② 반응 형성 결합($R$, USPTO)을 분리해 평가하는 3세대 하이브리드 모델입니다. 다른 1G~4G 모델과 달리 미지원 원소 입력 시 Feature Loss(Zero-Vector) 없이 결정론적으로 동작하고, 위험 대조군 오탐(False Positive)을 1차 차단하며, 신경망 재학습 없이 <code>_fscores</code> 해시 사전에 도메인 시약만 <strong>데이터 누설 없이(평가 대상 프리커서의 정답을 사전에 미리 넣지 않고, 상용 출발 시약 29종의 조각만 음수 영역 하한 <code>max(existing, -0.47)</code>로 보정)</strong> 확장할 수 있어 본 연구의 베이스 모델로 선정되었습니다.
         </p>
 
         <!-- 2.1 Architecture Flowchart -->
@@ -910,11 +910,10 @@ flowchart TD
 
         <!-- 2.2 Equations (8)-(13) -->
         <h3 id="brt-sub22" style="font-size:1.05rem; font-weight:800; color:#0f172a; margin:20px 0 8px 0;">
-          2.2 핵심 수식 체계 (Eq. 8~13)
+          2.2 핵심 수식 체계
         </h3>
         <div class="grid-2" style="margin-top:8px;">
           <div class="card" style="border-color:#93c5fd; background:#f8fbff;">
-            <h4 style="margin:0 0 8px 0; color:#0369a1;">BR-SAScore 지배 방정식 (Eq. 8~13)</h4>
             <div style="font-size:0.85rem; line-height:1.68; color:#334155;">
               <p>$$\text{BR-SAScore} = \text{BR-fragmentScore} - \text{complexityPenalty} \tag{8}$$</p>
               <p>$$\text{BScore}_i = \text{Scale}_{[-3,3]}\!\left(\log_{10} \frac{\text{count}_i^{(B)}}{0.001 \cdot N_B}\right) \tag{9}$$</p>
@@ -929,7 +928,7 @@ flowchart TD
             <strong>수식 설계의 3가지 핵심 논리</strong>
             <ul style="margin:8px 0 0 18px; line-height:1.68; font-size:0.84rem;">
               <li><strong>OR 논리 ($\max(\text{BScore}_i, \text{RScore}_i)$):</strong> 어떤 부분 구조가 시약으로 팔리거나(<code>BScore</code>) 혹은 특허 반응(<code>RScore</code>)으로 쉽게 이어지는 결합이라면 둘 중 더 유리한 쪽을 채택합니다.</li>
-              <li><strong>병목 중심 음수 평균 (Eq. 12):</strong> 상위 $0.1\%$ 초빈출 조각($\text{Score}_i \ge 0$)을 평균에 포함하면 희귀 병목 조각 1~2개의 난이도가 희석되므로, <strong>0 미만 조각만 평균</strong>내어 병목 민감도를 극대화합니다. 단, 모든 조각의 점수가 0 이상인 경우에는 병목 구간이 없는 것으로 간주하여 조각 평균 점수를 0으로 처리합니다.</li>
+              <li><strong>병목 중심 음수 평균 (Eq. 12):</strong> Eq. (9)~(10)에서 점수 <code>0</code>은 전체 데이터셋 출현 빈도의 <strong>상위 0.1% 기준선</strong>입니다. 따라서 <strong>0 이상($\text{Score}_i \ge 0$)</strong>은 메틸기처럼 상용 시약·반응에 매우 흔해 합성에 어려움이 없는 쉬운 조각을, <strong>0 미만($\text{Score}_i &lt; 0$)</strong>은 출현 빈도가 낮아 전체 합성을 가로막는 희귀·난해 조각(<strong>병목 구간</strong>)을 뜻합니다. 만약 흔한 쉬운 조각들까지 모두 평균에 넣으면 어려운 핵심 조각 1~2개의 난이도가 희석되어 전체 분자가 쉽다고 오판할 수 있으므로, <strong>0 미만 병목 조각만 골라 평균</strong>냄으로써 난해한 부분구조에 대한 민감도를 극대화합니다. 모든 조각이 0 이상이면 병목 구간이 없는 것이므로 평균을 0으로 처리합니다.</li>
               <li><strong>미등재 패널티 <code>-6</code> &amp; <code>PenaltyBuffer = 1</code> (Eq. 13):</strong> 사전 외 조각은 최소점(-3)의 2배인 <code>-6</code>을 부여하고, 복잡도 패널티가 겹칠 때 하한이 $-7.0$까지 확보되도록 <code>PenaltyBuffer = 1</code>(분모 $7$)로 $[1, 10]$에 정규화합니다.</li>
             </ul>
           </div>
@@ -946,7 +945,7 @@ flowchart TD
                 <th>데이터셋 / 파일</th>
                 <th>원천 데이터 규모</th>
                 <th>조각 추출 &amp; 가중 규칙</th>
-                <th>최종 사전 키 수</th>
+                <th style="white-space:nowrap; min-width:125px;">최종 사전 키 수</th>
                 <th>점수 범위 / 음수 비율</th>
               </tr>
             </thead>
@@ -1001,7 +1000,7 @@ flowchart TD
             <ul style="font-size:0.83rem; color:#334155; line-height:1.66; margin:0; padding-left:18px;">
               <li><strong>Aspirin:</strong> 유효 반경-2 원자 3개 $(-0.82 - 0.98 - 0.23)/3 = -0.68$, 복잡도 $0.17$ &rarr; Raw $-0.85$ &rarr; <strong>정규화 2.09</strong> (논문 = 본 저장소 실측 2.09 정확 일치).</li>
               <li><strong>AI-proposed 분자 [Gao et al., 5]:</strong> 평가 조각 전부 $B \cup R$ 미등재(<code>-6.0</code>), 복잡도 $0.10$ &rarr; Raw $-6.10$ &rarr; <strong>8.84 (Hard)</strong>.</li>
-              <li><strong>케토-에놀 민감도 실측:</strong> <code>Hacac(keto)</code>는 <code>SAScore (2009)</code> 모델에서 <code>2.17</code>이지만 <code>BR-SAScore</code>에선 중앙 <code>-CH2-</code> 1개가 사전 미등재(<code>-6.0</code>)에 걸려 <code>5.20</code>으로 과대 패널티가 발생합니다.</li>
+              <li><strong>케토-에놀 민감도 실측 (한계 사례):</strong> <code>Hacac (아세틸아세톤, keto)</code>는 실제 상용 시약으로 <code>SAScore (2009)</code> 모델에서 <code>2.17</code>이지만, <code>BR-SAScore</code>에선 중앙 <code>-CH2-</code> 1개가 사전 미등재(<code>-6.0</code>)에 걸려 <code>5.20</code>으로 과대 평가되는 한계를 보입니다(<code>compute_ligand_sa()</code>에서 <code>min(BR, SA)=2.17</code>로 복구).</li>
             </ul>
           </div>
         </div>
@@ -1098,13 +1097,13 @@ flowchart TD
             </p>
           </div>
           <div class="card">
-            <h4 style="margin:0 0 6px 0; color:#b45309;">주의사항: 0.0 덮어쓰기 누설 함정</h4>
+            <h4 style="margin:0 0 6px 0; color:#b45309;">주의사항: 0.0 덮어쓰기 및 데이터 누설 방지</h4>
             <p style="font-size:0.83rem; color:#475569; margin:0; line-height:1.6;">
-              시약 29종을 <code>0.0</code>으로 덮어쓰면 Eq. (12) <code>&lt; 0</code> 필터에서 빠져 Cp/아미디네이트 3종이 악화됩니다(<code>audit_reproduce_all.py</code> Check 5). 비누출 사전 확장은 반드시 <code>max(existing, -0.47)</code> 상향 하한을 사용합니다.
+              평가 대상 프리커서의 정답은 제외하고 실제 상용 시약 29종만 반영해야 데이터 누설(Data Leakage) 없는 공정 평가가 가능하며, 시약 조각을 <code>0.0</code>으로 덮어쓰면 Eq. (12) <code>&lt; 0</code> 필터에서 빠져 Cp/아미디네이트 3종이 악화되므로(<code>audit_reproduce_all.py</code> Check 5) 반드시 음수 영역 하한(<code>max(existing, -0.47)</code>)으로만 보정합니다.
             </p>
           </div>
           <div class="card">
-            <h4 style="margin:0 0 6px 0; color:#0f766e;">최종 결합: Pro-ligand + TMC-SA</h4>
+            <h4 style="margin:0 0 6px 0; color:#0f766e;">최종 결합: Pro-ligand + SAPIS</h4>
             <p style="font-size:0.83rem; color:#475569; margin:0; line-height:1.6;">
               <code>compute_ligand_sa()</code>가 금속 중심을 떼고 리간드 $HL_i$에만 <code>min(BR-SAScore, SAScore)</code>를 적용해 케토-에놀 오판(<code>Hacac 5.20 &rarr; 2.17</code>)까지 복구하며, 배위&middot;열안정성은 <code>SevenNet-0</code> 물리 지표(<code>%V_bur</code>, <code>BDE_min</code>, <code>E_coh</code>)로 보완합니다.
             </p>
@@ -1135,25 +1134,25 @@ flowchart TD
             바닐라 BR-SAScore vs 반도체 DB 확장 외삽 정합성 원리 및 명시적 수치 계산 (<code>CpTi(NMe2)3</code> 실측)
           </h4>
           <p style="font-size:0.84rem; color:#334155; line-height:1.68; margin:0 0 10px 0;">
-            바닐라 <code>BR-SAScore</code>에 반도체 상용 시약(29종) 및 Pro-ligand 분리 체계를 확장할 때 <strong>외삽 정합성(미지 프리커서에 대한 순위·판정 일관성)</strong>이 향상되는 핵심 원리는 <strong>Eq. (12)의 음수 집합($\text{Score}_k &lt; 0$) 분모 보존과 해시 사전의 국소 불변성</strong>에 있습니다. 신경망 모델은 새로운 시약 29종을 추가 학습하면 전체 결정 경계가 이동해 기존 유기·무기 점수까지 흔들리지만, <code>BR-SAScore</code>는 미등재 금속-리간드 비트만 <code>-6.0</code>으로 두고 <strong>실제 상용 시약이 공유하는 리간드 조각(<code>max(existing, -0.47)</code>)만 음수 영역 안에 안전하게 상향 보정</strong>합니다. 따라서 <code>&lt; 0</code> 분모($n_{\text{neg}}$)가 유지되면서 점수가 단조롭게 개선되며, 여기에 Pro-ligand 분리를 결합하면 금속 중심의 미등재 <code>-6.0</code> 붕괴까지 해소되어 신규 원소 프리커서로도 일관되게 외삽됩니다.
+            바닐라 <code>BR-SAScore</code>에 반도체 상용 시약(29종) 및 Pro-ligand 분리 체계를 확장할 때 <strong>외삽 정합성(미지 프리커서에 대한 순위·판정 일관성)</strong>이 향상되는 핵심 원리는 <strong>Eq. (12)의 음수 집합($\text{Score}_k &lt; 0$) 분모 보존과 해시 사전의 국소 불변성</strong>에 있습니다. 신경망 모델은 새로운 시약 29종을 추가 학습하면 전체 결정 경계가 이동해 기존 유기·무기 점수까지 흔들리지만, <code>BR-SAScore</code>는 미등재 금속-리간드 조각만 <code>-6.0</code>으로 두고 <strong>실제 상용 시약이 공유하는 리간드 조각(<code>max(existing, -0.47)</code>)만 음수 영역 안에 안전하게 상향 보정</strong>합니다. 따라서 <code>&lt; 0</code> 분모($n_{\text{neg}}$)가 유지되면서 점수가 단조롭게 개선되며, 여기에 Pro-ligand 분리를 결합하면 금속 중심의 미등재 <code>-6.0</code> 붕괴까지 해소되어 신규 원소 프리커서로도 일관되게 외삽됩니다.
           </p>
           <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:12px 14px; font-size:0.8rem; color:#334155; line-height:1.65;">
             <strong style="color:#0369a1;">실측 대입 비교: <code>CpTi(NMe2)3</code> ($\text{C}_{11}\text{H}_{23}\text{N}_3\text{Ti}$, $n_{\text{At}}=15,\; |\text{FP}|=21 \implies s_3=0.000,\; \text{comp}=0.2045$)</strong>
             <div class="brt-split-grid">
               <ul style="margin:0 0 0 18px; padding:0;">
-                <li><strong>① 바닐라 BR-SAScore (Default):</strong> 고유 반경-2 비트 7개 중 금속 인접 5개(적색 영역)는 <code>-6.0</code>, Cp 고리 2개(청색 영역)는 <code>-1.016, -1.324</code> ($n_{\text{neg}}=7$).<br>
-                  $\text{BR-frag} = \frac{5(-6.0) - 1.016 - 1.324}{7} = -4.6200 \implies \text{raw} = -4.8245 \implies 10 - 9\frac{-4.8245+7.0}{7.0} = \mathbf{7.2029}$</li>
+                <li><strong>① 바닐라 BR-SAScore (Default):</strong> 고유 반경-2 조각 7개 중 금속 인접 5개(적색 영역)는 <code>-6.0</code>, Cp 고리 2개(청색 영역)는 <code>-1.016, -1.324</code> ($n_{\text{neg}}=7$).<br>
+                  $\text{BR-frag} = \frac{5(-6.0) - 1.016 - 1.324}{7} = -4.620 \implies \text{raw} = -4.825 \implies 10 - 9\frac{-4.825+7.0}{7.0} = \mathbf{7.203}$</li>
                 <li><strong>② 반도체 시약 DB 확장 (<code>Strict Unleaked</code>, <code>max(existing, -0.47)</code>):</strong> 시약 사전의 Cp 조각 2개(청색)가 <code>-0.47</code>로 보정되나 여전히 <code>&lt; 0</code>이므로 분모 $n_{\text{neg}}=7$이 보존됨.<br>
-                  $\text{BR-frag} = \frac{5(-6.0) + 2(-0.47)}{7} = -4.4200 \implies \text{raw} = -4.6245 \implies 10 - 9\frac{-4.6245+7.0}{7.0} = \mathbf{6.9458}$ (<code>-0.2571</code> 개선, 기존 27종 악화 0건)</li>
-                <li><strong>③ (오류 대조) <code>0.0</code> 덮어쓰기 함정:</strong> Cp 2개 비트를 <code>0.0</code>으로 덮어쓰면 Eq. (12) <code>&lt; 0</code> 필터에서 탈락해 분모가 $n_{\text{neg}}=5$로 축소됨.<br>
-                  $\text{BR-frag} = \frac{5(-6.0)}{5} = -6.0000 \implies \text{raw} = -6.2045 \implies \mathbf{8.9772}$ (<code>+1.7743</code> 역전 악화)</li>
-                <li><strong>④ 완전 외삽 (Pro-ligand 분리 + <code>TMC-SA</code>):</strong> <code>Ti</code> 중심을 분리한 <code>Me2NH</code>(<code>BR=1.02</code>)와 <code>HCp</code>(<code>BR=3.33</code>)는 모두 사전 내에 등재되어 <code>ligand_sa = 3.31</code>($\le 3.5$ 통과)을 산출하고, <code>SevenNet-0</code> 물리 지표가 금속-리간드 안정성을 결합해 미지 프리커서에서도 높은 외삽 정합성을 달성함.</li>
+                  $\text{BR-frag} = \frac{5(-6.0) + 2(-0.47)}{7} = -4.420 \implies \text{raw} = -4.625 \implies 10 - 9\frac{-4.625+7.0}{7.0} = \mathbf{6.946}$ (<code>-0.257</code> 개선, 기존 27종 악화 0건)</li>
+                <li><strong>③ (오류 대조) <code>0.0</code> 덮어쓰기 함정:</strong> Cp 2개 조각을 <code>0.0</code>으로 덮어쓰면 Eq. (12) <code>&lt; 0</code> 필터에서 탈락해 분모가 $n_{\text{neg}}=5$로 축소됨.<br>
+                  $\text{BR-frag} = \frac{5(-6.0)}{5} = -6.000 \implies \text{raw} = -6.205 \implies \mathbf{8.977}$ (<code>+1.774</code> 역전 악화)</li>
+                <li><strong>④ 완전 외삽 (Pro-ligand 분리 + <code>SAPIS</code>):</strong> <code>Ti</code> 중심을 분리한 <code>Me2NH</code>(<code>BR=1.02</code>)와 <code>HCp</code>(<code>BR=3.33</code>)는 모두 사전 내에 등재되어 <code>ligand_sa = 3.31</code>($\le 3.5$ 통과)을 산출하고, <code>SevenNet-0</code> 물리 지표가 금속-리간드 안정성을 결합해 미지 프리커서에서도 높은 외삽 정합성을 달성함.</li>
               </ul>
               <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px; text-align:center;">
                 __CPTI_2D_SVG__
                 <div style="font-size:0.74rem; color:#475569; margin-top:6px; line-height:1.5;">
-                  <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#e63946; margin-right:3px;"></span><strong>금속 인접 미등재</strong> <code>-6.0</code> (5개 비트) &nbsp;
-                  <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#0284c7; margin-right:3px;"></span><strong>Cp 시약 확장</strong> <code>-0.47</code> (2개 비트)
+                  <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#e63946; margin-right:3px;"></span><strong>금속 인접 미등재</strong> <code>-6.0</code> (5개 조각) &nbsp;
+                  <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#0284c7; margin-right:3px;"></span><strong>Cp 시약 확장</strong> <code>-0.47</code> (2개 조각)
                   <div style="font-size:0.71rem; color:#64748b; margin-top:2px;">* 비강조 말단 메틸기(<code>-CH3</code>)는 <code>&ge; 0</code>으로 Eq. (12) 분모 제외</div>
                 </div>
               </div>
@@ -1164,7 +1163,7 @@ flowchart TD
               <span style="display:inline-block; padding:1px 7px; border-radius:999px; background:#fef3c7; color:#92400e; font-weight:700; margin:0 4px;">3.5 &lt; 점수 &le; 6.0 : 중간 난이도 (Moderate)</span>
               <span style="display:inline-block; padding:1px 7px; border-radius:999px; background:#fee2e2; color:#991b1b; font-weight:700; margin:0 4px;">6.0 &lt; 점수 &le; 10.0 : 합성 난해 (Hard / Fail)</span>
               <div style="margin-top:4px; color:#475569;">
-                * <strong>판정 기준 적용:</strong> <code>SAScore (2009)</code>와 동일하게 <strong>$3.5$ 이하</strong>를 표준 합성 가능(Pass) 임계치로 사용합니다. 위 예시의 ①(<code>7.2029</code>)과 ②(<code>6.9458</code>)는 시약 DB 확장으로 점수가 개선되더라도 금속-리간드 미등재(<code>-6.0</code>) 때문에 여전히 <code>&gt; 6.0</code>(합성 난해 오판) 영역에 머무르지만, ④ Pro-ligand 분리 후 산출된 <code>ligand_sa = 3.31</code>은 <strong><code>&le; 3.5</code> 기준을 통과</strong>하여 실제 합성 가능성을 정확히 반영합니다.
+                * <strong>판정 기준 적용:</strong> <code>SAScore (2009)</code>와 동일하게 <strong>$3.5$ 이하</strong>를 표준 합성 가능(Pass) 임계치로 사용합니다. 위 예시의 ①(<code>7.203</code>)과 ②(<code>6.946</code>)는 시약 DB 확장으로 점수가 개선되더라도 금속-리간드 미등재(<code>-6.0</code>) 때문에 여전히 <code>&gt; 6.0</code>(합성 난해 오판) 영역에 머무르지만, ④ Pro-ligand 분리 후 산출된 <code>ligand_sa = 3.31</code>은 <strong><code>&le; 3.5</code> 기준을 통과</strong>하여 실제 합성 가능성을 정확히 반영합니다.
               </div>
             </div>
           </div>

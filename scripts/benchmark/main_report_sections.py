@@ -1022,9 +1022,9 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
         _defb = _r.get("delta_e_form_per_bond_kcal_mol")
         _defb_str = f" | dE_f/bond={_defb:+.1f} kcal" if _defb is not None else ""
         _bde_str = f" | BDE={_r['bde_min_kcal_mol']:.1f} kcal/mol" if _r["bde_min_kcal_mol"] is not None else ""
-        _verdict = "PASS" if _r["unified_pass"] else f"REJECT ({', '.join(_r['gate_reasons']) or 'TMC-SA>4.0'})"
+        _verdict = "PASS" if _r["unified_pass"] else f"REJECT ({', '.join(_r['gate_reasons']) or 'SAPIS>4.0'})"
         _grp_disp = _grp.replace("Audited Precursor", "Core Precursor")
-        _tip = f"{_nm} [{_r['id']}] | {_grp_disp} | %V_bur={_vbur:.1f}% (R_probe={_rprobe:.2f} A, V_min^univ={_vmin:.0f}%, {_vsrc}) | TMC-SA={_sa_val:.2f} | {_verdict}{_bde_str}{_defb_str}"
+        _tip = f"{_nm} [{_r['id']}] | {_grp_disp} | %V_bur={_vbur:.1f}% (R_probe={_rprobe:.2f} A, V_min^univ={_vmin:.0f}%, {_vsrc}) | SAPIS={_sa_val:.2f} | {_verdict}{_bde_str}{_defb_str}"
 
         if "Audited Precursor" in _grp:
             _plot160_points_svg.append(
@@ -1187,7 +1187,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
     phase2_step4_summary_joined = f"""
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
                   <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #10b981; border-radius:6px; padding:16px;">
-                    <div style="font-size:0.8rem; font-weight:700; color:#64748b;">전체 Precursor TPR (102종, TMC-SA)</div>
+                    <div style="font-size:0.8rem; font-weight:700; color:#64748b;">전체 Precursor TPR (102종, SAPIS)</div>
                     <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:4px 0;">{_u_sum['baseline_sascore_precursors_tpr_pct']:.1f}% &rarr; {_u_sum['precursors_all_tpr_pct']:.1f}%</div>
                     <div style="font-size:0.8rem; color:#475569;"><strong>{_u_sum['precursors_all_tp']} Pass</strong> (핵심 {_u_sum['audited_precursors_tp']} [{_u_sum['audited_precursors_tpr_pct']:.1f}%] &middot; 확장 {_u_sum['expanded_precursors_tp']} [{_u_sum['expanded_precursors_tpr_pct']:.1f}%]; FNR {_u_sum['precursors_all_fnr_pct']:.1f}%)</div>
                   </div>
@@ -1211,16 +1211,16 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
                   </div>
                 </div>
 
-                <!-- View 1: Unified 160-Molecule Evaluation Space (%V_bur(R_probe) vs TMC-SA + Coord Risk) -->
+                <!-- View 1: Unified 160-Molecule Evaluation Space (%V_bur(R_probe) vs SAPIS + Coord Risk) -->
                 <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px; position:relative;">
                   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
                     <div style="font-weight:700; font-size:1.02rem; color:#0f172a;">
-                      [Unified Plot 1] 통합 160종 물리-배위 위험 공간 (%V<sub>bur</sub>(R<sub>probe</sub>) vs TMC-SA + Coord Risk)
+                      [Unified Plot 1] 통합 160종 물리-배위 위험 공간 (%V<sub>bur</sub>(R<sub>probe</sub>) vs SAPIS + Coord Risk)
                     </div>
                     <span class="badge badge-2g" style="font-size:0.75rem;">Physical-Property Framework &bull; {_u_ds['sevenn_relaxed_count']} SevenNet &bull; 102 Precursors &bull; 18 Inhibitors &bull; 40 Negative Controls</span>
                   </div>
                   <p style="font-size:0.82rem; color:#475569; margin:0 0 10px 0; line-height:1.5;">
-                    원소 공유반지름 비례 프로브 구($R_{{\text{{probe}}}}(Z_M)=R_{{\text{{cov}}}}(Z_M)+1.85\text{{ Å}}$), 보편 하한 $V_{{\min}}^{{\text{{univ}}}}(\eta_{{\pi}})$, 리간드 환경 연동 다중상태 전이금속 배위 벡터($R_{{\text{{eff}}}}$, $\chi_{{\text{{eff}}}}$, $CN_{{\text{{eff}}}}$, $N_{{\text{{ve}}}}$), 주족 하이드라이드 반응성 게이트, 및 범용 MLIAP인 SevenNet({_u_ds['sevenn_relaxed_count']}종 전수 LBFGS) 결합 해리 에너지를 <strong>TMC-SA (Transition-Metal Complex Synthetic Accessibility)</strong> 단일 수식으로 결합한 <strong>전체 160종 통합 판정</strong> 결과입니다. <strong>Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%)</strong> 통과 및 <strong>Negative Control {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong> 분별력을 보입니다. ($0\text{{--}}44\%$ 영역은 비이합체 단량체 통과·응집 시 <code>pen_olig</code> 부과 구간이며, $&gt;83.5\%$는 무조건 과밀 장벽 구간입니다.)
+                    원소 공유반지름 비례 프로브 구($R_{{\text{{probe}}}}(Z_M)=R_{{\text{{cov}}}}(Z_M)+1.85\text{{ Å}}$), 보편 하한 $V_{{\min}}^{{\text{{univ}}}}(\eta_{{\pi}})$, 리간드 환경 연동 다중상태 전이금속 배위 벡터($R_{{\text{{eff}}}}$, $\chi_{{\text{{eff}}}}$, $CN_{{\text{{eff}}}}$, $N_{{\text{{ve}}}}$), 주족 하이드라이드 반응성 게이트, 및 범용 MLIAP인 SevenNet({_u_ds['sevenn_relaxed_count']}종 전수 LBFGS) 결합 해리 에너지를 <strong>SAPIS (Synthetic Accessibility of Precursors & Inhibitors for Semiconductors)</strong> 단일 수식으로 결합한 <strong>전체 160종 통합 판정</strong> 결과입니다. <strong>Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%)</strong> 통과 및 <strong>Negative Control {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong> 분별력을 보입니다. ($0\text{{--}}44\%$ 영역은 비이합체 단량체 통과·응집 시 <code>pen_olig</code> 부과 구간이며, $&gt;83.5\%$는 무조건 과밀 장벽 구간입니다.)
                   </p>
                   <div id="step4-plot-tooltip" style="display:none; position:fixed; z-index:9999; background:#0f172a; color:#f8fafc; padding:6px 10px; border-radius:6px; font-size:0.76rem; font-family:'JetBrains Mono', monospace; pointer-events:none; box-shadow:0 4px 12px rgba(0,0,0,0.2);"></div>
                   <svg viewBox="0 0 820 400" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
@@ -1234,7 +1234,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
                     <rect x="{_opt_x1:.1f}" y="{_opt_y_4:.1f}" width="{_opt_x2 - _opt_x1:.1f}" height="{_opt_y_bot - _opt_y_4:.1f}" fill="#dcfce7" fill-opacity="0.62" />
                     <!-- Overcrowding zone (> 83.5%, Y <= 4.0) -->
                     <rect x="{_opt_x2:.1f}" y="{_opt_y_4:.1f}" width="{_opt_x_max - _opt_x2:.1f}" height="{_opt_y_bot - _opt_y_4:.1f}" fill="#fef3c7" fill-opacity="0.65" />
-                    <text x="80" y="{_opt_y_top + 18:.1f}" font-size="11" font-weight="700" fill="#b91c1c">Rejection Zone (TMC-SA &gt; 4.0 or Intrinsic Coordination/Topology Gate Triggered)</text>
+                    <text x="80" y="{_opt_y_top + 18:.1f}" font-size="11" font-weight="700" fill="#b91c1c">Rejection Zone (SAPIS &gt; 4.0 or Intrinsic Coordination/Topology Gate Triggered)</text>
                     <text x="{_opt_x0 + 8:.1f}" y="{_opt_y_bot - 8:.1f}" font-size="9.5" font-weight="700" fill="#1d4ed8">Monomeric Zone (Oligomer Check)</text>
                     <text x="{_opt_x_adapt + 4:.1f}" y="{_opt_y_bot - 22:.1f}" font-size="9.5" font-weight="700" fill="#0f766e">&pi;-haptic 34%</text>
                     <text x="{_opt_x1 + 8:.1f}" y="{_opt_y_bot - 8:.1f}" font-size="10.5" font-weight="700" fill="#15803d">Optimal Pass Window (44~83.5%, Risk &lt;= 4.0)</text>
@@ -1263,7 +1263,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
                     <text x="62" y="{_svg_y_risk(4)+4:.1f}" font-size="11" text-anchor="end" fill="#dc2626" font-weight="700">4.0</text>
                     <text x="62" y="{_svg_y_risk(2)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">2.0</text>
                     <text x="62" y="{_svg_y_risk(0)+4:.1f}" font-size="11" text-anchor="end" fill="#475569">0.0</text>
-                    <text x="20" y="185" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a" transform="rotate(-90 20 185)">Composite Risk (TMC-SA + 4 &times; Coord Gate)</text>
+                    <text x="20" y="185" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a" transform="rotate(-90 20 185)">Composite Risk (SAPIS + 4 &times; Coord Gate)</text>
                     <!-- Data points (All 160 molecules) -->
                     {_plot160_svg_joined}
                   </svg>
@@ -1342,7 +1342,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
                           <td>{_u_sum['baseline_sascore_neg_tnr_pct']/100.0:.3f} (도메인 불일치)</td>
                         </tr>
                         <tr style="background:#f0fdf4;">
-                          <td><strong>TMC-SA (Transition-Metal Complex Synthetic Accessibility) + Coord/Topology Gate</strong></td>
+                          <td><strong>SAPIS (Synthetic Accessibility of Precursors & Inhibitors for Semiconductors) + Coord/Topology Gate</strong></td>
                           <td>Pro-ligand SA + R<sub>cov</sub>-비례 프로브 V<sub>min</sub><sup>univ</sup> + 주기율표 물성 규칙</td>
                           <td><strong>TPR {_u_sum['precursors_all_tpr_pct']:.1f}% ({_u_sum['precursors_all_tp']})</strong></td>
                           <td><strong>TNR {_u_sum['negative_all_tnr_pct']:.1f}% ({_u_sum['negative_all_tn']})</strong></td>
@@ -1396,7 +1396,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
                           <th>표본 수</th>
                           <th>SAScore 차단 (TNR)</th>
                           <th>SYBA 차단 (TNR)</th>
-                          <th>TMC-SA + Coord Gate 차단 (TNR)</th>
+                          <th>SAPIS + Coord Gate 차단 (TNR)</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1606,7 +1606,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
                     </p>
                     <ul style="font-size:0.81rem; color:#064e3b; margin:0; padding-left:18px; line-height:1.6;">
                       <li><strong>스핀·전하 인지 MLIP / DFT 결합</strong>: <code>SevenNet-0</code>(MPtrj 무기 결정 학습)은 중성 <code>CO</code>·$\pi$-아렌 리간드 해리에서 음의 BDE(<code>Ir(CO)3(tBu3Cyp) -8.8</code>, <code>Ru(IMBCH) -15.1 kcal/mol</code>)를 산출할 수 있으므로, 분자 스핀·전하를 학습한 <code>MACE-OMol</code> 또는 <code>g-xTB</code>/$\omega\text{{B97M-V}}$로 전자구조 정밀도를 보강합니다.</li>
-                      <li><strong>점수식 직접 결합형 $\Delta E_f^{{\text{{std}}}}/v_M$·$\Delta G_{{\text{{dimer}}}}$·$P_{{\text{{vap}}}}$ 보정</strong>: 전체 160종 전수 MLIP 이완을 통해 정량 검증된 $\Delta E_f^{{\text{{std}}}}/v_M$ 및 $\Delta G_{{\text{{dimer}}}}(373\,\text{{K}})$을 향후 연속 스코어 <code>TMC-SA</code> 페널티 및 증기압($P_{{\text{{vap}}}}$) 항에 정규 결합합니다.</li>
+                      <li><strong>점수식 직접 결합형 $\Delta E_f^{{\text{{std}}}}/v_M$·$\Delta G_{{\text{{dimer}}}}$·$P_{{\text{{vap}}}}$ 보정</strong>: 전체 160종 전수 MLIP 이완을 통해 정량 검증된 $\Delta E_f^{{\text{{std}}}}/v_M$ 및 $\Delta G_{{\text{{dimer}}}}(373\,\text{{K}})$을 향후 연속 스코어 <code>SAPIS</code> 페널티 및 증기압($P_{{\text{{vap}}}}$) 항에 정규 결합합니다.</li>
                       <li><strong>외삽 표준 프로토콜 상시화</strong>: 무작위 CV-5가 아닌 <strong>Leave-One-Element-Out (LOEO)</strong> 및 <strong>LOFMO</strong>를 정규 외삽 검증 프로토콜로 유지합니다.</li>
                     </ul>
                   </div>
@@ -1615,7 +1615,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
     phase1_phase2_tuning_joined = f"""
             <!-- Unified 160-Molecule Framework Summary Callout -->
             <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #059669; border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:0.84rem; color:#14532d; line-height:1.6;">
-              <strong>통합 물리-배위 평가 프레임워크(<code>TMC-SA</code>: Transition-Metal Complex Synthetic Accessibility &bull; 다중상태 전이금속 배위 벡터 &bull; 극성 가중 <code>%V<sub>bur</sub><sup>D2</sup></code>) 핵심 성능:</strong>
+              <strong>통합 물리-배위 평가 프레임워크(<code>SAPIS</code>: Transition-Metal Complex Synthetic Accessibility &bull; 다중상태 전이금속 배위 벡터 &bull; 극성 가중 <code>%V<sub>bur</sub><sup>D2</sup></code>) 핵심 성능:</strong>
               공유반지름 정규화 프로브 구($R_{{\text{{probe}}}}(Z_M) = R_{{\text{{cov}}}} + 1.85\,\text{{Å}}$), 상태-의존 유효 반지름 $R_{{\text{{eff}}}}(M\mid\text{{env}})$, 극성·하이드라이드 가중 $\%V_{{\text{{bur}}}}^{{\text{{D2}}}}$, 개방 원추각 $\theta_{{\max}}^{{\text{{void}}}}$, 직교 표준 생성에너지($\Delta E_f^{{\text{{std}}}}/v_M$, {_d4_89['n_total']}종 전수 MLIP AUROC <code>{_d4_89['delta_e_form_per_bond']['auroc']:.3f}</code> · {_d4_85['n_total']}종 <code>{_d4_85['delta_e_form_per_bond']['auroc']:.3f}</code>) 및 주족 연쇄/&pi;-공액 하이드라이드 게이트를 결합하여, 핵심 검증셋(<code>N=55</code>) <strong>Precursor {_u_sum['audited_precursors_tp']} ({_u_sum['audited_precursors_tpr_pct']:.1f}%), Neg TNR {neg_tn_chem}/{neg_cnt} ({100.0 - neg_fp_pct_chem:.1f}%)</strong> 및 전체 <strong>160종 통합 데이터셋 Precursor {_u_sum['precursors_all_tp']} ({_u_sum['precursors_all_tpr_pct']:.1f}%), Neg TNR {_u_sum['negative_all_tn']} ({_u_sum['negative_all_tnr_pct']:.1f}%)</strong>을 기록합니다.
             </div>
 
@@ -1631,7 +1631,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
               </div>
 
               <div class="stat-card" style="border-left:4px solid #10b981; padding:18px;">
-                <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 2 Uniform Screening (TMC-SA &le; 4.0)</div>
+                <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Phase 2 Uniform Screening (SAPIS &le; 4.0)</div>
                 <div style="font-size:1.75rem; font-weight:800; color:#059669; margin:6px 0;">Precursor {prec_pct_chem:.1f}% ({prec_pass_chem}/{prec_cnt})</div>
                 <div style="font-size:0.82rem; color:#475569; line-height:1.5;">
                   Label/ID-free Continuous Penalty (FNR {base_cmp['precursors_sascore_fn']} &rarr; <strong>{prec_fn_chem_pct:.1f}%</strong>)<br>
@@ -1747,7 +1747,7 @@ def build_main_report_sections() -> Tuple[Dict[str, str], Dict[str, Any]]:
 
               <div style="display:grid; grid-template-columns: 3fr 2fr; gap:18px; margin-bottom:20px;">
                 <div>
-                  <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">표 15-1. Label/ID-Free Uniform Analytical Screening ($\\text{{TMC-SA}} \\le 4.0$) 성능</div>
+                  <div style="font-weight:700; color:#0f172a; margin-bottom:8px;">표 15-1. Label/ID-Free Uniform Analytical Screening ($\\text{{SAPIS}} \\le 4.0$) 성능</div>
                   <div style="overflow-x:auto;">
                   <table class="report-table" style="font-size:0.82rem;">
                     <thead>

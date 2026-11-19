@@ -17,13 +17,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      // Render math only in visible header & initial storyline tab (defer hidden tabs)
+      // Render math only in visible header & initial intro tab (defer hidden tabs)
       renderKatexInContainer('header', document.querySelector('header'));
-      renderKatexInContainer('storyline', document.getElementById('tab-content-storyline'));
+      renderKatexInContainer('intro', document.getElementById('tab-content-intro'));
       initScrollSpy();
-
-      // Trigger lazy Mermaid observer for visible Storyline tab
-      renderMermaidInStorylineTab();
 
       // Check URL hash on direct link entry
       if (window.location.hash) {
@@ -414,28 +411,41 @@
 
     // Top View Mode Switcher (Summary vs Full Report vs DB Explorer vs BR-SAScore Theory)
     function switchViewTab(tabName, opts) {
+      const btnIntro = document.getElementById('btn-tab-intro');
       const btnStoryline = document.getElementById('btn-tab-storyline');
       const btnTechnical = document.getElementById('btn-tab-technical');
       const btnDatabase = document.getElementById('btn-tab-database');
       const btnBrtheory = document.getElementById('btn-tab-brtheory');
+      const btnGlossary = document.getElementById('btn-tab-glossary');
+      const contentIntro = document.getElementById('tab-content-intro');
       const contentStoryline = document.getElementById('tab-content-storyline');
       const contentTechnical = document.getElementById('tab-content-technical');
       const contentDatabase = document.getElementById('tab-content-database');
       const contentBrtheory = document.getElementById('tab-content-brtheory');
+      const contentGlossary = document.getElementById('tab-content-glossary');
       const tocStoryline = document.getElementById('toc-storyline');
       const tocTechnical = document.getElementById('toc-technical');
       const tocDatabase = document.getElementById('toc-database');
       const tocBrtheory = document.getElementById('toc-brtheory');
+      const tocSidebar = document.querySelector('.toc-sidebar');
 
       if (!btnStoryline || !btnTechnical) return;
 
-      [btnStoryline, btnTechnical, btnDatabase, btnBrtheory].forEach(b => b && b.classList.remove('active'));
-      [contentStoryline, contentTechnical, contentDatabase, contentBrtheory].forEach(c => { if (c) c.style.display = 'none'; });
+      [btnIntro, btnStoryline, btnTechnical, btnDatabase, btnBrtheory, btnGlossary].forEach(b => b && b.classList.remove('active'));
+      [contentIntro, contentStoryline, contentTechnical, contentDatabase, contentBrtheory, contentGlossary].forEach(c => { if (c) c.style.display = 'none'; });
       [tocStoryline, tocTechnical, tocDatabase, tocBrtheory].forEach(t => { if (t) t.style.display = 'none'; });
+      if (tocSidebar) tocSidebar.style.display = (tabName === 'glossary' || tabName === 'intro') ? 'none' : '';
 
       const skipScrollTop = opts && opts.skipScrollTop;
 
-      if (tabName === 'storyline') {
+      if (tabName === 'intro') {
+        if (btnIntro) btnIntro.classList.add('active');
+        if (contentIntro) contentIntro.style.display = 'block';
+        if (!skipScrollTop) window.scrollTo(0, 0);
+        requestAnimationFrame(() => {
+          renderKatexInContainer('intro', contentIntro);
+        });
+      } else if (tabName === 'storyline') {
         btnStoryline.classList.add('active');
         if (contentStoryline) contentStoryline.style.display = 'block';
         if (tocStoryline) tocStoryline.style.display = 'block';
@@ -460,6 +470,13 @@
         requestAnimationFrame(() => {
           renderKatexInContainer('brtheory', contentBrtheory);
           renderMermaidInBrtheoryTab();
+        });
+      } else if (tabName === 'glossary') {
+        if (btnGlossary) btnGlossary.classList.add('active');
+        if (contentGlossary) contentGlossary.style.display = 'block';
+        if (!skipScrollTop) window.scrollTo(0, 0);
+        requestAnimationFrame(() => {
+          renderKatexInContainer('glossary', contentGlossary);
         });
       } else {
         btnTechnical.classList.add('active');
@@ -939,7 +956,7 @@
             (r.role_badges || []).forEach(rb => {
               pills.push(`<span class="db-mini-pill" style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;">${escapeHtmlStr(rb)}</span>`);
             });
-            if (r.phase2_pass === true) pills.push(`<span class="db-mini-pill" style="background:#dcfce7;color:#15803d;border-color:#86efac;">${r.db_type === 'patent_expansion' || (r.alt_db_types || []).includes('patent_expansion') ? 'TMC-SA Pass' : 'Phase 2 Pass'}</span>`);
+            if (r.phase2_pass === true) pills.push(`<span class="db-mini-pill" style="background:#dcfce7;color:#15803d;border-color:#86efac;">${r.db_type === 'patent_expansion' || (r.alt_db_types || []).includes('patent_expansion') ? 'SAPIS Pass' : 'Phase 2 Pass'}</span>`);
             if (r.phase2_pass === false) pills.push(`<span class="db-mini-pill" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;">${r.db_type === 'patent_expansion' || (r.alt_db_types || []).includes('patent_expansion') ? 'Boundary Flag' : 'Phase 2 Reject'}</span>`);
 
             let subLine = escapeHtmlStr(r.chemical_name);
@@ -1093,7 +1110,7 @@
       if (r.target_films) addRow('Target Films / Process', `${escapeHtmlStr(r.target_films)} (${escapeHtmlStr(r.process_type || '-')})`);
       if (r.jurisdictions || r.patent_references) addRow('Patent / Literature Expansion', `${r.jurisdictions ? '<strong>[' + escapeHtmlStr(r.jurisdictions) + ']</strong> ' : ''}${escapeHtmlStr(r.patent_references || '')}`);
       if (r.mechanism_note) addRow('Deposition / Chemical Note', escapeHtmlStr(r.mechanism_note));
-      if (r.diag_note) addRow('TMC-SA Boundary Diagnostic', escapeHtmlStr(r.diag_note));
+      if (r.diag_note) addRow('SAPIS Boundary Diagnostic', escapeHtmlStr(r.diag_note));
       if (r.vapor_pressure) addRow('Vapor Pressure / T_decomp', `${escapeHtmlStr(r.vapor_pressure)} &bull; >${escapeHtmlStr(r.t_decomp_c)} &deg;C`);
       if (r.starting_materials && r.starting_materials.length) addRow('Starting Materials & Route', `${escapeHtmlStr(r.starting_materials.join(' + '))} (${escapeHtmlStr(r.reaction_type)}, ${escapeHtmlStr(r.yield_pct)}% yield)`);
       if (r.vendors && r.vendors.length) addRow('Commercial Vendors', escapeHtmlStr(r.vendors.join(', ')));
@@ -1105,7 +1122,7 @@
       if (r.atomiclimits_process_count) addRow('AtomicLimits ALD Data', `Processes: ${r.atomiclimits_process_count} | Materials: ${escapeHtmlStr((r.atomiclimits_materials || []).join(', '))} | Co-reactants: ${escapeHtmlStr((r.atomiclimits_co_reactants || []).join(', '))} | DOIs: ${r.atomiclimits_doi_count}`);
       if (r.sascore != null) addRow('Phase 1 SA Scores', `SAScore: <strong>${r.sascore}</strong> | SCScore: <strong>${r.scscore}</strong> | SYBA: <strong>${r.syba}</strong> | BR-SAScore: <strong>${r.br_sascore}</strong> | RAscore: <strong>${r.rascore}</strong> | Ligand SA: <strong>${r.ligand_sa}</strong>`);
       if (r.bde_min != null) addRow('SevenNet-0 Physics (LBFGS)', `BDE_min: <strong>${r.bde_min} kcal/mol</strong> | %V_bur: <strong>${r.vbur}%</strong>${r.vbur_d2_7net != null ? ' (D2 ' + r.vbur_d2_7net + '%, ETKDG ' + r.vbur_etkdg + '%)' : ''} | dE_dimer: <strong>${r.de_dimer} kcal/mol</strong>${r.dg_dimer_373 != null ? ' (dG373 ' + r.dg_dimer_373 + ')' : ''} | e_coh: <strong>${r.e_coh} eV/atom</strong>${r.de_form_bond != null ? ' | dEf/vM: <strong>' + r.de_form_bond + ' kcal/mol</strong>' : ''}`);
-      if (r.tmc_sa_phys != null) addRow('Phase 2 Analytical Verdict', `TMC-SA (7net): <strong>${r.tmc_sa_phys}</strong>${r.tmc_sa_no3d != null ? ' (ETKDG No-3D: ' + r.tmc_sa_no3d + ')' : ''} | Flag: <code>${escapeHtmlStr(r.domain_flag)}</code> | Pass: <strong>${r.phase2_pass}</strong>`);
+      if (r.tmc_sa_phys != null) addRow('Phase 2 Analytical Verdict', `SAPIS (7net): <strong>${r.tmc_sa_phys}</strong>${r.tmc_sa_no3d != null ? ' (ETKDG No-3D: ' + r.tmc_sa_no3d + ')' : ''} | Flag: <code>${escapeHtmlStr(r.domain_flag)}</code> | Pass: <strong>${r.phase2_pass}</strong>`);
       if (r.doi) addRow('Reference DOI', `<a href="https://doi.org/${escapeHtmlStr(r.doi)}" target="_blank">${escapeHtmlStr(r.doi)}</a>`);
 
       const smiBlock = r.smiles
@@ -1221,6 +1238,45 @@
     }
 
     // ScrollSpy for Left Sticky TOC (Storyline, Technical & BR-SAScore Theory) - rAF throttled
+    let glossaryActiveCat = 'all';
+    function setGlossaryCategory(cat, btnEl) {
+      glossaryActiveCat = cat || 'all';
+      const wrap = document.getElementById('glossaryCatPills');
+      if (wrap && btnEl) {
+        wrap.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+      filterGlossary();
+    }
+    function resetGlossaryFilter() {
+      const inp = document.getElementById('glossarySearchInput');
+      if (inp) inp.value = '';
+      glossaryActiveCat = 'all';
+      const wrap = document.getElementById('glossaryCatPills');
+      if (wrap) {
+        wrap.querySelectorAll('button').forEach((b, idx) => b.classList.toggle('active', idx === 0));
+      }
+      filterGlossary();
+    }
+    function filterGlossary() {
+      const inp = document.getElementById('glossarySearchInput');
+      const q = (inp ? inp.value : '').trim().toLowerCase();
+      const cards = document.querySelectorAll('#glossaryCardGrid .glossary-card');
+      let shown = 0;
+      cards.forEach(c => {
+        const cat = c.getAttribute('data-gcat') || '';
+        const txt = c.getAttribute('data-gtext') || '';
+        const okCat = (glossaryActiveCat === 'all') || (cat === glossaryActiveCat);
+        const okTxt = !q || txt.indexOf(q) !== -1;
+        const vis = okCat && okTxt;
+        c.style.display = vis ? 'flex' : 'none';
+        if (vis) shown += 1;
+      });
+      const badge = document.getElementById('glossaryCountBadge');
+      if (badge) badge.textContent = '표시 ' + shown + '개';
+      const empty = document.getElementById('glossaryEmptyState');
+      if (empty) empty.style.display = shown === 0 ? 'block' : 'none';
+    }
     function initScrollSpy() {
       const progressBadge = document.getElementById('tocProgress');
       const brtProgressBadge = document.getElementById('brtTocProgress');

@@ -669,7 +669,7 @@ def build_mechanistic_technical_html(
                 </table>
               </div>
               <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:8px; padding:10px 12px; font-size:0.79rem; color:#881337; line-height:1.55;">
-                <strong>방법론적 통찰:</strong> 일반 Precursor vs Negative Control 분류는 <code>2D M+L + SMARTS</code>만으로도 AUROC <code>__C2_CV__</code>(LOMO <code>__C2_MO__</code>)까지 도달하며 소규모 142종 RF에서는 오히려 3D 노이즈 과적합이 적습니다. 그러나 Section 15에서 검증했듯이 학습 DB에 없던 <strong>완전 미지 실패 메커니즘(<code>LOFMO</code>)</strong>에 대해서는 ML 분류기가 붕괴(<code>0.000</code>)하고 물리 게이트(<code>TMC-SA</code>)만 <code>1.000</code>을 유지하므로 1차 <code>2D M+L</code> 필터 뒤 <code>TMC-SA</code> 물리 검증이 필수입니다.
+                <strong>방법론적 통찰:</strong> 일반 Precursor vs Negative Control 분류는 <code>2D M+L + SMARTS</code>만으로도 AUROC <code>__C2_CV__</code>(LOMO <code>__C2_MO__</code>)까지 도달하며 소규모 142종 RF에서는 오히려 3D 노이즈 과적합이 적습니다. 그러나 Section 15에서 검증했듯이 학습 DB에 없던 <strong>완전 미지 실패 메커니즘(<code>LOFMO</code>)</strong>에 대해서는 ML 분류기가 붕괴(<code>0.000</code>)하고 물리 게이트(<code>SAPIS</code>)만 <code>1.000</code>을 유지하므로 1차 <code>2D M+L</code> 필터 뒤 <code>SAPIS</code> 물리 검증이 필수입니다.
               </div>
             </div>
           </div>

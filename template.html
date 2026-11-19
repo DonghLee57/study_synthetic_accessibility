@@ -64,7 +64,10 @@
   <!-- Top View Mode Switcher -->
   <nav class="view-mode-bar" aria-label="보고서 뷰 모드 전환">
     <div class="view-mode-inner">
-      <button type="button" class="view-mode-btn active" id="btn-tab-storyline" onclick="switchViewTab('storyline')">
+      <button type="button" class="view-mode-btn active" id="btn-tab-intro" onclick="switchViewTab('intro')">
+        소개
+      </button>
+      <button type="button" class="view-mode-btn" id="btn-tab-storyline" onclick="switchViewTab('storyline')">
         요약
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-technical" onclick="switchViewTab('technical')">
@@ -76,8 +79,11 @@
       <button type="button" class="view-mode-btn" id="btn-tab-brtheory" onclick="switchViewTab('brtheory')">
         배경이론
       </button>
+      <button type="button" class="view-mode-btn" id="btn-tab-glossary" onclick="switchViewTab('glossary')">
+        용어 사전
+      </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 요약, 리포트, DB 탐색, 배경이론 뷰를 전환할 수 있습니다.
+        열람 목적에 따라 소개, 요약, 리포트, DB 탐색, 배경이론, 용어 사전 뷰를 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -86,9 +92,9 @@
   <div class="page-wrapper">
 
     <!-- Left Sticky Sidebar TOC -->
-    <aside class="toc-sidebar" aria-label="보고서 목차">
+    <aside class="toc-sidebar" aria-label="보고서 목차" style="display:none;">
       <!-- Storyline TOC -->
-      <div id="toc-storyline">
+      <div id="toc-storyline" style="display:none;">
         <div class="toc-header">
           <span>요약 목차</span>
           <span class="toc-progress">Step 1~5</span>
@@ -97,7 +103,7 @@
           <li><a href="#storyline-step1" class="toc-link active" data-target="storyline-step1">1. 반도체 프리커서 SA 모델 평가 기준 (Confusion Matrix)</a></li>
           <li><a href="#storyline-step2" class="toc-link" data-target="storyline-step2">2. 4세대 AI Model 체계와 반도체 프리커서 적합성 판정</a></li>
           <li><a href="#storyline-step3" class="toc-link" data-target="storyline-step3">3. 기존 모델 오분류 분석 및 SevenNet-0 물리 Descriptor 체계</a></li>
-          <li><a href="#storyline-step4" class="toc-link" data-target="storyline-step4">4. 통합 160종 물리-배위 모델(TMC-SA) 평가 결과</a></li>
+          <li><a href="#storyline-step4" class="toc-link" data-target="storyline-step4">4. 통합 160종 물리-배위 모델(SAPIS) 평가 결과</a></li>
           <li><a href="#storyline-step5" class="toc-link" data-target="storyline-step5">5. SevenNet 반응경로(CI-NEB) 열분해 벤치마크 및 ALD T<sub>decomp</sub> 연계</a></li>
         </ul>
         <div style="margin-top:20px; padding:12px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; font-size:0.78rem; line-height:1.5;">
@@ -185,14 +191,6 @@
           <li><a href="#brt-sec1" class="toc-link active" data-target="brt-sec1">1. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈</a></li>
           <li><a href="#brt-sec2" class="toc-link" data-target="brt-sec2">2. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거</a></li>
         </ul>
-        <div style="margin-top:10px; padding:10px 12px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; font-size:0.75rem; line-height:1.7;">
-          <strong style="color:#334155;">Sec 2 (BR-SAScore) 바로가기</strong><br>
-          <a href="#brt-sub21" style="color:#0369a1; text-decoration:none;">2.1 B/R 파이프라인 구조도</a><br>
-          <a href="#brt-sub22" style="color:#0369a1; text-decoration:none;">2.2 핵심 수식 체계 (Eq. 8~13)</a><br>
-          <a href="#brt-sub23" style="color:#0369a1; text-decoration:none;">2.3 eMolecules &middot; USPTO (331k)</a><br>
-          <a href="#brt-sub24" style="color:#0369a1; text-decoration:none;">2.4 소스코드 구현 해부 및 원자기여도 분석</a><br>
-          <a href="#brt-sub25" style="color:#0369a1; text-decoration:none;">2.5 베이스 모델로 BR-SAScore (2024) 선정 근거</a>
-        </div>
         <div class="toc-sub-actions">
           <button type="button" class="btn-toc-utility" onclick="switchViewTab('storyline')">요약 탭으로 이동</button>
           <button type="button" class="btn-toc-utility" onclick="switchViewTab('technical')">리포트 탭으로 이동</button>
@@ -206,7 +204,7 @@
       <!-- ===================================================================== -->
       <!-- TAB 1: EXECUTIVE STORYLINE GUIDE (요약 뷰)                             -->
       <!-- ===================================================================== -->
-      <div id="tab-content-storyline">
+      <div id="tab-content-storyline" style="display:none;">
         <!-- TAB_STORYLINE_SHELL_PLACEHOLDER -->
       </div> <!-- end #tab-content-storyline -->
 
@@ -230,6 +228,20 @@
       <div id="tab-content-brtheory" style="display:none;">
         <!-- BR_SASCORE_THEORY_PLACEHOLDER -->
       </div> <!-- end #tab-content-brtheory -->
+
+      <!-- ===================================================================== -->
+      <!-- TAB 0: SAPIS MODEL INTRODUCTION & NAMING HISTORY                      -->
+      <!-- ===================================================================== -->
+      <div id="tab-content-intro">
+        <!-- INTRO_PLACEHOLDER -->
+      </div> <!-- end #tab-content-intro -->
+
+      <!-- ===================================================================== -->
+      <!-- TAB 5: SCIENTIFIC GLOSSARY & TERMINOLOGY GUIDE                        -->
+      <!-- ===================================================================== -->
+      <div id="tab-content-glossary" style="display:none;">
+        <!-- GLOSSARY_PLACEHOLDER -->
+      </div> <!-- end #tab-content-glossary -->
     </main>
   </div>
 

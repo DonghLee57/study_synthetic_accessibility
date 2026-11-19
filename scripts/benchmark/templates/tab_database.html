@@ -13,7 +13,7 @@
 
         <div class="db-controls-card">
           <div class="db-search-row">
-            <input type="text" id="dbSearchInput" class="db-search-input" placeholder="프리커서명, 메인 금속(Hf, Mo, Nb, Ni, 티타늄, Si 등), 특허번호, 분자식, CAS, SMILES 검색..." oninput="scheduleDbExplorerRender()" oncompositionend="scheduleDbExplorerRender()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderDbExplorer();}">
+            <input type="text" id="dbSearchInput" class="db-search-input" placeholder="프리커서명, 메인 금속(Hf, Ti, Si 등), 특허번호, 분자식, CAS, SMILES 검색..." oninput="scheduleDbExplorerRender()" oncompositionend="scheduleDbExplorerRender()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderDbExplorer();}">
             <select id="dbSearchMode" class="db-select" onchange="renderDbExplorer()" title="검색 방식 선택">
               <option value="smart">스마트 검색 (금속·이름·분자식·SMILES)</option>
               <option value="metal">메인 금속 전용 (Main Metal)</option>

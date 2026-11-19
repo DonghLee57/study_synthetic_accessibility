@@ -230,7 +230,7 @@ def enumerate_feasible_precursor_space(
         nve = nval + tot_bo + 4.0 * pi_tot
         nsat = 18.0 if m in TRANSITION_METALS else 8.0
         ve_def = max(0.0, (nsat - nve) / nsat)
-        # Heteroleptic ligand-type diversity penalty (+0.25) anchored to TMC-SA
+        # Heteroleptic ligand-type diversity penalty (+0.25) anchored to SAPIS
         exact_max_sa = max(lig_bank[s]["exact_sa"] for s, _ in stoich) + (0.25 if len(stoich) > 1 else 0.0)
         vec = [
             rcov,
@@ -578,7 +578,7 @@ def build_inverse_design_storyline_html(
             </div>
 
             <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin-bottom:14px;">
-              앞서 <strong>Step 4-2</strong>에서 확인한 <code>{inv_stats['n_metals']}</code>종 중심 원자와 <code>{inv_stats['n_mono_ligs']}</code>종 1가 리간드 라이브러리 위에서 원자가&middot;$18e^-$ 규칙을 강제하면, $10^{{18}}$ 무제약 SMILES 공간이 <strong>{inv_stats['n_candidates']:,}종 화학적 타당 후보</strong>로 압축됩니다. 기존 유기 생성 모델(<code>RxnFlow</code>&middot;<code>SynFlowNet</code>&middot;<code>ReaSyn</code>: 금속 규칙 <code>0</code>건) 및 3D 확산 모델(<code>IDEAL</code>: 합성성 미보장)의 공백을 메우기 위해, 본 연구는 <strong>배위 문법 + <code>M&times;L</code> 불확실성 대리모델 + <code>TMC-SA</code> 게이트 + <code>SevenNet-0 CI-NEB</code> 검증</strong>을 결합한 <strong>4계층 <code>CoOrd-Inv</code> 역설계 모델</strong>을 정립했습니다.
+              앞서 <strong>Step 4-2</strong>에서 확인한 <code>{inv_stats['n_metals']}</code>종 중심 원자와 <code>{inv_stats['n_mono_ligs']}</code>종 1가 리간드 라이브러리 위에서 원자가&middot;$18e^-$ 규칙을 강제하면, $10^{{18}}$ 무제약 SMILES 공간이 <strong>{inv_stats['n_candidates']:,}종 화학적 타당 후보</strong>로 압축됩니다. 기존 유기 생성 모델(<code>RxnFlow</code>&middot;<code>SynFlowNet</code>&middot;<code>ReaSyn</code>: 금속 규칙 <code>0</code>건) 및 3D 확산 모델(<code>IDEAL</code>: 합성성 미보장)의 공백을 메우기 위해, 본 연구는 <strong>배위 문법 + <code>M&times;L</code> 불확실성 대리모델 + <code>SAPIS</code> 게이트 + <code>SevenNet-0 CI-NEB</code> 검증</strong>을 결합한 <strong>4계층 <code>CoOrd-Inv</code> 역설계 모델</strong>을 정립했습니다.
             </p>
 
             <div class="kpi-row" style="margin-bottom:14px;">
@@ -666,7 +666,7 @@ def build_inverse_design_technical_html(
                   <td><strong>Family II<br>3D 조건부 확산&middot;조립</strong></td>
                   <td><code>IDEAL</code> Conditional Diffusion + <code>Architector</code> / <code>molSimplify</code><br>목표 박막 물성 조건 $\\mathbf{{y}}^*$ 기반 SE(3) 3D 좌표 역확산</td>
                   <td>연속 3D 배위 기하 공간<br>($\\eta^n$, 킬레이트, 이성질체 표현)</td>
-                  <td>비제약 생성 시 원자가&middot;$18e^-$ 불균형 및 <code>TMC-SA &gt; 4.0</code> 고비용 리간드 양산 위험</td>
+                  <td>비제약 생성 시 원자가&middot;$18e^-$ 불균형 및 <code>SAPIS &gt; 4.0</code> 고비용 리간드 양산 위험</td>
                   <td>조성 확정 후 3D 초기 컨포머&middot;이성질체 조립기 및 MLIP 사전 최적화 입력</td>
                 </tr>
                 <tr>
@@ -678,7 +678,7 @@ def build_inverse_design_technical_html(
                 </tr>
                 <tr style="background:#f0fdfa;">
                   <td><strong>Family IV (본 연구 제안)<br><code>CoOrd-Inv</code> 통합 모델</strong></td>
-                  <td><strong>배위&middot;조성 제약 연속 대리모델 + 불확실성 획득 + CI-NEB 폐루프</strong><br><code>CN_eff</code> 문법 + <code>M&times;L</code> RF 앙상블($\\hat{{\\mu}},\\hat{{\\sigma}}$) + <code>TMC-SA</code> + <code>SevenNet</code></td>
+                  <td><strong>배위&middot;조성 제약 연속 대리모델 + 불확실성 획득 + CI-NEB 폐루프</strong><br><code>CN_eff</code> 문법 + <code>M&times;L</code> RF 앙상블($\\hat{{\\mu}},\\hat{{\\sigma}}$) + <code>SAPIS</code> + <code>SevenNet</code></td>
                   <td><strong>{inv_stats['n_candidates']:,}종</strong> 원자가&middot;$18e^-$ 정합 매니폴드<br>(전체 전수 평가 &lt; 1초)</td>
                   <td>2D SMILES 가교 이합체 인식을 위해 Tier-2 <code>SevenNet-0</code> 3D 이완 및 표면 슬랩 VASP 검증 필수</td>
                   <td><strong>Core Tier 0&ndash;3 반도체 프리커서 역설계 표준 아키텍처</strong></td>

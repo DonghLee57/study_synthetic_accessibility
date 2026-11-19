@@ -972,7 +972,7 @@ def build_neb_technical_html(
 
           <div class="mermaid">
 flowchart LR
-  S1["Stage 1-2: 정적 물리 스크리닝<br>(TMC-SA, V_bur, BDE_min)"] --> S2["반응 클래스 SMARTS 매칭<br>(beta-H, 4/6-원 고리, 1,2-이동)"]
+  S1["Stage 1-2: 정적 물리 스크리닝<br>(SAPIS, V_bur, BDE_min)"] --> S2["반응 클래스 SMARTS 매칭<br>(beta-H, 4/6-원 고리, 1,2-이동)"]
   S2 --> S3["배위 보정 초기구조 생성<br>(eta^5 Piano-Stool / Kabsch 정렬)"]
   S3 --> S4["TS 중심 25~45 percent 고리형 시딩<br>+ 조기 CI-NEB (FIRE maxstep=0.05)"]
   S4 --> G{{"자동 품질 게이트<br>valid_fs &amp; TS결합 &amp; n_imag=1"}}

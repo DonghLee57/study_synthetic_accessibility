@@ -1124,7 +1124,8 @@
       #tab-content-storyline,
       #tab-content-technical,
       #tab-content-database,
-      #tab-content-brtheory {
+      #tab-content-brtheory,
+      #tab-content-glossary {
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;

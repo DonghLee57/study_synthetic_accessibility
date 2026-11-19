@@ -17,7 +17,7 @@
             <a href="#storyline-step1" class="btn-pdf" style="text-decoration:none;">Step 1. 반도체 프리커서 SA 모델 평가 기준 &darr;</a>
             <a href="#storyline-step2" class="btn-pdf" style="text-decoration:none;">Step 2. 4세대 AI Model 체계와 적합성 판정 &darr;</a>
             <a href="#storyline-step3" class="btn-pdf" style="text-decoration:none;">Step 3. 오분류 분석 및 물리 Descriptor 체계 &darr;</a>
-            <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 통합 160종 물리-배위 모델(TMC-SA) 평가 결과 &darr;</a>
+            <a href="#storyline-step4" class="btn-pdf" style="text-decoration:none;">Step 4. 통합 160종 물리-배위 모델(SAPIS) 평가 결과 &darr;</a>
             <a href="#storyline-step5" class="btn-pdf" style="text-decoration:none;">Step 5. SevenNet 반응경로(CI-NEB) 및 T<sub>decomp</sub> 연계 &darr;</a>
             <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; cursor:pointer; text-decoration:none;">
               22개 섹션 전체 리포트 열기 &rarr;
@@ -58,7 +58,7 @@
                   <td><strong>2. 통합 분류 평가셋 (불변 기준)</strong><br><span style="font-size:0.75rem; color:#64748b;">(SMILES &amp; 화학식 정합성 통과)</span></td>
                   <td style="text-align:center;"><strong>160종</strong><br><span style="font-size:0.74rem; color:#059669;">(120 Pos : 40 Neg)</span></td>
                   <td><strong>Positive 120종</strong> = 프리커서 <strong>102종</strong>(핵심 검증셋 27 + 확장 원소 <code>Ir/Rh/As/Ga/In/Ru</code> 75) + AS-ALD 인히비터 <strong>18종</strong><br><strong>Negative Control 40종</strong> = 기본 대조군 10 + 6대 메커니즘 층화 30</td>
-                  <td>TMC-SA + 배위 게이트 전수 추론(160종), 지도학습 CV-5 및 LOFMO(160종), <code>OneClassSVM_RBF</code> 학습(Positive 120종만 사용)</td>
+                  <td>SAPIS + 배위 게이트 전수 추론(160종), 지도학습 CV-5 및 LOFMO(160종), <code>OneClassSVM_RBF</code> 학습(Positive 120종만 사용)</td>
                 </tr>
                 <tr>
                   <td><strong>3. SevenNet 물리 이완셋</strong><br><span style="font-size:0.75rem; color:#64748b;">(LBFGS 3D &middot; BDE &middot; E<sub>coh</sub> &middot; &Delta;E<sub>dimer</sub>)</span></td>
@@ -293,7 +293,7 @@ flowchart TD
     end
 
     subgraph S_STAGE4 ["Stage 4: Physical SA Output"]
-        S_C8 -->|"Pro-ligand HL_i + SevenNet Physics"| S_D2["<b>2-Track TMC-SA + SevenNet Physics</b><br>Un-hardcoded Screening<br>(All 18 Models Evaluated on 102 Precursors)"]
+        S_C8 -->|"Pro-ligand HL_i + SevenNet Physics"| S_D2["<b>2-Track SAPIS + SevenNet Physics</b><br>Un-hardcoded Screening<br>(All 18 Models Evaluated on 102 Precursors)"]
     end
 
     classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
@@ -369,13 +369,13 @@ flowchart TD
                   <span class="badge badge-success" style="font-size:0.75rem;">Track 1 Pro-Ligand 엔진 선정 근거</span>
                 </div>
                 <p style="font-size:0.84rem; color:#475569; line-height:1.6; margin:0 0 12px 0;">
-                  18종 오픈소스 모델 평가 결과, 유기 반응 정책 기반 4G/CASP 모델은 무기 배위 반응 규칙 부재로 <code>0.0%</code> 경로 완성률에 그치고, 2G <code>SCScore</code>는 열역학적 불안정 착물까지 무차별 통과시키며, 1G <code>SAScore</code>·3G <code>GASA</code>·<code>SYBA</code>는 비의약 원소(OOV) 및 무기 괄호 표기에서 표현 붕괴가 발생합니다. 반면 <strong>BR-SAScore (Building-block &amp; Reaction Decoupled SAScore)</strong>는 구조적 해시 사전 기반과 단편 분리 특성 덕분에 본 연구의 반도체 프리커서 DB 확장 및 <code>TMC-SA</code> 파이프라인에 가장 적합한 합성성 엔진으로 선정됩니다.
+                  18종 오픈소스 모델 평가 결과, 유기 반응 정책 기반 4G/CASP 모델은 무기 배위 반응 규칙 부재로 <code>0.0%</code> 경로 완성률에 그치고, 2G <code>SCScore</code>는 열역학적 불안정 착물까지 무차별 통과시키며, 1G <code>SAScore</code>·3G <code>GASA</code>·<code>SYBA</code>는 비의약 원소(OOV) 및 무기 괄호 표기에서 표현 붕괴가 발생합니다. 반면 <strong>BR-SAScore (Building-block &amp; Reaction Decoupled SAScore)</strong>는 구조적 해시 사전 기반과 단편 분리 특성 덕분에 본 연구의 반도체 프리커서 DB 확장 및 <code>SAPIS</code> 파이프라인에 가장 적합한 합성성 엔진으로 선정됩니다.
                 </p>
 
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:12px; margin-bottom:12px;">
                   <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px 14px; font-size:0.81rem; line-height:1.58; color:#334155;">
                     <div style="font-weight:700; color:#0f172a; margin-bottom:6px;">1. BR-SAScore 아키텍처 및 수학적 점수 산출 원리</div>
-                    &bull; <strong>단편 사전 분리 구조:</strong> eMolecules 상용 빌딩블록(120만 종)과 USPTO 특허 반응(180만 건)에서 추출한 키랄리티 포함 <strong>Morgan radius-2 원형 단편($f_i$)</strong>의 로그 빈도 점수 사전(<code>_fscores: dict[bitId, float]</code>)을 사용하며, 미등록 단편에는 <code>frag_penalty = -6.0</code>을 부여합니다.<br>
+                    &bull; <strong>단편 사전 분리 구조:</strong> eMolecules 상용 빌딩블록(120만 종)과 USPTO 특허 반응(180만 건)에서 추출한 카이랄리티 포함 <strong>Morgan radius-2 원형 단편($f_i$)</strong>의 로그 빈도 점수 사전(<code>_fscores: dict[bitId, float]</code>)을 사용하며, 미등록 단편에는 <code>frag_penalty = -6.0</code>을 부여합니다.<br>
                     &bull; <strong>음수 단편 평균($\text{score}_1$):</strong> 전체 $r=2$ 단편 중 음수 점수(<code>fscore &lt; 0</code>)만 평균하여 희귀·고난도 결합 단편의 기여를 집중 반영합니다:
                     $$\text{score}_1 = \frac{1}{N_{f&lt;0}} \sum_{f_i:\, s(f_i)&lt;0} s(f_i)$$
                     &bull; <strong>위상 복잡도($\text{score}_2$) 및 대칭성 보정($\text{score}_3$):</strong> 원자수($N_{\text{at}}^{1.005}-N_{\text{at}}$), 카이랄 중심·Spiro·Bridgehead·거대고리·다중고리 로그 페널티 합인 $\text{score}_2$와, 대칭 분자(동일 리간드 다중 배위)의 합성 용이성을 보상하는 지문 밀도 보정항 $\text{score}_3 = 0.5\ln(N_{\text{at}}/|\text{FP}|)$을 합산한 뒤 $[-7.0, 0]$ 구간을 <strong>$[1, 10]$ (낮을수록 합성 용이)</strong>으로 정규화합니다:
@@ -489,7 +489,7 @@ flowchart TD
             <div style="background:#f0f9ff; border:1px solid #bae6fd; border-left:4px solid #0284c7; border-radius:6px; padding:14px; margin-top:14px;">
               <div style="font-weight:700; color:#0369a1; font-size:0.9rem; margin-bottom:4px;">Smooth Sigmoid Penalty 및 Data Leakage-Free 균일 평가 설계:</div>
               <div style="font-size:0.84rem; color:#334155; line-height:1.5;">
-                계단식 임계값 대신 연속 미분 가능한 로지스틱 시그모이드 페널티 함수(Smooth Sigmoid Barrier)를 적용한 <strong>Transition-Metal Complex Synthetic Accessibility (<code>TMC-SA</code> &le; 4.0)</strong> 체계로 정량화합니다. 착물에서 해리한 유기 프로-리간드($HL_i$)의 합성 복잡도와 무기 배위 물리 페널티를 분리 결합하며, 정답 라벨 분기나 분자 ID 하드코딩을 배제한 Data Leakage-Free 균일 판정과 일반 SMARTS 규칙(-COOH / 불활성 알케인) 병용 결과 및 한계를 함께 검증합니다.
+                계단식 임계값 대신 연속 미분 가능한 로지스틱 시그모이드 페널티 함수(Smooth Sigmoid Barrier)를 적용한 <strong>Synthetic Accessibility of Precursors & Inhibitors for Semiconductors (<code>SAPIS</code> &le; 4.0)</strong> 체계로 정량화합니다. 착물에서 해리한 유기 프로-리간드($HL_i$)의 합성 복잡도와 무기 배위 물리 페널티를 분리 결합하며, 정답 라벨 분기나 분자 ID 하드코딩을 배제한 Data Leakage-Free 균일 판정과 일반 SMARTS 규칙(-COOH / 불활성 알케인) 병용 결과 및 한계를 함께 검증합니다.
               </div>
             </div>
           </div>
@@ -501,7 +501,7 @@ flowchart TD
             <span class="step-badge">4</span>
             <div>
               <div style="font-size:0.8rem; font-weight:700; color:#0284c7; text-transform:uppercase;">Step 4 &bull; Unified 160-Molecule Evaluation</div>
-              <h3 class="storyline-step-title">통합 160종 물리-배위 모델(TMC-SA) 평가 결과</h3>
+              <h3 class="storyline-step-title">통합 160종 물리-배위 모델(SAPIS) 평가 결과</h3>
             </div>
           </div>
 

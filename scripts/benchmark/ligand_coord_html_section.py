@@ -237,7 +237,7 @@ def compute_compositional_modeling_benchmark(precursors: List[Dict[str, Any]]) -
         ("vbur_percent", "매몰부피 (%Vbur)", "%"),
         ("ligand_sa", "프로-리간드 SA (Ligand SA)", "score"),
         ("bde_min_kcal_mol", "최소 결합 해리 에너지 (BDEmin)", "kcal/mol"),
-        ("tmc_sa_v2", "통합 합성가능성 (TMC-SA)", "score"),
+        ("tmc_sa_v2", "통합 합성가능성 (SAPIS)", "score"),
         ("delta_g_dimer_373_kcal_mol", "373 K 이합체 자유에너지 (ΔGdimer)", "kcal/mol"),
     ]
 

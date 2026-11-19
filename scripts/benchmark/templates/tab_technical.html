@@ -45,7 +45,7 @@
               <tr>
                 <td><strong>3. 반도체 ALD 프리커서 ML &amp; DFT</strong></td>
                 <td style="text-align:center; font-weight:700; color:#059669;">6편</td>
-                <td>Kulik TMC-SA, MPScore, AS-ALD ML, ALD-MLIP, ALD Roadmap, Aminosilane DFT</td>
+                <td>Kulik SAPIS, MPScore, AS-ALD ML, ALD-MLIP, ALD Roadmap, Aminosilane DFT</td>
                 <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2017 ~ 2026</td>
                 <td style="text-align:center;"><span class="badge badge-3g">6편 전원</span></td>
                 <td style="text-align:center;"><span class="badge badge-3g">6/6 검증</span></td>
@@ -151,7 +151,7 @@
           <div class="versus-grid">
             <div class="versus-card" style="border-left: 4px solid var(--accent-rose);">
               <div class="versus-header" style="color:var(--accent-rose);">
-                오탐지 1: 천연물 및 키랄 프리커서에 대한 과도한 False Negative 페널티
+                오탐지 1: 천연물 및 카이랄 프리커서에 대한 과도한 False Negative 페널티
               </div>
               <p style="font-size:0.9rem; color:var(--text-secondary);">
                 천연물 유래 물질이나 아미노산/당 유도체는 분자 내에 다수의 비대칭 중심(Stereocenter)과 가교 고리(Bridged ring)를 가집니다. SAScore는 복잡도 페널티 $\text{ComplexityPenalty} \propto \alpha \cdot \text{nChiral} + \beta \cdot \text{nBridge}$ 에 의해 점수가 6~8점 이상으로 치솟지만, 실제 유기합성에서는 <strong>상용화된 키랄 풀(Chiral pool building block, 예: L-proline, tartaric acid)</strong>로부터 1~2단계 커플링 반응만으로 쉽게 합성되는 경우가 많습니다.
@@ -683,7 +683,7 @@ flowchart TD
     end
 
     subgraph R_STAGE4 ["Stage 4: Physical SA Output"]
-        R_C8 -->|"Pro-ligand HL_i + SevenNet Physics"| R_D2["<b>2-Track TMC-SA + SevenNet Physics</b><br>Un-hardcoded Screening<br>(All 18 Models Evaluated on 102 Precursors)"]
+        R_C8 -->|"Pro-ligand HL_i + SevenNet Physics"| R_D2["<b>2-Track SAPIS + SevenNet Physics</b><br>Un-hardcoded Screening<br>(All 18 Models Evaluated on 102 Precursors)"]
     end
 
     classDef passNode fill:#dcfce7,stroke:#15803d,color:#15803d,font-weight:bold;
@@ -945,7 +945,7 @@ flowchart TD
                     &bull; 분리된 유기 Pro-ligand($HL_i$)에 적용 시 공식 Building Block Dictionary($s_B \in [-3.0, +3.0]$, Median $-2.54$)와 유기 반응 점수($s_R$)를 Data Leakage 없이 산출.
                   </td>
                   <td style="font-size:0.8rem; line-height:1.45; color:#047857; font-weight:600;">
-                    <strong>2-Track TMC-SA:</strong><br><code>BR-SAScore(HL_i)</code>와 무기 배위 Penalty 및 DFT 착물화 에너지를 결합하여 운용.
+                    <strong>2-Track SAPIS:</strong><br><code>BR-SAScore(HL_i)</code>와 무기 배위 Penalty 및 DFT 착물화 에너지를 결합하여 운용.
                   </td>
                 </tr>
 
@@ -1149,7 +1149,7 @@ flowchart TD
                 <strong style="color:#c2410c;">&bull; 실측 및 반사실적 검증 결론: max(existing, -0.47) 보정 후에도 3/27에 머물며 2-Track 리간드 분리가 필요한 원인:</strong><br>
                 1. <strong>엄격 시약 사전(Leakage-Free, <code>max(existing, -0.47)</code>) 실측 (11.1%, 3/27 통과, 악화 0종):</strong> <code>BRSAScore.calculateScore</code>는 반경 2 ($r=2$, <code>vs[0][1] == 2</code>) 단편 중 <strong>점수가 음수인 단편(<code>fscore &lt; 0</code>)들의 평균</strong>만 산출합니다(공식 <code>BScores_emolecules.pkl.gz</code>는 244,572개 항목이 $-3.0 \sim +3.0$ 범위를 가지며 중앙값은 $-2.54$, 양수 항목은 65개, 정확히 $0.0$인 키는 0개). 따라서 시약 단편을 <code>max(existing, -0.47)</code>(또는 $-0.1, -0.01$)로 갱신하면 유기 단편이 음수 평균 내에 유지되어 <strong>점수가 악화되는 프리커서가 단 1종도 없으며</strong>(예: <code>Cp(NMe2)3Zr</code> 7.20 &rarr; <strong>6.95</strong>, <code>CpTi(NMe2)3</code> 7.20 &rarr; <strong>6.95</strong>, <code>Co(AMD)2</code> 8.29 &rarr; <strong>7.91</strong>), 그럼에도 반응 후 새로 형성된 $\text{M-N, M-O, M-C}$ 결합 중심의 반경 2 단편은 어떤 시약에도 존재하지 않아 $-6.0$ 페널티를 유지하므로 Pass Rate는 <strong>3/27 (11.1%: TSA, TMA, DMAH)</strong>로 불변입니다. (반면 시약 단편을 단순 $0.0$으로 덮어쓰면 유기 단편이 분모 $N_{f&lt;0}$에서 빠져 3종 <code>CpZr, CpTi, Co(AMD)2</code> 점수가 악화됩니다.)<br>
                 2. <strong>생성물 암기 누수 대조군 (100.0%, 27/27; 구버전 24/27):</strong> 타깃 프리커서 생성물 자체의 단편을 $0.0$으로 사전 등록하면 금속 배위 단편까지 모두 평균에서 빠져(<code>score1 = 0</code>) 27종 전수가 $1.0 \sim 1.9$점으로 통과하나, 이는 테스트셋 생성물을 암기(Circular Data Leakage)한 결과이므로 미지의 신규 프리커서에는 전혀 일반화되지 않습니다.<br>
-                3. <strong>구조적 해법 (2-Track TMC-SA):</strong> 따라서 온전한 유기금속 착물에 1G/3G 단편 사전을 직접 적용하는 방식을 배제하고, 착물을 금속 코어($MX_m$)와 유기 프로-리간드($HL_i$)로 분해하여 리간드 합성성은 `BR-SAScore`($HL_i$)로 평가하고 금속 배위 열역학은 DFT($\Delta G_{\text{syn}}^{\text{DFT}}$)로 결합하는 <strong>Section 8의 2-Track TMC-SA 아키텍처</strong>가 정합적인 해법입니다.
+                3. <strong>구조적 해법 (2-Track SAPIS):</strong> 따라서 온전한 유기금속 착물에 1G/3G 단편 사전을 직접 적용하는 방식을 배제하고, 착물을 금속 코어($MX_m$)와 유기 프로-리간드($HL_i$)로 분해하여 리간드 합성성은 `BR-SAScore`($HL_i$)로 평가하고 금속 배위 열역학은 DFT($\Delta G_{\text{syn}}^{\text{DFT}}$)로 결합하는 <strong>Section 8의 2-Track SAPIS 아키텍처</strong>가 정합적인 해법입니다.
               </div>
             </div>
 
@@ -2589,7 +2589,7 @@ flowchart TD
 
     subgraph S2 ["Stage 2: ML Surrogate Model Screening (sub-1 ms)"]
         F1["Vapor Pressure Surrogate Model (GNN SASA/COSMO): P_vap 0.5 Torr 이상"]
-        F2["SA Metric Filter: Si-BR-SAScore / TMC-SA 3.5 이하"]
+        F2["SA Metric Filter: Si-BR-SAScore / SAPIS 3.5 이하"]
         G2 --> F1
         F1 --> F2
     end
@@ -2961,7 +2961,7 @@ flowchart TD
               <tbody>
                 <tr>
                   <td><strong>Track A: Quantitative Screening</strong><br><span class="badge badge-1g">Fast Scoring</span></td>
-                  <td><strong><code>BR-SAScore</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(&rarr; TMC-SA 확장)</span></td>
+                  <td><strong><code>BR-SAScore</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(&rarr; SAPIS 확장)</span></td>
                   <td style="font-size:0.82rem;">Fragment Frequency Lookup Table<br>(Morgan r=2 분해)</td>
                   <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
                   <td style="font-size:0.82rem; line-height:1.5;">
@@ -3005,10 +3005,10 @@ flowchart TD
           </div>
         </div>
 
-        <!-- 13.2 Methodology 1: BR-SAScore -> TMC-SA Hybrid Adaptation -->
+        <!-- 13.2 Methodology 1: BR-SAScore -> SAPIS Hybrid Adaptation -->
         <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [평가 스코어러 튜닝] `BR-SAScore` &rarr; `TMC-SA` (Transition-Metal Complex Synthetic Accessibility) 하이브리드 수식화</h3>
+            <h3 class="card-title" style="margin-bottom:0;">2. [평가 스코어러 튜닝] `BR-SAScore` &rarr; `SAPIS` (Transition-Metal Complex Synthetic Accessibility) 하이브리드 수식화</h3>
             <span class="badge badge-1g" style="font-size:0.82rem;">Scorer Adaptation Formulation</span>
           </div>
           <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
@@ -3016,7 +3016,7 @@ flowchart TD
           </p>
 
           <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid var(--accent-blue); border-radius:6px; padding:16px; margin-bottom:18px;">
-            <div style="font-weight:700; color:#0f172a; font-size:1.02rem; margin-bottom:6px;">TMC-SA 하이브리드 지배방정식 (Governing Equation):</div>
+            <div style="font-weight:700; color:#0f172a; font-size:1.02rem; margin-bottom:6px;">SAPIS 하이브리드 지배방정식 (Governing Equation):</div>
             $$\text{SA}_{\text{Precursor}} = \underbrace{\max_{i} \text{BR-SAScore}(HL_i)}_{\text{Track 1: 유기 프로-리간드 합성 난이도}} + \underbrace{w_1 \cdot \mathcal{S}_{\text{DFT}}(\Delta G_{\text{syn}}^{\text{DFT}}) + w_2 \cdot \mathcal{S}_{\text{steric}}(\%V_{\text{bur}})}_{\text{Track 2: DFT 배위 착물화 자유에너지 및 입체 인자}} + \underbrace{w_3 \cdot \mathcal{P}_{\text{exp}}}_{\text{실험 위험도 패널티}}$$
           </div>
 
@@ -3236,7 +3236,7 @@ flowchart TD
     end
 
     subgraph S2 ["Stage 2: 2-Track 합성 가능성 고속 스크리닝"]
-        C1 --> D1["Precursor TMC-SA: 유기 리간드 BR-SAScore 및 금속 복분해 타당성"]
+        C1 --> D1["Precursor SAPIS: 유기 리간드 BR-SAScore 및 금속 복분해 타당성"]
         C2 --> D2["Inhibitor SCScore: Reaxys 유기 합성 복잡도 및 기상 휘발성 평가"]
         D1 --> E{"SA 임계치 판정 (SA 3.5 이하 및 BDE 40 kcal 이상)"}
         D2 --> E
@@ -3277,7 +3277,7 @@ flowchart TD
 
           <div class="versus-grid">
             <div class="versus-card" style="border-top: 3px solid #7c3aed;">
-              <h4 style="color:#6d28d9; font-size:1.02rem; margin-bottom:6px;">Track A: 전이금속 프리커서 합성 스코어 (TMC-SA)</h4>
+              <h4 style="color:#6d28d9; font-size:1.02rem; margin-bottom:6px;">Track A: 전이금속 프리커서 합성 스코어 (SAPIS)</h4>
               <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:10px;">
                 중심 금속과 유기 리간드를 분리(De-coupling)하여 평가하며, 무기 할로겐화물과 리간드 음이온 간의 복분해 반응 열역학을 결합합니다:
               </p>
@@ -3490,7 +3490,7 @@ flowchart TD
         self.dft_runner = VaspAutomationPipeline() <span style="color:#64748b;"># High-precision transition-state runner</span>
 
     <span style="color:#7dd3fc;">def</span> <span style="color:#facc15;">evaluate_sa</span>(self, smiles: str, mol_type: str = <span style="color:#86efac;">"precursor"</span>) -&gt; dict:
-        <span style="color:#64748b;"># 1. 2-Track SA Scoring (TMC-SA for Precursors, SCScore for Inhibitors)</span>
+        <span style="color:#64748b;"># 1. 2-Track SA Scoring (SAPIS for Precursors, SCScore for Inhibitors)</span>
         <span style="color:#7dd3fc;">if</span> mol_type == <span style="color:#86efac;">"precursor"</span>:
             ligands = self.extract_ligands(smiles)
             ligand_sa = max([self.calc_br_sascore(l) <span style="color:#7dd3fc;">for</span> l <span style="color:#7dd3fc;">in</span> ligands])
@@ -3526,7 +3526,7 @@ flowchart TD
           <div class="section-tag">Section 15 &bull; Unified 160-Molecule Benchmark &amp; SevenNet Physical Validation</div>
           <h2 class="section-title">통합 160종 물리-배위 Benchmark &amp; SevenNet-0 물리 기준선·다중상태 배위 인식 검증</h2>
           <p class="section-desc">
-            전체 <strong>160종 통합 평가 데이터셋</strong>(양산 프리커서 27종 + 확장 원소 프리커서 75종 = 102종, AS-ALD 선택성 인히비터 18종, 6대 물리·화학적 실패 메커니즘별 Negative Control 40종)을 대상으로 <strong><code>TMC-SA</code> 물리-배위 평가 프레임워크(공유반지름 정규화 프로브 구, 다중상태 전이금속 배위 벡터 $\mathbf{c}_i$, 극성·하이드라이드 가중 $\%V_{\text{bur}}^{\text{D2}}$, 개방 원추각 $\theta_{\max}^{\text{void}}$, 연쇄·$\pi$-공액 하이드라이드 게이트)</strong>의 판정 정밀도와 범용 MLIAP인 SevenNet(160종 전수 LBFGS 물리 이완셋)의 <strong>표준 배위결합 생성에너지($\Delta E_f^{\text{std}}/v_M$)</strong> 및 <code>All-Sample &middot; CV-5 &middot; LOOCV &middot; LOFMO</code> 외삽 성능을 검증합니다.
+            전체 <strong>160종 통합 평가 데이터셋</strong>(양산 프리커서 27종 + 확장 원소 프리커서 75종 = 102종, AS-ALD 선택성 인히비터 18종, 6대 물리·화학적 실패 메커니즘별 Negative Control 40종)을 대상으로 <strong><code>SAPIS</code> 물리-배위 평가 프레임워크(공유반지름 정규화 프로브 구, 다중상태 전이금속 배위 벡터 $\mathbf{c}_i$, 극성·하이드라이드 가중 $\%V_{\text{bur}}^{\text{D2}}$, 개방 원추각 $\theta_{\max}^{\text{void}}$, 연쇄·$\pi$-공액 하이드라이드 게이트)</strong>의 판정 정밀도와 범용 MLIAP인 SevenNet(160종 전수 LBFGS 물리 이완셋)의 <strong>표준 배위결합 생성에너지($\Delta E_f^{\text{std}}/v_M$)</strong> 및 <code>All-Sample &middot; CV-5 &middot; LOOCV &middot; LOFMO</code> 외삽 성능을 검증합니다.
           </p>
         </div>
 
@@ -3812,7 +3812,7 @@ flowchart TD
           <div class="section-tag">Section 22 &bull; Global Patent &amp; Metal-Centered Literature Expansion</div>
           <h2 class="section-title">한&middot;중&middot;일&middot;미&middot;대만 특허 분석 및 중심금속원자 기반 신규 프리커서&middot;인히비터 DB 확장 검토</h2>
           <p class="section-desc">
-            현행 <code>102</code>종 프리커서·<code>18</code>종 인히비터 DB의 중심원소 편중(<code>Ga/In/Ru 62.7%</code>, <code>Nb/Ni/Cu/Ge/La/Y/Pt/Zn 0종</code>)을 해소하기 위해 한국(<code>KR</code>)·일본(<code>JP</code>)·중국(<code>CN</code>)·미국(<code>US/WO</code>)·대만(<code>TW</code>) 특허군과 <code>Chem. Rev.</code>·<code>Chem. Mater.</code> 중심금속 리뷰를 분석해 <strong>중복 없는 신규 38종(프리커서 28종 + ASD 인히비터 10종)</strong>을 도출하고 <code>TMC-SA</code> 체계로 실측 스크리닝합니다.
+            현행 <code>102</code>종 프리커서·<code>18</code>종 인히비터 DB의 중심원소 편중(<code>Ga/In/Ru 62.7%</code>, <code>Nb/Ni/Cu/Ge/La/Y/Pt/Zn 0종</code>)을 해소하기 위해 한국(<code>KR</code>)·일본(<code>JP</code>)·중국(<code>CN</code>)·미국(<code>US/WO</code>)·대만(<code>TW</code>) 특허군과 <code>Chem. Rev.</code>·<code>Chem. Mater.</code> 중심금속 리뷰를 분석해 <strong>중복 없는 신규 38종(프리커서 28종 + ASD 인히비터 10종)</strong>을 도출하고 <code>SAPIS</code> 체계로 실측 스크리닝합니다.
           </p>
         </div>
 

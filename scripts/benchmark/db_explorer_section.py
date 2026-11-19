@@ -431,9 +431,9 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         mw_val = round(Descriptors.MolWt(m_obj), 2) if m_obj else None
         elem = _norm_elem(exp_rec.get("center_atom", "-"))
         diag_note = exp_rec.get("boundary_flag") or (
-            f"All SevenNet-0 & TMC-SA physical/chemical gates passed (BDE={exp_rec.get('bde_min_kcal_mol')} kcal/mol, TMC={exp_rec.get('tmc_sa_7net')})"
+            f"All SevenNet-0 & SAPIS physical/chemical gates passed (BDE={exp_rec.get('bde_min_kcal_mol')} kcal/mol, TMC={exp_rec.get('tmc_sa_7net')})"
             if exp_rec.get("pass_7net")
-            else ("All ETKDG TMC-SA physical & chemical gates passed" if exp_rec.get("unified_pass") else "")
+            else ("All ETKDG SAPIS physical & chemical gates passed" if exp_rec.get("unified_pass") else "")
         )
         has_7n = exp_rec.get("tmc_sa_7net") is not None
         vbur_best = exp_rec.get("vbur_rprobe_7net") if has_7n else exp_rec.get("vbur_d2_percent")
@@ -624,7 +624,7 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         if n_pat_7n == n_pat_tot and n_pat_tot > 0:
             c2_items.append(("etk_pat", n_pat_tot, "#059669", "Exp SevenNet LBFGS", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 0 Fallback"))
         else:
-            c2_items.append(("etk_pat", n_pat_tot, "#f59e0b", "ETKDGv3 3D + TMC-SA", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 100% Embed"))
+            c2_items.append(("etk_pat", n_pat_tot, "#f59e0b", "ETKDGv3 3D + SAPIS", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 100% Embed"))
         c2 = _layout(c2_items, y_start=54.0, gap=22.0)
         for d in c2.values():
             d["x"] = x2
@@ -636,8 +636,8 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         )
         c3 = _layout([
             ("pos_120", n_pos, "#16a34a", "Benchmark Positive", f"{n_prec_eval}+{n_inhib} · OCSVM · CV-5"),
-            ("neg_40", n_neg, "#dc2626", "Negative Control", "LOFMO Test · CV-5 · TMC-SA"),
-            ("pat_out", n_pat_tot, "#0284c7", "Expansion 7net TMC-SA", pat_out_sub),
+            ("neg_40", n_neg, "#dc2626", "Negative Control", "LOFMO Test · CV-5 · SAPIS"),
+            ("pat_out", n_pat_tot, "#0284c7", "Expansion 7net SAPIS", pat_out_sub),
         ], y_start=54.0, gap=22.0)
         for d in c3.values():
             d["x"] = x3
@@ -646,7 +646,7 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             (c0["cat_prec"], c1["eval_160"], n_prec_eval, "#06b6d4", f"Precursor Catalog -> Pinned Eval Set: {n_prec_eval} (27 Core + 75 Expanded)"),
             (c0["cat_inh"], c1["eval_160"], n_inhib, "#0284c7", f"AS-ALD Inhibitors -> Pinned Eval Set: {n_inhib}"),
             (c0["cat_neg"], c1["eval_160"], n_neg, "#ef4444", f"Negative Controls -> Pinned Eval Set: {n_neg} (10 Core + 30 Stratified)"),
-            (c0["cat_pat"], c1["pat_38"], n_pat_tot, "#f59e0b", f"KR/JP/CN/US/TW Patent & Lit Expansion -> TMC-SA Screen & DB Backfill: {n_pat_tot} ({n_backfilled_al} AL Backfill + {n_net_new_patent} Net-New)"),
+            (c0["cat_pat"], c1["pat_38"], n_pat_tot, "#f59e0b", f"KR/JP/CN/US/TW Patent & Lit Expansion -> SAPIS Screen & DB Backfill: {n_pat_tot} ({n_backfilled_al} AL Backfill + {n_net_new_patent} Net-New)"),
             (c0["cat_prec"], c1["ref_144"], n_prec_ref, "#94a3b8", f"Precursor Catalog -> Reference Only: {n_prec_ref} (AtomicLimits + Meta 10; {n_backfilled_al} stubs SMILES-backfilled in DB Explorer)"),
             (c0["cat_rr"], c1["ref_144"], n_reag_rxn, "#64748b", f"Reagents ({len(bb_db)}, 10 Dual-Role Merged in DB Search) + Reactions ({len(rxn_db)}) -> Dict / Ref: {n_reag_rxn}"),
             (c1["eval_160"], c2["svn"], n_svn, "#10b981", f"Pinned Eval Set -> SevenNet LBFGS 3D: {n_svn} ({n_svn_pos} Pos + {n_svn_neg} Neg)"),
@@ -657,7 +657,7 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             (c1["pat_38"], c2["etk_pat"], n_pat_tot, "#059669" if n_pat_7n == n_pat_tot else "#f59e0b", f"Patent Expansion -> SevenNet-0 LBFGS 3D + BDE/Dimer/ΔEf: {n_pat_tot} (0 Fallbacks)"),
             (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"SevenNet LBFGS -> Benchmark Positive: {n_svn_pos}"),
             (c2["svn"], c3["neg_40"], n_svn_neg, "#059669", f"SevenNet LBFGS -> Negative Control Validation: {n_svn_neg}"),
-            (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"Expansion 7net TMC-SA -> {n_pat_pass}/{n_pat_tot} Strict Pass (ETKDG {n_pat_no3d_pass}/{n_pat_tot}) + {n_pat_bnd} Boundary Diagnostics"),
+            (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"Expansion 7net SAPIS -> {n_pat_pass}/{n_pat_tot} Strict Pass (ETKDG {n_pat_no3d_pass}/{n_pat_tot}) + {n_pat_bnd} Boundary Diagnostics"),
         ])
 
         ribbon_svg = []
