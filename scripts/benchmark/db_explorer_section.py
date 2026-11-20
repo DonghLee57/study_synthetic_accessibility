@@ -540,6 +540,75 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             "domain_flag": "boundary_diagnostic" if exp_rec.get("boundary_flag") else "patent_lit_pass",
         })
 
+    gate_reason_labels: Dict[str, str] = {
+        "sa_gt_4": "합성 난이도 초과 (>4.0)",
+        "homoleptic_tm_sp3": "불안정 금속 알킬",
+        "overcrowded_poly_aryl_tm": "다중 아릴 입체 과밀",
+        "poly_hydroxide": "다중 수산화기·응집 위험",
+        "carboxylic_acid": "카복실산 부반응·비휘발",
+        "inert_alkane": "비활성 알케인 (배위 불가)",
+        "strained_si_ring": "고리 변형 실란 불안정",
+        "pi_conjugated_main_group_hydride": "공액 하이드라이드 불안정",
+        "catenated_main_group_hydride": "연쇄 하이드라이드 불안정",
+    }
+
+    for rec in db_records:
+        u_rec = _u_by_id.get(rec.get("id"))
+        if u_rec is not None:
+            if u_rec.get("tmc_sa_v2") is not None:
+                rec["tmc_sa_phys"] = round(float(u_rec["tmc_sa_v2"]), 2)
+            if u_rec.get("unified_pass") is not None:
+                rec["phase2_pass"] = bool(u_rec["unified_pass"])
+            rec["gate_reasons"] = list(u_rec.get("gate_reasons") or [])
+
+        sapis_val = rec.get("tmc_sa_phys")
+        if sapis_val is None:
+            sapis_val = rec.get("tmc_sa_no3d")
+        rec["sapis_score"] = round(float(sapis_val), 2) if sapis_val is not None else None
+        rec["sapis_pass"] = rec.get("phase2_pass")
+
+        # Uniform concise source label
+        doi_str = (rec.get("doi") or "").strip()
+        pat_str = (rec.get("patent_references") or "").strip()
+        al_cnt = rec.get("atomiclimits_process_count") or 0
+        dt = rec.get("db_type")
+        if doi_str and al_cnt:
+            rec["card_source"] = "DOI · AtomicLimits"
+        elif doi_str:
+            rec["card_source"] = "DOI 문헌"
+        elif pat_str:
+            rec["card_source"] = "특허 · DOI" if "DOI:" in pat_str.upper() else "특허 문헌"
+        elif al_cnt:
+            rec["card_source"] = f"AtomicLimits ({al_cnt}건)"
+        elif dt == "inhibitor":
+            rec["card_source"] = "AS-ALD 문헌"
+        elif dt == "reagent":
+            rec["card_source"] = "상용 시약 DB"
+        elif dt == "reaction":
+            rec["card_source"] = "공인 합성 반응"
+        elif dt == "negative":
+            rec["card_source"] = "Negative Control"
+        else:
+            rec["card_source"] = rec.get("db_label") or "-"
+
+        # Uniform concise risk / failure mechanism label
+        g_reasons = rec.get("gate_reasons") or []
+        if g_reasons:
+            rec["card_risk"] = ", ".join(gate_reason_labels.get(g, g) for g in g_reasons[:2])
+        elif rec.get("sapis_pass") is True:
+            rec["card_risk"] = "낮음 (게이트 통과)"
+        elif rec.get("sapis_pass") is False:
+            if rec.get("domain_flag") == "boundary_diagnostic":
+                rec["card_risk"] = "경계 조건 검토 필요"
+            else:
+                rec["card_risk"] = "합성·물리 게이트 차단"
+        elif dt == "reagent":
+            rec["card_risk"] = rec.get("handling") or "일반 취급"
+        elif dt == "reaction":
+            rec["card_risk"] = f"ΔG {rec['dg_kcal_mol']} kcal/mol" if rec.get("dg_kcal_mol") is not None else "-"
+        else:
+            rec["card_risk"] = "미평가 (SMILES 미수록)"
+
     db_meta_summary = {
         "n_unique_entities": len(db_records),
         "n_merged_dual_role_reagents": n_merged_dual_role,

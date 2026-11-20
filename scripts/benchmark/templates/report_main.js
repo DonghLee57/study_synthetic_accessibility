@@ -433,8 +433,8 @@
 
       [btnIntro, btnStoryline, btnTechnical, btnDatabase, btnBrtheory, btnGlossary].forEach(b => b && b.classList.remove('active'));
       [contentIntro, contentStoryline, contentTechnical, contentDatabase, contentBrtheory, contentGlossary].forEach(c => { if (c) c.style.display = 'none'; });
-      [tocStoryline, tocTechnical, tocDatabase, tocBrtheory].forEach(t => { if (t) t.style.display = 'none'; });
-      if (tocSidebar) tocSidebar.style.display = (tabName === 'glossary' || tabName === 'intro') ? 'none' : '';
+      [tocStoryline, tocTechnical, tocBrtheory].forEach(t => { if (t) t.style.display = 'none'; });
+      if (tocSidebar) tocSidebar.style.display = (tabName === 'glossary' || tabName === 'intro' || tabName === 'database') ? 'none' : '';
 
       const skipScrollTop = opts && opts.skipScrollTop;
 
@@ -457,7 +457,6 @@
       } else if (tabName === 'database') {
         if (btnDatabase) btnDatabase.classList.add('active');
         if (contentDatabase) contentDatabase.style.display = 'block';
-        if (tocDatabase) tocDatabase.style.display = 'block';
         if (!skipScrollTop) window.scrollTo(0, 0);
         requestAnimationFrame(() => {
           ensureDbExplorerInitialized();
@@ -943,21 +942,35 @@
               </div>`;
             }
 
-            const pills = [];
-            if (r.mw != null) pills.push(`<span class="db-mini-pill">MW ${r.mw}</span>`);
-            if (r.sascore != null) pills.push(`<span class="db-mini-pill">SA ${r.sascore}</span>`);
-            if (r.br_sascore != null) pills.push(`<span class="db-mini-pill">BR ${r.br_sascore}</span>`);
-            if (r.bde_min != null) pills.push(`<span class="db-mini-pill">BDE ${r.bde_min}</span>`);
-            if (r.vbur != null) pills.push(`<span class="db-mini-pill">Vbur ${r.vbur}%</span>`);
-            if (r.de_form_bond != null) pills.push(`<span class="db-mini-pill">dEf/vM ${r.de_form_bond}</span>`);
-            if (r.dg_kcal_mol != null) pills.push(`<span class="db-mini-pill">dG ${r.dg_kcal_mol} kcal/mol</span>`);
-            if (r.atomiclimits_process_count) pills.push(`<span class="db-mini-pill">ALD ${r.atomiclimits_process_count}건</span>`);
-            if (r.jurisdictions) pills.push(`<span class="db-mini-pill" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">${escapeHtmlStr(r.jurisdictions)}</span>`);
-            (r.role_badges || []).forEach(rb => {
-              pills.push(`<span class="db-mini-pill" style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;">${escapeHtmlStr(rb)}</span>`);
-            });
-            if (r.phase2_pass === true) pills.push(`<span class="db-mini-pill" style="background:#dcfce7;color:#15803d;border-color:#86efac;">${r.db_type === 'patent_expansion' || (r.alt_db_types || []).includes('patent_expansion') ? 'SAPIS Pass' : 'Phase 2 Pass'}</span>`);
-            if (r.phase2_pass === false) pills.push(`<span class="db-mini-pill" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;">${r.db_type === 'patent_expansion' || (r.alt_db_types || []).includes('patent_expansion') ? 'Boundary Flag' : 'Phase 2 Reject'}</span>`);
+            const sapisTxt = (r.sapis_score != null) ? Number(r.sapis_score).toFixed(2) : '-';
+            let verdictBadge = '<span class="db-mini-pill" style="background:#f1f5f9;color:#475569;border-color:#cbd5e1;">참고 DB</span>';
+            if (r.sapis_pass === true) {
+              verdictBadge = '<span class="db-mini-pill" style="background:#dcfce7;color:#15803d;border-color:#86efac;font-weight:700;">합성 가능</span>';
+            } else if (r.sapis_pass === false) {
+              verdictBadge = '<span class="db-mini-pill" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;font-weight:700;">합성 불가</span>';
+            }
+            const srcTxt = escapeHtmlStr(r.card_source || r.db_label || '-');
+            const riskTxt = escapeHtmlStr(r.card_risk || '-');
+            const riskColor = (r.sapis_pass === false) ? '#b91c1c' : ((r.sapis_pass === true) ? '#15803d' : '#475569');
+
+            const uniformSummaryHtml = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; font-size:0.74rem; margin-top:4px;">
+              <div>
+                <div style="color:#64748b; font-size:0.68rem;">SAPIS 점수</div>
+                <div style="font-family:'JetBrains Mono', monospace; font-weight:800; font-size:0.86rem; color:#0f172a; margin-top:1px;">${sapisTxt}</div>
+              </div>
+              <div>
+                <div style="color:#64748b; font-size:0.68rem;">합성 판정</div>
+                <div style="margin-top:2px;">${verdictBadge}</div>
+              </div>
+              <div>
+                <div style="color:#64748b; font-size:0.68rem;">출처</div>
+                <div style="font-weight:600; color:#334155; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${srcTxt}">${srcTxt}</div>
+              </div>
+              <div>
+                <div style="color:#64748b; font-size:0.68rem;">위험성</div>
+                <div style="font-weight:600; color:${riskColor}; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${riskTxt}">${riskTxt}</div>
+              </div>
+            </div>`;
 
             let subLine = escapeHtmlStr(r.chemical_name);
             if (r.aliases && r.aliases.length) {
@@ -991,7 +1004,7 @@
                 <div style="font-size:0.78rem; color:#475569; margin-top:2px; line-height:1.4;">${subLine}</div>
                 <div style="font-family:'JetBrains Mono'; font-size:0.73rem; color:#0369a1; margin-top:3px;">${escapeHtmlStr(r.formula)}${r.cas && r.cas !== '-' ? ' &bull; CAS ' + escapeHtmlStr(r.cas) : ''}</div>
               </div>
-              <div class="db-meta-tags">${pills.join('')}</div>
+              ${uniformSummaryHtml}
               ${r.smiles ? `<div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b; background:#f8fafc; padding:4px 7px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtmlStr(r.smiles)}">${escapeHtmlStr(r.smiles)}</div>` : ''}
             </div>`;
           }).join('');

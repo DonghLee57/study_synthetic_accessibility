@@ -70,20 +70,20 @@
       <button type="button" class="view-mode-btn" id="btn-tab-storyline" onclick="switchViewTab('storyline')">
         요약
       </button>
+      <button type="button" class="view-mode-btn" id="btn-tab-brtheory" onclick="switchViewTab('brtheory')">
+        배경이론
+      </button>
       <button type="button" class="view-mode-btn" id="btn-tab-technical" onclick="switchViewTab('technical')">
         리포트
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-database" onclick="switchViewTab('database')">
         DB 탐색 (2D 구조)
       </button>
-      <button type="button" class="view-mode-btn" id="btn-tab-brtheory" onclick="switchViewTab('brtheory')">
-        배경이론
-      </button>
       <button type="button" class="view-mode-btn" id="btn-tab-glossary" onclick="switchViewTab('glossary')">
         용어 사전
       </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 소개, 요약, 리포트, DB 탐색, 배경이론, 용어 사전 뷰를 전환할 수 있습니다.
+        열람 목적에 따라 소개, 요약, 배경이론, 리포트, DB 탐색, 용어 사전 뷰를 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -151,33 +151,6 @@
             전체 상세 테이블 일괄 펼치기
           </button>
           <a href="#" class="btn-toc-utility" style="text-decoration:none;">맨 위로 이동 (Top)</a>
-        </div>
-      </div>
-
-      <!-- Database Explorer Sidebar -->
-      <div id="toc-database" style="display:none;">
-        <div class="toc-header">
-          <span>DB 탐색 필터</span>
-          <span class="toc-progress" id="dbSideBadge">286건</span>
-        </div>
-        <ul class="toc-list">
-          <li><a href="javascript:void(0)" class="toc-link active" data-dbcat="all" id="dbSideAllLink" onclick="setDbCategoryFromSidebar('all', this)">전체 통합 DB (정준)</a></li>
-          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="precursor" id="dbSidePrecLink" onclick="setDbCategoryFromSidebar('precursor', this)">상용 프리커서 Baseline (27)</a></li>
-          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="expanded_master" id="dbSideExpandedLink" onclick="setDbCategoryFromSidebar('expanded_master', this)">확장 ALD 프리커서 DB (203)</a></li>
-          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="patent_expansion" id="dbSidePatLink" onclick="setDbCategoryFromSidebar('patent_expansion', this)">특허·문헌 확장 DB (38)</a></li>
-          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="inhibitor" id="dbSideInhLink" onclick="setDbCategoryFromSidebar('inhibitor', this)">AS-ALD 인히비터 (28)</a></li>
-          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="reagent" id="dbSideReagLink" onclick="setDbCategoryFromSidebar('reagent', this)">출발물질·시약 (29)</a></li>
-          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="reaction" id="dbSideRxnLink" onclick="setDbCategoryFromSidebar('reaction', this)">공인 합성 반응 (12)</a></li>
-          <li><a href="javascript:void(0)" class="toc-link" data-dbcat="negative" id="dbSideNegLink" onclick="setDbCategoryFromSidebar('negative', this)">Negative Controls (10)</a></li>
-        </ul>
-        <div style="margin-top:16px; padding:12px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; font-size:0.77rem; line-height:1.55; color:#334155;">
-          <strong>2D 구조 렌더링 현황:</strong><br>
-          &bull; RDKit <code>MolDraw2DSVG</code> 기반 Vector 2D 구조 내장.<br>
-          &bull; <span id="dbSideSvgCount">고유 <code>SMILES</code> 및 반응식 12종 실시간 시각화 지원.</span>
-        </div>
-        <div class="toc-sub-actions">
-          <button type="button" class="btn-toc-utility" onclick="switchViewTab('storyline')">요약 탭으로 이동</button>
-          <button type="button" class="btn-toc-utility" onclick="switchViewTab('technical')">리포트 탭으로 이동</button>
         </div>
       </div>
 
