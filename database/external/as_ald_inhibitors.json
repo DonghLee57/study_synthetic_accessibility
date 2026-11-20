@@ -22,11 +22,11 @@
       "removal_method": "O2 / H2 plasma ash or thermal anneal > 350 °C",
       "incubation_cycles_enhancement": null,
       "literature_reference": {
-        "authors": "Mackus et al.",
+        "authors": "Khan et al.",
         "journal": "Chemistry of Materials",
-        "year": 2019,
-        "doi": "10.1021/acs.chemmater.8b03454",
-        "verification": "Crossref-verified (first author Mackus). Review article on AS-ALD; not a DMADMS-specific study, so it does not source the numeric fields."
+        "year": 2018,
+        "doi": "10.1021/acs.chemmater.8b02774",
+        "verification": "Crossref-verified primary research article on aminosilane (DMADMS/DMATMS) inhibitors for area-selective ALD."
       },
       "molecular_weight": 146.31,
       "logp": 0.81,

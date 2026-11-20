@@ -71,7 +71,7 @@
       "Merck",
       "Entegris"
     ],
-    "reference_doi": "10.1021/cm00045a037"
+    "reference_doi": "10.1021/acsami.5b06833"
   },
   {
     "id": "PREC_SI_03",
@@ -108,7 +108,7 @@
       "Merck",
       "SoulBrain"
     ],
-    "reference_doi": "10.1149/1.1393976"
+    "reference_doi": "10.1149/05810.0307ecst"
   },
   {
     "id": "PREC_SI_04",
@@ -144,7 +144,7 @@
       "Strem",
       "Merck"
     ],
-    "reference_doi": "10.1002/jcc.24437"
+    "reference_doi": "10.1016/j.ceramint.2026.10.168"
   },
   {
     "id": "PREC_SI_05",
@@ -180,7 +180,7 @@
       "Wonik Materials",
       "Entegris"
     ],
-    "reference_doi": "10.1021/ja01188a032"
+    "reference_doi": "10.35848/1882-0786/ab92f2"
   },
   {
     "id": "PREC_SI_06",
@@ -217,7 +217,7 @@
       "Hansol Chemical",
       "Merck"
     ],
-    "reference_doi": "10.1016/j.jcrysgro.2004.05.050"
+    "reference_doi": "10.4191/kcers.2017.54.5.11"
   },
   {
     "id": "PREC_SI_07",
@@ -254,7 +254,7 @@
       "SoulBrain",
       "Honeywell"
     ],
-    "reference_doi": "10.1021/ja01188a032"
+    "reference_doi": "10.1021/jp0518658"
   },
   {
     "id": "PREC_SI_08",
@@ -290,7 +290,7 @@
       "Air Liquide",
       "Gelest"
     ],
-    "reference_doi": "10.1021/acs.chemmater.5c03271"
+    "reference_doi": "10.1149/1.2946431"
   },
   {
     "id": "PREC_HK_01",
@@ -328,7 +328,7 @@
       "SoulBrain",
       "Hansol Chemical"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1016/j.apsusc.2012.04.130"
   },
   {
     "id": "PREC_HK_02",
@@ -364,7 +364,7 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1021/acs.langmuir.5c05147"
   },
   {
     "id": "PREC_HK_03",
@@ -400,7 +400,7 @@
       "Gelest",
       "Merck"
     ],
-    "reference_doi": "10.1021/cm00045a037"
+    "reference_doi": "10.1002/anie.200705550"
   },
   {
     "id": "PREC_HK_04",
@@ -437,7 +437,7 @@
       "Merck",
       "SoulBrain"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1016/j.apsusc.2016.06.122"
   },
   {
     "id": "PREC_HK_05",
@@ -473,7 +473,7 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.3389/fchem.2022.1035902"
   },
   {
     "id": "PREC_HK_06",
@@ -510,7 +510,7 @@
       "Air Liquide",
       "UP Chemical"
     ],
-    "reference_doi": "10.1021/jacsau.2c00547"
+    "reference_doi": "10.1116/1.3071844"
   },
   {
     "id": "PREC_HK_07",
@@ -546,7 +546,7 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1016/j.mtcomm.2022.104008"
   },
   {
     "id": "PREC_TI_01",
@@ -583,7 +583,7 @@
       "Merck",
       "SoulBrain"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1016/0040-6090(94)90363-8"
   },
   {
     "id": "PREC_TI_02",
@@ -621,7 +621,7 @@
       "SoulBrain",
       "DuPont"
     ],
-    "reference_doi": "10.1021/ja01188a032"
+    "reference_doi": "10.1116/1.4839015"
   },
   {
     "id": "PREC_TI_03",
@@ -657,7 +657,7 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1021/acs.chemmater.7b04790"
   },
   {
     "id": "PREC_AL_01",
@@ -696,7 +696,7 @@
       "Adeka",
       "Strem"
     ],
-    "reference_doi": "10.1021/cr00033a005"
+    "reference_doi": "10.1557/proc-335-335"
   },
   {
     "id": "PREC_AL_02",
@@ -732,7 +732,7 @@
       "Gelest",
       "Strem"
     ],
-    "reference_doi": "10.1021/cr00033a005"
+    "reference_doi": "10.1016/s0169-4332(00)00542-0"
   },
   {
     "id": "PREC_MET_01",
@@ -769,7 +769,7 @@
       "Adeka",
       "Air Liquide"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1063/1.1565699"
   },
   {
     "id": "PREC_MET_02",
@@ -806,7 +806,7 @@
       "Strem",
       "Air Liquide"
     ],
-    "reference_doi": "10.1021/acs.chemmater.5c03271"
+    "reference_doi": "10.1002/cvde.200706668"
   },
   {
     "id": "PREC_MET_03",
@@ -842,7 +842,7 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/om010268w"
+    "reference_doi": "10.1149/2.069206jes"
   },
   {
     "id": "PREC_MET_04",
@@ -878,7 +878,7 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/om010268w"
+    "reference_doi": "10.1021/acsaelm.9b00006"
   },
   {
     "id": "PREC_MET_05",
@@ -914,7 +914,7 @@
       "Strem",
       "Merck"
     ],
-    "reference_doi": "10.1021/om010268w"
+    "reference_doi": "10.1149/2162-8777/ad07ee"
   },
   {
     "id": "PREC_MET_06",
@@ -951,7 +951,7 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/ja020287v"
+    "reference_doi": "10.1149/1.3377003"
   },
   {
     "id": "PREC_EUV_01",
@@ -987,6 +987,6 @@
       "Gelest",
       "Strem"
     ],
-    "reference_doi": "10.1021/acs.chemmater.5c03271"
+    "reference_doi": "10.1021/acs.jpcc.3c07480"
   }
 ]
