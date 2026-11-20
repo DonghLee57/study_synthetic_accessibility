@@ -1967,3 +1967,118 @@
       box-sizing: border-box;
     }
 
+    /* Interactive Periodic Table Element Filter (DB Explorer) */
+    .pt-wrap {
+      margin: 10px 0 12px 0;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+    }
+    .pt-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .pt-grid-scroll {
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .pt-grid {
+      display: grid;
+      grid-template-columns: repeat(18, minmax(36px, 1fr));
+      gap: 3px;
+      min-width: 680px;
+    }
+    .pt-cell {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid #cbd5e1;
+      padding: 2px 1px;
+      font-family: 'Inter', sans-serif;
+      user-select: none;
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+    }
+    .pt-cell.empty-data {
+      opacity: 0.26;
+      background: #f1f5f9;
+      color: #64748b;
+      border-color: #cbd5e1;
+      cursor: default;
+      pointer-events: none;
+    }
+    .pt-cell.has-data {
+      cursor: pointer;
+    }
+    .pt-cell.has-data:hover {
+      transform: translateY(-2px) scale(1.08);
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.32);
+      z-index: 5;
+      filter: brightness(1.04);
+    }
+    .pt-cell.active {
+      box-shadow: 0 0 0 2.5px #f59e0b, 0 4px 12px rgba(245, 158, 11, 0.38) !important;
+      transform: scale(1.06);
+      z-index: 6;
+    }
+    .pt-z {
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      font-size: 0.54rem;
+      line-height: 1;
+      opacity: 0.78;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pt-sym {
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.05;
+      margin-top: 2px;
+    }
+    .pt-cnt {
+      font-size: 0.56rem;
+      font-weight: 700;
+      line-height: 1;
+      opacity: 0.92;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 1px;
+    }
+    .pt-lanth-gap {
+      grid-column: 1 / -1;
+      height: 6px;
+    }
+    .pt-lanth-lbl {
+      grid-column: 1 / 4;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+    .pt-legend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: #475569;
+      font-weight: 600;
+    }
+    .pt-legend-bar {
+      width: 96px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e0f2fe 0%, #7dd3fc 35%, #0284c7 68%, #1e3a8a 100%);
+      border: 1px solid #cbd5e1;
+    }
+

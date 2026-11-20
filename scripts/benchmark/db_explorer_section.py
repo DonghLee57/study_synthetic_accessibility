@@ -540,9 +540,98 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             "domain_flag": "boundary_diagnostic" if exp_rec.get("boundary_flag") else "patent_lit_pass",
         })
 
+    _THD = "O/C(=C/C(=O)C(C)(C)C)C(C)(C)C"
+    _ACAC = "O/C(C)=C\\C(C)=O"
+    _HFAC = "O/C(C(F)(F)F)=C\\C(=O)C(F)(F)F"
+    _FOD = "O/C(C(C)(C)C)=C\\C(=O)C(F)(F)C(F)(F)C(F)(F)F"
+    _OD = "O/C(CC)=C\\C(=O)CC"
+    _DMAMP = "OC(C)(C)CN(C)C"
+    _DMAMB = "OC(C)(CC)CN(C)C"
+    _CP = "C1C=CC=C1"
+    _ETCP = "CCC1=CC=CC1"
+    _IPRCP = "CC(C)C1=CC=CC1"
+    _CP_IPR3 = "CC(C)C1=C(C(C)C)C=C(C(C)C)C1"
+    _CURATED_DISPLAY_2D_SMILES: Dict[str, str] = {
+        "LiOtBu": "[Li]OC(C)(C)C",
+        "La(thd)3": f"[La]({_THD})({_THD}){_THD}",
+        "Ta(OEt)5": "CCO[Ta](OCC)(OCC)(OCC)OCC",
+        "Te(SiMe3)2": "C[Si](C)(C)[Te][Si](C)(C)C",
+        "Mn(thd)3": f"[Mn]({_THD})({_THD}){_THD}",
+        "Hf(NEt2)4": "CCN(CC)[Hf](N(CC)CC)(N(CC)CC)N(CC)CC",
+        "LiN(SiMe3)2": "[Li]N([Si](C)(C)C)[Si](C)(C)C",
+        "FeCp2": f"[Fe]({_CP}){_CP}",
+        "Sn(dmamp)2": f"[Sn]({_DMAMP}){_DMAMP}",
+        "Ca(thd)2": f"[Ca]({_THD}){_THD}",
+        "Sr(thd)2": f"[Sr]({_THD}){_THD}",
+        "WF6": "F[W](F)(F)(F)(F)F",
+        "Y(thd)3": f"[Y]({_THD})({_THD}){_THD}",
+        "Ag(fod)(PEt3)": f"CCP(CC)CC->[Ag]{_FOD}",
+        "Si2H6": "[SiH3][SiH3]",
+        "Te(OEt)4": "CCO[Te](OCC)(OCC)OCC",
+        "CoCp2": f"[Co]({_CP}){_CP}",
+        "Ni(acac)2": f"[Ni]({_ACAC}){_ACAC}",
+        "NiCp2": f"[Ni]({_CP}){_CP}",
+        "Yb(thd)3": f"[Yb]({_THD})({_THD}){_THD}",
+        "Cu(acac)2": f"[Cu]({_ACAC}){_ACAC}",
+        "NaOtBu": "[Na]OC(C)(C)C",
+        "Te(SiEt3)2": "CC[Si](CC)(CC)[Te][Si](CC)(CC)CC",
+        "Er(thd)3": f"[Er]({_THD})({_THD}){_THD}",
+        "Se(SiMe3)2": "C[Si](C)(C)[Se][Si](C)(C)C",
+        "SnCl4": "Cl[Sn](Cl)(Cl)Cl",
+        "Sr(CpiPr3)2": f"[Sr]({_CP_IPR3}){_CP_IPR3}",
+        "TiF4": "F[Ti](F)(F)F",
+        "Fe(thd)3": f"[Fe]({_THD})({_THD}){_THD}",
+        "Pb(N(SiMe3)2)2": "C[Si](C)(C)N([Si](C)(C)C)[Pb]N([Si](C)(C)C)[Si](C)(C)C",
+        "Sb(OEt)3": "CCO[Sb](OCC)OCC",
+        "Sc(thd)3": f"[Sc]({_THD})({_THD}){_THD}",
+        "SnI4": "I[Sn](I)(I)I",
+        "Ti(OMe)4": "CO[Ti](OC)(OC)OC",
+        "V(NEtMe)4": "CCN(C)[V](N(C)CC)(N(C)CC)N(C)CC",
+        "ZnMe2": "C[Zn]C",
+        "[Cu(sBuAMD)]2": "CCC(C)N=C(C)N(C(C)CC)[Cu]",
+        "Co(thd)2": f"[Co]({_THD}){_THD}",
+        "KOtBu": "[K]OC(C)(C)C",
+        "Ni(dmamb)2": f"[Ni]({_DMAMB}){_DMAMB}",
+        "Ni(tBu2AMD)2": "CC(=NC(C)(C)C)N(C(C)(C)C)[Ni]N(C(C)(C)C)C(C)=NC(C)(C)C",
+        "Si(OtBu)3OH": "CC(C)(C)O[Si](O)(OC(C)(C)C)OC(C)(C)C",
+        "TaF5": "F[Ta](F)(F)(F)F",
+        "BH3(NHMe2)": "C[NH+](C)[BH3-]",
+        "CdMe2": "C[Cd]C",
+        "Cu(hfac)2": f"[Cu]({_HFAC}){_HFAC}",
+        "La(iPrFMD)3": "CC(C)N=CN(C(C)C)[La](N(C(C)C)C=NC(C)C)N(C(C)C)C=NC(C)C",
+        "Mg(thd)2": f"[Mg]({_THD}){_THD}",
+        "Pb(dmamp)2": f"[Pb]({_DMAMP}){_DMAMP}",
+        "Pb(thd)2": f"[Pb]({_THD}){_THD}",
+        "Pd(hfac)2": f"[Pd]({_HFAC}){_HFAC}",
+        "Sb(NMe2)3": "CN(C)[Sb](N(C)C)N(C)C",
+        "Se(SiEt3)2": "CC[Si](CC)(CC)[Se][Si](CC)(CC)CC",
+        "VO(OiPr)3": "CC(C)O[V](=O)(OC(C)C)OC(C)C",
+        "ZnCl2": "Cl[Zn]Cl",
+        "Zr(OtBu)4": "CC(C)(C)O[Zr](OC(C)(C)C)(OC(C)(C)C)OC(C)(C)C",
+        "Cu(thd)2": f"[Cu]({_THD}){_THD}",
+        "Gd(thd)3": f"[Gd]({_THD})({_THD}){_THD}",
+        "Ge(OEt)4": "CCO[Ge](OCC)(OCC)OCC",
+        "La(CpiPr)3": f"[La]({_IPRCP})({_IPRCP}){_IPRCP}",
+        "Mg(EtCp)2": f"[Mg]({_ETCP}){_ETCP}",
+        "Mn(EtCp)2": f"[Mn]({_ETCP}){_ETCP}",
+        "SbCl3": "Cl[Sb](Cl)Cl",
+        "SnEt4": "CC[Sn](CC)(CC)CC",
+        "GaNp3": "CC(C)(C)C[Ga](CC(C)(C)C)CC(C)(C)C",
+        "In(triaz)3": "CN=NN(C)[In](N(C)N=NC)N(C)N=NC",
+        "Ga(triaz)3": "CN=NN(C)[Ga](N(C)N=NC)N(C)N=NC",
+        "In(dpguan)3": "CN(C)C(=NC(C)C)N(C(C)C)[In](N(C(C)C)C(=NC(C)C)N(C)C)N(C(C)C)C(=NC(C)C)N(C)C",
+        "InMe2(NtBu(CH2)2(CH3)2OMe)": "C[In](C)N(C(C)(C)C)CC(C)(C)OC",
+        "Ru(CpEtMe)2": "CCC1=C(C)C=CC1[Ru]C1C=CC(C)=C1CC",
+        "Ru(Me2pyr)2": "CC1=CC(C)=C([Ru]C2=C(C)C=C(C)N2)N1",
+        "Ru(od)3": f"[Ru]({_OD})({_OD}){_OD}",
+        "Ru(thd)2(cod)": f"[Ru]({_THD})({_THD})C1=CCCC=CCC1",
+        "RuCp(CO)2((CH2)3N(CH3)2)": f"CN(C)CCC[Ru]({_CP})(<-[C-]#[O+])<-[C-]#[O+]",
+        "RuCp(CpCH(Me)(NMe2))": f"CC(N(C)C)C1=CC=CC1[Ru]{_CP}",
+    }
+
     gate_reason_labels: Dict[str, str] = {
         "sa_gt_4": "합성 난이도 초과 (>4.0)",
-        "homoleptic_tm_sp3": "불안정 금속 알킬",
+        "homoleptic_tm_sp3": "불안정 금속 알킬 (β-H 제거/열분해)",
         "overcrowded_poly_aryl_tm": "다중 아릴 입체 과밀",
         "poly_hydroxide": "다중 수산화기·응집 위험",
         "carboxylic_acid": "카복실산 부반응·비휘발",
@@ -553,6 +642,19 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
     }
 
     for rec in db_records:
+        # Backfill display-only 2D RDKit structure for known AtomicLimits precursors
+        if not rec.get("has_2d"):
+            disp_smi = _CURATED_DISPLAY_2D_SMILES.get(rec.get("name", ""))
+            if disp_smi and _ensure_svg(disp_smi):
+                rec["smiles"] = disp_smi
+                rec["has_2d"] = True
+                m_disp = Chem.MolFromSmiles(disp_smi)
+                if m_disp is not None:
+                    if not rec.get("formula") or rec.get("formula") == "-":
+                        rec["formula"] = rdMolDescriptors.CalcMolFormula(m_disp)
+                    if rec.get("mw") is None:
+                        rec["mw"] = round(Descriptors.MolWt(m_disp), 2)
+
         u_rec = _u_by_id.get(rec.get("id"))
         if u_rec is not None:
             if u_rec.get("tmc_sa_v2") is not None:
@@ -591,23 +693,44 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         else:
             rec["card_source"] = rec.get("db_label") or "-"
 
-        # Uniform concise risk / failure mechanism label
+        # Detailed risk / rejection reason label
         g_reasons = rec.get("gate_reasons") or []
-        if g_reasons:
-            rec["card_risk"] = ", ".join(gate_reason_labels.get(g, g) for g in g_reasons[:2])
-        elif rec.get("sapis_pass") is True:
-            rec["card_risk"] = "낮음 (게이트 통과)"
-        elif rec.get("sapis_pass") is False:
-            if rec.get("domain_flag") == "boundary_diagnostic":
-                rec["card_risk"] = "경계 조건 검토 필요"
+        diag_note_str = (rec.get("diag_note") or "").strip()
+        bde_v = rec.get("bde_min")
+        lig_v = rec.get("ligand_sa")
+        if u_rec is not None:
+            if bde_v is None:
+                bde_v = u_rec.get("bde_min_kcal_mol")
+            if lig_v is None:
+                lig_v = u_rec.get("ligand_sa")
+
+        if rec.get("sapis_pass") is False:
+            if diag_note_str:
+                rec["card_risk"] = diag_note_str
+            elif g_reasons:
+                parts = []
+                for g in g_reasons[:2]:
+                    if g == "sa_gt_4" and rec["sapis_score"] is not None:
+                        parts.append(f"합성 난이도 초과 (SAPIS {rec['sapis_score']:.2f} > 4.0)")
+                    else:
+                        parts.append(gate_reason_labels.get(g, g))
+                rec["card_risk"] = ", ".join(parts)
+            elif bde_v is not None and float(bde_v) < 20.0 and (lig_v is None or float(lig_v) <= 3.5):
+                rec["card_risk"] = f"7net 저결합 해리 페널티 (BDE={float(bde_v):.1f} kcal/mol, ligand_sa={float(lig_v):.2f})"
+            elif dt == "inhibitor" and rec["sapis_score"] is not None and lig_v is not None and float(rec["sapis_score"]) > float(lig_v) + 0.5:
+                rec["card_risk"] = f"BR-SAScore 사전 미등재 조각 패널티 (BR={rec['sapis_score']:.2f}, ligand_sa={float(lig_v):.2f})"
+            elif rec["sapis_score"] is not None and rec["sapis_score"] > 4.0:
+                rec["card_risk"] = f"합성·물리 점수 초과 (SAPIS {rec['sapis_score']:.2f} > 4.0)"
             else:
                 rec["card_risk"] = "합성·물리 게이트 차단"
+        elif rec.get("sapis_pass") is True:
+            rec["card_risk"] = "낮음 (게이트 통과)"
         elif dt == "reagent":
             rec["card_risk"] = rec.get("handling") or "일반 취급"
         elif dt == "reaction":
             rec["card_risk"] = f"ΔG {rec['dg_kcal_mol']} kcal/mol" if rec.get("dg_kcal_mol") is not None else "-"
         else:
-            rec["card_risk"] = "미평가 (SMILES 미수록)"
+            rec["card_risk"] = "미평가 (문헌 참고용)"
 
     db_meta_summary = {
         "n_unique_entities": len(db_records),

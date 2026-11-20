@@ -13,11 +13,8 @@ def build_intro_html() -> str:
     """Build the ``소개`` tab HTML fragment for SAPIS identity, etymology, and architecture."""
     return """
       <section class="card" style="background:linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); border:1px solid #bfdbfe; margin-bottom:18px;">
-        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:16px;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;">
           <div style="flex:1 1 540px;">
-            <div style="display:inline-block; font-size:0.74rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1d4ed8; background:#dbeafe; border:1px solid #93c5fd; padding:3px 10px; border-radius:999px; margin-bottom:10px;">
-              Unified Semiconductor SA Model
-            </div>
             <h2 style="margin:0 0 8px 0; font-size:1.75rem; font-weight:800; color:#0f172a; letter-spacing:-0.02em;">
               SAPIS
             </h2>
@@ -30,9 +27,8 @@ def build_intro_html() -> str:
               <strong>2-Track 물리·화학 정보학 하이브리드 모델</strong>입니다.
             </p>
           </div>
-          <div style="flex:0 0 auto; min-width:240px; background:#ffffff; border:1px solid #cbd5e1; border-radius:10px; padding:14px 16px;">
-            <div style="font-size:0.75rem; font-weight:700; color:#64748b; margin-bottom:6px;">핵심 정체성 요약</div>
-            <ul style="margin:0; padding-left:18px; font-size:0.84rem; color:#1e293b; line-height:1.7;">
+          <div style="flex:0 0 auto; min-width:240px; background:#ffffff; border:1px solid #cbd5e1; border-radius:10px; padding:14px 16px; display:flex; align-items:center; align-self:center;">
+            <ul style="margin:0; padding-left:18px; font-size:0.84rem; color:#1e293b; line-height:1.75;">
               <li><strong>공식 명칭:</strong> SAPIS</li>
               <li><strong>평가 대상:</strong> 반도체 프리커서 &amp; 인히비터</li>
               <li><strong>점수 범위:</strong> 1.0 (용이) ~ 10.0 (난해)</li>

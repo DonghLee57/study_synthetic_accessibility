@@ -1181,7 +1181,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             fpath = os.path.join(PROJECT_ROOT, fname)
             with open(fpath, "r", encoding="utf-8") as fh:
                 html_txt = fh.read()
-            self.assertLess(len(html_txt.encode("utf-8")), 2800000)
+            self.assertLess(len(html_txt.encode("utf-8")), 3300000)
             self.assertIn("svg.rdk path:not([fill])", html_txt)
             self.assertIn(".u01{", html_txt)
             for placeholder in (

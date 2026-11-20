@@ -583,11 +583,96 @@
       return METAL_ALIAS_MAP[q] || null;
     }
 
+    const PERIODIC_TABLE_LAYOUT = [
+      // [Z, symbol, row, col] — Periods 1-6 + Lanthanides (Row 8)
+      [1,'H',1,1],[2,'He',1,18],
+      [3,'Li',2,1],[4,'Be',2,2],[5,'B',2,13],[6,'C',2,14],[7,'N',2,15],[8,'O',2,16],[9,'F',2,17],[10,'Ne',2,18],
+      [11,'Na',3,1],[12,'Mg',3,2],[13,'Al',3,13],[14,'Si',3,14],[15,'P',3,15],[16,'S',3,16],[17,'Cl',3,17],[18,'Ar',3,18],
+      [19,'K',4,1],[20,'Ca',4,2],[21,'Sc',4,3],[22,'Ti',4,4],[23,'V',4,5],[24,'Cr',4,6],[25,'Mn',4,7],[26,'Fe',4,8],[27,'Co',4,9],[28,'Ni',4,10],[29,'Cu',4,11],[30,'Zn',4,12],[31,'Ga',4,13],[32,'Ge',4,14],[33,'As',4,15],[34,'Se',4,16],[35,'Br',4,17],[36,'Kr',4,18],
+      [37,'Rb',5,1],[38,'Sr',5,2],[39,'Y',5,3],[40,'Zr',5,4],[41,'Nb',5,5],[42,'Mo',5,6],[43,'Tc',5,7],[44,'Ru',5,8],[45,'Rh',5,9],[46,'Pd',5,10],[47,'Ag',5,11],[48,'Cd',5,12],[49,'In',5,13],[50,'Sn',5,14],[51,'Sb',5,15],[52,'Te',5,16],[53,'I',5,17],[54,'Xe',5,18],
+      [55,'Cs',6,1],[56,'Ba',6,2],[72,'Hf',6,4],[73,'Ta',6,5],[74,'W',6,6],[75,'Re',6,7],[76,'Os',6,8],[77,'Ir',6,9],[78,'Pt',6,10],[79,'Au',6,11],[80,'Hg',6,12],[81,'Tl',6,13],[82,'Pb',6,14],[83,'Bi',6,15],[84,'Po',6,16],[85,'At',6,17],[86,'Rn',6,18],
+      // Lanthanides (row 8, cols 4-18)
+      [57,'La',8,4],[58,'Ce',8,5],[59,'Pr',8,6],[60,'Nd',8,7],[61,'Pm',8,8],[62,'Sm',8,9],[63,'Eu',8,10],[64,'Gd',8,11],[65,'Tb',8,12],[66,'Dy',8,13],[67,'Ho',8,14],[68,'Er',8,15],[69,'Tm',8,16],[70,'Yb',8,17],[71,'Lu',8,18]
+    ];
+
+    let dbElemCountsCache = {};
+
+    function getPeriodicHeatmapStyle(count, maxCount) {
+      if (!count || count <= 0) return '';
+      const t = maxCount > 1 ? Math.log(count) / Math.log(maxCount) : 1.0;
+      const stops = [
+        [0.00, [224, 242, 254]], // #e0f2fe
+        [0.35, [125, 211, 252]], // #7dd3fc
+        [0.68, [2, 132, 199]],   // #0284c7
+        [1.00, [30, 58, 138]],   // #1e3a8a
+      ];
+      let c0 = stops[0], c1 = stops[stops.length - 1];
+      for (let i = 0; i < stops.length - 1; i++) {
+        if (t >= stops[i][0] && t <= stops[i + 1][0]) {
+          c0 = stops[i];
+          c1 = stops[i + 1];
+          break;
+        }
+      }
+      const f = (c1[0] === c0[0]) ? 0 : (t - c0[0]) / (c1[0] - c0[0]);
+      const r = Math.round(c0[1][0] + (c1[1][0] - c0[1][0]) * f);
+      const g = Math.round(c0[1][1] + (c1[1][1] - c0[1][1]) * f);
+      const b = Math.round(c0[1][2] + (c1[1][2] - c0[1][2]) * f);
+      const textCol = (t >= 0.48) ? '#ffffff' : '#0c4a6e';
+      const brdCol = `rgb(${Math.max(0, r - 28)}, ${Math.max(0, g - 28)}, ${Math.max(0, b - 28)})`;
+      return `background:rgb(${r},${g},${b}); color:${textCol}; border-color:${brdCol};`;
+    }
+
+    function renderPeriodicTableFilter(elemCounts, totalCount) {
+      const grid = document.getElementById('dbPeriodicGrid');
+      if (!grid) return;
+      const ptElems = new Set(PERIODIC_TABLE_LAYOUT.map(e => e[1]));
+      let maxCnt = 1;
+      Object.entries(elemCounts).forEach(([k, v]) => {
+        if (ptElems.has(k) && v > maxCnt) maxCnt = v;
+      });
+      const maxLbl = document.getElementById('dbPtMaxLabel');
+      if (maxLbl) maxLbl.textContent = `${maxCnt}건`;
+      const allBtn = document.getElementById('dbPtAllBtn');
+      if (allBtn) allBtn.textContent = `전체 원소 (${totalCount})`;
+      const orgBtn = document.getElementById('dbPtOrgBtn');
+      if (orgBtn && elemCounts['Organic']) {
+        orgBtn.style.display = '';
+        orgBtn.textContent = `유기물 (${elemCounts['Organic']})`;
+      }
+
+      const cells = [];
+      PERIODIC_TABLE_LAYOUT.forEach(([z, sym, row, col]) => {
+        const cnt = elemCounts[sym] || 0;
+        if (cnt > 0) {
+          const hmStyle = getPeriodicHeatmapStyle(cnt, maxCnt);
+          cells.push(
+            `<button type="button" class="pt-cell has-data" data-dbmetal="${sym}" style="grid-row:${row}; grid-column:${col}; ${hmStyle}" title="${sym} (Z=${z}): ${cnt}건 — 클릭하여 필터링" onclick="toggleDbPeriodicElement('${sym}')">` +
+              `<span class="pt-z">${z}</span><span class="pt-sym">${sym}</span><span class="pt-cnt">${cnt}</span>` +
+            `</button>`
+          );
+        } else {
+          cells.push(
+            `<div class="pt-cell empty-data" style="grid-row:${row}; grid-column:${col};" aria-disabled="true">` +
+              `<span class="pt-z">${z}</span><span class="pt-sym">${sym}</span>` +
+            `</div>`
+          );
+        }
+      });
+      // Lanthanide placeholder at row 6, col 3 and label at row 8, cols 1-3
+      cells.push(`<div class="pt-cell empty-data" style="grid-row:6; grid-column:3; font-size:0.62rem; font-weight:700;">57-71</div>`);
+      cells.push(`<div class="pt-lanth-gap" style="grid-row:7;"></div>`);
+      cells.push(`<div class="pt-lanth-lbl" style="grid-row:8;">Lanthanides &rarr;</div>`);
+      grid.innerHTML = cells.join('');
+    }
+
+    function toggleDbPeriodicElement(sym) {
+      setDbMetalFilter(dbCurrentMetal === sym ? 'all' : sym);
+    }
+
     function ensureDbExplorerInitialized() {
       if (!dbExplorerReady) {
         const data = loadDbPayload();
-        const elemSelect = document.getElementById('dbElementFilter');
-        const metalPills = document.getElementById('dbMetalPills');
         const elemCounts = {};
         if (data.records) {
           data.records.forEach(r => {
@@ -597,27 +682,8 @@
             }
           });
         }
-        if (elemSelect) {
-          const sortedElems = Object.keys(elemCounts).sort((a, b) => elemCounts[b] - elemCounts[a]);
-          sortedElems.forEach(e => {
-            const opt = document.createElement('option');
-            opt.value = e;
-            opt.textContent = `${e} (${elemCounts[e]})`;
-            elemSelect.appendChild(opt);
-          });
-        }
-        if (metalPills && data.records) {
-          const otherCnt = Object.entries(elemCounts).reduce((acc, [k, v]) => acc + (NON_OTHER_ELEMENTS.has(k) ? 0 : v), 0);
-          const pillDefs = [['all', `전체 원소 (${data.records.length})`]];
-          CORE_METAL_ORDER.forEach(m => {
-            if (elemCounts[m]) pillDefs.push([m, `${m} (${elemCounts[m]})`]);
-          });
-          if (otherCnt > 0) pillDefs.push(['OTHER_METALS', `기타 금속 (${otherCnt})`]);
-          if (elemCounts['Organic']) pillDefs.push(['Organic', `유기물 (${elemCounts['Organic']})`]);
-          metalPills.innerHTML = pillDefs.map(([val, label]) =>
-            `<button type="button" class="db-pill ${val === 'all' ? 'active' : ''}" data-dbmetal="${val}" onclick="setDbMetalFilter('${val}')">${escapeHtmlStr(label)}</button>`
-          ).join('');
-        }
+        dbElemCountsCache = elemCounts;
+        renderPeriodicTableFilter(elemCounts, (data.records || []).length);
         const allBtn = document.getElementById('dbCatAllBtn');
         const precBtn = document.getElementById('dbCatPrecBtn');
         const expBtn = document.getElementById('dbCatExpandedBtn');
@@ -677,14 +743,18 @@
 
     function setDbMetalFilter(metalVal) {
       dbCurrentMetal = metalVal || 'all';
-      const elSel = document.getElementById('dbElementFilter');
-      if (elSel) {
-        const hasExactOpt = Array.from(elSel.options).some(o => o.value === dbCurrentMetal);
-        elSel.value = hasExactOpt ? dbCurrentMetal : 'all';
-      }
-      document.querySelectorAll('#dbMetalPills .db-pill').forEach(btn => {
+      document.querySelectorAll('#dbPeriodicWrap [data-dbmetal]').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-dbmetal') === dbCurrentMetal);
       });
+      const badge = document.getElementById('dbPeriodicActiveBadge');
+      if (badge) {
+        if (dbCurrentMetal === 'all') {
+          badge.textContent = '선택: 전체 원소';
+        } else {
+          const cnt = dbElemCountsCache[dbCurrentMetal] || 0;
+          badge.textContent = `선택: ${dbCurrentMetal} (${cnt}건)`;
+        }
+      }
       renderDbExplorer();
     }
 
@@ -715,18 +785,18 @@
     function resetDbFilters() {
       const inp = document.getElementById('dbSearchInput');
       const modeSel = document.getElementById('dbSearchMode');
-      const elSel = document.getElementById('dbElementFilter');
       const chk2d = document.getElementById('dbOnly2dCheck');
       const sortSel = document.getElementById('dbSortSelect');
       if (inp) inp.value = '';
       if (modeSel) modeSel.value = 'smart';
-      if (elSel) elSel.value = 'all';
       if (chk2d) chk2d.checked = false;
       if (sortSel) sortSel.value = 'default';
       dbCurrentMetal = 'all';
-      document.querySelectorAll('#dbMetalPills .db-pill').forEach(btn => {
+      document.querySelectorAll('#dbPeriodicWrap [data-dbmetal]').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-dbmetal') === 'all');
       });
+      const badge = document.getElementById('dbPeriodicActiveBadge');
+      if (badge) badge.textContent = '선택: 전체 원소';
       setDbCategory('all');
     }
 
@@ -936,9 +1006,14 @@
             } else if (r.has_2d && svgs[r.smiles]) {
               visualHtml = `<div class="db-svg-stage">${svgs[r.smiles]}</div>`;
             } else {
-              visualHtml = `<div class="db-svg-stage" style="background:#f8fafc; color:#94a3b8; font-size:0.78rem; text-align:center; flex-direction:column; gap:4px;">
-                <strong style="color:#64748b;">2D SMILES 미수록</strong>
-                <span>AtomicLimits ALD 문헌 레코드 (${escapeHtmlStr(r.atomiclimits_name || r.name)})</span>
+              const ligTokens = (r.name || '').match(/\(([^()]+)\)/g) || [];
+              const ligChips = ligTokens.map(t => `<span style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;padding:2px 7px;border-radius:999px;font-size:0.7rem;font-weight:700;font-family:'JetBrains Mono',monospace;">${escapeHtmlStr(t.slice(1, -1))}</span>`).join('');
+              visualHtml = `<div class="db-svg-stage" style="background:linear-gradient(135deg,#f8fafc 0%,#f0f9ff 100%); color:#475569; font-size:0.76rem; text-align:center; flex-direction:column; gap:7px; padding:10px;">
+                <div style="display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#0284c7;color:#fff;font-weight:800;font-size:0.8rem;font-family:'JetBrains Mono',monospace;">${escapeHtmlStr(r.element || 'M')}</span>
+                  ${ligChips || `<span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:#0f172a;">${escapeHtmlStr(r.name)}</span>`}
+                </div>
+                <span style="font-size:0.7rem; color:#64748b;">배위 약어 표기 (이성질체 미특정 &bull; AtomicLimits 문헌)</span>
               </div>`;
             }
 
@@ -953,22 +1028,22 @@
             const riskTxt = escapeHtmlStr(r.card_risk || '-');
             const riskColor = (r.sapis_pass === false) ? '#b91c1c' : ((r.sapis_pass === true) ? '#15803d' : '#475569');
 
-            const uniformSummaryHtml = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; font-size:0.74rem; margin-top:4px;">
+            const uniformSummaryHtml = `<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; font-size:0.74rem; margin-top:4px;">
               <div>
-                <div style="color:#64748b; font-size:0.68rem;">SAPIS 점수</div>
+                <div style="color:#64748b; font-size:0.67rem;">SAPIS 점수</div>
                 <div style="font-family:'JetBrains Mono', monospace; font-weight:800; font-size:0.86rem; color:#0f172a; margin-top:1px;">${sapisTxt}</div>
               </div>
               <div>
-                <div style="color:#64748b; font-size:0.68rem;">합성 판정</div>
+                <div style="color:#64748b; font-size:0.67rem;">합성 판정</div>
                 <div style="margin-top:2px;">${verdictBadge}</div>
               </div>
               <div>
-                <div style="color:#64748b; font-size:0.68rem;">출처</div>
+                <div style="color:#64748b; font-size:0.67rem;">출처</div>
                 <div style="font-weight:600; color:#334155; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${srcTxt}">${srcTxt}</div>
               </div>
-              <div>
-                <div style="color:#64748b; font-size:0.68rem;">위험성</div>
-                <div style="font-weight:600; color:${riskColor}; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${riskTxt}">${riskTxt}</div>
+              <div style="grid-column:1 / -1; border-top:1px dashed #e2e8f0; padding-top:5px;">
+                <div style="color:#64748b; font-size:0.67rem;">${r.sapis_pass === false ? '불가 원인 / 위험성' : '위험성'}</div>
+                <div style="font-weight:600; color:${riskColor}; margin-top:1px; line-height:1.4; word-break:keep-all;" title="${riskTxt}">${riskTxt}</div>
               </div>
             </div>`;
 

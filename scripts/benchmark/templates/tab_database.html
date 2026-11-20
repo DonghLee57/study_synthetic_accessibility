@@ -38,20 +38,27 @@
             <button type="button" class="db-pill" id="dbCatNegBtn" data-dbcat="negative" onclick="setDbCategory('negative')">Negative Controls (10)</button>
           </div>
 
-          <div style="margin-bottom:10px; padding-top:8px; border-top:1px dashed #e2e8f0;">
-            <div style="font-size:0.75rem; font-weight:700; color:#475569; margin-bottom:6px;">
-              메인 금속 빠른 필터 (Main Metal / Center Element)
+          <div class="pt-wrap" id="dbPeriodicWrap">
+            <div class="pt-header">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:0.78rem; font-weight:800; color:#0f172a;">주기율표 원소 필터</span>
+                <span id="dbPeriodicActiveBadge" style="font-size:0.74rem; font-weight:700; color:#0369a1; background:#e0f2fe; border:1px solid #7dd3fc; padding:2px 8px; border-radius:999px;">선택: 전체 원소</span>
+                <button type="button" class="db-pill active" id="dbPtAllBtn" data-dbmetal="all" onclick="setDbMetalFilter('all')" style="padding:3px 10px; font-size:0.74rem;">전체 원소</button>
+                <button type="button" class="db-pill" id="dbPtOrgBtn" data-dbmetal="Organic" onclick="setDbMetalFilter('Organic')" style="padding:3px 10px; font-size:0.74rem; display:none;">유기물 (Organic)</button>
+              </div>
+              <div class="pt-legend">
+                <span>1건</span>
+                <span class="pt-legend-bar" aria-hidden="true"></span>
+                <span id="dbPtMaxLabel">33건</span>
+                <span style="color:#94a3b8; font-weight:500;">(미보유 원소 불투명)</span>
+              </div>
             </div>
-            <div class="db-pill-bar" id="dbMetalPills" style="margin-bottom:0;"></div>
+            <div class="pt-grid-scroll">
+              <div class="pt-grid" id="dbPeriodicGrid"></div>
+            </div>
           </div>
 
           <div class="db-subfilter-row">
-            <label style="display:inline-flex; align-items:center; gap:6px; font-weight:600;">
-              상세 원소 선택:
-              <select id="dbElementFilter" class="db-select" onchange="setDbMetalFilter(this.value)">
-                <option value="all">전체 원소</option>
-              </select>
-            </label>
             <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer; font-weight:600;">
               <input type="checkbox" id="dbOnly2dCheck" onchange="renderDbExplorer()">
               <span>2D 구조(<code>SMILES</code>) 보유 항목만 표시</span>
