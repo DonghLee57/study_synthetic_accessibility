@@ -15,8 +15,10 @@ from __future__ import annotations
 import math
 import os
 import sys
-from typing import Any, Dict, List, Optional
+from collections import deque
+from typing import Any, Dict, List, Optional, Tuple
 
+import numpy as np
 from rdkit import Chem
 from rdkit.Chem import Crippen, Descriptors, Lipinski, RDConfig, rdMolDescriptors
 
@@ -194,6 +196,218 @@ def compute_coord_risk_count(desc: Dict[str, float], topo: Dict[str, Any], is_co
     )
 
 
+# Simple inorganic ligands excluded from organic pro-ligand SA complexity scoring
+_SIMPLE_INORGANIC_LIGANDS = frozenset({
+    "[H]", "H", "F", "Cl", "Br", "I", "O", "S",
+    "[F]", "[Cl]", "[Br]", "[I]", "[O]", "[S]",
+    "[C-]#[O+]", "[O+]#[C-]", "C#O",
+})
+
+# d8 centers preferring square-planar (D4h) geometry at CN = 4
+_SQUARE_PLANAR_D8_Z = frozenset({45, 46, 77, 78, 79})  # Rh, Pd, Ir, Pt, Au
+
+
+def _ideal_coordination_unit_vectors(cn: int, center_z: int) -> np.ndarray:
+    """Return ideal unit direction vectors for coordination number ``cn``.
+
+    Physics/Algorithm:
+        Generates canonical VSEPR / ligand-field polyhedral directions:
+        linear (CN=2), trigonal planar (CN=3), square planar (CN=4, d8) or
+        tetrahedral (CN=4), trigonal bipyramidal (CN=5), octahedral (CN=6),
+        and deterministic Fibonacci-sphere vectors (CN>=7).
+
+    Returns:
+        Array of shape ``(cn, 3)`` with unit-norm vectors (dimensionless).
+    """
+    if cn <= 1:
+        return np.array([[1.0, 0.0, 0.0]], dtype=float)
+    if cn == 2:
+        return np.array([[1.0, 0.0, 0.0], [-1.0, 0.0, 0.0]], dtype=float)
+    if cn == 3:
+        ang = [0.0, 2.0 * math.pi / 3.0, 4.0 * math.pi / 3.0]
+        return np.array([[math.cos(a), math.sin(a), 0.0] for a in ang], dtype=float)
+    if cn == 4:
+        if center_z in _SQUARE_PLANAR_D8_Z:
+            return np.array(
+                [[1.0, 0.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, -1.0, 0.0]],
+                dtype=float,
+            )
+        inv_s3 = 1.0 / math.sqrt(3.0)
+        return np.array(
+            [
+                [inv_s3, inv_s3, inv_s3],
+                [inv_s3, -inv_s3, -inv_s3],
+                [-inv_s3, inv_s3, -inv_s3],
+                [-inv_s3, -inv_s3, inv_s3],
+            ],
+            dtype=float,
+        )
+    if cn == 5:
+        ang = [0.0, 2.0 * math.pi / 3.0, 4.0 * math.pi / 3.0]
+        vecs = [[math.cos(a), math.sin(a), 0.0] for a in ang]
+        vecs.extend([[0.0, 0.0, 1.0], [0.0, 0.0, -1.0]])
+        return np.array(vecs, dtype=float)
+    if cn == 6:
+        return np.array(
+            [
+                [1.0, 0.0, 0.0], [-1.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0], [0.0, -1.0, 0.0],
+                [0.0, 0.0, 1.0], [0.0, 0.0, -1.0],
+            ],
+            dtype=float,
+        )
+    # Deterministic Fibonacci sphere for CN >= 7
+    golden_angle = math.pi * (3.0 - math.sqrt(5.0))
+    vecs = []
+    for i in range(cn):
+        y = 1.0 - (2.0 * i + 1.0) / float(cn)
+        r = math.sqrt(max(0.0, 1.0 - y * y))
+        theta = golden_angle * i
+        vecs.append([math.cos(theta) * r, y, math.sin(theta) * r])
+    return np.array(vecs, dtype=float)
+
+
+def build_coordination_template_3d(
+    mol: Chem.Mol,
+    c_idx: int,
+) -> Optional[Tuple[Chem.Mol, np.ndarray, List[str], int, str, int]]:
+    """Build deterministic 3D polyhedral coordinates when RDKit ETKDG/UFF fails.
+
+    Physics/Algorithm:
+        Places the central coordination atom at the origin, distributes first-shell
+        coordinated neighbors along ideal VSEPR/ligand-field unit vectors at
+        covalent sum bond lengths ``d = R_cov(M) + R_cov(L)`` (# units: Å), and
+        propagates outer-shell ligand atoms outward via BFS (using 1.13 Å for
+        C≡O triple bonds and covalent sums otherwise) to avoid steric overlap.
+
+    Args:
+        mol: RDKit molecule (heavy-atom graph).
+        c_idx: Atom index of the coordination center.
+
+    Returns:
+        Tuple ``(mol_h, pos, syms, c_idx_h, c_sym, c_z)`` matching
+        ``embed_etkdg_3d``, or ``None`` if invalid.
+    """
+    if mol is None or c_idx < 0 or c_idx >= mol.GetNumAtoms():
+        return None
+    mol_h = Chem.AddHs(mol)
+    n_atoms = mol_h.GetNumAtoms()
+    c_atom = mol_h.GetAtomWithIdx(c_idx)
+    c_sym = c_atom.GetSymbol()
+    c_z = int(c_atom.GetAtomicNum())
+    c_rcov = float(get_element_properties(c_sym, c_z)["r_cov_ang"])  # units: Å
+
+    pos = np.zeros((n_atoms, 3), dtype=float)  # units: Å
+    placed = {c_idx}
+    neighbors = [nb.GetIdx() for nb in c_atom.GetNeighbors()]
+    u_vecs = _ideal_coordination_unit_vectors(len(neighbors), c_z)
+
+    # Queue entries: (atom_idx, outward_unit_vec)
+    queue: deque[Tuple[int, np.ndarray]] = deque()
+    for nb_idx, u_dir in zip(neighbors, u_vecs):
+        nb_atom = mol_h.GetAtomWithIdx(nb_idx)
+        nb_rcov = float(get_element_properties(nb_atom.GetSymbol(), int(nb_atom.GetAtomicNum()))["r_cov_ang"])  # units: Å
+        bond_len = max(1.10, c_rcov + nb_rcov)  # units: Å
+        pos[nb_idx] = u_dir * bond_len
+        placed.add(nb_idx)
+        queue.append((nb_idx, u_dir))
+
+    while queue:
+        parent_idx, parent_dir = queue.popleft()
+        p_atom = mol_h.GetAtomWithIdx(parent_idx)
+        p_rcov = float(get_element_properties(p_atom.GetSymbol(), int(p_atom.GetAtomicNum()))["r_cov_ang"])  # units: Å
+        children = [nb.GetIdx() for nb in p_atom.GetNeighbors() if nb.GetIdx() not in placed]
+        if not children:
+            continue
+        # Orthonormal basis perpendicular to parent_dir
+        ref = np.array([0.0, 0.0, 1.0]) if abs(parent_dir[2]) < 0.9 else np.array([1.0, 0.0, 0.0])
+        e1 = np.cross(parent_dir, ref)
+        e1 /= max(1e-9, float(np.linalg.norm(e1)))
+        e2 = np.cross(parent_dir, e1)
+
+        n_ch = len(children)
+        for k, ch_idx in enumerate(children):
+            ch_atom = mol_h.GetAtomWithIdx(ch_idx)
+            bond = mol_h.GetBondBetweenAtoms(parent_idx, ch_idx)
+            is_triple = (bond is not None) and (bond.GetBondType() == Chem.BondType.TRIPLE)
+            ch_rcov = float(get_element_properties(ch_atom.GetSymbol(), int(ch_atom.GetAtomicNum()))["r_cov_ang"])  # units: Å
+            b_len = 1.13 if is_triple else max(0.96, p_rcov + ch_rcov)  # units: Å
+            if n_ch == 1:
+                ch_dir = parent_dir
+            else:
+                phi = 2.0 * math.pi * k / float(n_ch)
+                # Cone half-angle ~60 deg outward
+                ch_dir = 0.5 * parent_dir + 0.8660254 * (math.cos(phi) * e1 + math.sin(phi) * e2)
+                ch_dir /= max(1e-9, float(np.linalg.norm(ch_dir)))
+            pos[ch_idx] = pos[parent_idx] + ch_dir * b_len
+            placed.add(ch_idx)
+            queue.append((ch_idx, ch_dir))
+
+    # Attach 3D conformer onto mol_h so downstream RDKit geometry queries work
+    conf = Chem.Conformer(n_atoms)
+    for i in range(n_atoms):
+        conf.SetAtomPosition(i, (float(pos[i, 0]), float(pos[i, 1]), float(pos[i, 2])))
+    mol_h.RemoveAllConformers()
+    mol_h.AddConformer(conf, assignId=True)
+    syms = [a.GetSymbol() for a in mol_h.GetAtoms()]
+    return mol_h, pos, syms, c_idx, c_sym, c_z
+
+
+def relax_3d_structure_with_sevenn(
+    mol_h: Chem.Mol,
+    pos: np.ndarray,
+    syms: List[str],
+    fmax_ev_ang: float = 0.04,
+    max_steps: int = 80,
+    sevenn_calc: Any = None,
+) -> Tuple[Chem.Mol, np.ndarray, Dict[str, Any]]:
+    """Relax 3D molecular coordinates via ASE LBFGS with SevenNet-0.
+
+    Physics/Algorithm:
+        Minimizes the SevenNet-0 potential energy surface ``E(R)`` (# units: eV)
+        until ``max_i ||-∇_{r_i} E|| < fmax_ev_ang`` (# units: eV/Å) or
+        ``max_steps`` iterations, updating the RDKit conformer in-place.
+
+    Args:
+        mol_h: RDKit molecule with explicit hydrogens.
+        pos: Initial Cartesian coordinates, shape ``(N, 3)`` (# units: Å).
+        syms: Element symbols of length ``N``.
+        fmax_ev_ang: Force convergence threshold (# units: eV/Å).
+        max_steps: Maximum LBFGS optimization steps.
+        sevenn_calc: Optional pre-initialized ``SevenNetCalculator`` instance.
+
+    Returns:
+        Tuple ``(mol_h, relaxed_pos, relax_meta)``.
+    """
+    from ase import Atoms
+    from ase.optimize import LBFGS
+    from sevenn.calculator import SevenNetCalculator
+
+    calc = sevenn_calc if sevenn_calc is not None else SevenNetCalculator(model="7net-0", device="cpu")
+    atoms = Atoms(symbols=syms, positions=np.asarray(pos, dtype=float))
+    atoms.calc = calc
+    opt = LBFGS(atoms, logfile=None)
+    opt.run(fmax=float(fmax_ev_ang), steps=int(max_steps))
+
+    relaxed_pos = np.asarray(atoms.get_positions(), dtype=float)  # units: Å
+    energy_ev = float(atoms.get_potential_energy())  # units: eV
+    forces = np.asarray(atoms.get_forces(), dtype=float)  # units: eV/Å
+    final_fmax = float(np.max(np.linalg.norm(forces, axis=1))) if len(forces) else 0.0  # units: eV/Å
+
+    conf = Chem.Conformer(len(syms))
+    for i in range(len(syms)):
+        conf.SetAtomPosition(i, (float(relaxed_pos[i, 0]), float(relaxed_pos[i, 1]), float(relaxed_pos[i, 2])))
+    mol_h.RemoveAllConformers()
+    mol_h.AddConformer(conf, assignId=True)
+    meta = {
+        "relax_converged": bool(final_fmax <= fmax_ev_ang),
+        "relax_steps": int(opt.nsteps),
+        "relax_fmax_ev_ang": round(final_fmax, 5),  # units: eV/Å
+        "mono_energy_ev": round(energy_ev, 5),  # units: eV
+    }
+    return mol_h, relaxed_pos, meta
+
+
 def compute_ligand_sa(
     smi: str,
     sa_val: float,
@@ -225,7 +439,7 @@ def compute_ligand_sa(
                     a.SetNumExplicitHs(0)
                 Chem.SanitizeMol(frag)
                 l_smi = Chem.MolToSmiles(frag)
-                if l_smi and l_smi not in ("[H]", "Cl", "O"):
+                if l_smi and l_smi not in _SIMPLE_INORGANIC_LIGANDS:
                     cand: List[float] = []
                     if br_scorer is not None:
                         try:
@@ -279,9 +493,16 @@ def compute_tmc_sa_score(
     return round(min(10.0, max(1.0, base_sa + pen_crowd + hydride_pen)), 3)
 
 
-def compute_design12_geometry_metrics(smiles: str) -> Dict[str, Any]:
+def compute_design12_geometry_metrics(
+    smiles: str,
+    relax_with_sevenn: bool = False,
+    sevenn_calc: Any = None,
+    fmax_ev_ang: float = 0.04,
+    max_steps: int = 80,
+) -> Dict[str, Any]:
     """
-    Generate deterministic ETKDGv3 3D conformer and compute Design 1 (covalent probe sphere)
+    Generate deterministic ETKDGv3 (or polyhedral coordination template fallback) 3D conformer,
+    optionally relax with SevenNet-0 LBFGS, and compute Design 1 (covalent probe sphere)
     and Design 2 (state-adapted effective radius, polarity/hydride-weighted %V_bur^D2,
     open attack void cone, and 373.15 K dimerization entropy) descriptors.
     """
@@ -298,6 +519,7 @@ def compute_design12_geometry_metrics(smiles: str) -> Dict[str, Any]:
         }
 
     emb = embed_etkdg_3d(smiles)
+    embed_source = "etkdg_3d"
     c_idx, c_sym, c_z = find_central_atom_intrinsic(mol)
     props = get_element_properties(c_sym, c_z)
     pi_h = compute_refined_pi_hapticity(mol, c_idx)
@@ -305,13 +527,25 @@ def compute_design12_geometry_metrics(smiles: str) -> Dict[str, Any]:
     c_deg = max(1, mol.GetAtomWithIdx(c_idx).GetDegree() + mol.GetAtomWithIdx(c_idx).GetTotalNumHs())
 
     if emb is None:
+        emb = build_coordination_template_3d(mol, c_idx)
+        embed_source = "coord_template_3d"
+
+    if emb is None:
         return {
             "vbur_r35": 0.0, "vbur_rprobe": 0.0, "vbur_d2_percent": 0.0, "void_cone_deg": 180.0,
-            "td_s_dimer_373": 0.0, "center_sym": c_sym, "center_z": c_z, "center_degree": c_deg, "embed_ok": False,
+            "td_s_dimer_373": 0.0, "center_sym": c_sym, "center_z": c_z, "center_degree": c_deg,
+            "embed_ok": False, "embed_source": "failed",
             **cstate, **props,
         }
 
     mol_h, pos, syms, c_idx_h, c_sym, c_z = emb
+    relax_meta: Dict[str, Any] = {}
+    if relax_with_sevenn:
+        mol_h, pos, relax_meta = relax_3d_structure_with_sevenn(
+            mol_h, pos, syms, fmax_ev_ang=fmax_ev_ang, max_steps=max_steps, sevenn_calc=sevenn_calc,
+        )
+        embed_source = f"{embed_source}+7net_lbfgs"
+
     c_deg = max(1, mol_h.GetAtomWithIdx(c_idx_h).GetDegree())
     v35 = calc_buried_volume_sphere(pos, syms, c_idx_h, radius_ang=3.5, grid_step_ang=0.25)
     vrp = calc_buried_volume_sphere(pos, syms, c_idx_h, radius_ang=props["r_probe_ang"], grid_step_ang=0.25)
@@ -330,6 +564,8 @@ def compute_design12_geometry_metrics(smiles: str) -> Dict[str, Any]:
         "center_z": c_z,
         "center_degree": c_deg,
         "embed_ok": True,
+        "embed_source": embed_source,
+        **relax_meta,
         **cstate,
         **props,
     }

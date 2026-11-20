@@ -1194,6 +1194,44 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             ):
                 self.assertNotIn(placeholder, html_txt)
 
+    def test_26_pgm_halide_stage12_extrapolation(self):
+        """Verify Stage 1 inorganic halide/CO ligand_sa normalization and Stage 2 3D coordination template builder."""
+        bench_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        scorer_mod = self._load_script_module(
+            os.path.join("scripts", "benchmark", "tmc_sa_scorer.py"),
+            "repo_tmc_sa_scorer_stage12",
+        )
+        from rdkit import Chem
+
+        pgm_cases = [
+            ("RuCl3", "Cl[Ru](Cl)Cl", 3),
+            ("RuF5", "F[Ru](F)(F)(F)F", 5),
+            ("RhCl3", "Cl[Rh](Cl)Cl", 3),
+            ("IrCl3", "Cl[Ir](Cl)Cl", 3),
+            ("IrF6", "F[Ir](F)(F)(F)(F)F", 6),
+            ("RuCl2(CO)3", "Cl[Ru](Cl)(<-[C-]#[O+])(<-[C-]#[O+])<-[C-]#[O+]", 5),
+            ("IrCl(CO)3", "Cl[Ir](<-[C-]#[O+])(<-[C-]#[O+])<-[C-]#[O+]", 4),
+        ]
+        for name, smi, expected_cn in pgm_cases:
+            lig = scorer_mod.compute_ligand_sa(smi, 6.0, 9.9, br_scorer=None)
+            self.assertEqual(lig, 1.0, f"{name} expected ligand_sa=1.0, got {lig}")
+
+            mol = Chem.MolFromSmiles(smi)
+            self.assertIsNotNone(mol)
+            c_idx, _, _ = scorer_mod.find_central_atom_intrinsic(mol)
+            tpl = scorer_mod.build_coordination_template_3d(mol, c_idx)
+            self.assertIsNotNone(tpl, f"{name} template 3D build failed")
+            mol_h, pos, syms, c_idx_h, _, _ = tpl
+            self.assertEqual(mol_h.GetAtomWithIdx(c_idx_h).GetDegree(), expected_cn)
+            vbur = scorer_mod.calc_buried_volume_sphere(pos, syms, c_idx_h, radius_ang=3.5, grid_step_ang=0.25)
+            self.assertGreater(vbur, 10.0, f"{name} template %V_bur too small: {vbur}")
+
+            geom = scorer_mod.compute_design12_geometry_metrics(smi)
+            self.assertTrue(geom["embed_ok"])
+            self.assertGreater(geom["vbur_rprobe"], 10.0)
+
 
 if __name__ == "__main__":
     unittest.main()

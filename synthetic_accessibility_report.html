@@ -4181,6 +4181,7 @@ flowchart TD
 </p>
 <ul style="font-size:0.81rem; color:#064e3b; margin:0; padding-left:18px; line-height:1.6;">
 <li><strong>스핀·전하 인지 MLIP / DFT 결합</strong>: <code>SevenNet-0</code>(MPtrj 무기 결정 학습)은 중성 <code>CO</code>·$\pi$-아렌 리간드 해리에서 음의 BDE(<code>Ir(CO)3(tBu3Cyp) -8.8</code>, <code>Ru(IMBCH) -15.1 kcal/mol</code>)를 산출할 수 있으므로, 분자 스핀·전하를 학습한 <code>MACE-OMol</code> 또는 <code>g-xTB</code>/$\omega	ext{B97M-V}$로 전자구조 정밀도를 보강합니다.</li>
+<li><strong>이종 MLIP 앙상블 기반 불확실성 정량화(UQ)</strong>: 백금족(<code>Ir</code>·<code>Rh</code>·<code>Ru</code>) 할라이드·카보닐 착체 등 외삽 영역에서의 과신 오판을 방지하기 위해, <code>SevenNet-0</code>·<code>MACE-MP-0</code>·<code>ORB/UMA</code> 등 이종 범용 MLIP 간 $\mathrm{BDE}_{\min}$·$\Delta E_{	ext{dimer}}$ 예측 분산($\sigma_{	ext{MLIP}}$)을 산출하여 임계치 초과 시 자동으로 <em>고불확실성(스핀 편극 DFT 검증 권고)</em> 플래그를 부여합니다.</li>
 <li><strong>점수식 직접 결합형 $\Delta E_f^{	ext{std}}/v_M$·$\Delta G_{	ext{dimer}}$·$P_{	ext{vap}}$ 보정</strong>: 전체 160종 전수 MLIP 이완을 통해 정량 검증된 $\Delta E_f^{	ext{std}}/v_M$ 및 $\Delta G_{	ext{dimer}}(373\,	ext{K})$을 향후 연속 스코어 <code>SAPIS</code> 페널티 및 증기압($P_{	ext{vap}}$) 항에 정규 결합합니다.</li>
 <li><strong>외삽 표준 프로토콜 상시화</strong>: 무작위 CV-5가 아닌 <strong>Leave-One-Element-Out (LOEO)</strong> 및 <strong>LOFMO</strong>를 정규 외삽 검증 프로토콜로 유지합니다.</li>
 </ul>
@@ -15538,7 +15539,7 @@ flowchart TD
         
             <!-- Unified 160-Molecule Framework Summary Callout -->
 <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #059669; border-radius:8px; padding:14px 18px; margin-bottom:20px; font-size:0.84rem; color:#14532d; line-height:1.6;">
-              <strong>통합 물리-배위 평가 프레임워크(<code>SAPIS</code>: Transition-Metal Complex Synthetic Accessibility &bull; 다중상태 전이금속 배위 벡터 &bull; 극성 가중 <code>%V<sub>bur</sub><sup>D2</sup></code>) 핵심 성능:</strong>
+              <strong>통합 물리-배위 평가 프레임워크(<code>SAPIS</code>: Synthetic Accessibility of Precursors &amp; Inhibitors for Semiconductors &bull; 다중상태 전이금속 배위 벡터 &bull; 극성 가중 <code>%V<sub>bur</sub><sup>D2</sup></code>) 핵심 성능:</strong>
               공유반지름 정규화 프로브 구($R_{	ext{probe}}(Z_M) = R_{	ext{cov}} + 1.85\,	ext{Å}$), 상태-의존 유효 반지름 $R_{	ext{eff}}(M\mid	ext{env})$, 극성·하이드라이드 가중 $\%V_{	ext{bur}}^{	ext{D2}}$, 개방 원추각 $	heta_{\max}^{	ext{void}}$, 직교 표준 생성에너지($\Delta E_f^{	ext{std}}/v_M$, 160종 전수 MLIP AUROC <code>0.633</code> · 130종 <code>0.723</code>) 및 주족 연쇄/&pi;-공액 하이드라이드 게이트를 결합하여, 핵심 검증셋(<code>N=55</code>) <strong>Precursor 25/27 (92.6%), Neg TNR 6/10 (60.0%)</strong> 및 전체 <strong>160종 통합 데이터셋 Precursor 95/102 (93.1%), Neg TNR 40/40 (100.0%)</strong>을 기록합니다.
 </div>
 
