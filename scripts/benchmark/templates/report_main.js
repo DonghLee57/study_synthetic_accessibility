@@ -417,12 +417,14 @@
       const btnDatabase = document.getElementById('btn-tab-database');
       const btnBrtheory = document.getElementById('btn-tab-brtheory');
       const btnGlossary = document.getElementById('btn-tab-glossary');
+      const btnVerification = document.getElementById('btn-tab-verification');
       const contentIntro = document.getElementById('tab-content-intro');
       const contentStoryline = document.getElementById('tab-content-storyline');
       const contentTechnical = document.getElementById('tab-content-technical');
       const contentDatabase = document.getElementById('tab-content-database');
       const contentBrtheory = document.getElementById('tab-content-brtheory');
       const contentGlossary = document.getElementById('tab-content-glossary');
+      const contentVerification = document.getElementById('tab-content-verification');
       const tocStoryline = document.getElementById('toc-storyline');
       const tocTechnical = document.getElementById('toc-technical');
       const tocDatabase = document.getElementById('toc-database');
@@ -431,10 +433,10 @@
 
       if (!btnStoryline || !btnTechnical) return;
 
-      [btnIntro, btnStoryline, btnTechnical, btnDatabase, btnBrtheory, btnGlossary].forEach(b => b && b.classList.remove('active'));
-      [contentIntro, contentStoryline, contentTechnical, contentDatabase, contentBrtheory, contentGlossary].forEach(c => { if (c) c.style.display = 'none'; });
+      [btnIntro, btnStoryline, btnTechnical, btnDatabase, btnBrtheory, btnGlossary, btnVerification].forEach(b => b && b.classList.remove('active'));
+      [contentIntro, contentStoryline, contentTechnical, contentDatabase, contentBrtheory, contentGlossary, contentVerification].forEach(c => { if (c) c.style.display = 'none'; });
       [tocStoryline, tocTechnical, tocBrtheory].forEach(t => { if (t) t.style.display = 'none'; });
-      if (tocSidebar) tocSidebar.style.display = (tabName === 'glossary' || tabName === 'intro' || tabName === 'database') ? 'none' : '';
+      if (tocSidebar) tocSidebar.style.display = (tabName === 'glossary' || tabName === 'intro' || tabName === 'database' || tabName === 'verification') ? 'none' : '';
 
       const skipScrollTop = opts && opts.skipScrollTop;
 
@@ -477,6 +479,11 @@
         requestAnimationFrame(() => {
           renderKatexInContainer('glossary', contentGlossary);
         });
+      } else if (tabName === 'verification') {
+        if (btnVerification) btnVerification.classList.add('active');
+        if (contentVerification) contentVerification.style.display = 'block';
+        if (!skipScrollTop) window.scrollTo(0, 0);
+        initVerifyTab();
       } else {
         btnTechnical.classList.add('active');
         if (contentTechnical) contentTechnical.style.display = 'block';
@@ -1018,6 +1025,16 @@
             }
 
             const sapisTxt = (r.sapis_score != null) ? Number(r.sapis_score).toFixed(2) : '-';
+            let ensSubHtml = '';
+            if (r.ens_n_models >= 2) {
+              const gStyle = r.ens_grade === 'High'
+                ? 'background:#dcfce7;color:#15803d;border:1px solid #86efac;'
+                : (r.ens_grade === 'Medium'
+                  ? 'background:#fef3c7;color:#b45309;border:1px solid #fde68a;'
+                  : 'background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;');
+              const gShort = r.ens_grade === 'High' ? 'High' : (r.ens_grade === 'Medium' ? 'Med' : 'DFT!');
+              ensSubHtml = `<div style="display:flex;align-items:center;gap:4px;margin-top:2px;flex-wrap:wrap;"><span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#64748b;">[${Number(r.ens_min).toFixed(2)}–${Number(r.ens_max).toFixed(2)}]</span><span style="font-size:0.62rem;font-weight:700;padding:0 5px;border-radius:999px;${gStyle}" title="4-uMLIP UQ 신뢰도 (σ_BDE=${r.ens_sigma_bde} kcal/mol)">${gShort}</span></div>`;
+            }
             let verdictBadge = '<span class="db-mini-pill" style="background:#f1f5f9;color:#475569;border-color:#cbd5e1;">참고 DB</span>';
             if (r.sapis_pass === true) {
               verdictBadge = '<span class="db-mini-pill" style="background:#dcfce7;color:#15803d;border-color:#86efac;font-weight:700;">합성 가능</span>';
@@ -1030,8 +1047,9 @@
 
             const uniformSummaryHtml = `<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; font-size:0.74rem; margin-top:4px;">
               <div>
-                <div style="color:#64748b; font-size:0.67rem;">SAPIS 점수</div>
+                <div style="color:#64748b; font-size:0.67rem;">${r.ens_n_models >= 2 ? 'SAPIS (4-uMLIP)' : 'SAPIS 점수'}</div>
                 <div style="font-family:'JetBrains Mono', monospace; font-weight:800; font-size:0.86rem; color:#0f172a; margin-top:1px;">${sapisTxt}</div>
+                ${ensSubHtml}
               </div>
               <div>
                 <div style="color:#64748b; font-size:0.67rem;">합성 판정</div>
@@ -1211,6 +1229,10 @@
       if (r.sascore != null) addRow('Phase 1 SA Scores', `SAScore: <strong>${r.sascore}</strong> | SCScore: <strong>${r.scscore}</strong> | SYBA: <strong>${r.syba}</strong> | BR-SAScore: <strong>${r.br_sascore}</strong> | RAscore: <strong>${r.rascore}</strong> | Ligand SA: <strong>${r.ligand_sa}</strong>`);
       if (r.bde_min != null) addRow('SevenNet-0 Physics (LBFGS)', `BDE_min: <strong>${r.bde_min} kcal/mol</strong> | %V_bur: <strong>${r.vbur}%</strong>${r.vbur_d2_7net != null ? ' (D2 ' + r.vbur_d2_7net + '%, ETKDG ' + r.vbur_etkdg + '%)' : ''} | dE_dimer: <strong>${r.de_dimer} kcal/mol</strong>${r.dg_dimer_373 != null ? ' (dG373 ' + r.dg_dimer_373 + ')' : ''} | e_coh: <strong>${r.e_coh} eV/atom</strong>${r.de_form_bond != null ? ' | dEf/vM: <strong>' + r.de_form_bond + ' kcal/mol</strong>' : ''}`);
       if (r.tmc_sa_phys != null) addRow('Phase 2 Analytical Verdict', `SAPIS (7net): <strong>${r.tmc_sa_phys}</strong>${r.tmc_sa_no3d != null ? ' (ETKDG No-3D: ' + r.tmc_sa_no3d + ')' : ''} | Flag: <code>${escapeHtmlStr(r.domain_flag)}</code> | Pass: <strong>${r.phase2_pass}</strong>`);
+      if (r.ens_n_models >= 2) {
+        const pmStr = Object.entries(r.ens_per_model || {}).map(([k, v]) => `${escapeHtmlStr(k)}: <strong>${Number(v).toFixed(2)}</strong>`).join(' | ');
+        addRow('4-uMLIP Ensemble (UQ)', `Median SAPIS: <strong>${Number(r.ens_sapis).toFixed(2)}</strong> [${Number(r.ens_min).toFixed(2)} ~ ${Number(r.ens_max).toFixed(2)}] | Confidence: <strong>${escapeHtmlStr(r.ens_grade)}</strong> (&sigma;<sub>BDE</sub> = ${r.ens_sigma_bde} kcal/mol, IQR = ${r.ens_iqr_bde} kcal/mol)<br><span style="font-size:0.76rem;color:#475569;">${pmStr}</span>`);
+      }
       if (r.doi) addRow('Reference DOI', `<a href="https://doi.org/${escapeHtmlStr(r.doi)}" target="_blank">${escapeHtmlStr(r.doi)}</a>`);
 
       const smiBlock = r.smiles
@@ -1457,3 +1479,171 @@
         });
       });
     })();
+
+    // =========================================================================
+    // 304-Entity Dataset Provenance Verification Tab (localStorage + JSON I/O)
+    // =========================================================================
+    const VERIFY_STORAGE_KEY = 'sapis_source_verify_v1';
+    let verifyTabInitialized = false;
+    let verifyActiveCat = 'all';
+    let verifyActiveStatus = 'all';
+    let verifyState = { checked: {}, notes: {} };
+
+    function loadVerifyState() {
+      try {
+        const raw = localStorage.getItem(VERIFY_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          verifyState = {
+            checked: (parsed && typeof parsed.checked === 'object') ? parsed.checked : {},
+            notes: (parsed && typeof parsed.notes === 'object') ? parsed.notes : {},
+          };
+        }
+      } catch (e) {
+        verifyState = { checked: {}, notes: {} };
+      }
+    }
+
+    function persistVerifyState() {
+      try {
+        localStorage.setItem(VERIFY_STORAGE_KEY, JSON.stringify(verifyState));
+      } catch (e) {}
+    }
+
+    function updateVerifyProgressUi() {
+      const rows = document.querySelectorAll('#verifyTableBody tr.ver-row');
+      const total = rows.length;
+      let done = 0;
+      rows.forEach(tr => {
+        const vid = tr.getAttribute('data-vid');
+        const isDone = !!verifyState.checked[vid];
+        if (isDone) done++;
+        tr.style.background = isDone ? '#f0fdf4' : '';
+      });
+      const pct = total > 0 ? ((done * 100.0) / total).toFixed(1) : '0.0';
+      const badge = document.getElementById('verifyProgressBadge');
+      if (badge) badge.textContent = `확인 완료: ${done} / ${total} (${pct}%)`;
+      const bar = document.getElementById('verifyProgressBar');
+      if (bar) bar.style.width = `${pct}%`;
+    }
+
+    function initVerifyTab() {
+      if (!verifyTabInitialized) {
+        loadVerifyState();
+        document.querySelectorAll('#verifyTableBody .ver-chk').forEach(chk => {
+          const vid = chk.getAttribute('data-vid');
+          chk.checked = !!verifyState.checked[vid];
+        });
+        document.querySelectorAll('#verifyTableBody .ver-note').forEach(inp => {
+          const vid = inp.getAttribute('data-vid');
+          inp.value = verifyState.notes[vid] || '';
+        });
+        verifyTabInitialized = true;
+      }
+      updateVerifyProgressUi();
+      filterVerifyTable();
+    }
+
+    function toggleVerifyCheck(vid, isChecked) {
+      if (isChecked) {
+        verifyState.checked[vid] = true;
+      } else {
+        delete verifyState.checked[vid];
+      }
+      persistVerifyState();
+      updateVerifyProgressUi();
+      if (verifyActiveStatus !== 'all') filterVerifyTable();
+    }
+
+    function saveVerifyNote(vid, val) {
+      const trimmed = (val || '').trim();
+      if (trimmed) {
+        verifyState.notes[vid] = trimmed;
+      } else {
+        delete verifyState.notes[vid];
+      }
+      persistVerifyState();
+    }
+
+    function setVerifyCategory(cat, btnEl) {
+      verifyActiveCat = cat || 'all';
+      const wrap = document.getElementById('verifyCatPills');
+      if (wrap) wrap.querySelectorAll('.db-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      filterVerifyTable();
+    }
+
+    function setVerifyStatus(st, btnEl) {
+      verifyActiveStatus = st || 'all';
+      const wrap = document.getElementById('verifyStatusPills');
+      if (wrap) wrap.querySelectorAll('.db-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      filterVerifyTable();
+    }
+
+    function filterVerifyTable() {
+      const inp = document.getElementById('verifySearchInput');
+      const q = (inp ? inp.value : '').trim().toLowerCase();
+      const rows = document.querySelectorAll('#verifyTableBody tr.ver-row');
+      let shown = 0;
+      rows.forEach(tr => {
+        const vid = tr.getAttribute('data-vid');
+        const cat = tr.getAttribute('data-vcat');
+        const blob = tr.getAttribute('data-vtext') || '';
+        const note = (verifyState.notes[vid] || '').toLowerCase();
+        const isDone = !!verifyState.checked[vid];
+        const okCat = (verifyActiveCat === 'all') || (cat === verifyActiveCat);
+        const okStat = (verifyActiveStatus === 'all') || (verifyActiveStatus === 'checked' && isDone) || (verifyActiveStatus === 'unchecked' && !isDone);
+        const okQ = !q || blob.includes(q) || note.includes(q);
+        const vis = okCat && okStat && okQ;
+        tr.style.display = vis ? '' : 'none';
+        if (vis) shown++;
+      });
+      const shownBadge = document.getElementById('verifyShownBadge');
+      if (shownBadge) shownBadge.textContent = `표시: ${shown}건`;
+    }
+
+    function exportVerifyState() {
+      const payload = {
+        exported_at: new Date().toISOString(),
+        checked_count: Object.keys(verifyState.checked).length,
+        checked: verifyState.checked,
+        notes: verifyState.notes,
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sapis_304_verification_log.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importVerifyState(evt) {
+      const file = evt && evt.target && evt.target.files && evt.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          verifyState = {
+            checked: (parsed && typeof parsed.checked === 'object') ? parsed.checked : {},
+            notes: (parsed && typeof parsed.notes === 'object') ? parsed.notes : {},
+          };
+          persistVerifyState();
+          verifyTabInitialized = false;
+          initVerifyTab();
+        } catch (err) {
+          alert('유효한 JSON 파일이 아닙니다.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetVerifyChecks() {
+      if (!confirm('모든 검증 체크 및 메모 기록을 초기화하시겠습니까?')) return;
+      verifyState = { checked: {}, notes: {} };
+      persistVerifyState();
+      verifyTabInitialized = false;
+      initVerifyTab();
+    }

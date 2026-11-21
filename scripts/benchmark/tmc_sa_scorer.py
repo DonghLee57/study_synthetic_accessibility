@@ -493,6 +493,143 @@ def compute_tmc_sa_score(
     return round(min(10.0, max(1.0, base_sa + pen_crowd + hydride_pen)), 3)
 
 
+def compute_ensemble_sapis_metrics(
+    base_sa: float,
+    vbur_val: float,
+    v_min: float,
+    is_coord_center: bool,
+    model_metrics: Dict[str, Dict[str, Optional[float]]],
+    is_d_block: bool = False,
+    ve_deficit: float = 0.0,
+    chi_pauling: float = 2.0,
+    center_h: int = 0,
+    sigma_high_kcal: float = 5.0,
+    sigma_med_kcal: float = 12.0,
+) -> Dict[str, Any]:
+    """Aggregate multi-uMLIP single-point physical metrics into a robust SAPIS ensemble score and UQ grade.
+
+    Physics/Algorithm:
+        Given per-model physical descriptors ``{model_name: {'bde_min', 'e_coh', 'de_dimer'}}``
+        evaluated on a shared relaxed 3D geometry (e.g., 4-uMLIP ensemble of
+        ``SevenNet-0``, ``MACE-OMol``, ``ORB-v3-omol``, and ``FAIRChem UMA-S``):
+          1. Computes outlier-robust median physical estimates
+             ``BDE_hat = median_m(BDE_min^(m))``, ``E_coh_hat = median_m(E_coh^(m))``,
+             ``dE_dimer_hat = median_m(dE_dimer^(m))`` (# units: kcal/mol, eV/atom, kcal/mol)
+             so a single-model crystal-bias underbinding outlier (e.g., SevenNet-0 on Mo(CO)6)
+             does not corrupt the representative score.
+          2. Evaluates representative ``sapis_median`` and per-model scores to report the
+             conservative uncertainty interval ``[sapis_min, sapis_max]``.
+          3. Quantifies epistemic uncertainty via ``sigma_bde = std_m(BDE_min^(m))`` and
+             ``iqr_bde = Q75 - Q25`` (# units: kcal/mol), assigning a 3-tier confidence grade:
+             ``High`` (<= 5.0), ``Medium`` (5.0-12.0), or ``Low (DFT Flag)`` (> 12.0).
+
+    Args:
+        base_sa: Track 1 ligand/organic synthetic accessibility score (1.0-10.0).
+        vbur_val: Buried volume percentage (%V_bur).
+        v_min: Adaptive minimum buried volume threshold (%).
+        is_coord_center: Whether the central atom is a coordination center.
+        model_metrics: Mapping from uMLIP model name to metric dict
+            (``bde_min`` in kcal/mol, ``e_coh`` in eV/atom, ``de_dimer`` in kcal/mol).
+        is_d_block: Whether the center is a d-block transition metal.
+        ve_deficit: Valence electron deficit (dimensionless).
+        chi_pauling: Pauling electronegativity of the central atom.
+        center_h: Number of hydrogens directly bonded to the central atom.
+        sigma_high_kcal: Upper std threshold for High confidence (# units: kcal/mol).
+        sigma_med_kcal: Upper std threshold for Medium confidence (# units: kcal/mol).
+
+    Returns:
+        Dictionary with median physical metrics, representative ``sapis_median``,
+        conservative interval ``[sapis_min, sapis_max]``, per-model scores,
+        ``sigma_bde_kcal_mol``, ``iqr_bde_kcal_mol``, ``confidence_grade``,
+        and ``dft_verification_flag``.
+    """
+    bdes: List[float] = []
+    ecohs: List[float] = []
+    ddims: List[float] = []
+    per_model_sapis: Dict[str, float] = {}
+
+    for m_name, m_vals in model_metrics.items():
+        b_v = m_vals.get("bde_min")
+        e_v = m_vals.get("e_coh")
+        d_v = m_vals.get("de_dimer")
+        if b_v is not None:
+            bdes.append(float(b_v))
+        if e_v is not None:
+            ecohs.append(float(e_v))
+        if d_v is not None:
+            ddims.append(float(d_v))
+        per_model_sapis[m_name] = compute_tmc_sa_score(
+            base_sa=base_sa,
+            vbur_val=vbur_val,
+            v_min=v_min,
+            is_coord_center=is_coord_center,
+            bde_val=float(b_v) if b_v is not None else None,
+            ecoh_val=float(e_v) if e_v is not None else None,
+            ddim_val=float(d_v) if d_v is not None else None,
+            is_d_block=is_d_block,
+            ve_deficit=ve_deficit,
+            chi_pauling=chi_pauling,
+            center_h=center_h,
+        )
+
+    bde_med = float(np.median(bdes)) if bdes else None  # units: kcal/mol
+    ecoh_med = float(np.median(ecohs)) if ecohs else None  # units: eV/atom
+    ddim_med = float(np.median(ddims)) if ddims else None  # units: kcal/mol
+
+    sapis_med = compute_tmc_sa_score(
+        base_sa=base_sa,
+        vbur_val=vbur_val,
+        v_min=v_min,
+        is_coord_center=is_coord_center,
+        bde_val=bde_med,
+        ecoh_val=ecoh_med,
+        ddim_val=ddim_med,
+        is_d_block=is_d_block,
+        ve_deficit=ve_deficit,
+        chi_pauling=chi_pauling,
+        center_h=center_h,
+    )
+
+    scores_list = list(per_model_sapis.values())
+    sapis_min = round(min(scores_list), 3) if scores_list else sapis_med
+    sapis_max = round(max(scores_list), 3) if scores_list else sapis_med
+    sigma_sapis = round(float(np.std(scores_list)), 3) if len(scores_list) >= 2 else 0.0
+
+    if len(bdes) >= 2:
+        sigma_bde = float(np.std(bdes))  # units: kcal/mol
+        q75, q25 = np.percentile(bdes, [75, 25])
+        iqr_bde = float(q75 - q25)  # units: kcal/mol
+    else:
+        sigma_bde = 0.0
+        iqr_bde = 0.0
+
+    if sigma_bde <= sigma_high_kcal:
+        conf_grade = "High"
+        dft_flag = False
+    elif sigma_bde <= sigma_med_kcal:
+        conf_grade = "Medium"
+        dft_flag = False
+    else:
+        conf_grade = "Low (DFT Flag)"
+        dft_flag = True
+
+    return {
+        "n_models": len(model_metrics),
+        "sapis_median": sapis_med,
+        "sapis_min": sapis_min,
+        "sapis_max": sapis_max,
+        "sigma_sapis": sigma_sapis,
+        "per_model_sapis": per_model_sapis,
+        "bde_min_median_kcal_mol": round(bde_med, 3) if bde_med is not None else None,
+        "e_coh_median_ev_atom": round(ecoh_med, 4) if ecoh_med is not None else None,
+        "de_dimer_median_kcal_mol": round(ddim_med, 3) if ddim_med is not None else None,
+        "sigma_bde_kcal_mol": round(sigma_bde, 3),
+        "iqr_bde_kcal_mol": round(iqr_bde, 3),
+        "confidence_grade": conf_grade,
+        "dft_verification_flag": dft_flag,
+    }
+
+
 def compute_design12_geometry_metrics(
     smiles: str,
     relax_with_sevenn: bool = False,

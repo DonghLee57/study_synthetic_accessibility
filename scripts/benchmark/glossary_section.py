@@ -91,7 +91,7 @@ GLOSSARY_ENTRIES: List[Tuple[str, str, str, str, str, str, str]] = [
         "Synthetic Accessibility of Precursors & Inhibitors for Semiconductors",
         "본 연구에서 제안한 반도체 프리커서 및 AS-ALD 인히비터 통합 2트랙 평가 체계로, 분리된 프로리간드/유기물의 합성성(ligand_sa)과 3D 배위·열역학 안정성을 결합한 지표입니다.",
         "Track 1(ligand_sa)은 프로리간드별 min(BR-SAScore, SAScore) 중 최댓값으로 리간드 합성 난이도를 측정하고, "
-        "Track 2는 SevenNet-0 기계학습 포텐셜로 계산한 입체 차폐율(%V_bur), 결합 해리 에너지(BDE_min), 응집 에너지(E_coh) 게이트를 결합해 최종 합성 가능성을 판정합니다.",
+        "Track 2는 SevenNet-0 기계학습 포텐셜로 계산한 입체 차폐율(%V_bur), 결합 해리 에너지(BDE_min), 응집 에너지(E_coh) 판정 기준를 결합해 최종 합성 가능성을 판정합니다.",
     ),
     (
         "gl-hapticity",

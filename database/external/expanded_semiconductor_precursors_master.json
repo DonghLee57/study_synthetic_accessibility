@@ -7,7 +7,7 @@
     "center_element": "Si",
     "category": "Silicon & Main Group",
     "smiles": "CC(C)N([SiH3])C(C)C",
-    "cas_number": "18077-24-9",
+    "cas_number": "908831-34-5",
     "molecular_weight": 131.29,
     "vapor_pressure": "10 Torr @ 20 °C",
     "thermal_decomposition_temp_c": 450.0,
@@ -31,7 +31,8 @@
       "NH3 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 5
+    "atomiclimits_unique_doi_count": 5,
+    "pubchem_cid": 102295364
   },
   {
     "id": "PREC_SI_02",
@@ -64,7 +65,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 6
+    "atomiclimits_unique_doi_count": 6,
+    "pubchem_cid": 21904012
   },
   {
     "id": "PREC_SI_03",
@@ -104,7 +106,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 21
+    "atomiclimits_unique_doi_count": 21,
+    "pubchem_cid": 84795
   },
   {
     "id": "PREC_SI_04",
@@ -114,7 +117,7 @@
     "center_element": "Si",
     "category": "Silicon & Main Group",
     "smiles": "CN(C)[Si](N(C)C)(N(C)C)N(C)C",
-    "cas_number": "3768-55-1",
+    "cas_number": "1624-01-7",
     "molecular_weight": 204.39,
     "vapor_pressure": "5 Torr @ 25 °C",
     "thermal_decomposition_temp_c": 500.0,
@@ -133,7 +136,8 @@
     "atomiclimits_co_reactants": [
       "O2 plasma"
     ],
-    "atomiclimits_unique_doi_count": 1
+    "atomiclimits_unique_doi_count": 1,
+    "pubchem_cid": 74194
   },
   {
     "id": "PREC_SI_05",
@@ -164,7 +168,8 @@
       "N2 plasma",
       "NH3 plasma"
     ],
-    "atomiclimits_unique_doi_count": 4
+    "atomiclimits_unique_doi_count": 4,
+    "pubchem_cid": 139631
   },
   {
     "id": "PREC_SI_06",
@@ -204,7 +209,8 @@
       "NH3 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 13
+    "atomiclimits_unique_doi_count": 13,
+    "pubchem_cid": 83497
   },
   {
     "id": "PREC_SI_07",
@@ -245,7 +251,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 17
+    "atomiclimits_unique_doi_count": 17,
+    "pubchem_cid": 6517
   },
   {
     "id": "PREC_SI_08",
@@ -269,7 +276,8 @@
     "atomiclimits_process_count": 0,
     "atomiclimits_materials": [],
     "atomiclimits_co_reactants": [],
-    "atomiclimits_unique_doi_count": 0
+    "atomiclimits_unique_doi_count": 0,
+    "pubchem_cid": 123747245
   },
   {
     "id": "PREC_HK_01",
@@ -321,7 +329,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 93
+    "atomiclimits_unique_doi_count": 93,
+    "pubchem_cid": 4103752
   },
   {
     "id": "PREC_HK_02",
@@ -370,7 +379,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 84
+    "atomiclimits_unique_doi_count": 84,
+    "pubchem_cid": 140609
   },
   {
     "id": "PREC_HK_03",
@@ -405,7 +415,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 13
+    "atomiclimits_unique_doi_count": 13,
+    "pubchem_cid": 9934444
   },
   {
     "id": "PREC_HK_04",
@@ -446,7 +457,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 21
+    "atomiclimits_unique_doi_count": 21,
+    "pubchem_cid": 4446313
   },
   {
     "id": "PREC_HK_05",
@@ -494,7 +506,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 22
+    "atomiclimits_unique_doi_count": 22,
+    "pubchem_cid": 140580
   },
   {
     "id": "PREC_HK_06",
@@ -561,7 +574,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 6
+    "atomiclimits_unique_doi_count": 6,
+    "pubchem_cid": 87169982
   },
   {
     "id": "PREC_TI_01",
@@ -632,7 +646,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 87
+    "atomiclimits_unique_doi_count": 87,
+    "pubchem_cid": 123185
   },
   {
     "id": "PREC_TI_02",
@@ -709,7 +724,8 @@
       "PO(OMe)3 plasma",
       "Photons"
     ],
-    "atomiclimits_unique_doi_count": 139
+    "atomiclimits_unique_doi_count": 139,
+    "pubchem_cid": 11026
   },
   {
     "id": "PREC_TI_03",
@@ -719,7 +735,7 @@
     "center_element": "Ti",
     "category": "Titanium & Dielectrics",
     "smiles": "CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1",
-    "cas_number": "1072-67-9",
+    "cas_number": "-",
     "molecular_weight": 245.2,
     "vapor_pressure": "0.5 Torr @ 60 °C",
     "thermal_decomposition_temp_c": 290.0,
@@ -734,7 +750,8 @@
     "atomiclimits_process_count": 0,
     "atomiclimits_materials": [],
     "atomiclimits_co_reactants": [],
-    "atomiclimits_unique_doi_count": 0
+    "atomiclimits_unique_doi_count": 0,
+    "pubchem_cid": 88868006
   },
   {
     "id": "PREC_AL_01",
@@ -883,7 +900,8 @@
       "iPrOH",
       "nPrOH"
     ],
-    "atomiclimits_unique_doi_count": 661
+    "atomiclimits_unique_doi_count": 661,
+    "pubchem_cid": 16682925
   },
   {
     "id": "PREC_AL_02",
@@ -914,7 +932,8 @@
       "O2 plasma",
       "PH3"
     ],
-    "atomiclimits_unique_doi_count": 10
+    "atomiclimits_unique_doi_count": 10,
+    "pubchem_cid": 16721209
   },
   {
     "id": "PREC_MET_01",
@@ -962,7 +981,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 27
+    "atomiclimits_unique_doi_count": 27,
+    "pubchem_cid": 16217328
   },
   {
     "id": "PREC_MET_02",
@@ -1010,7 +1030,8 @@
       "O3",
       "PrSH"
     ],
-    "atomiclimits_unique_doi_count": 29
+    "atomiclimits_unique_doi_count": 29,
+    "pubchem_cid": 121237768
   },
   {
     "id": "PREC_MET_03",
@@ -1052,7 +1073,8 @@
       "O2 + H2O",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 38
+    "atomiclimits_unique_doi_count": 38,
+    "pubchem_cid": 22138507
   },
   {
     "id": "PREC_MET_04",
@@ -1062,7 +1084,7 @@
     "center_element": "Co",
     "category": "Metal & Barrier (W/Mo/Ru/Co)",
     "smiles": "CC(C)N=C(C)N(C(C)C)[Co]N(C(C)C)C(C)=NC(C)C",
-    "cas_number": "635680-56-7",
+    "cas_number": "635680-58-9",
     "molecular_weight": 341.4,
     "vapor_pressure": "0.1 Torr @ 60 °C",
     "thermal_decomposition_temp_c": 270.0,
@@ -1090,7 +1112,8 @@
       "NH3 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 8
+    "atomiclimits_unique_doi_count": 8,
+    "pubchem_cid": 12090689
   },
   {
     "id": "PREC_MET_05",
@@ -1165,7 +1188,8 @@
       "O2 plasma",
       "O3"
     ],
-    "atomiclimits_unique_doi_count": 22
+    "atomiclimits_unique_doi_count": 22,
+    "pubchem_cid": 4100858
   },
   {
     "id": "PREC_EUV_01",
@@ -1190,7 +1214,8 @@
     "atomiclimits_process_count": 0,
     "atomiclimits_materials": [],
     "atomiclimits_co_reactants": [],
-    "atomiclimits_unique_doi_count": 0
+    "atomiclimits_unique_doi_count": 0,
+    "pubchem_cid": 178573393
   },
   {
     "id": "EXT-ALD-028",

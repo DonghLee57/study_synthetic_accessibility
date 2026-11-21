@@ -551,7 +551,7 @@ def build_expansion_dataset(
         # Boundary / refinement note for honest diagnosis (ETKDGv3 + SevenNet-0 comparison)
         boundary_flag = ""
         if topo["center_atom"] == "Zn" and "homoleptic_tm_sp3" in gate["reasons"]:
-            boundary_flag = "Zn(II) d10 폐각 착물 — 현 SMARTS 게이트 정교화 대상 (7net 물리 안정)"
+            boundary_flag = "Zn(II) d10 폐각 착물 — 현 SMARTS 판정 기준 정교화 대상 (7net 물리 안정)"
         elif vbur_d2 > 83.5 and ttype == "precursor":
             if pass_7net is True:
                 boundary_flag = f"ETKDG 입체과밀(%Vbur={vbur_d2:.1f}%) -> 7net LBFGS 이완 후 통과({vbur_rp_7n:.1f}%, TMC={tmc_sa_7net:.2f})"

@@ -5,7 +5,7 @@
     "chemical_name": "Diisopropylaminosilane",
     "formula": "C6H17NSi",
     "smiles": "CC(C)N([SiH3])C(C)C",
-    "cas_number": "18077-24-9",
+    "cas_number": "908831-34-5",
     "molecular_weight": 131.29,
     "metal_center": "Si",
     "category": "Silicon & Main Group",
@@ -34,7 +34,8 @@
       "SoulBrain",
       "Hansol Chemical"
     ],
-    "reference_doi": "10.1039/c7ra02301d"
+    "reference_doi": "10.1016/j.ceramint.2016.10.186",
+    "pubchem_cid": 102295364
   },
   {
     "id": "PREC_SI_02",
@@ -71,7 +72,8 @@
       "Merck",
       "Entegris"
     ],
-    "reference_doi": "10.1021/acsami.5b06833"
+    "reference_doi": "10.1021/acsami.5b06833",
+    "pubchem_cid": 21904012
   },
   {
     "id": "PREC_SI_03",
@@ -108,7 +110,8 @@
       "Merck",
       "SoulBrain"
     ],
-    "reference_doi": "10.1149/05810.0307ecst"
+    "reference_doi": "10.1149/05810.0307ecst",
+    "pubchem_cid": 84795
   },
   {
     "id": "PREC_SI_04",
@@ -116,7 +119,7 @@
     "chemical_name": "Tetrakis(dimethylamino)silane",
     "formula": "C8H24N4Si",
     "smiles": "CN(C)[Si](N(C)C)(N(C)C)N(C)C",
-    "cas_number": "3768-55-1",
+    "cas_number": "1624-01-7",
     "molecular_weight": 204.39,
     "metal_center": "Si",
     "category": "Silicon & Main Group",
@@ -144,7 +147,8 @@
       "Strem",
       "Merck"
     ],
-    "reference_doi": "10.1016/j.ceramint.2026.10.168"
+    "reference_doi": "10.1016/j.ceramint.2026.10.168",
+    "pubchem_cid": 74194
   },
   {
     "id": "PREC_SI_05",
@@ -180,7 +184,8 @@
       "Wonik Materials",
       "Entegris"
     ],
-    "reference_doi": "10.35848/1882-0786/ab92f2"
+    "reference_doi": "10.35848/1882-0786/ab92f2",
+    "pubchem_cid": 139631
   },
   {
     "id": "PREC_SI_06",
@@ -217,7 +222,8 @@
       "Hansol Chemical",
       "Merck"
     ],
-    "reference_doi": "10.4191/kcers.2017.54.5.11"
+    "reference_doi": "10.4191/kcers.2017.54.5.11",
+    "pubchem_cid": 83497
   },
   {
     "id": "PREC_SI_07",
@@ -254,7 +260,8 @@
       "SoulBrain",
       "Honeywell"
     ],
-    "reference_doi": "10.1021/jp0518658"
+    "reference_doi": "10.1021/jp0518658",
+    "pubchem_cid": 6517
   },
   {
     "id": "PREC_SI_08",
@@ -290,7 +297,8 @@
       "Air Liquide",
       "Gelest"
     ],
-    "reference_doi": "10.1149/1.2946431"
+    "reference_doi": "10.1149/1.2946431",
+    "pubchem_cid": 123747245
   },
   {
     "id": "PREC_HK_01",
@@ -328,7 +336,8 @@
       "SoulBrain",
       "Hansol Chemical"
     ],
-    "reference_doi": "10.1016/j.apsusc.2012.04.130"
+    "reference_doi": "10.1016/j.apsusc.2012.04.130",
+    "pubchem_cid": 4103752
   },
   {
     "id": "PREC_HK_02",
@@ -364,7 +373,8 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/acs.langmuir.5c05147"
+    "reference_doi": "10.1021/acs.langmuir.5c05147",
+    "pubchem_cid": 140609
   },
   {
     "id": "PREC_HK_03",
@@ -400,7 +410,8 @@
       "Gelest",
       "Merck"
     ],
-    "reference_doi": "10.1002/anie.200705550"
+    "reference_doi": "10.1002/anie.200705550",
+    "pubchem_cid": 9934444
   },
   {
     "id": "PREC_HK_04",
@@ -437,7 +448,8 @@
       "Merck",
       "SoulBrain"
     ],
-    "reference_doi": "10.1016/j.apsusc.2016.06.122"
+    "reference_doi": "10.1016/j.apsusc.2016.06.122",
+    "pubchem_cid": 4446313
   },
   {
     "id": "PREC_HK_05",
@@ -473,7 +485,8 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.3389/fchem.2022.1035902"
+    "reference_doi": "10.3389/fchem.2022.1035902",
+    "pubchem_cid": 140580
   },
   {
     "id": "PREC_HK_06",
@@ -546,7 +559,8 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1016/j.mtcomm.2022.104008"
+    "reference_doi": "10.1016/j.mtcomm.2022.104008",
+    "pubchem_cid": 87169982
   },
   {
     "id": "PREC_TI_01",
@@ -583,7 +597,8 @@
       "Merck",
       "SoulBrain"
     ],
-    "reference_doi": "10.1016/0040-6090(94)90363-8"
+    "reference_doi": "10.1016/0040-6090(94)90363-8",
+    "pubchem_cid": 123185
   },
   {
     "id": "PREC_TI_02",
@@ -621,7 +636,8 @@
       "SoulBrain",
       "DuPont"
     ],
-    "reference_doi": "10.1116/1.4839015"
+    "reference_doi": "10.1116/1.4839015",
+    "pubchem_cid": 11026
   },
   {
     "id": "PREC_TI_03",
@@ -629,7 +645,7 @@
     "chemical_name": "Cyclopentadienyltris(dimethylamino)titanium",
     "formula": "C11H23N3Ti",
     "smiles": "CN(C)[Ti](N(C)C)(N(C)C)C1=CC=CC1",
-    "cas_number": "1072-67-9",
+    "cas_number": "-",
     "molecular_weight": 245.2,
     "metal_center": "Ti",
     "category": "Titanium & Dielectrics",
@@ -657,7 +673,8 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/acs.chemmater.7b04790"
+    "reference_doi": "10.1021/acs.chemmater.7b04790",
+    "pubchem_cid": 88868006
   },
   {
     "id": "PREC_AL_01",
@@ -696,7 +713,8 @@
       "Adeka",
       "Strem"
     ],
-    "reference_doi": "10.1557/proc-335-335"
+    "reference_doi": "10.1557/proc-335-335",
+    "pubchem_cid": 16682925
   },
   {
     "id": "PREC_AL_02",
@@ -732,7 +750,8 @@
       "Gelest",
       "Strem"
     ],
-    "reference_doi": "10.1016/s0169-4332(00)00542-0"
+    "reference_doi": "10.1016/s0169-4332(00)00542-0",
+    "pubchem_cid": 16721209
   },
   {
     "id": "PREC_MET_01",
@@ -769,7 +788,8 @@
       "Adeka",
       "Air Liquide"
     ],
-    "reference_doi": "10.1063/1.1565699"
+    "reference_doi": "10.1063/1.1565699",
+    "pubchem_cid": 16217328
   },
   {
     "id": "PREC_MET_02",
@@ -806,7 +826,8 @@
       "Strem",
       "Air Liquide"
     ],
-    "reference_doi": "10.1002/cvde.200706668"
+    "reference_doi": "10.1002/cvde.200706668",
+    "pubchem_cid": 121237768
   },
   {
     "id": "PREC_MET_03",
@@ -842,7 +863,8 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1149/2.069206jes"
+    "reference_doi": "10.1149/2.069206jes",
+    "pubchem_cid": 22138507
   },
   {
     "id": "PREC_MET_04",
@@ -850,7 +872,7 @@
     "chemical_name": "Bis(N,N'-diisopropylacetamidinato)cobalt(II)",
     "formula": "C16H34CoN4",
     "smiles": "CC(C)N=C(C)N(C(C)C)[Co]N(C(C)C)C(C)=NC(C)C",
-    "cas_number": "635680-56-7",
+    "cas_number": "635680-58-9",
     "molecular_weight": 341.4,
     "metal_center": "Co",
     "category": "Metal & Barrier (W/Mo/Ru/Co)",
@@ -878,7 +900,8 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1021/acsaelm.9b00006"
+    "reference_doi": "10.1021/acsaelm.9b00006",
+    "pubchem_cid": 12090689
   },
   {
     "id": "PREC_MET_05",
@@ -951,7 +974,8 @@
       "Merck",
       "Adeka"
     ],
-    "reference_doi": "10.1149/1.3377003"
+    "reference_doi": "10.1149/1.3377003",
+    "pubchem_cid": 4100858
   },
   {
     "id": "PREC_EUV_01",
@@ -987,6 +1011,7 @@
       "Gelest",
       "Strem"
     ],
-    "reference_doi": "10.1021/acs.jpcc.3c07480"
+    "reference_doi": "10.1021/acs.jpcc.3c07480",
+    "pubchem_cid": 178573393
   }
 ]

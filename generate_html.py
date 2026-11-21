@@ -23,6 +23,7 @@ if BENCH_DIR not in sys.path:
 from br_sascore_theory_section import build_br_sascore_theory_html
 from glossary_section import build_glossary_html
 from intro_section import build_intro_html
+from verification_section import build_verification_html
 from db_explorer_section import build_db_explorer_and_sankey
 from history_and_expansion_html_section import (
     build_analysis_history_technical_html,
@@ -118,6 +119,7 @@ def build_full_report_html() -> str:
     br_sascore_theory_html = build_br_sascore_theory_html()
     glossary_html = build_glossary_html()
     intro_html = build_intro_html()
+    verification_html = build_verification_html()
 
     with open("template.html", "r", encoding="utf-8") as fh:
         html_doc = fh.read()
@@ -150,6 +152,7 @@ def build_full_report_html() -> str:
         "<!-- BR_SASCORE_THEORY_PLACEHOLDER -->": br_sascore_theory_html,
         "<!-- GLOSSARY_PLACEHOLDER -->": glossary_html,
         "<!-- INTRO_PLACEHOLDER -->": intro_html,
+        "<!-- VERIFICATION_PLACEHOLDER -->": verification_html,
         "__NEB_TRAJECTORY_JSON_PLACEHOLDER__": neb_trajectory_json,
     }
     for token, content in section_replacements.items():

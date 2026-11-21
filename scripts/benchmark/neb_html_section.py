@@ -691,7 +691,7 @@ def build_neb_storyline_html(
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #d97706; border-radius:6px; padding:16px;">
                 <div style="font-size:0.8rem; font-weight:700; color:#64748b;">NEB 자동화 판정 &amp; 온도 불확도</div>
                 <div style="font-size:1.75rem; font-weight:800; color:#b45309; margin:4px 0;">&plusmn;{ctx['dt_halfwidth_c']:.1f}&deg;C / Stage-3</div>
-                <div style="font-size:0.8rem; color:#475569;">무작위 IDPP 실패 방지 위해 SMARTS 템플릿 &middot; 고리 TS 시딩 &middot; 부분 헤시안 게이트 기반 선별 자동화 적용</div>
+                <div style="font-size:0.8rem; color:#475569;">무작위 IDPP 실패 방지 위해 SMARTS 템플릿 &middot; 고리 TS 시딩 &middot; 부분 헤시안 판정 기준 기반 선별 자동화 적용</div>
               </div>
             </div>
 
@@ -975,7 +975,7 @@ flowchart LR
   S1["Stage 1-2: 정적 물리 스크리닝<br>(SAPIS, V_bur, BDE_min)"] --> S2["반응 클래스 SMARTS 매칭<br>(beta-H, 4/6-원 고리, 1,2-이동)"]
   S2 --> S3["배위 보정 초기구조 생성<br>(eta^5 Piano-Stool / Kabsch 정렬)"]
   S3 --> S4["TS 중심 25~45 percent 고리형 시딩<br>+ 조기 CI-NEB (FIRE maxstep=0.05)"]
-  S4 --> G{{"자동 품질 게이트<br>valid_fs &amp; TS결합 &amp; n_imag=1"}}
+  S4 --> G{{"자동 품질 판정 기준<br>valid_fs &amp; TS결합 &amp; n_imag=1"}}
   G -- "Pass" --> K["Arrhenius T_1pct &amp; 이중 장벽<br>ALD 공정창(Delta E_window) 판정"]
   G -- "Fail / Flat" --> R["시딩/스텝 보정 재시도<br>또는 VASP DFT 이관"]
           </div>

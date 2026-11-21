@@ -77,13 +77,16 @@
         리포트
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-database" onclick="switchViewTab('database')">
-        DB 탐색 (2D 구조)
+        DB 탐색
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-glossary" onclick="switchViewTab('glossary')">
         용어 사전
       </button>
+      <button type="button" class="view-mode-btn" id="btn-tab-verification" onclick="switchViewTab('verification')">
+        출처 검증
+      </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 소개, 요약, 배경이론, 리포트, DB 탐색, 용어 사전 뷰를 전환할 수 있습니다.
+        열람 목적에 따라 소개, 요약, 배경이론, 리포트, DB 탐색, 용어 사전, 출처 검증 뷰를 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -215,6 +218,13 @@
       <div id="tab-content-glossary" style="display:none;">
         <!-- GLOSSARY_PLACEHOLDER -->
       </div> <!-- end #tab-content-glossary -->
+
+      <!-- ===================================================================== -->
+      <!-- TAB 6: 304-ENTITY DATASET PROVENANCE VERIFICATION                     -->
+      <!-- ===================================================================== -->
+      <div id="tab-content-verification" style="display:none;">
+        <!-- VERIFICATION_PLACEHOLDER -->
+      </div> <!-- end #tab-content-verification -->
     </main>
   </div>
 

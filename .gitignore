@@ -27,3 +27,7 @@ downloaded_papers/
 
 # Third-party AtomicLimits raw dump: redistribution terms unconfirmed, keep local only
 database/external/atomiclimits_raw.json
+
+.venv_mace/
+.venv_orb/
+

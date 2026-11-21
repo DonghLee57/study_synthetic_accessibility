@@ -142,7 +142,7 @@ class TestSevenNetDecompNebBenchmark(unittest.TestCase):
             self.assertNotIn("\x0c", chunk)
             self.assertNotIn("\\x08", chunk)
         self.assertIn("T_{\\text{decomp}}", tech_html)
-        self.assertIn('G{"자동 품질 게이트', tech_html)
+        self.assertIn('G{"자동 품질 판정 기준', tech_html)
         self.assertIn('id="neb-explorer-storyline"', story_html)
         self.assertIn('id="neb-explorer-technical"', tech_html)
         self.assertIn("All-8 CI-NEB Minimum Energy Paths", tech_html)

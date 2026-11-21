@@ -102,7 +102,7 @@ def build_intro_html() -> str:
             </p>
             <p style="margin:0; font-size:0.84rem; color:#475569; line-height:1.65;">
               <strong>SAPIS</strong>는 Track 1의 리간드 합성성(<code>ligand_sa</code>)과
-              Track 2의 SevenNet-0 기반 3D 물리 게이트($\\mathrm{BDE}_{\\min}$, $\\%V_{\\mathrm{bur}}$, $E_{\\mathrm{coh}}$, Hydride)를 결합해
+              Track 2의 SevenNet-0 기반 3D 물리 판정 기준($\\mathrm{BDE}_{\\min}$, $\\%V_{\\mathrm{bur}}$, $E_{\\mathrm{coh}}$, Hydride)을 결합해
               실제 합성·공정 가능성을 물리적으로 분별합니다.
             </p>
           </div>
@@ -111,28 +111,48 @@ def build_intro_html() -> str:
 
       <section class="card">
         <h3 style="margin:0 0 10px 0; font-size:1.12rem; font-weight:800; color:#0f172a;">
-          3. SAPIS 통합 스코어링 구조 요약
+          3. SAPIS 스코어링 구조
         </h3>
         <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:12px 16px; margin-bottom:12px; font-size:0.9rem; overflow-x:auto;">
           $$\\mathrm{SAPIS} = \\operatorname{clip}\\!\\Big(\\text{Track 1}\\;(\\texttt{ligand\\_sa}) + \\text{Track 2}\\;(\\Delta_{\\text{labile}} + \\Delta_{\\text{crowd}} + \\Delta_{\\text{olig}} + \\Delta_{\\text{hydride}}),\\; 1.0,\\; 10.0\\Big)$$
         </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px; font-size:0.84rem; color:#334155;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px; font-size:0.84rem; color:#334155; margin-bottom:14px;">
           <div style="border-left:3px solid #2563eb; padding-left:12px;">
             <strong style="color:#0f172a;">Track 1 — 화학적 합성 난이도 (<code>ligand_sa</code>)</strong>
             <p style="margin:4px 0 0 0; line-height:1.65;">
               프리커서는 금속/준금속 중심과 프로리간드($\\mathrm{HL}_i$)를 분리한 뒤 각 리간드의
               $\\min(\\text{BR-SAScore},\\, \\text{SAScore})$ 최댓값으로 평가하고, 유기 인히비터는 분자 전체에 대해 동일 기준을 적용합니다.
-              이때 <code>BR-SAScore</code>의 미등재 조각 패널티(<code>-6.0</code>)로 인해 상용 시약(예: <code>Hacac</code>, <code>5.20</code>)이 과대 평가되는 편향을,
-              동일한 <code>1.0~10.0</code> 스케일 및 조각 빈도 체계를 공유하는 <code>SAScore</code>(<code>2.17</code>)와의 최솟값 결합으로 보완합니다.
+              단순 무기 리간드(<code>H, F, Cl, Br, I, O, S, CO</code>)는 전처리에서 정규화하여 불소화물·카보닐 착체의 오탐을 방지하며,
+              <code>BR-SAScore</code>의 미등재 조각 패널티(<code>-6.0</code>)로 인한 상용 시약(예: <code>Hacac</code>, <code>5.20</code>) 과대 평가 편향을
+              동일 스케일의 <code>SAScore</code>(<code>2.17</code>)와의 최솟값 결합으로 보완합니다.
             </p>
           </div>
           <div style="border-left:3px solid #0d9488; padding-left:12px;">
-            <strong style="color:#0f172a;">Track 2 — 3D 물리 안정성 페널티 (SevenNet-0)</strong>
+            <strong style="color:#0f172a;">Track 2 — 3D 물리 안정성 페널티 (uMLIP)</strong>
             <p style="margin:4px 0 0 0; line-height:1.65;">
+              ETKDGv3(실패 시 4d/5d 배위 기하 3D 템플릿 폴백) 및 <code>SevenNet-0</code> LBFGS 구조 이완 좌표로부터
               최소 결합 해리 에너지($\\mathrm{BDE}_{\\min}$), 입체 차폐율($\\%V_{\\mathrm{bur}}$),
-              응집 에너지($E_{\\mathrm{coh}}$), 불안정 하이드라이드($\\Delta_{\\text{hydride}}$) 게이트를 합산해
+              응집 에너지($E_{\\mathrm{coh}}$), 불안정 하이드라이드($\\Delta_{\\text{hydride}}$) 판정 기준을 합산해
               합성·저장 불가능한 불안정 후보를 걸러냅니다.
             </p>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg, #f0fdfa 0%, #eff6ff 100%); border:1px solid #99f6e4; border-radius:10px; padding:14px 16px;">
+          <div style="font-size:0.86rem; font-weight:800; color:#0f766e; margin-bottom:6px;">
+            4종 uMLIP 로버스트 앙상블 및 불확실성 정량화 (UQ 확장)
+          </div>
+          <p style="margin:0 0 8px 0; font-size:0.83rem; color:#1e293b; line-height:1.65;">
+            단일 결정 학습 포텐셜(<code>SevenNet-0</code>)의 외삽 편차(예: 중성 <code>CO</code> 과소결합, 백금족 할라이드)를 제어하기 위해,
+            단일 이완 구조($\\mathbf{R}^*$) 위에서 <strong>4종 이종 uMLIP</strong>(<code>SevenNet-0</code> · <code>MACE-OMol</code> · <code>ORB-v3</code> · <code>FAIRChem UMA-S</code>)의
+            단일점 물리량을 교차 평가하는 로버스트 앙상블 지표(<code>compute_ensemble_sapis_metrics()</code>)를 적용합니다.
+          </p>
+          <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:10px 14px; margin-bottom:8px; font-size:0.86rem; overflow-x:auto;">
+            $$\\widehat{\\mathrm{BDE}}_{\\min} = \\operatorname{median}_{m \\in \\{1..4\\}}\\!\\big(\\mathrm{BDE}_{\\min}^{(m)}\\big), \\qquad \\sigma_{\\mathrm{BDE}} = \\operatorname{Std}_{m}\\!\\big(\\mathrm{BDE}_{\\min}^{(m)}\\big), \\qquad \\mathrm{SAPIS} \\in \\big[\\mathrm{SAPIS}_{\\min},\\; \\mathrm{SAPIS}_{\\max}\\big]$$
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; font-size:0.78rem;">
+            <span style="background:#dcfce7; color:#15803d; border:1px solid #86efac; padding:3px 9px; border-radius:999px; font-weight:700;">High Confidence: $\\sigma_{\\mathrm{BDE}} \\le 5.0\\,\\text{kcal/mol}$</span>
+            <span style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:3px 9px; border-radius:999px; font-weight:700;">Medium Confidence: $5.0 &lt; \\sigma_{\\mathrm{BDE}} \\le 12.0\\,\\text{kcal/mol}$</span>
+            <span style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:3px 9px; border-radius:999px; font-weight:700;">Low (DFT Flag): $\\sigma_{\\mathrm{BDE}} &gt; 12.0\\,\\text{kcal/mol}$ (스핀 편극 DFT 권고)</span>
           </div>
         </div>
       </section>

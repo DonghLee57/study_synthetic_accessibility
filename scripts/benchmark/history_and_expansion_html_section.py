@@ -116,10 +116,10 @@ def build_analysis_history_technical_html(
         ),
         (
             "Stage 3",
-            "다중 배위수·SAPIS 물리 게이트 통합",
+            "다중 배위수·SAPIS 물리 판정 기준 통합",
             "160종 (102 Prec + 18 Inh + 40 Neg)",
             "element_physics.py / tmc_sa_scorer.py / run_unified_latest_160_analysis.py",
-            "CN_eff·R_eff(M|env)·%V_bur^D2·Design 1+2 정식화; ML LOFMO 0.000 붕괴 구간에서 SAPIS 물리 게이트 1.000 방어 검증.",
+            "CN_eff·R_eff(M|env)·%V_bur^D2·Design 1+2 정식화; ML LOFMO 0.000 붕괴 구간에서 SAPIS 물리 판정 기준 1.000 방어 검증.",
             "Sec 15 / Step 4",
         ),
         (

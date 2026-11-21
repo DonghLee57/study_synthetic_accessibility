@@ -1181,7 +1181,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             fpath = os.path.join(PROJECT_ROOT, fname)
             with open(fpath, "r", encoding="utf-8") as fh:
                 html_txt = fh.read()
-            self.assertLess(len(html_txt.encode("utf-8")), 3300000)
+            self.assertLess(len(html_txt.encode("utf-8")), 3800000)
             self.assertIn("svg.rdk path:not([fill])", html_txt)
             self.assertIn(".u01{", html_txt)
             for placeholder in (
@@ -1231,6 +1231,55 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             geom = scorer_mod.compute_design12_geometry_metrics(smi)
             self.assertTrue(geom["embed_ok"])
             self.assertGreater(geom["vbur_rprobe"], 10.0)
+
+    def test_27_four_umlip_ensemble_uq(self):
+        """Verify 4-uMLIP robust median SAPIS aggregation and 3-tier UQ confidence grading."""
+        bench_dir = os.path.join(PROJECT_ROOT, "scripts", "benchmark")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        scorer_mod = self._load_script_module(
+            os.path.join("scripts", "benchmark", "tmc_sa_scorer.py"),
+            "repo_tmc_sa_scorer_ens",
+        )
+
+        # Case 1: 1-model underbinding outlier (SevenNet-0 = 0.0, 3 OMol25 models = 52-56 kcal/mol)
+        res_outlier = scorer_mod.compute_ensemble_sapis_metrics(
+            base_sa=1.009,
+            vbur_val=58.2,
+            v_min=44.0,
+            is_coord_center=True,
+            is_d_block=True,
+            model_metrics={
+                "SevenNet-0": {"bde_min": 0.0, "e_coh": 5.36, "de_dimer": 0.24},
+                "MACE-OMol": {"bde_min": 52.0, "e_coh": 5.40, "de_dimer": 0.10},
+                "ORB-v3-omol": {"bde_min": 54.0, "e_coh": 5.38, "de_dimer": 0.15},
+                "UMA-S-omol": {"bde_min": 56.0, "e_coh": 5.42, "de_dimer": 0.08},
+            },
+        )
+        self.assertEqual(res_outlier["n_models"], 4)
+        # Median rejects the 1-model crystal underbinding outlier -> Pass (<= 1.1) while SevenNet-0 alone is ~4.5
+        self.assertLess(res_outlier["sapis_median"], 1.5)
+        self.assertGreater(res_outlier["sapis_max"], 4.0)
+        self.assertEqual(res_outlier["confidence_grade"], "Low (DFT Flag)")
+        self.assertTrue(res_outlier["dft_verification_flag"])
+
+        # Case 2: 4-model consensus -> High confidence, no DFT flag
+        res_agree = scorer_mod.compute_ensemble_sapis_metrics(
+            base_sa=1.0,
+            vbur_val=55.0,
+            v_min=44.0,
+            is_coord_center=True,
+            is_d_block=True,
+            model_metrics={
+                "SevenNet-0": {"bde_min": 68.0, "e_coh": 4.2, "de_dimer": -0.5},
+                "MACE-OMol": {"bde_min": 70.5, "e_coh": 4.3, "de_dimer": -0.4},
+                "ORB-v3-omol": {"bde_min": 69.2, "e_coh": 4.25, "de_dimer": -0.6},
+                "UMA-S-omol": {"bde_min": 71.0, "e_coh": 4.35, "de_dimer": -0.3},
+            },
+        )
+        self.assertEqual(res_agree["confidence_grade"], "High")
+        self.assertFalse(res_agree["dft_verification_flag"])
+        self.assertLessEqual(res_agree["sigma_bde_kcal_mol"], 5.0)
 
 
 if __name__ == "__main__":

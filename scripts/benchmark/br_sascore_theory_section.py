@@ -895,14 +895,14 @@ def build_br_sascore_theory_html() -> str:
 flowchart TD
   M["Target Molecule m"] --> MFP["Morgan Fingerprint (r=2, useChirality=True)"]
   M --> COMP["ComplexityPenalty (Size, Stereo, Ring, Macro)"]
-  MFP --> B["BScore Dict: eMolecules 231M (244,572 keys)"]
-  MFP --> R["RScore Dict: USPTO ~1M, 2^-d (175,186 keys)"]
-  B --> MAX["Eq.11 Fusion: max(B_i, R_i) else -6"]
+  MFP --> B["BScore Dict: eMolecules 231M (244,572 keys) (Eq. 9)"]
+  MFP --> R["RScore Dict: USPTO ~1M, 2^-d (175,186 keys) (Eq. 10)"]
+  B --> MAX["Fusion: max(B_i, R_i) else -6 (Eq. 11)"]
   R --> MAX
-  MAX --> NEG["Eq.12 Negative Mean: avg over Score_i &lt; 0"]
-  NEG --> RAW["Eq.8 Raw = BR_frag - Comp"]
+  MAX --> NEG["Negative Mean: avg over Score_i &lt; 0 (Eq. 12)"]
+  NEG --> RAW["Raw = BR_frag - Comp (Eq. 8)"]
   COMP --> RAW
-  RAW --> NORM["Eq.13 Scale [1, 10] (Buffer=1.0, Div=7)"]
+  RAW --> NORM["Scale [1, 10] (Buffer=1.0, Div=7) (Eq. 13)"]
               </div>
             </div>
           </div>
@@ -928,7 +928,7 @@ flowchart TD
             <strong>수식 설계의 3가지 핵심 논리</strong>
             <ul style="margin:8px 0 0 18px; line-height:1.68; font-size:0.84rem;">
               <li><strong>OR 논리 ($\max(\text{BScore}_i, \text{RScore}_i)$):</strong> 어떤 부분 구조가 시약으로 팔리거나(<code>BScore</code>) 혹은 특허 반응(<code>RScore</code>)으로 쉽게 이어지는 결합이라면 둘 중 더 유리한 쪽을 채택합니다.</li>
-              <li><strong>병목 중심 음수 평균 (Eq. 12):</strong> Eq. (9)~(10)에서 점수 <code>0</code>은 전체 데이터셋 출현 빈도의 <strong>상위 0.1% 기준선</strong>입니다. 따라서 <strong>0 이상($\text{Score}_i \ge 0$)</strong>은 메틸기처럼 상용 시약·반응에 매우 흔해 합성에 어려움이 없는 쉬운 조각을, <strong>0 미만($\text{Score}_i &lt; 0$)</strong>은 출현 빈도가 낮아 전체 합성을 가로막는 희귀·난해 조각(<strong>병목 구간</strong>)을 뜻합니다. 만약 흔한 쉬운 조각들까지 모두 평균에 넣으면 어려운 핵심 조각 1~2개의 난이도가 희석되어 전체 분자가 쉽다고 오판할 수 있으므로, <strong>0 미만 병목 조각만 골라 평균</strong>냄으로써 난해한 부분구조에 대한 민감도를 극대화합니다. 모든 조각이 0 이상이면 병목 구간이 없는 것이므로 평균을 0으로 처리합니다.</li>
+              <li><strong>병목 중심 음수 평균 (Eq. 12) 및 상위 0.1% 기준선의 근거:</strong> Eq. (9)~(10)에서 점수 <code>0</code>은 전체 데이터셋 출현 빈도의 <strong>상위 0.1% 기준선</strong>입니다. Morgan 지문 조각 빈도는 극단적인 <strong>멱법칙(Power-law / Zipf) 분포</strong>를 따라 전체 사전 조각의 99% 이상이 수 회 이하로만 등장하는 희귀 조각이기 때문에, 만약 기준선을 10%로 높이면 드문 조각까지 모두 0점 이상(쉬운 조각)에 섞여 변별력이 무너집니다. 이에 원조 <code>SAScore (2009)</code>가 전체 출현 횟수의 약 80%를 차지하는 최상위 핵심 조각군(약 상위 0.1%)을 0점 기준으로 삼은 <strong>경험적 하이퍼파라미터</strong> 설계를 <code>BR-SAScore</code>가 그대로 계승한 것입니다. 따라서 <strong>0 이상($\text{Score}_i \ge 0$)</strong>은 메틸기처럼 상용 시약·반응에 매우 흔해 합성에 어려움이 없는 쉬운 조각을, <strong>0 미만($\text{Score}_i &lt; 0$)</strong>은 출현 빈도가 낮아 전체 합성을 가로막는 희귀·난해 조각(<strong>병목 구간</strong>)을 뜻합니다. 만약 흔한 쉬운 조각들까지 모두 평균에 넣으면 어려운 핵심 조각 1~2개의 난이도가 희석되어 전체 분자가 쉽다고 오판할 수 있으므로, <strong>0 미만 병목 조각만 골라 평균</strong>냄으로써 난해한 부분구조에 대한 민감도를 극대화합니다. 모든 조각이 0 이상이면 병목 구간이 없는 것이므로 평균을 0으로 처리합니다.</li>
               <li><strong>미등재 패널티 <code>-6</code> &amp; <code>PenaltyBuffer = 1</code> (Eq. 13):</strong> 사전 외 조각은 최소점(-3)의 2배인 <code>-6</code>을 부여하고, 복잡도 패널티가 겹칠 때 하한이 $-7.0$까지 확보되도록 <code>PenaltyBuffer = 1</code>(분모 $7$)로 $[1, 10]$에 정규화합니다.</li>
             </ul>
           </div>

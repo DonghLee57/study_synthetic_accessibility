@@ -578,7 +578,7 @@ def build_inverse_design_storyline_html(
             </div>
 
             <p style="font-size:0.88rem; color:#334155; line-height:1.65; margin-bottom:14px;">
-              앞서 <strong>Step 4-2</strong>에서 확인한 <code>{inv_stats['n_metals']}</code>종 중심 원자와 <code>{inv_stats['n_mono_ligs']}</code>종 1가 리간드 라이브러리 위에서 원자가&middot;$18e^-$ 규칙을 강제하면, $10^{{18}}$ 무제약 SMILES 공간이 <strong>{inv_stats['n_candidates']:,}종 화학적 타당 후보</strong>로 압축됩니다. 기존 유기 생성 모델(<code>RxnFlow</code>&middot;<code>SynFlowNet</code>&middot;<code>ReaSyn</code>: 금속 규칙 <code>0</code>건) 및 3D 확산 모델(<code>IDEAL</code>: 합성성 미보장)의 공백을 메우기 위해, 본 연구는 <strong>배위 문법 + <code>M&times;L</code> 불확실성 대리모델 + <code>SAPIS</code> 게이트 + <code>SevenNet-0 CI-NEB</code> 검증</strong>을 결합한 <strong>4계층 <code>CoOrd-Inv</code> 역설계 모델</strong>을 정립했습니다.
+              앞서 <strong>Step 4-2</strong>에서 확인한 <code>{inv_stats['n_metals']}</code>종 중심 원자와 <code>{inv_stats['n_mono_ligs']}</code>종 1가 리간드 라이브러리 위에서 원자가&middot;$18e^-$ 규칙을 강제하면, $10^{{18}}$ 무제약 SMILES 공간이 <strong>{inv_stats['n_candidates']:,}종 화학적 타당 후보</strong>로 압축됩니다. 기존 유기 생성 모델(<code>RxnFlow</code>&middot;<code>SynFlowNet</code>&middot;<code>ReaSyn</code>: 금속 규칙 <code>0</code>건) 및 3D 확산 모델(<code>IDEAL</code>: 합성성 미보장)의 공백을 메우기 위해, 본 연구는 <strong>배위 문법 + <code>M&times;L</code> 불확실성 대리모델 + <code>SAPIS</code> 판정 기준 + <code>SevenNet-0 CI-NEB</code> 검증</strong>을 결합한 <strong>4계층 <code>CoOrd-Inv</code> 역설계 모델</strong>을 정립했습니다.
             </p>
 
             <div class="kpi-row" style="margin-bottom:14px;">
@@ -713,7 +713,7 @@ def build_inverse_design_technical_html(
               </ul>
             </div>
             <div class="versus-card" style="border-left:4px solid #7c3aed;">
-              <div class="versus-header" style="color:#6d28d9;">Tier 2 &rarr; Tier 3: SevenNet CI-NEB 동역학 게이트 &amp; VASP 슬랩</div>
+              <div class="versus-header" style="color:#6d28d9;">Tier 2 &rarr; Tier 3: SevenNet CI-NEB 동역학 판정 기준 &amp; VASP 슬랩</div>
               <ul style="font-size:0.82rem; color:#334155; line-height:1.6; padding-left:18px; margin:0;">
                 <li><strong>Tier 2 (3D MLIP + CI-NEB 검증)</strong>: 상위 후보를 3D 조립한 뒤 <code>SevenNet-0</code> 이완($\\%V_{{\\text{{bur}}}}^{{\\text{{D2}}}}, \\theta_{{\\max}}^{{\\text{{void}}}}$ 재측정)과 Section 17의 템플릿화 <strong>CI-NEB</strong>로 $E_a^{{\\text{{decomp}}}} \\ge 30\\,\\text{{kcal/mol}}$($T_{{\\text{{decomp}}}}$ 창) 여부를 검증합니다.</li>
                 <li><strong>Tier 3 (VASP PBE+D3 &amp; Active Learning)</strong>: 최종 후보의 웨이퍼 표면 흡착 자유에너지($\\Delta G_{{\\text{{ALD}}}}$) 및 ASD 선택도($\\Delta\\Delta G_{{\\text{{ads}}}}$)를 연산한 뒤 실측 라벨을 <code>CoOrd-Inv</code> 학습셋에 재주입합니다.</li>

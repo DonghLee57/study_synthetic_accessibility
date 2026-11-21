@@ -641,6 +641,12 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         "catenated_main_group_hydride": "연쇄 하이드라이드 불안정",
     }
 
+    ens_by_id: Dict[str, Dict[str, Any]] = {}
+    ens_path = os.path.join("database", "external", "umlip_ensemble_198.json")
+    if os.path.exists(ens_path):
+        with open(ens_path, "r", encoding="utf-8") as fh:
+            ens_by_id = json.load(fh).get("records", {})
+
     for rec in db_records:
         # Backfill display-only 2D RDKit structure for known AtomicLimits precursors
         if not rec.get("has_2d"):
@@ -668,6 +674,27 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             sapis_val = rec.get("tmc_sa_no3d")
         rec["sapis_score"] = round(float(sapis_val), 2) if sapis_val is not None else None
         rec["sapis_pass"] = rec.get("phase2_pass")
+
+        # Attach 4-uMLIP robust ensemble results when available
+        ens_rec = ens_by_id.get(rec.get("id"))
+        if ens_rec is None:
+            for sid in rec.get("secondary_ids") or []:
+                if sid in ens_by_id:
+                    ens_rec = ens_by_id[sid]
+                    break
+        if ens_rec is not None and ens_rec.get("n_models", 0) >= 2:
+            rec["ens_sapis"] = round(float(ens_rec["sapis_median"]), 2)
+            rec["ens_min"] = round(float(ens_rec["sapis_min"]), 2)
+            rec["ens_max"] = round(float(ens_rec["sapis_max"]), 2)
+            rec["ens_sigma_bde"] = round(float(ens_rec["sigma_bde_kcal_mol"]), 1)
+            rec["ens_iqr_bde"] = round(float(ens_rec["iqr_bde_kcal_mol"]), 1)
+            rec["ens_grade"] = str(ens_rec["confidence_grade"])
+            rec["ens_dft_flag"] = bool(ens_rec["dft_verification_flag"])
+            rec["ens_per_model"] = ens_rec.get("per_model_sapis") or {}
+            rec["ens_bde_med"] = ens_rec.get("bde_min_median_kcal_mol")
+            rec["ens_n_models"] = int(ens_rec["n_models"])
+            # Use robust 4-uMLIP median as the primary displayed SAPIS score
+            rec["sapis_score"] = rec["ens_sapis"]
 
         # Uniform concise source label
         doi_str = (rec.get("doi") or "").strip()
@@ -722,9 +749,9 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             elif rec["sapis_score"] is not None and rec["sapis_score"] > 4.0:
                 rec["card_risk"] = f"합성·물리 점수 초과 (SAPIS {rec['sapis_score']:.2f} > 4.0)"
             else:
-                rec["card_risk"] = "합성·물리 게이트 차단"
+                rec["card_risk"] = "합성·물리 판정 기준 차단"
         elif rec.get("sapis_pass") is True:
-            rec["card_risk"] = "낮음 (게이트 통과)"
+            rec["card_risk"] = "낮음 (판정 기준 통과)"
         elif dt == "reagent":
             rec["card_risk"] = rec.get("handling") or "일반 취급"
         elif dt == "reaction":
