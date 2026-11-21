@@ -647,6 +647,12 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         with open(ens_path, "r", encoding="utf-8") as fh:
             ens_by_id = json.load(fh).get("records", {})
 
+    tdec_by_id: Dict[str, Dict[str, Any]] = {}
+    tdec_path = os.path.join("database", "external", "thermal_decomposition_db.json")
+    if os.path.exists(tdec_path):
+        with open(tdec_path, "r", encoding="utf-8") as fh:
+            tdec_by_id = json.load(fh).get("records", {})
+
     for rec in db_records:
         # Backfill display-only 2D RDKit structure for known AtomicLimits precursors
         if not rec.get("has_2d"):
@@ -695,6 +701,26 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             rec["ens_n_models"] = int(ens_rec["n_models"])
             # Use robust 4-uMLIP median as the primary displayed SAPIS score
             rec["sapis_score"] = rec["ens_sapis"]
+
+        # Attach experimental thermal decomposition temperature (T_dec) & molecular mechanism when available
+        tdec_rec = tdec_by_id.get(rec.get("id"))
+        if tdec_rec is None:
+            for sid in rec.get("secondary_ids") or []:
+                if sid in tdec_by_id:
+                    tdec_rec = tdec_by_id[sid]
+                    break
+        if tdec_rec is not None:
+            rec["t_dec"] = {
+                "min_c": tdec_rec.get("t_dec_c_min"),
+                "max_c": tdec_rec.get("t_dec_c_max"),
+                "display": tdec_rec.get("t_dec_display"),
+                "metric": tdec_rec.get("t_dec_metric"),
+                "data_type": tdec_rec.get("data_type"),
+                "cond": tdec_rec.get("measurement_conditions") or {},
+                "ea": tdec_rec.get("activation_energy") or {},
+                "mech": tdec_rec.get("molecular_mechanism") or {},
+                "refs": tdec_rec.get("references") or [],
+            }
 
         # Uniform concise source label
         doi_str = (rec.get("doi") or "").strip()

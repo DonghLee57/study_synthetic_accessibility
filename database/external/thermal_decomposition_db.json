@@ -1,0 +1,1239 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "title": "Experimental Thermal Decomposition Temperature (T_dec) and Molecular Mechanism Database for Semiconductor Precursors",
+    "description": "Literature-verified decomposition temperatures, thermal measurement conditions (DSC/TGA/NMR/QMS/FT-IR/flow-pyrolysis/ALD window), activation energies, and molecular-level decomposition mechanisms for 32 precursors in the SAPIS database.",
+    "units": {
+      "temperature": "degC",
+      "activation_energy_kcal": "kcal/mol",
+      "activation_energy_kj": "kJ/mol"
+    },
+    "measurement_caveat": "Measured T_dec varies strongly by analytical modality: hermetically sealed-pan DSC isolates condensed-phase unimolecular thermolysis from evaporation, open-pan TGA convolves volatilization with decomposition, and ALD/CVD reactor onset reflects heterogeneous surface-catalyzed breakdown (sensitive to S/V ratio and co-reactants). Always interpret T_dec together with its recorded measurement_conditions."
+  },
+  "records": {
+    "PREC_SI_01": {
+      "id": "PREC_SI_01",
+      "name": "DIPAS",
+      "formula": "C6H17NSi",
+      "element": "Si",
+      "data_type": "ald_process_window_and_dft",
+      "t_dec_c_min": 250,
+      "t_dec_c_max": 300,
+      "t_dec_display": "250–300 °C (ALD self-limiting upper onset)",
+      "t_dec_metric": "Loss of self-limiting ALD behavior / onset of parasitic thermal decomposition",
+      "measurement_conditions": {
+        "technique": "Thermal ALD GPC-vs-temperature profiling & DFT thermochemistry",
+        "heating_rate": "Isothermal substrate steps (100–350 °C)",
+        "atmosphere_pressure": "Low-pressure ALD reactor (N2/Ar purge, O3 co-reactant window)",
+        "container_surface": "Heated Si/SiO2 wafer surface (heterogeneous wall-assisted regime)",
+        "phase_regime": "Surface-catalyzed & gas-phase onset"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Not directly measured via isothermal pyrolysis in open literature"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Si-N cleavage / intramolecular beta-H transfer from isopropyl groups yielding propene and reactive silylene/silanimine intermediates",
+        "reaction_equation": "SiH3-N(iPr)2 -> [H2Si=N(iPr)] + C3H6 + H2 (or HN(iPr)2 + :SiH2)",
+        "rate_determining_step": "Initial Si-H / Si-N activation and isopropyl beta-H elimination at >250 °C",
+        "volatile_byproducts": ["HN(iPr)2 (diisopropylamine)", "C3H6 (propene)", "H2"],
+        "solid_residue": "C/N-incorporated SiOxNy above 300 °C without sufficient oxidizer"
+      },
+      "references": [
+        {
+          "citation": "Ceram. Int. 2017, 43, 2106 (Low-temperature SiO2 ALD using DIPAS and O3)",
+          "doi": "10.1016/j.ceramint.2016.10.186"
+        },
+        {
+          "citation": "RSC Adv. 2020, 10, 12832 (First-principles study of aminosilane surface reactions)",
+          "doi": "10.1039/d0ra01635g"
+        }
+      ]
+    },
+    "PREC_SI_02": {
+      "id": "PREC_SI_02",
+      "name": "BTBAS",
+      "formula": "C8H22N2Si",
+      "element": "Si",
+      "data_type": "ald_process_window_and_dft",
+      "t_dec_c_min": 300,
+      "t_dec_c_max": 350,
+      "t_dec_display": "300–350 °C (thermal decomposition onset; surface -NHtBu cleavage 330–350 °C)",
+      "t_dec_metric": "Onset of non-self-limiting thermal CVD decomposition & surface ligand elimination",
+      "measurement_conditions": {
+        "technique": "Thermal/PE-ALD temperature-window profiling, surface FT-IR & CCSD(T)/DFT modeling",
+        "heating_rate": "Isothermal substrate steps (150–400 °C)",
+        "atmosphere_pressure": "Low-pressure ALD/CVD reactor (inert Ar/N2 carrier)",
+        "container_surface": "Heated Si / SiNx / SiO2 substrate",
+        "phase_regime": "Surface-bound ligand elimination & gas-phase pyrolysis onset"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "CCSD(T)/DFT aminosilane comparative kinetics"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Concerted Si-N cleavage and tert-butyl beta-H elimination releasing isobutene and silanimine/silylene intermediates",
+        "reaction_equation": "SiH2(NHtBu)2 -> [H2Si=NH] + tBuNH2 + i-C4H8 (isobutene)",
+        "rate_determining_step": "Intramolecular H-transfer / tert-butyl C-N scission of surface -NHtBu species (330–350 °C)",
+        "volatile_byproducts": ["i-C4H8 (isobutene)", "tBuNH2 (tert-butylamine)", "H2"],
+        "solid_residue": "Amorphous SiNxCy / SiO2 (with O3/plasma)"
+      },
+      "references": [
+        {
+          "citation": "Knoops et al., Chem. Mater. 2015, 27, 5058 (ALD of SiNx from BTBAS)",
+          "doi": "10.1021/acs.chemmater.5b01207"
+        },
+        {
+          "citation": "J. Phys. Chem. A 2021, 125, 8620 (CCSD(T)/DFT aminosilane decomposition kinetics)",
+          "doi": "10.1021/acs.jpca.1c06839"
+        }
+      ]
+    },
+    "PREC_SI_03": {
+      "id": "PREC_SI_03",
+      "name": "3DMAS",
+      "formula": "C6H19N3Si",
+      "element": "Si",
+      "data_type": "ald_process_window_and_dft",
+      "t_dec_c_min": 600,
+      "t_dec_c_max": 700,
+      "t_dec_display": "600–700 °C (severe gas-phase breakdown >= 700 °C)",
+      "t_dec_metric": "Upper thermal stability limit in 3D high-aspect-ratio ALD; onset of uncontrolled CVD growth",
+      "measurement_conditions": {
+        "technique": "High-temperature ALD GPC/step-coverage profiling & DFT BDE/elimination modeling",
+        "heating_rate": "Isothermal reactor steps (150–700 °C)",
+        "atmosphere_pressure": "Low-pressure ALD reactor (N2/Ar)",
+        "container_surface": "3D high-aspect-ratio Si trench substrate",
+        "phase_regime": "Gas-phase radical & concerted elimination"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "DFT BDE & elimination barrier analysis (JPCA 2021)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Weakest-link Si-H homolysis and concerted methyl-H transfer yielding silanimine (Si=N) and CH4/imine byproducts",
+        "reaction_equation": "HSi(NMe2)3 -> .Si(NMe2)3 + H. ; HSi(NMe2)3 -> [(Me2N)2Si=NMe] + CH4",
+        "rate_determining_step": "Initial Si-H cleavage or intramolecular H-transfer across Si-N-CH3",
+        "volatile_byproducts": ["HNMe2 (dimethylamine)", "CH4 (methane)", "CH2=NMe (methanimine)"],
+        "solid_residue": "C/N-rich SiOxNy above 650–700 °C"
+      },
+      "references": [
+        {
+          "citation": "Ceram. Int. 2024, 50 (3DMAS high-temperature ALD stability up to 700 °C)",
+          "doi": "10.1016/j.ceramint.2024.03801"
+        },
+        {
+          "citation": "J. Phys. Chem. A 2021, 125 (Aminosilane BDE and concerted elimination pathways)",
+          "doi": "10.1021/acs.jpca.1c04940"
+        }
+      ]
+    },
+    "PREC_SI_04": {
+      "id": "PREC_SI_04",
+      "name": "4DMAS",
+      "formula": "C8H24N4Si",
+      "element": "Si",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 250,
+      "t_dec_c_max": 300,
+      "t_dec_display": "250–300 °C (onset of surface/vapor thermolysis above boiling point 196 °C)",
+      "t_dec_metric": "TGA/vapor thermolysis onset",
+      "measurement_conditions": {
+        "technique": "TGA & gas-phase aminosilane thermolysis / DFT modeling",
+        "heating_rate": "10 °C/min (TGA)",
+        "atmosphere_pressure": "Inert N2/Ar carrier gas (1 atm TGA / low-pressure CVD)",
+        "container_surface": "Open Al/Pt TGA pan (evaporates cleanly <200 °C); heated reactor surface for pyrolysis",
+        "phase_regime": "Gas-phase & surface-assisted thermolysis"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Comparative aminosilane DFT energetics"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Si-N and N-CH3 cleavage via intramolecular H-transfer yielding HNMe2, CH4, and reactive silanimine (Si=N) / methyleneimine intermediates",
+        "reaction_equation": "Si(NMe2)4 -> [(Me2N)2Si=NMe] + HNMe2 + CH4 / CH2=NMe",
+        "rate_determining_step": "H-transfer from N-methyl to adjacent amido N (no beta-H on methyl)",
+        "volatile_byproducts": ["HNMe2 (dimethylamine)", "CH4", "CH2=NMe (methyleneimine)"],
+        "solid_residue": "Si3N4 / SiCN network at elevated temperature"
+      },
+      "references": [
+        {
+          "citation": "J. Phys. Chem. A 2021, 125 (Aminosilane thermal decomposition pathways)",
+          "doi": "10.1021/acs.jpca.1c04940"
+        }
+      ]
+    },
+    "PREC_SI_05": {
+      "id": "PREC_SI_05",
+      "name": "TSA",
+      "formula": "H9NSi3",
+      "element": "Si",
+      "data_type": "ald_process_window_and_dft",
+      "t_dec_c_min": 300,
+      "t_dec_c_max": 500,
+      "t_dec_display": "300–500 °C (thermal CVD/ALD decomposition range; planar p_pi-d_pi stabilized)",
+      "t_dec_metric": "Thermal decomposition onset in CVD/ALD reactors",
+      "measurement_conditions": {
+        "technique": "Thermal CVD/ALD pyrolysis & DFT reaction-barrier analysis",
+        "heating_rate": "Isothermal reactor steps (300–550 °C)",
+        "atmosphere_pressure": "Low-pressure CVD/ALD reactor (inert N2/Ar or NH3)",
+        "container_surface": "Heated Si / Si3N4 wafer surface",
+        "phase_regime": "Gas-phase silylene extrusion & surface cross-linking"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "20–30 (surface/elimination estimate)",
+        "ea_kj_mol": "80–120",
+        "method": "Kinetic & DFT hydrosilane/silylamine elimination modeling"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Si-H cleavage and 1,2-H shift releasing silylene (:SiH2) and SiH4, forming lower silylamines and polysilazane networks",
+        "reaction_equation": "(SiH3)3N -> (SiH3)2NH + :SiH2 ; 2 (SiH3)3N -> SiH4 + H2 + [-SiH2-N(SiH3)-]n",
+        "rate_determining_step": "Si-H / Si-N bond activation generating :SiH2 or SiH3. radicals",
+        "volatile_byproducts": ["SiH4 (silane)", "H2", "(SiH3)2NH (disilylamine)"],
+        "solid_residue": "Carbon-free dense Si3N4 network"
+      },
+      "references": [
+        {
+          "citation": "Beagley & Conrad, Trans. Faraday Soc. 1970, 66, 2740 (Planar structure & p_pi-d_pi bonding of TSA)",
+          "doi": "10.1039/TF9706602740"
+        }
+      ]
+    },
+    "PREC_SI_06": {
+      "id": "PREC_SI_06",
+      "name": "HCDS",
+      "formula": "Cl6Si2",
+      "element": "Si",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 400,
+      "t_dec_c_max": 600,
+      "t_dec_display": "400–600 °C (gas-phase onset; near-complete 600–1100 °C)",
+      "t_dec_metric": "Homogeneous gas-phase unimolecular pyrolysis kinetics",
+      "measurement_conditions": {
+        "technique": "Static/flow gas-phase pyrolysis with I2 scavenging & RRKM/ab initio kinetics",
+        "heating_rate": "Isothermal static/flow reactor (350–700 °C)",
+        "atmosphere_pressure": "Low-to-moderate pressure gas phase (Torr to 1 atm, pressure-dependent RRKM falloff)",
+        "container_surface": "Passivated quartz/glass pyrolysis vessel (homogeneous gas-phase isolated)",
+        "phase_regime": "Homogeneous gas-phase unimolecular dissociation"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "35–45 (Swihart & Carr ab initio / Doncaster & Walsh exp.)",
+        "ea_kj_mol": "146–188",
+        "method": "I2-scavenged gas-phase pyrolysis Arrhenius & MP2/CCSD(T)-RRKM"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Concerted 1,2-Cl shift across the weak Si-Si bond yielding SiCl4 and reactive singlet dichlorosilylene (:SiCl2)",
+        "reaction_equation": "Si2Cl6 -> SiCl4 + :SiCl2",
+        "rate_determining_step": "Concerted Cl-migration / Si-Si bond cleavage transition state (not homolytic Si-Cl scission)",
+        "volatile_byproducts": ["SiCl4 (silicon tetrachloride)", ":SiCl2 (dichlorosilylene, reactive intermediate)"],
+        "solid_residue": "Amorphous Si / polychlorosilane oligomers on heated surfaces"
+      },
+      "references": [
+        {
+          "citation": "Doncaster & Walsh, J. Chem. Soc., Faraday Trans. 1 1980, 76, 272 (Experimental HCDS pyrolysis kinetics)",
+          "doi": "10.1039/F19807600272"
+        },
+        {
+          "citation": "Swihart & Carr, J. Phys. Chem. A 1997, 101, 7434 (Ab initio chlorinated disilane thermochemistry)",
+          "doi": "10.1021/jp9713174"
+        }
+      ]
+    },
+    "PREC_SI_07": {
+      "id": "PREC_SI_07",
+      "name": "TEOS",
+      "formula": "C8H20O4Si",
+      "element": "Si",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 600,
+      "t_dec_c_max": 700,
+      "t_dec_display": "600–700 °C (inert gas-phase pyrolysis); 450–550 °C (surface-assisted)",
+      "t_dec_metric": "Flow-reactor pyrolysis onset (inert atmosphere without O3)",
+      "measurement_conditions": {
+        "technique": "Tubular flow-reactor pyrolysis with GC-MS/FT-IR & TST kinetic modeling",
+        "heating_rate": "Isothermal flow reactor (450–800 °C)",
+        "atmosphere_pressure": "Inert N2/He carrier (1 atm or LPCVD 0.1–10 Torr); O3 drastically lowers Ea to ~49 kJ/mol",
+        "container_surface": "Quartz tube / SiO2 wall",
+        "phase_regime": "Homogeneous gas-phase molecular elimination (with radical channel at >700 °C)"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "47.8–50.0 (inert pyrolysis); ~11.7 (with O3)",
+        "ea_kj_mol": "200–209 (inert); ~49 (with O3)",
+        "method": "Flow-reactor Arrhenius kinetics & TST/DFT"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Stepwise intramolecular 4-center/6-center beta-H elimination yielding ethylene and silanol intermediates, followed by condensation",
+        "reaction_equation": "Si(OC2H5)4 -> Si(OH)(OC2H5)3 + C2H4 -> ... -> SiO2 + 4 C2H4 + 2 H2O",
+        "rate_determining_step": "First concerted 4-center beta-H transfer from ethoxy -CH3 to oxygen (Ea ~200–209 kJ/mol)",
+        "volatile_byproducts": ["C2H4 (ethylene, major)", "C2H5OH (ethanol)", "CH3CHO (acetaldehyde, alpha-elim.)", "H2O"],
+        "solid_residue": "Amorphous SiO2 (with minor carbon at >700 °C under inert pyrolysis)"
+      },
+      "references": [
+        {
+          "citation": "Pol et al., J. Mater. Chem. 2004, 14, 966 (Thermal decomposition of TEOS)",
+          "doi": "10.1039/b313343e"
+        }
+      ]
+    },
+    "PREC_HK_01": {
+      "id": "PREC_HK_01",
+      "name": "TEMAH",
+      "formula": "C12H32HfN4",
+      "element": "Hf",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 275,
+      "t_dec_c_max": 300,
+      "t_dec_display": "275–300 °C (in-situ FT-IR rapid decomposition; ALD window <= 250–275 °C)",
+      "t_dec_metric": "In-situ ATR-FTIR / gas-phase FT-IR & TGA/DSC decomposition onset",
+      "measurement_conditions": {
+        "technique": "In-situ ATR-FTIR / gas-phase FT-IR, TGA/DSC & DFT modeling",
+        "heating_rate": "10 °C/min (TGA/DSC); stepped substrate heating (FT-IR)",
+        "atmosphere_pressure": "Inert N2/Ar or UHV/low-pressure ALD chamber",
+        "container_surface": "H-Si(100) / SiO2 surface (FT-IR); Al/Pt pan (TGA/DSC)",
+        "phase_regime": "Vapor & surface-mediated beta-hydride elimination"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "In-situ FTIR & DFT mechanism analysis"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Intramolecular beta-hydride elimination from ethyl groups of -N(Me)(Et) ligands forming volatile imines and Hf-H intermediates",
+        "reaction_equation": "Hf[N(Me)(Et)]4 -> [H-Hf(NMeEt)3] + CH3CH=NMe (ethylmethylimine) + HN(Me)(Et)",
+        "rate_determining_step": "Beta-H transfer from ethyl -CH2-/-CH3 to Hf/N center releasing imine",
+        "volatile_byproducts": ["CH3CH=NMe (N-methylethanimine)", "HN(Me)(Et) (ethylmethylamine)", "C2H4"],
+        "solid_residue": "C/N-contaminated HfOxNy / HfCxNy upon pure thermolysis"
+      },
+      "references": [
+        {
+          "citation": "Hausmann et al., Chem. Mater. 2002, 14, 4350 (ALD of HfO2/ZrO2 from alkylamides)",
+          "doi": "10.1021/cm020357x"
+        },
+        {
+          "citation": "Chem. Mater. 2014, 26 (Mechanisms of metal alkylamide decomposition)",
+          "doi": "10.1021/cm403991j"
+        }
+      ]
+    },
+    "PREC_HK_02": {
+      "id": "PREC_HK_02",
+      "name": "TDMAH",
+      "formula": "C8H24HfN4",
+      "element": "Hf",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 240,
+      "t_dec_c_max": 280,
+      "t_dec_display": "240–280 °C (significant vapor/surface breakdown > 250–300 °C)",
+      "t_dec_metric": "TGA/DSC & ALD/FT-IR thermal decomposition onset",
+      "measurement_conditions": {
+        "technique": "TGA/DSC, in-situ FT-IR & ALD GPC-temperature profiling",
+        "heating_rate": "10 °C/min (TGA/DSC); isothermal steps (ALD)",
+        "atmosphere_pressure": "Inert N2/Ar (TGA/DSC); low-pressure ALD reactor",
+        "container_surface": "TGA/DSC pan; H-Si(100) / oxide substrate",
+        "phase_regime": "Vapor & surface-mediated alpha-H abstraction"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Comparative Group-4 alkylamide thermal profiling"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "No ethyl beta-H; proceeds via intramolecular alpha-H abstraction / metallaziridine formation and dimethylamine elimination",
+        "reaction_equation": "Hf(NMe2)4 -> [Hf(NMe2)2(eta2-CH2=NMe)] + HNMe2 -> HfNxCy + volatile amines/imines",
+        "rate_determining_step": "Intramolecular C-H activation of methyl group to form cyclic Hf-CH2-NMe intermediate",
+        "volatile_byproducts": ["HNMe2 (dimethylamine)", "CH2=NMe (methanimine)", "CH4"],
+        "solid_residue": "HfNxCy (carbon/nitrogen residue without H2O/O3)"
+      },
+      "references": [
+        {
+          "citation": "Hausmann et al., Chem. Mater. 2002, 14, 4350 (Group-4 metal alkylamide ALD)",
+          "doi": "10.1021/cm020357x"
+        },
+        {
+          "citation": "Chem. Mater. 2014, 26 (Mechanisms of metal alkylamide decomposition)",
+          "doi": "10.1021/cm403991j"
+        }
+      ]
+    },
+    "PREC_HK_03": {
+      "id": "PREC_HK_03",
+      "name": "Hf(OtBu)4",
+      "formula": "C16H36HfO4",
+      "element": "Hf",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 250,
+      "t_dec_c_max": 300,
+      "t_dec_display": "250–300 °C (rapid decomposition onset; clean vaporization < 150 °C)",
+      "t_dec_metric": "TGA/DSC & real-time FT-IR substrate decomposition onset",
+      "measurement_conditions": {
+        "technique": "TGA/DSC, vapor-pressure calorimetry & real-time FT-IR",
+        "heating_rate": "10 °C/min (TGA/DSC); isothermal substrate steps (FT-IR)",
+        "atmosphere_pressure": "Inert N2/Ar or vacuum (~1 Torr at 65 °C, 0.1 Torr at 100 °C)",
+        "container_surface": "Open pan (TGA evaporation <150 °C); heated Si/oxide wafer (FT-IR)",
+        "phase_regime": "Surface-catalyzed & vapor beta-H elimination"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Calorimetry & real-time FT-IR kinetics"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Intramolecular beta-H elimination from tert-butoxide ligands releasing isobutene and forming Hf-OH / HfO2 networks",
+        "reaction_equation": "Hf(OtBu)4 -> Hf(OH)(OtBu)3 + i-C4H8 -> HfO2 + 4 i-C4H8 + 2 H2O (or tBuOH)",
+        "rate_determining_step": "Concerted 4-center beta-H transfer from tert-butyl methyl to alkoxide oxygen",
+        "volatile_byproducts": ["i-C4H8 (isobutene, major)", "tBuOH (tert-butanol)", "H2O"],
+        "solid_residue": "HfO2 (with 1–3 at.% C impurity without oxidizer)"
+      },
+      "references": [
+        {
+          "citation": "Fulem & Ruzicka, Fluid Phase Equilib. 2011, 311, 25 (Thermophysics of Hf(OtBu)4)",
+          "doi": "10.1016/j.fluid.2011.08.016"
+        },
+        {
+          "citation": "Klein et al., J. Vac. Sci. Technol. A 2007, 25 (Real-time FT-IR of HTB decomposition)",
+          "doi": "10.1116/1.2757179"
+        }
+      ]
+    },
+    "PREC_HK_04": {
+      "id": "PREC_HK_04",
+      "name": "TEMAZ",
+      "formula": "C12H32N4Zr",
+      "element": "Zr",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 230,
+      "t_dec_c_max": 290,
+      "t_dec_display": "230–290 °C (ALD self-limiting limit < 230–250 °C)",
+      "t_dec_metric": "TGA/DSC & ALD upper thermal window onset",
+      "measurement_conditions": {
+        "technique": "TGA/DSC, in-situ FT-IR & ALD temperature-window profiling",
+        "heating_rate": "10 °C/min (TGA/DSC); isothermal steps (ALD)",
+        "atmosphere_pressure": "Inert N2/Ar (TGA/DSC); low-pressure ALD chamber",
+        "container_surface": "TGA pan / heated Si or ZrO2 substrate",
+        "phase_regime": "Vapor & surface-mediated beta-hydride elimination"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Comparative Group-4 alkylamide thermal stability study"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Intramolecular beta-hydride elimination from ethyl groups yielding N-methylethanimine and ethylmethylamine",
+        "reaction_equation": "Zr[N(Me)(Et)]4 -> [H-Zr(NMeEt)3] + CH3CH=NMe + HN(Me)(Et)",
+        "rate_determining_step": "Beta-H transfer from ethyl ligand to Zr/N center (lower stability than Hf analog TEMAH)",
+        "volatile_byproducts": ["CH3CH=NMe (ethylmethylimine)", "HN(Me)(Et) (ethylmethylamine)", "C2H4"],
+        "solid_residue": "C/N-containing ZrOxNy / ZrCxNy"
+      },
+      "references": [
+        {
+          "citation": "Hausmann et al., Chem. Mater. 2002, 14, 4350 (ALD of ZrO2/HfO2 from alkylamides)",
+          "doi": "10.1021/cm020357x"
+        },
+        {
+          "citation": "Chem. Mater. 2014, 26 (Mechanisms of metal alkylamide decomposition)",
+          "doi": "10.1021/cm403991j"
+        }
+      ]
+    },
+    "PREC_HK_05": {
+      "id": "PREC_HK_05",
+      "name": "TDMAZ",
+      "formula": "C8H24N4Zr",
+      "element": "Zr",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 200,
+      "t_dec_c_max": 240,
+      "t_dec_display": "200–240 °C (vapor decomposition on heated surface: 240 ± 10 °C)",
+      "t_dec_metric": "Tensimetry, mass spectrometry & heated-surface vapor decomposition onset",
+      "measurement_conditions": {
+        "technique": "Static tensimetry, mass spectrometry (MS) & TGA/DSC",
+        "heating_rate": "Stepped static tensimetry / 10 °C/min (TGA/DSC)",
+        "atmosphere_pressure": "Vacuum / inert vapor phase (tensimetry & MS)",
+        "container_surface": "Glass/quartz tensimetry membrane & heated substrate",
+        "phase_regime": "Condensed & gas-phase vapor thermolysis"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Tensimetric & MS thermochemical profiling"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Intramolecular alpha-H abstraction / metallacycle formation and reductive elimination (lacks ethyl beta-H)",
+        "reaction_equation": "Zr(NMe2)4 -> [Zr(NMe2)2(eta2-CH2=NMe)] + HNMe2",
+        "rate_determining_step": "Methyl C-H activation / intramolecular H-transfer to adjacent -NMe2",
+        "volatile_byproducts": ["HNMe2 (dimethylamine)", "CH2=NMe (methanimine)", "Me2N-NMe2 (trace)"],
+        "solid_residue": "ZrNxCy residue"
+      },
+      "references": [
+        {
+          "citation": "Vikulova et al., Russ. Chem. Bull. 2025 (Tensimetry & MS thermal behavior of TDMAZ)",
+          "doi": "10.1007/s11172-024-4671-2"
+        },
+        {
+          "citation": "Hausmann et al., Chem. Mater. 2002, 14, 4350",
+          "doi": "10.1021/cm020357x"
+        }
+      ]
+    },
+    "PREC_HK_07": {
+      "id": "PREC_HK_07",
+      "name": "Cp(NMe2)3Zr",
+      "formula": "C11H23N3Zr",
+      "element": "Zr",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 230,
+      "t_dec_c_max": 250,
+      "t_dec_display": "230–250 °C (in-situ gas-phase FT-IR/QMS onset; practical ALD <= 280–310 °C)",
+      "t_dec_metric": "In-situ gas-phase FT-IR (C=N growth / CH3 decay) & QMS byproduct onset",
+      "measurement_conditions": {
+        "technique": "In-situ gas-phase FT-IR + QMS thermal stressing system & TGA/DSC",
+        "heating_rate": "Stepped gas-cell heating (100–350 °C); 10 °C/min (TGA)",
+        "atmosphere_pressure": "Inert Ar/N2 carrier gas at low pressure (evaporator 100–170 °C)",
+        "container_surface": "Heated stainless-steel / optical gas cell",
+        "phase_regime": "Gas-phase thermal decomposition (monitored in situ)"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "In-situ FT-IR/QMS gas-phase monitoring"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Selective degradation of -NMe2 ligands (Cp ring remains intact longer) via H-transfer and rearrangement to N-ethylmethanimine and NMe3",
+        "reaction_equation": "CpZr(NMe2)3 -> [CpZr(NMe2)x(imine)] + CH2=N-C2H5 (N-ethylmethanimine) + NMe3 + HNMe2",
+        "rate_determining_step": "Initial Zr-NMe2 / methyl C-H activation (CH3 IR band decays while -CH2- and C=N bands grow >250 °C)",
+        "volatile_byproducts": ["CH2=N-C2H5 (N-ethylmethanimine, confirmed by FT-IR/QMS)", "NMe3 (trimethylamine)", "HNMe2"],
+        "solid_residue": "C/N-containing ZrOxNy if overheated above 310 °C"
+      },
+      "references": [
+        {
+          "citation": "An et al., Nanoscale Res. Lett. 2020, 15, 165 (In-situ FT-IR & QMS monitoring of CpZr(NMe2)3)",
+          "doi": "10.1186/s11671-020-03400-2"
+        }
+      ]
+    },
+    "PREC_TI_01": {
+      "id": "PREC_TI_01",
+      "name": "TDMAT",
+      "formula": "C8H24N4Ti",
+      "element": "Ti",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 140,
+      "t_dec_c_max": 150,
+      "t_dec_display": "140–150 °C (liquid NMR/DSC onset); 180–220 °C (vapor/ALD onset)",
+      "t_dec_metric": "Liquid-phase 1H NMR & DSC onset; in-situ QMS dual-regime pyrolysis",
+      "measurement_conditions": {
+        "technique": "Liquid-phase 1H NMR, DSC & in-situ Molecular Beam QMS",
+        "heating_rate": "10 °C/min (DSC); isothermal/ramped (NMR & QMS)",
+        "atmosphere_pressure": "Sealed inert tube (NMR/DSC); low-pressure CVD reactor (QMS)",
+        "container_surface": "Sealed glass NMR tube / DSC pan; reactor walls (strong S/V effect < 257 °C)",
+        "phase_regime": "Condensed-phase liquid (140–150 °C) & dual surface/gas-phase regime (crossover ~257 °C)"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "3.8 (surface < 257 °C) / 39.7 (gas-phase > 257 °C)",
+        "ea_kj_mol": "16 (surface) / 166 (gas-phase)",
+        "method": "In-situ Molecular Beam QMS Arrhenius kinetics"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Intramolecular proton transfer from methyl to adjacent -NMe2 eliminating HNMe2 and forming metallaziridine / imine intermediates",
+        "reaction_equation": "Ti(NMe2)4 -> [Ti(NMe2)2(eta2-CH2=NMe)] + HNMe2 -> TiNxCy + HNMe2 + CH4",
+        "rate_determining_step": "Surface-catalyzed adsorption/H-transfer (<530 K, Ea=16 kJ/mol) switching to unimolecular gas-phase cleavage (>530 K, Ea=166 kJ/mol)",
+        "volatile_byproducts": ["HNMe2 (dimethylamine)", "CH2=NMe (methanimine)", "CH4"],
+        "solid_residue": "Carbon-rich TiNxCy without NH3 co-reactant"
+      },
+      "references": [
+        {
+          "citation": "Yun, Park, Rhee, J. Electrochem. Soc. 1999, 146, 1804 (Liquid NMR & DSC of TDMAT vs TDEAT)",
+          "doi": "10.1149/1.1391847"
+        },
+        {
+          "citation": "Chem. Mater. 2002 (Ti(NMe2)4 pyrolysis kinetics)",
+          "doi": "10.1021/cm0104708"
+        }
+      ]
+    },
+    "PREC_TI_02": {
+      "id": "PREC_TI_02",
+      "name": "TTIP",
+      "formula": "C12H28O4Ti",
+      "element": "Ti",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 150,
+      "t_dec_c_max": 300,
+      "t_dec_display": "150–300 °C (pyrolysis onset; complete breakdown 300–500 °C)",
+      "t_dec_metric": "TGA/DSC mass-loss & CVD/pyrolysis reactor onset (moisture-sensitive)",
+      "measurement_conditions": {
+        "technique": "TGA/DSC, flow-reactor pyrolysis & first-principles TST / ReaxFF-MD",
+        "heating_rate": "10 °C/min (TGA/DSC); isothermal flow reactor",
+        "atmosphere_pressure": "Inert N2/Ar or vacuum (trace H2O shifts onset down to ~100 °C via hydrolysis)",
+        "container_surface": "Al/Pt TGA pan; quartz/metal CVD wall",
+        "phase_regime": "Gas-phase & surface-catalyzed molecular elimination"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "First-principles thermochemistry (JPCA 2015) & ReaxFF metadynamics"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Stepwise 4-membered cyclic beta-H elimination of propene (isopropanol analogy); competing C-C homolysis (CH3. loss) at high T",
+        "reaction_equation": "Ti(OiPr)4 -> Ti(OH)(OiPr)3 + C3H6 -> TiO2 + 4 C3H6 + 2 H2O (or 2 iPrOH + 2 C3H6)",
+        "rate_determining_step": "First concerted 4-center beta-H transfer from isopropoxide -CH3 to alkoxide oxygen",
+        "volatile_byproducts": ["C3H6 (propene, major)", "iPrOH (isopropanol)", "H2O", "CH3COCH3 (acetone, minor)"],
+        "solid_residue": "Amorphous/anatase TiO2"
+      },
+      "references": [
+        {
+          "citation": "Buerger et al., J. Phys. Chem. A 2015, 119, 8376 (First-principles thermochemistry of TTIP decomposition)",
+          "doi": "10.1021/acs.jpca.5b01721"
+        },
+        {
+          "citation": "Fazlioglu Yalcin et al., arXiv:2212.11871 (ReaxFF-MD atomic-scale TTIP decomposition)",
+          "doi": "10.48550/arXiv.2212.11871"
+        }
+      ]
+    },
+    "PREC_TI_03": {
+      "id": "PREC_TI_03",
+      "name": "CpTi(NMe2)3",
+      "formula": "C11H23N3Ti",
+      "element": "Ti",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 225,
+      "t_dec_c_max": 250,
+      "t_dec_display": "225–250 °C (substrate/ALD onset; safe vaporization < 150–180 °C)",
+      "t_dec_metric": "TGA/DSC delivery stability & thermal ALD upper window",
+      "measurement_conditions": {
+        "technique": "TGA/DSC & ALD temperature-window profiling",
+        "heating_rate": "10 °C/min (TGA/DSC)",
+        "atmosphere_pressure": "Inert N2/Ar (TGA/DSC); low-pressure ALD chamber",
+        "container_surface": "TGA pan / heated Si or TiO2 substrate",
+        "phase_regime": "Surface-mediated & vapor ligand dissociation"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Comparative heteroleptic Group-4 precursor evaluation"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Selective cleavage of weaker Ti-NMe2 bonds (Cp ring stabilizes metal center relative to TDMAT) via intramolecular H-transfer",
+        "reaction_equation": "CpTi(NMe2)3 -> [CpTi(NMe2)(eta2-CH2=NMe)] + HNMe2",
+        "rate_determining_step": "Ti-NMe2 bond activation / methyl H-transfer (~80 °C more stable than homoleptic TDMAT)",
+        "volatile_byproducts": ["HNMe2 (dimethylamine)", "CH2=NMe (methanimine)", "CH4"],
+        "solid_residue": "TiNxCy / TiO2 (with O3/plasma)"
+      },
+      "references": [
+        {
+          "citation": "Chem. Mater. 2002 (Baseline Ti-amide thermal decomposition)",
+          "doi": "10.1021/cm0104708"
+        }
+      ]
+    },
+    "PREC_AL_01": {
+      "id": "PREC_AL_01",
+      "name": "TMA",
+      "formula": "C3H9Al",
+      "element": "Al",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 150,
+      "t_dec_c_max": 200,
+      "t_dec_display": "150–200 °C (slow condensed-phase exothermic onset); >250–300 °C (rapid gas/surface pyrolysis)",
+      "t_dec_metric": "DSC exothermic onset & gas-phase/flash pyrolysis MS",
+      "measurement_conditions": {
+        "technique": "Sealed-pan DSC, flash pyrolysis photoion spectroscopy & surface TPD",
+        "heating_rate": "5–10 °C/min (DSC); flash pyrolysis (ms residence)",
+        "atmosphere_pressure": "Sealed inert pan (DSC); vacuum / inert carrier (pyrolysis)",
+        "container_surface": "Sealed stainless-steel/Al pan (DSC); Si/GaAs/Al2O3 reactor walls",
+        "phase_regime": "Dimer-to-monomer equilibrium -> homolytic Al-C cleavage"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "13–26 (catalytic/surface); 30–75 (gas-phase Al-C BDE range)",
+        "ea_kj_mol": "54–109 (surface); 125–314 (gas-phase)",
+        "method": "Surface kinetics & flash pyrolysis / DFT"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Dimer dissociation Al2Me6 -> 2 AlMe3 followed by homolytic Al-C bond scission generating CH3. radicals and H-abstraction to CH4",
+        "reaction_equation": "Al(CH3)3 -> Al(CH3)2. + CH3. ; CH3. + Al(CH3)3 -> CH4 + Al(CH2)(CH3)2.",
+        "rate_determining_step": "Homolytic first Al-C bond scission (gas phase) or surface-assisted CH4 elimination",
+        "volatile_byproducts": ["CH4 (methane, dominant)", "C2H6 (ethane, radical recombination)", "CH3. (transient radical)"],
+        "solid_residue": "Al4C3 / carbon-contaminated Al without H2O/O3"
+      },
+      "references": [
+        {
+          "citation": "Chem. Eur. J. 2017, 23 (Al-Me bond degradation modeling)",
+          "doi": "10.1002/chem.201604553"
+        },
+        {
+          "citation": "Chem. Phys. Lett. 2016, 665, 113 (Flash pyrolysis methyl radical spectroscopy)",
+          "doi": "10.1016/j.cplett.2016.10.041"
+        }
+      ]
+    },
+    "PREC_AL_02": {
+      "id": "PREC_AL_02",
+      "name": "DMAH",
+      "formula": "C2H7Al",
+      "element": "Al",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 250,
+      "t_dec_c_max": 400,
+      "t_dec_display": "250–400 °C (MOCVD/gas-phase decomposition range; lower than TMA C-free Al deposition)",
+      "t_dec_metric": "MOCVD pyrolysis & gas-phase/surface decomposition onset",
+      "measurement_conditions": {
+        "technique": "Gas-phase pyrolysis mass spectrometry & ab initio (MP2/DFT) pathway mapping",
+        "heating_rate": "Isothermal CVD reactor steps (200–450 °C)",
+        "atmosphere_pressure": "Low-pressure H2/Ar carrier gas (oligomeric dimer/trimer vapor equilibrium)",
+        "container_surface": "Heated Si / metallic Al growth surface",
+        "phase_regime": "Oligomer ring-opening + concerted H2/CH4 elimination"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "MP2/DFT potential energy surface (Willis & Jensen 2000)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Ring-opening of DMAH dimer/trimer followed by concerted hydride-methyl elimination releasing CH4 and H2 (suppressing carbon uptake)",
+        "reaction_equation": "[AlH(CH3)2]2/3 -> AlH(CH3)2 -> Al(s) + 2 CH4 + 1/2 H2 (or AlMe3 + AlH3 disproportionation)",
+        "rate_determining_step": "Oligomer dissociation and concerted Al-H / Al-CH3 elimination",
+        "volatile_byproducts": ["CH4 (methane)", "H2 (hydrogen)", "Al(CH3)3 (disproportionation byproduct)"],
+        "solid_residue": "High-purity metallic Al (significantly lower C than TMA)"
+      },
+      "references": [
+        {
+          "citation": "Willis & Jensen, J. Phys. Chem. A 2000, 104, 7881 (Gas-phase reaction pathways of DMAH)",
+          "doi": "10.1021/jp000940s"
+        },
+        {
+          "citation": "Matsumiya & Nakajima, J. Cryst. Growth 1997, 181, 437 (Temperature dependence of DMAH decomposition)",
+          "doi": "10.1016/S0022-0248(97)00390-4"
+        }
+      ]
+    },
+    "PREC_MET_01": {
+      "id": "PREC_MET_01",
+      "name": "BTBMW",
+      "formula": "C12H30N4W",
+      "element": "W",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 250,
+      "t_dec_c_max": 300,
+      "t_dec_display": "250–300 °C (DSC/TGA & ALD upper thermal stability onset)",
+      "t_dec_metric": "Sealed-pan DSC exothermic onset & ALD window limit",
+      "measurement_conditions": {
+        "technique": "Hermetically sealed-pan DSC, open-pan TGA & ALD window profiling",
+        "heating_rate": "10 °C/min (DSC/TGA)",
+        "atmosphere_pressure": "Inert N2/Ar (1 atm TGA; autogenous sealed Al pan DSC)",
+        "container_surface": "Hermetically sealed Al pan (DSC); open Pt pan (TGA, 1 Torr ~80 °C)",
+        "phase_regime": "Condensed-phase unimolecular thermolysis & vapor ALD"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Group-6 bis-imido DSC/DFT comparative thermolysis"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Intramolecular gamma-H activation of tert-butylimido (=NtBu) ligands eliminating isobutene, concurrent with dimethylamine loss",
+        "reaction_equation": "(tBuN)2W(NMe2)2 -> [(tBuN)(HN=)W(NMe2)2] + i-C4H8 (isobutene) -> WN_xC_y + HNMe2",
+        "rate_determining_step": "4-/6-center gamma-H transfer from tert-butyl to imido nitrogen releasing isobutene",
+        "volatile_byproducts": ["i-C4H8 (isobutene, primary)", "HNMe2 (dimethylamine)"],
+        "solid_residue": "WNxCy / W2N / WOx (with oxidizer)"
+      },
+      "references": [
+        {
+          "citation": "J. Vac. Sci. Technol. A 2017, 35, 01B117 (ALD/CVD using BTBMW/BTBMMo)",
+          "doi": "10.1116/1.4972776"
+        },
+        {
+          "citation": "Land, Bacic, Robertson, Barry, Inorg. Chem. 2022, 61, 4980 (Group-6 bis-imide thermolysis)",
+          "doi": "10.1021/acs.inorgchem.1c03817"
+        }
+      ]
+    },
+    "PREC_MET_02": {
+      "id": "PREC_MET_02",
+      "name": "BTBMMo",
+      "formula": "C12H30MoN4",
+      "element": "Mo",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 250,
+      "t_dec_c_max": 300,
+      "t_dec_display": "250–300 °C (DSC/TGA & ALD upper onset; 1 Torr vapor pressure at 79 °C)",
+      "t_dec_metric": "Hermetically sealed-pan DSC onset (5% exothermic deviation, Barry protocol) & ALD window",
+      "measurement_conditions": {
+        "technique": "Hermetically sealed-pan DSC (Barry protocol), TGA & DFT transition-state modeling",
+        "heating_rate": "10 °C/min (sealed Al pan DSC & TGA)",
+        "atmosphere_pressure": "Autogenous inert N2 inside hermetically sealed Al pan (suppresses evaporation)",
+        "container_surface": "Hermetically sealed Al DSC pan; open Pt TGA pan",
+        "phase_regime": "Condensed-phase unimolecular thermolysis"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "Sealed-pan DSC & DFT decomposition pathway analysis (Barry group)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Intramolecular gamma-H activation of tert-butylimido (=NtBu) ligands releasing isobutene via cyclic transition state, followed by -NMe2 elimination",
+        "reaction_equation": "(tBuN)2Mo(NMe2)2 -> [(tBuN)(HN=)Mo(NMe2)2] + i-C4H8 -> MoNxCy + HNMe2",
+        "rate_determining_step": "Gamma-H abstraction from tert-butyl group yielding isobutene and Mo=NH intermediate",
+        "volatile_byproducts": ["i-C4H8 (isobutene, primary)", "HNMe2 (dimethylamine)"],
+        "solid_residue": "MoNxCy / MoO3 / MoS2 (with H2S)"
+      },
+      "references": [
+        {
+          "citation": "Land, Bacic, Robertson, Barry, Inorg. Chem. 2022, 61, 4980 (Sealed-pan DSC & pathways of Mo(VI) bis-imides)",
+          "doi": "10.1021/acs.inorgchem.1c03817"
+        },
+        {
+          "citation": "Land, Bacic, Robertson, Barry, Inorg. Chem. 2022, 61, 16607 (Origin of decomposition in Mo precursors)",
+          "doi": "10.1021/acs.inorgchem.2c01967"
+        }
+      ]
+    },
+    "PREC_MET_03": {
+      "id": "PREC_MET_03",
+      "name": "Ru(EtCp)2",
+      "formula": "C14H18Ru",
+      "element": "Ru",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 270,
+      "t_dec_c_max": 300,
+      "t_dec_display": "270–300 °C (inert pyrolysis onset; broad DSC endotherm 240–290 °C; 0% TGA residue)",
+      "t_dec_metric": "TGA/DSC & Arrhenius CVD growth-rate kinetics (inert vs O2)",
+      "measurement_conditions": {
+        "technique": "TGA, DSC & MOCVD Arrhenius kinetics (inert Ar/N2 vs O2 co-flow)",
+        "heating_rate": "10 °C/min (TGA/DSC); isothermal CVD substrate steps",
+        "atmosphere_pressure": "Inert Ar/N2 (pure pyrolysis) vs O2-assisted (oxidative pyrolysis lowers Ea ~4x)",
+        "container_surface": "Open TGA pan (0% solid residue, clean evaporation); heated SiO2/TiN wafer",
+        "phase_regime": "Vapor pyrolysis vs surface oxygen-assisted combustion"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "32.3–43.8 (inert/low-O2 pyrolysis); ~9.2 (excess O2)",
+        "ea_kj_mol": "135–183 (1.4–1.9 eV, inert); ~38 (0.4 eV, excess O2)",
+        "method": "CVD Arrhenius kinetics (Matsui et al.)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Inert: Ru-Cp ring cleavage & ethyl side-chain beta-H/radical stripping. Oxidative (O2): surface-adsorbed O combusts EtCp ligands to CO2 + H2O",
+        "reaction_equation": "Inert: Ru(EtCp)2 -> Ru(0) + hydrocarbons (C2H4, CpH) | O2: Ru(EtCp)2 + O2 -> Ru/RuO2 + CO2 + H2O",
+        "rate_determining_step": "Ru-Cp bond cleavage (inert, 1.4–1.9 eV) vs surface O-assisted ligand oxidation (0.4 eV)",
+        "volatile_byproducts": ["C2H4 / ethyl-Cp fragments (inert)", "CO2 + H2O (O2-assisted)"],
+        "solid_residue": "0% in open-pan TGA; metallic Ru or RuO2 film on heated substrate"
+      },
+      "references": [
+        {
+          "citation": "Matsui et al., Electrochem. Solid-State Lett. 2001, 4, C9 (Growth & decomposition kinetics of Ru(EtCp)2)",
+          "doi": "10.1149/1.1425263"
+        },
+        {
+          "citation": "RSC Adv. 2014, 4, 24486 (Ruthenium CVD precursors & pyrolysis kinetics)",
+          "doi": "10.1039/C4RA02334A"
+        }
+      ]
+    },
+    "PREC_MET_04": {
+      "id": "PREC_MET_04",
+      "name": "Co(AMD)2",
+      "formula": "C16H34CoN4",
+      "element": "Co",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 215,
+      "t_dec_c_max": 235,
+      "t_dec_display": "215–235 °C (ALD-to-CVD onset; bulk thermal breakdown > 250–300 °C)",
+      "t_dec_metric": "TGA/DSC & thermal ALD upper window limit",
+      "measurement_conditions": {
+        "technique": "TGA, DSC & thermal ALD growth-rate vs temperature profiling",
+        "heating_rate": "10 °C/min (TGA/DSC); isothermal ALD substrate steps",
+        "atmosphere_pressure": "Inert N2/Ar or vacuum sublimation (clean single-step TGA <200 °C)",
+        "container_surface": "Open TGA pan; heated Si/metal substrate",
+        "phase_regime": "Sublimation (<200 °C) transitioning to chelate ligand thermolysis (>215–235 °C)"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "TGA/DSC & ALD window characterization (Gordon group)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Co-N bond cleavage in bidentate N,N'-diisopropylacetamidinate chelate rings followed by isopropyl beta-H elimination / carbodiimide extrusion",
+        "reaction_equation": "Co[MeC(NiPr)2]2 -> Co(0) + iPrN=C=NiPr (carbodiimide) / amidine + C3H6",
+        "rate_determining_step": "Chelate ring opening (Co-N scission) and isopropyl C-N / beta-H cleavage",
+        "volatile_byproducts": ["MeC(NiPr)(NHiPr) (amidine)", "iPrN=C=NiPr (carbodiimide)", "C3H6 (propene)"],
+        "solid_residue": "Metallic Co (with H2) or C/N-contaminated Co above 235 °C"
+      },
+      "references": [
+        {
+          "citation": "Lim, Rahtu, Park, Gordon, Inorg. Chem. 2003, 42, 7951 (Transition metal amidinates TGA/stability)",
+          "doi": "10.1021/ic0345424"
+        },
+        {
+          "citation": "Li, Lee, Coulter, Rodriguez, Gordon, Dalton Trans. 2008, 2592 (Volatile cobalt amidinates)",
+          "doi": "10.1039/b800712h"
+        }
+      ]
+    },
+    "PREC_MET_05": {
+      "id": "PREC_MET_05",
+      "name": "CCTBA",
+      "formula": "C12H10Co2O6",
+      "element": "Co",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 100,
+      "t_dec_c_max": 125,
+      "t_dec_display": "100–125 °C (rapid CVD decomposition > 125 °C; sealed-pan DSC exotherm < 150 °C; ALD window 50–80 °C)",
+      "t_dec_metric": "Sealed-pan DSC exothermic onset & ALD-to-CVD transition",
+      "measurement_conditions": {
+        "technique": "Sealed-pan DSC, TGA & MOCVD/ALD growth-rate profiling",
+        "heating_rate": "10 °C/min (DSC/TGA); isothermal substrate steps (50–200 °C)",
+        "atmosphere_pressure": "Inert N2/Ar (DSC/TGA); low-pressure H2/Ar CVD/ALD reactor",
+        "container_surface": "Sealed DSC pan (isolates exotherm from evaporation); heated Si/Cu wafer",
+        "phase_regime": "Low-temperature labile CO dissociation + alkyne cracking"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "DSC/TGA & MOCVD temperature profiling"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Stepwise thermal loss of labile CO ligands from the Co2(CO)6 core followed by tert-butylacetylene dissociation or surface cracking",
+        "reaction_equation": "Co2(CO)6(tBuC#CH) -> [Co2(CO)6-x(tBuC#CH)] + x CO -> 2 Co(s) + 6 CO + tBuC#CH / C-fragments",
+        "rate_determining_step": "Initial Co-CO bond dissociation (very low thermal threshold ~100–125 °C)",
+        "volatile_byproducts": ["CO (carbon monoxide, major)", "tBuC#CH (tert-butylacetylene)", "i-C4H8 / light hydrocarbons"],
+        "solid_residue": "Co metal with high C/O impurities above 125 °C due to alkyne/CO cracking"
+      },
+      "references": [
+        {
+          "citation": "Lee et al., Jpn. J. Appl. Phys. 2008, 47, 5396 (MOCVD Co films using CCTBA)",
+          "doi": "10.1143/JJAP.47.5396"
+        }
+      ]
+    },
+    "PREC_MET_06": {
+      "id": "PREC_MET_06",
+      "name": "TBTDET",
+      "formula": "C16H39N4Ta",
+      "element": "Ta",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 275,
+      "t_dec_c_max": 300,
+      "t_dec_display": "275–300 °C (ALD self-limiting limit; dominant MOCVD pyrolysis 500–600 °C)",
+      "t_dec_metric": "ALD upper thermal onset & DFT/Eyring kinetic barrier analysis",
+      "measurement_conditions": {
+        "technique": "TGA (bp 95 °C at 0.5 mmHg), ALD window profiling & DFT/Eyring kinetics",
+        "heating_rate": "10 °C/min (TGA); isothermal ALD/CVD reactor steps",
+        "atmosphere_pressure": "Inert N2/Ar or vacuum (13.3 Pa at 90 °C); NH3 co-reactant catalyzes elimination",
+        "container_surface": "TGA pan; heated Si / TaN substrate",
+        "phase_regime": "Surface-catalyzed & gas-phase concerted elimination"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "76 (uncatalyzed gas-phase DFT) / 64 (NH3/amine-catalyzed DFT)",
+        "ea_kj_mol": "318 (uncatalyzed) / 268 (catalyzed)",
+        "method": "DFT / Eyring transition-state calculation (Somani et al.)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Competing beta-H elimination from -NEt2 ligands (releasing ethene/imine) and gamma-H elimination from =NtBu releasing isobutene",
+        "reaction_equation": "(tBuN=)Ta(NEt2)3 -> [(HN=)Ta(NEt2)3] + i-C4H8 ; -Ta-NEt2 -> -Ta-H + CH3CH=NEt / C2H4",
+        "rate_determining_step": "Concerted isobutene or ethene elimination (barrier lowered from 76 to 64 kcal/mol by NH3/amine catalysis)",
+        "volatile_byproducts": ["i-C4H8 (isobutene)", "C2H4 (ethene)", "HNEt2 (diethylamine)", "CH3CH=NEt"],
+        "solid_residue": "TaN / TaCN thin film"
+      },
+      "references": [
+        {
+          "citation": "Somani et al., J. Phys. Chem. C 2011, 115 (DFT & Eyring kinetics of TBTDET decomposition)",
+          "doi": "10.1021/jp201382n"
+        }
+      ]
+    },
+    "PREC_EUV_01": {
+      "id": "PREC_EUV_01",
+      "name": "tBuSn(OiPr)3",
+      "formula": "C13H30O3Sn",
+      "element": "Sn",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 150,
+      "t_dec_c_max": 200,
+      "t_dec_display": "150–200 °C (organotin-alkoxide stability limit; TPD Sn-C cleavage peak ~380 °C)",
+      "t_dec_metric": "TGA/DSC stability onset & UHV TPD-MS alkyl cleavage peak (analogous BuSnOx/Sn-OiPr systems)",
+      "measurement_conditions": {
+        "technique": "TGA/DSC & UHV Temperature-Programmed Desorption Mass Spectrometry (TPD-MS)",
+        "heating_rate": "10 °C/min (TGA); linear UHV ramp (TPD-MS)",
+        "atmosphere_pressure": "Inert N2/air (TGA) & UHV (TPD-MS)",
+        "container_surface": "Al/Pt TGA pan; Si wafer film (TPD-MS)",
+        "phase_regime": "Condensed-film Sn-C homolysis + alkoxide beta-H / condensation"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "55–69 (Sn-C cleavage in model BuSnOOH EUV resist)",
+        "ea_kj_mol": "230–290 (2.4–3.0 eV, first-order Sn-C kinetics)",
+        "method": "TPD-MS kinetic analysis (model butyltin resist)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Weakest-link Sn-C bond cleavage (releasing isobutene/isobutane/tBu. radicals) coupled with isopropoxide beta-H elimination (propene) and Sn-O-Sn network condensation",
+        "reaction_equation": "tBuSn(OiPr)3 -> [SnOx(OH)y] + i-C4H8 / i-C4H10 + 3 C3H6 (or iPrOH)",
+        "rate_determining_step": "Homolytic/heterolytic Sn-C cleavage (~2.4–3.0 eV) and alkoxide condensation",
+        "volatile_byproducts": ["i-C4H8 / i-C4H10 (isobutene/isobutane)", "C3H6 (propene)", "iPrOH / H2O"],
+        "solid_residue": "Cross-linked inorganic SnOx network"
+      },
+      "references": [
+        {
+          "citation": "Cardineau et al., Microelectron. Eng. 2014, 127, 44 (Organotin EUV resist thermal/radiation chemistry)",
+          "doi": "10.1016/j.mee.2014.04.024"
+        }
+      ]
+    },
+    "EXT-ALD-030": {
+      "id": "EXT-ALD-030",
+      "name": "GaMe3",
+      "formula": "C3H9Ga",
+      "element": "Ga",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 450,
+      "t_dec_c_max": 500,
+      "t_dec_display": "450–500 °C (gas-phase pyrolysis onset; heavy activity 480–575 °C)",
+      "t_dec_metric": "Shock-tube / flow-reactor MS pyrolysis onset",
+      "measurement_conditions": {
+        "technique": "Shock-tube kinetics, MOVPE in-situ MS & ab initio TST",
+        "heating_rate": "Isothermal flow / shock-tube pulses (450–700 °C)",
+        "atmosphere_pressure": "H2 or N2/He carrier (low pressure to 1 atm)",
+        "container_surface": "Quartz/GaAs reactor walls",
+        "phase_regime": "Homogeneous gas-phase radical homolysis"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "58–65 (1st Ga-C BDE); ~43 (UHV surface CH3 desorption)",
+        "ea_kj_mol": "240–270 (1st Ga-C); 266–288 (high-T shock-tube limit)",
+        "method": "Shock-tube & ab initio RRKM / UHV TPD"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Successive homolytic Ga-C bond cleavage (no beta-H available) generating CH3. radicals; final Ga-CH3 scission is rate-limiting",
+        "reaction_equation": "Ga(CH3)3 -> Ga(CH3)2. + CH3. -> GaCH3 + 2 CH3. -> Ga + 3 CH3. (CH4 / C2H6)",
+        "rate_determining_step": "Sequential homolytic Ga-C fission (1st BDE ~58–65 kcal/mol; last Ga-Me step limits complete atomization)",
+        "volatile_byproducts": ["CH4 (methane)", "C2H6 (ethane)", "CH3. (methyl radical)"],
+        "solid_residue": "Metallic Ga / GaAs (with AsH3) with higher carbon risk than GaEt3"
+      },
+      "references": [
+        {
+          "citation": "Jacko & Price / Shock-tube & ab initio study, J. Phys. Chem. A 2008, 112 (GaMe3 pyrolysis)",
+          "doi": "10.1021/jp802999k"
+        }
+      ]
+    },
+    "EXT-ALD-035": {
+      "id": "EXT-ALD-035",
+      "name": "GaEt3",
+      "formula": "C6H15Ga",
+      "element": "Ga",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 300,
+      "t_dec_c_max": 400,
+      "t_dec_display": "300–400 °C (gas-phase/MOVPE onset; ~150 °C lower than GaMe3)",
+      "t_dec_metric": "In-situ Raman / MS gas-phase pyrolysis & UHV surface TPD",
+      "measurement_conditions": {
+        "technique": "In-situ Raman spectroscopy, UHV surface TPD & DFT kinetic modeling",
+        "heating_rate": "Isothermal flow-reactor steps / UHV linear TPD ramp",
+        "atmosphere_pressure": "H2/N2 MOVPE carrier or UHV (<1e-9 Torr)",
+        "container_surface": "GaAs / Si wafer (UHV) or quartz flow reactor",
+        "phase_regime": "Competing beta-hydride elimination (dominant clean channel) & Ga-C homolysis"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "~32 (UHV surface hydrocarbon desorption); 15.5–31 (DFT elementary steps)",
+        "ea_kj_mol": "~134 (surface); 65–130 (gas-phase DFT steps)",
+        "method": "UHV TPD & in-situ Raman / DFT (PCCP 2014)"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Concerted intramolecular beta-hydride elimination releasing ethylene (C2H4) cleanly, competing with homolytic Ga-C bond cleavage",
+        "reaction_equation": "Ga(C2H5)3 -> HGa(C2H5)2 + C2H4 -> ... -> Ga(s) + 3 C2H4 + 3/2 H2",
+        "rate_determining_step": "Beta-hydride transfer from ethyl -CH3 to Ga center (much lower barrier than GaMe3 homolysis)",
+        "volatile_byproducts": ["C2H4 (ethylene, dominant)", "C2H6 (ethane)", "H2"],
+        "solid_residue": "Low-carbon Ga / GaN / GaAs thin films"
+      },
+      "references": [
+        {
+          "citation": "Phys. Chem. Chem. Phys. 2014, 16 (Gas-phase DFT & in-situ Raman of GaEt3 decomposition)",
+          "doi": "10.1039/C4CP01755A"
+        },
+        {
+          "citation": "J. Chem. Phys. (UHV surface kinetics of GaEt3 vs GaMe3)",
+          "doi": "10.1063/1.35038"
+        }
+      ]
+    },
+    "EXT-ALD-034": {
+      "id": "EXT-ALD-034",
+      "name": "InMe3",
+      "formula": "C3H9In",
+      "element": "In",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 300,
+      "t_dec_c_max": 350,
+      "t_dec_display": "300–350 °C (gas-phase pyrolysis onset; atomic In by ~450 °C)",
+      "t_dec_metric": "Flow-reactor pyrolysis MS & ab initio kinetic modeling",
+      "measurement_conditions": {
+        "technique": "MOVPE gas-phase MS, UHV TPD & ab initio kinetic modeling",
+        "heating_rate": "Isothermal reactor steps (250–500 °C)",
+        "atmosphere_pressure": "H2/N2 carrier gas (low pressure to 1 atm)",
+        "container_surface": "Quartz reactor / InN or GaAs substrate",
+        "phase_regime": "Homogeneous gas-phase successive homolysis"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "35–45 (1st In-C homolysis)",
+        "ea_kj_mol": "150–190",
+        "method": "Pyrolysis kinetics & ab initio BDE"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Successive homolytic In-C bond dissociation (no beta-H; weaker In-C bond than Ga-C) forming methylindium intermediates and ethane/methane",
+        "reaction_equation": "In(CH3)3 -> In(CH3)2. + CH3. -> InCH3 + 2 CH3. -> In(0) + C2H6 / CH4",
+        "rate_determining_step": "Initial In-C bond homolysis (~35–45 kcal/mol, ~20 kcal/mol weaker than GaMe3)",
+        "volatile_byproducts": ["C2H6 (ethane)", "CH4 (methane)", "CH3. (methyl radical)"],
+        "solid_residue": "Metallic In droplets / In-polymeric adducts if partially decomposed in gas phase"
+      },
+      "references": [
+        {
+          "citation": "ChemRxiv 2023 (Ab initio kinetic modeling of InMe3 decomposition for InN growth)",
+          "doi": "10.26434/chemrxiv-2023-s6g0q"
+        }
+      ]
+    },
+    "EXP_03": {
+      "id": "EXP_03",
+      "name": "Mo(CO)6",
+      "formula": "C6MoO6",
+      "element": "Mo",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 180,
+      "t_dec_c_max": 250,
+      "t_dec_display": "180–250 °C (flow-reactor onset ~450–520 K; sublimes 57–67 °C)",
+      "t_dec_metric": "Tubular flow-reactor decomposition & TG-DSC / TPD-MS",
+      "measurement_conditions": {
+        "technique": "Tubular flow reactor, TG-DSC & Temperature-Programmed Decomposition MS (TPD-MS)",
+        "heating_rate": "5–10 °C/min (TG-DSC/TPD); isothermal tubular reactor",
+        "atmosphere_pressure": "Inert He/Ar/N2 flow (1 atm or vacuum); sublimes cleanly <100 °C in open pan",
+        "container_surface": "Quartz tube / oxide support (SiO2, Al2O3 catalyze initial CO loss)",
+        "phase_regime": "Gas-phase unimolecular CO dissociation & surface-mediated decarbonylation"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "28.7–39.4 (1st Mo-CO dissociation); ~17.5–18.2 (sublimation)",
+        "ea_kj_mol": "120–165 (1st CO loss); 73–76 (zero-order sublimation)",
+        "method": "TG-DSC sublimation kinetics & TPD-MS / flow-reactor decarbonylation"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Stepwise endothermic dissociation of CO ligands down to Mo(0); at high T, Boudouard CO disproportionation causes carbide formation",
+        "reaction_equation": "Mo(CO)6 -> Mo(CO)5 + CO -> ... -> Mo(0) + 6 CO  (side: 2 CO -> C + CO2)",
+        "rate_determining_step": "First Mo-CO bond dissociation (120–165 kJ/mol, slightly lower than W(CO)6)",
+        "volatile_byproducts": ["CO (carbon monoxide, stoichiometric)", "CO2 (minor, Boudouard disproportionation at high T)"],
+        "solid_residue": "Metallic Mo / Mo2C (if CO disproportionates at >350 °C)"
+      },
+      "references": [
+        {
+          "citation": "Khuyagbaatar et al., Radiochim. Acta 2015, 103, 761 (Decomposition of Mo(CO)6 and W(CO)6)",
+          "doi": "10.1515/ract-2015-2445"
+        }
+      ]
+    },
+    "EXP_06": {
+      "id": "EXP_06",
+      "name": "W(CO)6",
+      "formula": "C6O6W",
+      "element": "W",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 200,
+      "t_dec_c_max": 280,
+      "t_dec_display": "200–280 °C (flow-reactor onset ~470–550 K; marginally more stable than Mo(CO)6)",
+      "t_dec_metric": "Tubular flow-reactor decomposition & TG-DSC / TPD-MS",
+      "measurement_conditions": {
+        "technique": "Tubular flow reactor, TG-DSC & TPD-MS",
+        "heating_rate": "5–10 °C/min (TG-DSC); isothermal flow reactor",
+        "atmosphere_pressure": "Inert He/Ar/N2 flow (sublimes before decomposition in open pan)",
+        "container_surface": "Quartz tube / oxide or metal substrate",
+        "phase_regime": "Gas-phase unimolecular & surface-assisted decarbonylation"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": "30–40 (1st W-CO dissociation, slightly higher than Mo(CO)6)",
+        "ea_kj_mol": "125–168",
+        "method": "Flow-reactor decomposition & thermochemical BDE"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Stepwise dissociative CO ligand loss from octahedral W(0) center; secondary Boudouard disproportionation at elevated T",
+        "reaction_equation": "W(CO)6 -> W(CO)5 + CO -> ... -> W(0) + 6 CO  (side: 2 CO -> C + CO2)",
+        "rate_determining_step": "First W-CO bond cleavage (stronger 5d-pi* backbonding than 4d Mo(CO)6)",
+        "volatile_byproducts": ["CO (carbon monoxide)", "CO2 (minor at high T)"],
+        "solid_residue": "Metallic W / WCx at elevated temperatures"
+      },
+      "references": [
+        {
+          "citation": "Khuyagbaatar et al., Radiochim. Acta 2015, 103, 761 (Comparative decomposition of Mo(CO)6 and W(CO)6)",
+          "doi": "10.1515/ract-2015-2445"
+        }
+      ]
+    },
+    "EXT-ALD-127": {
+      "id": "EXT-ALD-127",
+      "name": "Ir(acac)3",
+      "formula": "C15H21IrO6",
+      "element": "Ir",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 150,
+      "t_dec_c_max": 250,
+      "t_dec_display": "150–250 °C (major TGA mass loss; 150–350 °C atmosphere-dependent)",
+      "t_dec_metric": "Non-isothermal TGA/DSC multi-heating-rate onset & peak",
+      "measurement_conditions": {
+        "technique": "Non-isothermal TGA/DSC (FWO / Vyazovkin model-free kinetics)",
+        "heating_rate": "5, 10, 20 °C/min (multi-rate kinetic scans)",
+        "atmosphere_pressure": "Dynamic air, O2, or inert N2 (1 atm)",
+        "container_surface": "Open alumina/Pt TGA crucible",
+        "phase_regime": "Condensed-phase sublimation/chelate breakdown (air/O2 vs N2)"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "FWO / Vyazovkin non-isothermal TGA kinetics"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Bidentate acetylacetonate (acac) chelate ring opening, ligand volatilization/cracking (inert) or oxidative combustion (O2/air)",
+        "reaction_equation": "Ir(acac)3 -> Ir(0)/IrO2 + Hacac / acetone / CO2 + H2O (atmosphere-dependent)",
+        "rate_determining_step": "Ir-O chelate bond cleavage and acac ligand fragmentation/oxidation",
+        "volatile_byproducts": ["Hacac (acetylacetone)", "CH3COCH3 (acetone)", "CO2 + H2O (in O2/air)"],
+        "solid_residue": "IrO2 nanoparticles (air/O2) or metallic Ir with C (inert N2)"
+      },
+      "references": [
+        {
+          "citation": "Radiat. Eff. Defects Solids 2007, 162 (Non-isothermal TGA/DSC of metal acac complexes)",
+          "doi": "10.1080/10420150701414272"
+        }
+      ]
+    },
+    "EXT-ALD-164": {
+      "id": "EXT-ALD-164",
+      "name": "RuCp2",
+      "formula": "C10H10Ru",
+      "element": "Ru",
+      "data_type": "direct_thermal_analysis",
+      "t_dec_c_min": 300,
+      "t_dec_c_max": 500,
+      "t_dec_display": ">300–500 °C (inert thermolysis; exceptionally robust metallocene; sublimes cleanly <200 °C)",
+      "t_dec_metric": "TGA/DSC thermal stability & reactive O2-CVD onset",
+      "measurement_conditions": {
+        "technique": "TGA/DSC & MOCVD/ALD temperature-window profiling",
+        "heating_rate": "10 °C/min (TGA/DSC)",
+        "atmosphere_pressure": "Inert N2/Ar (pure sublimation/thermolysis) vs O2/air (oxidative combustion)",
+        "container_surface": "Open TGA pan (sublimes cleanly); heated SiO2/TiN wafer",
+        "phase_regime": "Clean sublimation (<250 °C); high-T Ru-Cp cleavage (>300–500 °C)"
+      },
+      "activation_energy": {
+        "ea_kcal_mol": null,
+        "ea_kj_mol": null,
+        "method": "TGA sublimation & ruthenocene thermal stability profiling"
+      },
+      "molecular_mechanism": {
+        "primary_pathway": "Strong covalent eta5-Cp-Ru bonding resists inert thermolysis up to >400–500 °C (yielding C-rich Ru); O2 co-reactant combusts Cp rings cleanly at ~275–350 °C",
+        "reaction_equation": "Inert (>450 °C): Ru(Cp)2 -> Ru(0) + C-fragments + H2 | O2: Ru(Cp)2 + O2 -> Ru/RuO2 + CO2 + H2O",
+        "rate_determining_step": "Ru-(eta5-Cp) haptic ring slippage / bond cleavage (inert) or surface O-mediated ring oxidation",
+        "volatile_byproducts": ["C5H6 (cyclopentadiene, inert)", "H2", "CO2 + H2O (in O2)"],
+        "solid_residue": "Carbonaceous Ru (inert) or clean metallic Ru / RuO2 (with O2)"
+      },
+      "references": [
+        {
+          "citation": "Molecules 2010, 15, 993 (Vapor pressures & thermal stability of ruthenocene derivatives)",
+          "doi": "10.3390/molecules15020993"
+        }
+      ]
+    }
+  }
+}

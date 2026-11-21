@@ -1032,8 +1032,15 @@
                 : (r.ens_grade === 'Medium'
                   ? 'background:#fef3c7;color:#b45309;border:1px solid #fde68a;'
                   : 'background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;');
-              const gShort = r.ens_grade === 'High' ? 'High' : (r.ens_grade === 'Medium' ? 'Med' : 'DFT!');
-              ensSubHtml = `<div style="display:flex;align-items:center;gap:4px;margin-top:2px;flex-wrap:wrap;"><span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#64748b;">[${Number(r.ens_min).toFixed(2)}–${Number(r.ens_max).toFixed(2)}]</span><span style="font-size:0.62rem;font-weight:700;padding:0 5px;border-radius:999px;${gStyle}" title="4-uMLIP UQ 신뢰도 (σ_BDE=${r.ens_sigma_bde} kcal/mol)">${gShort}</span></div>`;
+              const gShort = r.ens_grade === 'High'
+                ? 'Confidence: High'
+                : (r.ens_grade === 'Medium' ? 'Confidence: Med' : 'Confidence: Low');
+              const gTip = r.ens_grade === 'High'
+                ? `4-uMLIP 앙상블 신뢰도 높음 (σ_BDE = ${r.ens_sigma_bde} kcal/mol < 5.0)`
+                : (r.ens_grade === 'Medium'
+                  ? `4-uMLIP 앙상블 신뢰도 보통 (σ_BDE = ${r.ens_sigma_bde} kcal/mol)`
+                  : `4-uMLIP 앙상블 신뢰도 낮음 — 정밀 DFT 검증 권장 (σ_BDE = ${r.ens_sigma_bde} kcal/mol ≥ 12.0)`);
+              ensSubHtml = `<div style="display:flex;align-items:center;gap:4px;margin-top:2px;flex-wrap:wrap;"><span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#64748b;">[${Number(r.ens_min).toFixed(2)}–${Number(r.ens_max).toFixed(2)}]</span><span style="font-size:0.62rem;font-weight:700;padding:0 5px;border-radius:999px;${gStyle}" title="${gTip}">${gShort}</span></div>`;
             }
             let verdictBadge = '<span class="db-mini-pill" style="background:#f1f5f9;color:#475569;border-color:#cbd5e1;">참고 DB</span>';
             if (r.sapis_pass === true) {
@@ -1044,6 +1051,19 @@
             const srcTxt = escapeHtmlStr(r.card_source || r.db_label || '-');
             const riskTxt = escapeHtmlStr(r.card_risk || '-');
             const riskColor = (r.sapis_pass === false) ? '#b91c1c' : ((r.sapis_pass === true) ? '#15803d' : '#475569');
+
+            let tdecCardHtml = '';
+            if (r.t_dec) {
+              const tdRange = (r.t_dec.min_c != null && r.t_dec.max_c != null)
+                ? `${r.t_dec.min_c}–${r.t_dec.max_c} °C`
+                : escapeHtmlStr(r.t_dec.display || '-');
+              const tdTech = escapeHtmlStr((r.t_dec.cond && r.t_dec.cond.technique) || '');
+              const tdPath = escapeHtmlStr((r.t_dec.mech && r.t_dec.mech.primary_pathway) || '');
+              tdecCardHtml = `<div style="grid-column:1 / -1; border-top:1px dashed #cbd5e1; padding-top:5px; display:flex; align-items:flex-start; gap:6px; flex-wrap:wrap;" title="${tdTech} | ${tdPath}">
+                <span style="background:#ccfbf1;color:#0f766e;border:1px solid #5eead4;font-size:0.64rem;font-weight:700;padding:1px 6px;border-radius:999px;white-space:nowrap;font-family:'JetBrains Mono',monospace;">T<sub>dec</sub>: ${tdRange}</span>
+                <span style="font-size:0.68rem;color:#334155;flex:1;min-width:120px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">${tdPath}</span>
+              </div>`;
+            }
 
             const uniformSummaryHtml = `<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; font-size:0.74rem; margin-top:4px;">
               <div>
@@ -1063,6 +1083,7 @@
                 <div style="color:#64748b; font-size:0.67rem;">${r.sapis_pass === false ? '불가 원인 / 위험성' : '위험성'}</div>
                 <div style="font-weight:600; color:${riskColor}; margin-top:1px; line-height:1.4; word-break:keep-all;" title="${riskTxt}">${riskTxt}</div>
               </div>
+              ${tdecCardHtml}
             </div>`;
 
             let subLine = escapeHtmlStr(r.chemical_name);
@@ -1231,7 +1252,56 @@
       if (r.tmc_sa_phys != null) addRow('Phase 2 Analytical Verdict', `SAPIS (7net): <strong>${r.tmc_sa_phys}</strong>${r.tmc_sa_no3d != null ? ' (ETKDG No-3D: ' + r.tmc_sa_no3d + ')' : ''} | Flag: <code>${escapeHtmlStr(r.domain_flag)}</code> | Pass: <strong>${r.phase2_pass}</strong>`);
       if (r.ens_n_models >= 2) {
         const pmStr = Object.entries(r.ens_per_model || {}).map(([k, v]) => `${escapeHtmlStr(k)}: <strong>${Number(v).toFixed(2)}</strong>`).join(' | ');
-        addRow('4-uMLIP Ensemble (UQ)', `Median SAPIS: <strong>${Number(r.ens_sapis).toFixed(2)}</strong> [${Number(r.ens_min).toFixed(2)} ~ ${Number(r.ens_max).toFixed(2)}] | Confidence: <strong>${escapeHtmlStr(r.ens_grade)}</strong> (&sigma;<sub>BDE</sub> = ${r.ens_sigma_bde} kcal/mol, IQR = ${r.ens_iqr_bde} kcal/mol)<br><span style="font-size:0.76rem;color:#475569;">${pmStr}</span>`);
+        const gLabel = r.ens_grade === 'High' ? 'High' : (r.ens_grade === 'Medium' ? 'Med' : 'Low (DFT 검증 권장)');
+        addRow('4-uMLIP Ensemble (UQ)', `Median SAPIS: <strong>${Number(r.ens_sapis).toFixed(2)}</strong> [${Number(r.ens_min).toFixed(2)} ~ ${Number(r.ens_max).toFixed(2)}] | Confidence: <strong>${gLabel}</strong> (&sigma;<sub>BDE</sub> = ${r.ens_sigma_bde} kcal/mol, IQR = ${r.ens_iqr_bde} kcal/mol)<br><span style="font-size:0.76rem;color:#475569;">${pmStr}</span>`);
+      }
+      if (r.t_dec) {
+        const td = r.t_dec;
+        const c = td.cond || {};
+        const ea = td.ea || {};
+        const m = td.mech || {};
+        const dtypePill = td.data_type === 'direct_thermal_analysis'
+          ? '<span style="background:#ccfbf1;color:#0f766e;border:1px solid #5eead4;padding:1px 6px;border-radius:999px;font-size:0.7rem;font-weight:700;">직접 열분석 / 열분해</span>'
+          : '<span style="background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;padding:1px 6px;border-radius:999px;font-size:0.7rem;font-weight:700;">ALD 열창 / DFT</span>';
+        addRow(
+          'Thermal Decomp. (T_dec)',
+          `<strong style="color:#0f766e;">${escapeHtmlStr(td.display || '-')}</strong> ${dtypePill}<br><span style="font-size:0.76rem;color:#475569;">판정 기준: ${escapeHtmlStr(td.metric || '-')}</span>`
+        );
+        addRow(
+          '열측정 조건 (Conditions)',
+          `<div style="font-size:0.78rem;line-height:1.55;">
+            &bull; <strong>분석 기법:</strong> ${escapeHtmlStr(c.technique || '-')}<br>
+            &bull; <strong>승온 속도:</strong> ${escapeHtmlStr(c.heating_rate || '-')}<br>
+            &bull; <strong>분위기 / 압력:</strong> ${escapeHtmlStr(c.atmosphere_pressure || '-')}<br>
+            &bull; <strong>용기 / 표면:</strong> ${escapeHtmlStr(c.container_surface || '-')}<br>
+            &bull; <strong>분해 영역:</strong> ${escapeHtmlStr(c.phase_regime || '-')}
+          </div>`
+        );
+        if (ea.ea_kcal_mol || ea.ea_kj_mol) {
+          addRow(
+            '활성화 에너지 (E_a)',
+            `<strong>${escapeHtmlStr(ea.ea_kcal_mol || '-')} kcal/mol</strong> (${escapeHtmlStr(ea.ea_kj_mol || '-')} kJ/mol)<br><span style="font-size:0.76rem;color:#475569;">산출 방법: ${escapeHtmlStr(ea.method || '-')}</span>`
+          );
+        }
+        const bypStr = (m.volatile_byproducts || []).map(b => `<code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:0.74rem;">${escapeHtmlStr(b)}</code>`).join(' ');
+        addRow(
+          '분자 분해 메커니즘',
+          `<div style="font-size:0.78rem;line-height:1.55;">
+            &bull; <strong>주 경로:</strong> ${escapeHtmlStr(m.primary_pathway || '-')}<br>
+            &bull; <strong>반응식:</strong> <code style="background:#f8fafc;border:1px solid #e2e8f0;padding:1px 6px;border-radius:4px;font-size:0.74rem;color:#0f172a;">${escapeHtmlStr(m.reaction_equation || '-')}</code><br>
+            &bull; <strong>속도 결정 단계(RDS):</strong> ${escapeHtmlStr(m.rate_determining_step || '-')}<br>
+            &bull; <strong>휘발성 부산물:</strong> ${bypStr || '-'}<br>
+            &bull; <strong>고체 잔류물:</strong> ${escapeHtmlStr(m.solid_residue || '-')}
+          </div>`
+        );
+        if (td.refs && td.refs.length) {
+          const refHtml = td.refs.map(rf =>
+            rf.doi
+              ? `<a href="https://doi.org/${escapeHtmlStr(rf.doi)}" target="_blank" style="color:#0284c7;">${escapeHtmlStr(rf.citation)} (DOI: ${escapeHtmlStr(rf.doi)})</a>`
+              : escapeHtmlStr(rf.citation)
+          ).join('<br>');
+          addRow('T_dec 문헌 출처', `<div style="font-size:0.76rem;line-height:1.5;">${refHtml}</div>`);
+        }
       }
       if (r.doi) addRow('Reference DOI', `<a href="https://doi.org/${escapeHtmlStr(r.doi)}" target="_blank">${escapeHtmlStr(r.doi)}</a>`);
 

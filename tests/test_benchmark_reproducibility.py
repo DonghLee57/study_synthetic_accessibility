@@ -1281,6 +1281,33 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertFalse(res_agree["dft_verification_flag"])
         self.assertLessEqual(res_agree["sigma_bde_kcal_mol"], 5.0)
 
+    def test_28_thermal_decomposition_db_integrity(self):
+        """Verify experimental T_dec database schema, conditions, molecular mechanisms, and DB linkage."""
+        tdec_path = os.path.join(PROJECT_ROOT, "database", "external", "thermal_decomposition_db.json")
+        self.assertTrue(os.path.exists(tdec_path), "thermal_decomposition_db.json missing")
+        with open(tdec_path, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        recs = data.get("records", {})
+        self.assertGreaterEqual(len(recs), 30)
+
+        ens_path = os.path.join(PROJECT_ROOT, "database", "external", "umlip_ensemble_198.json")
+        with open(ens_path, "r", encoding="utf-8") as fh:
+            valid_ids = set(json.load(fh).get("records", {}).keys())
+
+        for rid, rec in recs.items():
+            self.assertIn(rid, valid_ids, f"T_dec record ID {rid} not found in 198-molecule DB")
+            self.assertLessEqual(rec["t_dec_c_min"], rec["t_dec_c_max"])
+            cond = rec.get("measurement_conditions") or {}
+            for req_c in ("technique", "heating_rate", "atmosphere_pressure", "container_surface"):
+                self.assertTrue(str(cond.get(req_c, "")).strip(), f"{rid} missing condition {req_c}")
+            mech = rec.get("molecular_mechanism") or {}
+            for req_m in ("primary_pathway", "reaction_equation", "rate_determining_step"):
+                self.assertTrue(str(mech.get(req_m, "")).strip(), f"{rid} missing mechanism {req_m}")
+            self.assertGreaterEqual(len(mech.get("volatile_byproducts") or []), 1)
+            refs = rec.get("references") or []
+            self.assertGreaterEqual(len(refs), 1, f"{rid} missing literature reference")
+            self.assertTrue(any("10." in str(rf.get("doi", "")) for rf in refs), f"{rid} missing DOI")
+
 
 if __name__ == "__main__":
     unittest.main()
