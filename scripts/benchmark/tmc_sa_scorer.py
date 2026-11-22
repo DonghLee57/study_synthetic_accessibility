@@ -593,6 +593,7 @@ def compute_ensemble_sapis_metrics(
     scores_list = list(per_model_sapis.values())
     sapis_min = round(min(scores_list), 3) if scores_list else sapis_med
     sapis_max = round(max(scores_list), 3) if scores_list else sapis_med
+    sapis_spread = round(sapis_max - sapis_min, 3)
     sigma_sapis = round(float(np.std(scores_list)), 3) if len(scores_list) >= 2 else 0.0
 
     if len(bdes) >= 2:
@@ -603,21 +604,31 @@ def compute_ensemble_sapis_metrics(
         sigma_bde = 0.0
         iqr_bde = 0.0
 
-    if sigma_bde <= sigma_high_kcal:
+    n_m = len(scores_list)
+    n_pass = sum(1 for v in scores_list if v <= 4.0)
+    n_agree = max(n_pass, n_m - n_pass)
+
+    # Decision-aware 3-tier confidence grading:
+    # - High: unanimous verdict (N_agree == M) AND tight score spread (delta_SAPIS <= 0.30)
+    # - Low (DFT Flag): split verdict (N_agree <= M // 2, e.g. 2:2 Pass vs Fail)
+    # - Medium: majority consensus (e.g. 3/4 with 1-model outlier) OR unanimous with delta_SAPIS > 0.30
+    if n_m >= 2 and n_agree == n_m and sapis_spread <= 0.30:
         conf_grade = "High"
         dft_flag = False
-    elif sigma_bde <= sigma_med_kcal:
-        conf_grade = "Medium"
-        dft_flag = False
-    else:
+    elif n_m >= 2 and n_agree <= (n_m // 2):
         conf_grade = "Low (DFT Flag)"
         dft_flag = True
+    else:
+        conf_grade = "Medium"
+        dft_flag = False
 
     return {
         "n_models": len(model_metrics),
         "sapis_median": sapis_med,
         "sapis_min": sapis_min,
         "sapis_max": sapis_max,
+        "sapis_spread": sapis_spread,
+        "verdict_agreement": f"{n_agree}/{n_m}" if n_m else "0/0",
         "sigma_sapis": sigma_sapis,
         "per_model_sapis": per_model_sapis,
         "bde_min_median_kcal_mol": round(bde_med, 3) if bde_med is not None else None,

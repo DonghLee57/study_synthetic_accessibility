@@ -49,34 +49,34 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>1. 기본 도메인 카탈로그</strong></td>
+                  <td><strong>1. 원본 데이터 수집 &mdash; 기본 카탈로그</strong><br><span style="font-size:0.75rem; color:#64748b;">(프리커서 카탈로그 &middot; 선택적 증착 인히비터 &middot; 합성 불가 대조군 &middot; 출발 시약 및 합성 반응)</span></td>
                   <td style="text-align:center;"><strong>304건</strong></td>
-                  <td>프리커서 마스터 카탈로그 <strong>205종</strong>(핵심 검증셋 27 + AtomicLimits 93 + 확장 85), 인히비터 <strong>18종</strong>, 출발 시약 <strong>29종</strong>(이중역할 10종 포함), 합성 반응 <strong>12건</strong>, Negative Control <strong>40종</strong></td>
-                  <td>기본 문헌 데이터베이스. 시약 29종·반응 12건은 Leakage-Free 사전 구축 및 반응 에너지 검증에만 사용(분류 평가셋 제외)</td>
+                  <td>프리커서 카탈로그 <strong>205종</strong>(핵심 검증셋 27 + AtomicLimits 93 + 확장 85), 선택적 증착 인히비터 <strong>18종</strong>, 합성 불가 대조군 <strong>40종</strong>, 출발 시약 및 합성 반응 <strong>41건</strong>(시약 29종 + 반응 12건)</td>
+                  <td>기본 문헌 데이터베이스. 시약 29종·반응 12건은 데이터 누수 없는(Leakage-Free) 사전 구축 및 반응 에너지 검증에만 사용하며 분류 평가셋에서 제외</td>
                 </tr>
                 <tr style="background:#f8fafc;">
-                  <td><strong>2. 통합 분류 평가셋 (불변 기준)</strong><br><span style="font-size:0.75rem; color:#64748b;">(SMILES &amp; 화학식 정합성 통과)</span></td>
-                  <td style="text-align:center;"><strong>160종</strong><br><span style="font-size:0.74rem; color:#059669;">(120 Pos : 40 Neg)</span></td>
-                  <td><strong>Positive 120종</strong> = 프리커서 <strong>102종</strong>(핵심 검증셋 27 + 확장 원소 <code>Ir/Rh/As/Ga/In/Ru</code> 75) + AS-ALD 인히비터 <strong>18종</strong><br><strong>Negative Control 40종</strong> = 기본 대조군 10 + 6대 메커니즘 층화 30</td>
-                  <td>SAPIS + 배위 판정 기준 전수 추론(160종), 지도학습 CV-5 및 LOFMO(160종), <code>OneClassSVM_RBF</code> 학습(Positive 120종만 사용)</td>
+                  <td><strong>2. 통합 분류 평가셋</strong><br><span style="font-size:0.75rem; color:#64748b;">(합성 가능 양성군 120 + 합성 불가 대조군 40)</span></td>
+                  <td style="text-align:center;"><strong>160종</strong><br><span style="font-size:0.74rem; color:#059669;">(양성 120 : 대조 40)</span></td>
+                  <td><strong>합성 가능 양성군 120종</strong> = 프리커서 <strong>102종</strong>(핵심 27 + 확장 원소 <code>Ir/Rh/As/Ga/In/Ru</code> 75) + 선택적 증착 인히비터 <strong>18종</strong><br><strong>합성 불가 대조군 40종</strong> = 기본 대조군 10 + 6대 메커니즘 층화 30</td>
+                  <td>SAPIS 및 배위 판정 기준 전수 추론(160종), 교차검증(CV-5) 및 미지 금속군 외삽(LOFMO) 평가, <code>OneClassSVM_RBF</code> 학습(양성군 120종만 사용)</td>
                 </tr>
                 <tr>
-                  <td><strong>3. SevenNet 물리 이완셋</strong><br><span style="font-size:0.75rem; color:#64748b;">(LBFGS 3D &middot; BDE &middot; E<sub>coh</sub> &middot; &Delta;E<sub>dimer</sub>)</span></td>
-                  <td style="text-align:center;"><strong>160종 (100%)</strong><br><span style="font-size:0.74rem; color:#0284c7;">(120 Pos : 40 Neg)</span></td>
-                  <td>통합 평가셋 <strong>160종 전수</strong>(핵심 코어 55종 + 확장 원소 프리커서 75종 + 확장 Negative Control 30종, 단량체·이합체·해리 BDE 완비)</td>
-                  <td>전수 SevenNet LBFGS 양자역학 대리 계산 완비(UFF 보정 ETKDGv3 초기 배위 구조 병용), 입체 차폐(<code>%V<sub>bur</sub></code>, <code>%V<sub>bur</sub><sup>D2</sup></code>, <code>&theta;<sub>max</sub><sup>void</sup></code>) 및 표준 생성에너지(Descriptor 4) AUROC 비교 평가(160종·130종·55종)</td>
+                  <td><strong>3. 벤치마크 3D 최적화</strong><br><span style="font-size:0.75rem; color:#64748b;">(SevenNet-0 LBFGS 3D &middot; 4종 uMLIP 앙상블)</span></td>
+                  <td style="text-align:center;"><strong>160종 (100%)</strong><br><span style="font-size:0.74rem; color:#0284c7;">(양성 120 : 대조 40)</span></td>
+                  <td>통합 분류 평가셋 <strong>160종 전수</strong>에 대해 SevenNet-0 3D 구조 최적화 및 4종 uMLIP 앙상블(<code>SevenNet-0</code> &middot; <code>MACE-OMol</code> &middot; <code>MACE-MP-0</code> &middot; <code>ORB-v3-omol</code>) 단일점 물리량(BDE, E<sub>coh</sub>, &Delta;E<sub>dimer</sub>) 완비</td>
+                  <td>입체 차폐(<code>%V<sub>bur</sub></code>, <code>%V<sub>bur</sub><sup>D2</sup></code>, <code>&theta;<sub>max</sub><sup>void</sup></code>), 표준 생성에너지 및 4종 앙상블 신뢰도(Confidence) 평가</td>
                 </tr>
                 <tr style="background:#f8fafc;">
                   <td><strong>4. 참조·사전 전용 데이터</strong><br><span style="font-size:0.75rem; color:#64748b;">(분류 평가셋 제외)</span></td>
                   <td style="text-align:center;"><strong>144건</strong></td>
-                  <td>AtomicLimits 참조 목록 <strong>93건</strong>(특허 SMILES 역충전 14건 포함) + Meta 메타정보 <strong>10건</strong> + 상용 시약 사전 <strong>29종</strong> + 합성 반응 검증 <strong>12건</strong></td>
+                  <td>AtomicLimits 참조 목록 <strong>93건</strong>(특허 SMILES 역충전 14건 포함) + 메타정보 <strong>10건</strong> + 출발 시약 사전 <strong>29종</strong> + 합성 반응 검증 <strong>12건</strong></td>
                   <td><code>BR-SAScore</code> 도메인 빌딩블록 사전 확장 및 문헌 반응 에너지(&Delta;E<sub>rxn</sub>) 참조 전용으로 활용하며 분류 성능 집계에서 엄격히 분리</td>
                 </tr>
                 <tr style="background:#fffbeb;">
-                  <td><strong>5. 특허·문헌 확장 스크리닝 DB</strong><br><span style="font-size:0.75rem; color:#92400e;">(KR/JP/CN/US/TW + 8 신규 원소)</span></td>
-                  <td style="text-align:center;"><strong>+38건</strong><br><span style="font-size:0.74rem; color:#059669;">(7net 38/38 · 0 FB)</span></td>
-                  <td><strong>프리커서 28종 + AS-ALD 인히비터 10종</strong>(원소 <code>16 &rarr; 24</code>종 확장). AtomicLimits 무-SMILES <code>14</code>종 역충전 + 순신규 <code>24</code>종 등록, <strong>전수 <code>SevenNet-0</code> LBFGS 3D 이완&middot;BDE&middot;E<sub>coh</sub>&middot;&Delta;E<sub>dimer</sub>&middot;&Delta;E<sub>f</sub>/v<sub>M</sub> 완비</strong></td>
-                  <td>DB 탐색기 정준 중복 제거(이중역할 시약 <code>10</code>종 &middot; <code>Ga</code> 이형 <code>2</code>쌍 &middot; AtomicLimits <code>14</code>종 병합 &rarr; <strong>총 <code>286</code>개 유일 엔티티</strong>) 및 7net <code>PDMAT/Ge</code> 입체 구제 실측</td>
+                  <td><strong>5. 특허·문헌 확장 후보 &rarr; 확장 후보 SAPIS 판정</strong><br><span style="font-size:0.75rem; color:#92400e;">(특허·문헌 스크리닝셋 &rarr; 확장 후보 3D 최적화)</span></td>
+                  <td style="text-align:center;"><strong>+38건</strong><br><span style="font-size:0.74rem; color:#059669;">(3D 최적화 38/38)</span></td>
+                  <td><strong>프리커서 28종 + 선택적 증착 인히비터 10종</strong>(중심 원소 <code>16 &rarr; 24</code>종 확장). AtomicLimits 미수록 SMILES <code>14</code>종 역충전 + 순신규 <code>24</code>종 등록, 전수 3D 최적화 및 4종 uMLIP 앙상블 완비</td>
+                  <td>DB 탐색기 정준 중복 제거(이중역할 시약 <code>10</code>종 &middot; <code>Ga</code> 이형 <code>2</code>쌍 &middot; AtomicLimits <code>14</code>종 병합 &rarr; <strong>총 <code>286</code>개 유일 엔티티</strong>) 및 확장 스크리닝 검증</td>
                 </tr>
               </tbody>
             </table>

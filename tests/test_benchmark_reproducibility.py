@@ -1242,7 +1242,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             "repo_tmc_sa_scorer_ens",
         )
 
-        # Case 1: 1-model underbinding outlier (SevenNet-0 = 0.0, 3 OMol25 models = 52-56 kcal/mol)
+        # Case 1: 1-model underbinding outlier (3/4 majority Pass -> Medium confidence, median rejects outlier)
         res_outlier = scorer_mod.compute_ensemble_sapis_metrics(
             base_sa=1.009,
             vbur_val=58.2,
@@ -1257,13 +1257,13 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             },
         )
         self.assertEqual(res_outlier["n_models"], 4)
-        # Median rejects the 1-model crystal underbinding outlier -> Pass (<= 1.1) while SevenNet-0 alone is ~4.5
         self.assertLess(res_outlier["sapis_median"], 1.5)
         self.assertGreater(res_outlier["sapis_max"], 4.0)
-        self.assertEqual(res_outlier["confidence_grade"], "Low (DFT Flag)")
-        self.assertTrue(res_outlier["dft_verification_flag"])
+        self.assertEqual(res_outlier["verdict_agreement"], "3/4")
+        self.assertEqual(res_outlier["confidence_grade"], "Medium")
+        self.assertFalse(res_outlier["dft_verification_flag"])
 
-        # Case 2: 4-model consensus -> High confidence, no DFT flag
+        # Case 2: 4/4 unanimous consensus with large raw BDE functional offset (68 vs 95 kcal/mol) -> still High!
         res_agree = scorer_mod.compute_ensemble_sapis_metrics(
             base_sa=1.0,
             vbur_val=55.0,
@@ -1272,14 +1272,33 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             is_d_block=True,
             model_metrics={
                 "SevenNet-0": {"bde_min": 68.0, "e_coh": 4.2, "de_dimer": -0.5},
-                "MACE-OMol": {"bde_min": 70.5, "e_coh": 4.3, "de_dimer": -0.4},
-                "ORB-v3-omol": {"bde_min": 69.2, "e_coh": 4.25, "de_dimer": -0.6},
-                "UMA-S-omol": {"bde_min": 71.0, "e_coh": 4.35, "de_dimer": -0.3},
+                "MACE-OMol": {"bde_min": 95.0, "e_coh": 4.3, "de_dimer": -0.4},
+                "ORB-v3-omol": {"bde_min": 93.0, "e_coh": 4.25, "de_dimer": -0.6},
+                "UMA-S-omol": {"bde_min": 70.0, "e_coh": 4.35, "de_dimer": -0.3},
             },
         )
+        self.assertEqual(res_agree["verdict_agreement"], "4/4")
         self.assertEqual(res_agree["confidence_grade"], "High")
         self.assertFalse(res_agree["dft_verification_flag"])
-        self.assertLessEqual(res_agree["sigma_bde_kcal_mol"], 5.0)
+        self.assertLessEqual(res_agree["sapis_spread"], 0.30)
+
+        # Case 3: 2:2 split verdict (2 Pass vs 2 Fail) -> Low (DFT Flag)
+        res_split = scorer_mod.compute_ensemble_sapis_metrics(
+            base_sa=1.0,
+            vbur_val=55.0,
+            v_min=44.0,
+            is_coord_center=True,
+            is_d_block=True,
+            model_metrics={
+                "SevenNet-0": {"bde_min": 5.0, "e_coh": 4.2, "de_dimer": -0.5},
+                "MACE-MP-0": {"bde_min": 6.0, "e_coh": 4.2, "de_dimer": -0.5},
+                "MACE-OMol": {"bde_min": 65.0, "e_coh": 4.3, "de_dimer": -0.4},
+                "ORB-v3-omol": {"bde_min": 68.0, "e_coh": 4.3, "de_dimer": -0.4},
+            },
+        )
+        self.assertEqual(res_split["verdict_agreement"], "2/4")
+        self.assertEqual(res_split["confidence_grade"], "Low (DFT Flag)")
+        self.assertTrue(res_split["dft_verification_flag"])
 
     def test_28_thermal_decomposition_db_integrity(self):
         """Verify experimental T_dec database schema, conditions, molecular mechanisms, and DB linkage."""

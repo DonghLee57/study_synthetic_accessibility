@@ -696,6 +696,8 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             rec["ens_iqr_bde"] = round(float(ens_rec["iqr_bde_kcal_mol"]), 1)
             rec["ens_grade"] = str(ens_rec["confidence_grade"])
             rec["ens_dft_flag"] = bool(ens_rec["dft_verification_flag"])
+            rec["ens_agree"] = str(ens_rec.get("verdict_agreement") or "")
+            rec["ens_spread"] = round(float(ens_rec.get("sapis_spread", float(ens_rec["sapis_max"]) - float(ens_rec["sapis_min"]))), 2)
             rec["ens_per_model"] = ens_rec.get("per_model_sapis") or {}
             rec["ens_bde_med"] = ens_rec.get("bde_min_median_kcal_mol")
             rec["ens_n_models"] = int(ens_rec["n_models"])
@@ -831,78 +833,70 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         n_etk_pos = n_pos - n_svn_pos
         n_etk_neg = n_neg - n_svn_neg
 
-        scale = 0.72
+        scale = 0.70
         bar_w = 14.0
-        x0, x1, x2, x3 = 198.0, 412.0, 602.0, 772.0
+        x0, x1, x2, x3 = 205.0, 415.0, 605.0, 760.0
 
-        def _layout(items, y_start=54.0, gap=12.0):
+        def _layout(items, y_start=56.0, gap=14.0):
             pos = {}
             y = y_start
-            for key, val, color, title, sub in items:
-                h = val * scale
-                pos[key] = {"x": 0.0, "y": y, "h": h, "val": val, "color": color, "title": title, "sub": sub, "in_off": y, "out_off": y}
+            for key, val, color, title in items:
+                h = max(16.0, val * scale)
+                pos[key] = {"x": 0.0, "y": y, "h": h, "val": val, "color": color, "title": title, "in_off": y, "out_off": y}
                 y += h + gap
             return pos
 
         c0 = _layout([
-            ("cat_prec", n_prec_cat, "#06b6d4", "Precursor Catalog", "Core 27 · AL 93 · Exp 85"),
-            ("cat_inh", n_inhib, "#0284c7", "AS-ALD Inhibitors", "Baseline SMILES 18/18"),
-            ("cat_pat", n_pat_tot, "#f59e0b", "Patent & Lit Expansion", f"+{n_pat_prec} Prec · +{n_pat_inh} Inh ({n_backfilled_al} AL-BF + {n_net_new_patent} New)"),
-            ("cat_neg", n_neg, "#ef4444", "Negative Controls", "Core 10 · 6-Mech 30"),
-            ("cat_rr", n_reag_rxn, "#64748b", "Reagents & Reactions", f"{len(bb_db)} Reagents (10 Dual-Role) + {len(rxn_db)} Rxns"),
-        ], y_start=54.0, gap=11.0)
+            ("cat_prec", n_prec_cat, "#06b6d4", "프리커서 카탈로그"),
+            ("cat_inh", n_inhib, "#0284c7", "선택적 증착 인히비터"),
+            ("cat_pat", n_pat_tot, "#f59e0b", "특허·문헌 확장 후보"),
+            ("cat_neg", n_neg, "#ef4444", "합성 불가 대조군"),
+            ("cat_rr", n_reag_rxn, "#64748b", "출발 시약 및 합성 반응"),
+        ], y_start=56.0, gap=12.0)
         for d in c0.values():
             d["x"] = x0
 
-        y_eval = 54.0
-        y_pat1 = y_eval + n_eval * scale + 20.0
+        y_eval = 56.0
+        y_pat1 = y_eval + n_eval * scale + 24.0
         y_ref1 = y_pat1 + n_pat_tot * scale + 28.0
         c1 = {
-            "eval_160": {"x": x1, "y": y_eval, "h": n_eval * scale, "val": n_eval, "color": "#0f766e", "title": "Pinned Benchmark", "sub": f"SMILES Valid ({n_pos}:{n_neg})", "in_off": y_eval, "out_off": y_eval},
-            "pat_38": {"x": x1, "y": y_pat1, "h": n_pat_tot * scale, "val": n_pat_tot, "color": "#d97706", "title": "Patent Screening", "sub": f"+8 Metals (16→{pat_s.get('n_merged_elements', 24)}) · Deduplicated", "in_off": y_pat1, "out_off": y_pat1},
-            "ref_144": {"x": x1, "y": y_ref1, "h": n_excl * scale, "val": n_excl, "color": "#94a3b8", "title": "Reference / Dict Only", "sub": f"AL {n_prec_ref - 10} (incl. {n_backfilled_al} BF) · Meta 10 · Dict {len(bb_db)} · Rxn {len(rxn_db)}", "in_off": y_ref1, "out_off": y_ref1},
+            "eval_160": {"x": x1, "y": y_eval, "h": n_eval * scale, "val": n_eval, "color": "#0f766e", "title": "통합 분류 평가셋", "in_off": y_eval, "out_off": y_eval},
+            "pat_38": {"x": x1, "y": y_pat1, "h": n_pat_tot * scale, "val": n_pat_tot, "color": "#d97706", "title": "특허·문헌 스크리닝셋", "in_off": y_pat1, "out_off": y_pat1},
+            "ref_144": {"x": x1, "y": y_ref1, "h": n_excl * scale, "val": n_excl, "color": "#94a3b8", "title": "참조·사전 전용 데이터", "in_off": y_ref1, "out_off": y_ref1},
         }
 
-        c2_items = [("svn", n_svn, "#10b981", "SevenNet LBFGS 3D", "Core 55 · Exp 75 · Neg 30 · 100%")]
+        c2_items = [("svn", n_svn, "#10b981", "벤치마크 3D 최적화")]
         if n_etk_base > 0:
-            c2_items.append(("etk_base", n_etk_base, "#8b5cf6", "ETKDGv3 Guarded", "Benchmark Subset"))
-        if n_pat_7n == n_pat_tot and n_pat_tot > 0:
-            c2_items.append(("etk_pat", n_pat_tot, "#059669", "Exp SevenNet LBFGS", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 0 Fallback"))
-        else:
-            c2_items.append(("etk_pat", n_pat_tot, "#f59e0b", "ETKDGv3 3D + SAPIS", f"{n_pat_prec} Prec + {n_pat_inh} Inh · 100% Embed"))
-        c2 = _layout(c2_items, y_start=54.0, gap=22.0)
+            c2_items.append(("etk_base", n_etk_base, "#8b5cf6", "초기 3D 구조 생성"))
+        c2_items.append(("etk_pat", n_pat_tot, "#059669" if (n_pat_7n == n_pat_tot and n_pat_tot > 0) else "#f59e0b", "확장 후보 3D 최적화"))
+        c2 = _layout(c2_items, y_start=56.0, gap=24.0)
         for d in c2.values():
             d["x"] = x2
 
-        pat_out_sub = (
-            f"7net {n_pat_pass}/{n_pat_tot} Pass (PDMAT/Ge Rescued) · {n_pat_bnd} Diag"
-            if (n_pat_7n == n_pat_tot and n_pat_tot > 0)
-            else f"{n_pat_pass} Pass ({int(pat_s.get('n_precursors_pass', 0))}+{int(pat_s.get('n_inhibitors_pass', 0))}) · {n_pat_bnd} Boundary Flag"
-        )
         c3 = _layout([
-            ("pos_120", n_pos, "#16a34a", "Benchmark Positive", f"{n_prec_eval}+{n_inhib} · OCSVM · CV-5"),
-            ("neg_40", n_neg, "#dc2626", "Negative Control", "LOFMO Test · CV-5 · SAPIS"),
-            ("pat_out", n_pat_tot, "#0284c7", "Expansion 7net SAPIS", pat_out_sub),
-        ], y_start=54.0, gap=22.0)
+            ("pos_120", n_pos, "#16a34a", "합성 가능 양성군"),
+            ("neg_40", n_neg, "#dc2626", "합성 불가 대조군"),
+            ("pat_out", n_pat_tot, "#0284c7", "확장 후보 SAPIS 판정"),
+        ], y_start=56.0, gap=24.0)
         for d in c3.values():
             d["x"] = x3
 
         flows = [
-            (c0["cat_prec"], c1["eval_160"], n_prec_eval, "#06b6d4", f"Precursor Catalog -> Pinned Eval Set: {n_prec_eval} (27 Core + 75 Expanded)"),
-            (c0["cat_inh"], c1["eval_160"], n_inhib, "#0284c7", f"AS-ALD Inhibitors -> Pinned Eval Set: {n_inhib}"),
-            (c0["cat_neg"], c1["eval_160"], n_neg, "#ef4444", f"Negative Controls -> Pinned Eval Set: {n_neg} (10 Core + 30 Stratified)"),
-            (c0["cat_pat"], c1["pat_38"], n_pat_tot, "#f59e0b", f"KR/JP/CN/US/TW Patent & Lit Expansion -> SAPIS Screen & DB Backfill: {n_pat_tot} ({n_backfilled_al} AL Backfill + {n_net_new_patent} Net-New)"),
-            (c0["cat_prec"], c1["ref_144"], n_prec_ref, "#94a3b8", f"Precursor Catalog -> Reference Only: {n_prec_ref} (AtomicLimits + Meta 10; {n_backfilled_al} stubs SMILES-backfilled in DB Explorer)"),
-            (c0["cat_rr"], c1["ref_144"], n_reag_rxn, "#64748b", f"Reagents ({len(bb_db)}, 10 Dual-Role Merged in DB Search) + Reactions ({len(rxn_db)}) -> Dict / Ref: {n_reag_rxn}"),
-            (c1["eval_160"], c2["svn"], n_svn, "#10b981", f"Pinned Eval Set -> SevenNet LBFGS 3D: {n_svn} ({n_svn_pos} Pos + {n_svn_neg} Neg)"),
+            (c0["cat_prec"], c1["eval_160"], n_prec_eval, "#06b6d4", f"프리커서 카탈로그 → 통합 분류 평가셋: {n_prec_eval}종"),
+            (c0["cat_inh"], c1["eval_160"], n_inhib, "#0284c7", f"선택적 증착 인히비터 → 통합 분류 평가셋: {n_inhib}종"),
+            (c0["cat_neg"], c1["eval_160"], n_neg, "#ef4444", f"합성 불가 대조군 → 통합 분류 평가셋: {n_neg}종"),
+            (c0["cat_pat"], c1["pat_38"], n_pat_tot, "#f59e0b", f"특허·문헌 확장 후보 → 특허·문헌 스크리닝셋: {n_pat_tot}종"),
+            (c0["cat_prec"], c1["ref_144"], n_prec_ref, "#94a3b8", f"프리커서 카탈로그 → 참조·사전 전용 데이터: {n_prec_ref}건"),
+            (c0["cat_rr"], c1["ref_144"], n_reag_rxn, "#64748b", f"출발 시약 및 합성 반응 → 참조·사전 전용 데이터: {n_reag_rxn}건"),
+            (c1["eval_160"], c2["svn"], n_svn, "#10b981", f"통합 분류 평가셋 → 벤치마크 3D 최적화: {n_svn}종"),
         ]
         if n_etk_base > 0:
-            flows.append((c1["eval_160"], c2["etk_base"], n_etk_base, "#8b5cf6", f"Eval -> ETKDGv3: {n_etk_base}"))
+            flows.append((c1["eval_160"], c2["etk_base"], n_etk_base, "#8b5cf6", f"통합 분류 평가셋 → 초기 3D 구조 생성: {n_etk_base}종"))
         flows.extend([
-            (c1["pat_38"], c2["etk_pat"], n_pat_tot, "#059669" if n_pat_7n == n_pat_tot else "#f59e0b", f"Patent Expansion -> SevenNet-0 LBFGS 3D + BDE/Dimer/ΔEf: {n_pat_tot} (0 Fallbacks)"),
-            (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"SevenNet LBFGS -> Benchmark Positive: {n_svn_pos}"),
-            (c2["svn"], c3["neg_40"], n_svn_neg, "#059669", f"SevenNet LBFGS -> Negative Control Validation: {n_svn_neg}"),
-            (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"Expansion 7net SAPIS -> {n_pat_pass}/{n_pat_tot} Strict Pass (ETKDG {n_pat_no3d_pass}/{n_pat_tot}) + {n_pat_bnd} Boundary Diagnostics"),
+            (c1["pat_38"], c2["etk_pat"], n_pat_tot, "#059669" if n_pat_7n == n_pat_tot else "#f59e0b", f"특허·문헌 스크리닝셋 → 확장 후보 3D 최적화: {n_pat_tot}종"),
+            (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"벤치마크 3D 최적화 → 합성 가능 양성군: {n_svn_pos}종"),
+            (c2["svn"], c3["neg_40"], n_svn_neg, "#059669", f"벤치마크 3D 최적화 → 합성 불가 대조군: {n_svn_neg}종"),
+            (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"확장 후보 3D 최적화 → 확장 후보 SAPIS 판정: {n_pat_tot}종"),
         ])
 
         ribbon_svg = []
@@ -931,66 +925,60 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
         for d in c0.values():
             ym = d["y"] + d["h"] * 0.5
             nodes_svg.append(
-                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
-            )
-            nodes_svg.append(
-                f'<text x="{d["x"] - 8:.1f}" y="{ym - 1:.1f}" text-anchor="end" font-size="11" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
-                f'<text x="{d["x"] - 8:.1f}" y="{ym + 11:.1f}" text-anchor="end" font-size="9" fill="#64748b">{d["sub"]}</text>'
+                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]} ({d["val"]}건)</title></rect>'
+                f'<text x="{d["x"] - 10:.1f}" y="{ym + 4:.1f}" text-anchor="end" font-size="11.2" font-weight="700" fill="#0f172a">{d["title"]} ({d["val"]})</text>'
             )
 
         for k, d in c1.items():
             ym = d["y"] + d["h"] * 0.5
             nodes_svg.append(
-                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
+                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]} ({d["val"]}건)</title></rect>'
             )
             if k in {"eval_160", "pat_38"}:
-                bw = 158 if k == "pat_38" else 142
+                bw = 152 if k == "pat_38" else 136
                 bx = d["x"] + 7 - bw * 0.5
                 tcol = "#92400e" if k == "pat_38" else "#0f766e"
                 nodes_svg.append(
-                    f'<rect x="{bx:.1f}" y="{ym - 16:.1f}" width="{bw}" height="31" rx="5" fill="#ffffff" fill-opacity="0.93" stroke="#cbd5e1" stroke-width="0.8" />'
-                    f'<text x="{d["x"] + 7:.1f}" y="{ym - 2:.1f}" text-anchor="middle" font-size="10.8" font-weight="800" fill="{tcol}">{d["val"]} {d["title"]}</text>'
-                    f'<text x="{d["x"] + 7:.1f}" y="{ym + 10:.1f}" text-anchor="middle" font-size="8.6" fill="#475569">{d["sub"]}</text>'
+                    f'<rect x="{bx:.1f}" y="{ym - 12:.1f}" width="{bw}" height="24" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#cbd5e1" stroke-width="0.9" />'
+                    f'<text x="{d["x"] + 7:.1f}" y="{ym + 4:.1f}" text-anchor="middle" font-size="10.8" font-weight="700" fill="{tcol}">{d["title"]} ({d["val"]})</text>'
                 )
             else:
                 nodes_svg.append(
-                    f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym - 2:.1f}" text-anchor="start" font-size="11" font-weight="800" fill="#475569">{d["val"]} {d["title"]}</text>'
-                    f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym + 11:.1f}" text-anchor="start" font-size="9" fill="#64748b">{d["sub"]} (분류 제외)</text>'
+                    f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym + 4:.1f}" text-anchor="start" font-size="11.2" font-weight="700" fill="#475569">{d["title"]} ({d["val"]})</text>'
                 )
 
         for d in c2.values():
             ym = d["y"] + d["h"] * 0.5
+            bw = 146
+            bx = d["x"] + 7 - bw * 0.5
             nodes_svg.append(
-                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
-                f'<rect x="{d["x"] - 64:.1f}" y="{ym - 16:.1f}" width="142" height="31" rx="5" fill="#ffffff" fill-opacity="0.93" stroke="#cbd5e1" stroke-width="0.8" />'
-                f'<text x="{d["x"] + 7:.1f}" y="{ym - 2:.1f}" text-anchor="middle" font-size="10.6" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
-                f'<text x="{d["x"] + 7:.1f}" y="{ym + 10:.1f}" text-anchor="middle" font-size="8.6" fill="#475569">{d["sub"]}</text>'
+                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]} ({d["val"]}종)</title></rect>'
+                f'<rect x="{bx:.1f}" y="{ym - 12:.1f}" width="{bw}" height="24" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#cbd5e1" stroke-width="0.9" />'
+                f'<text x="{d["x"] + 7:.1f}" y="{ym + 4:.1f}" text-anchor="middle" font-size="10.8" font-weight="700" fill="#0f172a">{d["title"]} ({d["val"]})</text>'
             )
 
         for d in c3.values():
             ym = d["y"] + d["h"] * 0.5
             nodes_svg.append(
-                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]}: {d["val"]}</title></rect>'
-                f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym - 1:.1f}" text-anchor="start" font-size="11" font-weight="800" fill="#0f172a">{d["val"]} {d["title"]}</text>'
-                f'<text x="{d["x"] + bar_w + 8:.1f}" y="{ym + 11:.1f}" text-anchor="start" font-size="8.8" fill="#475569">{d["sub"]}</text>'
+                f'<rect x="{d["x"]:.1f}" y="{d["y"]:.1f}" width="{bar_w}" height="{d["h"]:.1f}" rx="2" fill="{d["color"]}"><title>{d["title"]} ({d["val"]}종)</title></rect>'
+                f'<text x="{d["x"] + bar_w + 10:.1f}" y="{ym + 4:.1f}" text-anchor="start" font-size="11.2" font-weight="700" fill="#0f172a">{d["title"]} ({d["val"]})</text>'
             )
 
         headers_svg = (
-            f'<text x="{x0 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0369a1">1. Curated Sources ({n_total_curated})</text>'
-            f'<text x="{x1 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#0f766e">2. Benchmark &amp; Patent Split ({n_total_curated})</text>'
-            f'<text x="{x2 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#059669">3. 3D Structure Engine ({n_eval + n_pat_tot})</text>'
-            f'<text x="{x3 + 7:.1f}" y="24" text-anchor="middle" font-size="11" font-weight="800" fill="#334155">4. Eval &amp; Screening ({n_eval + n_pat_tot})</text>'
-            f'<line x1="18" y1="36" x2="942" y2="36" stroke="#e2e8f0" stroke-width="1" />'
+            f'<text x="{x0 + 7:.1f}" y="25" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0369a1">1. 원본 데이터 수집 ({n_total_curated})</text>'
+            f'<text x="{x1 + 7:.1f}" y="25" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0f766e">2. 평가·스크리닝 분할 ({n_total_curated})</text>'
+            f'<text x="{x2 + 7:.1f}" y="25" text-anchor="middle" font-size="11.5" font-weight="800" fill="#059669">3. 3D 물리 구조 최적화 ({n_eval + n_pat_tot})</text>'
+            f'<text x="{x3 + 7:.1f}" y="25" text-anchor="middle" font-size="11.5" font-weight="800" fill="#334155">4. 최종 검증 및 판정 ({n_eval + n_pat_tot})</text>'
+            f'<line x1="18" y1="38" x2="942" y2="38" stroke="#e2e8f0" stroke-width="1" />'
         )
 
         return f"""
               <div style="margin-bottom:14px;">
-                <style>.sankey-flow {{ fill-opacity: 0.44; transition: fill-opacity 0.15s ease; cursor: pointer; }} .sankey-flow:hover {{ fill-opacity: 0.72; }}</style>
-                <svg viewBox="0 0 960 392" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+                <style>.sankey-flow {{ fill-opacity: 0.42; transition: fill-opacity 0.15s ease; cursor: pointer; }} .sankey-flow:hover {{ fill-opacity: 0.72; }}</style>
+                <svg viewBox="0 0 960 368" style="width:100%; height:auto; display:block; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
                   {headers_svg}
                   {''.join(ribbon_svg)}
                   {''.join(nodes_svg)}
-                  <text x="944" y="382" text-anchor="end" font-size="9.3" fill="#64748b">* Raw Curated {n_total_curated} ({n_eval + n_excl} Baseline + {n_pat_tot} Patent/Lit) &bull; DB Explorer Canonical Unique = {len(db_records)} ({n_merged_dual_role} Dual-Role Reagents &amp; {n_backfilled_al} AL Backfills Merged)</text>
                 </svg>
               </div>"""
 

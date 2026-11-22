@@ -143,16 +143,16 @@ def build_intro_html() -> str:
           </div>
           <p style="margin:0 0 8px 0; font-size:0.83rem; color:#1e293b; line-height:1.65;">
             단일 결정 학습 포텐셜(<code>SevenNet-0</code>)의 외삽 편차(예: 중성 <code>CO</code> 과소결합, 백금족 할라이드)를 제어하기 위해,
-            단일 이완 구조($\\mathbf{R}^*$) 위에서 <strong>4종 이종 uMLIP</strong>(<code>SevenNet-0</code> · <code>MACE-OMol</code> · <code>ORB-v3</code> · <code>FAIRChem UMA-S</code>)의
+            단일 이완 구조($\\mathbf{R}^*$) 위에서 <strong>4종 이종 uMLIP</strong>(<code>SevenNet-0</code> · <code>MACE-OMol</code> · <code>MACE-MP-0</code> · <code>ORB-v3-omol</code>)의
             단일점 물리량을 교차 평가하는 로버스트 앙상블 지표(<code>compute_ensemble_sapis_metrics()</code>)를 적용합니다.
           </p>
           <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:10px 14px; margin-bottom:8px; font-size:0.86rem; overflow-x:auto;">
-            $$\\widehat{\\mathrm{BDE}}_{\\min} = \\operatorname{median}_{m \\in \\{1..4\\}}\\!\\big(\\mathrm{BDE}_{\\min}^{(m)}\\big), \\qquad \\sigma_{\\mathrm{BDE}} = \\operatorname{Std}_{m}\\!\\big(\\mathrm{BDE}_{\\min}^{(m)}\\big), \\qquad \\mathrm{SAPIS} \\in \\big[\\mathrm{SAPIS}_{\\min},\\; \\mathrm{SAPIS}_{\\max}\\big]$$
+            $$\\widehat{\\mathrm{BDE}}_{\\min} = \\operatorname{median}_{m \\in \\{1..4\\}}\\!\\big(\\mathrm{BDE}_{\\min}^{(m)}\\big), \\qquad \\Delta\\mathrm{SAPIS} = \\mathrm{SAPIS}_{\\max} - \\mathrm{SAPIS}_{\\min}, \\qquad N_{\\mathrm{agree}} = \\max\\!\\big(\\#\\{\\mathrm{Pass}\\},\\; \\#\\{\\mathrm{Fail}\\}\\big)$$
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:8px; font-size:0.78rem;">
-            <span style="background:#dcfce7; color:#15803d; border:1px solid #86efac; padding:3px 9px; border-radius:999px; font-weight:700;">High Confidence: $\\sigma_{\\mathrm{BDE}} \\le 5.0\\,\\text{kcal/mol}$</span>
-            <span style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:3px 9px; border-radius:999px; font-weight:700;">Medium Confidence: $5.0 &lt; \\sigma_{\\mathrm{BDE}} \\le 12.0\\,\\text{kcal/mol}$</span>
-            <span style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:3px 9px; border-radius:999px; font-weight:700;">Low (DFT Flag): $\\sigma_{\\mathrm{BDE}} &gt; 12.0\\,\\text{kcal/mol}$ (스핀 편극 DFT 권고)</span>
+            <span style="background:#dcfce7; color:#15803d; border:1px solid #86efac; padding:3px 9px; border-radius:999px; font-weight:700;">Confidence: High ($N_{\\mathrm{agree}} = 4/4$ &amp; $\\Delta\\mathrm{SAPIS} \\le 0.30$)</span>
+            <span style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:3px 9px; border-radius:999px; font-weight:700;">Confidence: Med ($3/4$ 다수결 또는 $\\Delta\\mathrm{SAPIS} &gt; 0.30$)</span>
+            <span style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:3px 9px; border-radius:999px; font-weight:700;">Confidence: Low ($2/4$ 판정 분열 &middot; DFT 검증 권장)</span>
           </div>
         </div>
       </section>

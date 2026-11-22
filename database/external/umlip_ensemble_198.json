@@ -11,6 +11,12 @@
       "High": 21,
       "Medium": 75,
       "Low (DFT Flag)": 102
+    },
+    "confidence_scheme": "decision_aware_option_b (High: 4/4 & dSAPIS<=0.30; Low: 2:2 split; Med: otherwise)",
+    "confidence_distribution": {
+      "High": 102,
+      "Medium": 81,
+      "Low (DFT Flag)": 15
     }
   },
   "records": {
@@ -56,8 +62,10 @@
       "de_dimer_median_kcal_mol": -0.525,
       "sigma_bde_kcal_mol": 17.238,
       "iqr_bde_kcal_mol": 25.926,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.018,
+      "verdict_agreement": "4/4"
     },
     "PREC_SI_02": {
       "id": "PREC_SI_02",
@@ -101,8 +109,10 @@
       "de_dimer_median_kcal_mol": -0.225,
       "sigma_bde_kcal_mol": 12.497,
       "iqr_bde_kcal_mol": 21.505,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.007,
+      "verdict_agreement": "4/4"
     },
     "PREC_SI_03": {
       "id": "PREC_SI_03",
@@ -146,8 +156,10 @@
       "de_dimer_median_kcal_mol": -0.51,
       "sigma_bde_kcal_mol": 12.954,
       "iqr_bde_kcal_mol": 25.408,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.01,
+      "verdict_agreement": "4/4"
     },
     "PREC_SI_04": {
       "id": "PREC_SI_04",
@@ -191,8 +203,10 @@
       "de_dimer_median_kcal_mol": -0.708,
       "sigma_bde_kcal_mol": 12.461,
       "iqr_bde_kcal_mol": 8.762,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.006,
+      "verdict_agreement": "4/4"
     },
     "PREC_SI_05": {
       "id": "PREC_SI_05",
@@ -237,7 +251,9 @@
       "sigma_bde_kcal_mol": 9.468,
       "iqr_bde_kcal_mol": 17.218,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.259,
+      "verdict_agreement": "4/4"
     },
     "PREC_SI_06": {
       "id": "PREC_SI_06",
@@ -281,8 +297,10 @@
       "de_dimer_median_kcal_mol": -1.27,
       "sigma_bde_kcal_mol": 26.986,
       "iqr_bde_kcal_mol": 39.968,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.205,
+      "verdict_agreement": "3/4"
     },
     "PREC_SI_07": {
       "id": "PREC_SI_07",
@@ -326,8 +344,10 @@
       "de_dimer_median_kcal_mol": -0.21,
       "sigma_bde_kcal_mol": 10.618,
       "iqr_bde_kcal_mol": 15.972,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "PREC_SI_08": {
       "id": "PREC_SI_08",
@@ -371,8 +391,10 @@
       "de_dimer_median_kcal_mol": -0.488,
       "sigma_bde_kcal_mol": 15.549,
       "iqr_bde_kcal_mol": 26.496,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.01,
+      "verdict_agreement": "4/4"
     },
     "PREC_HK_01": {
       "id": "PREC_HK_01",
@@ -416,8 +438,10 @@
       "de_dimer_median_kcal_mol": -0.945,
       "sigma_bde_kcal_mol": 11.282,
       "iqr_bde_kcal_mol": 10.605,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 3.214,
+      "verdict_agreement": "2/4"
     },
     "PREC_HK_02": {
       "id": "PREC_HK_02",
@@ -461,8 +485,10 @@
       "de_dimer_median_kcal_mol": -0.225,
       "sigma_bde_kcal_mol": 5.37,
       "iqr_bde_kcal_mol": 9.387,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.011,
+      "verdict_agreement": "4/4"
     },
     "PREC_HK_03": {
       "id": "PREC_HK_03",
@@ -506,8 +532,10 @@
       "de_dimer_median_kcal_mol": -0.318,
       "sigma_bde_kcal_mol": 13.912,
       "iqr_bde_kcal_mol": 22.493,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.002,
+      "verdict_agreement": "4/4"
     },
     "PREC_HK_04": {
       "id": "PREC_HK_04",
@@ -552,7 +580,9 @@
       "sigma_bde_kcal_mol": 13.531,
       "iqr_bde_kcal_mol": 17.017,
       "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "dft_verification_flag": true,
+      "sapis_spread": 3.481,
+      "verdict_agreement": "2/4"
     },
     "PREC_HK_05": {
       "id": "PREC_HK_05",
@@ -596,8 +626,10 @@
       "de_dimer_median_kcal_mol": -0.045,
       "sigma_bde_kcal_mol": 5.163,
       "iqr_bde_kcal_mol": 6.582,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.012,
+      "verdict_agreement": "4/4"
     },
     "PREC_HK_06": {
       "id": "PREC_HK_06",
@@ -642,7 +674,9 @@
       "sigma_bde_kcal_mol": 2.426,
       "iqr_bde_kcal_mol": 4.03,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "PREC_HK_07": {
       "id": "PREC_HK_07",
@@ -687,7 +721,9 @@
       "sigma_bde_kcal_mol": 12.054,
       "iqr_bde_kcal_mol": 16.84,
       "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "dft_verification_flag": true,
+      "sapis_spread": 3.259,
+      "verdict_agreement": "2/4"
     },
     "PREC_TI_01": {
       "id": "PREC_TI_01",
@@ -731,8 +767,10 @@
       "de_dimer_median_kcal_mol": -0.128,
       "sigma_bde_kcal_mol": 12.036,
       "iqr_bde_kcal_mol": 7.374,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.006,
+      "verdict_agreement": "4/4"
     },
     "PREC_TI_02": {
       "id": "PREC_TI_02",
@@ -776,8 +814,10 @@
       "de_dimer_median_kcal_mol": -0.126,
       "sigma_bde_kcal_mol": 5.164,
       "iqr_bde_kcal_mol": 9.833,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "PREC_TI_03": {
       "id": "PREC_TI_03",
@@ -821,8 +861,10 @@
       "de_dimer_median_kcal_mol": 0.02,
       "sigma_bde_kcal_mol": 5.079,
       "iqr_bde_kcal_mol": 4.021,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "PREC_AL_01": {
       "id": "PREC_AL_01",
@@ -866,8 +908,10 @@
       "de_dimer_median_kcal_mol": 0.011,
       "sigma_bde_kcal_mol": 9.631,
       "iqr_bde_kcal_mol": 13.556,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.081,
+      "verdict_agreement": "4/4"
     },
     "PREC_AL_02": {
       "id": "PREC_AL_02",
@@ -912,7 +956,9 @@
       "sigma_bde_kcal_mol": 11.893,
       "iqr_bde_kcal_mol": 13.765,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.446,
+      "verdict_agreement": "4/4"
     },
     "PREC_MET_01": {
       "id": "PREC_MET_01",
@@ -956,8 +1002,10 @@
       "de_dimer_median_kcal_mol": -0.315,
       "sigma_bde_kcal_mol": 7.884,
       "iqr_bde_kcal_mol": 8.2,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.005,
+      "verdict_agreement": "4/4"
     },
     "PREC_MET_02": {
       "id": "PREC_MET_02",
@@ -1002,7 +1050,9 @@
       "sigma_bde_kcal_mol": 4.192,
       "iqr_bde_kcal_mol": 3.448,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.004,
+      "verdict_agreement": "4/4"
     },
     "PREC_MET_03": {
       "id": "PREC_MET_03",
@@ -1046,8 +1096,10 @@
       "de_dimer_median_kcal_mol": -0.331,
       "sigma_bde_kcal_mol": 12.918,
       "iqr_bde_kcal_mol": 13.444,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "PREC_MET_04": {
       "id": "PREC_MET_04",
@@ -1091,8 +1143,10 @@
       "de_dimer_median_kcal_mol": 20.923,
       "sigma_bde_kcal_mol": 19.093,
       "iqr_bde_kcal_mol": 36.731,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.158,
+      "verdict_agreement": "4/4"
     },
     "PREC_MET_05": {
       "id": "PREC_MET_05",
@@ -1136,8 +1190,10 @@
       "de_dimer_median_kcal_mol": 0.309,
       "sigma_bde_kcal_mol": 5.538,
       "iqr_bde_kcal_mol": 6.553,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "PREC_MET_06": {
       "id": "PREC_MET_06",
@@ -1181,8 +1237,10 @@
       "de_dimer_median_kcal_mol": -0.22,
       "sigma_bde_kcal_mol": 35.605,
       "iqr_bde_kcal_mol": 52.484,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.002,
+      "verdict_agreement": "4/4"
     },
     "PREC_EUV_01": {
       "id": "PREC_EUV_01",
@@ -1226,8 +1284,10 @@
       "de_dimer_median_kcal_mol": -0.454,
       "sigma_bde_kcal_mol": 32.351,
       "iqr_bde_kcal_mol": 37.251,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "INHIB-001": {
       "id": "INHIB-001",
@@ -1271,8 +1331,10 @@
       "de_dimer_median_kcal_mol": -0.788,
       "sigma_bde_kcal_mol": 14.957,
       "iqr_bde_kcal_mol": 18.652,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.009,
+      "verdict_agreement": "4/4"
     },
     "INHIB-002": {
       "id": "INHIB-002",
@@ -1316,8 +1378,10 @@
       "de_dimer_median_kcal_mol": -0.33,
       "sigma_bde_kcal_mol": 13.831,
       "iqr_bde_kcal_mol": 15.249,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.012,
+      "verdict_agreement": "4/4"
     },
     "INHIB-003": {
       "id": "INHIB-003",
@@ -1361,8 +1425,10 @@
       "de_dimer_median_kcal_mol": -0.41,
       "sigma_bde_kcal_mol": 15.928,
       "iqr_bde_kcal_mol": 21.957,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.006,
+      "verdict_agreement": "4/4"
     },
     "INHIB-004": {
       "id": "INHIB-004",
@@ -1406,8 +1472,10 @@
       "de_dimer_median_kcal_mol": -0.54,
       "sigma_bde_kcal_mol": 13.503,
       "iqr_bde_kcal_mol": 17.909,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.01,
+      "verdict_agreement": "4/4"
     },
     "INHIB-005": {
       "id": "INHIB-005",
@@ -1451,8 +1519,10 @@
       "de_dimer_median_kcal_mol": -0.657,
       "sigma_bde_kcal_mol": 20.555,
       "iqr_bde_kcal_mol": 36.003,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.035,
+      "verdict_agreement": "4/4"
     },
     "INHIB-006": {
       "id": "INHIB-006",
@@ -1496,8 +1566,10 @@
       "de_dimer_median_kcal_mol": -0.092,
       "sigma_bde_kcal_mol": 60.154,
       "iqr_bde_kcal_mol": 62.453,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "INHIB-007": {
       "id": "INHIB-007",
@@ -1541,8 +1613,10 @@
       "de_dimer_median_kcal_mol": -0.203,
       "sigma_bde_kcal_mol": 22.215,
       "iqr_bde_kcal_mol": 23.642,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.004,
+      "verdict_agreement": "4/4"
     },
     "INHIB-008": {
       "id": "INHIB-008",
@@ -1586,8 +1660,10 @@
       "de_dimer_median_kcal_mol": 0.075,
       "sigma_bde_kcal_mol": 22.025,
       "iqr_bde_kcal_mol": 37.397,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "INHIB-009": {
       "id": "INHIB-009",
@@ -1631,8 +1707,10 @@
       "de_dimer_median_kcal_mol": -1.606,
       "sigma_bde_kcal_mol": 21.315,
       "iqr_bde_kcal_mol": 36.459,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.159,
+      "verdict_agreement": "4/4"
     },
     "INHIB-010": {
       "id": "INHIB-010",
@@ -1676,8 +1754,10 @@
       "de_dimer_median_kcal_mol": -0.234,
       "sigma_bde_kcal_mol": 10.865,
       "iqr_bde_kcal_mol": 18.116,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "INHIB-011": {
       "id": "INHIB-011",
@@ -1721,8 +1801,10 @@
       "de_dimer_median_kcal_mol": -0.088,
       "sigma_bde_kcal_mol": 10.123,
       "iqr_bde_kcal_mol": 15.609,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.005,
+      "verdict_agreement": "4/4"
     },
     "INHIB-012": {
       "id": "INHIB-012",
@@ -1766,8 +1848,10 @@
       "de_dimer_median_kcal_mol": -0.745,
       "sigma_bde_kcal_mol": 13.962,
       "iqr_bde_kcal_mol": 22.326,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.077,
+      "verdict_agreement": "4/4"
     },
     "INHIB-013": {
       "id": "INHIB-013",
@@ -1811,8 +1895,10 @@
       "de_dimer_median_kcal_mol": -0.766,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.479,
+      "verdict_agreement": "3/4"
     },
     "INHIB-014": {
       "id": "INHIB-014",
@@ -1856,8 +1942,10 @@
       "de_dimer_median_kcal_mol": -0.901,
       "sigma_bde_kcal_mol": 36.171,
       "iqr_bde_kcal_mol": 24.148,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.481,
+      "verdict_agreement": "3/4"
     },
     "INHIB-015": {
       "id": "INHIB-015",
@@ -1901,8 +1989,10 @@
       "de_dimer_median_kcal_mol": -0.191,
       "sigma_bde_kcal_mol": 12.934,
       "iqr_bde_kcal_mol": 21.583,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "INHIB-016": {
       "id": "INHIB-016",
@@ -1946,8 +2036,10 @@
       "de_dimer_median_kcal_mol": -0.305,
       "sigma_bde_kcal_mol": 26.566,
       "iqr_bde_kcal_mol": 35.883,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "INHIB-017": {
       "id": "INHIB-017",
@@ -1991,8 +2083,10 @@
       "de_dimer_median_kcal_mol": 0.06,
       "sigma_bde_kcal_mol": 48.458,
       "iqr_bde_kcal_mol": 69.402,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "INHIB-018": {
       "id": "INHIB-018",
@@ -2036,8 +2130,10 @@
       "de_dimer_median_kcal_mol": 0.151,
       "sigma_bde_kcal_mol": 72.959,
       "iqr_bde_kcal_mol": 93.0,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-030": {
       "id": "EXT-ALD-030",
@@ -2082,7 +2178,9 @@
       "sigma_bde_kcal_mol": 3.816,
       "iqr_bde_kcal_mol": 2.998,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.272,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-034": {
       "id": "EXT-ALD-034",
@@ -2127,7 +2225,9 @@
       "sigma_bde_kcal_mol": 9.405,
       "iqr_bde_kcal_mol": 8.471,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.207,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-035": {
       "id": "EXT-ALD-035",
@@ -2172,7 +2272,9 @@
       "sigma_bde_kcal_mol": 7.392,
       "iqr_bde_kcal_mol": 13.36,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 1.868,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-040": {
       "id": "EXT-ALD-040",
@@ -2216,8 +2318,10 @@
       "de_dimer_median_kcal_mol": -1.109,
       "sigma_bde_kcal_mol": 8.784,
       "iqr_bde_kcal_mol": 15.029,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.058,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-053": {
       "id": "EXT-ALD-053",
@@ -2261,8 +2365,10 @@
       "de_dimer_median_kcal_mol": -0.047,
       "sigma_bde_kcal_mol": 14.957,
       "iqr_bde_kcal_mol": 10.3,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-074": {
       "id": "EXT-ALD-074",
@@ -2306,8 +2412,10 @@
       "de_dimer_median_kcal_mol": 0.294,
       "sigma_bde_kcal_mol": 6.73,
       "iqr_bde_kcal_mol": 9.083,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.063,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-094": {
       "id": "EXT-ALD-094",
@@ -2352,7 +2460,9 @@
       "sigma_bde_kcal_mol": 6.697,
       "iqr_bde_kcal_mol": 4.706,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.089,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-100": {
       "id": "EXT-ALD-100",
@@ -2396,8 +2506,10 @@
       "de_dimer_median_kcal_mol": -0.165,
       "sigma_bde_kcal_mol": 7.895,
       "iqr_bde_kcal_mol": 11.982,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-109": {
       "id": "EXT-ALD-109",
@@ -2441,8 +2553,10 @@
       "de_dimer_median_kcal_mol": -0.088,
       "sigma_bde_kcal_mol": 6.252,
       "iqr_bde_kcal_mol": 10.511,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.022,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-114": {
       "id": "EXT-ALD-114",
@@ -2486,8 +2600,10 @@
       "de_dimer_median_kcal_mol": -0.36,
       "sigma_bde_kcal_mol": 7.39,
       "iqr_bde_kcal_mol": 8.726,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-115": {
       "id": "EXT-ALD-115",
@@ -2531,8 +2647,10 @@
       "de_dimer_median_kcal_mol": 2.422,
       "sigma_bde_kcal_mol": 13.665,
       "iqr_bde_kcal_mol": 17.569,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.011,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-121": {
       "id": "EXT-ALD-121",
@@ -2576,8 +2694,10 @@
       "de_dimer_median_kcal_mol": -0.26,
       "sigma_bde_kcal_mol": 23.511,
       "iqr_bde_kcal_mol": 19.762,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-122": {
       "id": "EXT-ALD-122",
@@ -2621,8 +2741,10 @@
       "de_dimer_median_kcal_mol": -0.335,
       "sigma_bde_kcal_mol": 9.221,
       "iqr_bde_kcal_mol": 8.093,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.075,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-123": {
       "id": "EXT-ALD-123",
@@ -2666,8 +2788,10 @@
       "de_dimer_median_kcal_mol": -0.909,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 1.008,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-124": {
       "id": "EXT-ALD-124",
@@ -2712,7 +2836,9 @@
       "sigma_bde_kcal_mol": 10.22,
       "iqr_bde_kcal_mol": 10.316,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.495,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-125": {
       "id": "EXT-ALD-125",
@@ -2757,7 +2883,9 @@
       "sigma_bde_kcal_mol": 6.821,
       "iqr_bde_kcal_mol": 6.421,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.32,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-126": {
       "id": "EXT-ALD-126",
@@ -2801,8 +2929,10 @@
       "de_dimer_median_kcal_mol": 0.546,
       "sigma_bde_kcal_mol": 13.561,
       "iqr_bde_kcal_mol": 15.085,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.002,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-127": {
       "id": "EXT-ALD-127",
@@ -2847,7 +2977,9 @@
       "sigma_bde_kcal_mol": 5.288,
       "iqr_bde_kcal_mol": 10.201,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.469,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-128": {
       "id": "EXT-ALD-128",
@@ -2891,8 +3023,10 @@
       "de_dimer_median_kcal_mol": 0.312,
       "sigma_bde_kcal_mol": 38.699,
       "iqr_bde_kcal_mol": 39.536,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-129": {
       "id": "EXT-ALD-129",
@@ -2936,8 +3070,10 @@
       "de_dimer_median_kcal_mol": -0.128,
       "sigma_bde_kcal_mol": 10.612,
       "iqr_bde_kcal_mol": 8.453,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.286,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-130": {
       "id": "EXT-ALD-130",
@@ -2981,8 +3117,10 @@
       "de_dimer_median_kcal_mol": -0.977,
       "sigma_bde_kcal_mol": 10.006,
       "iqr_bde_kcal_mol": 13.155,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 3.484,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-131": {
       "id": "EXT-ALD-131",
@@ -3026,8 +3164,10 @@
       "de_dimer_median_kcal_mol": 0.333,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 2.779,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-132": {
       "id": "EXT-ALD-132",
@@ -3071,8 +3211,10 @@
       "de_dimer_median_kcal_mol": -0.215,
       "sigma_bde_kcal_mol": 7.061,
       "iqr_bde_kcal_mol": 12.558,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.004,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-133": {
       "id": "EXT-ALD-133",
@@ -3116,8 +3258,10 @@
       "de_dimer_median_kcal_mol": -0.26,
       "sigma_bde_kcal_mol": 23.511,
       "iqr_bde_kcal_mol": 19.762,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-134": {
       "id": "EXT-ALD-134",
@@ -3161,8 +3305,10 @@
       "de_dimer_median_kcal_mol": -0.182,
       "sigma_bde_kcal_mol": 24.155,
       "iqr_bde_kcal_mol": 18.231,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-135": {
       "id": "EXT-ALD-135",
@@ -3206,8 +3352,10 @@
       "de_dimer_median_kcal_mol": -2.433,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.499,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-136": {
       "id": "EXT-ALD-136",
@@ -3251,8 +3399,10 @@
       "de_dimer_median_kcal_mol": -0.32,
       "sigma_bde_kcal_mol": 20.19,
       "iqr_bde_kcal_mol": 17.834,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.498,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-138": {
       "id": "EXT-ALD-138",
@@ -3296,8 +3446,10 @@
       "de_dimer_median_kcal_mol": -5.648,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-139": {
       "id": "EXT-ALD-139",
@@ -3341,8 +3493,10 @@
       "de_dimer_median_kcal_mol": -0.272,
       "sigma_bde_kcal_mol": 13.411,
       "iqr_bde_kcal_mol": 9.979,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.488,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-140": {
       "id": "EXT-ALD-140",
@@ -3386,8 +3540,10 @@
       "de_dimer_median_kcal_mol": 0.07,
       "sigma_bde_kcal_mol": 27.142,
       "iqr_bde_kcal_mol": 24.306,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-141": {
       "id": "EXT-ALD-141",
@@ -3432,7 +3588,9 @@
       "sigma_bde_kcal_mol": 3.311,
       "iqr_bde_kcal_mol": 5.982,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-142": {
       "id": "EXT-ALD-142",
@@ -3476,8 +3634,10 @@
       "de_dimer_median_kcal_mol": -0.046,
       "sigma_bde_kcal_mol": 2504.657,
       "iqr_bde_kcal_mol": 1480.324,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-143": {
       "id": "EXT-ALD-143",
@@ -3522,7 +3682,9 @@
       "sigma_bde_kcal_mol": 24.248,
       "iqr_bde_kcal_mol": 37.036,
       "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "dft_verification_flag": true,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-145": {
       "id": "EXT-ALD-145",
@@ -3567,7 +3729,9 @@
       "sigma_bde_kcal_mol": 29.899,
       "iqr_bde_kcal_mol": 31.895,
       "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "dft_verification_flag": true,
+      "sapis_spread": 3.499,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-146": {
       "id": "EXT-ALD-146",
@@ -3611,8 +3775,10 @@
       "de_dimer_median_kcal_mol": 0.115,
       "sigma_bde_kcal_mol": 12.382,
       "iqr_bde_kcal_mol": 10.094,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.497,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-147": {
       "id": "EXT-ALD-147",
@@ -3656,8 +3822,10 @@
       "de_dimer_median_kcal_mol": 0.396,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 2.488,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-148": {
       "id": "EXT-ALD-148",
@@ -3701,8 +3869,10 @@
       "de_dimer_median_kcal_mol": -0.351,
       "sigma_bde_kcal_mol": 5.128,
       "iqr_bde_kcal_mol": 4.877,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.123,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-149": {
       "id": "EXT-ALD-149",
@@ -3746,8 +3916,10 @@
       "de_dimer_median_kcal_mol": -0.33,
       "sigma_bde_kcal_mol": 14.4,
       "iqr_bde_kcal_mol": 20.929,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.35,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-150": {
       "id": "EXT-ALD-150",
@@ -3791,8 +3963,10 @@
       "de_dimer_median_kcal_mol": -0.077,
       "sigma_bde_kcal_mol": 20.274,
       "iqr_bde_kcal_mol": 33.352,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.641,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-151": {
       "id": "EXT-ALD-151",
@@ -3836,8 +4010,10 @@
       "de_dimer_median_kcal_mol": 0.969,
       "sigma_bde_kcal_mol": 6.605,
       "iqr_bde_kcal_mol": 4.711,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-153": {
       "id": "EXT-ALD-153",
@@ -3881,8 +4057,10 @@
       "de_dimer_median_kcal_mol": -0.135,
       "sigma_bde_kcal_mol": 10.03,
       "iqr_bde_kcal_mol": 15.158,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 3.134,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-154": {
       "id": "EXT-ALD-154",
@@ -3927,7 +4105,9 @@
       "sigma_bde_kcal_mol": 8.845,
       "iqr_bde_kcal_mol": 11.097,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.352,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-155": {
       "id": "EXT-ALD-155",
@@ -3971,8 +4151,10 @@
       "de_dimer_median_kcal_mol": -1.078,
       "sigma_bde_kcal_mol": 28.208,
       "iqr_bde_kcal_mol": 27.716,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-156": {
       "id": "EXT-ALD-156",
@@ -4016,8 +4198,10 @@
       "de_dimer_median_kcal_mol": -0.327,
       "sigma_bde_kcal_mol": 26.957,
       "iqr_bde_kcal_mol": 33.564,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-157": {
       "id": "EXT-ALD-157",
@@ -4061,8 +4245,10 @@
       "de_dimer_median_kcal_mol": -0.223,
       "sigma_bde_kcal_mol": 9.503,
       "iqr_bde_kcal_mol": 8.663,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 1.428,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-158": {
       "id": "EXT-ALD-158",
@@ -4106,8 +4292,10 @@
       "de_dimer_median_kcal_mol": 0.019,
       "sigma_bde_kcal_mol": 10.223,
       "iqr_bde_kcal_mol": 9.183,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 1.987,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-159": {
       "id": "EXT-ALD-159",
@@ -4152,7 +4340,9 @@
       "sigma_bde_kcal_mol": 7.524,
       "iqr_bde_kcal_mol": 7.512,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.111,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-161": {
       "id": "EXT-ALD-161",
@@ -4196,8 +4386,10 @@
       "de_dimer_median_kcal_mol": -0.002,
       "sigma_bde_kcal_mol": 6.152,
       "iqr_bde_kcal_mol": 9.199,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-162": {
       "id": "EXT-ALD-162",
@@ -4241,8 +4433,10 @@
       "de_dimer_median_kcal_mol": 6.846,
       "sigma_bde_kcal_mol": 27.439,
       "iqr_bde_kcal_mol": 37.26,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-163": {
       "id": "EXT-ALD-163",
@@ -4286,8 +4480,10 @@
       "de_dimer_median_kcal_mol": 0.015,
       "sigma_bde_kcal_mol": 9.526,
       "iqr_bde_kcal_mol": 16.498,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-164": {
       "id": "EXT-ALD-164",
@@ -4331,8 +4527,10 @@
       "de_dimer_median_kcal_mol": 0.579,
       "sigma_bde_kcal_mol": 22.794,
       "iqr_bde_kcal_mol": 22.857,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.319,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-165": {
       "id": "EXT-ALD-165",
@@ -4376,8 +4574,10 @@
       "de_dimer_median_kcal_mol": -0.298,
       "sigma_bde_kcal_mol": 27.916,
       "iqr_bde_kcal_mol": 36.088,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-166": {
       "id": "EXT-ALD-166",
@@ -4421,8 +4621,10 @@
       "de_dimer_median_kcal_mol": -0.705,
       "sigma_bde_kcal_mol": 25.422,
       "iqr_bde_kcal_mol": 25.934,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.499,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-167": {
       "id": "EXT-ALD-167",
@@ -4467,7 +4669,9 @@
       "sigma_bde_kcal_mol": 10.534,
       "iqr_bde_kcal_mol": 15.621,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.41,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-168": {
       "id": "EXT-ALD-168",
@@ -4511,8 +4715,10 @@
       "de_dimer_median_kcal_mol": -0.195,
       "sigma_bde_kcal_mol": 6.575,
       "iqr_bde_kcal_mol": 11.323,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.009,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-169": {
       "id": "EXT-ALD-169",
@@ -4557,7 +4763,9 @@
       "sigma_bde_kcal_mol": 26.803,
       "iqr_bde_kcal_mol": 40.455,
       "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "dft_verification_flag": true,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-171": {
       "id": "EXT-ALD-171",
@@ -4601,8 +4809,10 @@
       "de_dimer_median_kcal_mol": -6.04,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-172": {
       "id": "EXT-ALD-172",
@@ -4646,8 +4856,10 @@
       "de_dimer_median_kcal_mol": 0.0,
       "sigma_bde_kcal_mol": 8.419,
       "iqr_bde_kcal_mol": 9.219,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-173": {
       "id": "EXT-ALD-173",
@@ -4691,8 +4903,10 @@
       "de_dimer_median_kcal_mol": 0.185,
       "sigma_bde_kcal_mol": 2.962,
       "iqr_bde_kcal_mol": 5.266,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 1.239,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-174": {
       "id": "EXT-ALD-174",
@@ -4736,8 +4950,10 @@
       "de_dimer_median_kcal_mol": -6.777,
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-175": {
       "id": "EXT-ALD-175",
@@ -4782,7 +4998,9 @@
       "sigma_bde_kcal_mol": 10.196,
       "iqr_bde_kcal_mol": 11.918,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.284,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-176": {
       "id": "EXT-ALD-176",
@@ -4826,8 +5044,10 @@
       "de_dimer_median_kcal_mol": -0.184,
       "sigma_bde_kcal_mol": 6.262,
       "iqr_bde_kcal_mol": 8.823,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.025,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-177": {
       "id": "EXT-ALD-177",
@@ -4871,8 +5091,10 @@
       "de_dimer_median_kcal_mol": -0.613,
       "sigma_bde_kcal_mol": 3.545,
       "iqr_bde_kcal_mol": 5.147,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.456,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-178": {
       "id": "EXT-ALD-178",
@@ -4916,8 +5138,10 @@
       "de_dimer_median_kcal_mol": -1.421,
       "sigma_bde_kcal_mol": 31.579,
       "iqr_bde_kcal_mol": 33.967,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-179": {
       "id": "EXT-ALD-179",
@@ -4961,8 +5185,10 @@
       "de_dimer_median_kcal_mol": -1.421,
       "sigma_bde_kcal_mol": 31.579,
       "iqr_bde_kcal_mol": 33.967,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-181": {
       "id": "EXT-ALD-181",
@@ -5007,7 +5233,9 @@
       "sigma_bde_kcal_mol": 8.392,
       "iqr_bde_kcal_mol": 7.498,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.335,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-182": {
       "id": "EXT-ALD-182",
@@ -5052,7 +5280,9 @@
       "sigma_bde_kcal_mol": 8.453,
       "iqr_bde_kcal_mol": 6.451,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.447,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-183": {
       "id": "EXT-ALD-183",
@@ -5096,8 +5326,10 @@
       "de_dimer_median_kcal_mol": -0.263,
       "sigma_bde_kcal_mol": 10.457,
       "iqr_bde_kcal_mol": 18.947,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 3.433,
+      "verdict_agreement": "2/4"
     },
     "EXT-ALD-184": {
       "id": "EXT-ALD-184",
@@ -5141,8 +5373,10 @@
       "de_dimer_median_kcal_mol": 0.128,
       "sigma_bde_kcal_mol": 20.338,
       "iqr_bde_kcal_mol": 31.401,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 1.367,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-186": {
       "id": "EXT-ALD-186",
@@ -5186,8 +5420,10 @@
       "de_dimer_median_kcal_mol": -0.68,
       "sigma_bde_kcal_mol": 12.852,
       "iqr_bde_kcal_mol": 12.833,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.492,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-187": {
       "id": "EXT-ALD-187",
@@ -5231,8 +5467,10 @@
       "de_dimer_median_kcal_mol": -1.201,
       "sigma_bde_kcal_mol": 17.467,
       "iqr_bde_kcal_mol": 12.617,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "EXT-ALD-188": {
       "id": "EXT-ALD-188",
@@ -5277,7 +5515,9 @@
       "sigma_bde_kcal_mol": 0.0,
       "iqr_bde_kcal_mol": 0.0,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.005,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-189": {
       "id": "EXT-ALD-189",
@@ -5321,8 +5561,10 @@
       "de_dimer_median_kcal_mol": -0.789,
       "sigma_bde_kcal_mol": 2477.004,
       "iqr_bde_kcal_mol": 1454.348,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.019,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-190": {
       "id": "EXT-ALD-190",
@@ -5366,8 +5608,10 @@
       "de_dimer_median_kcal_mol": 0.018,
       "sigma_bde_kcal_mol": 20.15,
       "iqr_bde_kcal_mol": 19.446,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.502,
+      "verdict_agreement": "4/4"
     },
     "EXT-ALD-191": {
       "id": "EXT-ALD-191",
@@ -5412,7 +5656,9 @@
       "sigma_bde_kcal_mol": 7.763,
       "iqr_bde_kcal_mol": 8.661,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.862,
+      "verdict_agreement": "3/4"
     },
     "NEG-001": {
       "id": "NEG-001",
@@ -5456,8 +5702,10 @@
       "de_dimer_median_kcal_mol": 0.131,
       "sigma_bde_kcal_mol": 5.901,
       "iqr_bde_kcal_mol": 6.075,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.084,
+      "verdict_agreement": "4/4"
     },
     "NEG-002": {
       "id": "NEG-002",
@@ -5502,7 +5750,9 @@
       "sigma_bde_kcal_mol": 4.014,
       "iqr_bde_kcal_mol": 3.289,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.058,
+      "verdict_agreement": "4/4"
     },
     "NEG-008": {
       "id": "NEG-008",
@@ -5547,7 +5797,9 @@
       "sigma_bde_kcal_mol": 6.629,
       "iqr_bde_kcal_mol": 4.999,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.142,
+      "verdict_agreement": "3/4"
     },
     "NEG-011": {
       "id": "NEG-011",
@@ -5591,8 +5843,10 @@
       "de_dimer_median_kcal_mol": 0.085,
       "sigma_bde_kcal_mol": 5.959,
       "iqr_bde_kcal_mol": 4.064,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.169,
+      "verdict_agreement": "4/4"
     },
     "NEG-012": {
       "id": "NEG-012",
@@ -5636,8 +5890,10 @@
       "de_dimer_median_kcal_mol": 0.135,
       "sigma_bde_kcal_mol": 6.546,
       "iqr_bde_kcal_mol": 5.981,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.168,
+      "verdict_agreement": "4/4"
     },
     "NEG-013": {
       "id": "NEG-013",
@@ -5682,7 +5938,9 @@
       "sigma_bde_kcal_mol": 9.473,
       "iqr_bde_kcal_mol": 12.574,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.343,
+      "verdict_agreement": "4/4"
     },
     "NEG-014": {
       "id": "NEG-014",
@@ -5727,7 +5985,9 @@
       "sigma_bde_kcal_mol": 16.653,
       "iqr_bde_kcal_mol": 32.126,
       "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "dft_verification_flag": true,
+      "sapis_spread": 3.484,
+      "verdict_agreement": "2/4"
     },
     "NEG-004": {
       "id": "NEG-004",
@@ -5771,8 +6031,10 @@
       "de_dimer_median_kcal_mol": 7.046,
       "sigma_bde_kcal_mol": 11.307,
       "iqr_bde_kcal_mol": 19.809,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.041,
+      "verdict_agreement": "4/4"
     },
     "NEG-015": {
       "id": "NEG-015",
@@ -5816,8 +6078,10 @@
       "de_dimer_median_kcal_mol": -0.05,
       "sigma_bde_kcal_mol": 9.271,
       "iqr_bde_kcal_mol": 6.534,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.02,
+      "verdict_agreement": "4/4"
     },
     "NEG-016": {
       "id": "NEG-016",
@@ -5861,8 +6125,10 @@
       "de_dimer_median_kcal_mol": -0.171,
       "sigma_bde_kcal_mol": 13.463,
       "iqr_bde_kcal_mol": 22.399,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.014,
+      "verdict_agreement": "4/4"
     },
     "NEG-017": {
       "id": "NEG-017",
@@ -5906,8 +6172,10 @@
       "de_dimer_median_kcal_mol": -0.172,
       "sigma_bde_kcal_mol": 13.539,
       "iqr_bde_kcal_mol": 23.531,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "NEG-018": {
       "id": "NEG-018",
@@ -5951,8 +6219,10 @@
       "de_dimer_median_kcal_mol": -0.084,
       "sigma_bde_kcal_mol": 9.536,
       "iqr_bde_kcal_mol": 15.813,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.036,
+      "verdict_agreement": "4/4"
     },
     "NEG-019": {
       "id": "NEG-019",
@@ -5996,8 +6266,10 @@
       "de_dimer_median_kcal_mol": 8.402,
       "sigma_bde_kcal_mol": 25.189,
       "iqr_bde_kcal_mol": 21.554,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.449,
+      "verdict_agreement": "3/4"
     },
     "NEG-007": {
       "id": "NEG-007",
@@ -6042,7 +6314,9 @@
       "sigma_bde_kcal_mol": 2.154,
       "iqr_bde_kcal_mol": 1.895,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "NEG-020": {
       "id": "NEG-020",
@@ -6087,7 +6361,9 @@
       "sigma_bde_kcal_mol": 4.248,
       "iqr_bde_kcal_mol": 3.095,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.002,
+      "verdict_agreement": "4/4"
     },
     "NEG-021": {
       "id": "NEG-021",
@@ -6132,7 +6408,9 @@
       "sigma_bde_kcal_mol": 3.933,
       "iqr_bde_kcal_mol": 2.804,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.002,
+      "verdict_agreement": "4/4"
     },
     "NEG-022": {
       "id": "NEG-022",
@@ -6176,8 +6454,10 @@
       "de_dimer_median_kcal_mol": -0.765,
       "sigma_bde_kcal_mol": 10.529,
       "iqr_bde_kcal_mol": 13.756,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "NEG-023": {
       "id": "NEG-023",
@@ -6221,8 +6501,10 @@
       "de_dimer_median_kcal_mol": -1.357,
       "sigma_bde_kcal_mol": 8.737,
       "iqr_bde_kcal_mol": 6.235,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.005,
+      "verdict_agreement": "4/4"
     },
     "NEG-024": {
       "id": "NEG-024",
@@ -6267,7 +6549,9 @@
       "sigma_bde_kcal_mol": 4.716,
       "iqr_bde_kcal_mol": 4.898,
       "confidence_grade": "High",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.005,
+      "verdict_agreement": "4/4"
     },
     "NEG-025": {
       "id": "NEG-025",
@@ -6311,8 +6595,10 @@
       "de_dimer_median_kcal_mol": -1.216,
       "sigma_bde_kcal_mol": 5.787,
       "iqr_bde_kcal_mol": 7.201,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.042,
+      "verdict_agreement": "4/4"
     },
     "NEG-006": {
       "id": "NEG-006",
@@ -6356,8 +6642,10 @@
       "de_dimer_median_kcal_mol": -0.44,
       "sigma_bde_kcal_mol": 14.215,
       "iqr_bde_kcal_mol": 25.495,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.357,
+      "verdict_agreement": "4/4"
     },
     "NEG-026": {
       "id": "NEG-026",
@@ -6401,8 +6689,10 @@
       "de_dimer_median_kcal_mol": -0.606,
       "sigma_bde_kcal_mol": 24.961,
       "iqr_bde_kcal_mol": 49.34,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.004,
+      "verdict_agreement": "4/4"
     },
     "NEG-027": {
       "id": "NEG-027",
@@ -6446,8 +6736,10 @@
       "de_dimer_median_kcal_mol": -0.974,
       "sigma_bde_kcal_mol": 57.497,
       "iqr_bde_kcal_mol": 78.76,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "NEG-028": {
       "id": "NEG-028",
@@ -6491,8 +6783,10 @@
       "de_dimer_median_kcal_mol": -0.692,
       "sigma_bde_kcal_mol": 59.266,
       "iqr_bde_kcal_mol": 75.994,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "NEG-029": {
       "id": "NEG-029",
@@ -6536,8 +6830,10 @@
       "de_dimer_median_kcal_mol": -0.526,
       "sigma_bde_kcal_mol": 59.586,
       "iqr_bde_kcal_mol": 85.355,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "NEG-030": {
       "id": "NEG-030",
@@ -6581,8 +6877,10 @@
       "de_dimer_median_kcal_mol": 1.238,
       "sigma_bde_kcal_mol": 63.596,
       "iqr_bde_kcal_mol": 78.156,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "NEG-031": {
       "id": "NEG-031",
@@ -6626,8 +6924,10 @@
       "de_dimer_median_kcal_mol": -0.292,
       "sigma_bde_kcal_mol": 18.095,
       "iqr_bde_kcal_mol": 16.573,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "NEG-005": {
       "id": "NEG-005",
@@ -6671,8 +6971,10 @@
       "de_dimer_median_kcal_mol": -0.039,
       "sigma_bde_kcal_mol": 10.051,
       "iqr_bde_kcal_mol": 16.199,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "NEG-032": {
       "id": "NEG-032",
@@ -6716,8 +7018,10 @@
       "de_dimer_median_kcal_mol": -0.151,
       "sigma_bde_kcal_mol": 9.346,
       "iqr_bde_kcal_mol": 15.574,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.004,
+      "verdict_agreement": "4/4"
     },
     "NEG-033": {
       "id": "NEG-033",
@@ -6761,8 +7065,10 @@
       "de_dimer_median_kcal_mol": -0.138,
       "sigma_bde_kcal_mol": 9.045,
       "iqr_bde_kcal_mol": 14.847,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "NEG-034": {
       "id": "NEG-034",
@@ -6806,8 +7112,10 @@
       "de_dimer_median_kcal_mol": -0.059,
       "sigma_bde_kcal_mol": 10.435,
       "iqr_bde_kcal_mol": 15.805,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.002,
+      "verdict_agreement": "4/4"
     },
     "NEG-035": {
       "id": "NEG-035",
@@ -6851,8 +7159,10 @@
       "de_dimer_median_kcal_mol": -0.348,
       "sigma_bde_kcal_mol": 17.601,
       "iqr_bde_kcal_mol": 24.067,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "NEG-036": {
       "id": "NEG-036",
@@ -6896,8 +7206,10 @@
       "de_dimer_median_kcal_mol": -0.353,
       "sigma_bde_kcal_mol": 20.933,
       "iqr_bde_kcal_mol": 22.694,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "NEG-037": {
       "id": "NEG-037",
@@ -6941,8 +7253,10 @@
       "de_dimer_median_kcal_mol": -0.341,
       "sigma_bde_kcal_mol": 15.068,
       "iqr_bde_kcal_mol": 15.063,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "NEG-003": {
       "id": "NEG-003",
@@ -6986,8 +7300,10 @@
       "de_dimer_median_kcal_mol": 0.059,
       "sigma_bde_kcal_mol": 28.022,
       "iqr_bde_kcal_mol": 31.459,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "3/4"
     },
     "NEG-009": {
       "id": "NEG-009",
@@ -7031,8 +7347,10 @@
       "de_dimer_median_kcal_mol": -0.901,
       "sigma_bde_kcal_mol": 24.515,
       "iqr_bde_kcal_mol": 26.089,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 2.826,
+      "verdict_agreement": "3/4"
     },
     "NEG-010": {
       "id": "NEG-010",
@@ -7076,8 +7394,10 @@
       "de_dimer_median_kcal_mol": -0.179,
       "sigma_bde_kcal_mol": 21.809,
       "iqr_bde_kcal_mol": 30.978,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.498,
+      "verdict_agreement": "3/4"
     },
     "NEG-038": {
       "id": "NEG-038",
@@ -7121,8 +7441,10 @@
       "de_dimer_median_kcal_mol": -0.18,
       "sigma_bde_kcal_mol": 23.137,
       "iqr_bde_kcal_mol": 32.194,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.489,
+      "verdict_agreement": "3/4"
     },
     "NEG-039": {
       "id": "NEG-039",
@@ -7166,8 +7488,10 @@
       "de_dimer_median_kcal_mol": -0.72,
       "sigma_bde_kcal_mol": 26.505,
       "iqr_bde_kcal_mol": 30.91,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.071,
+      "verdict_agreement": "3/4"
     },
     "NEG-040": {
       "id": "NEG-040",
@@ -7212,7 +7536,9 @@
       "sigma_bde_kcal_mol": 18.461,
       "iqr_bde_kcal_mol": 25.421,
       "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "dft_verification_flag": true,
+      "sapis_spread": 3.5,
+      "verdict_agreement": "2/4"
     },
     "EXP_01": {
       "id": "EXP_01",
@@ -7256,8 +7582,10 @@
       "de_dimer_median_kcal_mol": 1.981,
       "sigma_bde_kcal_mol": 51.133,
       "iqr_bde_kcal_mol": 71.835,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.08,
+      "verdict_agreement": "3/4"
     },
     "EXP_02": {
       "id": "EXP_02",
@@ -7301,8 +7629,10 @@
       "de_dimer_median_kcal_mol": 8.607,
       "sigma_bde_kcal_mol": 14.294,
       "iqr_bde_kcal_mol": 25.738,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 2.645,
+      "verdict_agreement": "3/4"
     },
     "EXP_03": {
       "id": "EXP_03",
@@ -7346,8 +7676,10 @@
       "de_dimer_median_kcal_mol": 0.55,
       "sigma_bde_kcal_mol": 8.843,
       "iqr_bde_kcal_mol": 10.351,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXP_04": {
       "id": "EXP_04",
@@ -7391,8 +7723,10 @@
       "de_dimer_median_kcal_mol": 0.09,
       "sigma_bde_kcal_mol": 65.841,
       "iqr_bde_kcal_mol": 82.174,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.363,
+      "verdict_agreement": "3/4"
     },
     "EXP_05": {
       "id": "EXP_05",
@@ -7436,8 +7770,10 @@
       "de_dimer_median_kcal_mol": 11.984,
       "sigma_bde_kcal_mol": 7.606,
       "iqr_bde_kcal_mol": 11.076,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 3.231,
+      "verdict_agreement": "2/4"
     },
     "EXP_06": {
       "id": "EXP_06",
@@ -7481,8 +7817,10 @@
       "de_dimer_median_kcal_mol": 0.157,
       "sigma_bde_kcal_mol": 9.331,
       "iqr_bde_kcal_mol": 8.704,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXP_07": {
       "id": "EXP_07",
@@ -7526,8 +7864,10 @@
       "de_dimer_median_kcal_mol": -0.105,
       "sigma_bde_kcal_mol": 9.019,
       "iqr_bde_kcal_mol": 8.525,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "EXP_08": {
       "id": "EXP_08",
@@ -7571,8 +7911,10 @@
       "de_dimer_median_kcal_mol": -0.205,
       "sigma_bde_kcal_mol": 34.297,
       "iqr_bde_kcal_mol": 50.466,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "EXP_09": {
       "id": "EXP_09",
@@ -7617,7 +7959,9 @@
       "sigma_bde_kcal_mol": 6.915,
       "iqr_bde_kcal_mol": 9.114,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.942,
+      "verdict_agreement": "3/4"
     },
     "EXP_10": {
       "id": "EXP_10",
@@ -7661,8 +8005,10 @@
       "de_dimer_median_kcal_mol": -0.03,
       "sigma_bde_kcal_mol": 12.26,
       "iqr_bde_kcal_mol": 10.931,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.17,
+      "verdict_agreement": "4/4"
     },
     "EXP_11": {
       "id": "EXP_11",
@@ -7707,7 +8053,9 @@
       "sigma_bde_kcal_mol": 7.176,
       "iqr_bde_kcal_mol": 13.916,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.449,
+      "verdict_agreement": "3/4"
     },
     "EXP_12": {
       "id": "EXP_12",
@@ -7752,7 +8100,9 @@
       "sigma_bde_kcal_mol": 9.013,
       "iqr_bde_kcal_mol": 10.637,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 1.654,
+      "verdict_agreement": "3/4"
     },
     "EXP_13": {
       "id": "EXP_13",
@@ -7797,7 +8147,9 @@
       "sigma_bde_kcal_mol": 8.268,
       "iqr_bde_kcal_mol": 7.87,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.224,
+      "verdict_agreement": "3/4"
     },
     "EXP_14": {
       "id": "EXP_14",
@@ -7842,7 +8194,9 @@
       "sigma_bde_kcal_mol": 7.812,
       "iqr_bde_kcal_mol": 10.3,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.364,
+      "verdict_agreement": "3/4"
     },
     "EXP_15": {
       "id": "EXP_15",
@@ -7887,7 +8241,9 @@
       "sigma_bde_kcal_mol": 5.097,
       "iqr_bde_kcal_mol": 5.047,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 2.201,
+      "verdict_agreement": "4/4"
     },
     "EXP_16": {
       "id": "EXP_16",
@@ -7931,8 +8287,10 @@
       "de_dimer_median_kcal_mol": 0.206,
       "sigma_bde_kcal_mol": 5.789,
       "iqr_bde_kcal_mol": 6.46,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.001,
+      "verdict_agreement": "4/4"
     },
     "EXP_17": {
       "id": "EXP_17",
@@ -7976,8 +8334,10 @@
       "de_dimer_median_kcal_mol": 11.284,
       "sigma_bde_kcal_mol": 4.178,
       "iqr_bde_kcal_mol": 5.424,
-      "confidence_grade": "High",
-      "dft_verification_flag": false
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.471,
+      "verdict_agreement": "4/4"
     },
     "EXP_18": {
       "id": "EXP_18",
@@ -8022,7 +8382,9 @@
       "sigma_bde_kcal_mol": 6.102,
       "iqr_bde_kcal_mol": 8.181,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 3.214,
+      "verdict_agreement": "3/4"
     },
     "EXP_19": {
       "id": "EXP_19",
@@ -8066,8 +8428,10 @@
       "de_dimer_median_kcal_mol": 0.078,
       "sigma_bde_kcal_mol": 10.202,
       "iqr_bde_kcal_mol": 17.347,
-      "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "confidence_grade": "Low (DFT Flag)",
+      "dft_verification_flag": true,
+      "sapis_spread": 3.433,
+      "verdict_agreement": "2/4"
     },
     "EXP_20": {
       "id": "EXP_20",
@@ -8111,8 +8475,10 @@
       "de_dimer_median_kcal_mol": -0.334,
       "sigma_bde_kcal_mol": 14.371,
       "iqr_bde_kcal_mol": 18.864,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.498,
+      "verdict_agreement": "3/4"
     },
     "EXP_21": {
       "id": "EXP_21",
@@ -8156,8 +8522,10 @@
       "de_dimer_median_kcal_mol": -0.49,
       "sigma_bde_kcal_mol": 13.03,
       "iqr_bde_kcal_mol": 8.27,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXP_22": {
       "id": "EXP_22",
@@ -8201,8 +8569,10 @@
       "de_dimer_median_kcal_mol": 0.411,
       "sigma_bde_kcal_mol": 16.495,
       "iqr_bde_kcal_mol": 13.858,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.499,
+      "verdict_agreement": "3/4"
     },
     "EXP_23": {
       "id": "EXP_23",
@@ -8246,8 +8616,10 @@
       "de_dimer_median_kcal_mol": -0.353,
       "sigma_bde_kcal_mol": 21.488,
       "iqr_bde_kcal_mol": 20.037,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.499,
+      "verdict_agreement": "3/4"
     },
     "EXP_24": {
       "id": "EXP_24",
@@ -8291,8 +8663,10 @@
       "de_dimer_median_kcal_mol": -0.155,
       "sigma_bde_kcal_mol": 12.553,
       "iqr_bde_kcal_mol": 24.307,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.493,
+      "verdict_agreement": "4/4"
     },
     "EXP_25": {
       "id": "EXP_25",
@@ -8337,7 +8711,9 @@
       "sigma_bde_kcal_mol": 7.065,
       "iqr_bde_kcal_mol": 13.419,
       "confidence_grade": "Medium",
-      "dft_verification_flag": false
+      "dft_verification_flag": false,
+      "sapis_spread": 0.564,
+      "verdict_agreement": "4/4"
     },
     "EXP_26": {
       "id": "EXP_26",
@@ -8381,8 +8757,10 @@
       "de_dimer_median_kcal_mol": -0.254,
       "sigma_bde_kcal_mol": 14.646,
       "iqr_bde_kcal_mol": 11.673,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.761,
+      "verdict_agreement": "4/4"
     },
     "EXP_27": {
       "id": "EXP_27",
@@ -8426,8 +8804,10 @@
       "de_dimer_median_kcal_mol": -0.4,
       "sigma_bde_kcal_mol": 12.813,
       "iqr_bde_kcal_mol": 9.179,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.409,
+      "verdict_agreement": "3/4"
     },
     "EXP_28": {
       "id": "EXP_28",
@@ -8471,8 +8851,10 @@
       "de_dimer_median_kcal_mol": -0.279,
       "sigma_bde_kcal_mol": 16.643,
       "iqr_bde_kcal_mol": 29.786,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.042,
+      "verdict_agreement": "4/4"
     },
     "EXP_29": {
       "id": "EXP_29",
@@ -8516,8 +8898,10 @@
       "de_dimer_median_kcal_mol": -0.318,
       "sigma_bde_kcal_mol": 15.69,
       "iqr_bde_kcal_mol": 21.201,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.007,
+      "verdict_agreement": "4/4"
     },
     "EXP_30": {
       "id": "EXP_30",
@@ -8561,8 +8945,10 @@
       "de_dimer_median_kcal_mol": -0.315,
       "sigma_bde_kcal_mol": 20.378,
       "iqr_bde_kcal_mol": 24.695,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.036,
+      "verdict_agreement": "4/4"
     },
     "EXP_31": {
       "id": "EXP_31",
@@ -8606,8 +8992,10 @@
       "de_dimer_median_kcal_mol": -0.705,
       "sigma_bde_kcal_mol": 15.693,
       "iqr_bde_kcal_mol": 17.188,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.005,
+      "verdict_agreement": "4/4"
     },
     "EXP_32": {
       "id": "EXP_32",
@@ -8651,8 +9039,10 @@
       "de_dimer_median_kcal_mol": -1.111,
       "sigma_bde_kcal_mol": 35.664,
       "iqr_bde_kcal_mol": 45.183,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 3.49,
+      "verdict_agreement": "3/4"
     },
     "EXP_33": {
       "id": "EXP_33",
@@ -8696,8 +9086,10 @@
       "de_dimer_median_kcal_mol": -0.631,
       "sigma_bde_kcal_mol": 12.642,
       "iqr_bde_kcal_mol": 16.3,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.006,
+      "verdict_agreement": "4/4"
     },
     "EXP_34": {
       "id": "EXP_34",
@@ -8741,8 +9133,10 @@
       "de_dimer_median_kcal_mol": -0.15,
       "sigma_bde_kcal_mol": 47.88,
       "iqr_bde_kcal_mol": 69.239,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.0,
+      "verdict_agreement": "4/4"
     },
     "EXP_35": {
       "id": "EXP_35",
@@ -8786,8 +9180,10 @@
       "de_dimer_median_kcal_mol": -0.132,
       "sigma_bde_kcal_mol": 46.641,
       "iqr_bde_kcal_mol": 69.334,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.003,
+      "verdict_agreement": "4/4"
     },
     "EXP_36": {
       "id": "EXP_36",
@@ -8831,8 +9227,10 @@
       "de_dimer_median_kcal_mol": -1.302,
       "sigma_bde_kcal_mol": 32.942,
       "iqr_bde_kcal_mol": 58.2,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.206,
+      "verdict_agreement": "4/4"
     },
     "EXP_37": {
       "id": "EXP_37",
@@ -8876,8 +9274,10 @@
       "de_dimer_median_kcal_mol": -0.323,
       "sigma_bde_kcal_mol": 21.528,
       "iqr_bde_kcal_mol": 28.423,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "Medium",
+      "dft_verification_flag": false,
+      "sapis_spread": 2.146,
+      "verdict_agreement": "3/4"
     },
     "EXP_38": {
       "id": "EXP_38",
@@ -8921,8 +9321,10 @@
       "de_dimer_median_kcal_mol": -0.204,
       "sigma_bde_kcal_mol": 28.637,
       "iqr_bde_kcal_mol": 55.125,
-      "confidence_grade": "Low (DFT Flag)",
-      "dft_verification_flag": true
+      "confidence_grade": "High",
+      "dft_verification_flag": false,
+      "sapis_spread": 0.135,
+      "verdict_agreement": "4/4"
     }
   }
 }

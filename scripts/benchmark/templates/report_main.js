@@ -738,11 +738,6 @@
         if (sideRxn) sideRxn.textContent = `공인 합성 반응 (${cRxn})`;
         if (sideNeg) sideNeg.textContent = `Negative Controls (${cNeg})`;
         if (sideSvg) sideSvg.innerHTML = `고유 <code>SMILES</code> ${svgCnt}종 및 반응식 12종 실시간 시각화 지원 (정준 중복 0건).`;
-        const headerStats = document.getElementById('dbHeaderStats');
-        if (headerStats) {
-          const n2d = recs.filter(r => r.has_2d).length;
-          headerStats.innerHTML = `${cAll} Canonical Unique Entities (38 Patent/Lit Integrated) &bull; ${n2d} with 2D SVG (${svgCnt} Unique SMILES)`;
-        }
         dbExplorerReady = true;
       }
       renderDbExplorer();
@@ -1024,23 +1019,22 @@
               </div>`;
             }
 
-            const sapisTxt = (r.sapis_score != null) ? Number(r.sapis_score).toFixed(2) : '-';
-            let ensSubHtml = '';
+            let confBadge = '<span class="db-mini-pill" style="background:#f1f5f9;color:#64748b;border-color:#cbd5e1;">-</span>';
             if (r.ens_n_models >= 2) {
               const gStyle = r.ens_grade === 'High'
-                ? 'background:#dcfce7;color:#15803d;border:1px solid #86efac;'
+                ? 'background:#dcfce7;color:#15803d;border-color:#86efac;font-weight:700;'
                 : (r.ens_grade === 'Medium'
-                  ? 'background:#fef3c7;color:#b45309;border:1px solid #fde68a;'
-                  : 'background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;');
-              const gShort = r.ens_grade === 'High'
-                ? 'Confidence: High'
-                : (r.ens_grade === 'Medium' ? 'Confidence: Med' : 'Confidence: Low');
+                  ? 'background:#fef3c7;color:#b45309;border-color:#fde68a;font-weight:700;'
+                  : 'background:#fee2e2;color:#b91c1c;border-color:#fca5a5;font-weight:700;');
+              const gShort = r.ens_grade === 'High' ? 'High' : (r.ens_grade === 'Medium' ? 'Med' : 'Low');
+              const agTxt = r.ens_agree ? `판정 합의 ${r.ens_agree}, ` : '';
+              const spTxt = (r.ens_spread != null) ? `ΔSAPIS = ${Number(r.ens_spread).toFixed(2)}, ` : '';
               const gTip = r.ens_grade === 'High'
-                ? `4-uMLIP 앙상블 신뢰도 높음 (σ_BDE = ${r.ens_sigma_bde} kcal/mol < 5.0)`
+                ? `4-uMLIP 앙상블 신뢰도 높음 (${agTxt}${spTxt}σ_BDE = ${r.ens_sigma_bde} kcal/mol)`
                 : (r.ens_grade === 'Medium'
-                  ? `4-uMLIP 앙상블 신뢰도 보통 (σ_BDE = ${r.ens_sigma_bde} kcal/mol)`
-                  : `4-uMLIP 앙상블 신뢰도 낮음 — 정밀 DFT 검증 권장 (σ_BDE = ${r.ens_sigma_bde} kcal/mol ≥ 12.0)`);
-              ensSubHtml = `<div style="display:flex;align-items:center;gap:4px;margin-top:2px;flex-wrap:wrap;"><span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#64748b;">[${Number(r.ens_min).toFixed(2)}–${Number(r.ens_max).toFixed(2)}]</span><span style="font-size:0.62rem;font-weight:700;padding:0 5px;border-radius:999px;${gStyle}" title="${gTip}">${gShort}</span></div>`;
+                  ? `4-uMLIP 앙상블 신뢰도 보통 (${agTxt}${spTxt}σ_BDE = ${r.ens_sigma_bde} kcal/mol)`
+                  : `4-uMLIP 앙상블 판정 분열 — 정밀 DFT 검증 권장 (${agTxt}${spTxt}σ_BDE = ${r.ens_sigma_bde} kcal/mol)`);
+              confBadge = `<span class="db-mini-pill" style="${gStyle}" title="${gTip}">${gShort}</span>`;
             }
             let verdictBadge = '<span class="db-mini-pill" style="background:#f1f5f9;color:#475569;border-color:#cbd5e1;">참고 DB</span>';
             if (r.sapis_pass === true) {
@@ -1059,67 +1053,42 @@
                 : escapeHtmlStr(r.t_dec.display || '-');
               const tdTech = escapeHtmlStr((r.t_dec.cond && r.t_dec.cond.technique) || '');
               const tdPath = escapeHtmlStr((r.t_dec.mech && r.t_dec.mech.primary_pathway) || '');
-              tdecCardHtml = `<div style="grid-column:1 / -1; border-top:1px dashed #cbd5e1; padding-top:5px; display:flex; align-items:flex-start; gap:6px; flex-wrap:wrap;" title="${tdTech} | ${tdPath}">
-                <span style="background:#ccfbf1;color:#0f766e;border:1px solid #5eead4;font-size:0.64rem;font-weight:700;padding:1px 6px;border-radius:999px;white-space:nowrap;font-family:'JetBrains Mono',monospace;">T<sub>dec</sub>: ${tdRange}</span>
-                <span style="font-size:0.68rem;color:#334155;flex:1;min-width:120px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">${tdPath}</span>
+              tdecCardHtml = `<div style="grid-column:1 / -1; border-top:1px dashed #e2e8f0; padding-top:5px;" title="${tdTech} | ${tdPath}">
+                <div style="color:#64748b; font-size:0.67rem;">분해 정보</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px; flex-wrap:wrap;">
+                  <span class="db-mini-pill" style="background:#ccfbf1;color:#0f766e;border-color:#5eead4;font-weight:700;font-family:'JetBrains Mono',monospace;">T<sub>dec</sub> ${tdRange}</span>
+                  <span style="font-size:0.7rem;color:#334155;flex:1;min-width:110px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">${tdPath}</span>
+                </div>
               </div>`;
             }
 
             const uniformSummaryHtml = `<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; font-size:0.74rem; margin-top:4px;">
               <div>
-                <div style="color:#64748b; font-size:0.67rem;">${r.ens_n_models >= 2 ? 'SAPIS (4-uMLIP)' : 'SAPIS 점수'}</div>
-                <div style="font-family:'JetBrains Mono', monospace; font-weight:800; font-size:0.86rem; color:#0f172a; margin-top:1px;">${sapisTxt}</div>
-                ${ensSubHtml}
+                <div style="color:#64748b; font-size:0.67rem;">합성 판정</div>
+                <div style="margin-top:3px;">${verdictBadge}</div>
               </div>
               <div>
-                <div style="color:#64748b; font-size:0.67rem;">합성 판정</div>
-                <div style="margin-top:2px;">${verdictBadge}</div>
+                <div style="color:#64748b; font-size:0.67rem;">Confidence</div>
+                <div style="margin-top:3px;">${confBadge}</div>
               </div>
               <div>
                 <div style="color:#64748b; font-size:0.67rem;">출처</div>
-                <div style="font-weight:600; color:#334155; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${srcTxt}">${srcTxt}</div>
+                <div style="font-weight:600; color:#334155; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${srcTxt}">${srcTxt}</div>
               </div>
               <div style="grid-column:1 / -1; border-top:1px dashed #e2e8f0; padding-top:5px;">
                 <div style="color:#64748b; font-size:0.67rem;">${r.sapis_pass === false ? '불가 원인 / 위험성' : '위험성'}</div>
-                <div style="font-weight:600; color:${riskColor}; margin-top:1px; line-height:1.4; word-break:keep-all;" title="${riskTxt}">${riskTxt}</div>
+                <div style="font-weight:600; color:${riskColor}; margin-top:2px; line-height:1.4; word-break:keep-all;" title="${riskTxt}">${riskTxt}</div>
               </div>
               ${tdecCardHtml}
             </div>`;
 
-            let subLine = escapeHtmlStr(r.chemical_name);
-            if (r.aliases && r.aliases.length) {
-              subLine += ` &bull; 별칭: ${escapeHtmlStr(r.aliases.slice(0, 2).join(', '))}`;
-            }
-            if (r.db_type === 'precursor' || r.db_type === 'expanded' || r.db_type === 'patent_expansion') {
-              if (r.target_surface) {
-                subLine += ` &bull; 차단: ${escapeHtmlStr(r.target_surface)}`;
-              } else {
-                subLine += ` &bull; ${escapeHtmlStr(r.target_films || '-')}`;
-              }
-            } else if (r.db_type === 'inhibitor') {
-              subLine += ` &bull; 차단: ${escapeHtmlStr(r.target_surface || '-')}`;
-            } else if (r.db_type === 'reagent') {
-              subLine = `${escapeHtmlStr(r.category)} &bull; ${escapeHtmlStr(r.purity || '-')}`;
-            } else if (r.db_type === 'reaction') {
-              subLine = `${escapeHtmlStr(r.solvent)} &bull; ${escapeHtmlStr(r.conditions)}`;
-            }
-
             return `<div class="db-card ${r.db_type === 'reaction' ? 'db-card-reaction' : ''}" onclick="openDbDetailModal(${idx})">
-              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
-                <span class="badge ${badgeCls}" style="font-size:0.68rem;">${escapeHtmlStr(r.db_label)}</span>
-                <div style="display:flex; gap:5px; align-items:center;">
-                  ${r.element && r.element !== '-' ? `<span class="badge badge-1g" style="font-size:0.68rem;">${escapeHtmlStr(r.element)}</span>` : ''}
-                  <span style="font-family:'JetBrains Mono'; font-size:0.71rem; color:#64748b;">${escapeHtmlStr(r.id)}${(r.secondary_ids && r.secondary_ids.length) ? ' (+' + r.secondary_ids.length + ')' : ''}</span>
-                </div>
-              </div>
               ${visualHtml}
-              <div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap;">
                 <div style="font-weight:700; font-size:0.95rem; color:#0f172a; line-height:1.35;">${escapeHtmlStr(r.name)}</div>
-                <div style="font-size:0.78rem; color:#475569; margin-top:2px; line-height:1.4;">${subLine}</div>
-                <div style="font-family:'JetBrains Mono'; font-size:0.73rem; color:#0369a1; margin-top:3px;">${escapeHtmlStr(r.formula)}${r.cas && r.cas !== '-' ? ' &bull; CAS ' + escapeHtmlStr(r.cas) : ''}</div>
+                <div style="font-family:'JetBrains Mono', monospace; font-size:0.74rem; font-weight:600; color:#0369a1;">${escapeHtmlStr(r.formula || '-')}</div>
               </div>
               ${uniformSummaryHtml}
-              ${r.smiles ? `<div style="font-family:'JetBrains Mono'; font-size:0.68rem; color:#64748b; background:#f8fafc; padding:4px 7px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtmlStr(r.smiles)}">${escapeHtmlStr(r.smiles)}</div>` : ''}
             </div>`;
           }).join('');
           gridEl.insertAdjacentHTML('beforeend', html);
@@ -1253,7 +1222,8 @@
       if (r.ens_n_models >= 2) {
         const pmStr = Object.entries(r.ens_per_model || {}).map(([k, v]) => `${escapeHtmlStr(k)}: <strong>${Number(v).toFixed(2)}</strong>`).join(' | ');
         const gLabel = r.ens_grade === 'High' ? 'High' : (r.ens_grade === 'Medium' ? 'Med' : 'Low (DFT 검증 권장)');
-        addRow('4-uMLIP Ensemble (UQ)', `Median SAPIS: <strong>${Number(r.ens_sapis).toFixed(2)}</strong> [${Number(r.ens_min).toFixed(2)} ~ ${Number(r.ens_max).toFixed(2)}] | Confidence: <strong>${gLabel}</strong> (&sigma;<sub>BDE</sub> = ${r.ens_sigma_bde} kcal/mol, IQR = ${r.ens_iqr_bde} kcal/mol)<br><span style="font-size:0.76rem;color:#475569;">${pmStr}</span>`);
+        const agBadge = r.ens_agree ? ` | 합의: <strong>${escapeHtmlStr(r.ens_agree)}</strong>` : '';
+        addRow('4-uMLIP Ensemble (UQ)', `Median SAPIS: <strong>${Number(r.ens_sapis).toFixed(2)}</strong> [${Number(r.ens_min).toFixed(2)} ~ ${Number(r.ens_max).toFixed(2)}]${agBadge} | Confidence: <strong>${gLabel}</strong> (&sigma;<sub>BDE</sub> = ${r.ens_sigma_bde} kcal/mol, IQR = ${r.ens_iqr_bde} kcal/mol)<br><span style="font-size:0.76rem;color:#475569;">${pmStr}</span>`);
       }
       if (r.t_dec) {
         const td = r.t_dec;

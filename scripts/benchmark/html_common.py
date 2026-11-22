@@ -175,14 +175,29 @@ def render_mol2d_svg(smi: str, width: int = 240, height: int = 165) -> str:
         if mol is None:
             return ""
         mol.UpdatePropertyCache(strict=False)
+    else:
+        # Canonicalize atom order so identical graphs always receive identical 2D layouts
+        try:
+            canon = Chem.MolToSmiles(mol, canonical=True)
+            m_canon = Chem.MolFromSmiles(canon)
+            if m_canon is not None:
+                mol = m_canon
+        except Exception:
+            pass
     try:
+        rdDepictor.SetPreferCoordGen(True)
         rdDepictor.Compute2DCoords(mol)
+        rdDepictor.StraightenDepiction(mol)
     except Exception:
-        pass
+        try:
+            rdDepictor.SetPreferCoordGen(False)
+            rdDepictor.Compute2DCoords(mol)
+        except Exception:
+            pass
     drawer = rdMolDraw2D.MolDraw2DSVG(width, height)
     opts = drawer.drawOptions()
     opts.clearBackground = False
-    opts.padding = 0.08
+    opts.padding = 0.12
     opts.bondLineWidth = 1.6
     opts.minFontSize = 11
     drawer.DrawMolecule(mol)
