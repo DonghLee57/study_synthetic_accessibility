@@ -26,24 +26,19 @@ from intro_section import build_intro_html
 from verification_section import build_verification_html
 from db_explorer_section import build_db_explorer_and_sankey
 from history_and_expansion_html_section import (
-    build_analysis_history_technical_html,
-    build_patent_expansion_storyline_html,
     build_patent_expansion_technical_html,
 )
 from html_common import COMPACT_REPORT_CSS, compress_html_report
 from inverse_design_model import (
-    build_inverse_design_storyline_html,
     build_inverse_design_technical_html,
     compute_inverse_design_analysis,
 )
 from ligand_coord_html_section import (
     analyze_precursor_coordination_and_ligands,
-    build_ligand_coord_storyline_html,
     build_ligand_coord_technical_html,
 )
 from main_report_sections import build_main_report_sections
 from mechanistic_ml_model import (
-    build_mechanistic_storyline_html,
     build_mechanistic_technical_html,
     evaluate_mechanistic_ml_models,
 )
@@ -84,35 +79,20 @@ def build_full_report_html() -> str:
     neb_trajectory_json = build_neb_trajectory_payload_json(neb_bench_path, unified_bench_path)
 
     ligand_coord_stats = analyze_precursor_coordination_and_ligands(unified_bench_path)
-    ligand_coord_storyline_html = build_ligand_coord_storyline_html(
-        unified_bench_path, stats=ligand_coord_stats
-    )
     ligand_coord_technical_html = build_ligand_coord_technical_html(
         unified_bench_path, stats=ligand_coord_stats
     )
 
     inverse_design_stats = compute_inverse_design_analysis(unified_bench_path)
-    inverse_design_storyline_html = build_inverse_design_storyline_html(
-        unified_bench_path, inv_stats=inverse_design_stats
-    )
     inverse_design_technical_html = build_inverse_design_technical_html(
         unified_bench_path, inv_stats=inverse_design_stats
     )
 
     mech_ml_stats = evaluate_mechanistic_ml_models(unified_bench_path, neb_bench_path)
-    mechanistic_ml_storyline_html = build_mechanistic_storyline_html(
-        unified_bench_path, neb_bench_path, mech_stats=mech_ml_stats
-    )
     mechanistic_ml_technical_html = build_mechanistic_technical_html(
         unified_bench_path, neb_bench_path, mech_stats=mech_ml_stats
     )
 
-    analysis_history_technical_html = build_analysis_history_technical_html(
-        unified_bench_path, neb_bench_path, expansion_cand_path
-    )
-    patent_expansion_storyline_html = build_patent_expansion_storyline_html(
-        expansion_cand_path, unified_bench_path
-    )
     patent_expansion_technical_html = build_patent_expansion_technical_html(
         expansion_cand_path, unified_bench_path
     )
@@ -127,6 +107,7 @@ def build_full_report_html() -> str:
     shell_replacements: Dict[str, str] = {
         "<!-- REPORT_STYLES_PLACEHOLDER -->": _read_template_asset("report_styles.css") + COMPACT_REPORT_CSS,
         "<!-- TAB_STORYLINE_SHELL_PLACEHOLDER -->": _read_template_asset("tab_storyline.html"),
+        "<!-- TAB_SA_STUDY_SHELL_PLACEHOLDER -->": _read_template_asset("tab_sa_study.html"),
         "<!-- TAB_TECHNICAL_SHELL_PLACEHOLDER -->": _read_template_asset("tab_technical.html"),
         "<!-- TAB_DATABASE_SHELL_PLACEHOLDER -->": _read_template_asset("tab_database.html"),
         "<!-- REPORT_MAIN_JS_PLACEHOLDER -->": _read_template_asset("report_main.js"),
@@ -136,23 +117,18 @@ def build_full_report_html() -> str:
         html_doc = html_doc.replace(token, content)
 
     section_replacements: Dict[str, str] = {
+        "<!-- BR_SASCORE_THEORY_PLACEHOLDER -->": br_sascore_theory_html,
+        "<!-- VERIFICATION_PLACEHOLDER -->": verification_html,
         **main_placeholders,
         **db_placeholders,
         "<!-- NEB_DECOMP_STORYLINE_PLACEHOLDER -->": neb_decomp_storyline_html,
         "<!-- NEB_DECOMP_TECHNICAL_PLACEHOLDER -->": neb_decomp_technical_html,
-        "<!-- LIGAND_COORD_STORYLINE_PLACEHOLDER -->": ligand_coord_storyline_html,
         "<!-- LIGAND_COORD_TECHNICAL_PLACEHOLDER -->": ligand_coord_technical_html,
-        "<!-- INVERSE_DESIGN_STORYLINE_PLACEHOLDER -->": inverse_design_storyline_html,
         "<!-- INVERSE_DESIGN_TECHNICAL_PLACEHOLDER -->": inverse_design_technical_html,
-        "<!-- MECHANISTIC_ML_STORYLINE_PLACEHOLDER -->": mechanistic_ml_storyline_html,
         "<!-- MECHANISTIC_ML_TECHNICAL_PLACEHOLDER -->": mechanistic_ml_technical_html,
-        "<!-- ANALYSIS_HISTORY_TECHNICAL_PLACEHOLDER -->": analysis_history_technical_html,
-        "<!-- PATENT_EXPANSION_STORYLINE_PLACEHOLDER -->": patent_expansion_storyline_html,
         "<!-- PATENT_EXPANSION_TECHNICAL_PLACEHOLDER -->": patent_expansion_technical_html,
-        "<!-- BR_SASCORE_THEORY_PLACEHOLDER -->": br_sascore_theory_html,
         "<!-- GLOSSARY_PLACEHOLDER -->": glossary_html,
         "<!-- INTRO_PLACEHOLDER -->": intro_html,
-        "<!-- VERIFICATION_PLACEHOLDER -->": verification_html,
         "__NEB_TRAJECTORY_JSON_PLACEHOLDER__": neb_trajectory_json,
     }
     for token, content in section_replacements.items():

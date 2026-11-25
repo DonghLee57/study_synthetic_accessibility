@@ -279,6 +279,16 @@ def build_verification_html() -> str:
         )
 
     return f"""
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+        <button type="button" class="db-pill active" id="btnVerifySubDataset" onclick="switchVerifySubView('dataset')" style="padding:8px 16px; font-weight:700;">
+          데이터셋 출처 검증 ({total_n}종 체크리스트)
+        </button>
+        <button type="button" class="db-pill" id="btnVerifySubLit" onclick="switchVerifySubView('literature')" style="padding:8px 16px; font-weight:700;">
+          검증 학술 문헌 아카이브 (34편 PDF/XML)
+        </button>
+      </div>
+
+      <div id="verifyPaneDataset">
       <div class="db-controls-card" style="margin-bottom:14px;">
         <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
           <div>
@@ -343,5 +353,118 @@ def build_verification_html() -> str:
             </tbody>
           </table>
         </div>
+      </div>
+      </div>
+
+      <div id="verifyPaneLit" style="display:none;">
+        <section id="verification-hub">
+          <div class="section-header">
+            <div class="section-tag">Literature Verification &amp; Master Archive</div>
+            <h2 class="section-title">검증 학술 문헌 종합 통계 및 원문(PDF/XML) 아카이브 (총 34편)</h2>
+            <p class="section-desc">
+              SA 평가 지표(1~3세대 9편), 경로 내재화 생성·역합성 벤치마크(10편), 반도체 ALD/CVD 프리커서 ML·DFT(6편), 기판 면선택적(ASD) 증착(4편), VASP 계산 자동화(5편)까지 <strong>총 34편의 공식 학술 문헌 DOI 전수 검증</strong> 및 원클릭 열람 아카이브입니다.
+            </p>
+          </div>
+
+          <div class="table-responsive" style="margin: 14px 0 20px 0;">
+            <table style="font-size:0.86rem;">
+              <thead>
+                <tr style="background:#f1f5f9;">
+                  <th style="width:230px;">연구 도메인 및 문헌 분류</th>
+                  <th style="width:75px; text-align:center;">문헌 수</th>
+                  <th>주요 핵심 모델 / 대상 연구</th>
+                  <th style="width:95px; text-align:center;">연도 범위</th>
+                  <th style="width:110px; text-align:center;">원문 확보</th>
+                  <th style="width:105px; text-align:center;">DOI 검증</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. 1~3세대 합성 가능성 (SA) 평가 모델</strong></td>
+                  <td style="text-align:center; font-weight:700; color:#0284c7;">9편</td>
+                  <td>SAScore, SYBA, SCScore, RAscore, RetroGNN, GASA, DeepSA, DFRscore, BR-SAScore</td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2009 ~ 2024</td>
+                  <td style="text-align:center;"><span class="badge badge-1g">6편 로컬</span></td>
+                  <td style="text-align:center;"><span class="badge badge-3g">9/9 검증</span></td>
+                </tr>
+                <tr>
+                  <td><strong>2. 4세대 경로 내재화 및 역합성/생성</strong></td>
+                  <td style="text-align:center; font-weight:700; color:#7c3aed;">10편</td>
+                  <td>ChemProjector, SynFormer, SynFlowNet, RxnFlow, ReaSyn, SynNet, Coley BM 등</td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2020 ~ 2026</td>
+                  <td style="text-align:center;"><span class="badge badge-2g">9편 로컬</span></td>
+                  <td style="text-align:center;"><span class="badge badge-3g">10/10 검증</span></td>
+                </tr>
+                <tr>
+                  <td><strong>3. 반도체 ALD 프리커서 ML &amp; DFT</strong></td>
+                  <td style="text-align:center; font-weight:700; color:#059669;">6편</td>
+                  <td>Kulik TMC, MPScore, AS-ALD ML, ALD-MLIP, ALD Roadmap, Aminosilane DFT</td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2017 ~ 2026</td>
+                  <td style="text-align:center;"><span class="badge badge-3g">6편 전원</span></td>
+                  <td style="text-align:center;"><span class="badge badge-3g">6/6 검증</span></td>
+                </tr>
+                <tr>
+                  <td><strong>4. 기판 계면 흡착 및 면선택적(ASD) 증착</strong></td>
+                  <td style="text-align:center; font-weight:700; color:#d97706;">4편</td>
+                  <td>Oh(ASD 프리커서 선택), Tonner(루이스산도/입체), Mackus(ASD 수식), Parsons(원리)</td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2019 ~ 2024</td>
+                  <td style="text-align:center;"><span class="badge badge-2g">2편 로컬 (XML)</span></td>
+                  <td style="text-align:center;"><span class="badge badge-3g">4/4 검증</span></td>
+                </tr>
+                <tr>
+                  <td><strong>5. VASP 제일원리 계산 자동화 프레임워크</strong></td>
+                  <td style="text-align:center; font-weight:700; color:#e11d48;">5편</td>
+                  <td>Pymatgen, atomate2+jobflow, AiiDA-VASP, Architector, Sella</td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2013 ~ 2024</td>
+                  <td style="text-align:center;"><span class="badge badge-1g">3편 로컬 (PDF)</span></td>
+                  <td style="text-align:center;"><span class="badge badge-3g">5/5 검증</span></td>
+                </tr>
+                <tr style="background:#f8fafc; font-weight:700;">
+                  <td>전체 총괄 (Master Total)</td>
+                  <td style="text-align:center; font-size:0.96rem; color:#0f172a;">34편</td>
+                  <td>22개 오픈소스 도구 및 반도체 프리커서 통합 DB 연계</td>
+                  <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2009 ~ 2026</td>
+                  <td style="text-align:center; color:#0369a1;">26편 (76%)</td>
+                  <td style="text-align:center; color:#15803d;">34/34 (100%)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card" style="padding:16px;">
+            <div class="filter-bar">
+              <div class="filter-group">
+                <button class="filter-btn active" onclick="filterPapers('all', event)">전체 (34)</button>
+                <button class="filter-btn" onclick="filterPapers('1G', event)">1세대: 통계/휴리스틱 (2)</button>
+                <button class="filter-btn" onclick="filterPapers('2G', event)">2세대: 반응/CASP 대리 (3)</button>
+                <button class="filter-btn" onclick="filterPapers('3G', event)">3세대: GNN/반응인지 (4)</button>
+                <button class="filter-btn" onclick="filterPapers('4G', event)">4세대: 합성경로 내재화 (5)</button>
+                <button class="filter-btn" onclick="filterPapers('Related', event)">역합성/벤치마크 (5)</button>
+                <button class="filter-btn" onclick="filterPapers('Precursor', event)">반도체 프리커서 ML/DFT (6)</button>
+                <button class="filter-btn" onclick="filterPapers('ASD', event)">기판 흡착/면선택 ALD (4)</button>
+                <button class="filter-btn" onclick="filterPapers('VASP', event)">VASP 자동화 프레임워크 (5)</button>
+                <button class="filter-btn" onclick="filterPapers('downloaded', event)">원문 로컬 확보 (26)</button>
+              </div>
+              <input type="text" id="paperSearch" class="search-input" placeholder="모델명, 저자, 프리커서, ALD, VASP 검색..." onkeyup="searchPapers()" oninput="searchPapers()">
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:44px; text-align:center;">No</th>
+                    <th style="width:110px;">세대 / 분류</th>
+                    <th style="width:120px;">모델 / 약칭</th>
+                    <th style="width:60px; text-align:center;">연도</th>
+                    <th style="min-width:460px;">검증된 공식 논문 제목, 저자진 및 게재 저널</th>
+                    <th style="width:230px;">공식 DOI 및 원문 열람</th>
+                  </tr>
+                </thead>
+                <tbody id="litTableBody">
+<!-- LIT_ROWS_PLACEHOLDER -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
     """

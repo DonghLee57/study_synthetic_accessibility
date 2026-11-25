@@ -71,10 +71,10 @@
         요약
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-brtheory" onclick="switchViewTab('brtheory')">
-        배경이론
+        SA 모델 스터디
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-technical" onclick="switchViewTab('technical')">
-        리포트
+        반도체 확장 리포트
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-database" onclick="switchViewTab('database')">
         DB 탐색
@@ -83,10 +83,10 @@
         용어 사전
       </button>
       <button type="button" class="view-mode-btn" id="btn-tab-verification" onclick="switchViewTab('verification')">
-        출처 검증
+        문헌·출처 검증
       </button>
       <div style="margin-left:auto; font-size:0.8rem; color:#64748b; font-weight:500;">
-        열람 목적에 따라 소개, 요약, 배경이론, 리포트, DB 탐색, 용어 사전, 출처 검증 뷰를 전환할 수 있습니다.
+        열람 목적에 따라 소개, 요약, SA 모델 스터디, 반도체 확장 리포트, DB 탐색, 용어 사전, 문헌·출처 검증 뷰를 전환할 수 있습니다.
       </div>
     </div>
   </nav>
@@ -118,35 +118,28 @@
         </div>
       </div>
 
-      <!-- Technical Deep TOC -->
+      <!-- Technical Deep TOC (5 Logical Parts, 10 Focused Sections) -->
       <div id="toc-technical" style="display:none;">
         <div class="toc-header">
-          <span>리포트 목차 (22대 섹션)</span>
-          <span class="toc-progress" id="tocProgress">Sec 1/22</span>
+          <span>확장 리포트 목차 (5대 Part)</span>
+          <span class="toc-progress" id="tocProgress">Sec 1/10</span>
         </div>
         <ul class="toc-list" id="tocList">
-          <li><a href="#verification-hub" class="toc-link active" data-target="verification-hub">1. 문헌 종합 통계 및 아카이브 (34편)</a></li>
-          <li><a href="#review-critique" class="toc-link" data-target="review-critique">2. SAScore 한계 및 타당성 검토</a></li>
-          <li><a href="#paradigm-evolution" class="toc-link" data-target="paradigm-evolution">3. 세대별 패러다임 진화 및 수식</a></li>
-          <li><a href="#comparison-matrix" class="toc-link" data-target="comparison-matrix">4. 16개 모델 정량 비교 매트릭스</a></li>
-          <li><a href="#extended-studies" class="toc-link" data-target="extended-studies">5. 유사 및 확장 연구 심층 분석</a></li>
-          <li><a href="#decision-guide" class="toc-link" data-target="decision-guide">6. 연구 목적별 모델 선정 가이드</a></li>
-          <li><a href="#opensource-eval" class="toc-link" data-target="opensource-eval">7. 오픈소스 저장소 검증 및 18대 모델 4단계 파이프라인 실측 종합 평가</a></li>
-          <li><a href="#semiconductor-precursor" class="toc-link" data-target="semiconductor-precursor">8. 반도체 프리커서 적용 및 확장</a></li>
-          <li><a href="#dft-synergy" class="toc-link" data-target="dft-synergy">9. DFT 계산 연계 응용 프레임워크</a></li>
-          <li><a href="#vasp-automation" class="toc-link" data-target="vasp-automation">10. VASP 기반 DFT 자동화 스택</a></li>
-          <li><a href="#semiconductor-db" class="toc-link" data-target="semiconductor-db">11. 상용 프리커서·반응 및 AS-ALD 인히비터 DB</a></li>
-          <li><a href="#precursor-inverse-design" class="toc-link" data-target="precursor-inverse-design">12. 프리커서 Inverse Design &amp; 연산 매핑</a></li>
-          <li><a href="#dft-tuning-roadmap" class="toc-link" data-target="dft-tuning-roadmap">13. 반도체 Model Tuning &amp; DFT·실험 융합 전략</a></li>
-          <li><a href="#synthesis-workflow" class="toc-link" data-target="synthesis-workflow">14. 프리커서·인히비터 합성 Workflow &amp; DFT·MLIP 설계</a></li>
-          <li><a href="#phase1-phase2-benchmark" class="toc-link" data-target="phase1-phase2-benchmark">15. 통합 160종 물리-배위 Benchmark &amp; SevenNet-0 검증</a></li>
-          <li><a href="#general-metal-expansion" class="toc-link" data-target="general-metal-expansion">16. 세대별 유기 Dataset 및 일반 금속 반응 확장</a></li>
-          <li><a href="#neb-decomp-kinetics" class="toc-link" data-target="neb-decomp-kinetics">17. SevenNet 반응경로(CI-NEB) 열분해 벤치마크 &amp; ALD T<sub>decomp</sub> 연계</a></li>
-          <li><a href="#tm-coord-ligand-stats" class="toc-link" data-target="tm-coord-ligand-stats">18. 전이금속 다중 배위수 결정 및 리간드 조합 통계</a></li>
-          <li><a href="#precursor-inverse-model-synthesis" class="toc-link" data-target="precursor-inverse-model-synthesis">19. 반도체 프리커서 역설계 모델 통합 (CoOrd-Inv)</a></li>
-        <li><a href="#ml-mechanistic-generalization" class="toc-link" data-target="ml-mechanistic-generalization">20. 중심원자&ndash;리간드 물리&middot;메커니즘 모델 및 일반화 검증</a></li>
-        <li><a href="#analysis-history-roadmap" class="toc-link" data-target="analysis-history-roadmap">21. 연구&middot;분석 이력 및 단계별 검증 로드맵</a></li>
-        <li><a href="#patent-literature-expansion" class="toc-link" data-target="patent-literature-expansion">22. 한&middot;중&middot;일&middot;미&middot;대만 특허 및 중심금속별 문헌 DB 확장</a></li>
+          <li style="font-size:0.7rem; font-weight:800; color:#0369a1; padding:6px 10px 2px; text-transform:uppercase;">Part I. 기존 모델 실패 진단</li>
+          <li><a href="#opensource-eval" class="toc-link active" data-target="opensource-eval">1. 18대 모델 파이프라인 실측 진단</a></li>
+          <li><a href="#semiconductor-precursor" class="toc-link" data-target="semiconductor-precursor">2. 반도체 도메인 병목 및 확장 전략</a></li>
+          <li style="font-size:0.7rem; font-weight:800; color:#059669; padding:8px 10px 2px; text-transform:uppercase;">Part II. SAPIS 모델 및 일반화 검증</li>
+          <li><a href="#phase1-phase2-benchmark" class="toc-link" data-target="phase1-phase2-benchmark">3. 통합 160종 SAPIS 및 물리 지표</a></li>
+          <li><a href="#tm-coord-ligand-stats" class="toc-link" data-target="tm-coord-ligand-stats">4. 전이금속 다중 배위수 및 리간드 통계</a></li>
+          <li><a href="#ml-mechanistic-generalization" class="toc-link" data-target="ml-mechanistic-generalization">5. 중심원자–리간드 일반화 검증</a></li>
+          <li><a href="#patent-literature-expansion" class="toc-link" data-target="patent-literature-expansion">6. 5극 특허·문헌 38종 확장 검증</a></li>
+          <li style="font-size:0.7rem; font-weight:800; color:#d97706; padding:8px 10px 2px; text-transform:uppercase;">Part III. 열분해 동역학 연계</li>
+          <li><a href="#neb-decomp-kinetics" class="toc-link" data-target="neb-decomp-kinetics">7. CI-NEB 열분해 및 ALD T<sub>decomp</sub></a></li>
+          <li style="font-size:0.7rem; font-weight:800; color:#7c3aed; padding:8px 10px 2px; text-transform:uppercase;">Part IV. 배위 제약 역설계</li>
+          <li><a href="#precursor-inverse-model-synthesis" class="toc-link" data-target="precursor-inverse-model-synthesis">8. CoOrd-Inv 역설계 모델 및 실측</a></li>
+          <li style="font-size:0.7rem; font-weight:800; color:#475569; padding:8px 10px 2px; text-transform:uppercase;">Part V. DFT 자동화 및 합성 SOP</li>
+          <li><a href="#vasp-automation" class="toc-link" data-target="vasp-automation">9. DFT 물성 연계 및 VASP 자동화</a></li>
+          <li><a href="#synthesis-workflow" class="toc-link" data-target="synthesis-workflow">10. 합성 워크플로우 및 MLIP 융합</a></li>
         </ul>
 
         <div class="toc-sub-actions">
@@ -157,19 +150,22 @@
         </div>
       </div>
 
-      <!-- Background Theory Sidebar -->
+      <!-- SA Model Study Sidebar -->
       <div id="toc-brtheory" style="display:none;">
         <div class="toc-header">
-          <span>배경이론 목차</span>
-          <span class="toc-progress" id="brtTocProgress">Sec 1/2</span>
+          <span>SA 모델 스터디 목차</span>
+          <span class="toc-progress" id="brtTocProgress">Sec 1/5</span>
         </div>
         <ul class="toc-list">
-          <li><a href="#brt-sec1" class="toc-link active" data-target="brt-sec1">1. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈</a></li>
-          <li><a href="#brt-sec2" class="toc-link" data-target="brt-sec2">2. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거</a></li>
+          <li><a href="#paradigm-evolution" class="toc-link active" data-target="paradigm-evolution">1. 세대별 패러다임 진화 (1G~4G)</a></li>
+          <li><a href="#brt-sec1" class="toc-link" data-target="brt-sec1">2. SAScore (2009) 원리 및 재구성 이슈</a></li>
+          <li><a href="#brt-sec2" class="toc-link" data-target="brt-sec2">3. BR-SAScore (2024) 원리 및 선정 근거</a></li>
+          <li><a href="#comparison-matrix" class="toc-link" data-target="comparison-matrix">4. 16종 모델 비교 및 선정 가이드</a></li>
+          <li><a href="#general-metal-expansion" class="toc-link" data-target="general-metal-expansion">5. 학습 Dataset 및 금속 확장 한계</a></li>
         </ul>
         <div class="toc-sub-actions">
           <button type="button" class="btn-toc-utility" onclick="switchViewTab('storyline')">요약 탭으로 이동</button>
-          <button type="button" class="btn-toc-utility" onclick="switchViewTab('technical')">리포트 탭으로 이동</button>
+          <button type="button" class="btn-toc-utility" onclick="switchViewTab('technical')">반도체 확장 리포트로 이동</button>
         </div>
       </div>
     </aside>
@@ -202,7 +198,7 @@
       <!-- TAB 4: BR-SASCORE FOUNDATIONAL THEORY & DATASET STUDY GUIDE           -->
       <!-- ===================================================================== -->
       <div id="tab-content-brtheory" style="display:none;">
-        <!-- BR_SASCORE_THEORY_PLACEHOLDER -->
+        <!-- TAB_SA_STUDY_SHELL_PLACEHOLDER -->
       </div> <!-- end #tab-content-brtheory -->
 
       <!-- ===================================================================== -->

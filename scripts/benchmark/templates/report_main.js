@@ -71,8 +71,9 @@
     ];
 
     function toggleAllTables() {
-      const anyClosed = tableConfigs.some(cfg => !document.getElementById(cfg.panel).classList.contains('open'));
-      tableConfigs.forEach(cfg => {
+      const activeCfgs = tableConfigs.filter(cfg => document.getElementById(cfg.panel));
+      const anyClosed = activeCfgs.some(cfg => !document.getElementById(cfg.panel).classList.contains('open'));
+      activeCfgs.forEach(cfg => {
         const panel = document.getElementById(cfg.panel);
         const btn = document.getElementById(cfg.btn);
         if (!panel || !btn) return;
@@ -91,7 +92,9 @@
 
     function updateGlobalToggleBtnState() {
       const globalBtn = document.getElementById('btnToggleAllTables');
-      const anyClosed = tableConfigs.some(cfg => !document.getElementById(cfg.panel).classList.contains('open'));
+      if (!globalBtn) return;
+      const activeCfgs = tableConfigs.filter(cfg => document.getElementById(cfg.panel));
+      const anyClosed = activeCfgs.some(cfg => !document.getElementById(cfg.panel).classList.contains('open'));
       globalBtn.textContent = anyClosed ? '전체 상세 테이블 일괄 펼치기' : '전체 상세 테이블 일괄 접기';
     }
 
@@ -484,6 +487,9 @@
         if (contentVerification) contentVerification.style.display = 'block';
         if (!skipScrollTop) window.scrollTo(0, 0);
         initVerifyTab();
+        requestAnimationFrame(() => {
+          renderKatexInContainer('verification', contentVerification);
+        });
       } else {
         btnTechnical.classList.add('active');
         if (contentTechnical) contentTechnical.style.display = 'block';
@@ -1565,6 +1571,24 @@
       if (badge) badge.textContent = `확인 완료: ${done} / ${total} (${pct}%)`;
       const bar = document.getElementById('verifyProgressBar');
       if (bar) bar.style.width = `${pct}%`;
+    }
+
+    function switchVerifySubView(mode) {
+      const paneData = document.getElementById('verifyPaneDataset');
+      const paneLit = document.getElementById('verifyPaneLit');
+      const btnData = document.getElementById('btnVerifySubDataset');
+      const btnLit = document.getElementById('btnVerifySubLit');
+      if (mode === 'literature') {
+        if (paneData) paneData.style.display = 'none';
+        if (paneLit) paneLit.style.display = 'block';
+        if (btnData) btnData.classList.remove('active');
+        if (btnLit) btnLit.classList.add('active');
+      } else {
+        if (paneData) paneData.style.display = 'block';
+        if (paneLit) paneLit.style.display = 'none';
+        if (btnData) btnData.classList.add('active');
+        if (btnLit) btnLit.classList.remove('active');
+      }
     }
 
     function initVerifyTab() {

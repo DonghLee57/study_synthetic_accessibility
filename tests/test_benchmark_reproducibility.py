@@ -788,10 +788,9 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             fpath = os.path.join(PROJECT_ROOT, fname)
             with open(fpath, "r", encoding="utf-8") as fh:
                 html_txt = fh.read()
-            self.assertIn("4-2. 전이금속 다중 배위수(", html_txt)
             self.assertIn('id="tm-coord-ligand-stats"', html_txt)
-            self.assertIn("Sec 1/22", html_txt)
-            self.assertIn("18. 전이금속 다중 배위수 결정 및 리간드 조합 통계", html_txt)
+            self.assertIn("Sec 1/10", html_txt)
+            self.assertIn("4. 전이금속 다중 배위수 및 리간드 통계", html_txt)
             self.assertIn("CCTBA", html_txt)
             self.assertIn("Co(AMD)2", html_txt)
 
@@ -831,9 +830,8 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             fpath = os.path.join(PROJECT_ROOT, fname)
             with open(fpath, "r", encoding="utf-8") as fh:
                 html_txt = fh.read()
-            self.assertIn("Step 4-3", html_txt)
             self.assertIn('id="precursor-inverse-model-synthesis"', html_txt)
-            self.assertIn("19. 반도체 프리커서 역설계 모델 통합 (CoOrd-Inv)", html_txt)
+            self.assertIn("8. CoOrd-Inv 역설계 모델 및 실측", html_txt)
             self.assertNotIn("<!-- INVERSE_DESIGN_STORYLINE_PLACEHOLDER -->", html_txt)
             self.assertNotIn("<!-- INVERSE_DESIGN_TECHNICAL_PLACEHOLDER -->", html_txt)
 
@@ -898,9 +896,8 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             fpath = os.path.join(PROJECT_ROOT, fname)
             with open(fpath, "r", encoding="utf-8") as fh:
                 html_txt = fh.read()
-            self.assertIn("Step 4-4", html_txt)
             self.assertIn('id="ml-mechanistic-generalization"', html_txt)
-            self.assertIn("20. 중심원자&ndash;리간드 물리&middot;메커니즘 모델 및 일반화 검증", html_txt)
+            self.assertIn("5. 중심원자–리간드 일반화 검증", html_txt)
             self.assertNotIn("<!-- MECHANISTIC_ML_STORYLINE_PLACEHOLDER -->", html_txt)
             self.assertNotIn("<!-- MECHANISTIC_ML_TECHNICAL_PLACEHOLDER -->", html_txt)
 
@@ -974,15 +971,12 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             fpath = os.path.join(PROJECT_ROOT, fname)
             with open(fpath, "r", encoding="utf-8") as fh:
                 html_txt = fh.read()
-            self.assertIn("4-5. 한&middot;중&middot;일&middot;미&middot;대만 특허", html_txt)
-            self.assertIn('id="analysis-history-roadmap"', html_txt)
+            self.assertNotIn('id="analysis-history-roadmap"', html_txt)
             self.assertIn('id="patent-literature-expansion"', html_txt)
-            self.assertIn("21. 연구&middot;분석 이력 및 단계별 검증 로드맵", html_txt)
-            self.assertIn("22. 한&middot;중&middot;일&middot;미&middot;대만 특허 및 중심금속별 문헌 DB 확장", html_txt)
+            self.assertIn("6. 5극 특허·문헌 38종 확장 검증", html_txt)
             self.assertNotIn("<!-- ANALYSIS_HISTORY_TECHNICAL_PLACEHOLDER -->", html_txt)
             self.assertNotIn("<!-- PATENT_EXPANSION_STORYLINE_PLACEHOLDER -->", html_txt)
             self.assertNotIn("<!-- PATENT_EXPANSION_TECHNICAL_PLACEHOLDER -->", html_txt)
-            self.assertIn("38 Patent &amp; Lit Expansion", html_txt) if "38 Patent &amp; Lit Expansion" in html_txt else self.assertIn("38 Patent & Lit Expansion", html_txt)
             self.assertIn('data-dbcat="patent_expansion"', html_txt)
 
         # Verify Canonical Deduplicated DB Explorer payload inside index.html
@@ -1089,7 +1083,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
         self.assertIn("2.4 소스코드 구현 해부 및 원자기여도 분석", theory_html)
         self.assertIn("2.5 베이스 모델로 BR-SAScore (2024) 선정 근거", theory_html)
         self.assertNotIn("TS1 PR-AUC", theory_html)
-        self.assertIn("2. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거", theory_html)
+        self.assertIn("3. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거", theory_html)
         self.assertIn('id="card-brt-pipeline"', theory_html)
         self.assertIn("s_3=0.000", theory_html)
         self.assertIn("합성이 용이하고", theory_html)
@@ -1115,7 +1109,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             with open(fpath, "r", encoding="utf-8") as fh:
                 html_txt = fh.read()
             self.assertIn('id="btn-tab-brtheory"', html_txt)
-            self.assertIn("배경이론", html_txt)
+            self.assertIn("SA 모델 스터디", html_txt)
             self.assertIn('id="toc-brtheory"', html_txt)
             self.assertNotIn("Sec 2 (BR-SAScore) 바로가기", html_txt)
             self.assertIn("메인 금속(Hf, Ti, Si 등)", html_txt)
@@ -1132,7 +1126,7 @@ class TestBenchmarkReproducibility(unittest.TestCase):
             self.assertNotIn("Scientific Intelligence &amp; Validation System", html_txt)
             self.assertNotIn("반도체 SA 배경이론: 2009 SAScore 재구성 이슈부터 BR-SAScore까지", html_txt)
             self.assertIn("반도체 SA 모델을 이해하기 위한 기초 이론 가이드입니다.", html_txt)
-            self.assertIn("1. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈", html_txt)
+            self.assertIn("2. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈", html_txt)
             self.assertIn("*Morgan Fingerprint", html_txt)
             self.assertNotIn("Morgan Fingerprint(Radius 0~2)란?", html_txt)
             self.assertIn("1.1 SAScore (2009) 모델의 수식과 정규화 규격", html_txt)

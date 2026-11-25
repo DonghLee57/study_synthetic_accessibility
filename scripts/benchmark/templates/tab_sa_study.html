@@ -1,0 +1,490 @@
+      <div class="card" style="margin-bottom:22px; background:linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%); border:1px solid #c7d2fe; padding:20px 24px;">
+        <h2 style="margin:0 0 8px 0; font-size:1.5rem; font-weight:800; color:#0f172a;">
+          Synthetic Accessibility (SA) 평가 모델 종합 스터디 가이드
+        </h2>
+        <p style="font-size:0.9rem; color:#334155; line-height:1.68; margin:0;">
+          2009년 정적 조각 빈도 기반 <code>SAScore</code>(1세대)부터 반응 코퍼스·역합성 증류(2세대), 빌딩블록·반응 조각 분리 <code>BR-SAScore</code> 및 GNN(3세대), 합성 경로 내재화 생성 모델(4세대, 2024~2026)까지의 이론·지배 수식·한계·비교 매트릭스와 금속 화합물 확장 시의 근본 제약을 5개 장(Chapter 1~5)으로 체계화한 스터디 노트입니다.
+        </p>
+      </div>
+
+      <!-- Chapter 1: 4-Stage Paradigm Evolution & SAScore Structural Critique -->
+      <section id="paradigm-evolution">
+        <div class="section-header">
+          <div class="section-tag">Chapter 01 &bull; Paradigm Evolution &amp; Mathematical Formulation</div>
+          <h2 class="section-title">1. SA 평가 모델 세대별 패러다임 진화 (1G~4G) 및 구조적 한계</h2>
+          <p class="section-desc">
+            단순 부분구조 빈도 집계(1G)에서 출발하여 반응 코퍼스·역합성 증류(2G), 상용 시약/반응 파편 분리(3G), 합성 경로 내재화 생성(4G)으로 이어진 진화 계보와 초기 빈도 기반 모델의 구조적 한계를 수식으로 정리합니다.
+          </p>
+        </div>
+
+        <div class="mermaid-card clickable-card" id="card-paradigm-roadmap" onclick="openDiagramModal('roadmap-container', 'SA Model 세대별 진화 로드맵 (1G~4G)')" title="클릭하여 팝업 확대 보기">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-title">다이어그램: SA Model 세대별 진화 로드맵 (1G~4G)</span>
+            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
+          </div>
+          <div class="mermaid-viewport" id="viewport-paradigm-roadmap">
+            <div class="mermaid-svg-container" id="roadmap-container">
+              <div class="mermaid" id="roadmap-diagram-svg">
+flowchart TD
+    RM_A["<b>1G (2009~) Heuristic &amp; Statistics</b><br>SAScore, SYBA<br>(PubChem / ZINC Fragment Odds)"] -->|"Reaction Data<br>(Reaxys, CASP)"| RM_B["<b>2G (2018~) Reaction Corpus &amp; CASP Surrogate</b><br>SCScore, RAscore, RetroGNN<br>(Pairwise Ranking &amp; MCTS Distillation)"]
+    RM_B -->|"Local Environment &amp;<br>BFrag/RFrag Split"| RM_C["<b>3G (2022~) GNN &amp; Decoupled Scoring</b><br>GASA, DFRscore, BR-SAScore<br>(GAT &amp; Building-Block Split)"]
+    RM_C -->|"By-Design Synthesizability"| RM_D["<b>4G (2024~2026) Pathway Generative &amp; Projection</b><br>ChemProjector, SynFormer, BioNeMo ReaSyn, RxnFlow<br>(CoR Autoregressive &amp; Synthon Trees)"]
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot dot-1g"></div>
+            <div class="timeline-content">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="badge badge-1g">1G: Heuristic &amp; Statistics (2009 ~ 2020)</span>
+                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">SAScore &bull; SYBA</span>
+              </div>
+              <h4 style="font-size:1.08rem; color:var(--text-primary); margin-bottom:8px;">정적 Fragment Frequency 및 Naive Bayes Log-Odds</h4>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">
+                수백만 개 분자 DB의 원형 지문(Morgan/ECFP) 출현 빈도를 사전으로 구축하고 고리·입체 복잡도 패널티를 결합합니다. <strong>SYBA</strong>는 ZINC(합성 용이)와 비합성 가상 집합 간의 로그오즈 합으로 확장하였습니다.
+              </p>
+              <div class="math-callout">
+                $$ \text{SYBA}(m) = \sum_{f \in m} \log \frac{P(f \mid \text{Easily Synthesizable})}{P(f \mid \text{Non-Synthesizable})} $$
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot dot-2g"></div>
+            <div class="timeline-content">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="badge badge-2g">2G: Reaction Corpus &amp; CASP Surrogate (2018 ~ 2022)</span>
+                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">SCScore &bull; RAscore &bull; RetroGNN</span>
+              </div>
+              <h4 style="font-size:1.08rem; color:var(--text-primary); margin-bottom:8px;">Reaction Pairwise Ranking 및 역합성 탐색(MCTS) 증류</h4>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">
+                <strong>SCScore</strong>는 Reaxys 1,200만 반응에서 반응물 대비 생성물의 복잡도 증가($S(P) &gt; S(R)$)를 학습하며, <strong>RAscore</strong>와 <strong>RetroGNN</strong>은 AiZynthFinder의 MCTS 경로 탐색 성공 확률($y \in \{0, 1\}$)을 신경망/트리로 증류하여 밀리초 단위 추론을 수행합니다.
+              </p>
+              <div class="math-callout">
+                $$ \mathcal{L}_{\text{SCScore}} = -\sum_{(R, P)} \left[ y \log \sigma(S(P) - S(R)) + (1-y)\log(1 - \sigma(S(P) - S(R))) \right] $$
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot dot-3g"></div>
+            <div class="timeline-content">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="badge badge-3g">3G: GNN/Transformer 및 시약·반응 인지형 지표 (2022 ~ 2024)</span>
+                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">GASA &bull; DeepSA &bull; DFRscore &bull; BR-SAScore</span>
+              </div>
+              <h4 style="font-size:1.08rem; color:var(--text-primary); margin-bottom:8px;">위치 이성질체 구분 및 상용 빌딩블록(B) / 반응 형성 결합(R) 분리</h4>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">
+                <strong>GASA</strong>는 Graph Attention(GAT)으로 위치 이성질체 난이도 차이를 포착하고, <strong>BR-SAScore (2024)</strong>는 상용 시약으로 도입 가능한 조각(<strong>BFrag</strong>)과 유기반응으로 형성되는 조각(<strong>RFrag</strong>)을 분리해 초고속 연산($\sim 1\,\text{ms}$)과 높은 경로 정합성을 동시에 확보합니다.
+              </p>
+              <div class="math-callout">
+                $$ \text{BR-SAScore}(m) = 10 - 9 \times \text{clip}_{[0, 1]}\left( \frac{\frac{1}{|F_R|}\sum_{f \in F_R} s_R(f) - \text{Penalty}_{\text{struct}}(m) + \text{Sym}(m) - S_{\min}}{S_{\max} - S_{\min}} \right) $$
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot dot-4g"></div>
+            <div class="timeline-content">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="badge badge-4g">4G: 합성 경로 내재화 생성 및 공간 투영 (2024 ~ 2026)</span>
+                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">ChemProjector &bull; SynFormer &bull; SynFlowNet &bull; RxnFlow &bull; ReaSyn</span>
+              </div>
+              <h4 style="font-size:1.08rem; color:var(--text-primary); margin-bottom:8px;">사후 필터링에서 경로 보장 생성(By-Design Synthesizability)으로 전환</h4>
+              <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">
+                상용 빌딩블록과 반응 템플릿 조합으로 도달 가능한 합성 가능 화학 공간($\mathcal{M}_{\text{synth}}$) 내부에서만 분자를 생성하거나, 비합성 분자를 최근접 합성 가능 분자로 투영(Projection)합니다.
+              </p>
+              <div class="math-callout">
+                $$ \mathcal{M}_{\text{synth}} = \left\{ m \in \mathcal{M} \;\middle|\; \exists \text{ valid tree } \mathcal{T} = (B_1, \dots, B_k; R_1, \dots, R_{k-1}) \xrightarrow{\text{chemistry}} m \right\}, \qquad \hat{m}_{\text{synth}} = \arg\min_{m \in \mathcal{M}_{\text{synth}}} \mathcal{D}_{\text{struct}}(m, m_{\text{target}}) $$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="versus-grid" style="margin-top:16px;">
+          <div class="versus-card" style="border-left: 4px solid var(--accent-rose);">
+            <div class="versus-header" style="color:var(--accent-rose);">
+              세대 전환의 동기 1: 상용 키랄 빌딩블록에 대한 False Negative &amp; Reward Hacking
+            </div>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.62; margin:0;">
+              정적 빈도 모델(<code>SAScore</code>)은 상용 키랄 풀(L-proline 등)로 1~2단계에 합성되는 분자에도 높은 복잡도 패널티를 매기는 반면, 생성 모델의 단독 보상으로 쓰면 페닐·알킬 사슬만 반복 연결해 점수는 낮으나 실제 반응 작용기가 결여된 비합성 구조를 양산합니다.
+            </p>
+          </div>
+          <div class="versus-card" style="border-left: 4px solid var(--accent-blue);">
+            <div class="versus-header" style="color:var(--accent-blue);">
+              세대 전환의 동기 2: 역합성 경로 존재율과의 괴리 (Gao &amp; Coley, JCIM 2020)
+            </div>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.62; margin:0;">
+              Gao &amp; Coley(MIT, 2020)의 ASKCOS MCTS 실증에서 <code>SAScore &le; 2.5</code>로 통과한 생성 분자 중 실제 상용 시약까지 역합성 경로가 존재하는 비율은 <strong>42%</strong>에 불과했습니다(58% 경로 부재). 즉 부분구조 친숙도(Familiarity)만으로는 실제 합성 경로 존재성을 담보할 수 없습니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chapters 2 & 3: SAScore (2009) & BR-SAScore (2024) Deep Dive -->
+      <!-- BR_SASCORE_THEORY_PLACEHOLDER -->
+
+      <!-- Chapter 4: 16-Model Comparison Matrix, CASP Infrastructure & Selection Guide -->
+      <section id="comparison-matrix">
+        <div class="section-header">
+          <div class="section-tag">Chapter 04 &bull; Quantitative Comparison &amp; Selection Guide</div>
+          <h2 class="section-title">4. 주요 SA·생성 모델 16종 비교 매트릭스 및 목적별 선정 가이드</h2>
+          <p class="section-desc">
+            1G~4G 16개 주요 모델의 입력 표현, 학습 DB, 출력 척도, 추론 속도, 설명 가능성을 정량 비교하고, 역합성 인프라(AiZynthFinder, Retro*, Enamine REAL) 및 연구 시나리오별 최적 조합 기준을 제시합니다.
+          </p>
+        </div>
+
+        <div class="versus-grid">
+          <div class="versus-card">
+            <div class="versus-header">초고속 스크리닝 영역 (&lt; 1 ms/분자)</div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>SAScore, SYBA, BR-SAScore, RAscore(XGB), MPScore</strong>가 해당되며, 이 중 <strong>BR-SAScore</strong>가 상용 빌딩블록 분리 인지와 원자별 기여도 시각화 면에서 가장 우수합니다.
+            </p>
+          </div>
+          <div class="versus-card">
+            <div class="versus-header">딥러닝 분류·회귀 영역 (5 ~ 15 ms/분자)</div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>SCScore, RetroGNN, GASA, DeepSA, DFRscore</strong>가 해당되며, 치환기 위치 이성질체 구분(GASA) 및 예상 합성 단계 수 추정(SCScore, DFRscore)에 강점이 있습니다.
+            </p>
+          </div>
+          <div class="versus-card">
+            <div class="versus-header">합성 트리 생성·투영 영역 (40 ~ 100 ms/분자)</div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>SynNet, ChemProjector, SynFormer, SynFlowNet, RxnFlow, ReaSyn</strong>은 단일 점수 대신 실제 출발 시약과 반응 단계 시퀀스를 직접 출력합니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="table-toggle-bar">
+          <div class="table-toggle-info">
+            <span class="table-toggle-title">16개 주요 SA 및 Synthesis-Path Generative Model 상세 비교 테이블</span>
+            <span class="table-toggle-subtitle">입력 표현, 학습 데이터셋, 출력 범위, 분자당 추론 시간, 설명 가능성 및 원문 링크를 비교합니다.</span>
+          </div>
+          <button type="button" class="btn-toggle-table" id="btn-panel-matrix" onclick="togglePanel('panel-matrix', 'btn-panel-matrix', '16개 모델 비교 테이블 보기', '비교 테이블 닫기 (숨김)')">
+            16개 모델 비교 테이블 보기
+          </button>
+        </div>
+
+        <div id="panel-matrix" class="collapsible-panel">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>연도</th>
+                  <th>세대</th>
+                  <th>Input Representation</th>
+                  <th>Training Dataset</th>
+                  <th>Output Scale</th>
+                  <th>Runtime (per molecule)</th>
+                  <th>Interpretability</th>
+                  <th>원문 아카이브</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>SAScore</strong></td>
+                  <td>2009</td>
+                  <td><span class="badge badge-1g">1G</span></td>
+                  <td>ECFP4 / Topology</td>
+                  <td>PubChem (100만 화합물)</td>
+                  <td>1 (쉬움) ~ 10 (어려움)</td>
+                  <td>&lt; 0.1 ms</td>
+                  <td>높음 (프래그먼트)</td>
+                  <td><a href="downloaded_papers/SAScore_2009.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SAScore_2009.pdf', 'https://doi.org/10.1186/1758-2946-1-8')" target="_blank" class="btn-pdf">PDF (1.2MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>SYBA</strong></td>
+                  <td>2020</td>
+                  <td><span class="badge badge-1g">1G</span></td>
+                  <td>Morgan Fingerprint</td>
+                  <td>ZINC (ES) vs Non-synth (NS)</td>
+                  <td>양수 (쉬움) ~ 음수 (어려움)</td>
+                  <td>~ 0.5 ms</td>
+                  <td>중간 (Naive Bayes Attribution)</td>
+                  <td><a href="downloaded_papers/SYBA_2020.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SYBA_2020.pdf', 'https://doi.org/10.1186/s13321-020-00439-2')" target="_blank" class="btn-pdf">PDF (3.2MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>SCScore</strong></td>
+                  <td>2018</td>
+                  <td><span class="badge badge-2g">2G</span></td>
+                  <td>Morgan FP (Count, r=2)</td>
+                  <td>Reaxys (1,200만 반응)</td>
+                  <td>1 (단순) ~ 5 (복잡)</td>
+                  <td>~ 5 ms</td>
+                  <td>낮음 (Black-box DNN)</td>
+                  <td><a href="https://doi.org/10.1021/acs.jcim.7b00622" target="_blank" class="btn-paywall">ACS DOI</a></td>
+                </tr>
+                <tr>
+                  <td><strong>RAscore</strong></td>
+                  <td>2021</td>
+                  <td><span class="badge badge-2g">2G</span></td>
+                  <td>ECFP4 (2048-bit)</td>
+                  <td>AiZynthFinder CASP (14만)</td>
+                  <td>0 (불가) ~ 1 (합성 가능)</td>
+                  <td>~ 1 ms</td>
+                  <td>낮음 (MLP / XGBoost)</td>
+                  <td><a href="downloaded_papers/RAscore_2021.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/RAscore_2021.pdf', 'https://doi.org/10.1039/d0sc05401a')" target="_blank" class="btn-pdf">PDF (322KB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>RetroGNN</strong></td>
+                  <td>2022</td>
+                  <td><span class="badge badge-2g">2G</span></td>
+                  <td>Directed MPNN Graph</td>
+                  <td>CASP MCTS Output</td>
+                  <td>0 (불가) ~ 1 (합성 가능)</td>
+                  <td>~ 8 ms</td>
+                  <td>중간 (Node Weight)</td>
+                  <td><a href="downloaded_papers/RetroGNN_2022.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/RetroGNN_2022.pdf', 'https://doi.org/10.1021/acs.jcim.2c00424')" target="_blank" class="btn-pdf">PDF (2.4MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>GASA</strong></td>
+                  <td>2022</td>
+                  <td><span class="badge badge-3g">3G</span></td>
+                  <td>Graph Attention Net</td>
+                  <td>USPTO &amp; Synthesis DB</td>
+                  <td>0 ~ 1 (Probability)</td>
+                  <td>~ 10 ms</td>
+                  <td>높음 (Attention Map)</td>
+                  <td><a href="https://doi.org/10.1021/acs.jcim.2c00539" target="_blank" class="btn-paywall">ACS DOI</a></td>
+                </tr>
+                <tr>
+                  <td><strong>DeepSA</strong></td>
+                  <td>2023</td>
+                  <td><span class="badge badge-3g">3G</span></td>
+                  <td>SMILES Transformer</td>
+                  <td>ChEMBL + Tree</td>
+                  <td>1 ~ 10 Score</td>
+                  <td>~ 15 ms</td>
+                  <td>중간 (Transformer Attention)</td>
+                  <td><a href="downloaded_papers/DeepSA_2023.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/DeepSA_2023.pdf', 'https://doi.org/10.1093/bib/bbad254')" target="_blank" class="btn-pdf">PDF (4.1MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>DFRscore</strong></td>
+                  <td>2023</td>
+                  <td><span class="badge badge-3g">3G</span></td>
+                  <td>Graph Convolutions</td>
+                  <td>Retrosynthesis Pathways</td>
+                  <td>Predicted Step Count</td>
+                  <td>~ 12 ms</td>
+                  <td>중간 (Edge Attribution)</td>
+                  <td><a href="https://doi.org/10.1021/acs.jcim.3c00451" target="_blank" class="btn-paywall">ACS DOI</a></td>
+                </tr>
+                <tr>
+                  <td><strong>BR-SAScore</strong></td>
+                  <td>2024</td>
+                  <td><span class="badge badge-3g">3G</span></td>
+                  <td>BFrag &amp; RFrag Rules</td>
+                  <td>eMolecules BB + USPTO Reaction</td>
+                  <td>1 (쉬움) ~ 10 (어려움)</td>
+                  <td>~ 1 ms</td>
+                  <td>높음 (Per-Atom SVG Highlight)</td>
+                  <td><a href="downloaded_papers/BR_SAScore_2024.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/BR_SAScore_2024.pdf', 'https://doi.org/10.1039/d4dd00057f')" target="_blank" class="btn-pdf">PDF (1.4MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>MPScore</strong></td>
+                  <td>2021</td>
+                  <td><span class="badge badge-prec">Materials Precursor</span></td>
+                  <td>ECFP4 + Random Forest</td>
+                  <td>Chemist Synthetic Labels</td>
+                  <td>0 (쉬움) ~ 1 (어려움)</td>
+                  <td>~ 1 ms</td>
+                  <td>중간</td>
+                  <td><a href="downloaded_papers/MPScore_Jelfs_2021.xml" onclick="smartOpenPaper(event, 'downloaded_papers/MPScore_Jelfs_2021.xml', 'https://doi.org/10.1021/acs.jcim.1c00375')" target="_blank" class="btn-pdf">XML (173KB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>SynNet</strong></td>
+                  <td>2022</td>
+                  <td><span class="badge badge-ext">4G Base</span></td>
+                  <td>Molecular Embeddings</td>
+                  <td>Synthetic Tree (Amortized MDP)</td>
+                  <td>Synthetic Tree</td>
+                  <td>Generative (~ 50 ms)</td>
+                  <td>100% (Stepwise Route)</td>
+                  <td><a href="downloaded_papers/SynNet_2022.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SynNet_2022.pdf', 'https://doi.org/10.1038/s44160-021-00005-4')" target="_blank" class="btn-pdf">PDF (3.1MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>ChemProjector</strong></td>
+                  <td>2024</td>
+                  <td><span class="badge badge-4g">4G</span></td>
+                  <td>Target Mol &rarr; Pathway Tree</td>
+                  <td>Commercial BB + USPTO</td>
+                  <td>Projected Synthesizable Mol</td>
+                  <td>~ 100 ms (Projection)</td>
+                  <td>100% (Pathway Output)</td>
+                  <td><a href="downloaded_papers/ChemProjector_2024.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/ChemProjector_2024.pdf', 'https://doi.org/10.48550/arXiv.2405.15858')" target="_blank" class="btn-pdf">PDF (4.8MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>SynFormer</strong></td>
+                  <td>2025</td>
+                  <td><span class="badge badge-4g">4G</span></td>
+                  <td>Reaction Token Sequence</td>
+                  <td>Combinatorial Chemical Space</td>
+                  <td>Reaction Token Sequence</td>
+                  <td>Autoregressive (~ 80 ms)</td>
+                  <td>100% (Tokenwise Tree)</td>
+                  <td><a href="downloaded_papers/SynFormer_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SynFormer_2025.pdf', 'https://doi.org/10.48550/arXiv.2501.07823')" target="_blank" class="btn-pdf">PDF (3.7MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>SynFlowNet</strong></td>
+                  <td>2025</td>
+                  <td><span class="badge badge-4g">4G</span></td>
+                  <td>GFlowNet State/Action Graph</td>
+                  <td>Building Block + Reaction Rules</td>
+                  <td>Pathway Sample (Diverse Pool)</td>
+                  <td>~ 40 ms</td>
+                  <td>100% (Synthetic Trajectory)</td>
+                  <td><a href="downloaded_papers/SynFlowNet_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SynFlowNet_2025.pdf', 'https://doi.org/10.48550/arXiv.2502.13840')" target="_blank" class="btn-pdf">PDF (8.1MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>RxnFlow</strong></td>
+                  <td>2024</td>
+                  <td><span class="badge badge-4g">4G</span></td>
+                  <td>Synthetic Pathway DAG</td>
+                  <td>Reaction DAG Space</td>
+                  <td>Multi-Objective Pathway</td>
+                  <td>~ 45 ms</td>
+                  <td>100% (DAG Route)</td>
+                  <td><a href="downloaded_papers/RxnFlow_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/RxnFlow_2025.pdf', 'https://doi.org/10.48550/arXiv.2502.04639')" target="_blank" class="btn-pdf">PDF (4.9MB)</a></td>
+                </tr>
+                <tr>
+                  <td><strong>ReaSyn</strong></td>
+                  <td>2025</td>
+                  <td><span class="badge badge-4g">4G</span></td>
+                  <td>Chain-of-Reaction (CoR)</td>
+                  <td>Bidirectional Tree + Edit Flow</td>
+                  <td>Pathway + Optimized Mol</td>
+                  <td>Test-Time Compute Scaling</td>
+                  <td>100% (Refined CoR Sequence)</td>
+                  <td><a href="downloaded_papers/ReaSyn_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/ReaSyn_2025.pdf', 'https://doi.org/10.48550/arXiv.2502.17061')" target="_blank" class="btn-pdf">PDF (2.5MB)</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="card">
+            <h4 style="margin:0 0 8px 0; color:#0f172a;">연관 역합성 인프라 (CASP &amp; Make-on-Demand Space)</h4>
+            <ul style="color:var(--text-secondary); font-size:0.86rem; padding-left:18px; line-height:1.68; margin:0;">
+              <li><strong>AiZynthFinder (2020) &amp; Retro* (2020):</strong> 2G 대리 모델(RAscore, RetroGNN)의 교사(Teacher) 역할을 수행하는 MCTS 및 AND-OR A* 역합성 탐색 엔진입니다.</li>
+              <li><strong>V-SYNTH &amp; Enamine REAL Space (Nature 2022):</strong> 140여 검증 반응과 10만 개 이상 상용 빌딩블록 조합으로 수백억 개 합성 보장 화학 공간을 Core Synthon 계층 탐색으로 스크리닝합니다.</li>
+            </ul>
+          </div>
+          <div class="card" style="background:#f8fafc;">
+            <h4 style="margin:0 0 8px 0; color:#0f172a;">유기 분자 파이프라인별 모델 선정 요약</h4>
+            <ul style="color:var(--text-secondary); font-size:0.86rem; padding-left:18px; line-height:1.68; margin:0;">
+              <li><strong>대규모 고속 스크리닝:</strong> <code>BR-SAScore</code> (단독 또는 SAScore 대체, 1 ms 미만)</li>
+              <li><strong>생성 모델 보상 함수(RL/Diffusion):</strong> <code>RAscore (&gt; 0.6) + SCScore</code> 결합 (단독 SAScore 보상 해킹 억제)</li>
+              <li><strong>경로 동반 de novo 설계:</strong> <code>ChemProjector</code> · <code>RxnFlow</code> · <code>ReaSyn</code></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chapter 5: Generational Organic Datasets & General Metal Extension Limits -->
+      <section id="general-metal-expansion">
+        <div class="section-header">
+          <div class="section-tag">Chapter 05 &bull; Training Datasets &amp; Organometallic Domain Boundary</div>
+          <h2 class="section-title">5. 세대별 유기 학습 Dataset 현황 및 금속 포함 분자 확장 한계</h2>
+          <p class="section-desc">
+            1G~4G 유기 SA·역합성 모델이 의존하는 학습 데이터셋의 도메인 편향을 대조하고, 반도체 프리커서·촉매·OLED·MOF 등 금속 포함 분자로 확장할 때 직면하는 4대 기술적 병목과 외부 DB 연계 경로를 정리합니다.
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom:18px; border-top:3px solid var(--accent-blue);">
+          <h3 class="card-title" style="margin-bottom:10px;">5.1 세대별 활용 Dataset 및 금속 도메인 한계 비교</h3>
+          <div class="table-responsive no-scroll-16" style="margin-bottom:12px;">
+            <table class="table-compact-16">
+              <colgroup>
+                <col style="width:10%;"><col style="width:19%;"><col style="width:36%;"><col style="width:35%;">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>세대</th><th>대표 Model</th><th>활용 Dataset 및 시약·반응 규모</th><th>금속·유기금속 도메인 한계</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge badge-1g">1G</span></td>
+                  <td><strong>SAScore</strong> (2009)</td>
+                  <td><strong>PubChem</strong> (~100만 샘플, Morgan $r\le 2$ 빈도 사전)</td>
+                  <td>반응 경로 정보 부재; $\text{Si-N}$, $\text{Al-C}$, $\text{M-N}$ 조각 결손으로 바닥값(-4.0) 붕괴.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-1g">1G</span></td>
+                  <td><strong>SYBA</strong> (2020)</td>
+                  <td><strong>ZINC15</strong> (143,303종) vs 비합성 무작위 고리 집합</td>
+                  <td>전이금속-Cp 착체를 비합성 고리로 오분류하며 단순 금속 알킬은 과도 통과.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-2g">2G</span></td>
+                  <td><strong>SCScore</strong> (2018)</td>
+                  <td><strong>Reaxys</strong> (1,200만 반응쌍 $(R, P)$)</td>
+                  <td>유기금속이 출발 시약·촉매로 등재되어 불안정 금속 알킬의 난이도를 과소평가.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-2g">2G</span></td>
+                  <td><strong>RAscore / RetroGNN</strong></td>
+                  <td><strong>ChEMBL</strong> 20만 종 + AiZynthFinder MCTS 증류</td>
+                  <td>유기 알킬 비트 편향으로 열역학·배위 불안정성을 전혀 식별하지 못함.</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-3g">3G</span></td>
+                  <td><strong>GASA / DeepSA / DFRscore</strong></td>
+                  <td>USPTO / ChEMBL / 역합성 단계 수 집합</td>
+                  <td>원자 인코더 원소 제한(GASA 52% Zero-Vector, DFRscore 금속 100% <code>ELSE</code> 통합).</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-3g">3G</span></td>
+                  <td><strong>BR-SAScore</strong> (2024)</td>
+                  <td><strong>eMolecules</strong> (2.31억 시약) + <strong>USPTO</strong> (~100만 반응)</td>
+                  <td>사전 확장이 투명하나 기본 사전에는 $\text{M-L}$ 배위 규칙이 부재(Pro-ligand 분리 필요).</td>
+                </tr>
+                <tr>
+                  <td><span class="badge badge-4g">4G</span></td>
+                  <td><strong>ChemProjector / SynFormer / RxnFlow / ReaSyn</strong></td>
+                  <td><strong>Enamine / ZINC</strong> 시약 + 72~115종 유기 반응 템플릿</td>
+                  <td>템플릿 내 금속 배위 규칙 <strong>0건</strong>으로 유기금속 코어 직접 생성 불가.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="background:#f8fafc; border-left:4px solid var(--accent-blue); border-radius:0 6px 6px 0; padding:10px 14px; font-size:0.83rem; line-height:1.55; color:#334155;">
+            <strong>소재·착물 특화 선행 연구:</strong> Jelfs 그룹의 <strong>MPScore</strong>(2021, 다공성 유기 소재)와 Kulik 그룹의 <strong>TMC Synthesizability</strong>(2022, CSD 전이금속 착물)는 도메인 특화 라벨을 도입했으나, 휘발성·단량체 유지·열분해 장벽이 지배하는 반도체 증착 프리커서는 <strong>유기 리간드 SA(Track 1) + 3D 양자 물리 지표(Track 2)</strong> 결합이 필수적입니다.
+          </div>
+        </div>
+
+        <div class="card" style="border-top:3px solid var(--accent-rose);">
+          <h3 class="card-title" style="margin-bottom:10px;">5.2 범용 금속 화합물 확장 시 해결해야 할 4대 기술 병목 및 외부 데이터 경로</h3>
+          <div class="versus-grid">
+            <div class="versus-card" style="border-left:4px solid #e11d48;">
+              <div class="versus-header" style="color:#be123c;">1. 배위결합(<code>-&gt;</code>) 및 <code>ReactionFromSmarts</code> 제약</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                표준 SMARTS 파서는 배위결합 화살표 변환에 제약이 있으므로, 단일결합 절단 후 <code>RWMol</code> 수준에서 <code>BondType.DATIVE</code>와 원자가 캐시(<code>strict=False</code>)를 제어해야 합니다.
+              </p>
+            </div>
+            <div class="versus-card" style="border-left:4px solid #d97706;">
+              <div class="versus-header" style="color:#b45309;">2. $\eta^n$ 다중심 배위($\eta^5$-Cp, $\eta^6$-arene) 정규화</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                파이 착물은 DB마다 공유/배위/이온 표기가 상이하여 2D 부분그래프 매칭 전 배위 차수($\eta_\pi$) 정규화와 프로리간드 분리가 선행되어야 합니다.
+              </p>
+            </div>
+            <div class="versus-card" style="border-left:4px solid #7c3aed;">
+              <div class="versus-header" style="color:#6d28d9;">3. 원자 매핑(AAM) 편향 &amp; 외부 반응 DB 연계</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                유기 학습 AAM 도구는 금속 산화수 변화·염 복분해에서 정확도가 낮으므로, <strong>ORD</strong>·<strong>Reaxys(Gmelin)</strong>·<strong>CSD/tmQM</strong> 및 <strong>OMol25</strong>($\omega\text{B97M-V}$ DFT)와 결합해야 합니다.
+              </p>
+            </div>
+            <div class="versus-card" style="border-left:4px solid #0284c7;">
+              <div class="versus-header" style="color:#0369a1;">4. 응용 도메인별 물리 보상 함수 재정의</div>
+              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+                반도체 프리커서는 기화성·단량체 입체 차폐($\%V_{\text{bur}}$)·열안정성($\text{BDE}_{\min}$)이 핵심이며, 균일계 촉매·OLED로 확장 시 용매화 자유에너지·산화환원 전위·삼중항($T_1$) 안정성으로 물리 항을 교체합니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>

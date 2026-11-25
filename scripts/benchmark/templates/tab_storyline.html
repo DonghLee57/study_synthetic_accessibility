@@ -505,13 +505,32 @@ flowchart TD
             </div>
           </div>
 
-          <div class="card" style="margin-bottom:24px; padding:20px;">
+          <div class="card" style="margin-bottom:20px; padding:20px;">
 <!-- PHASE2_STEP4_SUMMARY_PLACEHOLDER -->
           </div>
-<!-- LIGAND_COORD_STORYLINE_PLACEHOLDER -->
-<!-- INVERSE_DESIGN_STORYLINE_PLACEHOLDER -->
-<!-- MECHANISTIC_ML_STORYLINE_PLACEHOLDER -->
-<!-- PATENT_EXPANSION_STORYLINE_PLACEHOLDER -->
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:24px;">
+            <div class="card" style="padding:14px 16px; border-left:4px solid #0284c7; margin:0; cursor:pointer;" onclick="jumpToTechnicalSection('tm-coord-ligand-stats')">
+              <div style="font-size:0.74rem; font-weight:700; color:#0284c7;">심화 검증 &rarr; Part II-4</div>
+              <div style="font-weight:700; font-size:0.88rem; color:#0f172a; margin-top:2px;">다중 배위수($CN_{\text{eff}}$) &amp; 리간드 통계</div>
+              <div style="font-size:0.78rem; color:#64748b; margin-top:4px;">16종 금속·51종 리간드 결합 회귀 검증</div>
+            </div>
+            <div class="card" style="padding:14px 16px; border-left:4px solid #059669; margin:0; cursor:pointer;" onclick="jumpToTechnicalSection('ml-mechanistic-generalization')">
+              <div style="font-size:0.74rem; font-weight:700; color:#059669;">심화 검증 &rarr; Part II-5</div>
+              <div style="font-weight:700; font-size:0.88rem; color:#0f172a; margin-top:2px;">중심원자–리간드 일반화 한계 검증</div>
+              <div style="font-size:0.78rem; color:#64748b; margin-top:4px;">CV-5 · LOMO · LOLO · Homo&rarr;Hetero</div>
+            </div>
+            <div class="card" style="padding:14px 16px; border-left:4px solid #d97706; margin:0; cursor:pointer;" onclick="jumpToTechnicalSection('patent-literature-expansion')">
+              <div style="font-size:0.74rem; font-weight:700; color:#d97706;">심화 검증 &rarr; Part II-6</div>
+              <div style="font-weight:700; font-size:0.88rem; color:#0f172a; margin-top:2px;">5극 특허·문헌 38종 확장 스크리닝</div>
+              <div style="font-size:0.78rem; color:#64748b; margin-top:4px;">원소 16&rarr;24종 확장 · 4-uMLIP 검증</div>
+            </div>
+            <div class="card" style="padding:14px 16px; border-left:4px solid #7c3aed; margin:0; cursor:pointer;" onclick="jumpToTechnicalSection('precursor-inverse-model-synthesis')">
+              <div style="font-size:0.74rem; font-weight:700; color:#7c3aed;">역설계 &rarr; Part IV-8</div>
+              <div style="font-weight:700; font-size:0.88rem; color:#0f172a; margin-top:2px;">배위 제약 역설계 (<code>CoOrd-Inv</code>)</div>
+              <div style="font-size:0.78rem; color:#64748b; margin-top:4px;">3만+ 조합 공간 Out-of-Fold 재발견율</div>
+            </div>
+          </div>
         </section>
 
         <!-- Step 5: SevenNet CI-NEB Decomposition Benchmark, Automation Feasibility & ALD T_decomp -->
@@ -530,14 +549,14 @@ flowchart TD
             <div style="background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border:1px solid #cbd5e1; border-radius:8px; padding:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
               <div>
                 <div style="font-weight:700; font-size:1.05rem; color:#0f172a; margin-bottom:4px;">
-                  22개 섹션 전체 Technical Report 및 정량 데이터시트
+                  5대 Part 구성 반도체 확장 리포트 및 SA 모델 스터디
                 </div>
                 <div style="font-size:0.85rem; color:#475569;">
-                  34편 원문 아카이브, Model 비교 매트릭스, DFT/VASP 자동화 Pipeline, 8대 CI-NEB 열분해 동역학·<code>CpZr</code> 메커니즘, 전이금속 다중 배위수($CN_{\text{eff}}$), 리간드 조합 통계, <code>CoOrd-Inv</code> 역설계 모델, 중심원자&ndash;리간드 물리&middot;메커니즘 모델 일반화 검증, 연구&middot;분석 이력(Sec 21) 및 5극 특허&middot;문헌 확장 스크리닝(Sec 22)을 리포트 탭에서 열람할 수 있습니다.
+                  기존 SA 모델 계보·수식 스터디는 <strong>SA 모델 스터디</strong> 탭에서, 5대 Part로 재편된 반도체 프리커서 실패 실측·SAPIS 검증·열분해 동역학·역설계(<code>CoOrd-Inv</code>)·DFT 자동화 파이프라인은 <strong>반도체 확장 리포트</strong> 탭에서 열람할 수 있습니다.
                 </div>
               </div>
               <button type="button" onclick="switchViewTab('technical')" class="btn-pdf" style="background:#0284c7; color:#fff; border-color:#0284c7; padding:10px 22px; font-size:0.92rem; font-weight:700; cursor:pointer;">
-                22개 섹션 상세 리포트 열기 &rarr;
+                반도체 확장 리포트 열기 &rarr;
               </button>
             </div>
           </div>

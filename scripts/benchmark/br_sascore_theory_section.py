@@ -752,17 +752,12 @@ def build_br_sascore_theory_html() -> str:
     ov = stats["overlap"]
 
     html_template = r"""
-      <div class="card" style="margin-bottom:22px; background:linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 100%); border:1px solid #c7d2fe; padding:20px 24px;">
-        <p style="font-size:0.92rem; color:#334155; line-height:1.68; margin:0;">
-          반도체 SA 모델을 이해하기 위한 기초 이론 가이드입니다. 섹션 1에서 SAScore (2009) 모델의 원리와 반도체용 프리커서에서도 SMILES 그래프 재구성에 따라 점수가 달라지는 이슈를 정리하고, 섹션 2에서 현재 베이스 모델인 BR-SAScore (2024)의 원리, 학습 데이터셋, 소스코드 및 베이스 모델 선정 근거를 통합적으로 해설합니다.
-        </p>
-      </div>
-
-      <!-- SECTION 1: SASCORE (2009) VANILLA ISSUES -->
+      <!-- SECTION 2: SASCORE (2009) VANILLA ISSUES -->
       <section id="brt-sec1">
         <div class="section-header">
-          <div class="section-tag">Background Section 01</div>
-          <h2 class="section-title">1. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈</h2>
+          <div class="section-tag">Chapter 02 &bull; Base Model Deep Dive I</div>
+          <h2 class="section-title">2. SAScore (2009) 모델의 원리 및 SMILES 재구성 이슈</h2>
+          <p class="section-desc" style="margin-top:4px;">반도체 SA 모델을 이해하기 위한 기초 이론 가이드입니다. <code>SAScore (2009)</code>의 수식 규격과 유기금속 SMILES 그래프 재구성에 따른 점수 편차 원인을 검증합니다.</p>
         </div>
 
         <p style="line-height:1.72; color:#334155;">
@@ -869,11 +864,11 @@ def build_br_sascore_theory_html() -> str:
         </div>
       </section>
 
-      <!-- SECTION 2: BR-SASCORE UNIFIED SINGLE SECTION -->
+      <!-- SECTION 3: BR-SASCORE UNIFIED SINGLE SECTION -->
       <section id="brt-sec2">
         <div class="section-header">
-          <div class="section-tag">Background Section 02</div>
-          <h2 class="section-title">2. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거</h2>
+          <div class="section-tag">Chapter 03 &bull; Base Model Deep Dive II</div>
+          <h2 class="section-title">3. BR-SAScore (2024) 모델의 원리 및 베이스 모델 선정 근거</h2>
         </div>
 
         <p style="line-height:1.72; color:#334155;">

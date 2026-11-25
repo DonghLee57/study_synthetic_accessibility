@@ -1,607 +1,12 @@
 
-      <!-- Section 1: Verification Hub -->
-      <section id="verification-hub">
-        <div class="section-header">
-          <div class="section-tag">Section 1 &bull; Literature Verification &amp; Master Download Hub</div>
-          <h2 class="section-title">문헌 종합 통계 및 원문(PDF/XML) 마스터 아카이브 (총 34편)</h2>
-          <p class="section-desc">
-            합성 가능성(SA) 평가 지표(1~3세대 9편), Synthesis-Path Generative Model 및 Retrosynthesis 벤치마크(10편), 반도체 ALD/CVD 프리커서 ML·DFT(6편), 기판 흡착 및 면선택적(ASD) 증착(4편), 그리고 VASP 제일원리 계산 자동화 프레임워크(5편)까지 <strong>총 34편의 공식 학술 문헌 DOI를 CrossRef와 arXiv API로 전수 검증</strong>하고, 로컬 저장소(<code>downloaded_papers/</code>) 및 공식 출판사 DOI를 통해 원클릭 열람을 지원합니다.
-          </p>
-          <div style="background:var(--bg-card); border:1px solid var(--border-color); border-left:4px solid var(--accent-blue); padding:10px 16px; border-radius:6px; margin-top:12px; font-size:0.86rem; color:var(--text-secondary);">
-            <strong>스마트 논문 링크 안내:</strong> 로컬 환경(로컬 파일 또는 개발 서버)에서는 다운로드된 원본 PDF/XML이 즉시 열리며, 출판사 저작권 보호를 위해 GitHub 원격 저장소 및 GitHub Pages 배포 시에는 PDF 바이너리가 원천 제외되고 공식 DOI 웹페이지로 안전하게 자동 리다이렉트됩니다.
-          </div>
-        </div>
-
-        <!-- Overall Literature Statistics Summary Table -->
-        <div class="table-responsive" style="margin: 18px 0 24px 0;">
-          <table style="font-size:0.88rem;">
-            <thead>
-              <tr style="background:#f1f5f9;">
-                <th style="width:230px;">연구 도메인 및 문헌 분류</th>
-                <th style="width:75px; text-align:center;">문헌 수</th>
-                <th>주요 핵심 모델 / 대상 연구</th>
-                <th style="width:95px; text-align:center;">연도 범위</th>
-                <th style="width:110px; text-align:center;">원문 확보</th>
-                <th style="width:105px; text-align:center;">DOI 검증</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>1. 1~3세대 합성 가능성 (SA) 평가 모델</strong></td>
-                <td style="text-align:center; font-weight:700; color:#0284c7;">9편</td>
-                <td>SAScore, SYBA, SCScore, RAscore, RetroGNN, GASA, DeepSA, DFRscore, BR-SAScore</td>
-                <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2009 ~ 2024</td>
-                <td style="text-align:center;"><span class="badge badge-1g">6편 로컬</span></td>
-                <td style="text-align:center;"><span class="badge badge-3g">9/9 검증</span></td>
-              </tr>
-              <tr>
-                <td><strong>2. 4세대 경로 내재화 및 역합성/생성</strong></td>
-                <td style="text-align:center; font-weight:700; color:#7c3aed;">10편</td>
-                <td>ChemProjector, SynFormer, SynFlowNet, RxnFlow, ReaSyn, SynNet, Coley BM 등</td>
-                <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2020 ~ 2026</td>
-                <td style="text-align:center;"><span class="badge badge-2g">9편 로컬</span></td>
-                <td style="text-align:center;"><span class="badge badge-3g">10/10 검증</span></td>
-              </tr>
-              <tr>
-                <td><strong>3. 반도체 ALD 프리커서 ML &amp; DFT</strong></td>
-                <td style="text-align:center; font-weight:700; color:#059669;">6편</td>
-                <td>Kulik SAPIS, MPScore, AS-ALD ML, ALD-MLIP, ALD Roadmap, Aminosilane DFT</td>
-                <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2017 ~ 2026</td>
-                <td style="text-align:center;"><span class="badge badge-3g">6편 전원</span></td>
-                <td style="text-align:center;"><span class="badge badge-3g">6/6 검증</span></td>
-              </tr>
-              <tr>
-                <td><strong>4. 기판 계면 흡착 및 면선택적(ASD) 증착</strong></td>
-                <td style="text-align:center; font-weight:700; color:#d97706;">4편</td>
-                <td>Oh(ASD 프리커서 선택), Tonner(루이스산도/입체), Mackus(ASD 수식), Parsons(원리)</td>
-                <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2019 ~ 2024</td>
-                <td style="text-align:center;"><span class="badge badge-2g">2편 로컬 (XML)</span></td>
-                <td style="text-align:center;"><span class="badge badge-3g">4/4 검증</span></td>
-              </tr>
-              <tr>
-                <td><strong>5. VASP 제일원리 계산 자동화 프레임워크</strong></td>
-                <td style="text-align:center; font-weight:700; color:#e11d48;">5편</td>
-                <td>Pymatgen, atomate2+jobflow, AiiDA-VASP, Architector, Sella</td>
-                <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2013 ~ 2024</td>
-                <td style="text-align:center;"><span class="badge badge-1g">3편 로컬 (PDF)</span></td>
-                <td style="text-align:center;"><span class="badge badge-3g">5/5 검증</span></td>
-              </tr>
-              <tr style="background:#f8fafc; font-weight:700;">
-                <td>전체 총괄 (Master Total)</td>
-                <td style="text-align:center; font-size:0.96rem; color:#0f172a;">34편</td>
-                <td>22개 오픈소스 도구 및 27종 반도체 프리커서 독자 DB 연계</td>
-                <td style="text-align:center; font-family:'JetBrains Mono'; font-size:0.8rem;">2009 ~ 2026</td>
-                <td style="text-align:center; color:#0369a1;">26편 (76%)</td>
-                <td style="text-align:center; color:#15803d;">34/34 (100%)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Collapsible Toggle Bar for 34-Paper Table -->
-        <div class="table-toggle-bar">
-          <div class="table-toggle-info">
-            <span class="table-toggle-title">검증된 전체 문헌 마스터 목록 및 원문 열람 테이블 (34건)</span>
-            <span class="table-toggle-subtitle">도메인별 필터링, 실시간 검색, 공식 DOI 직결 및 로컬 PDF/XML 원클릭 열람을 지원합니다.</span>
-          </div>
-          <button type="button" class="btn-toggle-table" id="btn-panel-lit" onclick="togglePanel('panel-lit', 'btn-panel-lit', '문헌 검증 전체 마스터 테이블 보기 (34건)', '문헌 검증 테이블 닫기 (숨김)')">
-            문헌 검증 전체 마스터 테이블 보기 (34건)
-          </button>
-        </div>
-
-        <!-- Hidden by default: Full 34-Paper Table -->
-        <div id="panel-lit" class="collapsible-panel">
-          <div class="filter-bar">
-            <div class="filter-group">
-              <button class="filter-btn active" onclick="filterPapers('all', event)">전체 (34)</button>
-              <button class="filter-btn" onclick="filterPapers('1G', event)">1세대: 통계/휴리스틱 (2)</button>
-              <button class="filter-btn" onclick="filterPapers('2G', event)">2세대: 반응/CASP 대리 (3)</button>
-              <button class="filter-btn" onclick="filterPapers('3G', event)">3세대: GNN/반응인지 (4)</button>
-              <button class="filter-btn" onclick="filterPapers('4G', event)">4세대: 합성경로 내재화 (5)</button>
-              <button class="filter-btn" onclick="filterPapers('Related', event)">역합성/벤치마크 (5)</button>
-              <button class="filter-btn" onclick="filterPapers('Precursor', event)">반도체 프리커서 ML/DFT (6)</button>
-              <button class="filter-btn" onclick="filterPapers('ASD', event)">기판 흡착/면선택 ALD (4)</button>
-              <button class="filter-btn" onclick="filterPapers('VASP', event)">VASP 자동화 프레임워크 (5)</button>
-              <button class="filter-btn" onclick="filterPapers('downloaded', event)">원문 로컬 확보 (26)</button>
-            </div>
-            <input type="text" id="paperSearch" class="search-input" placeholder="모델명, 저자, 프리커서, ALD, VASP 검색..." onkeyup="searchPapers()" oninput="searchPapers()">
-          </div>
-
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:44px; text-align:center;">No</th>
-                  <th style="width:110px;">세대 / 분류</th>
-                  <th style="width:120px;">모델 / 약칭</th>
-                  <th style="width:60px; text-align:center;">연도</th>
-                  <th style="min-width:460px;">검증된 공식 논문 제목, 저자진 및 게재 저널</th>
-                  <th style="width:230px;">공식 DOI 및 원문 열람</th>
-                </tr>
-              </thead>
-              <tbody id="litTableBody">
-<!-- LIT_ROWS_PLACEHOLDER -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2: Review & Critique -->
-      <section id="review-critique">
-        <div class="section-header">
-          <div class="section-tag">Section 2 &bull; Scientific Review &amp; Critique</div>
-          <h2 class="section-title">제시된 내용 검토 및 물리·화학적 타당성 분석</h2>
-          <p class="section-desc">
-            제시된 본문의 핵심 논지는 현재 계산화학 및 분자 설계 학계의 정설과 정확히 부합합니다. 아래에서는 화학적 메커니즘과 수학적 근거를 바탕으로 SAScore의 구조적 한계와 세대 전환의 필연성을 검증합니다.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">1. SAScore의 구조적 한계와 False Negative의 화학적 메커니즘</h3>
-          <p style="color:var(--text-secondary); margin-bottom:14px;">
-            SAScore는 <strong>PubChem 내 ECFP4 프래그먼트의 통계적 출현 빈도</strong>와 <strong>기하학적/위상학적 복잡도 페널티</strong>(고리 크기, 입체 중심 수, Spiro 원자 등)의 Linear Combination으로 정의됩니다:
-          </p>
-          
-          <div class="math-callout">
-            $$ \text{SAScore} = 10 - 9 \times \left( \frac{\text{FragmentScore} - \text{ComplexityPenalty} - \text{Score}_{\min}}{\text{Score}_{\max} - \text{Score}_{\min}} \right) $$
-            $$ \text{FragmentScore} = \frac{1}{|F|} \sum_{f \in F} \log_{10} \left( \frac{\text{Count}(f)}{\sum_{f'} \text{Count}(f')} \right) $$
-          </div>
-
-          <div class="versus-grid">
-            <div class="versus-card" style="border-left: 4px solid var(--accent-rose);">
-              <div class="versus-header" style="color:var(--accent-rose);">
-                오탐지 1: 천연물 및 카이랄 프리커서에 대한 과도한 False Negative 페널티
-              </div>
-              <p style="font-size:0.9rem; color:var(--text-secondary);">
-                천연물 유래 물질이나 아미노산/당 유도체는 분자 내에 다수의 비대칭 중심(Stereocenter)과 가교 고리(Bridged ring)를 가집니다. SAScore는 복잡도 페널티 $\text{ComplexityPenalty} \propto \alpha \cdot \text{nChiral} + \beta \cdot \text{nBridge}$ 에 의해 점수가 6~8점 이상으로 치솟지만, 실제 유기합성에서는 <strong>상용화된 키랄 풀(Chiral pool building block, 예: L-proline, tartaric acid)</strong>로부터 1~2단계 커플링 반응만으로 쉽게 합성되는 경우가 많습니다.
-              </p>
-            </div>
-            <div class="versus-card" style="border-left: 4px solid var(--accent-amber);">
-              <div class="versus-header" style="color:var(--accent-amber);">
-                오탐지 2: Generative Model의 Reward Hacking
-              </div>
-              <p style="font-size:0.9rem; color:var(--text-secondary);">
-                RL이나 Diffusion Model의 Objective Function으로 SAScore를 단독 최소화하면, Model은 PubChem에 빈도가 높은 페닐 고리(Phenyl)나 선형 알킬 사슬만을 반복 연결합니다. 그 결과 SAScore는 1.5~2.0으로 낮게 측정되지만, 입체 장애(Steric clash), 산화 안정성 부족, 결합 형성을 위한 반응 작용기 결여로 인해 실제 합성이 불가능한 구조가 생성됩니다.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-subtle">
-          <h3 class="card-title">2. 역합성 경로 존재 확률과의 괴리: Gao &amp; Coley (JCIM 2020) 실증 연구</h3>
-          <p style="color:var(--text-secondary); margin-bottom:10px;">
-            Gao &amp; Coley(MIT, 2020)는 Generative Model이 제안한 수만 개의 분자에 대해 ASKCOS 기반 MCTS Retrosynthesis Search를 수행하고 SAScore와의 상관관계를 검증했습니다.
-          </p>
-          <div class="code-box">[실증 결론 - Gao & Coley, J. Chem. Inf. Model. 2020, 60, 5714-5723]
-1. SAScore가 2.5 이하로 판정된 생성 분자 중 실제 역합성 경로가 발견된 비율은 42%임.
-2. 나머지 58%는 Commercial Building Blocks까지 도달하는 Forward Reaction Step이 존재하지 않음.
-3. 결론: SAScore는 부분구조 Familiarity를 측정할 뿐, Feasible Synthetic Route를 담보하지 않음.</div>
-        </div>
-      </section>
-
-      <!-- Section 3: Paradigm Evolution -->
-      <section id="paradigm-evolution">
-        <div class="section-header">
-          <div class="section-tag">Section 3 &bull; Deep Architectural Analysis</div>
-          <h2 class="section-title">4-Stage Paradigm Evolution 및 수식적 정식화</h2>
-          <p class="section-desc">
-            단순 Fragment Frequency 집계에서 출발하여 Reaction Corpus 학습, CASP Surrogate Model (Distillation), Building Block / Reaction Fragment 분리, 그리고 Pathway-Aware Generative Model로의 발전을 수식과 아키텍처 관점에서 정리합니다.
-          </p>
-        </div>
-
-        <!-- Mermaid Flowchart of Paradigm Shift: Click to Enlarge -->
-        <div class="mermaid-card clickable-card" id="card-paradigm-roadmap" onclick="openDiagramModal('roadmap-container', 'SA Model 세대별 진화 로드맵 (1G~4G)')" title="클릭하여 팝업 확대 보기">
-          <div class="mermaid-toolbar">
-            <span class="mermaid-title">다이어그램: SA Model 세대별 진화 로드맵 (1G~4G)</span>
-            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
-          </div>
-          <div class="mermaid-viewport" id="viewport-paradigm-roadmap">
-            <div class="mermaid-svg-container" id="roadmap-container">
-              <div class="mermaid" id="roadmap-diagram-svg">
-flowchart TD
-    RM_A["<b>1G (2009~) Heuristic &amp; Statistics</b><br>SAScore, SYBA<br>(PubChem / ZINC Fragment Odds)"] -->|"Reaction Data<br>(Reaxys, CASP)"| RM_B["<b>2G (2018~) Reaction Corpus &amp; CASP Surrogate</b><br>SCScore, RAscore, RetroGNN<br>(Pairwise Ranking &amp; MCTS Distillation)"]
-    RM_B -->|"Local Environment &amp;<br>BFrag/RFrag Split"| RM_C["<b>3G (2022~) GNN &amp; Decoupled Scoring</b><br>GASA, DFRscore, BR-SAScore<br>(GAT &amp; Building-Block Split)"]
-    RM_C -->|"By-Design Synthesizability"| RM_D["<b>4G (2024~2026) Pathway Generative &amp; Projection</b><br>ChemProjector, SynFormer, BioNeMo ReaSyn, RxnFlow<br>(CoR Autoregressive &amp; Synthon Trees)"]
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline">
-
-          <div class="timeline-item">
-            <div class="timeline-dot dot-1g"></div>
-            <div class="timeline-content">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="badge badge-1g">1G: Heuristic &amp; Statistics (2009 ~ 2020)</span>
-                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">SAScore &bull; SYBA</span>
-              </div>
-              <h4 style="font-size:1.12rem; color:var(--text-primary); margin-bottom:8px;">정적 Fragment Frequency 및 Naive Bayes Log-Odds</h4>
-              <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:10px;">
-                수백만 개 분자 DB의 Circular Fingerprint (Morgan/ECFP) 기반 Fragment Frequency를 Dictionary Lookup으로 구축하고 Ring/Chiral Penalty를 부여합니다. <strong>SYBA</strong>는 이를 ZINC(합성 용이)와 난합성 집합 간의 Naive Bayes Classifier로 발전시켰습니다.
-              </p>
-              <div class="math-callout">
-                $$ \text{SYBA}(m) = \sum_{f \in m} \log \frac{P(f \mid \text{Easily Synthesizable})}{P(f \mid \text{Non-Synthesizable})} $$
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot dot-2g"></div>
-            <div class="timeline-content">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="badge badge-2g">2G: Reaction Corpus &amp; CASP Surrogate (2018 ~ 2022)</span>
-                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">SCScore &bull; RAscore &bull; RetroGNN</span>
-              </div>
-              <h4 style="font-size:1.12rem; color:var(--text-primary); margin-bottom:8px;">Reaction Pairwise Ranking 및 MCTS Distillation</h4>
-              <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:10px;">
-                <strong>SCScore</strong>는 Reaxys 1,200만 개 반응에서 반응물 대비 생성물의 Complexity 부등 관계($S(P) > S(R)$)를 학습하며, <strong>RAscore</strong>와 <strong>RetroGNN</strong>은 AiZynthFinder의 MCTS 성공 여부($y \in \{0, 1\}$)를 Neural Distillation하여 밀리초($\text{ms}$) 단위 추론을 수행합니다.
-              </p>
-              <div class="math-callout">
-                $$ \mathcal{L}_{\text{SCScore}} = -\sum_{(R, P)} \left[ y \log \sigma(S(P) - S(R)) + (1-y)\log(1 - \sigma(S(P) - S(R))) \right] $$
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot dot-3g"></div>
-            <div class="timeline-content">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="badge badge-3g">3세대: 딥러닝(GNN/Transformer) 및 반응 인지형 지표 (2022 ~ 2024)</span>
-                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">GASA &bull; DeepSA &bull; DFRscore &bull; BR-SAScore</span>
-              </div>
-              <h4 style="font-size:1.12rem; color:var(--text-primary); margin-bottom:8px;">Graph Attention (GAT) 기반 Regioselectivity 파악 및 Building Block / 반응 파편 분리</h4>
-              <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:10px;">
-                <strong>GASA</strong>는 Graph Attention (GAT)을 통해 치환기 위치 이성질체(Regio-isomers) 간의 합성 난이도 차이를 포착했고, <strong>BR-SAScore (서울대 정유성 교수팀, 2024)</strong>는 상용 시약으로부터 그대로 도입 가능한 파편(<strong>BFrag</strong>, $s_B(f) = 0$)과 유기반응을 통해서만 형성되는 파편(<strong>RFrag</strong>, $s_R(f) < 0$)을 분리하여 초고속 연산($\sim 1\text{ms}$)과 높은 경로 정합성을 동시에 확보했습니다.
-              </p>
-              <div class="math-callout">
-                $$ \text{BR-SAScore}(m) = 10 - 9 \times \text{clip}_{[0, 1]}\left( \frac{\frac{1}{|F_R|}\sum_{f \in F_R} s_R(f) - \text{Penalty}_{\text{struct}}(m) + \text{Sym}(m) - S_{\min}}{S_{\max} - S_{\min}} \right) $$
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot dot-4g"></div>
-            <div class="timeline-content">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span class="badge badge-4g">4세대: 합성 경로 내재화 생성 및 투영 (2024 ~ 2026)</span>
-                <span style="font-family:'JetBrains Mono'; font-size:0.82rem; color:var(--text-muted);">ChemProjector &bull; SynFormer &bull; SynFlowNet &bull; RxnFlow &bull; ReaSyn</span>
-              </div>
-              <h4 style="font-size:1.12rem; color:var(--text-primary); margin-bottom:8px;">사후 필터링에서 경로 내재화 생성(By-Design Synthesizability)으로의 전환</h4>
-              <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:10px;">
-                상용 빌딩 블록과 반응 템플릿의 조합으로 도달 가능한 화학 공간($\mathcal{M}_{\text{synth}}$) 내부에서만 분자를 생성하거나, 비합성 분자를 가장 가까운 합성 가능 분자로 투영(Projection)합니다.
-              </p>
-              <div class="math-callout">
-                $$ \mathcal{M}_{\text{synth}} = \left\{ m \in \mathcal{M} \;\middle|\; \exists \text{ valid tree } \mathcal{T} = (B_1, \dots, B_k; R_1, \dots, R_{k-1}) \xrightarrow{\text{chemistry}} m \right\}, \qquad \hat{m}_{\text{synth}} = \arg\min_{m \in \mathcal{M}_{\text{synth}}} \mathcal{D}_{\text{struct}}(m, m_{\text{target}}) $$
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section 4: Comparison Matrix -->
-      <section id="comparison-matrix">
-        <div class="section-header">
-          <div class="section-tag">Section 4 &bull; Benchmarking &amp; Quantitative Comparison</div>
-          <h2 class="section-title">주요 Synthetic Accessibility 모델 16종 정량 비교 매트릭스</h2>
-          <p class="section-desc">
-            각 모델의 Input Representation, Training Database, Output Scale, 분자당 Runtime, Interpretability 및 로컬 원문 파일 링크를 정리했습니다.
-          </p>
-        </div>
-
-        <div class="versus-grid">
-          <div class="versus-card">
-            <div class="versus-header">초고속 스크리닝 영역 (&lt; 1 ms/분자)</div>
-            <p style="font-size:0.88rem; color:var(--text-secondary);">
-              <strong>SAScore, SYBA, BR-SAScore, RAscore(XGB), MPScore</strong>가 해당되며, 이 중 <strong>BR-SAScore</strong>가 상용 빌딩 블록 인지 능력과 원자별 설명 가능성(SVG 하이라이팅) 면에서 가장 우수합니다.
-            </p>
-          </div>
-          <div class="versus-card">
-            <div class="versus-header">Deep Learning Classification / Regression 영역 (5 ~ 15 ms/분자)</div>
-            <p style="font-size:0.88rem; color:var(--text-secondary);">
-              <strong>SCScore, RetroGNN, GASA, DeepSA, DFRscore</strong>가 해당되며, 치환기 위치 이성질체 구분(GASA) 및 예상 반응 단계 수 추정(SCScore, DFRscore)에 강점이 있습니다.
-            </p>
-          </div>
-          <div class="versus-card">
-            <div class="versus-header">Synthesis Tree Generation &amp; Chemical Space Projection (40 ~ 100 ms/분자)</div>
-            <p style="font-size:0.88rem; color:var(--text-secondary);">
-              <strong>SynNet, ChemProjector, SynFormer, SynFlowNet, RxnFlow, ReaSyn</strong>은 Score만 출력하는 대신 실제 합성 경로(시약 + 반응 단계)를 함께 출력합니다.
-            </p>
-          </div>
-        </div>
-
-        <!-- Collapsible Toggle Bar for 16-Model Comparison Table -->
-        <div class="table-toggle-bar">
-          <div class="table-toggle-info">
-            <span class="table-toggle-title">16개 주요 SA 및 Synthesis-Path Generative Model 상세 비교 테이블</span>
-            <span class="table-toggle-subtitle">Input Representation, Training Dataset, Output Scale, Inference Runtime, Interpretability 및 원문 링크를 비교합니다.</span>
-          </div>
-          <button type="button" class="btn-toggle-table" id="btn-panel-matrix" onclick="togglePanel('panel-matrix', 'btn-panel-matrix', '16개 모델 비교 테이블 보기', '비교 테이블 닫기 (숨김)')">
-            16개 모델 비교 테이블 보기
-          </button>
-        </div>
-
-        <!-- Hidden by default: 16-Model Comparison Table -->
-        <div id="panel-matrix" class="collapsible-panel">
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>Model</th>
-                  <th>연도</th>
-                  <th>세대</th>
-                  <th>Input Representation</th>
-                  <th>Training Dataset</th>
-                  <th>Output Scale</th>
-                  <th>Runtime (per molecule)</th>
-                  <th>Interpretability</th>
-                  <th>원문 아카이브</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>SAScore</strong></td>
-                  <td>2009</td>
-                  <td><span class="badge badge-1g">1G</span></td>
-                  <td>ECFP4 / Topology</td>
-                  <td>PubChem (100만 화합물)</td>
-                  <td>1 (쉬움) ~ 10 (어려움)</td>
-                  <td>&lt; 0.1 ms</td>
-                  <td>높음 (프래그먼트)</td>
-                  <td><a href="downloaded_papers/SAScore_2009.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SAScore_2009.pdf', 'https://doi.org/10.1186/1758-2946-1-8')" target="_blank" class="btn-pdf">PDF (1.2MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>SYBA</strong></td>
-                  <td>2020</td>
-                  <td><span class="badge badge-1g">1G</span></td>
-                  <td>Morgan Fingerprint</td>
-                  <td>ZINC (ES) vs Non-synth (NS)</td>
-                  <td>양수 (쉬움) ~ 음수 (어려움)</td>
-                  <td>~ 0.5 ms</td>
-                  <td>중간 (Naive Bayes Attribution)</td>
-                  <td><a href="downloaded_papers/SYBA_2020.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SYBA_2020.pdf', 'https://doi.org/10.1186/s13321-020-00439-2')" target="_blank" class="btn-pdf">PDF (3.2MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>SCScore</strong></td>
-                  <td>2018</td>
-                  <td><span class="badge badge-2g">2G</span></td>
-                  <td>Morgan FP (Count, r=2)</td>
-                  <td>Reaxys (1,200만 반응)</td>
-                  <td>1 (단순) ~ 5 (복잡)</td>
-                  <td>~ 5 ms</td>
-                  <td>낮음 (Black-box DNN)</td>
-                  <td><a href="https://doi.org/10.1021/acs.jcim.7b00622" target="_blank" class="btn-paywall">ACS DOI</a></td>
-                </tr>
-                <tr>
-                  <td><strong>RAscore</strong></td>
-                  <td>2021</td>
-                  <td><span class="badge badge-2g">2G</span></td>
-                  <td>ECFP4 (2048-bit)</td>
-                  <td>AiZynthFinder CASP (14만)</td>
-                  <td>0 (불가) ~ 1 (합성 가능)</td>
-                  <td>~ 1 ms</td>
-                  <td>낮음 (MLP / XGBoost)</td>
-                  <td><a href="downloaded_papers/RAscore_2021.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/RAscore_2021.pdf', 'https://doi.org/10.1039/d0sc05401a')" target="_blank" class="btn-pdf">PDF (322KB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>RetroGNN</strong></td>
-                  <td>2022</td>
-                  <td><span class="badge badge-2g">2G</span></td>
-                  <td>Directed MPNN Graph</td>
-                  <td>CASP MCTS Output</td>
-                  <td>0 (불가) ~ 1 (합성 가능)</td>
-                  <td>~ 8 ms</td>
-                  <td>중간 (Node Weight)</td>
-                  <td><a href="downloaded_papers/RetroGNN_2022.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/RetroGNN_2022.pdf', 'https://doi.org/10.1021/acs.jcim.2c00424')" target="_blank" class="btn-pdf">PDF (2.4MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>GASA</strong></td>
-                  <td>2022</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td>Graph Attention Net</td>
-                  <td>USPTO &amp; Synthesis DB</td>
-                  <td>0 ~ 1 (Probability)</td>
-                  <td>~ 10 ms</td>
-                  <td>높음 (Attention Map)</td>
-                  <td><a href="https://doi.org/10.1021/acs.jcim.2c00539" target="_blank" class="btn-paywall">ACS DOI</a></td>
-                </tr>
-                <tr>
-                  <td><strong>DeepSA</strong></td>
-                  <td>2023</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td>SMILES Transformer</td>
-                  <td>ChEMBL + Tree</td>
-                  <td>1 ~ 10 Score</td>
-                  <td>~ 15 ms</td>
-                  <td>중간 (Transformer Attention)</td>
-                  <td><a href="downloaded_papers/DeepSA_2023.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/DeepSA_2023.pdf', 'https://doi.org/10.1093/bib/bbad254')" target="_blank" class="btn-pdf">PDF (4.1MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>DFRscore</strong></td>
-                  <td>2023</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td>Graph Convolutions</td>
-                  <td>Retrosynthesis Pathways</td>
-                  <td>Predicted Step Count</td>
-                  <td>~ 12 ms</td>
-                  <td>중간 (Edge Attribution)</td>
-                  <td><a href="https://doi.org/10.1021/acs.jcim.3c00451" target="_blank" class="btn-paywall">ACS DOI</a></td>
-                </tr>
-                <tr>
-                  <td><strong>BR-SAScore</strong></td>
-                  <td>2024</td>
-                  <td><span class="badge badge-3g">3G</span></td>
-                  <td>BFrag &amp; RFrag Rules</td>
-                  <td>eMolecules BB + USPTO Reaction</td>
-                  <td>1 (쉬움) ~ 10 (어려움)</td>
-                  <td>~ 1 ms</td>
-                  <td>높음 (Per-Atom SVG Highlight)</td>
-                  <td><a href="downloaded_papers/BR_SAScore_2024.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/BR_SAScore_2024.pdf', 'https://doi.org/10.1039/d4dd00057f')" target="_blank" class="btn-pdf">PDF (1.4MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>MPScore</strong></td>
-                  <td>2021</td>
-                  <td><span class="badge badge-prec">Materials Precursor</span></td>
-                  <td>ECFP4 + Random Forest</td>
-                  <td>Chemist Synthetic Labels</td>
-                  <td>0 (쉬움) ~ 1 (어려움)</td>
-                  <td>~ 1 ms</td>
-                  <td>중간</td>
-                  <td><a href="downloaded_papers/MPScore_Jelfs_2021.xml" onclick="smartOpenPaper(event, 'downloaded_papers/MPScore_Jelfs_2021.xml', 'https://doi.org/10.1021/acs.jcim.1c00375')" target="_blank" class="btn-pdf">XML (173KB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>SynNet</strong></td>
-                  <td>2022</td>
-                  <td><span class="badge badge-ext">4G Base</span></td>
-                  <td>Molecular Embeddings</td>
-                  <td>Synthetic Tree (Amortized MDP)</td>
-                  <td>Synthetic Tree</td>
-                  <td>Generative (~ 50 ms)</td>
-                  <td>100% (Stepwise Route)</td>
-                  <td><a href="downloaded_papers/SynNet_2022.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SynNet_2022.pdf', 'https://doi.org/10.1038/s44160-021-00005-4')" target="_blank" class="btn-pdf">PDF (3.1MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>ChemProjector</strong></td>
-                  <td>2024</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>Target Mol &rarr; Pathway Tree</td>
-                  <td>Commercial BB + USPTO</td>
-                  <td>Projected Synthesizable Mol</td>
-                  <td>~ 100 ms (Projection)</td>
-                  <td>100% (Pathway Output)</td>
-                  <td><a href="downloaded_papers/ChemProjector_2024.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/ChemProjector_2024.pdf', 'https://doi.org/10.48550/arXiv.2405.15858')" target="_blank" class="btn-pdf">PDF (4.8MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>SynFormer</strong></td>
-                  <td>2025</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>Reaction Token Sequence</td>
-                  <td>Combinatorial Chemical Space</td>
-                  <td>Reaction Token Sequence</td>
-                  <td>Autoregressive (~ 80 ms)</td>
-                  <td>100% (Tokenwise Tree)</td>
-                  <td><a href="downloaded_papers/SynFormer_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SynFormer_2025.pdf', 'https://doi.org/10.48550/arXiv.2501.07823')" target="_blank" class="btn-pdf">PDF (3.7MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>SynFlowNet</strong></td>
-                  <td>2025</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>GFlowNet State/Action Graph</td>
-                  <td>Building Block + Reaction Rules</td>
-                  <td>Pathway Sample (Diverse Pool)</td>
-                  <td>~ 40 ms</td>
-                  <td>100% (Synthetic Trajectory)</td>
-                  <td><a href="downloaded_papers/SynFlowNet_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/SynFlowNet_2025.pdf', 'https://doi.org/10.48550/arXiv.2502.13840')" target="_blank" class="btn-pdf">PDF (8.1MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>RxnFlow</strong></td>
-                  <td>2024</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>Synthetic Pathway DAG</td>
-                  <td>Reaction DAG Space</td>
-                  <td>Multi-Objective Pathway</td>
-                  <td>~ 45 ms</td>
-                  <td>100% (DAG Route)</td>
-                  <td><a href="downloaded_papers/RxnFlow_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/RxnFlow_2025.pdf', 'https://doi.org/10.48550/arXiv.2502.04639')" target="_blank" class="btn-pdf">PDF (4.9MB)</a></td>
-                </tr>
-                <tr>
-                  <td><strong>ReaSyn</strong></td>
-                  <td>2025</td>
-                  <td><span class="badge badge-4g">4G</span></td>
-                  <td>Chain-of-Reaction (CoR)</td>
-                  <td>Bidirectional Tree + Edit Flow</td>
-                  <td>Pathway + Optimized Mol</td>
-                  <td>Test-Time Compute Scaling</td>
-                  <td>100% (Refined CoR Sequence)</td>
-                  <td><a href="downloaded_papers/ReaSyn_2025.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/ReaSyn_2025.pdf', 'https://doi.org/10.48550/arXiv.2502.17061')" target="_blank" class="btn-pdf">PDF (2.5MB)</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 5: Extended Studies -->
-      <section id="extended-studies">
-        <div class="section-header">
-          <div class="section-tag">Section 5 &bull; In-Depth Extended Studies</div>
-          <h2 class="section-title">유사 및 연관 확장 연구 심층 조사</h2>
-          <p class="section-desc">
-            본문에서 다룬 모델들 외에도 학계와 산업계에서 합성 접근성을 측정하고 극복하기 위해 제안된 핵심 역합성 인프라와 거대 조합 라이브러리 기술을 정리했습니다.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">1. AiZynthFinder (Genheden et al., 2020) &amp; Retro* (Chen et al., 2020)</h3>
-          <p style="color:var(--text-secondary); font-size:0.94rem; margin-bottom:10px;">
-            RAscore와 RetroGNN이 Knowledge Distillation에 활용하는 CASP 엔진입니다.
-          </p>
-          <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px; line-height:1.7;">
-            <li><strong>AiZynthFinder (J. Cheminform. 2020):</strong> Rollout Policy Network와 MCTS를 결합하여 상용 시약 카탈로그까지 도달하는 역합성 경로를 탐색합니다. (<a href="downloaded_papers/AiZynthFinder_2020.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/AiZynthFinder_2020.pdf', 'https://doi.org/10.1186/s13321-020-00472-1')" target="_blank">원문 PDF 1.1MB</a>)</li>
-            <li><strong>Retro* (ICML 2020):</strong> AND-OR Tree 상에서 A* Search와 Value Network를 결합해 탐색 효율을 개선한 CASP 알고리즘입니다. (<a href="downloaded_papers/RetroStar_2020.pdf" onclick="smartOpenPaper(event, 'downloaded_papers/RetroStar_2020.pdf', 'https://doi.org/10.48550/arXiv.2005.03606')" target="_blank">원문 PDF 3.2MB</a>)</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">2. V-SYNTH (Sadybekov et al., Nature 2022) &amp; Enamine REAL Space</h3>
-          <p style="color:var(--text-secondary); font-size:0.94rem; margin-bottom:10px;">
-            화합물을 비구조적으로 생성하는 대신, 140여 종 반응과 10만 개 이상 상용 빌딩 블록을 조합하여 <strong>수백억 개 규모의 Synthesizable Chemical Space</strong>를 탐색하는 접근법입니다.
-          </p>
-          <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px; line-height:1.7;">
-            <li><strong>Synthon 기반 계층적 탐색:</strong> 110억 개 화합물 전체를 열거하지 않고 Core Synthon을 우선 스크리닝한 뒤 곁사슬을 확장하여 연산 비용을 절감합니다. (Nature 2022, DOI: <a href="https://doi.org/10.1038/s41586-021-04220-9" target="_blank">10.1038/s41586-021-04220-9</a>)</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Section 6: Decision Guide -->
-      <section id="decision-guide">
-        <div class="section-header">
-          <div class="section-tag">Section 6 &bull; Practical Engineering &amp; Pipeline Integration</div>
-          <h2 class="section-title">연구 목적 및 파이프라인별 Model Selection 가이드</h2>
-          <p class="section-desc">
-            Screening 규모, Generative Model Architecture, 및 연구 목표에 따른 SA 조합 기준을 정리합니다.
-          </p>
-        </div>
-
-        <div class="versus-grid">
-          <div class="versus-card" style="border-top: 3px solid #0284c7;">
-            <h4 style="color:#0369a1; font-size:1.05rem; margin-bottom:8px;">Scenario A: 대규모 가상 라이브러리 High-Throughput Screening</h4>
-            <p style="color:var(--text-primary); font-size:0.9rem; margin-bottom:8px;">
-              <strong>추천 Model:</strong> <code>BR-SAScore</code> (단독 또는 SAScore 대체)
-            </p>
-            <p style="color:var(--text-secondary); font-size:0.86rem; line-height:1.6;">
-              SAScore의 연산 속도를 유지하면서 BFrag와 RFrag를 분리하여 False Negative를 완화합니다. Python 패키지(<code>pip install BRSAScore</code>)로 즉시 적용 가능합니다.
-            </p>
-          </div>
-
-          <div class="versus-card" style="border-top: 3px solid #7c3aed;">
-            <h4 style="color:#6d28d9; font-size:1.05rem; margin-bottom:8px;">Scenario B: Generative Model (Diffusion / GFlowNet / RL) Reward Function</h4>
-            <p style="color:var(--text-primary); font-size:0.9rem; margin-bottom:8px;">
-              <strong>추천 조합:</strong> <code>RAscore (&gt; 0.6) + SCScore (Step Complexity)</code>
-            </p>
-            <p style="color:var(--text-secondary); font-size:0.86rem; line-height:1.6;">
-              SAScore 단독 사용 시 발생하는 Reward Hacking을 완화합니다. RAscore로 역합성 경로 존재 확률을 반영하고 SCScore로 합성 단계 복잡도를 제어합니다.
-            </p>
-          </div>
-
-          <div class="versus-card" style="border-top: 3px solid #e11d48;">
-            <h4 style="color:#be123c; font-size:1.05rem; margin-bottom:8px;">Scenario C: de novo 분자 설계 및 합성 경로 검증</h4>
-            <p style="color:var(--text-primary); font-size:0.9rem; margin-bottom:8px;">
-              <strong>추천 Architecture:</strong> <code>ChemProjector</code> 또는 <code>RxnFlow / ReaSyn</code>
-            </p>
-            <p style="color:var(--text-secondary); font-size:0.86rem; line-height:1.6;">
-              비합성 분자를 Synthesizable Space로 Projection하거나 초기 단계부터 합성 트리를 생성하므로, 설계 분자에 대응하는 시약 및 반응 단계를 함께 도출합니다.
-            </p>
-          </div>
-        </div>
-      </section>
-
-            <!-- Section 7: Open-Source Repositories & 4-Stage Pipeline Empirical Evaluation -->
+      <div style="margin:28px 0 16px 0; padding:14px 20px; background:linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border:1px solid #cbd5e1; border-left:5px solid #0284c7; border-radius:8px;">
+        <div style="font-size:0.76rem; font-weight:800; color:#0284c7; text-transform:uppercase; letter-spacing:0.04em;">Part I</div>
+        <div style="font-size:1.22rem; font-weight:800; color:#0f172a; margin-top:2px;">기존 SA 모델의 반도체 프리커서 실패 진단</div>
+        <div style="font-size:0.84rem; color:#475569; margin-top:3px;">유기 의약 중심 1G~4G 오픈소스 18대 모델의 원소·배위 붕괴 지점 실측 및 도메인 병목 규명</div>
+      </div>
       <section id="opensource-eval">
         <div class="section-header">
-          <div class="section-tag">Section 7 &bull; Open-Source Repository Verification &amp; 4-Stage Pipeline Empirical Evaluation</div>
+          <div class="section-tag">Part I - Section 01 &bull; Open-Source Repository Verification &amp; 4-Stage Pipeline Empirical Evaluation</div>
           <h2 class="section-title">오픈소스 저장소 검증 및 18대 모델 4단계 파이프라인 실측 종합 평가</h2>
           <p class="section-desc">
             기존 오픈소스 코드베이스의 단순 존재 여부 확인을 넘어, 실제 로컬 파이썬 가상환경에서 <strong>15대 고유 오픈소스 합성 가능성·역합성 모델(1G: SAScore, SYBA; 2G: SCScore, RAscore; 3G: BR-SAScore, GASA, DeepSA, DFRscore; 4G: SynNet, ChemProjector, SynFormer, RxnFlow, BioNeMo ReaSyn; CASP 엔진: AiZynthFinder, Retro*)</strong>을 직접 구동·정적 분석하여 27종 반도체 양산 프리커서 대상 <strong>4단계 실행 파이프라인(Stage 1: 구문 수용 &rarr; Stage 2: 특성 표현 &rarr; Stage 3: 반응 매니폴드 &rarr; Stage 4: 물리화학적 합성성 $N_{\text{pass}}$)</strong> 전수를 중복 없이 체계적으로 실측 평가하고 모델별 붕괴 원인을 해부합니다.
@@ -1275,10 +680,9 @@ flowchart TD
         </div>
       </section>
 
-      <!-- Section 8: Semiconductor Precursors -->
       <section id="semiconductor-precursor">
         <div class="section-header">
-          <div class="section-tag">Section 8 &bull; Semiconductor Precursors (ALD / CVD / EUV) Application &amp; Extension</div>
+          <div class="section-tag">Part I - Section 02 &bull; Semiconductor Precursors (ALD / CVD / EUV) Application &amp; Extension</div>
           <h2 class="section-title">반도체 분야 프리커서 적용 사례 조사 및 도메인 확장 아키텍처</h2>
           <p class="section-desc">
             반도체 박막 증착(ALD, CVD) 및 EUV 포토레지스트용 유기금속·실리콘 프리커서 분야에서 합성 가능성(SA) 지표의 실제 적용 문헌을 점검하고, 기존 의약화학 SA 지표의 한계를 극복하는 <strong>2-Track 반도체 프리커서 맞춤형 확장 설계안</strong>을 제시합니다.
@@ -1379,1046 +783,92 @@ score, contrib = scorer.calculateScore("CC(C)N(C(C)C)[SiH3]") # DIPAS</div>
         </div>
       </section>
 
-      <!-- Section 9: DFT Synergy -->
-      <section id="dft-synergy">
+      <div style="margin:28px 0 16px 0; padding:14px 20px; background:linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border:1px solid #cbd5e1; border-left:5px solid #059669; border-radius:8px;">
+        <div style="font-size:0.76rem; font-weight:800; color:#059669; text-transform:uppercase; letter-spacing:0.04em;">Part II</div>
+        <div style="font-size:1.22rem; font-weight:800; color:#0f172a; margin-top:2px;">SAPIS 물리·배위 모델 및 외삽 일반화 검증</div>
+        <div style="font-size:0.84rem; color:#475569; margin-top:3px;">160종 통합 벤치마크, 전이금속 다중 배위수 통계, 중심원자–리간드 메커니즘 일반화 및 5극 특허 38종 확장</div>
+      </div>
+      <section id="phase1-phase2-benchmark">
         <div class="section-header">
-          <div class="section-tag">Section 9 &bull; Multi-Fidelity DFT Integration &amp; Quantum Chemical Applications</div>
-          <h2 class="section-title">DFT 계산을 통한 추가 응용 및 물리 기반 프리커서 설계 프레임워크</h2>
+          <div class="section-tag">Part II - Section 03 &bull; Unified 160-Molecule SAPIS &amp; 4-uMLIP Validation</div>
+          <h2 class="section-title">통합 160종 물리-배위 모델(SAPIS) 및 4대 물리 Descriptor 검증</h2>
           <p class="section-desc">
-            반도체 프리커서에서는 유기 리간드($HL$)의 합성이 아무리 쉬워도(낮은 SA 점수), <strong>금속 중심 주변의 입체 장애(Steric crowding)로 인해 착물 합성 반응이 진행되지 않거나</strong>, 합성 직후 <strong>상온 이합체화(Dimerization) 또는 증류 중 열분해($\beta$-H 제거)</strong>되어 사용할 수 없는 경우가 빈번합니다. 따라서 2D 그래프 기반 SA 지표에 <strong>DFT(밀도범함수이론) 계산을 결합하면 기존 SA의 한계를 보완하는 5가지 핵심 응용</strong>이 가능합니다.
+            160종 통합 평가 데이터셋(프리커서 102종 + 인히비터 18종 + 6대 실패 메커니즘 대조군 40종) 및 4종 uMLIP 앙상블 기반 SAPIS 물리-배위 프레임워크의 판정 정밀도와 직교 물리 지표를 검증합니다.
           </p>
         </div>
-
-        <!-- Interactive Mermaid Multi-Fidelity Workflow Card: Click to Expand Popup Modal -->
-        <div class="mermaid-card clickable-card" id="card-dft-workflow" onclick="openDiagramModal('dft-workflow-container', '다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인')" title="클릭하여 팝업 확대 보기">
-          <div class="mermaid-toolbar">
-            <span class="mermaid-title">다이어그램: Multi-Fidelity DFT + SA 프리커서 설계 5단계 파이프라인</span>
-            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
-          </div>
-          <div class="mermaid-viewport" id="viewport-dft-workflow">
-            <div class="mermaid-svg-container" id="dft-workflow-container">
-              <div class="mermaid" id="dft-workflow-svg">
-flowchart TD
-    L0["<b>Stage 0: 4G 생성 및 3G SA 초고속 필터링 (1 ms 미만)</b><br>BR-SAScore, RxnFlow 및 BioNeMo ReaSyn으로 합성 가능한 리간드(HL)·실란 후보 100,000개 생성"] --> L1
-    L1["<b>Stage 1: 반경험적 양자역학 GFN2-xTB 3D 입체 스크리닝 (1 s)</b><br>3D 구조 최적화 및 매몰 부피 Vbur 58-82 percent 리간드 입체 충돌 필터링"] --> L2
-    L2["<b>Stage 2: 분자 DFT 착물 합성 열역학 검증 (5 min, B3LYP-D3/def2-TZVP)</b><br>착물 형성 자유에너지 dG_syn 음수 및 단량체 vs 이합체화 dG_dimer 양수 평가"] --> L3
-    L3["<b>Stage 3: 분자 DFT 열안정성 및 휘발성 윈도우 평가 (COSMO-RS / NEB)</b><br>최약 결합 해리 BDE 35 kcal 이상, 베타-수소 제거 장벽 dG_decomp 및 증기압 예측"] --> L4
-    L4["<b>Stage 4: Slab DFT 및 MLIP 웨이퍼 표면 반응성 검증</b><br>-OH/-NH2 표면 화학흡착 dG_ALD -15 kcal 이하 및 부산물 탈착 장벽 계산"] --> AL
-    AL["<b>Stage 5: Active Learning 피드백 루프 (QM-Augmented SA)</b><br>DFT 계산 결과(dG_syn, BDE)를 BR-SAScore Fragment Weight 및 RxnFlow Reward Function에 역반영"] -.->|"Reward Function Update"| L0
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">1. DFT를 활용한 5대 핵심 응용 영역 및 지배 방정식 (Governing Equations)</h3>
-
-          <div class="timeline" style="margin-top:16px;">
-
-            <div class="timeline-item">
-              <div class="timeline-dot dot-1g"></div>
-              <div class="timeline-content">
-                <h4 style="color:#0369a1; font-size:1.08rem; margin-bottom:6px;">응용 1: 프리커서 착물화 반응의 열역학적 합성 가능성 ($\Delta G_{\text{syn}}^{\text{DFT}}$)</h4>
-                <p style="color:var(--text-secondary); font-size:0.92rem;">
-                  2D 그래프 SA 모델은 리간드 $HL$이 금속 프리커서($\text{HfCl}_4$ 또는 $\text{Ti(NMe}_2)_4$)와 실제로 치환 반응을 일으켜 목표 배위수($ML_n$)까지 도달할 수 있는지 알지 못합니다. DFT($\omega\text{B97X-D3/def2-TZVPP}$)를 통해 <strong>단계별 리간드 치환 반응 자유에너지($\Delta G_{\text{syn}}$)</strong>를 계산하면 불완전 치환 여부를 사전에 판별할 수 있습니다:
-                </p>
-                <div class="math-callout">
-                  $$ M\text{X}_n + n\,HL \xrightarrow{\text{THF or Toluene}} ML_n + n\,\text{HX}\uparrow, \qquad \Delta G_{\text{syn}}^{(k)} = G_{\text{DFT}}\big(M\text{X}_{n-k}L_k\big) + G_{\text{DFT}}(\text{HX}) - G_{\text{DFT}}\big(M\text{X}_{n-k+1}L_{k-1}\big) - G_{\text{DFT}}(HL) $$
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-dot dot-2g"></div>
-              <div class="timeline-content">
-                <h4 style="color:#6d28d9; font-size:1.08rem; margin-bottom:6px;">응용 2: 3D 입체 차폐율($\%V_{\text{bur}}$) 및 단량체 vs 이합체화($\Delta G_{\text{dimer}}$) 예측</h4>
-                <p style="color:var(--text-secondary); font-size:0.92rem;">
-                  반도체 ALD 프리커서는 기상 수송을 위해 <strong>단량체(Monomer)</strong>를 유지해야 합니다. 리간드가 너무 작으면 다리 결합 이합체($M_2L_{2n}$)를 형성해 증기압이 급락하고, 너무 크면 합성이 불가능합니다. GFN2-xTB 및 DFT 구조 최적화 후 <strong>매몰 부피($\%V_{\text{bur}} \in [58\%, 82\%]$)</strong>와 <strong>이합체화 자유에너지($\Delta G_{\text{dimer}} > +5.0\text{ kcal/mol}$)</strong>를 계산합니다:
-                </p>
-                <div class="math-callout">
-                  $$ \%V_{\text{bur}} = \frac{V_{\text{occupied by ligands}}(r \le 3.5\,\text{\AA})}{\frac{4}{3}\pi (3.5\,\text{\AA})^3} \times 100\%, \qquad \Delta G_{\text{dimer}} = G_{\text{DFT}}(M_2L_{2n}) - 2\,G_{\text{DFT}}(ML_n) $$
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-dot dot-3g"></div>
-              <div class="timeline-content">
-                <h4 style="color:#047857; font-size:1.08rem; margin-bottom:6px;">응용 3: 합성 후 분리·정제 가능성(Isolability) — 열분해 장벽($\Delta G^\ddagger_{\text{decomp}}$) 및 $\text{BDE}_{\min}$</h4>
-                <p style="color:var(--text-secondary); font-size:0.92rem;">
-                  반도체 프리커서는 합성 후 <strong>감압 증류 또는 승화를 통해 99.999%(5N) 이상 고순도 정제</strong>가 가능해야 합니다. 정제 온도($80\text{--}180^\circ\text{C}$)에서 분해되지 않도록 DFT로 <strong>최약 결합 해리에너지($\text{BDE}_{\min}$)</strong>와 <strong>분자 내 $\beta$-수소 제거 반응 활성화 장벽($\Delta G^\ddagger_{\beta\text{-H}}$)</strong>을 계산합니다:
-                </p>
-                <div class="math-callout">
-                  $$ \text{BDE}_{\min} = \min_{\text{bond } i} \Big[ E_{\text{DFT}}(\text{Frag}_A^\bullet) + E_{\text{DFT}}(\text{Frag}_B^\bullet) - E_{\text{DFT}}(ML_n) \Big] > 35.0\text{ kcal/mol}, \qquad \Delta G^\ddagger_{\beta\text{-H / decomp}} > 28.0\text{ kcal/mol} $$
-                </div>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-dot dot-4g"></div>
-              <div class="timeline-content">
-                <h4 style="color:#be123c; font-size:1.08rem; margin-bottom:6px;">응용 4: DFT 기반 휘발성(COSMO-RS $P_{\text{vap}}$) 및 웨이퍼 표면 ALD 반반응성($\Delta G_{\text{ALD}}$) 동시 최적화</h4>
-                <p style="color:var(--text-secondary); font-size:0.92rem;">
-                  단일 분자 DFT의 표면 전하 밀도 분포($\sigma$-profile, <strong>COSMO-RS</strong>) 또는 쌍극자 모멘트($\mu$)/분극률($\alpha$)을 통해 <strong>증발 엔탈피($\Delta H_{\text{vap}}$)와 증기압 곡선</strong>을 예측하고, Slab DFT(또는 SevenNet/MACE 등 MLIP)로 웨이퍼 표면($-\text{OH}^*, -\text{NH}_2^*$)과의 초기 화학흡착 에너지를 평가합니다:
-                </p>
-                <div class="math-callout">
-                  $$ \ln P_{\text{vap}}(T) = A - \frac{\Delta H_{\text{vap}}(\sigma\text{-profile}, \mu, \alpha)}{R T}, \qquad \text{Surf-OH}^* + ML_n(\text{g}) \xrightarrow{\Delta G_{\text{ALD}} < -15\text{ kcal/mol}} \text{Surf-O-}ML_{n-1}^* + HL(\text{g}) $$
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="card-subtle" style="border-left: 4px solid var(--accent-teal);">
-          <h3 class="card-title">응용 5: DFT와 3세대/4세대 SA 모델의 결합 수식 — QM-Augmented Reward Function</h3>
-          <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:12px;">
-            4세대 Synthesis-Path Generative Model (<strong>RxnFlow, SynFlowNet, ChemProjector</strong>) 및 Active Learning 루프에서 반도체 프리커서를 역설계할 때, <strong>2D SA 지표와 DFT 물성을 결합한 Multi-Fidelity Reward Function ($R_{\text{Precursor}}$)</strong>은 다음과 같이 구성됩니다:
-          </p>
-          <div class="math-callout">
-            $$ R_{\text{Precursor}}(ML_n) = \underbrace{\sigma\Big(\tau_{\text{SA}} - \text{BR-SAScore}(HL)\Big)}_{\text{① 리간드 합성 용이성 (1 ms)}} \times \underbrace{\sigma\Big(-\Delta G_{\text{syn}}^{\text{xTB/DFT}}\Big)}_{\text{② 금속 착물화 열역학}} \times \underbrace{\mathbb{I}\Big(58\% \le \%V_{\text{bur}} \le 82\%\Big)}_{\text{③ 단량체 입체 안정성}} \times \underbrace{\sigma\Big(\frac{\text{BDE}_{\min} - \Delta H_{\text{vap}}}{RT}\Big)}_{\text{④ 증류 정제 및 ALD 공정 윈도우}} $$
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.88rem;">
-            &bull; <strong>Multi-Fidelity Gating:</strong> ①번 항(<code>BR-SAScore</code>)과 ③번 항(<code>GFN2-xTB</code> $\%V_{\text{bur}}$)을 통과한 상위 후보군에 대해서만 DFT($\Delta G_{\text{syn}}, \text{BDE}_{\min}$) 또는 Equivariant MLIP (MACE / SevenNet)를 호출함으로써, DFT 단독 대비 탐색 속도를 $10^4$배 이상 가속하면서 실제 합성 성공률을 높일 수 있습니다.
-          </p>
-        </div>
+        <!-- PHASE1_PHASE2_TUNING_PLACEHOLDER -->
       </section>
 
-      <!-- Section 10: VASP Automation Stack -->
-      <section id="vasp-automation">
+      <section id="tm-coord-ligand-stats">
         <div class="section-header">
-          <div class="section-tag">Section 10 &bull; VASP-Centered High-Throughput DFT Automation Architecture</div>
-          <h2 class="section-title">VASP 기반 반도체 프리커서 DFT 자동화 프레임워크 및 실행 파이프라인</h2>
+          <div class="section-tag">Part II - Section 04 &bull; Multi-Coordination Physics &amp; Combinatorial Ligand Statistics</div>
+          <h2 class="section-title">전이금속 다중 배위수 결정 원리 및 리간드 조합&middot;물성 연계 통계</h2>
           <p class="section-desc">
-            평면파(Plane-Wave) 기반 주기적 경계 조건(PBC) 코드인 <strong>VASP(Vienna Ab initio Simulation Package)</strong>를 주력 엔진으로 사용할 때, <strong>2D SMILES(SA 필터링 통과 후보)로부터 3D 유기금속 착물 및 웨이퍼 표면 슬랩(Slab) <code>POSCAR</code> 자동 생성, MLIP 사전 구조 이완, VASP 런타임 에러 자동 복구(<code>Custodian</code>), 그리고 전이상태(<code>CI-NEB / Sella</code>) 계산까지 전 과정을 무인 자동화하는 4-Layer 오픈소스 스택</strong>을 정리했습니다.
+            단일 스칼라 반경이나 고정 배위수 가정을 배제하고 $\sigma$&middot;배위결합&middot;킬레이트&middot;$\eta^n$ 다중심 $\pi$-배위를 연속 정량화하는 <strong>유효 배위수($CN_{\text{eff}}$) 결정 알고리즘</strong>과 2D SMILES 파싱 경계를 정리하고, <code>102</code>종 반도체 프리커서의 리간드 절편 통계 및 <code>5-CV / LOMO-5</code> 금속&ndash;리간드 조합 예측 실측 벤치마크를 수록합니다.
           </p>
         </div>
 
-        <!-- Mermaid 4-Layer VASP Automation Architecture: Click to Enlarge -->
-        <div class="mermaid-card clickable-card" id="card-vasp-architecture" onclick="openDiagramModal('vasp-stack-container', 'VASP 중심의 4계층 반도체 프리커서 DFT 자동화 아키텍처')" title="클릭하여 팝업 확대 보기">
-          <div class="mermaid-toolbar">
-            <span class="mermaid-title">다이어그램: VASP 중심의 4계층 반도체 프리커서 DFT 자동화 아키텍처</span>
-            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
-          </div>
-          <div class="mermaid-viewport" id="viewport-vasp-architecture">
-            <div class="mermaid-svg-container" id="vasp-stack-container">
-              <div class="mermaid" id="vasp-stack-svg">
-flowchart TD
-    subgraph L0 ["0. SA 및 경로 생성"]
-        A1["BR-SAScore / RxnFlow / BioNeMo ReaSyn<br>합성 가능 후보 SMILES"]
-    end
-    subgraph L1 ["Layer 1: 3D 착물 및 슬랩 빌더"]
-        B1["molSimplify / Architector<br>유기금속 3D 배위 구조 생성"]
-        B2["Pymatgen / CatKit<br>진공 박스 및 웨이퍼 Slab+흡착물 POSCAR"]
-    end
-    subgraph L2 ["Layer 2: MLIP 사전 이완"]
-        C1["SevenNet-0 / MACE-MP-0<br>ASE 기반 초고속 사전 최적화<br>(VASP 이온 스텝 80 percent 단축)"]
-    end
-    subgraph L3 ["Layer 3: VASP 워크플로우 및 에러 복구"]
-        D1["atomate2 / Quacc / AiiDA-VASP<br>SLURM/PBS 스케줄링 및 DB 적재"]
-        D2["Custodian (VaspErrorHandler)<br>ZBRENT, BRMIX, EDDDAV 자동 수정"]
-    end
-    subgraph L4 ["Layer 4: 전이상태 및 열역학"]
-        E1["Sella / VTST (CI-NEB, Dimer)<br>dG_decomp 및 dG_ALD 장벽"]
-        E2["ASE Thermo (Harmonic/IdealGas)<br>dG_syn(T,P) 및 Reward Function Feedback"]
-    end
-    A1 --> B1
-    A1 --> B2
-    B1 --> C1
-    B2 --> C1
-    C1 --> D1
-    D1 --- D2
-    D1 --> E1 --> E2
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="versus-grid">
-          <div class="versus-card" style="border-top: 3px solid #0284c7;">
-            <div class="versus-header" style="color:#0369a1;">Layer 1: 3D 유기금속 &amp; 표면 슬랩 빌더</div>
-            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-              &bull; <strong>기상 프리커서(Molecule-in-a-Box):</strong> <code>molSimplify</code> 또는 <code>Architector</code>로 금속-리간드 3D 배위 구조를 조립한 뒤, <code>Pymatgen</code>으로 비대칭 직방정계 진공 셀($20 \times 21 \times 22\;\text{\AA}^3$, 오비탈 축퇴 방지) <code>POSCAR</code>를 생성합니다.<br>
-              &bull; <strong>웨이퍼 표면 슬랩(ALD Slab):</strong> <code>Pymatgen</code>의 <code>SlabGenerator</code>와 <code>AdsorbateSiteFinder</code>(또는 <code>CatKit</code>)로 $\text{SiO}_2\text{-OH}$, $\text{HfO}_2(111)$, $\text{TiN}(100)$ 표면에 프리커서를 자동 배치하고 하부 원자층을 고정(<code>Selective Dynamics</code>)합니다.
-            </p>
-          </div>
-
-          <div class="versus-card" style="border-top: 3px solid #7c3aed;">
-            <div class="versus-header" style="color:#6d28d9;">Layer 2 &amp; 4: MLIP 사전 이완 &amp; 전이상태 탐색</div>
-            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-              &bull; <strong>VASP 계산 비용 80% 절감:</strong> VASP의 PBE/PBE+U 궤적(MPtrj)으로 학습된 범용 MLIAP인 SevenNet(서울대 한승우 교수팀) 또는 MACE-MP-0로 초기 3D 구조를 2~3초 만에 사전 이완한 후 VASP를 호출하면 <code>NSW</code> 이온 스텝이 150회에서 20~30회로 줄어듭니다.<br>
-              &bull; <strong>전이상태 자동 탐색:</strong> <code>VTST Tools</code>(CI-NEB)로 초기 반응 경로를 잡고 <strong>Sella</strong>와 VASP를 연동하면 수 개 이미지 대신 단일 구조에서 내부좌표계 안장점($\Delta G^\ddagger_{\text{decomp}}, \Delta G^\ddagger_{\text{ALD}}$)으로 빠르게 수렴합니다.
-            </p>
-          </div>
-
-          <div class="versus-card" style="border-top: 3px solid #059669;">
-            <div class="versus-header" style="color:#047857;">Layer 3: 워크플로우 엔진 &amp; 런타임 에러 자동 복구</div>
-            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-              &bull; <strong>경량/유연성 최우선 시:</strong> <strong>Quacc</strong>(프린스턴 Rosen 그룹)는 데코레이터(<code>@job</code>) 하나로 ASE/Pymatgen과 Custodian을 통합하며, <code>Parsl</code>, <code>Dask</code>, <code>Jobflow</code>, <code>SLURM</code> 어디서나 즉시 동작합니다.<br>
-              &bull; <strong>대규모 DB 파이프라인 구축 시:</strong> Materials Project의 차세대 표준인 <strong>atomate2 + jobflow</strong>가 MongoDB 결과 적재, 탄성/진동/NEB 워크플로우 체이닝, 그리고 <strong>Custodian</strong> 기반 무인 에러 복구를 기본 내장하고 있습니다.
-            </p>
-          </div>
-        </div>
-
-        <!-- Collapsible Toggle Bar for 10 VASP Automation Frameworks Table -->
-        <div class="table-toggle-bar">
-          <div class="table-toggle-info">
-            <span class="table-toggle-title">검증된 VASP 자동화 핵심 오픈소스 프레임워크 10종 비교 테이블</span>
-            <span class="table-toggle-subtitle">계층별 역할, 공식 GitHub 저장소, 논문 DOI, Stars, 라이선스 및 핵심 Python API 스니펫을 정리했습니다.</span>
-          </div>
-          <button type="button" class="btn-toggle-table" id="btn-panel-vasp" onclick="togglePanel('panel-vasp', 'btn-panel-vasp', 'VASP 자동화 프레임워크 테이블 보기 (10건)', 'VASP 프레임워크 테이블 닫기 (숨김)')">
-            VASP 자동화 프레임워크 테이블 보기 (10건)
-          </button>
-        </div>
-
-        <!-- Hidden by default: 10 VASP Frameworks Table -->
-        <div id="panel-vasp" class="collapsible-panel">
-          <div class="table-responsive" style="margin-bottom:20px;">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:44px; text-align:center;">No</th>
-                  <th style="width:120px;">계층 (Layer)</th>
-                  <th style="width:280px;">프레임워크명 및 핵심 역할</th>
-                  <th>공식 GitHub 저장소 &amp; DOI</th>
-                  <th style="width:90px; text-align:center;">Stars</th>
-                  <th style="width:110px; text-align:center;">라이선스</th>
-                </tr>
-              </thead>
-              <tbody>
-<!-- VASP_ROWS_PLACEHOLDER -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- VASP INCAR Physics & Substrate Free Energy Governing Equations -->
-        <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">1. 반도체 프리커서 및 기판(Substrate) VASP 표준 INCAR 물리 파라미터 &amp; 자유에너지 수식</h3>
-          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:12px;">
-            유기금속 프리커서 분자(비주기적 고립계)와 웨이퍼 표면 슬랩(2D 주기계) 간의 화학흡착 및 ALD 반반응 에너지를 VASP에서 오차 없이 자동 계산하기 위한 <strong>열역학적 지배 방정식(Governing Equations)</strong>과 물리적 제약 조건(단위계: <code>eV</code>, <code>eV/Å</code>, <code>Å</code>)입니다:
-          </p>
-
-          <div class="math-callout">
-            $$ G_{\text{gas}}^{\text{VASP}}(T, P) = E_{\text{DFT}}^{\text{box}} + E_{\text{ZPE}} + \Delta H_{\text{trans+rot+vib}}(T) - T\Big(S_{\text{trans}}(T, P) + S_{\text{rot}}(T) + S_{\text{vib}}^{\text{QRRHO}}(T) + S_{\text{elec}}\Big) $$
-            $$ G_{\text{slab}}^{\text{clean}}(T) = E_{\text{DFT}}^{\text{clean\_slab}} + F_{\text{vib}}^{\text{clean\_surf}}(T), \qquad G_{\text{slab+ads}}^{\text{VASP}}(T) = E_{\text{DFT}}^{\text{slab+ads}} + F_{\text{vib}}^{\text{ads+surf}}(T) $$
-            $$ \Delta G_{\text{ALD}}(T, P) = \Big[ G_{\text{slab+ads}}^{\text{VASP}}(T) + G_{\text{gas}}(HL, T, P) \Big] - \Big[ G_{\text{slab}}^{\text{clean}}(T) + G_{\text{gas}}(ML_n, T, P) \Big] $$
-          </div>
-
-          <div class="card-subtle" style="border-left: 4px solid var(--accent-indigo); margin: 16px 0;">
-            <h4 style="color:var(--accent-indigo); font-size:0.98rem; margin-bottom:8px;">기판(Substrate) 자유에너지 산출 시 "하부 고정층 포논 상쇄(Cancellation) 근사"의 물리적 정당성 검토</h4>
-            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.65; margin-bottom:8px;">
-              &bull; <strong>핵심 검증 명제:</strong> 기판 하부 원자들을 고정(<code>Selective Dynamics: F F F</code>)한 상태에서 Phonon / Partial Hessian을 계산할 때, 흡착 전 청정 기판($\text{Surf}^*$)과 흡착 후 기판($\text{Surf-Ads}^*$)의 하부 벌크층 진동 기여는 상쇄 근사가 성립함.<br>
-              &bull; <strong>1. 하부 고정층(Bottom Fixed Layers)의 상쇄 성립 ($\Delta F_{\text{vib}}^{\text{bottom}} \approx 0$):</strong> 고정된 하부 벌크층은 변위가 0이므로 헤시안 행렬에 포함되지 않습니다. 표면으로부터 수 개 원자층 아래의 격자 환경은 프리커서 흡착 전/후에 전자기적 변화가 지수함수적으로 감쇠($\sim e^{-z/\lambda}$)하므로, <strong>하부 고정층의 진동 자유에너지 변화가 상쇄된다는 근사는 물리적으로 타당</strong>하며 실제 오차는 $0.5\text{ kcal/mol}$ ($0.02\text{ eV}$) 미만으로 작습니다.<br>
-              &bull; <strong>2. 표면 활성 원자(Active Surface Atoms)의 필수 포함 이유 (PHVA 프로토콜):</strong> 그러나 <strong>프리커서와 직접 결합하는 표면 최상단 1~2개 층의 원자(예: $-\text{OH}^*$ 표면 산소 및 결합 실리콘)는 절대 상쇄되지 않습니다!</strong> 흡착 전 $-\text{OH}^*$ 신축 진동($\sim 3750\text{ cm}^{-1}$)이 반응 후 소멸하고 새로운 $M-\text{O}$ 배위 결합 진동($200 \sim 600\text{ cm}^{-1}$)으로 치환되기 때문입니다. 따라서 <strong>Partial Hessian Vibrational Analysis (PHVA)</strong>를 통해 <em>"흡착된 프리커서 분자 + 표면 최상단 반응 원자"</em>만을 활성 모드로 지정하여 진동수와 $F_{\text{vib}}^{\text{active}}(T)$를 계산해야 엄밀한 $\Delta G_{\text{ALD}}$가 산출됩니다.<br>
-              &bull; <strong>3. 기상 분자의 엔트로피 손실이 열역학을 지배:</strong> 주기적 기판(PBC Slab)은 병진/회전 엔트로피가 0($S_{\text{trans}}=S_{\text{rot}}=0$)인 반면, 기상 프리커서 $ML_n(\text{g})$는 흡착되면서 거대한 병진/회전 엔트로피($T S_{\text{trans+rot}} \approx 0.7 \sim 1.0\text{ eV}$ @ $200^\circ\text{C}$)를 잃게 되므로, 기상 분자의 분압($P = 0.1 \sim 1\text{ Torr}$) 조건 보정이 흡착 평형을 결정합니다.
-            </p>
-          </div>
-
-          <div class="versus-grid">
-            <div class="versus-card" style="border-left: 4px solid #0284c7;">
-              <div class="versus-header" style="color:#0369a1;">
-                Mode A: 기상 단일 프리커서 &amp; 리간드 (Molecule-in-a-Box)
-              </div>
-              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65;">
-                &bull; <strong>진공 셀 크기:</strong> $20.0 \times 21.0 \times 22.0\;\text{\AA}^3$ (정육면체 대칭 파쇄로 불필요한 오비탈 축퇴 방지, 인접 주기 이미지 간 최소 거리 $> 12\;\text{\AA}$ 보장)<br>
-                &bull; <strong>KPOINTS 및 바이너리:</strong> $\Gamma$-point 단일점 ($1 \times 1 \times 1$) 및 <code>vasp_gam</code> 실행 파일 사용으로 계산 속도 2배 향상<br>
-                &bull; <strong>필수 <code>INCAR</code> 태그:</strong><br>
-                &nbsp;&nbsp;- <code>ISYM = 0</code> (분자 대칭성 강제 해제), <code>ISIF = 2</code> (셀 고정, 원자 좌표만 이완)<br>
-                &nbsp;&nbsp;- <code>ISMEAR = 0</code>, <code>SIGMA = 0.01</code> (단위: <code>eV</code>, HOMO-LUMO 갭 내 비물리적 부분 점유 방지)<br>
-                &nbsp;&nbsp;- <code>IDIPOL = 4</code>, <code>LDIPOL = .TRUE.</code> (3차원 고립 분자 쌍극자 모멘트 상호작용 보정)<br>
-                &nbsp;&nbsp;- <code>IVDW = 12</code> (Grimme DFT-D3(BJ) 분산력 보정; 벌키한 아미디네이트/Cp 리간드 입체 상호작용 필수)<br>
-                &nbsp;&nbsp;- <code>LASPH = .TRUE.</code> ($d$/$f$ 전이금속 Hf, Zr, Mo, Ru, W의 비구형 PAW 코어 기여 반영)
-              </p>
-            </div>
-
-            <div class="versus-card" style="border-left: 4px solid #059669;">
-              <div class="versus-header" style="color:#047857;">
-                Mode B: 웨이퍼 표면 슬랩 &amp; ALD 화학흡착 (Slab + Adsorbate)
-              </div>
-              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65;">
-                &bull; <strong>슬랩 및 진공층 설계:</strong> 최소 4개 원자층(하부 2개 층 <code>F F F</code> 고정, 상부 2개 층 및 흡착 프리커서 <code>T T T</code> 이완), $z$축 진공 두께 $\ge 15.0\;\text{\AA}$<br>
-                &bull; <strong>필수 <code>INCAR</code> 태그:</strong><br>
-                &nbsp;&nbsp;- <code>IDIPOL = 3</code>, <code>LDIPOL = .TRUE.</code> ($z$축 법선 방향 비대칭 슬랩의 표면 쌍극자 보정)<br>
-                &nbsp;&nbsp;- <code>AMIX = 0.2</code>, <code>BMIX = 0.0001</code>, <code>AMIX_MAG = 0.8</code>, <code>BMIX_MAG = 0.0001</code> (진공 영역 전하 출렁임 <code>BRMIX</code> 에러 예방)<br>
-                &nbsp;&nbsp;- <code>EDIFF = 1E-6</code> (단위: <code>eV</code>), <code>EDIFFG = -0.02</code> (단위: <code>eV/Å</code>, 힘 기준 수렴)<br>
-                &nbsp;&nbsp;- <strong>진동수 및 영점 에너지(ZPE):</strong> 흡착물과 표면 반응 부위 원자만 <code>T T T</code>로 활성화한 뒤 <code>IBRION = 5</code>, <code>NFREE = 2</code>, <code>POTIM = 0.015</code> (단위: <code>Å</code>)로 부분 헤시안(Partial Hessian) 계산
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Section 10.2: Algorithm Decision Tree & Options Framework (Replaces Raw Code) -->
-        <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">2. VASP 기반 프리커서 DFT 자동화 알고리즘 및 단계별 선택지 의사결정 프레임워크</h3>
-          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
-            연구 현장에서 다양한 분자 구조와 클러스터 환경에 유연하게 대응할 수 있도록, <strong>5대 핵심 단계별 오픈소스 도구 선택지와 의사결정 기준(Decision Matrix)</strong>을 알고리즘 구조로 정리했습니다:
-          </p>
-
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:90px;">단계 (Stage)</th>
-                  <th>선택 가능한 오픈소스 도구 (Options)</th>
-                  <th>핵심 알고리즘 메커니즘</th>
-                  <th>장점 및 한계 비교</th>
-                  <th>추천 적용 시나리오</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Stage 1<br>3D 착물 &amp; 슬랩 생성</strong></td>
-                  <td>
-                    <div><strong>Option A:</strong> <code>molSimplify</code></div>
-                    <div><strong>Option B:</strong> <code>Architector</code></div>
-                    <div><strong>Option C:</strong> <code>Pymatgen MVLSlabSet</code></div>
-                    <div><strong>Option D:</strong> <code>CatKit</code></div>
-                  </td>
-                  <td>
-                    &bull; A: 휴리스틱 배위 기하학 기반 3D 조립<br>
-                    &bull; B: 전이금속/란타넘족 입체이성질체 전수 탐색 및 xTB 최적화<br>
-                    &bull; C: 결정면 밀러 지수 절단 및 흡착 사이트 탐지<br>
-                    &bull; D: 표면 대칭성 그래프 기반 자동 흡착
-                  </td>
-                  <td>
-                    &bull; A: 가볍고 빠름, 다핵 착물 처리 제한<br>
-                    &bull; B: $d/f$-블록 이종리간드 정확성 최고, 계산 시간 소요<br>
-                    &bull; C: 슬랩 표준 도구, 비정질 표면 수동 처리 필요<br>
-                    &bull; D: 촉매/흡착 자동화 강력, 설정 학습 필요
-                  </td>
-                  <td>
-                    &bull; <strong>단일 프리커서:</strong> <code>Architector</code><br>
-                    &bull; <strong>웨이퍼 흡착:</strong> <code>Pymatgen</code> + <code>CatKit</code>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Stage 2<br>MLIP 초고속 사전 이완</strong></td>
-                  <td>
-                    <div><strong>Option A:</strong> <code>SevenNet (7net-0)</code></div>
-                    <div><strong>Option B:</strong> <code>MACE-MP-0</code></div>
-                    <div><strong>Option C:</strong> <code>GFN2-xTB</code></div>
-                  </td>
-                  <td>
-                    &bull; A: 등변 GNN, MPtrj VASP PBE 궤적 전수 학습<br>
-                    &bull; B: 고차 등변 다체 전개 (Higher-body order E(3))<br>
-                    &bull; C: 반경험적 양자역학 (SQM) 해밀토니안 풀이
-                  </td>
-                  <td>
-                    &bull; A: VASP PBE와 포텐셜 표면 일치도 최고, VASP NSW 80% 단축<br>
-                    &bull; B: 원자간 힘 예측 Accuracy 우수, GPU 메모리 요구량 큼<br>
-                    &bull; C: 훈련 불필요한 물리학 기반, 금속-탄소 결합 파라미터 한계
-                  </td>
-                  <td>
-                    &bull; <strong>VASP 연계 표준:</strong> <code>SevenNet</code><br>
-                    &bull; <strong>대규모 리간드 스크리닝:</strong> <code>GFN2-xTB</code>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Stage 3<br>VASP Workflow &amp; Error Recovery</strong></td>
-                  <td>
-                    <div><strong>Option A:</strong> <code>Quacc + Custodian</code></div>
-                    <div><strong>Option B:</strong> <code>atomate2 + jobflow</code></div>
-                    <div><strong>Option C:</strong> <code>AiiDA-VASP</code></div>
-                  </td>
-                  <td>
-                    &bull; A: 파이썬 데코레이터(<code>@job</code>) 기반 분산 태스크 연결<br>
-                    &bull; B: Materials Project 공식 FireWorks/MongoDB 오케스트레이션<br>
-                    &bull; C: 데이터 출처(Provenance) 완전 보존 그래프 DAG
-                  </td>
-                  <td>
-                    &bull; A: 학습 곡선 가장 낮음, SLURM/Dask/Parsl 즉시 동작<br>
-                    &bull; B: 수만 건 대규모 DB 적재에 유리, 보일러플레이트 코드 존재<br>
-                    &bull; C: 전체 이력(Provenance) 재현성 우수, 초기 설정 및 학습 난이도 높음
-                  </td>
-                  <td>
-                    &bull; <strong>빠른 연구/실험실:</strong> <code>Quacc</code><br>
-                    &bull; <strong>엔터프라이즈 DB 구축:</strong> <code>atomate2</code>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Stage 4<br>전이상태 (TS) 장벽 탐색</strong></td>
-                  <td>
-                    <div><strong>Option A:</strong> <code>Sella</code></div>
-                    <div><strong>Option B:</strong> <code>VTST CI-NEB</code></div>
-                    <div><strong>Option C:</strong> <code>VTST Dimer Method</code></div>
-                  </td>
-                  <td>
-                    &bull; A: 내부좌표계(Internal Coords) 기반 단일 구조 1차 안장점 최적화<br>
-                    &bull; B: 반응물-생성물 간 다중 이미지 탄성 밴드(Climbing Image)<br>
-                    &bull; C: 최소 곡률 방향 회전-이동 2원자 다이머 알고리즘
-                  </td>
-                  <td>
-                    &bull; A: 중간 이미지 불필요로 계산 비용 최소, 초기 추측 중요<br>
-                    &bull; B: 복잡한 결합 해리/재결합 경로 탐색 신뢰도 최고, 비용 큼<br>
-                    &bull; C: 생성물 구조 미상 시 탐색 가능, 수렴 안정성 중간
-                  </td>
-                  <td>
-                    &bull; <strong>분자 내 열분해(β-H):</strong> <code>Sella</code><br>
-                    &bull; <strong>표면 흡착/탈착 경로:</strong> <code>CI-NEB</code>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Stage 5<br>유한온도 열역학 해석</strong></td>
-                  <td>
-                    <div><strong>Option A:</strong> <code>ASE IdealGasThermo (QRRHO)</code></div>
-                    <div><strong>Option B:</strong> <code>PHVA HarmonicThermo (Partial)</code></div>
-                  </td>
-                  <td>
-                    &bull; A: 저주파수 진동 로터 보정(Grimme QRRHO) 기상 엔트로피<br>
-                    &bull; B: 활성 표면 모드 진동 자유에너지 + 기상 분압($P$) 보정
-                  </td>
-                  <td>
-                    &bull; A: 기상 프리커서 $\Delta H_{\text{vap}}, S_{\text{gas}}$ 산출 최적<br>
-                    &bull; B: 표면 흡착 $\Delta G_{\text{ALD}}(T, P)$ 정밀 산출
-                  </td>
-                  <td>
-                    &bull; <strong>기상/열분해:</strong> Option A<br>
-                    &bull; <strong>웨이퍼 ALD 반반응:</strong> Option B
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-<!-- Eval 3: VASP Automation 10 Frameworks Comprehensive Matrix -->
-        <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">6. VASP 기반 반도체 프리커서 DFT 자동화 도구 10종 실무 생산성 평가</h3>
-          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
-            실제 VASP 클러스터 환경에서의 학습 곡선, 오류 복구력, 유지보수성 및 추천 활용 시나리오 비교입니다:
-          </p>
-
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>도구명</th>
-                  <th>계층 (Layer)</th>
-                  <th>학습 곡선 (낮을수록 쉬움)</th>
-                  <th>런타임 오류 복구력</th>
-                  <th>프리커서/슬랩 특화도</th>
-                  <th>유지보수 상태 (GitHub)</th>
-                  <th>실무 생산성 등급</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Pymatgen</strong></td>
-                  <td>Layer 1: I/O &amp; Slab</td>
-                  <td>쉬움 (표준 파이이썬 객체)</td>
-                  <td>해당 없음 (I/O 전용)</td>
-                  <td>최우수 (진공박스, MVLSlabSet)</td>
-                  <td>활발 (2,000+ stars)</td>
-                  <td><strong>필수 기본 인프라</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Custodian</strong></td>
-                  <td>Layer 3: Error Handler</td>
-                  <td>매우 쉬움 (간단한 핸들러)</td>
-                  <td><strong>최고 (ZBRENT, BRMIX 자동교정)</strong></td>
-                  <td>최우수 (진공 영역 에러 해결)</td>
-                  <td>활발 (Materials Project)</td>
-                  <td><strong>필수 기본 인프라</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Quacc</strong></td>
-                  <td>Layer 3: Workflow</td>
-                  <td><strong>가장 쉬움 (데코레이터 기반)</strong></td>
-                  <td>우수 (Custodian 래핑)</td>
-                  <td>최우수 (xTB + VASP 슬랩 원스톱)</td>
-                  <td>매우 활발 (Rosen 그룹)</td>
-                  <td><strong>S (실험실/연구 추천 1순위)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>atomate2 + jobflow</strong></td>
-                  <td>Layer 3: Workflow</td>
-                  <td>보통 (구조화된 Maker 학습)</td>
-                  <td>우수 (Custodian 내장)</td>
-                  <td>우수 (MongoDB 대규모 적재)</td>
-                  <td>매우 활발 (MP 공식 차세대)</td>
-                  <td><strong>S (엔터프라이즈 DB 구축 1순위)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>AiiDA-VASP</strong></td>
-                  <td>Layer 3: Workflow</td>
-                  <td>어려움 (PostgreSQL, Daemon)</td>
-                  <td>우수</td>
-                  <td>보통 (일반 고체 위주)</td>
-                  <td>보통</td>
-                  <td><strong>B+</strong> (출처 엄밀성 요구 시)</td>
-                </tr>
-                <tr>
-                  <td><strong>molSimplify</strong></td>
-                  <td>Layer 1: 3D Builder</td>
-                  <td>쉬움 (CLI / Python)</td>
-                  <td>해당 없음</td>
-                  <td>우수 (착물 3D 자동 빌드)</td>
-                  <td>안정적 (MIT Kulik 그룹)</td>
-                  <td><strong>A</strong> (빠른 프로토타이핑)</td>
-                </tr>
-                <tr>
-                  <td><strong>Architector</strong></td>
-                  <td>Layer 1: 3D Builder</td>
-                  <td>보통</td>
-                  <td>해당 없음</td>
-                  <td><strong>최고 (d/f-블록 이종리간드 전수탐색)</strong></td>
-                  <td>활발 (LANL)</td>
-                  <td><strong>A+</strong> (Hf/Zr 정밀 착물 구축)</td>
-                </tr>
-                <tr>
-                  <td><strong>CatKit</strong></td>
-                  <td>Layer 1: Slab Graph</td>
-                  <td>보통</td>
-                  <td>해당 없음</td>
-                  <td>우수 (표면 대칭 흡착 탐색)</td>
-                  <td>안정적 (SLAC SUNCAT)</td>
-                  <td><strong>A</strong> (표면 반응 사이트 자동화)</td>
-                </tr>
-                <tr>
-                  <td>SevenNet</td>
-                  <td>Layer 2: MLIP Pre-relax</td>
-                  <td><strong>매우 쉬움 (ASE 호환)</strong></td>
-                  <td>해당 없음</td>
-                  <td><strong>최고 (VASP NSW 80% 단축)</strong></td>
-                  <td>활발 (SNU 한승우 교수팀)</td>
-                  <td><strong>S (VASP 가속 필수 도구)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Sella</strong></td>
-                  <td>Layer 4: TS Optimizer</td>
-                  <td>쉬움 (ASE Optimizer 교체)</td>
-                  <td>우수 (내부좌표계 안장점)</td>
-                  <td>우수 (열분해, 탈착 장벽 계산)</td>
-                  <td>활발 (Sandia / Zador Lab)</td>
-                  <td><strong>A+</strong> (단일 구조 TS 수렴 최적)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
+        <!-- LIGAND_COORD_TECHNICAL_PLACEHOLDER -->
       </section>
 
-      <!-- Section 11: Semiconductor Precursor & Reaction Database -->
-      <section id="semiconductor-db">
+      <section id="ml-mechanistic-generalization">
         <div class="section-header">
-          <div class="section-tag">Section 11 &bull; Semiconductor Precursor, Reagents &amp; Reaction Domain Database</div>
-          <h2 class="section-title">반도체 상용 프리커서·반응 및 AS-ALD 인히비터(억제제) 통합 데이터베이스</h2>
+          <div class="section-tag">Part II - Section 05 &bull; Metal&ndash;Ligand Physicochemical Modeling &amp; Mechanistic Generalization</div>
+          <h2 class="section-title">중심원자&ndash;리간드 기반 물리&middot;메커니즘 모델링 및 DB 일반화 한계 검증</h2>
           <p class="section-desc">
-            기존 SA 모델이 의약화학 데이터 위주로 구축되어 반도체 프리커서의 합성 가능성을 False Negative로 왜곡하는 구조적 한계를 극복하기 위해, <strong>실제 반도체 양산 라인에서 합성·적용되는 상용 프리커서 27종 (<code>database/precursors.json</code>), 핵심 출발물질/시약 29종 (<code>database/building_blocks.json</code>), 공인된 유기금속 합성 반응 12종 (<code>database/reactions.json</code>)</strong>과 더불어, <strong>AtomicLimits ALD 공정 DB 연계 확장 프리커서 205종 DB (<code>database/external/expanded_semiconductor_precursors_master.json</code>)</strong> 및 <strong>AS-ALD(면적선택증착) 핵심 인히비터 18종 DB (<code>database/external/as_ald_inhibitors.json</code>)</strong>를 정형화하여 통합 구축하였습니다.
+            중심 금속($M$)과 리간드 조합($\{L_i\}$)의 1차 물리 법칙(<strong>Pauling–HSAB 결합 안정화</strong>, <strong>구형 포화 입체 차폐</strong>)만으로 정량 예측&middot;외삽 가능한 물성($\Delta E_f^{\text{std}}/v_M$, $\%V_{\text{bur}}$)과 비선형 전자 전이&middot;극값 연산이 개입하는 한계 물성($\text{BDE}_{\min}$, $\Delta G_{\text{dimer}}$)을 4개 일반화 체계(<code>5-CV</code>, <code>LOMO-5</code>, <code>LOLO-5</code>, <code>Homo&rarr;Hetero</code>)에서 분해 검증하고, <strong>142종 SA 분류</strong> 및 <strong>102종 리간드 분해 모티프</strong>를 문헌 DFT&middot;<code>SevenNet CI-NEB</code> 8대 채널과 통합 해석합니다.
           </p>
         </div>
 
-        <!-- Eval 1: Proprietary Database Evaluation -->
-        <div class="card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">1. 자체 구축 반도체 프리커서 &amp; 반응 데이터베이스 평가</h3>
-            <span class="badge badge-1g" style="font-size:0.85rem;">종합 평가 점수: 9.3 / 10.0</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
-            의약화학 위주의 기존 오픈소스 DB가 지닌 도메인 불일치를 해결하고, 실제 양산 라인의 실리콘/전이금속 프리커서 합성 경로를 1:1로 모사할 수 있도록 구축되었습니다.
-          </p>
-
-          <div class="versus-grid">
-            <div class="versus-card" style="border-top: 3px solid #059669;">
-              <h4 style="color:#047857; font-size:1.02rem; margin-bottom:6px;">핵심 강점 및 학술적 가치</h4>
-              <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
-                <li><strong>산업 양산 현실성 100%:</strong> 가상 분자가 아닌 실제 삼성, SK하이닉스, TSMC 등에서 양산에 적용되는 핵심 물질(DIPAS, BTBAS, TEMAH, TEMAZ, TDMAT, TMA, WF6, Mo-imido, Co(AMD)2 등) 전수 수록.</li>
-                <li><strong>RDKit 구조 검증 무결성:</strong> 전이금속 착물의 비정상 원자가(Valence error)를 극복할 수 있도록 정규화된 2D SMILES를 제공하여 RDKit 2025.09에서 100% 파싱 성공.</li>
-                <li><strong>SA 모델 즉시 이식성:</strong> <code>BR-SAScore</code> 사전 생성기에 바로 공급 가능한 <code>semi_bb.csv</code>와 <code>semi_rxn.csv</code>를 동시 제공하여 모델 재학습 없이 도메인 사전 구축 가능.</li>
-              </ul>
-            </div>
-
-            <div class="versus-card" style="border-top: 3px solid #d97706;">
-              <h4 style="color:#b45309; font-size:1.02rem; margin-bottom:6px;">도메인 원소 포괄 구성 및 물성 데이터 현황</h4>
-              <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
-                <li><strong>반도체 공정 원소군 수록 (총 205종):</strong> AtomicLimits ALD DB 상위 공정 원소군(Si, Ti, Zr, Hf, Al, Co, W 등)과 귀금속·III-V족·배리어 원소군(<code>Ir, Rh, As, Ga, In, Ru</code> 등)을 포괄하여 총 205종을 수록하고, RDKit 화학식 정합성을 검증한 102종의 <code>SMILES</code> 및 2D 분자 구조를 제공합니다.</li>
-                <li><strong>실험 물성 출처 보강 대상:</strong> 증기압·분해온도·녹는점 등 공정 물성은 핵심 검증 분자 27종을 중심으로 정리되어 있으며, 전체 205종에 대해 PubChem, NIST WebBook 및 공급사 데이터시트 기반 출처 연동을 병행하고 있습니다.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- External Precursor Database Integration Card (values from database/external/*.json) -->
-        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-purple);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. AtomicLimits ALD 공정 DB 연계: 프리커서 인벤토리 814종 / 통합 목록 205종</h3>
-            <span class="badge badge-4g" style="font-size:0.82rem;">External ALD Process Data</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
-            <strong>AtomicLimits ALD Database</strong>(<a href="https://www.atomiclimits.com/alddatabase" target="_blank">atomiclimits.com/alddatabase</a>, DOI 10.6100/alddatabase)의 공정 목록 스냅샷(2026-11-06)을 집계한 결과입니다. 이 DB는 <strong>연구 문헌에 보고된 ALD 공정</strong>의 모음이므로, 아래 공정 수는 문헌 보고 빈도이지 양산 사용 빈도가 아닙니다. 반응물 A~D 칸을 모두 읽어 금속·준금속을 포함한 반응물을 프리커서로, 나머지(H2O, O3, 플라즈마 등)를 공반응물로 분류했고, 표기 변형(예: AlMe3 = Al(CH3)3, Ru(CpEt)2 = Ru(EtCp)2)은 <code>atomiclimits_aliases.json</code>으로 병합했습니다.
-          </p>
-
-          <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:18px;">
-            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #0284c7;">
-              <div class="stat-value" style="font-size:1.35rem; color:#0369a1;">2,447 건</div>
-              <div class="stat-label"><strong>ALD 공정 레코드</strong><br>&bull; 박막 재료 662종<br>&bull; 필드: 재료, 반응물 A~D, 비고 (GPC·온도 필드 없음)</div>
-            </div>
-            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #7c3aed;">
-              <div class="stat-value" style="font-size:1.35rem; color:#6d28d9;">814 종</div>
-              <div class="stat-label"><strong>프리커서 인벤토리 (표기 변형 병합 후)</strong><br>&bull; 원본 Reactant A 문자열 780개<br>&bull; <code>atomiclimits_precursors_extracted.json</code></div>
-            </div>
-            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #059669;">
-              <div class="stat-value" style="font-size:1.35rem; color:#047857;">205 종</div>
-              <div class="stat-label"><strong>ALD/CVD 프리커서 통합 목록 (중복 없음)</strong><br>&bull; Baseline 27종 + 상위 93종 + 집중 원소군(Ir·Rh·As·Ga·In·Ru) 85종<br>&bull; <code>SMILES</code> 검증 수록 102종(<code>SevenNet-0</code> 확장 계산 연동)</div>
-            </div>
-            <div class="stat-card" style="padding:12px 14px; border-left:4px solid #ea580c;">
-              <div class="stat-value" style="font-size:1.35rem; color:#c2410c;">4,177 개</div>
-              <div class="stat-label"><strong>고유 문헌 DOI</strong><br>&bull; 참고문헌 레코드 5,732건 중 중복 제외<br>&bull; 공정과 연결되지 않는 레코드 36건</div>
-            </div>
-          </div>
-
-          <div class="table-responsive" style="margin-top:10px;">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:40px; text-align:center;">순위</th>
-                  <th style="width:170px;">프리커서 (AtomicLimits 표기)</th>
-                  <th style="width:70px; text-align:center;">중심원소</th>
-                  <th style="width:90px; text-align:center;">공정 수<br>(A~D 전체)</th>
-                  <th style="width:90px; text-align:center;">공정 수<br>(Reactant A)</th>
-                  <th>최다 박막 재료 (상위 5)</th>
-                  <th style="width:200px;">최다 공반응물 (상위 4)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">01</td>
-                  <td><strong>AlMe3 (TMA)</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Al</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">158</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">78</td>
-                  <td style="font-size:0.82rem;">Al2O3, AlN, HfAlxOy, AlSixOy, AlPxOy</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, O2 plasma, NH3</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">02</td>
-                  <td><strong>ZnEt2 (DEZ)</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Zn</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">108</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">77</td>
-                  <td style="font-size:0.82rem;">ZnO, ZnSnxOy, InGaxZnyOz, ZnAlxOy, ZnS</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, O2 plasma, H2S</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">03</td>
-                  <td><strong>TiCl4</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">66</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">33</td>
-                  <td style="font-size:0.82rem;">TiN, TiO2, TiOxPy, Ti, TiAlxOy</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, O3 / H2O, NH3</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">04</td>
-                  <td><strong>Ti(OiPr)4 (TTIP)</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">60</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">27</td>
-                  <td style="font-size:0.82rem;">TiO2, SrTixOy, BaTixOy, PbTixOy, TiAlxOy</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O2 plasma, O3, H2O plasma</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">05</td>
-                  <td><strong>GaMe3 (TMGa)</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Ga</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">50</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">21</td>
-                  <td style="font-size:0.82rem;">InGaxOy, InGaxZnyOz, GaP, Ga2O3, GaAs</td>
-                  <td style="font-size:0.8rem; color:#64748b;">O2 plasma, O3, H2O, NH3</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">06</td>
-                  <td><strong>Sn(NMe2)4 (TDMASn)</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Sn</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">40</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">22</td>
-                  <td style="font-size:0.82rem;">SnO2, InSnxOy, ZnSnxOy, NbSnxOy, SnOxPy</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, H2O2, H2S</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">07</td>
-                  <td><strong>Ti(NMe2)4 (TDMAT)</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Ti</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">40</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">24</td>
-                  <td style="font-size:0.82rem;">TiN, TiO2, ZnTixOy, TiS2, SiTixOy</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, N2 plasma, N2 + H2 plasma, NH3</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">08</td>
-                  <td><strong>LiOtBu</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Li</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">39</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">36</td>
-                  <td style="font-size:0.82rem;">LiPxOy, LiPxOyNz, LiF, LiZrxOy, Li2O</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O2 plasma, O3, PO(OMe)3</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">09</td>
-                  <td><strong>AlCl3</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Al</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">33</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">27</td>
-                  <td style="font-size:0.82rem;">Al2O3, AlPxOy, AlSixOy, AlN, AlF3</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, P(OMe)3O, P2O5</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">10</td>
-                  <td><strong>InMe3 (TMIn)</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">In</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">30</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">28</td>
-                  <td style="font-size:0.82rem;">In2O3, InGaxNy, InGaxZnyOz, InP, InAs</td>
-                  <td style="font-size:0.8rem; color:#64748b;">H2O, O3, O2 plasma, N2 plasma</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">11</td>
-                  <td><strong>GaEt3</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">Ga</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">28</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">19</td>
-                  <td style="font-size:0.82rem;">GaN, GaAs, Ga2O3, InGaxNy, InGaxZnyOz</td>
-                  <td style="font-size:0.8rem; color:#64748b;">O3, NH3, H2O, NH3 plasma</td>
-                </tr>
-                <tr>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700;">12</td>
-                  <td><strong>La(thd)3</strong></td>
-                  <td style="text-align:center;"><span class="badge badge-1g">La</span></td>
-                  <td style="text-align:center; font-family:'JetBrains Mono'; font-weight:700; color:#0369a1;">28</td>
-                  <td style="text-align:center; font-family:'JetBrains Mono';">25</td>
-                  <td style="font-size:0.82rem;">La2O3, LaAlxOy, LaF3, LaNixOy, LaCoxOy</td>
-                  <td style="font-size:0.8rem; color:#64748b;">O3, H2O, P(OMe)3O, O2</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div style="font-size:0.82rem; color:#64748b; margin-top:10px;">
-          <div style="font-size:0.82rem; color:#64748b; margin-top:10px;">
-            * 원본 덤프(<code>atomiclimits_raw.json</code>)의 재배포 라이선스 조건을 고려하여 저장소에는 정제된 추출 집계본만 포함합니다. <code>python scripts/data/fetch_external_precursor_dbs.py --fetch</code>로 실시간 내려받을 수 있으며, 스냅샷 날짜·SHA-256·집계 수치는 <code>atomiclimits_snapshot.json</code>에 기록됩니다.
-          </div>
-
-          <!-- Collapsible Toggle Bar: 205 Expanded Precursors DB -->
-          <div class="table-toggle-bar" style="margin-top:18px;">
-            <div class="table-toggle-info">
-              <span class="table-toggle-title">확장 반도체 프리커서 데이터베이스 (205종 전수)</span>
-              <span class="table-toggle-subtitle">프로젝트 기준 27종 + AtomicLimits ALD 상위 93종 + Ir/Rh/As/Ga/In/Ru 확장 85종 통합 목록: 중심원소, 공정 횟수, 박막 재료, 공반응제, 문헌 DOI, 검증 SMILES 수록.</span>
-            </div>
-            <button type="button" class="btn-toggle-table" id="btn-panel-expdb" onclick="togglePanel('panel-expdb', 'btn-panel-expdb', '확장 프리커서 DB 테이블 보기 (205종)', '확장 프리커서 DB 닫기 (숨김)')">
-              확장 프리커서 DB 테이블 보기 (205종)
-            </button>
-          </div>
-
-          <!-- Hidden by default: 120 Expanded Precursors Table -->
-          <div id="panel-expdb" class="collapsible-panel">
-            <div class="filter-bar">
-              <input type="text" id="expPrecSearch" class="search-input" style="width:100%;" placeholder="프리커서명, 화학명, 분자식, 중심원소, 박막 재료 검색..." onkeyup="searchExpandedPrecursors()" oninput="searchExpandedPrecursors()">
-            </div>
-            <div class="table-responsive" style="margin-bottom:20px;">
-              <table>
-                <thead>
-                  <tr>
-                    <th style="width:40px; text-align:center;">No</th>
-                    <th>프리커서 표기 / ID</th>
-                    <th>화학명 &amp; 분자식</th>
-                    <th style="text-align:center;">중심원소</th>
-                    <th>출처 / 분류</th>
-                    <th style="text-align:center;">공정 보고수</th>
-                    <th>타깃 박막 재료</th>
-                    <th>대표 공반응제</th>
-                    <th style="text-align:center;">고유 DOI 수</th>
-                    <th>2D SMILES</th>
-                  </tr>
-                </thead>
-                <tbody>
-<!-- EXPANDED_PREC_DB_ROWS_PLACEHOLDER -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-          </div>
-        </div>
-
-        <div class="versus-grid">
-          <div class="versus-card" style="border-top: 3px solid #0284c7;">
-            <div class="versus-header" style="color:#0369a1;">1. 실제 양산 프리커서 27종 전수 검증</div>
-            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-              &bull; <strong>실리콘 &amp; 주족원소 (8종):</strong> DIPAS, BTBAS, 3DMAS, 4DMAS, TSA, HCDS, TEOS, SAM.24<br>
-              &bull; <strong>High-k 유전체 (7종):</strong> TEMAH, TDMAH, Hf(OtBu)4, TEMAZ, TDMAZ, ZMA, Cp(NMe2)3Zr<br>
-              &bull; <strong>타이타늄 &amp; 알루미나 (5종):</strong> TDMAT, TTIP, CpTi(NMe2)3, TMA, DMAH<br>
-              &bull; <strong>메탈 &amp; 배리어 &amp; EUV (7종):</strong> BTBMW, BTBMMo, Ru(EtCp)2, Co(AMD)2, CCTBA, TBTDET, tBuSn(OiPr)3
-            </p>
-          </div>
-
-          <div class="versus-card" style="border-top: 3px solid #7c3aed;">
-            <div class="versus-header" style="color:#6d28d9;">2. DB 기반 기존 SAScore 왜곡 실증</div>
-            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-              &bull; <strong>TSA False Negative 왜곡:</strong> 원자 4개의 초단순 구조인 Trisilylamine이 PubChem 파편 결여로 <strong>SAScore 6.91</strong>로 과도한 페널티를 받음.<br>
-              &bull; <strong>DMAH 왜곡:</strong> Al-H 결합을 지닌 단순 분자량 58 화합물이 <strong>SAScore 6.31</strong>로 산출됨.<br>
-              &bull; <strong>해결책:</strong> 본 DB의 시약 카탈로그를 <code>BR-SAScore</code>의 <code>BScores</code>로 등록 시 감점(0.0)에서 면제되어 정상 판정됨.
-            </p>
-          </div>
-
-          <div class="versus-card" style="border-top: 3px solid #059669;">
-            <div class="versus-header" style="color:#047857;">3. DFT 계산 및 파이프라인 직접 공급</div>
-            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
-              &bull; <strong>VASP POSCAR 즉시 생성:</strong> <code>Molecule.from_file</code>을 통해 $20 \times 21 \times 22\;\text{\AA}^3$ 진공 셀 POSCAR 및 <code>INCAR</code> 자동 변환.<br>
-              &bull; <strong>오픈 데이터 제공:</strong> 연구자가 직접 분석할 수 있도록 JSON/CSV 및 <code>BR-SAScore</code> 입력 파일(<code>semi_bb.csv</code>, <code>semi_rxn.csv</code>) 제공.
-            </p>
-          </div>
-        </div>
-
-        <!-- Collapsible Toggle Bar 1: 27 Precursors -->
-        <div class="table-toggle-bar">
-          <div class="table-toggle-info">
-            <span class="table-toggle-title">1. 반도체 상용 프리커서 전체 데이터베이스 (27종)</span>
-            <span class="table-toggle-subtitle">약칭, 화학명, 분자식, 중심원소, 타겟 박막, 증기압, 열분해온도, 합성 출발물질, 공급사 및 SMILES를 제공합니다.</span>
-          </div>
-          <button type="button" class="btn-toggle-table" id="btn-panel-precdb" onclick="togglePanel('panel-precdb', 'btn-panel-precdb', '상용 프리커서 DB 테이블 보기 (27종)', '상용 프리커서 DB 닫기 (숨김)')">
-            상용 프리커서 DB 테이블 보기 (27종)
-          </button>
-        </div>
-
-        <!-- Hidden by default: 27 Precursors Table -->
-        <div id="panel-precdb" class="collapsible-panel">
-          <div class="filter-bar">
-            <div class="filter-group">
-              <button class="filter-btn active" onclick="filterPrecursors('all', event)">전체 (27)</button>
-              <button class="filter-btn" onclick="filterPrecursors('silicon', event)">실리콘/주족원소 (8)</button>
-              <button class="filter-btn" onclick="filterPrecursors('high-k', event)">High-k Hf/Zr (7)</button>
-              <button class="filter-btn" onclick="filterPrecursors('titanium', event)">타이타늄 (3)</button>
-              <button class="filter-btn" onclick="filterPrecursors('group', event)">알루미나 Al (2)</button>
-              <button class="filter-btn" onclick="filterPrecursors('metal', event)">메탈/배리어 W/Mo/Ru/Co (6)</button>
-              <button class="filter-btn" onclick="filterPrecursors('euv', event)">EUV 주석 Sn (1)</button>
-            </div>
-            <input type="text" id="precSearch" class="search-input" placeholder="프리커서명, 화학명, 박막, 중심금속 검색..." onkeyup="searchPrecursors()" oninput="searchPrecursors()">
-          </div>
-
-          <div class="table-responsive" style="margin-bottom:20px;">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:40px; text-align:center;">No</th>
-                  <th>프리커서 약칭 / ID</th>
-                  <th>화학명, 분자식 &amp; CAS</th>
-                  <th style="text-align:center;">중심원소</th>
-                  <th>카테고리</th>
-                  <th>타겟 박막 / 공정</th>
-                  <th>증기압 &amp; 열분해온도</th>
-                  <th>합성 출발물질 &amp; 수율</th>
-                  <th>상용 공급사</th>
-                  <th>2D SMILES</th>
-                </tr>
-              </thead>
-              <tbody id="precTableBody">
-<!-- PREC_DB_ROWS_PLACEHOLDER -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Collapsible Toggle Bar 2: 29 Building Blocks -->
-        <div class="table-toggle-bar">
-          <div class="table-toggle-info">
-            <span class="table-toggle-title">2. 반도체 프리커서 핵심 출발물질 및 반응 시약 (29종)</span>
-            <span class="table-toggle-subtitle">무기 코어(SiCl4, HfCl4, TiCl4, WCl6 등), 유기 프로리간드(아민, 아미딘, 알콕사이드), 리튬화 염기 및 순도 등급.</span>
-          </div>
-          <button type="button" class="btn-toggle-table" id="btn-panel-bbdb" onclick="togglePanel('panel-bbdb', 'btn-panel-bbdb', '출발물질·시약 DB 테이블 보기 (29종)', '출발물질·시약 DB 닫기 (숨김)')">
-            출발물질·시약 DB 테이블 보기 (29종)
-          </button>
-        </div>
-
-        <!-- Hidden by default: 29 Building Blocks Table -->
-        <div id="panel-bbdb" class="collapsible-panel">
-          <div class="table-responsive" style="margin-bottom:20px;">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:40px; text-align:center;">No</th>
-                  <th>시약 ID</th>
-                  <th>시약명 &amp; CAS</th>
-                  <th>화학식</th>
-                  <th>역할 (Role)</th>
-                  <th>반도체 순도 등급</th>
-                  <th>취급 및 유해성 (Handling)</th>
-                  <th>2D SMILES</th>
-                </tr>
-              </thead>
-              <tbody>
-<!-- BB_DB_ROWS_PLACEHOLDER -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Collapsible Toggle Bar 3: 12 Chemical Reactions -->
-        <div class="table-toggle-bar">
-          <div class="table-toggle-info">
-            <span class="table-toggle-title">3. 공인된 반도체 프리커서 합성 반응 데이터베이스 (12종)</span>
-            <span class="table-toggle-subtitle">탈염산 아민화, 염 복분해(Salt Metathesis), 알코올리시스, 킬레이션, 반응 조건, 부산물 및 반응 자유에너지(&Delta;G).</span>
-          </div>
-          <button type="button" class="btn-toggle-table" id="btn-panel-rxndb" onclick="togglePanel('panel-rxndb', 'btn-panel-rxndb', '공인 합성 반응 DB 테이블 보기 (12종)', '합성 반응 DB 닫기 (숨김)')">
-            공인 합성 반응 DB 테이블 보기 (12종)
-          </button>
-        </div>
-
-        <!-- Hidden by default: 12 Chemical Reactions Table -->
-        <div id="panel-rxndb" class="collapsible-panel">
-          <div class="table-responsive" style="margin-bottom:20px;">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:40px; text-align:center;">No</th>
-                  <th>반응 ID</th>
-                  <th>반응명 및 합성 조건</th>
-                  <th>반응 유형</th>
-                  <th>화학 반응 경로 (반응물 &rarr; 생성물 + 부산물)</th>
-                  <th>반응 자유에너지 (&Delta;G)</th>
-                  <th>반응 SMARTS 스니펫</th>
-                </tr>
-              </thead>
-              <tbody>
-<!-- RXN_DB_ROWS_PLACEHOLDER -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Card 3: AS-ALD Area-Selective Deposition Inhibitor Database -->
-        <div class="card" style="margin-top:20px; border-top: 3px solid #0284c7;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. AS-ALD 면적선택증착 인히비터(억제제) 마스터 데이터베이스 (18종)</h3>
-            <span class="badge" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd; font-weight:700;">AS-ALD Inhibitor Master Hub</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
-            선단 반도체 패터닝 오정렬(Edge Placement Error, EPE) 극복 및 Fully Self-Aligned Vias(FSAV) 구현의 핵심인 <strong>AS-ALD 면적선택증착 인히비터 18종 (<code>database/external/as_ald_inhibitors.json</code>)</strong>을 체계적으로 분류·구축하였습니다. 기상 저분자 억제제(SMI)와 자가조립단분자막(SAM)을 망라하며, RDKit 분자 디스크립터(MW, LogP, 회전 결합 수) 검증 및 원천 학술 논문(Mackus, Bent, Tonner-Zech 등) DOI가 전수 연동되어 있습니다.
-          </p>
-
-          <div class="versus-grid">
-            <div class="versus-card" style="border-top: 3px solid #dc2626;">
-              <h4 style="color:#b91c1c; font-size:1.02rem; margin-bottom:6px;">유전체 선택적 억제제 (Dielectric-blocking)</h4>
-              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:8px;">
-                <strong>타깃:</strong> \(\text{SiO}_2, \text{SiN}_x, \text{Low-}k\) 유전체 표면 차단 &rarr; 금속(\(\text{Cu, Co, Ru}\)) 배선 위에만 선택 증착 (Metal-on-Dielectric ASD).
-              </p>
-              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
-                <li><strong>화학 메커니즘:</strong> 친수성 실란올(\(\equiv\text{Si-OH}\))과 선택적 실릴화(Silylation) 반응으로 소수성 알킬/실릴 캡 형성. 금속 표면에는 흡착되지 않고 날아감.</li>
-                <li><strong>대표 물질:</strong> <strong>DMADMS</strong>, <strong>DMATMS</strong>, <strong>BEMS</strong> (기상 아미노실란), <strong>HMDS</strong> (소수화 표준제), <strong>Propargyl Amine</strong> (열 가교형 초고온 억제제), <strong>ODTS / FDTS</strong> (결정성·불소화 SAM).</li>
-              </ul>
-            </div>
-
-            <div class="versus-card" style="border-top: 3px solid #2563eb;">
-              <h4 style="color:#1d4ed8; font-size:1.02rem; margin-bottom:6px;">금속 선택적 억제제 (Metal-blocking)</h4>
-              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:8px;">
-                <strong>타깃:</strong> 전이금속/귀금속(\(\text{Cu, Co, Ru, W}\)) 표면 차단 &rarr; 절연막(\(\text{SiO}_2, \text{Al}_2\text{O}_3\)) 위에만 선택 증착 (Dielectric-on-Metal ASD).
-              </p>
-              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
-                <li><strong>화학 메커니즘:</strong> 금속 \(\text{d}\)-오비탈 및 자유 전자와 유기 분자의 헤테로원자(S, N)가 강한 배위 화학흡착(\(\text{M-S}\) 공유결합, \([\text{Cu(I)-BTA}]_n\) 배위 고분자 착물) 형성. 산화막과는 비반응성.</li>
-                <li><strong>대표 물질:</strong> <strong>1-DDT</strong>, <strong>1-Octanethiol</strong>, <strong>Ethanethiol</strong> (알칸티올 계열), <strong>BTA</strong>, <strong>TTA</strong>, <strong>Imidazole</strong>, <strong>Pyrazole</strong> (아자헤테로고리 계열), <strong>ODPA</strong> (포스폰산), <strong>Hacac</strong> (킬레이트 공억제제).</li>
-              </ul>
-            </div>
-
-            <div class="versus-card" style="border-top: 3px solid #059669;">
-              <h4 style="color:#047857; font-size:1.02rem; margin-bottom:6px;">Inhibitor 가상 스크리닝 4대 물리 지표</h4>
-              <ul style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; padding-left:18px;">
-                <li><strong>흡착 선택도 (\(\Delta\Delta G_{\text{ads}}\)):</strong> \(\Delta G_{\text{ads}}^{\text{Target}} - \Delta G_{\text{ads}}^{\text{Growth}}\) (최소 \(15 \sim 25\text{ kcal/mol}\) 이상 우위 요구).</li>
-                <li><strong>패킹 밀도 (\(\theta\)):</strong> 분자 풋프린트(\(\text{\AA}^2/\text{molecule}\))와 van der Waals 반경에 따른 프리커서 접근 입체 차폐율.</li>
-                <li><strong>지연 주기 수 (\(N_{\text{incubation}}\)):</strong> 억제제 피막 파괴 전까지 비성장 영역에서 ALD 핵생성을 지연시키는 사이클 수 (\(\ge 100\text{ cycles}\)).</li>
-                <li><strong>탈착/제거 윈도우 (\(T_{\text{desorp}}\)):</strong> 증착 후 탄소 잔류물 없이 \(\text{O}_2/\text{H}_2\) 플라즈마 애싱 또는 진공 열처리로 \(100\%\) 무잔류 제거 가능성.</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Collapsible Toggle Bar: 18 AS-ALD Inhibitors -->
-          <div class="table-toggle-bar" style="margin-top:16px;">
-            <div class="table-toggle-info">
-              <span class="table-toggle-title">AS-ALD 면적선택증착 억제제(Inhibitor) 마스터 데이터베이스 (18종 전수)</span>
-              <span class="table-toggle-subtitle">약어, 화학명, CAS, 분류, 차단&rarr;성장 표면, 화학흡착 메커니즘, 분자량·LogP(RDKit 계산), 제거 방식, 2D SMILES, 원천 문헌 DOI.</span>
-            </div>
-            <button type="button" class="btn-toggle-table" id="btn-panel-inhibdb" onclick="togglePanel('panel-inhibdb', 'btn-panel-inhibdb', 'AS-ALD 억제제 DB 테이블 보기 (18종)', 'AS-ALD 억제제 DB 닫기 (숨김)')">
-              AS-ALD 억제제 DB 테이블 보기 (18종)
-            </button>
-          </div>
-
-          <!-- Hidden by default: 18 AS-ALD Inhibitors Table -->
-          <div id="panel-inhibdb" class="collapsible-panel">
-            <div class="filter-bar">
-              <input type="text" id="inhibSearch" class="search-input" style="width:100%;" placeholder="억제제 약어, 화학명, CAS, 화학 계열, 표적 표면 검색..." onkeyup="searchInhibitors()" oninput="searchInhibitors()">
-            </div>
-            <div class="table-responsive" style="margin-bottom:20px;">
-              <table>
-                <thead>
-                  <tr>
-                    <th style="width:40px; text-align:center;">No</th>
-                    <th>억제제 약어 / ID</th>
-                    <th>화학명 &amp; CAS</th>
-                    <th>분류 &amp; 투입 방식</th>
-                    <th>차단 표면 &rarr; 선택 성장 표면</th>
-                    <th>표면 화학흡착 메커니즘 &amp; 결합형</th>
-                    <th style="text-align:center;">MW / LogP</th>
-                    <th>제거 방식</th>
-                    <th>2D SMILES</th>
-                    <th>원천 문헌 DOI</th>
-                  </tr>
-                </thead>
-                <tbody>
-<!-- INHIBITOR_DB_ROWS_PLACEHOLDER -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Database Downloads & Computational Toolkit Card -->
-        <div class="card" style="margin-top:20px;">
-          <h3 class="card-title">4. 데이터베이스 다운로드 및 BR-SAScore / VASP 연동 안내</h3>
-          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:12px;">
-            구축된 데이터베이스는 파이썬 데이터 프레임워크(Pandas), 분자 스크리닝 도구(RDKit), 그리고 VASP 자동화 입력기에서 즉시 로드할 수 있도록 오픈 포맷(CSV / JSON)으로 제공됩니다:
-          </p>
-
-          <div class="versus-grid">
-            <div class="versus-card" style="border-left: 4px solid #0284c7;">
-              <div class="versus-header" style="color:#0369a1;">정형 데이터셋 파일 목록</div>
-              <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.7; padding-left:18px;">
-                <li><strong>상용 프리커서 메타데이터:</strong> <code>database/precursors.json</code> &bull; <code>database/precursors.csv</code> (27건)</li>
-                <li><strong>출발물질 및 반응 시약:</strong> <code>database/building_blocks.json</code> &bull; <code>database/building_blocks.csv</code> (29건)</li>
-                <li><strong>유기금속 합성 반응식:</strong> <code>database/reactions.json</code> &bull; <code>database/reactions.csv</code> (12건)</li>
-                <li><strong>확장 반도체 프리커서 DB:</strong> <code>database/external/expanded_semiconductor_precursors_master.json</code> (205건)</li>
-                <li><strong>AS-ALD 억제제(Inhibitor) DB:</strong> <code>database/external/as_ald_inhibitors.json</code> (18건)</li>
-                <li><strong>AtomicLimits ALD 추출 프리커서:</strong> <code>database/external/atomiclimits_precursors_extracted.json</code> (814건)</li>
-              </ul>
-            </div>
-
-            <div class="versus-card" style="border-left: 4px solid #059669;">
-              <div class="versus-header" style="color:#047857;">BR-SAScore 사전 빌더 및 벤치마크 코드</div>
-              <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.7; padding-left:18px;">
-                <li><strong>BR-SAScore BFrag 빌딩블록:</strong> <code>database/br_sascore_inputs/semi_bb.csv</code></li>
-                <li><strong>BR-SAScore RFrag 반응식:</strong> <code>database/br_sascore_inputs/semi_rxn.csv</code></li>
-                <li><strong>벤치마크 검증 스크립트:</strong> <code>scripts/benchmark/run_phase1_baseline.py</code>, <code>scripts/data/verify_vasp_frameworks.py</code> (Phase 1 벤치마크 및 VASP 환경 검증)</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
+        <!-- MECHANISTIC_ML_TECHNICAL_PLACEHOLDER -->
       </section>
 
-      
-
-    
-      <!-- Section 12: Precursor Inverse Design & Computational Mapping -->
-      <section id="precursor-inverse-design">
+      <section id="patent-literature-expansion">
         <div class="section-header">
-          <div class="section-tag">Section 12 &bull; AI-Driven Precursor Inverse Design &amp; Computational Mapping</div>
-          <h2 class="section-title">반도체 프리커서 AI 역설계: 최신 트렌드, 핵심 물성 지표 및 전산 연계 방법론</h2>
+          <div class="section-tag">Part II - Section 06 &bull; Global Patent &amp; Metal-Centered Literature Expansion</div>
+          <h2 class="section-title">한&middot;중&middot;일&middot;미&middot;대만 특허 분석 및 중심금속원자 기반 신규 프리커서&middot;인히비터 DB 확장 검토</h2>
           <p class="section-desc">
-            원하는 타깃 물성(증기압, 열분해 창, 입체 매몰 부피, 기판 흡착 깁스 자유에너지, 합성 가능성)을 목표로 반도체 프리커서 분자를 거꾸로 설계하는 <strong>AI Inverse Molecular Design</strong>의 최신 문헌 트렌드(2022~2026), 5대 지배 물성 수식, 그리고 이를 ML Surrogate Model·양자역학·VASP DFT와 결합하는 닫힌 루프(Closed-Loop) 아키텍처를 정리합니다.
+            현행 <code>102</code>종 프리커서·<code>18</code>종 인히비터 DB의 중심원소 편중(<code>Ga/In/Ru 62.7%</code>, <code>Nb/Ni/Cu/Ge/La/Y/Pt/Zn 0종</code>)을 해소하기 위해 한국(<code>KR</code>)·일본(<code>JP</code>)·중국(<code>CN</code>)·미국(<code>US/WO</code>)·대만(<code>TW</code>) 특허군과 <code>Chem. Rev.</code>·<code>Chem. Mater.</code> 중심금속 리뷰를 분석해 <strong>중복 없는 신규 38종(프리커서 28종 + ASD 인히비터 10종)</strong>을 도출하고 <code>SAPIS</code> 체계로 실측 스크리닝합니다.
           </p>
         </div>
 
-        <div style="background:#f0fdfa; border:1px solid #99f6e4; border-left:4px solid #0d9488; border-radius:8px; padding:12px 16px; margin-bottom:18px; font-size:0.85rem; color:#134e4a; line-height:1.6;">
-          <strong>역설계 모델 실증 계보 연계 안내:</strong> 본 섹션은 문헌 기반 5대 물리 지표와 기판(산화물&middot;질화물&middot;금속) ASD 메커니즘 원리를 개관합니다. 이후 <strong>Section 16 (Check 7)</strong>에서 기존 4세대 유기 반응 생성 모델(<code>RxnFlow</code>&middot;<code>ChemProjector</code>&middot;<code>SynFormer</code>)의 금속 배위 규칙 부재(<code>0</code>건)를 실측 확인함에 따라, 이를 해결한 <strong>배위&middot;조성 제약 통합 역설계 모델(<code>CoOrd-Inv</code>)</strong> 및 <code>5-CV / LOMO-5</code> 재발견율 벤치마크는 <a href="#precursor-inverse-model-synthesis" style="color:#0f766e; font-weight:800; text-decoration:underline;">Section 19 (CoOrd-Inv 통합 역설계 모델)</a>에 정량 수록되어 있습니다.
+        <!-- PATENT_EXPANSION_TECHNICAL_PLACEHOLDER -->
+      </section>
+
+      <div style="margin:28px 0 16px 0; padding:14px 20px; background:linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border:1px solid #cbd5e1; border-left:5px solid #d97706; border-radius:8px;">
+        <div style="font-size:0.76rem; font-weight:800; color:#d97706; text-transform:uppercase; letter-spacing:0.04em;">Part III</div>
+        <div style="font-size:1.22rem; font-weight:800; color:#0f172a; margin-top:2px;">열분해 동역학 및 ALD 공정 열창 연계</div>
+        <div style="font-size:0.84rem; color:#475569; margin-top:3px;">SevenNet CI-NEB 전이상태 활성화 장벽 벤치마크 및 실험 열분해 온도(T_dec) 연계 분석</div>
+      </div>
+      <section id="neb-decomp-kinetics">
+        <div class="section-header">
+          <div class="section-tag">Part III - Section 07 &bull; CI-NEB Reaction Path Benchmark &amp; Kinetic ALD Window</div>
+          <h2 class="section-title">SevenNet 반응경로(CI-NEB) 열분해 벤치마크 &amp; ALD T<sub>decomp</sub> 연계</h2>
+          <p class="section-desc">
+            정적 단일 분자 결합 해리 에너지($\text{BDE}_{\min}$)가 포착하지 못하는 협동 제거 메커니즘($\alpha$/$\beta$-H 제거, 1,2-이동, 4/6원 고리 제거)을 평가하기 위해 범용 MLIAP인 SevenNet(<code>7net-0</code>) 기반 <strong>8대 반도체 프리커서 분해 경로 CI-NEB 벤치마크</strong>(<code>Cp(NMe2)3Zr</code> 포함)를 수행하고, 전이상태 헤시안 검증·자동화 아키텍처 타당성·Arrhenius 속도론 기반 ALD 열분해 온도($T_{\text{decomp}}$) 및 이중 장벽 공정창($\Delta E_{\text{window}}$) 연계성을 분석합니다.
+          </p>
         </div>
 
+        <!-- NEB_DECOMP_TECHNICAL_PLACEHOLDER -->
+      </section>
+
+      <div style="margin:28px 0 16px 0; padding:14px 20px; background:linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border:1px solid #cbd5e1; border-left:5px solid #7c3aed; border-radius:8px;">
+        <div style="font-size:0.76rem; font-weight:800; color:#7c3aed; text-transform:uppercase; letter-spacing:0.04em;">Part IV</div>
+        <div style="font-size:1.22rem; font-weight:800; color:#0f172a; margin-top:2px;">배위 제약 프리커서 역설계 (CoOrd-Inv)</div>
+        <div style="font-size:0.84rem; color:#475569; margin-top:3px;">3만+ 중심금속–리간드 조합 공간의 배위 제약 필터링 및 Out-of-Fold 재발견율 검증</div>
+      </div>
+      <section id="precursor-inverse-model-synthesis">
+        <div class="section-header">
+          <div class="section-tag">Part IV - Section 08 &bull; Coordination-Constrained Inverse Design (CoOrd-Inv)</div>
+          <h2 class="section-title">반도체 프리커서 역설계 모델 통합 정립: 배위 제약 조합 역설계(CoOrd-Inv) 및 물성 매핑</h2>
+          <p class="section-desc">
+            배위수·산화수·입체 차폐 제약을 결합한 조합 역설계 모델(<code>CoOrd-Inv</code>)의 Out-of-Fold 재발견율 벤치마크와 5대 타깃 물성·기판 선택성(ASD) 수식 체계를 단일 섹션으로 통합 정리합니다.
+          </p>
+        </div>
+        <!-- INVERSE_DESIGN_TECHNICAL_PLACEHOLDER -->
+        <details style="margin-top:18px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:12px 16px;">
+          <summary style="cursor:pointer; font-weight:700; font-size:0.9rem; color:#0f766e;">문헌 기반 역설계 동향(2022~2026), 5대 타깃 물성 수식 및 ASD 계면 선택성 상세 보기</summary>
+          <div style="margin-top:14px;">
         <!-- 13.1 Literature Trends & Paradigm Shift -->
         <div class="card">
           <h3 class="card-title">1. 반도체 프리커서 역설계 최신 연구 동향 및 핵심 문헌 요약 (2022 ~ 2026)</h3>
@@ -2923,81 +1373,400 @@ flowchart TD
           </div>
         </div>
 
+
+          </div>
+        </details>
       </section>
 
-    
-      <!-- Section 13: Semiconductor Precursor AI Model Adaptation & DFT/Experiment Tuning Roadmap -->
-      <section id="dft-tuning-roadmap">
+      <div style="margin:28px 0 16px 0; padding:14px 20px; background:linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border:1px solid #cbd5e1; border-left:5px solid #475569; border-radius:8px;">
+        <div style="font-size:0.76rem; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:0.04em;">Part V</div>
+        <div style="font-size:1.22rem; font-weight:800; color:#0f172a; margin-top:2px;">DFT/VASP 계산 자동화 및 엔드투엔드 합성 워크플로우</div>
+        <div style="font-size:0.84rem; color:#475569; margin-top:3px;">다중 충실도 MLIP·VASP 자동화 아키텍처 및 출발 시약·반응 조건 SOP 도출 파이프라인</div>
+      </div>
+      <section id="vasp-automation">
         <div class="section-header">
-          <div class="section-tag">Section 13 &bull; Model Adaptation Strategy &amp; DFT/Experiment-Coupled Tuning Roadmap</div>
-          <h2 class="section-title">반도체 프리커서 AI 모델 선정, 튜닝 방법론 및 DFT·실험 데이터 융합 로드맵</h2>
+          <div class="section-tag">Part V - Section 09 &bull; Multi-Fidelity DFT Synergy &amp; VASP Automation Stack</div>
+          <h2 class="section-title">DFT 물성 연계 프레임워크 및 VASP 기반 무인 계산 자동화 스택</h2>
           <p class="section-desc">
-            기존 의약 중심 오픈소스 모델의 도메인 불일치와 4단계 파이프라인 붕괴를 극복하기 위해, <strong>어떤 오픈소스 모델을 베이스로 선정하고(BR-SAScore, RxnFlow, AiZynthFinder)</strong>, <strong>분자 분해(De-coupling), Multi-Fidelity DFT(SevenNet MLIP, VASP), 그리고 실험 피드백(열분해 창, 증기압, 자연발화성)</strong>을 어떻게 단계별 보상(Reward) 및 제약으로 결합·튜닝할 것인지에 대한 <strong>종합 실행 전략 및 엔지니어링 청사진</strong>을 제시합니다.
+            2D SA 스크리닝 통과 후보에 대해 착물 합성 자유에너지, 단량체-이합체 평형, BDE, 증기압을 평가하는 5대 DFT 지배 방정식과 VASP 4계층 자동화 파이프라인을 통합 제시합니다.
+          </p>
+        </div>
+        <!-- Interactive Mermaid Multi-Fidelity Workflow Card: Click to Expand Popup Modal -->
+        <div class="mermaid-card clickable-card" id="card-dft-workflow" onclick="openDiagramModal('dft-workflow-container', '다중정밀도 DFT + SA 프리커서 설계 5단계 파이프라인')" title="클릭하여 팝업 확대 보기">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-title">다이어그램: Multi-Fidelity DFT + SA 프리커서 설계 5단계 파이프라인</span>
+            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
+          </div>
+          <div class="mermaid-viewport" id="viewport-dft-workflow">
+            <div class="mermaid-svg-container" id="dft-workflow-container">
+              <div class="mermaid" id="dft-workflow-svg">
+flowchart TD
+    L0["<b>Stage 0: 4G 생성 및 3G SA 초고속 필터링 (1 ms 미만)</b><br>BR-SAScore, RxnFlow 및 BioNeMo ReaSyn으로 합성 가능한 리간드(HL)·실란 후보 100,000개 생성"] --> L1
+    L1["<b>Stage 1: 반경험적 양자역학 GFN2-xTB 3D 입체 스크리닝 (1 s)</b><br>3D 구조 최적화 및 매몰 부피 Vbur 58-82 percent 리간드 입체 충돌 필터링"] --> L2
+    L2["<b>Stage 2: 분자 DFT 착물 합성 열역학 검증 (5 min, B3LYP-D3/def2-TZVP)</b><br>착물 형성 자유에너지 dG_syn 음수 및 단량체 vs 이합체화 dG_dimer 양수 평가"] --> L3
+    L3["<b>Stage 3: 분자 DFT 열안정성 및 휘발성 윈도우 평가 (COSMO-RS / NEB)</b><br>최약 결합 해리 BDE 35 kcal 이상, 베타-수소 제거 장벽 dG_decomp 및 증기압 예측"] --> L4
+    L4["<b>Stage 4: Slab DFT 및 MLIP 웨이퍼 표면 반응성 검증</b><br>-OH/-NH2 표면 화학흡착 dG_ALD -15 kcal 이하 및 부산물 탈착 장벽 계산"] --> AL
+    AL["<b>Stage 5: Active Learning 피드백 루프 (QM-Augmented SA)</b><br>DFT 계산 결과(dG_syn, BDE)를 BR-SAScore Fragment Weight 및 RxnFlow Reward Function에 역반영"] -.->|"Reward Function Update"| L0
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">1. DFT를 활용한 5대 핵심 응용 영역 및 지배 방정식 (Governing Equations)</h3>
+
+          <div class="timeline" style="margin-top:16px;">
+
+            <div class="timeline-item">
+              <div class="timeline-dot dot-1g"></div>
+              <div class="timeline-content">
+                <h4 style="color:#0369a1; font-size:1.08rem; margin-bottom:6px;">응용 1: 프리커서 착물화 반응의 열역학적 합성 가능성 ($\Delta G_{\text{syn}}^{\text{DFT}}$)</h4>
+                <p style="color:var(--text-secondary); font-size:0.92rem;">
+                  2D 그래프 SA 모델은 리간드 $HL$이 금속 프리커서($\text{HfCl}_4$ 또는 $\text{Ti(NMe}_2)_4$)와 실제로 치환 반응을 일으켜 목표 배위수($ML_n$)까지 도달할 수 있는지 알지 못합니다. DFT($\omega\text{B97X-D3/def2-TZVPP}$)를 통해 <strong>단계별 리간드 치환 반응 자유에너지($\Delta G_{\text{syn}}$)</strong>를 계산하면 불완전 치환 여부를 사전에 판별할 수 있습니다:
+                </p>
+                <div class="math-callout">
+                  $$ M\text{X}_n + n\,HL \xrightarrow{\text{THF or Toluene}} ML_n + n\,\text{HX}\uparrow, \qquad \Delta G_{\text{syn}}^{(k)} = G_{\text{DFT}}\big(M\text{X}_{n-k}L_k\big) + G_{\text{DFT}}(\text{HX}) - G_{\text{DFT}}\big(M\text{X}_{n-k+1}L_{k-1}\big) - G_{\text{DFT}}(HL) $$
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot dot-2g"></div>
+              <div class="timeline-content">
+                <h4 style="color:#6d28d9; font-size:1.08rem; margin-bottom:6px;">응용 2: 3D 입체 차폐율($\%V_{\text{bur}}$) 및 단량체 vs 이합체화($\Delta G_{\text{dimer}}$) 예측</h4>
+                <p style="color:var(--text-secondary); font-size:0.92rem;">
+                  반도체 ALD 프리커서는 기상 수송을 위해 <strong>단량체(Monomer)</strong>를 유지해야 합니다. 리간드가 너무 작으면 다리 결합 이합체($M_2L_{2n}$)를 형성해 증기압이 급락하고, 너무 크면 합성이 불가능합니다. GFN2-xTB 및 DFT 구조 최적화 후 <strong>매몰 부피($\%V_{\text{bur}} \in [58\%, 82\%]$)</strong>와 <strong>이합체화 자유에너지($\Delta G_{\text{dimer}} > +5.0\text{ kcal/mol}$)</strong>를 계산합니다:
+                </p>
+                <div class="math-callout">
+                  $$ \%V_{\text{bur}} = \frac{V_{\text{occupied by ligands}}(r \le 3.5\,\text{\AA})}{\frac{4}{3}\pi (3.5\,\text{\AA})^3} \times 100\%, \qquad \Delta G_{\text{dimer}} = G_{\text{DFT}}(M_2L_{2n}) - 2\,G_{\text{DFT}}(ML_n) $$
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot dot-3g"></div>
+              <div class="timeline-content">
+                <h4 style="color:#047857; font-size:1.08rem; margin-bottom:6px;">응용 3: 합성 후 분리·정제 가능성(Isolability) — 열분해 장벽($\Delta G^\ddagger_{\text{decomp}}$) 및 $\text{BDE}_{\min}$</h4>
+                <p style="color:var(--text-secondary); font-size:0.92rem;">
+                  반도체 프리커서는 합성 후 <strong>감압 증류 또는 승화를 통해 99.999%(5N) 이상 고순도 정제</strong>가 가능해야 합니다. 정제 온도($80\text{--}180^\circ\text{C}$)에서 분해되지 않도록 DFT로 <strong>최약 결합 해리에너지($\text{BDE}_{\min}$)</strong>와 <strong>분자 내 $\beta$-수소 제거 반응 활성화 장벽($\Delta G^\ddagger_{\beta\text{-H}}$)</strong>을 계산합니다:
+                </p>
+                <div class="math-callout">
+                  $$ \text{BDE}_{\min} = \min_{\text{bond } i} \Big[ E_{\text{DFT}}(\text{Frag}_A^\bullet) + E_{\text{DFT}}(\text{Frag}_B^\bullet) - E_{\text{DFT}}(ML_n) \Big] > 35.0\text{ kcal/mol}, \qquad \Delta G^\ddagger_{\beta\text{-H / decomp}} > 28.0\text{ kcal/mol} $$
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot dot-4g"></div>
+              <div class="timeline-content">
+                <h4 style="color:#be123c; font-size:1.08rem; margin-bottom:6px;">응용 4: DFT 기반 휘발성(COSMO-RS $P_{\text{vap}}$) 및 웨이퍼 표면 ALD 반반응성($\Delta G_{\text{ALD}}$) 동시 최적화</h4>
+                <p style="color:var(--text-secondary); font-size:0.92rem;">
+                  단일 분자 DFT의 표면 전하 밀도 분포($\sigma$-profile, <strong>COSMO-RS</strong>) 또는 쌍극자 모멘트($\mu$)/분극률($\alpha$)을 통해 <strong>증발 엔탈피($\Delta H_{\text{vap}}$)와 증기압 곡선</strong>을 예측하고, Slab DFT(또는 SevenNet/MACE 등 MLIP)로 웨이퍼 표면($-\text{OH}^*, -\text{NH}_2^*$)과의 초기 화학흡착 에너지를 평가합니다:
+                </p>
+                <div class="math-callout">
+                  $$ \ln P_{\text{vap}}(T) = A - \frac{\Delta H_{\text{vap}}(\sigma\text{-profile}, \mu, \alpha)}{R T}, \qquad \text{Surf-OH}^* + ML_n(\text{g}) \xrightarrow{\Delta G_{\text{ALD}} < -15\text{ kcal/mol}} \text{Surf-O-}ML_{n-1}^* + HL(\text{g}) $$
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-subtle" style="border-left: 4px solid var(--accent-teal);">
+          <h3 class="card-title">응용 5: DFT와 3세대/4세대 SA 모델의 결합 수식 — QM-Augmented Reward Function</h3>
+          <p style="color:var(--text-secondary); font-size:0.93rem; margin-bottom:12px;">
+            4세대 Synthesis-Path Generative Model (<strong>RxnFlow, SynFlowNet, ChemProjector</strong>) 및 Active Learning 루프에서 반도체 프리커서를 역설계할 때, <strong>2D SA 지표와 DFT 물성을 결합한 Multi-Fidelity Reward Function ($R_{\text{Precursor}}$)</strong>은 다음과 같이 구성됩니다:
+          </p>
+          <div class="math-callout">
+            $$ R_{\text{Precursor}}(ML_n) = \underbrace{\sigma\Big(\tau_{\text{SA}} - \text{BR-SAScore}(HL)\Big)}_{\text{① 리간드 합성 용이성 (1 ms)}} \times \underbrace{\sigma\Big(-\Delta G_{\text{syn}}^{\text{xTB/DFT}}\Big)}_{\text{② 금속 착물화 열역학}} \times \underbrace{\mathbb{I}\Big(58\% \le \%V_{\text{bur}} \le 82\%\Big)}_{\text{③ 단량체 입체 안정성}} \times \underbrace{\sigma\Big(\frac{\text{BDE}_{\min} - \Delta H_{\text{vap}}}{RT}\Big)}_{\text{④ 증류 정제 및 ALD 공정 윈도우}} $$
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.88rem;">
+            &bull; <strong>Multi-Fidelity Gating:</strong> ①번 항(<code>BR-SAScore</code>)과 ③번 항(<code>GFN2-xTB</code> $\%V_{\text{bur}}$)을 통과한 상위 후보군에 대해서만 DFT($\Delta G_{\text{syn}}, \text{BDE}_{\min}$) 또는 Equivariant MLIP (MACE / SevenNet)를 호출함으로써, DFT 단독 대비 탐색 속도를 $10^4$배 이상 가속하면서 실제 합성 성공률을 높일 수 있습니다.
           </p>
         </div>
 
-        <!-- 13.1 Base Model Selection Matrix -->
-        <div class="card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">1. 반도체 프리커서 맞춤형 3대 오픈소스 Base Model Selection Matrix</h3>
-            <span class="badge badge-4g" style="font-size:0.82rem;">Base Model Architecture Matrix</span>
+        <div style="margin-top:22px;"></div>
+        <!-- Mermaid 4-Layer VASP Automation Architecture: Click to Enlarge -->
+        <div class="mermaid-card clickable-card" id="card-vasp-architecture" onclick="openDiagramModal('vasp-stack-container', 'VASP 중심의 4계층 반도체 프리커서 DFT 자동화 아키텍처')" title="클릭하여 팝업 확대 보기">
+          <div class="mermaid-toolbar">
+            <span class="mermaid-title">다이어그램: VASP 중심의 4계층 반도체 프리커서 DFT 자동화 아키텍처</span>
+            <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
           </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
-            단일 모델로 모든 것을 해결하려는 시도는 실패합니다. 목적에 따라 <strong>'빠른 대량 스크리닝(Scoring)'</strong>, <strong>'합성 경로 보장 생성(Generation)'</strong>, 그리고 <strong>'체계적 Retrosynthesis Tree Search (CASP Planning)'</strong>으로 명확히 역할을 분리하여 Base Model을 선정함:
-          </p>
+          <div class="mermaid-viewport" id="viewport-vasp-architecture">
+            <div class="mermaid-svg-container" id="vasp-stack-container">
+              <div class="mermaid" id="vasp-stack-svg">
+flowchart TD
+    subgraph L0 ["0. SA 및 경로 생성"]
+        A1["BR-SAScore / RxnFlow / BioNeMo ReaSyn<br>합성 가능 후보 SMILES"]
+    end
+    subgraph L1 ["Layer 1: 3D 착물 및 슬랩 빌더"]
+        B1["molSimplify / Architector<br>유기금속 3D 배위 구조 생성"]
+        B2["Pymatgen / CatKit<br>진공 박스 및 웨이퍼 Slab+흡착물 POSCAR"]
+    end
+    subgraph L2 ["Layer 2: MLIP 사전 이완"]
+        C1["SevenNet-0 / MACE-MP-0<br>ASE 기반 초고속 사전 최적화<br>(VASP 이온 스텝 80 percent 단축)"]
+    end
+    subgraph L3 ["Layer 3: VASP 워크플로우 및 에러 복구"]
+        D1["atomate2 / Quacc / AiiDA-VASP<br>SLURM/PBS 스케줄링 및 DB 적재"]
+        D2["Custodian (VaspErrorHandler)<br>ZBRENT, BRMIX, EDDDAV 자동 수정"]
+    end
+    subgraph L4 ["Layer 4: 전이상태 및 열역학"]
+        E1["Sella / VTST (CI-NEB, Dimer)<br>dG_decomp 및 dG_ALD 장벽"]
+        E2["ASE Thermo (Harmonic/IdealGas)<br>dG_syn(T,P) 및 Reward Function Feedback"]
+    end
+    A1 --> B1
+    A1 --> B2
+    B1 --> C1
+    B2 --> C1
+    C1 --> D1
+    D1 --- D2
+    D1 --> E1 --> E2
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <div class="table-responsive" style="margin-bottom:16px;">
+        <div class="versus-grid">
+          <div class="versus-card" style="border-top: 3px solid #0284c7;">
+            <div class="versus-header" style="color:#0369a1;">Layer 1: 3D 유기금속 &amp; 표면 슬랩 빌더</div>
+            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
+              &bull; <strong>기상 프리커서(Molecule-in-a-Box):</strong> <code>molSimplify</code> 또는 <code>Architector</code>로 금속-리간드 3D 배위 구조를 조립한 뒤, <code>Pymatgen</code>으로 비대칭 직방정계 진공 셀($20 \times 21 \times 22\;\text{\AA}^3$, 오비탈 축퇴 방지) <code>POSCAR</code>를 생성합니다.<br>
+              &bull; <strong>웨이퍼 표면 슬랩(ALD Slab):</strong> <code>Pymatgen</code>의 <code>SlabGenerator</code>와 <code>AdsorbateSiteFinder</code>(또는 <code>CatKit</code>)로 $\text{SiO}_2\text{-OH}$, $\text{HfO}_2(111)$, $\text{TiN}(100)$ 표면에 프리커서를 자동 배치하고 하부 원자층을 고정(<code>Selective Dynamics</code>)합니다.
+            </p>
+          </div>
+
+          <div class="versus-card" style="border-top: 3px solid #7c3aed;">
+            <div class="versus-header" style="color:#6d28d9;">Layer 2 &amp; 4: MLIP 사전 이완 &amp; 전이상태 탐색</div>
+            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
+              &bull; <strong>VASP 계산 비용 80% 절감:</strong> VASP의 PBE/PBE+U 궤적(MPtrj)으로 학습된 범용 MLIAP인 SevenNet(서울대 한승우 교수팀) 또는 MACE-MP-0로 초기 3D 구조를 2~3초 만에 사전 이완한 후 VASP를 호출하면 <code>NSW</code> 이온 스텝이 150회에서 20~30회로 줄어듭니다.<br>
+              &bull; <strong>전이상태 자동 탐색:</strong> <code>VTST Tools</code>(CI-NEB)로 초기 반응 경로를 잡고 <strong>Sella</strong>와 VASP를 연동하면 수 개 이미지 대신 단일 구조에서 내부좌표계 안장점($\Delta G^\ddagger_{\text{decomp}}, \Delta G^\ddagger_{\text{ALD}}$)으로 빠르게 수렴합니다.
+            </p>
+          </div>
+
+          <div class="versus-card" style="border-top: 3px solid #059669;">
+            <div class="versus-header" style="color:#047857;">Layer 3: 워크플로우 엔진 &amp; 런타임 에러 자동 복구</div>
+            <p style="font-size:0.87rem; color:var(--text-secondary); line-height:1.6;">
+              &bull; <strong>경량/유연성 최우선 시:</strong> <strong>Quacc</strong>(프린스턴 Rosen 그룹)는 데코레이터(<code>@job</code>) 하나로 ASE/Pymatgen과 Custodian을 통합하며, <code>Parsl</code>, <code>Dask</code>, <code>Jobflow</code>, <code>SLURM</code> 어디서나 즉시 동작합니다.<br>
+              &bull; <strong>대규모 DB 파이프라인 구축 시:</strong> Materials Project의 차세대 표준인 <strong>atomate2 + jobflow</strong>가 MongoDB 결과 적재, 탄성/진동/NEB 워크플로우 체이닝, 그리고 <strong>Custodian</strong> 기반 무인 에러 복구를 기본 내장하고 있습니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- Collapsible Toggle Bar for 10 VASP Automation Frameworks Table -->
+        <div class="table-toggle-bar">
+          <div class="table-toggle-info">
+            <span class="table-toggle-title">검증된 VASP 자동화 핵심 오픈소스 프레임워크 10종 비교 테이블</span>
+            <span class="table-toggle-subtitle">계층별 역할, 공식 GitHub 저장소, 논문 DOI, Stars, 라이선스 및 핵심 Python API 스니펫을 정리했습니다.</span>
+          </div>
+          <button type="button" class="btn-toggle-table" id="btn-panel-vasp" onclick="togglePanel('panel-vasp', 'btn-panel-vasp', 'VASP 자동화 프레임워크 테이블 보기 (10건)', 'VASP 프레임워크 테이블 닫기 (숨김)')">
+            VASP 자동화 프레임워크 테이블 보기 (10건)
+          </button>
+        </div>
+
+        <!-- Hidden by default: 10 VASP Frameworks Table -->
+        <div id="panel-vasp" class="collapsible-panel">
+          <div class="table-responsive" style="margin-bottom:20px;">
             <table>
               <thead>
                 <tr>
-                  <th style="width:130px;">적용 목적</th>
-                  <th style="width:140px;">추천 Base Model</th>
-                  <th style="width:140px;">원작 아키텍처</th>
-                  <th style="width:110px;">라이선스</th>
-                  <th style="width:230px;">Selection Rationale</th>
-                  <th>반도체 도메인 개조 핵심 포인트</th>
+                  <th style="width:44px; text-align:center;">No</th>
+                  <th style="width:120px;">계층 (Layer)</th>
+                  <th style="width:280px;">프레임워크명 및 핵심 역할</th>
+                  <th>공식 GitHub 저장소 &amp; DOI</th>
+                  <th style="width:90px; text-align:center;">Stars</th>
+                  <th style="width:110px; text-align:center;">라이선스</th>
+                </tr>
+              </thead>
+              <tbody>
+<!-- VASP_ROWS_PLACEHOLDER -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VASP INCAR Physics & Substrate Free Energy Governing Equations -->
+        <div class="card" style="margin-top:20px;">
+          <h3 class="card-title">1. 반도체 프리커서 및 기판(Substrate) VASP 표준 INCAR 물리 파라미터 &amp; 자유에너지 수식</h3>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:12px;">
+            유기금속 프리커서 분자(비주기적 고립계)와 웨이퍼 표면 슬랩(2D 주기계) 간의 화학흡착 및 ALD 반반응 에너지를 VASP에서 오차 없이 자동 계산하기 위한 <strong>열역학적 지배 방정식(Governing Equations)</strong>과 물리적 제약 조건(단위계: <code>eV</code>, <code>eV/Å</code>, <code>Å</code>)입니다:
+          </p>
+
+          <div class="math-callout">
+            $$ G_{\text{gas}}^{\text{VASP}}(T, P) = E_{\text{DFT}}^{\text{box}} + E_{\text{ZPE}} + \Delta H_{\text{trans+rot+vib}}(T) - T\Big(S_{\text{trans}}(T, P) + S_{\text{rot}}(T) + S_{\text{vib}}^{\text{QRRHO}}(T) + S_{\text{elec}}\Big) $$
+            $$ G_{\text{slab}}^{\text{clean}}(T) = E_{\text{DFT}}^{\text{clean\_slab}} + F_{\text{vib}}^{\text{clean\_surf}}(T), \qquad G_{\text{slab+ads}}^{\text{VASP}}(T) = E_{\text{DFT}}^{\text{slab+ads}} + F_{\text{vib}}^{\text{ads+surf}}(T) $$
+            $$ \Delta G_{\text{ALD}}(T, P) = \Big[ G_{\text{slab+ads}}^{\text{VASP}}(T) + G_{\text{gas}}(HL, T, P) \Big] - \Big[ G_{\text{slab}}^{\text{clean}}(T) + G_{\text{gas}}(ML_n, T, P) \Big] $$
+          </div>
+
+          <div class="card-subtle" style="border-left: 4px solid var(--accent-indigo); margin: 16px 0;">
+            <h4 style="color:var(--accent-indigo); font-size:0.98rem; margin-bottom:8px;">기판(Substrate) 자유에너지 산출 시 "하부 고정층 포논 상쇄(Cancellation) 근사"의 물리적 정당성 검토</h4>
+            <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.65; margin-bottom:8px;">
+              &bull; <strong>핵심 검증 명제:</strong> 기판 하부 원자들을 고정(<code>Selective Dynamics: F F F</code>)한 상태에서 Phonon / Partial Hessian을 계산할 때, 흡착 전 청정 기판($\text{Surf}^*$)과 흡착 후 기판($\text{Surf-Ads}^*$)의 하부 벌크층 진동 기여는 상쇄 근사가 성립함.<br>
+              &bull; <strong>1. 하부 고정층(Bottom Fixed Layers)의 상쇄 성립 ($\Delta F_{\text{vib}}^{\text{bottom}} \approx 0$):</strong> 고정된 하부 벌크층은 변위가 0이므로 헤시안 행렬에 포함되지 않습니다. 표면으로부터 수 개 원자층 아래의 격자 환경은 프리커서 흡착 전/후에 전자기적 변화가 지수함수적으로 감쇠($\sim e^{-z/\lambda}$)하므로, <strong>하부 고정층의 진동 자유에너지 변화가 상쇄된다는 근사는 물리적으로 타당</strong>하며 실제 오차는 $0.5\text{ kcal/mol}$ ($0.02\text{ eV}$) 미만으로 작습니다.<br>
+              &bull; <strong>2. 표면 활성 원자(Active Surface Atoms)의 필수 포함 이유 (PHVA 프로토콜):</strong> 그러나 <strong>프리커서와 직접 결합하는 표면 최상단 1~2개 층의 원자(예: $-\text{OH}^*$ 표면 산소 및 결합 실리콘)는 절대 상쇄되지 않습니다!</strong> 흡착 전 $-\text{OH}^*$ 신축 진동($\sim 3750\text{ cm}^{-1}$)이 반응 후 소멸하고 새로운 $M-\text{O}$ 배위 결합 진동($200 \sim 600\text{ cm}^{-1}$)으로 치환되기 때문입니다. 따라서 <strong>Partial Hessian Vibrational Analysis (PHVA)</strong>를 통해 <em>"흡착된 프리커서 분자 + 표면 최상단 반응 원자"</em>만을 활성 모드로 지정하여 진동수와 $F_{\text{vib}}^{\text{active}}(T)$를 계산해야 엄밀한 $\Delta G_{\text{ALD}}$가 산출됩니다.<br>
+              &bull; <strong>3. 기상 분자의 엔트로피 손실이 열역학을 지배:</strong> 주기적 기판(PBC Slab)은 병진/회전 엔트로피가 0($S_{\text{trans}}=S_{\text{rot}}=0$)인 반면, 기상 프리커서 $ML_n(\text{g})$는 흡착되면서 거대한 병진/회전 엔트로피($T S_{\text{trans+rot}} \approx 0.7 \sim 1.0\text{ eV}$ @ $200^\circ\text{C}$)를 잃게 되므로, 기상 분자의 분압($P = 0.1 \sim 1\text{ Torr}$) 조건 보정이 흡착 평형을 결정합니다.
+            </p>
+          </div>
+
+          <div class="versus-grid">
+            <div class="versus-card" style="border-left: 4px solid #0284c7;">
+              <div class="versus-header" style="color:#0369a1;">
+                Mode A: 기상 단일 프리커서 &amp; 리간드 (Molecule-in-a-Box)
+              </div>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65;">
+                &bull; <strong>진공 셀 크기:</strong> $20.0 \times 21.0 \times 22.0\;\text{\AA}^3$ (정육면체 대칭 파쇄로 불필요한 오비탈 축퇴 방지, 인접 주기 이미지 간 최소 거리 $> 12\;\text{\AA}$ 보장)<br>
+                &bull; <strong>KPOINTS 및 바이너리:</strong> $\Gamma$-point 단일점 ($1 \times 1 \times 1$) 및 <code>vasp_gam</code> 실행 파일 사용으로 계산 속도 2배 향상<br>
+                &bull; <strong>필수 <code>INCAR</code> 태그:</strong><br>
+                &nbsp;&nbsp;- <code>ISYM = 0</code> (분자 대칭성 강제 해제), <code>ISIF = 2</code> (셀 고정, 원자 좌표만 이완)<br>
+                &nbsp;&nbsp;- <code>ISMEAR = 0</code>, <code>SIGMA = 0.01</code> (단위: <code>eV</code>, HOMO-LUMO 갭 내 비물리적 부분 점유 방지)<br>
+                &nbsp;&nbsp;- <code>IDIPOL = 4</code>, <code>LDIPOL = .TRUE.</code> (3차원 고립 분자 쌍극자 모멘트 상호작용 보정)<br>
+                &nbsp;&nbsp;- <code>IVDW = 12</code> (Grimme DFT-D3(BJ) 분산력 보정; 벌키한 아미디네이트/Cp 리간드 입체 상호작용 필수)<br>
+                &nbsp;&nbsp;- <code>LASPH = .TRUE.</code> ($d$/$f$ 전이금속 Hf, Zr, Mo, Ru, W의 비구형 PAW 코어 기여 반영)
+              </p>
+            </div>
+
+            <div class="versus-card" style="border-left: 4px solid #059669;">
+              <div class="versus-header" style="color:#047857;">
+                Mode B: 웨이퍼 표면 슬랩 &amp; ALD 화학흡착 (Slab + Adsorbate)
+              </div>
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65;">
+                &bull; <strong>슬랩 및 진공층 설계:</strong> 최소 4개 원자층(하부 2개 층 <code>F F F</code> 고정, 상부 2개 층 및 흡착 프리커서 <code>T T T</code> 이완), $z$축 진공 두께 $\ge 15.0\;\text{\AA}$<br>
+                &bull; <strong>필수 <code>INCAR</code> 태그:</strong><br>
+                &nbsp;&nbsp;- <code>IDIPOL = 3</code>, <code>LDIPOL = .TRUE.</code> ($z$축 법선 방향 비대칭 슬랩의 표면 쌍극자 보정)<br>
+                &nbsp;&nbsp;- <code>AMIX = 0.2</code>, <code>BMIX = 0.0001</code>, <code>AMIX_MAG = 0.8</code>, <code>BMIX_MAG = 0.0001</code> (진공 영역 전하 출렁임 <code>BRMIX</code> 에러 예방)<br>
+                &nbsp;&nbsp;- <code>EDIFF = 1E-6</code> (단위: <code>eV</code>), <code>EDIFFG = -0.02</code> (단위: <code>eV/Å</code>, 힘 기준 수렴)<br>
+                &nbsp;&nbsp;- <strong>진동수 및 영점 에너지(ZPE):</strong> 흡착물과 표면 반응 부위 원자만 <code>T T T</code>로 활성화한 뒤 <code>IBRION = 5</code>, <code>NFREE = 2</code>, <code>POTIM = 0.015</code> (단위: <code>Å</code>)로 부분 헤시안(Partial Hessian) 계산
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 10.2: Algorithm Decision Tree & Options Framework (Replaces Raw Code) -->
+        <div class="card" style="margin-top:20px;">
+          <h3 class="card-title">2. VASP 기반 프리커서 DFT 자동화 알고리즘 및 단계별 선택지 의사결정 프레임워크</h3>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
+            연구 현장에서 다양한 분자 구조와 클러스터 환경에 유연하게 대응할 수 있도록, <strong>5대 핵심 단계별 오픈소스 도구 선택지와 의사결정 기준(Decision Matrix)</strong>을 알고리즘 구조로 정리했습니다:
+          </p>
+
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:90px;">단계 (Stage)</th>
+                  <th>선택 가능한 오픈소스 도구 (Options)</th>
+                  <th>핵심 알고리즘 메커니즘</th>
+                  <th>장점 및 한계 비교</th>
+                  <th>추천 적용 시나리오</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Track A: Quantitative Screening</strong><br><span class="badge badge-1g">Fast Scoring</span></td>
-                  <td><strong><code>BR-SAScore</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(&rarr; SAPIS 확장)</span></td>
-                  <td style="font-size:0.82rem;">Fragment Frequency Lookup Table<br>(Morgan r=2 분해)</td>
-                  <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
-                  <td style="font-size:0.82rem; line-height:1.5;">
-                    &bull; <strong>구조 Interpretability:</strong> Black-Box Neural Network가 아닌 Fragment Frequency 기반이므로 사전 수정 및 제어가 용이함.<br>
-                    &bull; <strong>시약/반응 분리 구조:</strong> $BFrag$(시약)와 $RFrag$(반응)가 분리되어 유기 리간드 평가와 무기 배위 평가의 디커플링이 용이함.
+                  <td><strong>Stage 1<br>3D 착물 &amp; 슬랩 생성</strong></td>
+                  <td>
+                    <div><strong>Option A:</strong> <code>molSimplify</code></div>
+                    <div><strong>Option B:</strong> <code>Architector</code></div>
+                    <div><strong>Option C:</strong> <code>Pymatgen MVLSlabSet</code></div>
+                    <div><strong>Option D:</strong> <code>CatKit</code></div>
                   </td>
-                  <td style="font-size:0.82rem; line-height:1.5;">
-                    프리커서를 $\{HL_i\}$와 $M\text{X}_m$으로 분해하여 리간드 점수와 DFT 착물화 에너지($\Delta G_{\text{syn}}^{\text{DFT}}$)를 결합하는 하이브리드 수식으로 확장.
+                  <td>
+                    &bull; A: 휴리스틱 배위 기하학 기반 3D 조립<br>
+                    &bull; B: 전이금속/란타넘족 입체이성질체 전수 탐색 및 xTB 최적화<br>
+                    &bull; C: 결정면 밀러 지수 절단 및 흡착 사이트 탐지<br>
+                    &bull; D: 표면 대칭성 그래프 기반 자동 흡착
                   </td>
-                </tr>
-
-                <tr>
-                  <td><strong>Track B: 경로 내재화 생성</strong><br><span class="badge badge-4g">de novo 역설계 생성</span></td>
-                  <td><strong><code>RxnFlow</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(ICLR 2025)</span></td>
-                  <td style="font-size:0.82rem;">GFlowNet 기반<br>반응 DAG 순방향 생성</td>
-                  <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
-                  <td style="font-size:0.82rem; line-height:1.5;">
-                    &bull; <strong>Reward Function 연동성:</strong> Objective Function $R(x)$에 DFT 계산값($\Delta G$, $\%V_{\text{bur}}$, 증기압)을 다중 보상으로 직접 결합 가능.<br>
-                    &bull; <strong>반응 경로 내재화:</strong> 반응 템플릿을 따라 순방향으로 조립하므로 생성 분자에 대응하는 합성 트리가 함께 도출됨.
+                  <td>
+                    &bull; A: 가볍고 빠름, 다핵 착물 처리 제한<br>
+                    &bull; B: $d/f$-블록 이종리간드 정확성 최고, 계산 시간 소요<br>
+                    &bull; C: 슬랩 표준 도구, 비정질 표면 수동 처리 필요<br>
+                    &bull; D: 촉매/흡착 자동화 강력, 설정 학습 필요
                   </td>
-                  <td style="font-size:0.82rem; line-height:1.5;">
-                    의약 유기 템플릿(72개)을 반도체 유기금속 25대 템플릿(염복분해, 아미노분해 등)으로 교체하고 29종 반도체 시약 카탈로그를 공급.
+                  <td>
+                    &bull; <strong>단일 프리커서:</strong> <code>Architector</code><br>
+                    &bull; <strong>웨이퍼 흡착:</strong> <code>Pymatgen</code> + <code>CatKit</code>
                   </td>
                 </tr>
-
                 <tr>
-                  <td><strong>Track C: Retrosynthesis Tree Search</strong><br><span class="badge badge-2g">CASP Route Planning</span></td>
-                  <td><strong><code>AiZynthFinder</code></strong><br><span style="font-size:0.75rem; color:#64748b;">(AstraZeneca)</span></td>
-                  <td style="font-size:0.82rem;">MCTS Tree Search<br>+ Policy Network</td>
-                  <td style="font-size:0.8rem; font-family:'JetBrains Mono';">MIT</td>
-                  <td style="font-size:0.82rem; line-height:1.5;">
-                    &bull; <strong>모듈형 파이프라인 무결성:</strong> 27종 반도체 프리커서 객체 수용(<code>Molecule.sanitize()</code>) 100% 검증 완료.<br>
-                    &bull; <strong>설정 파일 분리:</strong> <code>config.yml</code>을 통해 Policy 파일과 Stock HDF5만 교체하면 무기 전용 엔진으로 전환 가능.
+                  <td><strong>Stage 2<br>MLIP 초고속 사전 이완</strong></td>
+                  <td>
+                    <div><strong>Option A:</strong> <code>SevenNet (7net-0)</code></div>
+                    <div><strong>Option B:</strong> <code>MACE-MP-0</code></div>
+                    <div><strong>Option C:</strong> <code>GFN2-xTB</code></div>
                   </td>
-                  <td style="font-size:0.82rem; line-height:1.5;">
-                    USPTO 의약 정책망 대신 유기금속 특허 반응망을 추출하여 커스텀 Policy Network 및 재고 카탈로그(`building_blocks.json`)를 연동.
+                  <td>
+                    &bull; A: 등변 GNN, MPtrj VASP PBE 궤적 전수 학습<br>
+                    &bull; B: 고차 등변 다체 전개 (Higher-body order E(3))<br>
+                    &bull; C: 반경험적 양자역학 (SQM) 해밀토니안 풀이
+                  </td>
+                  <td>
+                    &bull; A: VASP PBE와 포텐셜 표면 일치도 최고, VASP NSW 80% 단축<br>
+                    &bull; B: 원자간 힘 예측 Accuracy 우수, GPU 메모리 요구량 큼<br>
+                    &bull; C: 훈련 불필요한 물리학 기반, 금속-탄소 결합 파라미터 한계
+                  </td>
+                  <td>
+                    &bull; <strong>VASP 연계 표준:</strong> <code>SevenNet</code><br>
+                    &bull; <strong>대규모 리간드 스크리닝:</strong> <code>GFN2-xTB</code>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Stage 3<br>VASP Workflow &amp; Error Recovery</strong></td>
+                  <td>
+                    <div><strong>Option A:</strong> <code>Quacc + Custodian</code></div>
+                    <div><strong>Option B:</strong> <code>atomate2 + jobflow</code></div>
+                    <div><strong>Option C:</strong> <code>AiiDA-VASP</code></div>
+                  </td>
+                  <td>
+                    &bull; A: 파이썬 데코레이터(<code>@job</code>) 기반 분산 태스크 연결<br>
+                    &bull; B: Materials Project 공식 FireWorks/MongoDB 오케스트레이션<br>
+                    &bull; C: 데이터 출처(Provenance) 완전 보존 그래프 DAG
+                  </td>
+                  <td>
+                    &bull; A: 학습 곡선 가장 낮음, SLURM/Dask/Parsl 즉시 동작<br>
+                    &bull; B: 수만 건 대규모 DB 적재에 유리, 보일러플레이트 코드 존재<br>
+                    &bull; C: 전체 이력(Provenance) 재현성 우수, 초기 설정 및 학습 난이도 높음
+                  </td>
+                  <td>
+                    &bull; <strong>빠른 연구/실험실:</strong> <code>Quacc</code><br>
+                    &bull; <strong>엔터프라이즈 DB 구축:</strong> <code>atomate2</code>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Stage 4<br>전이상태 (TS) 장벽 탐색</strong></td>
+                  <td>
+                    <div><strong>Option A:</strong> <code>Sella</code></div>
+                    <div><strong>Option B:</strong> <code>VTST CI-NEB</code></div>
+                    <div><strong>Option C:</strong> <code>VTST Dimer Method</code></div>
+                  </td>
+                  <td>
+                    &bull; A: 내부좌표계(Internal Coords) 기반 단일 구조 1차 안장점 최적화<br>
+                    &bull; B: 반응물-생성물 간 다중 이미지 탄성 밴드(Climbing Image)<br>
+                    &bull; C: 최소 곡률 방향 회전-이동 2원자 다이머 알고리즘
+                  </td>
+                  <td>
+                    &bull; A: 중간 이미지 불필요로 계산 비용 최소, 초기 추측 중요<br>
+                    &bull; B: 복잡한 결합 해리/재결합 경로 탐색 신뢰도 최고, 비용 큼<br>
+                    &bull; C: 생성물 구조 미상 시 탐색 가능, 수렴 안정성 중간
+                  </td>
+                  <td>
+                    &bull; <strong>분자 내 열분해(β-H):</strong> <code>Sella</code><br>
+                    &bull; <strong>표면 흡착/탈착 경로:</strong> <code>CI-NEB</code>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Stage 5<br>유한온도 열역학 해석</strong></td>
+                  <td>
+                    <div><strong>Option A:</strong> <code>ASE IdealGasThermo (QRRHO)</code></div>
+                    <div><strong>Option B:</strong> <code>PHVA HarmonicThermo (Partial)</code></div>
+                  </td>
+                  <td>
+                    &bull; A: 저주파수 진동 로터 보정(Grimme QRRHO) 기상 엔트로피<br>
+                    &bull; B: 활성 표면 모드 진동 자유에너지 + 기상 분압($P$) 보정
+                  </td>
+                  <td>
+                    &bull; A: 기상 프리커서 $\Delta H_{\text{vap}}, S_{\text{gas}}$ 산출 최적<br>
+                    &bull; B: 표면 흡착 $\Delta G_{\text{ALD}}(T, P)$ 정밀 산출
+                  </td>
+                  <td>
+                    &bull; <strong>기상/열분해:</strong> Option A<br>
+                    &bull; <strong>웨이퍼 ALD 반반응:</strong> Option B
                   </td>
                 </tr>
               </tbody>
@@ -3005,213 +1774,128 @@ flowchart TD
           </div>
         </div>
 
-        <!-- 13.2 Methodology 1: BR-SAScore -> SAPIS Hybrid Adaptation -->
-        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [평가 스코어러 튜닝] `BR-SAScore` &rarr; `SAPIS` (Transition-Metal Complex Synthetic Accessibility) 하이브리드 수식화</h3>
-            <span class="badge badge-1g" style="font-size:0.82rem;">Scorer Adaptation Formulation</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            MIT Kulik 그룹의 전이금속 착물 합성성 연구(JACS Au 2022)와 `BR-SAScore`의 모듈형 사전 룩업 방식을 결합하여, 유기금속 프리커서에 내재된 두 화학적 층위(유기 리간드 합성과 금속-리간드 배위 결합)를 분리 평가하는 지배방정식을 정의합니다:
+<!-- Eval 3: VASP Automation 10 Frameworks Comprehensive Matrix -->
+        <div class="card" style="margin-top:20px;">
+          <h3 class="card-title">6. VASP 기반 반도체 프리커서 DFT 자동화 도구 10종 실무 생산성 평가</h3>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:14px;">
+            실제 VASP 클러스터 환경에서의 학습 곡선, 오류 복구력, 유지보수성 및 추천 활용 시나리오 비교입니다:
           </p>
 
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid var(--accent-blue); border-radius:6px; padding:16px; margin-bottom:18px;">
-            <div style="font-weight:700; color:#0f172a; font-size:1.02rem; margin-bottom:6px;">SAPIS 하이브리드 지배방정식 (Governing Equation):</div>
-            $$\text{SA}_{\text{Precursor}} = \underbrace{\max_{i} \text{BR-SAScore}(HL_i)}_{\text{Track 1: 유기 프로-리간드 합성 난이도}} + \underbrace{w_1 \cdot \mathcal{S}_{\text{DFT}}(\Delta G_{\text{syn}}^{\text{DFT}}) + w_2 \cdot \mathcal{S}_{\text{steric}}(\%V_{\text{bur}})}_{\text{Track 2: DFT 배위 착물화 자유에너지 및 입체 인자}} + \underbrace{w_3 \cdot \mathcal{P}_{\text{exp}}}_{\text{실험 위험도 패널티}}$$
-          </div>
-
-          <div class="hero-stats" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:14px;">
-            <div class="stat-card" style="padding:14px; border-left:4px solid #0284c7;">
-              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">1. Track 1: 리간드 분해 ($HL_i$)</div>
-              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
-                프리커서 $M(L_1)_{n_1}(L_2)_{n_2}$를 중심 금속염 $M\text{X}_m$과 중성 프로-리간드 $HL_1, HL_2$로 자동 절단. 리간드는 순수 유기 분자이므로 `BR-SAScore`(또는 `SCScore`)를 통해 합성성을 일관성 있게 평가.
-              </div>
-            </div>
-
-            <div class="stat-card" style="padding:14px; border-left:4px solid #059669;">
-              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">2. Track 2: DFT 착물화 ($\Delta G_{\text{syn}}^{\text{DFT}}$)</div>
-              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
-                기상 착물화 반응 $M\text{Cl}_m + n HL \rightarrow M(L)_n + m \text{HCl}$의 깁스 자유에너지 산출:<br>
-                &bull; $\Delta G_{\text{syn}}^{\text{DFT}} \le -15\text{ kcal/mol}$: 자발적 착물 형성 (패널티 0.0)<br>
-                &bull; $\Delta G_{\text{syn}}^{\text{DFT}} > 0\text{ kcal/mol}$: 열역학적 불안정 (+5.0 감점)
-              </div>
-            </div>
-
-            <div class="stat-card" style="padding:14px; border-left:4px solid #7c3aed;">
-              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">3. 입체 매몰 부피 ($\%V_{\text{bur}}$)</div>
-              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
-                단분자 기화성과 이량화 억제를 유도하는 입체 포화도 제어:<br>
-                &bull; $\%V_{\text{bur}} \in [65\%, 80\%]$: 정상 단분자 창 (패널티 0.0)<br>
-                &bull; $\%V_{\text{bur}} < 60\%$: 배위 미포화로 인한 중합 위험 (+3.0 감점)<br>
-                &bull; $\%V_{\text{bur}} > 85\%$: 과도한 입체 장해로 리간드 탈락 (+4.0 감점)
-              </div>
-            </div>
-
-            <div class="stat-card" style="padding:14px; border-left:4px solid #ea580c;">
-              <div style="font-weight:700; color:#0f172a; font-size:0.92rem; margin-bottom:4px;">4. 실험 피드백 패널티 ($\mathcal{P}_{\text{exp}}$)</div>
-              <div style="font-size:0.82rem; color:#64748b; line-height:1.6;">
-                실제 실험실/양산 라인의 취급 난이도 반영:<br>
-                &bull; $\text{TGA residue} > 2\%$: 불완전 기화 패널티 (+2.0)<br>
-                &bull; 자연발화성(Pyrophoric: TMA, Al-H) 시약 사용 시 공정 안전 Weight ($+1.5 \times N_{\text{pyro}}$) 부과.
-              </div>
-            </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>도구명</th>
+                  <th>계층 (Layer)</th>
+                  <th>학습 곡선 (낮을수록 쉬움)</th>
+                  <th>런타임 오류 복구력</th>
+                  <th>프리커서/슬랩 특화도</th>
+                  <th>유지보수 상태 (GitHub)</th>
+                  <th>실무 생산성 등급</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pymatgen</strong></td>
+                  <td>Layer 1: I/O &amp; Slab</td>
+                  <td>쉬움 (표준 파이이썬 객체)</td>
+                  <td>해당 없음 (I/O 전용)</td>
+                  <td>최우수 (진공박스, MVLSlabSet)</td>
+                  <td>활발 (2,000+ stars)</td>
+                  <td><strong>필수 기본 인프라</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Custodian</strong></td>
+                  <td>Layer 3: Error Handler</td>
+                  <td>매우 쉬움 (간단한 핸들러)</td>
+                  <td><strong>최고 (ZBRENT, BRMIX 자동교정)</strong></td>
+                  <td>최우수 (진공 영역 에러 해결)</td>
+                  <td>활발 (Materials Project)</td>
+                  <td><strong>필수 기본 인프라</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Quacc</strong></td>
+                  <td>Layer 3: Workflow</td>
+                  <td><strong>가장 쉬움 (데코레이터 기반)</strong></td>
+                  <td>우수 (Custodian 래핑)</td>
+                  <td>최우수 (xTB + VASP 슬랩 원스톱)</td>
+                  <td>매우 활발 (Rosen 그룹)</td>
+                  <td><strong>S (실험실/연구 추천 1순위)</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>atomate2 + jobflow</strong></td>
+                  <td>Layer 3: Workflow</td>
+                  <td>보통 (구조화된 Maker 학습)</td>
+                  <td>우수 (Custodian 내장)</td>
+                  <td>우수 (MongoDB 대규모 적재)</td>
+                  <td>매우 활발 (MP 공식 차세대)</td>
+                  <td><strong>S (엔터프라이즈 DB 구축 1순위)</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>AiiDA-VASP</strong></td>
+                  <td>Layer 3: Workflow</td>
+                  <td>어려움 (PostgreSQL, Daemon)</td>
+                  <td>우수</td>
+                  <td>보통 (일반 고체 위주)</td>
+                  <td>보통</td>
+                  <td><strong>B+</strong> (출처 엄밀성 요구 시)</td>
+                </tr>
+                <tr>
+                  <td><strong>molSimplify</strong></td>
+                  <td>Layer 1: 3D Builder</td>
+                  <td>쉬움 (CLI / Python)</td>
+                  <td>해당 없음</td>
+                  <td>우수 (착물 3D 자동 빌드)</td>
+                  <td>안정적 (MIT Kulik 그룹)</td>
+                  <td><strong>A</strong> (빠른 프로토타이핑)</td>
+                </tr>
+                <tr>
+                  <td><strong>Architector</strong></td>
+                  <td>Layer 1: 3D Builder</td>
+                  <td>보통</td>
+                  <td>해당 없음</td>
+                  <td><strong>최고 (d/f-블록 이종리간드 전수탐색)</strong></td>
+                  <td>활발 (LANL)</td>
+                  <td><strong>A+</strong> (Hf/Zr 정밀 착물 구축)</td>
+                </tr>
+                <tr>
+                  <td><strong>CatKit</strong></td>
+                  <td>Layer 1: Slab Graph</td>
+                  <td>보통</td>
+                  <td>해당 없음</td>
+                  <td>우수 (표면 대칭 흡착 탐색)</td>
+                  <td>안정적 (SLAC SUNCAT)</td>
+                  <td><strong>A</strong> (표면 반응 사이트 자동화)</td>
+                </tr>
+                <tr>
+                  <td>SevenNet</td>
+                  <td>Layer 2: MLIP Pre-relax</td>
+                  <td><strong>매우 쉬움 (ASE 호환)</strong></td>
+                  <td>해당 없음</td>
+                  <td><strong>최고 (VASP NSW 80% 단축)</strong></td>
+                  <td>활발 (SNU 한승우 교수팀)</td>
+                  <td><strong>S (VASP 가속 필수 도구)</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Sella</strong></td>
+                  <td>Layer 4: TS Optimizer</td>
+                  <td>쉬움 (ASE Optimizer 교체)</td>
+                  <td>우수 (내부좌표계 안장점)</td>
+                  <td>우수 (열분해, 탈착 장벽 계산)</td>
+                  <td>활발 (Sandia / Zador Lab)</td>
+                  <td><strong>A+</strong> (단일 구조 TS 수렴 최적)</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <!-- 13.3 Methodology 2: RxnFlow Domain Specialization & Multi-Fidelity Reward -->
-        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-purple);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. [생성 엔진 튜닝] `RxnFlow` (GFlowNet) 도메인 특화 전용 및 Multi-Fidelity 보상 연계</h3>
-            <span class="badge badge-4g" style="font-size:0.82rem;">GFlowNet Domain Tuning</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:14px;">
-            `RxnFlow`의 가장 강력한 장점은 <strong>Objective Function인 Reward $R(x)$를 통해 에이전트의 분자 탐색 확률을 직접 조종</strong>할 수 있다는 점입니다 ($P(x) \propto R(x)$). 의약 유기 룰을 반도체 프리커서 템플릿으로 교체하고 Reward Function에 VASP DFT 및 SevenNet MLIP 에너지를 직접 연계합니다:
-          </p>
-
-          <div style="background:#faf5ff; border:1px solid #f3e8ff; border-left:4px solid #9333ea; border-radius:6px; padding:16px; margin-bottom:16px;">
-            <div style="font-weight:700; color:#581c87; font-size:1.02rem; margin-bottom:6px;">Multi-Fidelity GFlowNet Composite Reward Function:</div>
-            $$R(x) = \exp \left( - \frac{\alpha \cdot \text{SA}_{\text{ligand}}(x) + \beta \cdot \Delta G_{\text{syn}}^{\text{DFT}}(x) + \gamma \cdot |\Delta H_{\text{vap}}(x) - \Delta H_{\text{target}}| + \delta \cdot \mathcal{P}_{\text{dimer}}(x)}{k_B T} \right) \times \mathbf{1}\Big(\%V_{\text{bur}}(x) \in [65\%, 82\%]\Big)$$
-          </div>
-
-          <div class="versus-grid">
-            <div class="versus-card" style="border-top: 3px solid #7c3aed;">
-              <h4 style="color:#6d28d9; font-size:1.02rem; margin-bottom:8px;">반도체 전용 반응 템플릿 라이브러리 (25대 룰 구축)</h4>
-              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6;">
-                기존 의약 템플릿(환원적 아민화 등 72개)을 전면 제거하고, 본 연구의 <code>database/reactions.json</code> 기반 25개 핵심 유기금속 반응 템플릿으로 치환:<br>
-                &bull; <strong>무기 염 복분해 (Salt Metathesis):</strong> <code>[M:1][Cl] + [Li:2][N:3] &gt;&gt; [M:1][N:3] + [Li][Cl]</code><br>
-                &bull; <strong>실란 아미노분해 (Silane Aminolysis):</strong> <code>[Si:1][Cl] + [H:2][N:3] &gt;&gt; [Si:1][N:3] + [H][Cl]</code><br>
-                &bull; <strong>알콕사이드 리간드 교환:</strong> <code>[M:1][N:2] + [H:3][O:4] &gt;&gt; [M:1][O:4] + [H][N:2]</code><br>
-                &bull; <strong>시클로펜타다이에닐($\text{Cp}$) 전이:</strong> <code>[M:1][Cl] + [Na:2][c:3]1[c:4][c:5][c:6][c:7]1 &gt;&gt; [M:1][c:3]1[c:4][c:5][c:6][c:7]1 + [Na][Cl]</code>
-              </p>
-            </div>
-
-            <div class="versus-card" style="border-top: 3px solid #0284c7;">
-              <h4 style="color:#0369a1; font-size:1.02rem; margin-bottom:8px;">상용 시약 카탈로그 공급 (Building Blocks)</h4>
-              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6;">
-                ZINC/Enamine 의약 라이브러리 대신, 본 연구에서 체계화한 <strong>29종 반도체 양산 시약 카탈로그(<code>database/building_blocks.json</code>)</strong>와 Gelest 상용 클로로실란($\text{SiCl}_4, \text{SiH}_2\text{Cl}_2$), 무수 금속염화물($\text{TiCl}_4, \text{ZrCl}_4, \text{HfCl}_4, \text{WCl}_6$), 그리고 알킬리튬/아민염을 공급하여 실제 구매 가능한 시약으로만 분자를 조립하도록 강제합니다.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 13.4 Closed-Loop Active Learning Pipeline Diagram -->
-        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-blue);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">4. [인프라 융합 아키텍처] Multi-Fidelity Closed-Loop Active Learning 파이프라인 맵</h3>
-            <span class="badge badge-3g" style="font-size:0.82rem;">Interactive Pipeline Diagram</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.6; margin-bottom:16px;">
-            Generative Model (RxnFlow), 고속 MLIP (SevenNet), 제일원리 DFT (VASP), 그리고 실험 피드백이 실시간 닫힌 루프(Closed-Loop)로 연동되는 차세대 반도체 프리커서 AI 역설계 프레임워크의 전체 데이터 흐름도입니다:
-          </p>
-
-          <!-- Interactive Mermaid Card -->
-          <div class="mermaid-card clickable-card" id="card-closedloop-pipeline" onclick="openDiagramModal('closedloop-pipeline-container', '반도체 프리커서 맞춤형 Multi-Fidelity Closed-Loop Active Learning 아키텍처')" title="클릭하여 팝업 확대 보기">
-            <div class="mermaid-toolbar">
-              <span class="mermaid-title">다이어그램: 반도체 프리커서 맞춤형 Multi-Fidelity Closed-Loop Active Learning 아키텍처</span>
-              <span class="click-to-expand-badge">클릭하여 팝업 확대</span>
-            </div>
-            <div class="mermaid-viewport" id="viewport-closedloop-pipeline">
-              <div class="mermaid-svg-container" id="closedloop-pipeline-container">
-                <div class="mermaid" id="closedloop-pipeline-svg">
-flowchart TD
-    subgraph S1 ["Level 1: 도메인 특화 생성 및 경로 전개 (Generative Policy)"]
-        G1["RxnFlow (GFlowNet) / BioNeMo ReaSyn (CoR) / AiZynthFinder (MCTS)"] -->|"25대 유기금속·Pro-ligand 반응 템플릿 적용"| G2["반도체 프리커서 후보 M(L)n 생성"]
-        DB1["29종 양산 시약 + Gelest 실란/금속염 카탈로그"] --> G1
-    end
-
-    subgraph S2 ["Level 2: 4단계 Multi-Fidelity 전산 및 DFT 깔때기 (Computational Funnel)"]
-        G2 -->|"Tier 1 (0.5 ms)"| T1["GNN Surrogate Model: 분자량, 대략적 기화열, 리간드 BR-SAScore 필터링"]
-        T1 -->|"Tier 2 (1 s)"| T2["SevenNet-0 (MLIP): 3D 완화 및 중심금속 매몰 부피 (Vbur) 산출"]
-        T2 -->|"Tier 3 (10 min)"| T3["VASP PBE-D3 Gas-phase: 착물화 깁스 자유에너지 (dG_syn) 및 이량화 억제 연산"]
-        T3 -->|"Tier 4 (8 hr)"| T4["VASP Slab Surface: 기판 반응 흡착 에너지 (dG_ALD) 및 면선택성 (ddG_ads)"]
-    end
-
-    subgraph S3 ["Level 3: 실험 데이터 캘리브레이션 및 닫힌 루프 보상 (Closed-Loop Feedback)"]
-        T4 --> E1["실험 데이터 검증: TGA 열분해 창, 증기압, 대기 안정성"]
-        E1 --> R1["Reward Function Update: R(x) = exp(-(alpha SA + beta dG_syn + gamma dH_vap)/kT)"]
-        R1 -->|"정책 파라미터 업데이트 (Active Learning)"| G1
-    end
-
-    classDef genNode fill:#eff6ff,stroke:#2563eb,color:#1e40af,font-weight:bold;
-    classDef compNode fill:#f0fdf4,stroke:#16a34a,color:#166534;
-    classDef expNode fill:#fff7ed,stroke:#ea580c,color:#9a3412;
-    classDef rewardNode fill:#faf5ff,stroke:#9333ea,color:#6b21a8,font-weight:bold;
-
-    class G1,G2,DB1 genNode;
-    class T1,T2,T3,T4 compNode;
-    class E1 expNode;
-    class R1 rewardNode;
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 13.5 Actionable Implementation Roadmap -->
-        <div class="card" style="margin-top:20px; border-top: 3px solid var(--accent-green);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <h3 class="card-title" style="margin-bottom:0;">5. [단계별 추진 로드맵] 실무 개발 일정 및 구체적 마일스톤 (Actionable Milestones)</h3>
-            <span class="badge badge-1g" style="font-size:0.82rem;">Implementation Milestones</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.65; margin-bottom:16px;">
-            연구 현장에서 즉시 착수하여 점진적으로 완성도를 높일 수 있는 3단계 실행 로드맵입니다:
-          </p>
-
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot dot-1g"></div>
-              <div class="timeline-content">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                  <span class="badge badge-1g">Phase 1: 리간드 분해 프로토타입 평가기 구축 (소요: 1 ~ 2주)</span>
-                  <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--text-muted);">Quick Prototype</span>
-                </div>
-                <h4 style="font-size:1.05rem; color:var(--text-primary); margin-bottom:6px;">`BR-SAScore` 기반 리간드 분해 스코어러 및 29종 시약 카탈로그 이식</h4>
-                <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
-                  <li>RDKit 서브그래프 절단 함수를 개발하여 프리커서 입력 시 중성 프로-리간드($HL_i$)와 금속염($M\text{X}_m$)을 자동 분리.</li>
-                  <li>본 연구의 <code>database/building_blocks.json</code>(29종)을 `BScores` 테이블에 이식하여 Leakage-Free 순수 출발물질 기반 1차 Scorer 완성.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-dot dot-2g"></div>
-              <div class="timeline-content">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                  <span class="badge badge-2g">Phase 2: MLIP (SevenNet) 기반 입체 형상 스코어러 결합 (소요: 2 ~ 3주)</span>
-                  <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--text-muted);">Geometry &amp; Steric</span>
-                </div>
-                <h4 style="font-size:1.05rem; color:var(--text-primary); margin-bottom:6px;">ASE + SevenNet-0 연동 3D 완화 및 매몰 부피($\%V_{\text{bur}}$) 자동화</h4>
-                <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
-                  <li>로컬 파이썬 가상환경에 설치된 ASE와 `SevenNet-0` MLIP를 호출하여 2D SMILES &rarr; 3D 착체 자동 완화 파이프라인 구축 (~1초).</li>
-                  <li>중심 금속 주변 매몰 부피율($\%V_{\text{bur}}$)을 계산하여 올리고머화/응집 위험을 감지하는 페널티 모듈 통합.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-dot dot-4g"></div>
-              <div class="timeline-content">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                  <span class="badge badge-4g">Phase 3: VASP 자동화 스택 연동 및 RxnFlow 닫힌 루프 가동 (소요: 4 ~ 6주)</span>
-                  <span style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--text-muted);">Full Closed-Loop</span>
-                </div>
-                <h4 style="font-size:1.05rem; color:var(--text-primary); margin-bottom:6px;">VASP DFT 에너지 실시간 보상 피드백 &amp; 반도체 프리커서 AI 역설계 가동</h4>
-                <ul style="font-size:0.86rem; color:var(--text-secondary); line-height:1.65; padding-left:18px;">
-                  <li>보고서 섹션 10의 VASP 자동화 스택(`Pymatgen` + `Custodian` + `Quacc`)과 연동하여 기상 착물화 $\Delta G_{\text{syn}}^{\text{DFT}}$ 자동 연산.</li>
-                  <li>`RxnFlow`의 반응 템플릿을 무기 배위 룰로 치환하고 VASP 에너지를 보상으로 피드백하여 고증기압·고열안정성 반도체 신규 프리커서 자동 역설계 가동.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
 
       </section>
 
-    
-      <!-- Section 14: End-to-End Synthesis Workflow & Multi-Fidelity DFT/MLIP Architecture -->
       <section id="synthesis-workflow">
         <div class="section-header">
-          <div class="section-tag">Section 14 &bull; End-to-End Synthesis Workflow &amp; Multi-Fidelity DFT/MLIP Architecture</div>
+          <div class="section-tag">Part V - Section 10 &bull; End-to-End Synthesis Workflow &amp; Multi-Fidelity DFT/MLIP Architecture</div>
           <h2 class="section-title">확장 DB 기반 프리커서·인히비터 합성 가능성 평가 및 합성 경로 자동 설계 워크플로우</h2>
           <p class="section-desc">
             구축된 <strong>205종 확장 ALD 프리커서 DB</strong>, <strong>18종 AS-ALD 인히비터 DB</strong>, <strong>29종 반응 시약(Building Blocks)</strong> 및 <strong>12종 공인 유기금속 반응식</strong>을 바탕으로, 가상 후보 분자의 합성 가능성(SA) 고속 스크리닝부터 시작 물질 선정, 반응 조건·용매·글러브박스 분위기, 부반응물 제거 및 정제법에 이르는 <strong>엔드투엔드 실험 레시피(SOP)를 자동 도출하는 Workflow</strong>를 구축합니다. 아울러 <strong>MLIP (SevenNet, MACE, ALD-MLIP)</strong>과 <strong>고정밀 DFT (VASP, ORCA)</strong>를 Multi-Fidelity 체계로 연계하여 반응 활성화 장벽($\Delta G^\ddagger$), 열분해 한계($T_{\text{decomp}}$), 증기압 곡선, 그리고 표면 선택 흡착능($\Delta\Delta G_{\text{ads}}$)을 계산·검증하는 전산 아키텍처를 상세히 설계합니다.
@@ -3519,303 +2203,3 @@ flowchart TD
         </div>
 
       </section>
-
-      <!-- Section 15: Unified 160-Molecule Evaluation & SevenNet-0 Empirical Benchmark -->
-      <section id="phase1-phase2-benchmark">
-        <div class="section-header">
-          <div class="section-tag">Section 15 &bull; Unified 160-Molecule Benchmark &amp; SevenNet Physical Validation</div>
-          <h2 class="section-title">통합 160종 물리-배위 Benchmark &amp; SevenNet-0 물리 기준선·다중상태 배위 인식 검증</h2>
-          <p class="section-desc">
-            전체 <strong>160종 통합 평가 데이터셋</strong>(양산 프리커서 27종 + 확장 원소 프리커서 75종 = 102종, AS-ALD 선택성 인히비터 18종, 6대 물리·화학적 실패 메커니즘별 Negative Control 40종)을 대상으로 <strong><code>SAPIS</code> 물리-배위 평가 프레임워크(공유반지름 정규화 프로브 구, 다중상태 전이금속 배위 벡터 $\mathbf{c}_i$, 극성·하이드라이드 가중 $\%V_{\text{bur}}^{\text{D2}}$, 개방 원추각 $\theta_{\max}^{\text{void}}$, 연쇄·$\pi$-공액 하이드라이드 판정 기준)</strong>의 판정 정밀도와 범용 MLIAP인 SevenNet(160종 전수 LBFGS 물리 이완셋)의 <strong>표준 배위결합 생성에너지($\Delta E_f^{\text{std}}/v_M$)</strong> 및 <code>All-Sample &middot; CV-5 &middot; LOOCV &middot; LOFMO</code> 외삽 성능을 검증합니다.
-          </p>
-        </div>
-
-        <!-- PHASE1_PHASE2_TUNING_PLACEHOLDER -->
-      </section>
-
-      <!-- Section 16: Generational Organic Datasets & General Organometallic Reaction Extension -->
-      <section id="general-metal-expansion">
-        <div class="section-header">
-          <div class="section-tag">Section 16 &bull; Generational Organic Datasets &amp; General Organometallic Reaction Extension</div>
-          <h2 class="section-title">유기 분자 세대별 학습 Dataset 현황 및 범용 금속 포함 분자 반응 확장 분석</h2>
-          <p class="section-desc">
-            1G~4G 및 CASP 계열 유기 SA·역합성 Model이 기반으로 삼은 공개·상용 <code>Dataset</code> 구성을 세대별로 체계화하고, 반도체 공정 프리커서 외 일반 금속 포함 분자(균일계 촉매, OLED 인광체, MOF·배위 고분자, 금속의약품)로 반응 생성 및 합성 가능성 평가 범위를 확장하기 위한 외부 <code>Dataset</code> 연계 전략과 Cheminformatics·물리 제약 해결 과제를 정리합니다.
-          </p>
-        </div>
-
-        <!-- Card 1: Generational Organic Datasets Matrix -->
-        <div class="card" style="margin-bottom:20px; border-top:3px solid var(--accent-blue);">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">1. [유기 분자 1G ~ 4G + CASP] 세대별 활용 Dataset 및 코퍼스 비교</h3>
-            <span class="badge badge-3g" style="font-size:0.8rem;">1G~4G &bull; Organic Corpora Benchmark</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:14px; line-height:1.6;">
-            기존 SA Model들은 1G 정적 분자 빈도 사전에서 출발해 2G 반응쌍·CASP <code>Distillation</code>, 3G 시약·반응 단편 분리, 4G 경로 내재화 조합 공간으로 진화했으나, 학습 <code>Dataset</code> 전반이 의약·유기 특허 화학 공간에 집중되어 있습니다.
-          </p>
-
-          <div class="table-responsive no-scroll-16" style="margin-bottom:14px;">
-            <table class="table-compact-16">
-              <colgroup>
-                <col style="width:10%;">
-                <col style="width:19%;">
-                <col style="width:36%;">
-                <col style="width:35%;">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>세대 / 분류</th>
-                  <th>대표 Model</th>
-                  <th>활용 <code>Dataset</code> 및 시약·반응 코퍼스</th>
-                  <th>데이터 성격 및 금속 도메인 한계</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span class="badge badge-1g">1G</span><br><span style="font-size:0.68rem; color:#64748b;">2009~2020</span></td>
-                  <td><strong>SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">Ertl &amp; Schuffenhauer</span></td>
-                  <td><strong>PubChem</strong> (약 100만 샘플링 / ~1,300만 의약 중심 화합물 카탈로그에서 추출한 Morgan $r=2$ <code>Fragment Frequency</code> 사전)</td>
-                  <td>반응 경로 정보 없이 정적 분자 빈도만 집계하며, $\text{Si-N}$, $\text{Al-C}$, $\text{M-N}$ 결합의 <code>Fragment Frequency</code>가 부재함.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-1g">1G</span><br><span style="font-size:0.68rem; color:#64748b;">2020</span></td>
-                  <td><strong>SYBA</strong><br><span style="font-size:0.72rem; color:#64748b;">Naive Bayes</span></td>
-                  <td><strong>ZINC15</strong> (Positive: 구매 가능 의약 분자 <code>143,303</code>종) vs <strong>비합성 가상 고리 생성 집합</strong> (Negative: 무작위 토폴로지 <code>143,303</code>종)</td>
-                  <td>ZINC 약물 공간에 부재한 전이금속-Cp 착체를 비합성 고리 클래스로 분류함.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-2g">2G</span><br><span style="font-size:0.68rem; color:#64748b;">2018</span></td>
-                  <td><strong>SCScore</strong><br><span style="font-size:0.72rem; color:#64748b;">Pairwise Ranking DNN</span></td>
-                  <td><strong>Reaxys</strong> (<code>1,200만</code> 건 출판·특허 화학 반응쌍 $(R, P)$)</td>
-                  <td>반응 진행 방향성($S(P) &gt; S(R)$)을 반영하나, 유기금속이 출발 시약·촉매로 등재되어 열·화학적 위험성에 대한 <code>Underestimation</code> 경향을 보임.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-2g">2G</span><br><span style="font-size:0.68rem; color:#64748b;">2021~2022</span></td>
-                  <td><strong>RAscore / RetroGNN</strong><br><span style="font-size:0.72rem; color:#64748b;">CASP Surrogate</span></td>
-                  <td><strong>ChEMBL</strong> (<code>200,000</code>개 의약 분자에 대한 <strong>AiZynthFinder</strong> MCTS 탐색 결과 <code>Distillation Dataset</code>)</td>
-                  <td><code>ECFP6</code> 알킬 비트 편향과 유기 <code>MCTS</code> 분포로 금속 배위 불안정성을 변별하지 못함.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-3g">3G</span><br><span style="font-size:0.68rem; color:#64748b;">2022~2023</span></td>
-                  <td><strong>GASA / DeepSA / DFRscore</strong><br><span style="font-size:0.72rem; color:#64748b;">GNN &amp; Transformer</span></td>
-                  <td><strong>GASA:</strong> USPTO + 문헌 <code>Synthesis DB</code><br><strong>DeepSA:</strong> ChEMBL + Synthetic Tree<br><strong>DFRscore:</strong> 유기 Retrosynthesis Step Count 집합</td>
-                  <td>GASA의 <code>Hf, Ta, Ru, W, Mo</code> 누락 및 DFRscore의 유기 10원소 제한(금속 원자의 <code>ELSE</code> <code>Token</code> 축퇴)이 확인됨.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-3g">3G</span><br><span style="font-size:0.68rem; color:#64748b;">2024</span></td>
-                  <td><strong>BR-SAScore</strong><br><span style="font-size:0.72rem; color:#64748b;">BFrag / RFrag Split</span></td>
-                  <td><strong>eMolecules</strong> (<code>120만</code> Building Blocks; 공식 사전 <code>244,572</code>개 키) + <strong>USPTO</strong> (<code>180만</code> 특허 반응)</td>
-                  <td><code>BFrag</code>/<code>RFrag</code> 사전 교체를 통한 도메인 조정이 가능하나 기본 사전에는 $\text{M-N/M-C}$ 배위 규칙이 부재함.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-4g">4G</span><br><span style="font-size:0.68rem; color:#64748b;">2022~2025</span></td>
-                  <td><strong>SynNet / ChemProjector / SynFormer / RxnFlow</strong></td>
-                  <td><strong>Enamine / ZINC</strong> 시약 카탈로그(<code>5,000~200,000</code>종) + <strong>HB-91</strong>(<code>91</code>종), <strong>SynFormer <code>comprehensive.txt</code></strong>(<code>115</code>종), <strong>Explore+CGFlow</strong>(<code>72</code>종) 유기 반응 <code>Template</code></td>
-                  <td>합성 트리를 직접 생성하나 전체 <code>Template</code> 라이브러리 내 금속 원자가 <code>0</code>건으로 코어 배위 경로 생성이 불가함.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-4g">4G</span><br><span style="font-size:0.68rem; color:#64748b;">2025~2026</span></td>
-                  <td><strong>BioNeMo ReaSyn</strong><br><span style="font-size:0.72rem; color:#64748b;">AR + Edit Flow</span></td>
-                  <td><strong>Enamine US Stock</strong> + <strong>SynFormer <code>115</code>종</strong> 반응 <code>Template</code> + <strong><code>1,050만(10.5M)</code></strong> 정렬 <code>CoR</code> 트리플렛</td>
-                  <td><code>118</code>원소 <code>Tokenizer</code>(<code>Vocabulary</code>)는 전 원소를 수용하나 생성 공간 $[R_0, R_{114}]$이 유기 <code>115</code>종 반응에 고정됨.</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-ext">CASP</span><br><span style="font-size:0.68rem; color:#64748b;">2020~2024</span></td>
-                  <td><strong>AiZynthFinder / Retro*</strong><br><span style="font-size:0.72rem; color:#64748b;">MCTS &amp; Neural A*</span></td>
-                  <td><strong>USPTO 50k / Pistachio</strong> 반응 특허 + <strong>ZINC / Enamine / MolPort</strong> 상용 Stock 카탈로그</td>
-                  <td>알고리즘 구조는 도메인 중립적이며, Custom Policy 및 Stock 주입 시 무기 반응 탐색으로 확장 가능함.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div style="background:#f8fafc; border-left:4px solid var(--accent-blue); border-radius:0 6px 6px 0; padding:10px 14px; font-size:0.83rem; line-height:1.55; color:#334155;">
-            <strong>소재·무기 특화 선행 Model 대조:</strong> Jelfs 그룹의 <strong>MPScore</strong>(JCIM 2021)는 소재 합성 화학자가 직접 <code>Label</code>을 부여한 다공성·소재 프리커서 점수를 학습했으며, Kulik 그룹의 <strong>TMC Synthesizability</strong>(JACS Au 2022)는 <strong>CSD</strong> 추출 전이금속 착물을 대상으로 유기 리간드 합성성과 금속 배위 규칙을 결합하여 기존 의약 <code>Dataset</code>의 <code>Domain Shift</code>를 보완했습니다.
-          </div>
-        </div>
-
-        <!-- Card 2: External Metal Corpora & Extension Architecture -->
-        <div class="card" style="margin-bottom:20px; border-top:3px solid var(--accent-teal);">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">2. [일반 금속 포함 분자 확장] 활용 가능 외부 DB 및 저장소 확장 경로</h3>
-            <span class="badge badge-prec" style="font-size:0.8rem;">General Organometallics &bull; Catalysis &bull; OLED &bull; MOF</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:14px; line-height:1.6;">
-            반도체 ALD/CVD 프리커서 외의 일반 금속 포함 분자(균일계 Pd·Ni·Ru 촉매, OLED Ir·Pt 발광체, MOF·배위 고분자, 금속의약품) 반응도 동일한 다단계 하이브리드 아키텍처 위에서 확장 가능합니다.
-          </p>
-
-          <div class="versus-grid" style="margin-bottom:16px;">
-            <div class="versus-card" style="border-top:3px solid #0d9488;">
-              <div class="versus-header" style="color:#0f766e;">A. 외부 반응 코퍼스 연계 (<code>ORD</code>, <code>Reaxys</code>, <code>Pistachio</code>, <code>SynMOF</code>)</div>
-              <ul style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6; padding-left:18px; margin:0;">
-                <li><strong>ORD (Open Reaction Database):</strong> 오픈소스 구조화 스키마로 촉매·리간드·첨가제·수율을 분리 저장하며 Pd/Ni/Cu 촉매 교차결합 등 HTE 데이터를 다수 보유함(<code>ORDerly</code> 등 전처리 도구로 ML 학습용 정제 지원). 다만 착물 자체 합성보다 전이금속 <em>촉매 유기반응</em> 비중이 높음.</li>
-                <li><strong>Reaxys / Pistachio vs Raw USPTO:</strong> 원문 <code>USPTO</code> 텍스트 마이닝 코퍼스는 유기 작용기 변환에 편중되고 자연 원자 균형 비율이 소수에 불과한 반면, 상용 <strong>Reaxys</strong>는 유기 <code>Beilstein</code>과 무기·유기금속 <code>Gmelin Handbook</code>을 통합해 배위 합성 및 리간드 교환 조건을 포괄함.</li>
-                <li><strong>MOF·배위 고분자 문헌 DB:</strong> 다공성 배위 고분자(MOF) 합성 레시피 및 결정화 조건은 <code>SynMOF</code>, <code>DigiMOF</code>, <code>QMOF</code> 등 문헌 텍스트 마이닝 기반 특화 DB를 연계할 수 있음.</li>
-              </ul>
-            </div>
-
-            <div class="versus-card" style="border-top:3px solid #2563eb;">
-              <div class="versus-header" style="color:#1d4ed8;">B. 3D 구조·양자화학 <code>Dataset</code> (<code>CSD</code>, <code>tmQM</code>, <code>OMol25</code>, <code>Architector</code>)</div>
-              <ul style="font-size:0.83rem; color:var(--text-secondary); line-height:1.6; padding-left:18px; margin:0;">
-                <li><strong>CSD &amp; tmQM:</strong> 실험 X-선 결정 구조 저장소인 <strong>CSD</strong> 및 이로부터 전이금속 착물의 3D 기하·양자 물성을 추출한 <strong>tmQM</strong>은 반응 데이터가 부족한 착물 영역의 구조적 기준선 역할을 수행함.</li>
-                <li><strong>Architector &amp; OMol25 (2025):</strong> <strong>Architector</strong>로 산화수·배위수·스핀 상태를 조합 생성하고 Meta FAIR/LBNL이 $\omega\text{B97M-V/def2-TZVPD}$ 수준 1억 건 이상 DFT 계산을 축적한 <strong>OMol25</strong>를 연계하면 범용 유기금속 반응 경로 보간 및 스핀·전하 인지형 <code>MLIP</code> <code>Reward Function</code> 학습이 가능함.</li>
-                <li><strong>2-Track 저장소 재사용:</strong> 유기 리간드($HL_i$)는 <code>BR-SAScore</code>·<code>RxnFlow</code>·<code>BioNeMo ReaSyn</code>으로 생성·평가하고, 중심금속 배위 및 열역학은 <code>run_phase2_sevenn_features.py</code> 구조와 동일한 <code>MLIP</code>/<code>DFT</code> 검증 계층으로 연계함.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="table-responsive no-scroll-16">
-            <table class="table-compact-16">
-              <colgroup>
-                <col style="width:22%;">
-                <col style="width:42%;">
-                <col style="width:36%;">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>확장 대상 금속 반응 클래스</th>
-                  <th>대표 적용 영역 및 <code>Template</code> 확장 방식 (<code>reactions.json</code> · <code>AiZynthFinder</code> · <code>ReaSyn</code>)</th>
-                  <th>필수 물리·화학적 검증 지표 (<code>MLIP</code> / <code>DFT</code>)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>리간드 교환 및 치환 반응</strong><br><span style="font-size:0.7rem; color:#64748b;">Ligand Exchange / Chelation</span></td>
-                  <td>포스핀($\text{PR}_3$), NHC, 바이피리딘, $\beta$-디케토네이트 등 일반 배위 착물 합성. 프리커서 DB의 염 복분해·아미노분해 규칙을 중성·킬레이트 배위 <code>SMARTS</code>로 일반화함.</td>
-                  <td>단계별 치환 자유에너지 $\Delta G_{\text{syn}}$, 리간드 킬레이트 효과, 입체 차폐율($\%V_{\text{bur}}$)</td>
-                </tr>
-                <tr>
-                  <td><strong>산화적 첨가 · 환원적 제거 · 금속교환</strong><br><span style="font-size:0.7rem; color:#64748b;">Catalytic Cycle &amp; Transmetallation</span></td>
-                  <td>Pd/Ni/Pt/Ir 균일계 촉매 중간체 및 B·Sn·Zn·Li 경유 금속교환(Transmetallation). <strong>ORD</strong> 내 촉매·리간드 쌍 코퍼스를 Custom Policy로 편입함.</td>
-                  <td>촉매 회전 전이상태 활성화 장벽($\Delta G^\ddagger$), 산화환원 전위(Redox Potential)</td>
-                </tr>
-                <tr>
-                  <td><strong>고리금속화 반응</strong><br><span style="font-size:0.7rem; color:#64748b;">Cyclometalation</span></td>
-                  <td>OLED 인광 발광체($\text{Ir(ppy)}_3$, Pt 착물) 및 광촉매용 C^N·C^C 킬레이트 $\text{M-C}$/$\text{M-N}$ 이중 결합 형성 규칙 추가.</td>
-                  <td>고리 형성 자유에너지, 여기상태(Triplet $T_1$) 안정성 및 배위 해리 $\text{BDE}_{\min}$</td>
-                </tr>
-                <tr>
-                  <td><strong>$\eta^n$-아렌/Cp 및 카보닐 치환</strong><br><span style="font-size:0.7rem; color:#64748b;">Metallocene &amp; Carbonyls</span></td>
-                  <td>메탈로센, 하프샌드위치 촉매, $\text{M(CO)}_6$ 유도체의 다중심 배위 및 카보닐 리간드 치환 반응 규칙 정식화.</td>
-                  <td>단편 해리 $\text{BDE}$, 다중심 배위 기하 안정성, 스핀 다중도(Spin Multiplicity) 차</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Card 3: 4 Core Technical Bottlenecks -->
-        <div class="card" style="border-top:3px solid var(--accent-rose);">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-            <h3 class="card-title" style="margin-bottom:0;">3. 일반 금속 반응 확장 시 해결해야 할 4대 기술적 병목</h3>
-            <span class="badge badge-4g" style="font-size:0.8rem;">Cheminformatics &amp; Physical Constraints</span>
-          </div>
-          <div class="versus-grid">
-            <div class="versus-card" style="border-left:4px solid #e11d48;">
-              <div class="versus-header" style="color:#be123c;">병목 1: Dative Bond (<code>-&gt;</code>, <code>&lt;-</code>) 및 <code>ReactionFromSmarts</code> 파싱 제약</div>
-              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-                RDKit <code>SMILES</code>는 배위결합 화살표 표기를 지원하나 <code>ReactionFromSmarts</code> 파서에서는 배위결합 직접 표현에 제약이 발생합니다. 범용 배위 반응 규칙에서는 단일결합(<code>-</code>) 기반 절단 이후 Python <code>RWMol</code> API로 <code>Chem.BondType.DATIVE</code>, 형식전하, 및 <code>UpdatePropertyCache(strict=False)</code>(필요 시 <code>sanitize=False</code>)를 프로그래밍 방식으로 제어해야 합니다.
-              </p>
-            </div>
-
-            <div class="versus-card" style="border-left:4px solid #d97706;">
-              <div class="versus-header" style="color:#b45309;">병목 2: $\eta^n$ 다중심 배위 결합 표현 한계</div>
-              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-                $\eta^5$-Cp(예: <code>Ru(EtCp)2</code>, <code>Cp(NMe2)3Zr</code>), $\eta^3$-allyl, $\eta^6$-arene 등 파이 착물은 2D 루이스 원자가 그래프 상에서 연결 차수와 형식전하 표기가 문헌·DB마다 상이해 표준 유기 Subgraph 기반 <code>Template</code> 매칭 시 정규화 규칙이 추가로 요구됩니다.
-              </p>
-            </div>
-
-            <div class="versus-card" style="border-left:4px solid #7c3aed;">
-              <div class="versus-header" style="color:#6d28d9;">병목 3: Atom-to-Atom Mapping (<code>AAM</code>) 도메인 편향</div>
-              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-                <code>RXNMapper</code> 등 기존 비지도 원자 매핑 도구는 유기 반응 분포에 맞춰 학습되어, 금속 중심 산화수 변화나 구경꾼 리간드·다성분 염·첨가제가 공존하는 무기·유기금속 반응식에서 자동 반응 중심 추출 <code>Accuracy</code>가 저하됩니다.
-              </p>
-            </div>
-
-            <div class="versus-card" style="border-left:4px solid #0284c7;">
-              <div class="versus-header" style="color:#0369a1;">병목 4: 비반도체 도메인 맞춤형 물리 <code>Reward Function</code> 재정의</div>
-              <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-                반도체 ALD/CVD 프리커서에서는 기화성($P_{\text{vap}}$)·단량체 유지($\%V_{\text{bur}}$, $\Delta E_{\text{dimer}}$)·기상 열안정성($\text{BDE}_{\min}$)이 핵심 제약입니다. 반면 일반 촉매·OLED·금속의약품 영역으로 확장하려면 용액상 용매화 안정성, 산화환원 전위, 스핀 상태 다중도, 촉매 전이상태 장벽($\Delta G^\ddagger$)을 기준으로 <code>MLIP</code>(예: <strong>OMol25</strong> 학습 포텐셜) 및 <code>DFT</code> 보상을 재구성해야 합니다.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 17: SevenNet-0 CI-NEB Decomposition Benchmark, CpZr Mechanism & ALD T_decomp Kinetics -->
-      <section id="neb-decomp-kinetics">
-        <div class="section-header">
-          <div class="section-tag">Section 17 &bull; CI-NEB Reaction Path Benchmark &amp; Kinetic ALD Window</div>
-          <h2 class="section-title">SevenNet 반응경로(CI-NEB) 열분해 벤치마크 &amp; ALD T<sub>decomp</sub> 연계</h2>
-          <p class="section-desc">
-            정적 단일 분자 결합 해리 에너지($\text{BDE}_{\min}$)가 포착하지 못하는 협동 제거 메커니즘($\alpha$/$\beta$-H 제거, 1,2-이동, 4/6원 고리 제거)을 평가하기 위해 범용 MLIAP인 SevenNet(<code>7net-0</code>) 기반 <strong>8대 반도체 프리커서 분해 경로 CI-NEB 벤치마크</strong>(<code>Cp(NMe2)3Zr</code> 포함)를 수행하고, 전이상태 헤시안 검증·자동화 아키텍처 타당성·Arrhenius 속도론 기반 ALD 열분해 온도($T_{\text{decomp}}$) 및 이중 장벽 공정창($\Delta E_{\text{window}}$) 연계성을 분석합니다.
-          </p>
-        </div>
-
-        <!-- NEB_DECOMP_TECHNICAL_PLACEHOLDER -->
-      </section>
-
-      <!-- Section 18: Transition-Metal Multi-Coordination Determination & Ligand Compositional Statistics -->
-      <section id="tm-coord-ligand-stats">
-        <div class="section-header">
-          <div class="section-tag">Section 18 &bull; Multi-Coordination Physics &amp; Combinatorial Ligand Statistics</div>
-          <h2 class="section-title">전이금속 다중 배위수 결정 원리 및 리간드 조합&middot;물성 연계 통계</h2>
-          <p class="section-desc">
-            단일 스칼라 반경이나 고정 배위수 가정을 배제하고 $\sigma$&middot;배위결합&middot;킬레이트&middot;$\eta^n$ 다중심 $\pi$-배위를 연속 정량화하는 <strong>유효 배위수($CN_{\text{eff}}$) 결정 알고리즘</strong>과 2D SMILES 파싱 경계를 정리하고, <code>102</code>종 반도체 프리커서의 리간드 절편 통계 및 <code>5-CV / LOMO-5</code> 금속&ndash;리간드 조합 예측 실측 벤치마크를 수록합니다.
-          </p>
-        </div>
-
-        <!-- LIGAND_COORD_TECHNICAL_PLACEHOLDER -->
-      </section>
-
-      <!-- Section 19: Semiconductor Precursor Inverse Design Model Synthesis (CoOrd-Inv) -->
-      <section id="precursor-inverse-model-synthesis">
-        <div class="section-header">
-          <div class="section-tag">Section 19 &bull; Semiconductor Precursor Inverse Design Model (CoOrd-Inv)</div>
-          <h2 class="section-title">반도체 프리커서 역설계 모델 통합 정립: 생성 패러다임&middot;배위 제약 조합 역설계&middot;실측 재발견율</h2>
-          <p class="section-desc">
-            유기 반응 템플릿 기반 4세대 생성 모델과 3D 확산&middot;진화 탐색 모델의 도메인 정합성을 비교하고, <strong>Section 18</strong>의 <code>16</code>종 중심 금속&ndash;<code>44</code>종 1가 리간드 문법 및 <code>M&times;L</code> 결합 불확실성 대리모델을 <strong>Section 17</strong>의 <code>SevenNet-0 CI-NEB</code> 열분해 장벽 판정 기준와 폐루프로 결합한 <strong><code>CoOrd-Inv</code> 반도체 프리커서 역설계 모델</strong>을 정식화&middot;벤치마크합니다.
-          </p>
-        </div>
-
-        <!-- INVERSE_DESIGN_TECHNICAL_PLACEHOLDER -->
-      </section>
-
-      <!-- Section 20: Metal-Ligand Mechanistic Physicochemical Model & Generalization Synthesis -->
-      <section id="ml-mechanistic-generalization">
-        <div class="section-header">
-          <div class="section-tag">Section 20 &bull; Metal&ndash;Ligand Physicochemical Modeling &amp; Mechanistic Generalization</div>
-          <h2 class="section-title">중심원자&ndash;리간드 기반 물리&middot;메커니즘 모델링 및 DB 일반화 한계 검증</h2>
-          <p class="section-desc">
-            중심 금속($M$)과 리간드 조합($\{L_i\}$)의 1차 물리 법칙(<strong>Pauling–HSAB 결합 안정화</strong>, <strong>구형 포화 입체 차폐</strong>)만으로 정량 예측&middot;외삽 가능한 물성($\Delta E_f^{\text{std}}/v_M$, $\%V_{\text{bur}}$)과 비선형 전자 전이&middot;극값 연산이 개입하는 한계 물성($\text{BDE}_{\min}$, $\Delta G_{\text{dimer}}$)을 4개 일반화 체계(<code>5-CV</code>, <code>LOMO-5</code>, <code>LOLO-5</code>, <code>Homo&rarr;Hetero</code>)에서 분해 검증하고, <strong>142종 SA 분류</strong> 및 <strong>102종 리간드 분해 모티프</strong>를 문헌 DFT&middot;<code>SevenNet CI-NEB</code> 8대 채널과 통합 해석합니다.
-          </p>
-        </div>
-
-        <!-- MECHANISTIC_ML_TECHNICAL_PLACEHOLDER -->
-      </section>
-
-      <!-- Section 21: Chronological Analysis & Validation History -->
-      <section id="analysis-history-roadmap">
-        <div class="section-header">
-          <div class="section-tag">Section 21 &bull; Analysis History &amp; Reproducible Validation Lineage</div>
-          <h2 class="section-title">프로젝트 연구&middot;분석 이력 및 단계별 모델 검증 로드맵 (Stage 1 &rarr; Stage 8)</h2>
-          <p class="section-desc">
-            초기 유기 SA 모델 18종 감사(<code>55</code>종)에서 출발해 <code>SevenNet-0</code> 3D 완화(<code>160</code>종), <code>8</code>대 <code>CI-NEB</code> 열분해 동역학, 다중 배위수·리간드 통계(Sec 18), <code>CoOrd-Inv</code> 역설계(Sec 19), <code>M+L</code> 물리 법칙·4대 일반화 검증(Sec 20) 및 5극 특허·문헌 확장(Sec 22)까지 누적된 분석 이력과 스크립트·단위 테스트 계보를 정리합니다.
-          </p>
-        </div>
-
-        <!-- ANALYSIS_HISTORY_TECHNICAL_PLACEHOLDER -->
-      </section>
-
-      <!-- Section 22: KR/JP/CN/US/TW Patent & Metal-Centered Literature DB Expansion -->
-      <section id="patent-literature-expansion">
-        <div class="section-header">
-          <div class="section-tag">Section 22 &bull; Global Patent &amp; Metal-Centered Literature Expansion</div>
-          <h2 class="section-title">한&middot;중&middot;일&middot;미&middot;대만 특허 분석 및 중심금속원자 기반 신규 프리커서&middot;인히비터 DB 확장 검토</h2>
-          <p class="section-desc">
-            현행 <code>102</code>종 프리커서·<code>18</code>종 인히비터 DB의 중심원소 편중(<code>Ga/In/Ru 62.7%</code>, <code>Nb/Ni/Cu/Ge/La/Y/Pt/Zn 0종</code>)을 해소하기 위해 한국(<code>KR</code>)·일본(<code>JP</code>)·중국(<code>CN</code>)·미국(<code>US/WO</code>)·대만(<code>TW</code>) 특허군과 <code>Chem. Rev.</code>·<code>Chem. Mater.</code> 중심금속 리뷰를 분석해 <strong>중복 없는 신규 38종(프리커서 28종 + ASD 인히비터 10종)</strong>을 도출하고 <code>SAPIS</code> 체계로 실측 스크리닝합니다.
-          </p>
-        </div>
-
-        <!-- PATENT_EXPANSION_TECHNICAL_PLACEHOLDER -->
-      </section>
-
