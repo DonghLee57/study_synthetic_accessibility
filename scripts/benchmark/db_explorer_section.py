@@ -874,10 +874,9 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             d["x"] = x2
 
         c3 = _layout([
-            ("pos_120", n_pos, "#16a34a", "합성 가능 양성군"),
+            ("pos_all", n_pos + n_pat_tot, "#16a34a", "합성 가능 양성군"),
             ("neg_40", n_neg, "#dc2626", "합성 불가 대조군"),
-            ("pat_out", n_pat_tot, "#0284c7", "확장 후보 SAPIS 판정"),
-        ], y_start=56.0, gap=24.0)
+        ], y_start=56.0, gap=28.0)
         for d in c3.values():
             d["x"] = x3
 
@@ -894,9 +893,9 @@ def build_db_explorer_and_sankey(shared_ctx: Dict[str, Any]) -> Dict[str, str]:
             flows.append((c1["eval_160"], c2["etk_base"], n_etk_base, "#8b5cf6", f"통합 분류 평가셋 → 초기 3D 구조 생성: {n_etk_base}종"))
         flows.extend([
             (c1["pat_38"], c2["etk_pat"], n_pat_tot, "#059669" if n_pat_7n == n_pat_tot else "#f59e0b", f"특허·문헌 스크리닝셋 → 확장 후보 3D 최적화: {n_pat_tot}종"),
-            (c2["svn"], c3["pos_120"], n_svn_pos, "#16a34a", f"벤치마크 3D 최적화 → 합성 가능 양성군: {n_svn_pos}종"),
-            (c2["svn"], c3["neg_40"], n_svn_neg, "#059669", f"벤치마크 3D 최적화 → 합성 불가 대조군: {n_svn_neg}종"),
-            (c2["etk_pat"], c3["pat_out"], n_pat_tot, "#0284c7", f"확장 후보 3D 최적화 → 확장 후보 SAPIS 판정: {n_pat_tot}종"),
+            (c2["svn"], c3["pos_all"], n_svn_pos, "#16a34a", f"벤치마크 3D 최적화 → 합성 가능 양성군: {n_svn_pos}종 (합계 {n_pos + n_pat_tot}종)"),
+            (c2["etk_pat"], c3["pos_all"], n_pat_tot, "#0284c7", f"확장 후보 3D 최적화 → 합성 가능 양성군: +{n_pat_tot}종 (합계 {n_pos + n_pat_tot}종)"),
+            (c2["svn"], c3["neg_40"], n_svn_neg, "#dc2626", f"벤치마크 3D 최적화 → 합성 불가 대조군: {n_svn_neg}종"),
         ])
 
         ribbon_svg = []

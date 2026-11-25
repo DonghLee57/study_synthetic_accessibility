@@ -184,10 +184,20 @@ def render_mol2d_svg(smi: str, width: int = 240, height: int = 165) -> str:
                 mol = m_canon
         except Exception:
             pass
+    _ORGANIC_ONLY_Z = {1, 5, 6, 7, 8, 9, 15, 16, 17, 35, 53}
+    has_metal_or_dative = any(
+        a.GetAtomicNum() not in _ORGANIC_ONLY_Z for a in mol.GetAtoms()
+    ) or any(b.GetBondType() == Chem.BondType.DATIVE for b in mol.GetBonds())
     try:
-        rdDepictor.SetPreferCoordGen(True)
-        rdDepictor.Compute2DCoords(mol)
-        rdDepictor.StraightenDepiction(mol)
+        if has_metal_or_dative:
+            # Native RDKit layout preserves radial star symmetry for metal/chelate complexes
+            # (avoids CoordGen squashing TDMAH or vertically collapsing Hf(acac)4).
+            rdDepictor.SetPreferCoordGen(False)
+            rdDepictor.Compute2DCoords(mol)
+        else:
+            rdDepictor.SetPreferCoordGen(True)
+            rdDepictor.Compute2DCoords(mol)
+            rdDepictor.StraightenDepiction(mol)
     except Exception:
         try:
             rdDepictor.SetPreferCoordGen(False)
